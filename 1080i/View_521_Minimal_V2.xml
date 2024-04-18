@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="521Content">
+
+        <include>Def_On_Info</include>
+
+        <visible>Container.Content(actors) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(sets) | Container.Content(videos) | $EXP[InGameMode]</visible>
+        <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
+            <param name="string" value="$LOCALIZE[31436]" />
+        </include>
+        <include content="Def_Top" condition="!Skin.HasSetting(home.widgets.show.reflections)">
+            <param name="top" value="568" />
+        </include>
+        <include content="Def_Top" condition="Skin.HasSetting(home.widgets.show.reflections)">
+            <param name="top" value="556" />
+        </include>
+
+        <include content="Def_Autoscroll" condition="String.IsEqual(Skin.String(521.autoscroll.speed),1)">
+            <param name="time" value="2000" />
+        </include>
+
+        <include content="Def_Autoscroll" condition="String.IsEqual(Skin.String(521.autoscroll.speed),2)">
+            <param name="time" value="500" />
+        </include>
+
+        <!-- <include content="Def_Focus_Position" condition="!Skin.HasSetting(521.poster.control.list)"> -->
+            <!-- <param name="focusposition" value="1" /> -->
+        <!-- </include> -->
+
+        <include content="Def_Movement" condition="!Skin.HasSetting(521.poster.control.list)">
+            <param name="movement" value="7" />
+        </include>
+        <height>365</height>
+        <Width>1848</Width>
+        <left>72</left>
+
+        <onup condition="!Skin.HasSetting(global.kioskmode)">9000</onup>
+        <ondown>1611</ondown>
+        <!-- <onback>ClearProperty(WallMode,Home)</onback> -->
+        <onunfocus condition="Skin.HasSetting(home.netflix.autoplay.trailer)">ClearProperty(listitem.trailer,Home)</onunfocus>
+        <onfocus condition="Skin.HasSetting(home.netflix.autoplay.trailer)">ClearProperty(TrailerIsPlayingFullscreen,Home)</onfocus>
+        <orientation>horizontal</orientation>
+
+        <preloaditems>2</preloaditems>
+        <pagecontrol>1611</pagecontrol>
+        <focusposition>0</focusposition>
+
+        <viewtype label="31436">list</viewtype>
+        <include>Animation_ScrolltimeViewsList</include>
+        <itemlayout height="325" width="222">
+            <include content="Layout_Widget_Poster">
+                <param name="id" value="521"/>
+                <param name="reflections" value="Skin.HasSetting(show.reflections)"/>
+            </include>
+        </itemlayout>
+        <focusedlayout height="325" width="222">
+            <include content="Layout_Widget_Poster_Focus">
+                <param name="id" value="521"/>
+                <param name="reflections" value="Skin.HasSetting(show.reflections)"/>
+            </include>
+            <!-- <include>Hidden_List_Genre_Split</include> -->
+            <include condition="Skin.HasSetting(home.netflix.autoplay.trailer)">SetAutoTrailerControl</include>
+        </focusedlayout>
+    </include>
+
+    <include name="521Fixed">
+        <control type="fixedlist" id="521">
+            <include>521Content</include>
+        </control>
+    </include>
+
+    <include name="521List">
+        <control type="list" id="521">
+            <include>521Content</include>
+        </control>
+    </include>
+
+    <include name="View_521_Minimal_V2">
+        <description>List View (id=521)</description>
+        <control type="group">
+            <include condition="!Skin.HasSetting(furniture.weather.home.only)">Furniture_Footer_Clock_Right</include>
+
+            <include>Animation_Common</include>
+            <include>View_Slide_For_JumpBar</include>
+            <visible>Control.IsVisible(521)</visible>
+            <include>View_522_Minimal_V2_Content</include>
+            <control type="scrollbar" id="1611">
+                <include content="Object_Scrollbar_Horizontal">
+                    <param name="scrollid" value="1611"/>
+                    <param name="jumpbar" value="true"/>
+                    <param name="bottom" value="165"/>
+                    <param name="idlayout" value="521"/>
+                </include>
+            </control>
+            <include condition="!Skin.HasSetting(521.poster.control.list)">521Fixed</include>
+            <include condition="Skin.HasSetting(521.poster.control.list)">521List</include>
+        </control>
+
+        <control type="group">
+            <visible>Control.IsVisible(5218)</visible>
+            <include>Animation_Common</include>
+            <include>Animation_FadeIn_Slide</include>
+            <include content="Layout_Viewtype_Wall_Switch">
+                <param name="id" value="5218" />
+                <param name="include" value="Layout_Video_Wall_Poster" />
+                <param name="viewtype-label" value="31436" />
+                <param name="onbackid" value="521" />
+                <visible>!Window.IsVisible(MyPlaylist.xml)</visible>
+                <!-- <visible>!String.IsEqual(Container.Property(Param.Info),details)</visible> -->
+            </include>
+        </control>
+        <include content="Layout_Viewtype_Wall_Furniture">
+            <param name="id" value="5218" />
+            <param name="onbackid" value="521" />
+        </include>
+    </include>
+
+    <include name="View_522_Minimal_V2_Content">
+        <control type="group">
+            <left>SidePad</left>
+            <include content="Def_Top" condition="!Skin.HasSetting(home.widgets.show.reflections)">
+                <param name="top" value="195" />
+            </include>
+            <include content="Def_Top" condition="Skin.HasSetting(home.widgets.show.reflections)">
+                <param name="top" value="191" />
+            </include>
+
+            <width>NetflixPlotWidth</width>
+
+            <control type="grouplist">
+                <visible>[!Skin.HasSetting(show.view.netflix.title.clearlogo.video) + Window.IsVisible(MyVideoNav.xml)] | [!Skin.HasSetting(show.view.netflix.title.clearlogo.music) + Window.IsVisible(MyMusicNav.xml)]</visible>
+                <orientation>vertical</orientation>
+                <itemgap>0</itemgap>
+                <control type="label">
+                    <textcolor>Dark1</textcolor>
+                    <font>LargeNew</font>
+                    <label fallback="19055">$INFO[ListItem.Label]</label>
+                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <selectedcolor>Dark1</selectedcolor>
+                    <label>$VAR[LabelSub_1_GenreAlbum]</label>
+                    <visible>!container.content(movies) + !container.content(sets) + !container.content(artists)</visible>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <selectedcolor>Dark1</selectedcolor>
+                    <label>$VAR[Label_Music_Sub_Title]</label>
+                    <visible>container.content(artists)</visible>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[Label_View_Main_SubTitle]</label>
+                    <visible>!container.content(artists)</visible>
+                </control>
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <height min="36" max="150">auto</height>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[LabelPlotBox]</label>
+                    <visible>!container.content(movies)</visible>
+                </control>
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <height min="36" max="176">auto</height>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[LabelPlotBox]</label>
+                    <visible>container.content(movies)</visible>
+                </control>
+            </control>
+
+            <control type="grouplist">
+                <visible>[Skin.HasSetting(show.view.netflix.title.clearlogo.video) + Window.IsVisible(MyVideoNav.xml)] | [Skin.HasSetting(show.view.netflix.title.clearlogo.music) + Window.IsVisible(MyMusicNav.xml)]</visible>
+                <visible>!$EXP[Exp_Title_Clearlogo_Available]</visible>
+                <!-- <visible>!Container.Content(seasons)</visible> -->
+                <orientation>vertical</orientation>
+                <itemgap>0</itemgap>
+                <control type="label">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <textcolor>Dark1</textcolor>
+                    <font>LargeNew</font>
+                    <label fallback="19055">$INFO[ListItem.Label]</label>
+                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <selectedcolor>Dark1</selectedcolor>
+                    <label>$VAR[LabelSub_1_GenreAlbum]</label>
+                    <visible>!container.content(movies) + !container.content(sets) + !container.content(videos) + !Container.Content(actors) + !$EXP[IsYoutube] + !container.content(artists)</visible>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <selectedcolor>Dark1</selectedcolor>
+                    <label>$VAR[Label_Music_Sub_Title]</label>
+                    <visible>container.content(artists)</visible>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[Label_View_Main_SubTitle]</label>
+                    <visible>!container.content(artists)</visible>
+                </control>
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <height min="36" max="140">auto</height>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[LabelPlotBox]</label>
+                </control>
+            </control>
+
+            <control type="grouplist">
+                <visible>[Skin.HasSetting(show.view.netflix.title.clearlogo.video) + Window.IsVisible(MyVideoNav.xml)] | [Skin.HasSetting(show.view.netflix.title.clearlogo.music) + Window.IsVisible(MyMusicNav.xml)]</visible>
+                <visible>$EXP[Exp_Title_Clearlogo_Available]</visible>
+                <!-- <visible>!Container.Content(seasons)</visible> -->
+                <orientation>vertical</orientation>
+                <itemgap>0</itemgap>
+                <control type="image" description="clearlogo">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <width>ClearLogoTitleMaxWidth</width>
+                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                    <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+                    <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
+                    <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <selectedcolor>Dark1</selectedcolor>
+                    <label>$VAR[Label_Music_Sub_Title]</label>
+                    <visible>container.content(artists)</visible>
+                </control>
+                <control type="label">
+                    <aligny>center</aligny>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <selectedcolor>Dark1</selectedcolor>
+                    <label>$VAR[Label_View_Main_SubTitle]</label>
+                    <visible>!container.content(artists)</visible>
+                </control>
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <height min="36" max="140">auto</height>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[LabelPlotBox]</label>
+                </control>
+            </control>
+        </control>
+        <control type="list" id="52281">
+            <include>Def_Hidden_ListControl</include>
+            <content>$INFO[Container($PARAM[id]).ListItem.DBID,musicdb://artists/,/]</content>
+        </control>
+    </include>
+</includes>

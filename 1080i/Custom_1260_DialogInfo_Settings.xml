@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="1260">
+    <defaultcontrol always="true">11</defaultcontrol>
+    <controls>
+        <include>Background_Overlay</include>
+        <control type="group">
+
+            <include>Def_Dialog_Background</include>
+
+            <control type="label">
+                <include>Def_Dialog_Header_Title</include>
+                <label>5</label>
+            </control>
+
+            <include>Def_Dialog_Header_Logo</include>
+            <include>Def_Dialog_Header_Line</include>
+
+            <!-- MENU LEFT -->
+
+            <control type="grouplist" id="11">
+                <height>660</height>
+                <width>705</width>
+                <top>115</top>
+                <onright>5</onright>
+                <usecontrolcoords>true</usecontrolcoords>
+                <itemgap>0</itemgap>
+                <scrolltime>0</scrolltime>
+
+                <control type="button" id="100">
+                    <height>66</height>
+                    <include>Def_Button_Title_Menu_Setting_Right</include>
+                    <label>35103</label>
+                    <enable>false</enable>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+    <!-- MOVIE SECTION -->
+
+                <!-- Trailer -->
+                <control type="radiobutton" id="102">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>20410</label>
+                    <selected>!Skin.HasSetting(hide.button.video.trailer)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.trailer)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Wiki -->
+                <control type="radiobutton" id="1092">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31575</label>
+                    <selected>!Skin.HasSetting(hide.button.video.wiki)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.wiki)</onclick>
+                    <onclick>System.AddonIsEnabled(script.wikipedia)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Langue Wiki -->
+                <control type="button" id="1093">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31262]$LOCALIZE[248] $LOCALIZE[31575]</label>
+                    <label2>$VAR[Label_Language_Wiki_Dialog_Info]</label2>
+                    <onclick>SetProperty(includesetting,Value_Wiki_Language,Home)</onclick>
+                    <onclick>ActivateWindow(1248)</onclick>
+                    <visible>System.AddonIsEnabled(script.wikipedia) + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.wiki)</visible>
+                </control>
+
+
+                <!-- Cinema -->
+                <control type="radiobutton" id="109">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31146</label>
+                    <selected>Skin.HasSetting(show.button.video.cinema)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.cinema)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Cinema vision -->
+                <control type="radiobutton" id="1091">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31262]$LOCALIZE[31591]</label>
+                    <selected>Skin.HasSetting(use.video.cinemavision)</selected>
+                    <onclick>Skin.ToggleSetting(use.video.cinemavision)</onclick>
+                    <visible>Skin.HasSetting(show.button.video.cinema) + System.AddonIsEnabled(script.preshowexperience)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- User rating -->
+                <control type="radiobutton" id="103">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>38018</label>
+                    <selected>!Skin.HasSetting(hide.button.video.rating)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.rating)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Special feature -->
+                <control type="radiobutton" id="104">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31249</label>
+                    <selected>!Skin.HasSetting(hide.button.video.specialfeatures)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.specialfeatures)</onclick>
+                    <visible>System.AddonIsEnabled(plugin.video.specialfeatures)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Track -->
+                <control type="radiobutton" id="113">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31433]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.trakt)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.trakt)</onclick>
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.TraktIsAuth))</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- manage video version -->
+                <control type="radiobutton" id="114">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31656]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.manage)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.manage)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- manage video extra -->
+                <control type="radiobutton" id="115">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31657]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.extra)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.extra)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Local only ? -->
+                <control type="radiobutton" id="116">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31662]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.local.only)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.local.only)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- RECOMMENDATION -->
+
+                <control type="button" id="200">
+                    <height>66</height>
+                    <include>Def_Button_Title_Menu_Setting_Right</include>
+                    <label>$LOCALIZE[14240]</label>
+                    <enable>false</enable>
+                </control>
+
+                <!-- Local only -->
+                <control type="radiobutton" id="166">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31445</label>
+                    <selected>Skin.HasSetting(filter.video.only.local)</selected>
+                    <onclick>Skin.ToggleSetting(filter.video.only.local)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <enable>System.AddonIsEnabled(plugin.video.themoviedb.helper)</enable>
+                </control>
+
+                <!-- filter animation from movies -->
+                <control type="radiobutton" id="138">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31580]</label>
+                    <selected>Skin.HasSetting(filter.video.animation)</selected>
+                    <onclick>Skin.ToggleSetting(filter.video.animation)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+
+                <!-- Creator -->
+                <control type="radiobutton" id="1353">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31648]</label>
+                    <selected>Skin.HasSetting(show.button.video.creator)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.creator)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(filter.video.only.local)</visible>
+                </control>
+
+                <!-- Director -->
+                <control type="radiobutton" id="135">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31442]</label>
+                    <selected>Skin.HasSetting(show.button.video.director)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.director)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Writer -->
+                <control type="radiobutton" id="1351">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31641]</label>
+                    <selected>Skin.HasSetting(show.button.video.writer)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.writer)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Crew -->
+                <control type="radiobutton" id="1352">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31199]</label>
+                    <selected>Skin.HasSetting(show.button.video.crew)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.crew)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(filter.video.only.local)</visible>
+                </control>
+
+                <!-- Year -->
+                <control type="radiobutton" id="137">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31579]</label>
+                    <selected>Skin.HasSetting(show.button.video.year)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.year)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Set -->
+                <control type="radiobutton" id="136">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31443]</label>
+                    <selected>Skin.HasSetting(show.button.video.set)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.set)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Similar -->
+                <control type="radiobutton" id="105">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31178]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.similar)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.similar)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(filter.video.only.local)</visible>
+                </control>
+
+                <!-- Recommended -->
+                <control type="radiobutton" id="1051">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31647]</label>
+                    <selected>Skin.HasSetting(show.button.video.recommended)</selected>
+                    <onclick>Skin.ToggleSetting(show.button.video.recommended)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(filter.video.only.local)</visible>
+                </control>
+
+                <!-- Studio -->
+                <control type="radiobutton" id="106">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31193]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.studio)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.studio)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Seasons -->
+                <control type="radiobutton" id="1061">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[33054]</label>
+                    <selected>!Skin.HasSetting(hide.button.tvshow.season)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.tvshow.season)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Creator -->
+                <control type="radiobutton" id="1062">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31648]</label>
+                    <selected>!Skin.HasSetting(hide.button.tvshow.creator)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.tvshow.creator)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Youtube -->
+                <control type="radiobutton" id="107">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[31119]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.youtube)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.youtube)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Fanart -->
+                <control type="radiobutton" id="108">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label> - $LOCALIZE[39123]</label>
+                    <selected>!Skin.HasSetting(hide.button.video.fanart)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.video.fanart)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                </control>
+
+                <!-- CINEMA EXPERIENCE  -->
+
+                <control type="button" id="110">
+                    <font>Button</font>
+                    <textcolor>PanelWhite30</textcolor>
+                    <height>66</height>
+                    <include>Def_Button_Title_Menu_Setting_Right</include>
+                    <label>31146</label>
+                    <enable>false</enable>
+                    <visible>![Skin.HasSetting(use.video.cinemavision) + System.AddonIsEnabled(script.preshowexperience)]</visible>
+                    <visible>Skin.HasSetting(show.button.video.cinema)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+                <control type="button" id="111">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31405</label>
+                    <label2>$VAR[Label_IntroPath]</label2>
+                    <onclick>Skin.SetPath(IntroPath)</onclick>
+                    <visible>![Skin.HasSetting(use.video.cinemavision) + System.AddonIsEnabled(script.preshowexperience)]</visible>
+                    <visible>Skin.HasSetting(show.button.video.cinema)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+                <control type="button" id="112">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31406</label>
+                    <label2>$VAR[Label_Trailer_Count]</label2>
+                    <onclick condition="!Skin.String(Value_Trailer_Count)">Skin.SetString(Value_Trailer_Count,1)</onclick>
+                    <onclick condition="Skin.String(Value_Trailer_Count,1)">Skin.SetString(Value_Trailer_Count,2)</onclick>
+                    <onclick condition="Skin.String(Value_Trailer_Count,2)">Skin.SetString(Value_Trailer_Count,3)</onclick>
+                    <onclick condition="Skin.String(Value_Trailer_Count,3)">Skin.SetString(Value_Trailer_Count,4)</onclick>
+                    <onclick condition="Skin.String(Value_Trailer_Count,4)">Skin.SetString(Value_Trailer_Count,5)</onclick>
+                    <onclick condition="Skin.String(Value_Trailer_Count,5)">Skin.Reset(Value_Trailer_Count)</onclick>
+                    <visible>![Skin.HasSetting(use.video.cinemavision) + System.AddonIsEnabled(script.preshowexperience)]</visible>
+                    <visible>Skin.HasSetting(show.button.video.cinema)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+    <!-- MUSIC SECTION -->
+
+
+                <control type="radiobutton" id="160">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31575</label>
+                    <selected>!Skin.HasSetting(hide.button.music.wiki)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.music.wiki)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml) + System.AddonIsEnabled(script.wikipedia)</visible>
+                </control>
+                <control type="radiobutton" id="120">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31201</label>
+                    <selected>!Skin.HasSetting(hide.button.music.sets)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.music.sets)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+                <control type="radiobutton" id="124">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31294</label>
+                    <selected>!Skin.HasSetting(hide.button.music.more)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.music.more)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+                 <!-- <control type="radiobutton" id="1201"> -->
+                    <!-- <include>Def_Button_Gradient_Select</include> -->
+                    <!-- <label>21887</label> -->
+                    <!-- <selected>!Skin.HasSetting(hide.button.music.bio)</selected> -->
+                    <!-- <onclick>Skin.ToggleSetting(hide.button.music.bio)</onclick> -->
+                    <!-- <visible>Window.IsVisible(DialogMusicInfo.xml)</visible> -->
+                    <!-- <enable>String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)</enable> -->
+                <!-- </control> -->
+                <control type="radiobutton" id="123">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>38018</label>
+                    <selected>!Skin.HasSetting(hide.button.music.rating)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.music.rating)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+                <control type="radiobutton" id="121">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31119</label>
+                    <selected>!Skin.HasSetting(hide.button.music.youtube)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.music.youtube)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+                <control type="radiobutton" id="122">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>39123</label>
+                    <selected>!Skin.HasSetting(hide.button.music.fanart)</selected>
+                    <onclick>Skin.ToggleSetting(hide.button.music.fanart)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+
+                <!-- TITLE SECTION -->
+
+                <control type="button" id="150">
+                    <height>66</height>
+                    <include>Def_Button_Title_Menu_Setting_Right</include>
+                    <label>31411</label>
+                    <enable>false</enable>
+                    <visible>!Skin.HasSetting(hide.button.music.fanart)</visible>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+
+    <!-- MUSIC SECTION -->
+
+                <control type="radiobutton" id="151">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>20445</label>
+                    <selected>!Skin.HasSetting(hide.artwork.music.fanart)</selected>
+                    <onclick>Skin.ToggleSetting(hide.artwork.music.fanart)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml) + !Skin.HasSetting(hide.button.music.fanart)</visible>
+                    <enable>!Skin.HasSetting(hide.button.music.fanart)</enable>
+                </control>
+                <control type="radiobutton" id="152">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31412</label>
+                    <selected>!Skin.HasSetting(hide.artwork.music.landscape)</selected>
+                    <onclick>Skin.ToggleSetting(hide.artwork.music.landscape)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml) + !Skin.HasSetting(hide.button.music.fanart)</visible>
+                    <enable>!Skin.HasSetting(hide.button.music.fanart)</enable>
+                </control>
+                <control type="radiobutton" id="153">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>21371</label>
+                    <selected>!Skin.HasSetting(hide.artwork.music.thumb)</selected>
+                    <onclick>Skin.ToggleSetting(hide.artwork.music.thumb)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml) + !Skin.HasSetting(hide.button.music.fanart)</visible>
+                    <enable>!Skin.HasSetting(hide.button.music.fanart)</enable>
+                </control>
+
+    <!-- MOVIE SECTION -->
+
+                <control type="button" id="1501">
+                    <height>66</height>
+                    <include>Def_Button_Title_Menu_Setting_Right</include>
+                    <label>31411</label>
+                    <enable>false</enable>
+                    <visible>!Skin.HasSetting(hide.button.video.fanart)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                </control>
+
+                <!-- Fanart -->
+                <control type="radiobutton" id="161">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>20445</label>
+                    <selected>!Skin.HasSetting(hide.artwork.video.fanart)</selected>
+                    <onclick>Skin.ToggleSetting(hide.artwork.video.fanart)</onclick>
+                    <visible>!Skin.HasSetting(hide.button.video.fanart)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                </control>
+
+                <!-- Landscape -->
+                <control type="radiobutton" id="154">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31412</label>
+                    <selected>!Skin.HasSetting(hide.artwork.video.landscape)</selected>
+                    <onclick>Skin.ToggleSetting(hide.artwork.video.landscape)</onclick>
+                    <visible>!Skin.HasSetting(hide.button.video.fanart)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                </control>
+
+                <!-- TMDb ArtWork -->
+                <control type="radiobutton" id="162">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31478</label>
+                    <selected>Skin.HasSetting(showartwork.video.tmdbhelper)</selected>
+                    <onclick>Skin.ToggleSetting(showartwork.video.tmdbhelper)</onclick>
+                    <visible>!Skin.HasSetting(hide.button.video.fanart)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                </control>
+
+                <!-- TITLE SECTION -->
+
+                <control type="button" id="180">
+                    <font>Button</font>
+                    <textcolor>PanelWhite30</textcolor>
+                    <height>66</height>
+                    <include>Def_Button_Title_Menu_Setting_Right</include>
+                    <label>31407</label>
+                    <enable>false</enable>
+                </control>
+
+    <!-- MUSIC SECTION -->
+
+                <!-- Discart -->
+                <control type="radiobutton" id="171">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31063</label>
+                    <selected>Skin.HasSetting(Show.Discart.Music.Info)</selected>
+                    <onclick>Skin.ToggleSetting(Show.Discart.Music.Info)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+
+                <!-- Clearlogo -->
+                <control type="radiobutton" id="1711">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31015</label>
+                    <selected>Skin.HasSetting(show.dialog.info.clearlogo.music)</selected>
+                    <onclick>Skin.ToggleSetting(show.dialog.info.clearlogo.music)</onclick>
+                    <visible>Window.IsVisible(DialogMusicInfo.xml)</visible>
+                </control>
+
+    <!-- MOVIE SECTION -->
+
+                <!-- Discart -->
+                <control type="radiobutton" id="170">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31063</label>
+                    <selected>Skin.HasSetting(Show.Discart.Video.Info)</selected>
+                    <onclick>Skin.ToggleSetting(Show.Discart.Video.Info)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Actors -->
+                <control type="radiobutton" id="1702">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31029</label>
+                    <selected>Skin.HasSetting(HideActorImages)</selected>
+                    <onclick>Skin.ToggleSetting(HideActorImages)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Clearlogo -->
+                <control type="radiobutton" id="1701">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31015</label>
+                    <selected>Skin.HasSetting(show.dialog.info.clearlogo.video)</selected>
+                    <onclick>Skin.ToggleSetting(show.dialog.info.clearlogo.video)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                </control>
+
+                <!-- Consensus / Clearart -->
+                <control type="button" id="159">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31306</label>
+                    <label2>$VAR[InfoTypeLabelTexture]</label2>
+                    <onclick condition="!Skin.HasSetting(show.studiologos) + !Skin.HasSetting(show.clearart) + !Skin.HasSetting(show.consensus)">Skin.ToggleSetting(show.clearart)</onclick>
+                    <onclick condition="Skin.HasSetting(show.clearart)">Skin.ToggleSetting(show.consensus)</onclick>
+                    <onclick condition="Skin.HasSetting(show.clearart)">Skin.Reset(show.clearart)</onclick>
+                    <onclick condition="Skin.HasSetting(show.consensus)">Skin.ToggleSetting(show.studiologos)</onclick>
+                    <onclick condition="Skin.HasSetting(show.consensus)">Skin.Reset(show.consensus)</onclick>
+                    <onclick condition="Skin.HasSetting(show.studiologos)">Skin.Reset(show.studiologos)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Tagline -->
+
+                <control type="button" id="1703">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>202</label>
+                    <label2>$VAR[InfoTypeLabelTagline]</label2>
+                    <onclick condition="!Skin.HasSetting(show.tagline.never) + !Skin.HasSetting(show.tagline.notempty)">Skin.ToggleSetting(show.tagline.notempty)</onclick>
+                    <onclick condition="Skin.HasSetting(show.tagline.notempty)">Skin.ToggleSetting(show.tagline.never)</onclick>
+                    <onclick condition="Skin.HasSetting(show.tagline.notempty)">Skin.Reset(show.tagline.notempty)</onclick>
+                    <onclick condition="Skin.HasSetting(show.tagline.never)">Skin.Reset(show.tagline.never)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+
+                <!-- Trailer Windowed -->
+                <control type="radiobutton" id="158">
+                    <include>Def_Button_Gradient_Select</include>
+                    <label>31117</label>
+                    <selected>Skin.HasSetting(PlayTrailerWindowed)</selected>
+                    <onclick>Skin.ToggleSetting(PlayTrailerWindowed)</onclick>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml)</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                </control>
+            </control>
+
+            <!-- LINE -->
+
+            <control type="image">
+                <right>356</right>
+                <top>115</top>
+                <bottom>19</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <visible>!Control.IsVisible(21)</visible>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+            </control>
+
+            <!-- BUTTON -->
+
+            <control type="button" id="5">
+                <description>Manual</description>
+                <right>31</right>
+                <posy>115</posy>
+                <width>300</width>
+                <height>66</height>
+                <align>center</align>
+                <label>15067</label>
+                <onleft>11</onleft>
+                <font>Button</font>
+                <textcolor>Black70</textcolor>
+                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+                <onclick>Close</onclick>
+            </control>
+
+            <include>Def_Dialog_Select_label_Num_Item</include>
+        </control>
+    </controls>
+</window>

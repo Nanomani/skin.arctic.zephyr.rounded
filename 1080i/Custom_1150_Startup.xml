@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1150">
+    <defaultcontrol always="true">3615</defaultcontrol>
+    <animation effect="fade" start="100" end="0" time="500">WindowClose</animation>
+
+    <!-- Message Initialising Skin -->
+    <onload condition="String.IsEmpty(Window.Property(ReloadDone))">SetProperty(InitStatus,$LOCALIZE[31623])</onload>
+
+    <!-- Start TMDbH service -->
+    <onload condition="String.IsEmpty(Window.Property(ReloadDone)) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(TMDbHelper.Service)</onload>
+    <onload condition="String.IsEmpty(Window.Property(ReloadDone)) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(TMDbHelper.UseLocalWidgetContainer)</onload>
+    <onload condition="String.IsEmpty(Window.Property(ReloadDone)) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetString(TMDbHelper.MonitorContainer,99950)</onload>
+
+    <!-- <onload condition="String.IsEmpty(Window.Property(ReloadDone))">Skin.Reset(TMDbHelper.EnableBlur)</onload> -->
+
+    <!-- Build includes for textures / views / menus -->
+    <include condition="String.IsEmpty(Window.Property(ReloadDone))">Action_BuildTextures_Onload</include>
+
+    <!-- <onload condition="String.IsEmpty(Window.Property(ReloadDone))">RunScript(script.skinvariables,action=buildviews)</onload> -->
+    <onload condition="!String.IsEmpty(Window.Property(ReloadDone))">SetProperty(InitStatus,$LOCALIZE[31624])</onload>
+
+    <!-- Reload -->
+    <onload>SetProperty(ReloadDone,1)</onload>
+    <onload>SetProperty(ReloadDone,1,Home)</onload>
+    <onunload>CancelAlarm(GoHome,true)</onunload>
+
+    <controls>
+
+        <control type="button" id="3615">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:06,silent)</onfocus>
+            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(FocusButton,SetFocus(3616),00:01,silent)</onfocus>
+            <onfocus condition="!String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(GoToCheck,SetFocus(9000),00:00,silent)</onfocus>
+        </control>
+
+        <control type="button" id="9000">
+            <include>Def_Hidden_Button</include>
+            <onfocus>AlarmClock(Check1,SetFocus(9002),00:01,silent)</onfocus>
+            <onfocus condition="!String.IsEmpty(Skin.String(StartupPlaylist)) + !Player.HasMedia">AlarmClock(PlayStartupVideo,PlayMedia($ESCINFO[Skin.String(StartupPlaylist)],1),00:00,silent,false)</onfocus>
+            <onback>ReplaceWindow($INFO[System.StartupWindow])</onback>
+            <onback>Stop</onback>
+        </control>
+
+        <control type="button" id="9001">
+            <include>Def_Hidden_Button</include>
+            <onfocus condition="!Player.HasMedia">ReplaceWindow($INFO[System.StartupWindow])</onfocus>
+            <onfocus condition="Player.HasMedia">AlarmClock(Check3,SetFocus(9002),00:01,silent)</onfocus>
+            <onback>ReplaceWindow($INFO[System.StartupWindow])</onback>
+            <onback>Stop</onback>
+        </control>
+        <control type="button" id="9002">
+            <include>Def_Hidden_Button</include>
+            <onfocus>AlarmClock(Check2,SetFocus(9001),00:01,silent)</onfocus>
+            <onback>ReplaceWindow($INFO[System.StartupWindow])</onback>
+            <onback>Stop</onback>
+        </control>
+
+        <control type="button" id="3616">
+            <include>Def_Hidden_Button</include>
+        </control>
+
+        <control type="group">
+
+            <!-- BACKGROUND -->
+            <control type="image" description="Background">
+                <include>Def_Dimensions_Fullscreen</include>
+                <texture colordiffuse="$VAR[StartupDiffuse]">$VAR[StartupFanart]</texture>
+                <animation effect="fade" start="100" end="0" time="500" tween="quadratic">WindowClose</animation>
+            </control>
+
+            <!-- <control type="image"> -->
+                <!-- <left>912</left> -->
+                <!-- <centertop>345</centertop> -->
+                <!-- <width>96</width> -->
+                <!-- <height>96</height> -->
+                <!-- <texture colordiffuse="$VAR[Color_Highlight]">special://skin/extras/icons/kodi.png</texture> -->
+            <!-- </control> -->
+            <!-- <control type="label"> -->
+                <!-- <centertop>400</centertop> -->
+                <!-- <height>32</height> -->
+                <!-- <textcolor>ffC5C5C5</textcolor> -->
+                <!-- <label>KODI</label> -->
+                <!-- <font>InfoNetflix</font> -->
+                <!-- <align>center</align> -->
+            <!-- </control> -->
+
+            <control type="label">
+                <description>Loading</description>
+                <width>100%</width>
+                <height>100%</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>Arctic [COLOR=$VAR[Color_Highlight]]Zephyr[/COLOR]</label>
+                <font>EpisodeNumber</font>
+                <textcolor>ffC5C5C5</textcolor>
+                <animation effect="fade" start="100" end="0" time="500">WindowClose</animation>
+                <visible>String.IsEmpty(Skin.String(StartupPlaylist))</visible>
+            </control>
+            <control type="image">
+                <left>1020</left>
+                <top>605</top>
+                <width>331</width>
+                <height>60</height>
+                <centertop>50%</centertop>
+                <texture>misc/matrix.png</texture>
+                <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+                <animation effect="fade" start="100" end="0" time="500">WindowClose</animation>
+                <visible>String.IsEmpty(Skin.String(StartupPlaylist)) + Control.HasFocus(3616)</visible>
+            </control>
+
+            <!-- <control type="videowindow"> -->
+                <!-- <visible>Player.HasVideo + !String.IsEmpty(Skin.String(StartupPlaylist))</visible> -->
+                <!-- <include>Def_Dimensions_Fullscreen</include> -->
+            <!-- </control> -->
+
+            <control type="group">
+                <bottom>80</bottom>
+                <height>140</height>
+                <centerleft>50%</centerleft>
+                <width>600</width>
+                <visible>Weather.IsFetched</visible>
+                <animation effect="fade" reversible="false" start="0" end="100" time="300" delay="0">Visible</animation>
+                <control type="grouplist">
+                    <orientation>horizontal</orientation>
+                    <align>center</align>
+                    <height>100</height>
+                    <top>0</top>
+                    <control type="image">
+                        <centertop>50%</centertop>
+                        <width>90</width>
+                        <height>90</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="ffC5C5C5">$INFO[Window(Weather).Property(Current.FanartCode),resource://resource.images.weathericons.white/,.png]</texture>
+                        <visible>!String.IsEmpty(Window(Weather).Property(Current.FanartCode))</visible>
+                    </control>
+                    <control type="label">
+                        <left>-10</left>
+                        <label>$INFO[Window(Weather).Property(Current.Temperature), [B],[/B]°]</label>
+                        <width>auto</width>
+                        <height>90</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>EpisodeNumberNew</font>
+                        <textcolor>ffC5C5C5</textcolor>
+                        <visible>!String.IsEmpty(Window(Weather).Property(Current.Temperature))</visible>
+                    </control>
+                </control>
+                <control type="label">
+                    <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                    <height>20</height>
+                    <centerbottom>20</centerbottom>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <font>MediumBold3</font>
+                    <textcolor>ffC5C5C5</textcolor>
+                    <visible>!String.IsEmpty(Window(Weather).Property(Current.Condition))</visible>
+                </control>
+            </control>
+
+            <!-- <control type="label"> -->
+                <!-- <centertop>800</centertop> -->
+                <!-- <height>40</height> -->
+                <!-- <aligny>center</aligny> -->
+                <!-- <align>center</align> -->
+                <!-- <font>MediumBold3</font> -->
+                <!-- <textcolor>ffC5C5C5</textcolor> -->
+                <!-- <label>$INFO[Window.Property(InitStatus)]...</label> -->
+            <!-- </control> -->
+
+            <!-- SPINNER -->
+
+            <control type="group">
+                <centertop>700</centertop>
+                <height>80</height>
+                <include content="Object_BusySpinner">
+                    <param name="haslabel" value="false" />
+                    <param name="centerleft" value="50%" />
+                    <param name="centertop" value="50%" />
+                    <param name="colordiffuse" value="B3dddddd" />
+                </include>
+            </control>
+
+        </control>
+    </controls>
+</window>

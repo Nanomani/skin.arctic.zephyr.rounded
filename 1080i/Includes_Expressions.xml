@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+
+    <!-- AUTOCOMPLETION IS ENABLED ? -->
+
+    <expression name="Is_AutoCompletion_Enabled">[System.HasAddon(plugin.program.autocompletion) + System.AddonIsEnabled(plugin.program.autocompletion) + !Skin.HasSetting(Keyboard.DisableAutoCompletion)]</expression>
+
+    <!-- SHOW VIDEO IN HOME IN WINDOWS FLIX -->
+
+    <expression name="VideoWindowFlixIsActive">!Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Skin.HasSetting(show.home.nowplaying.video.flix) + !Skin.HasSetting(home.hide.nowplaying)  + [Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Netflix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Netflix]]] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !$EXP[TrailerWindowIsActive]</expression>
+
+    <!-- TMDBHELPER IS UPDATING ? -->
+
+    <expression name="Exp_TMDbHelper_IsUpdating">[!String.IsEmpty(Window(Home).Property(TMDBHelper.IsUpdating)) | !String.IsEmpty(Window(Home).Property(TMDBHelper.IsUpdatingRating))]</expression>
+
+    <!-- CLEARLOGO  -->
+
+    <expression name="Exp_Title_Clearlogo_Available">[!String.IsEmpty(Container(99950).ListItem.Art(cropimage)) | !String.IsEmpty(Container(99950).ListItem.Property(base_clearlogo))]</expression>
+    <expression name="Exp_Title_Clearlogo_PlayingNow_Available">[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(artist.clearlogo))]</expression>
+
+    <!-- CONTEXT MENU  -->
+
+    <expression name="Exp_ContextMenu_HasPoster">[!String.IsEmpty(Container(99950).ListItem.Art(poster)) | !String.IsEmpty(Container(99950).ListItem.Property(base_poster))]</expression>
+
+    <!-- SHOW LABEL ITEM MENU  -->
+
+    <expression name="Exp_Show_Label_Item_Menu">$EXP[Home_Is_Vertical] + Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons) + Skin.HasSetting(home.show.label)</expression>
+
+    <!-- HOME LAYOUT TYPE -->
+
+    <expression name="Home_Is_Vertical_Netflix">Skin.HasSetting(home.vertical) + !Skin.HasSetting(homemenu.horizontal.clean) + Skin.HasSetting(homemenu.netflix)</expression>
+    <expression name="Home_Is_Horizontal_Netflix">!Skin.HasSetting(home.vertical)+ !Skin.HasSetting(homemenu.horizontal.clean) + Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.horizontal) </expression>
+    <expression name="Home_Is_Vertical">Skin.HasSetting(home.vertical)</expression>
+    <expression name="Home_Is_Horizontal">!Skin.HasSetting(home.vertical) + Skin.HasSetting(home.horizontal)</expression>
+    <expression name="Home_Is_Horizontal_Clean">Skin.HasSetting(home.horizontal) + Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(homemenu.horizontal.clean)</expression>
+
+    <!-- WIDGETS ENABLE ? -->
+
+    <expression name="Widget1Enabled">String.IsEqual(Container(300).ListItem.Property(widgetEnable),yes)</expression>
+    <expression name="Widget2Enabled">String.IsEqual(Container(300).ListItem.Property(widgetEnable.2),yes)</expression>
+    <expression name="Widget3Enabled">String.IsEqual(Container(300).ListItem.Property(widgetEnable.3),yes)</expression>
+    <expression name="Widget4Enabled">String.IsEqual(Container(300).ListItem.Property(widgetEnable.4),yes)</expression>
+    <expression name="Widget5Enabled">String.IsEqual(Container(300).ListItem.Property(widgetEnable.5),yes)</expression>
+    <expression name="Widget6Enabled">String.IsEqual(Container(300).ListItem.Property(widgetEnable.6),yes)</expression>
+
+    <!-- YOUTUBE CONTENT -->
+
+    <expression name="IsYoutube">String.Contains(Container.FolderPath,plugin://plugin.video.youtube)</expression>
+    <expression name="IsYoutubeItem">String.Contains(ListItem.FolderPath,plugin://plugin.video.youtube)</expression>
+    <expression name="IsYoutube_Comments">String.Contains(Container.FolderPath,plugin://plugin.video.youtube/special/parent_comments) | String.Contains(Container.FolderPath,plugin://plugin.video.youtube/special/child_comments)</expression>
+
+    <!-- PLUGIN YOUTUBE / RADIO_DE - LISTITEM -->
+
+    <expression name="IsPluginItem">String.Contains(ListItem.FolderPath,plugin://plugin.video.youtube) | String.Contains(ListItem.Path,plugin://plugin.audio.radio_de)</expression>
+
+    <!-- PLUGIN TMDb - CONTENT -->
+
+    <expression name="IsTMDbHelper">String.Contains(Container.FolderPath,plugin://plugin.video.themoviedb.helper)</expression>
+
+    <!-- PLUGIN TMDb - LISTITEM -->
+
+    <expression name="IsTMDbHelperItem">String.Contains(ListItem.Path,plugin://plugin.video.themoviedb.helper)</expression>
+
+    <!-- PLUGIN ITUNES - LISTITEM -->
+
+    <expression name="IsItunesItem">String.Contains(ListItem.Path,plugin://plugin.video.itunes)</expression>
+
+    <!-- PLUGIN SHORTLIST -->
+
+    <expression name="IsPluginShortlist">String.Contains(Container.FolderPath,plugin://plugin.program.shortlist)</expression>
+
+    <!-- PLUGIN RADIO_DE - LISTITEM -->
+
+    <expression name="IsPluginRadio_DeItem">String.Contains(ListItem.FolderPath,plugin://plugin.audio.radio_de)</expression>
+
+    <!-- AN PLUGIN ? -->
+
+    <expression name="IsAnPlugin">String.Contains(Container.FolderPath,plugin://)</expression>
+
+    <!-- IS LIBRARY ? -->
+
+    <expression name="IsAnLibrary">String.Contains(Container.FolderPath,library://) | String.Contains(ListItem.FolderPath,library://)</expression>
+
+    <!-- IS SOURCE ? -->
+
+    <expression name="IsAnSource">String.StartsWith(Container.FolderPath,sources://)</expression>
+
+    <!-- LAYOUT CONTENT -->
+
+    <expression name="Is_Person_Info">[String.IsEqual(ListItem.Property(item.type),person) | String.IsEqual(ListItem.Property(tmdb_type),person)]</expression>
+
+    <expression name="Is_Info_Dialogs">[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogAddonInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(script-tmdbhelper-wikipedia.xml)]
+    </expression>
+
+    <expression name="Is_View_Video_Flix">Control.IsVisible(522) | Control.IsVisible(521)</expression>
+    <expression name="Is_View_Video_Flix_Wall">Control.IsVisible(5228) | Control.IsVisible(5218) | Control.IsVisible(5048)</expression>
+
+    <expression name="Is_View_Music_Flix">Control.IsVisible(523) | Control.IsVisible(522)</expression>
+    <expression name="Is_View_Music_Flix_Wall">Control.IsVisible(5238) | Control.IsVisible(5228)</expression>
+
+    <expression name="Exp_View_Flag_Watched_Album_Song">[[!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,song)] | [[String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)] + Skin.HasSetting(show.markers.watched.music)]]</expression>
+    <expression name="Exp_Context_Menu_Has_Poster">[!String.IsEmpty(Container(99950).ListItem.Art(poster)) | !String.IsEmpty(Container(99950).ListItem.Property(base_poster))]</expression>
+
+    <!-- AUTO SLIDE MENU -->
+
+    <expression name="Has_Home_Menu_Auto_Slide_Out_Animation">[Skin.HasSetting(homemenu.slide) + !Skin.HasSetting(hide.only.if.widgetcontainer.gets.focus)]</expression>
+
+    <!-- AUTO FOCUS MAIN MENU IF INACTIVITY -->
+
+    <expression name="Has_Home_Menu_Auto_Focus_Main_If_Inactivity">[!$EXP[TrailerIsReady] + !$EXP[TrailerIsPlaying] + !$EXP[TrailerWaitingForPlayer] + !$EXP[TrailerWindowIsActive] + [System.IdleTime(10) + Skin.HasSetting(homemenu.auto.back.to.main) + !String.IsEmpty(Window(Home).Property(focus.main.menu.timer)) + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
+
+    <!-- AUTO FOCUS MAIN MENU IF INACTIVITY ON SEARCH BAR -->
+
+    <expression name="Has_Home_menu_Auto_Focus_Main_If_SearchBar_Inactivity">[!$EXP[TrailerIsReady] + !$EXP[TrailerIsPlaying] + !$EXP[TrailerWaitingForPlayer] + !$EXP[TrailerWindowIsActive] + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(focus_main_menu_timer_from_search_bar)) + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
+
+    <!-- AUTO SLIDE MENU IF NOWPLAYING -->
+
+    <expression name="Has_Now_Playing_Auto_Slide_Out_Animation">[!$EXP[TrailerIsReady] + !$EXP[TrailerIsPlaying] + !$EXP[TrailerWaitingForPlayer] + !$EXP[TrailerWindowIsActive] + Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + [!Skin.HasSetting(homemenu.slide) | Skin.HasSetting(hide.only.if.widgetcontainer.gets.focus)]]</expression>
+
+    <!-- DISPLAY NOWPLAYING IF WIDGET IS FOCUS -->
+
+    <expression name="Has_Home_Menu_Auto_Slide_Out_Animation_Only_If_Widget_Is_Focused">[Skin.HasSetting(homemenu.slide) + [$EXP[Home_Is_Horizontal] + Skin.HasSetting(homemenu.horizontal.clean)] | [$EXP[Home_Is_Vertical] + Skin.HasSetting(homemenu.slide)] + Skin.HasSetting(hide.only.if.widgetcontainer.gets.focus)]</expression>
+
+    <!-- AUTO SHOW NOWPLAYING HELPER -->
+
+    <expression name="Extended_Now_Playing_Helper_AutoShow">[!$EXP[TrailerIsReady] + !$EXP[TrailerIsPlaying] + !$EXP[TrailerWaitingForPlayer] + !$EXP[TrailerWindowIsActive] + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + [Player.HasMedia | Player.Playing] + Skin.HasSetting(enable.home.auto.show.nowplaying.extended) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
+
+    <!-- AUTO CLOSE NOWPLAYING HELPER -->
+
+    <expression name="Extended_Now_Playing_Helper_AutoClose">[!$EXP[TrailerIsReady] + !$EXP[TrailerIsPlaying] + !$EXP[TrailerWaitingForPlayer] + !$EXP[TrailerWindowIsActive] + [[!String.IsEmpty(Window(Home).Property(controlsvisible)) | Control.HasFocus(25) | Control.HasFocus(778)] + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !Player.HasMedia + !Player.Playing + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)]]</expression>
+
+    <!-- NOWPLAYING VISIBLE -->
+
+    <expression name="Extended_Now_Playing_Is_Visible">[Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + Player.HasMedia] + [[!ControlGroup(301).HasFocus() + !Control.HasFocus(9808) + !Control.HasFocus(9888) + !Control.HasFocus(9567) + !Control.HasFocus(8808) + !Control.HasFocus(8888) + !Control.HasFocus(4567)] | ControlGroup(777).HasFocus()]</expression>
+
+    <!-- ENABLE DIALOG INFO BRIGHTNESS -->
+
+    <expression name="View_List_Dialog_Info_Settings">[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(Settings.xml) | Window.IsVisible(skinsettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(MyFavourites.xml) | Window.IsVisible(MyFavourites.xml) | Window.IsVisible(MyPlaylist.xml) | Window.IsVisible(MyPrograms.xml) | Window.IsVisible(MyPVRChannels.xml) | Window.IsVisible(MyPVRGuide.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(MyWeather.xml) | Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyPVRTimers.xml) | Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(56) | Control.IsVisible(513) | Control.IsVisible(514) | Control.IsVisible(57) | Control.IsVisible(527) | Control.IsVisible(52) | Control.IsVisible(53) | Control.IsVisible(55) | Control.IsVisible(555) | Control.IsVisible(557) | Control.IsVisible(517) | Control.IsVisible(500) | Control.IsVisible(547) | Control.IsVisible(509) | Control.IsVisible(519) | Control.IsVisible(511) | Control.IsVisible(512) | Control.IsVisible(58) | Control.IsVisible(507) | Control.IsVisible(501) | Control.IsVisible(515) | Window.IsVisible(script-globalsearch.xml) | $EXP[Is_View_Video_Flix_Wall] | $EXP[Is_View_Music_Flix_Wall]]</expression>
+
+    <!-- <expression name="View_List_Dialog_Info_Settings">![Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(523) | Control.IsVisible(524) | Control.IsVisible(550)]</expression> -->
+
+    <!-- ENABLE VIEW NO FLIX BRIGHTNESS -->
+
+    <expression name="View_Not_Flix">![Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(523) | Control.IsVisible(524)]</expression>
+
+    <!-- VIEW TYPE -->
+
+    <expression name="View_Flix">Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(523) | Control.IsVisible(524)</expression>
+    <expression name="View_List">Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(56) | Control.IsVisible(57)</expression>
+    <expression name="View_Fanart">Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(56) | Control.IsVisible(57)</expression>
+    <expression name="View_Poster">Control.IsVisible(55) | Control.IsVisible(509) | Control.IsVisible(517) | Control.IsVisible(519)</expression>
+
+    <!-- TYPE VIDEO / AUDIO / PVR -->
+
+    <expression name="IsPVRVideo">!Player.HasAudio + VideoPlayer.Content(livetv)</expression>
+    <expression name="IsPVRAudio">Player.HasAudio + VideoPlayer.Content(livetv)</expression>
+    <expression name="IsAudio">Player.HasAudio + !VideoPlayer.Content(livetv)</expression>
+    <expression name="IsVideo">Player.HasVideo + !VideoPlayer.Content(livetv)</expression>
+    <expression name="MusicSeekbarIsVisible">!Window.IsVisible(musicosd) + [Player.ShowInfo | Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding]</expression>
+
+    <expression name="TrailerWindowIsActive">Skin.HasSetting(home.netflix.autoplay.trailer) + [[Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Netflix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Netflix]]] | Control.IsVisible(521) | Control.IsVisible(522)] + !Window.IsVisible(DialogVideoInfo.xml) + String.IsEqual(Window(Home).Property(TrailerPath2),Player.FileNameAndPath) + !String.IsEmpty(Player.FileNameAndPath)</expression>
+
+    <expression name="TrailerIsReady">Skin.HasSetting(home.netflix.autoplay.trailer) + [Window.IsVisible(Home) | Window.IsVisible(MyVideoNav.xml) | $EXP[InGameMode]] + !Control.HasFocus(300) + !Player.HasMedia + !String.IsEmpty(Window(Home).Property(listitem.trailer)) + !System.HasVisibleModalDialog + !Window.IsVisible(script-globalsearch.xml) + !String.IsEqual(Window(Home).Property(TrailerPath),Window(Home).Property(listitem.trailer)) + !System.IdleTime(30)</expression>
+
+    <expression name="TrailerWaitingForPlayer">!String.IsEmpty(Window(Home).Property(TrailerPath2)) + !String.IsEmpty(Window(Home).Property(TrailerPath)) + String.IsEmpty(Player.FileNameAndPath)</expression>
+
+    <expression name="TrailerIsPlaying">String.IsEqual(Window(Home).Property(TrailerPath2),Player.FileNameAndPath) + !String.IsEmpty(Player.FileNameAndPath)</expression>
+
+    <expression name="AutoTrailerDebugging">Skin.HasSetting(home.netflix.autoplay.trailer) + Skin.HasSetting(DebugInfo.extended) + Skin.HasSetting(DebugInfo.extended)</expression>
+
+    <expression name="IsFanartAddonEmbeded">[String.Contains(Player.Art(fanart),plugin) | String.Contains(Player.Art(fanart),script) | String.Contains(Player.Art(fanart),service)]</expression>
+
+    <expression name="IsAudioCodecATMOS">String.Contains(ListItem.FileNameAndPath,atmos) | [VideoPlayer.IsFullscreen + String.Contains(Player.FileNameAndPath,atmos)]</expression>
+
+    <expression name="IsAudioCodecATMOS2">String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,atmos)</expression>
+
+    <expression name="IsAudioCodecDTSX">
+        [String.Contains(ListItem.FileNameAndPath,dts-x) | String.Contains(ListItem.FileNameAndPath,dtsx) | String.Contains(ListItem.FileNameAndPath,dts.x) | [VideoPlayer.IsFullscreen + [String.Contains(Player.FileNameAndPath,dts-x) | String.Contains(Player.FileNameAndPath,dtsx) | String.Contains(Player.FileNameAndPath,dts.x)]]]
+    </expression>
+
+    <expression name="IsAudioCodecDTSX2">
+        [String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dts-x) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dtsx) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dts.x)]
+    </expression>
+
+    <expression name="IsVideoHDR10Plus">
+        [String.IsEmpty(ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(ListItem.FileNameAndPath,hdr10plus) | [VideoPlayer.IsFullscreen + String.Contains(Player.FileNameAndPath,hdr10plus)]]]
+    </expression>
+    <expression name="IsVideoHDR10Plus2">
+        [String.IsEmpty(Container($PARAM[controlid]).ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr10plus.)]
+    </expression>
+
+    <expression name="IsVideoHDR10">
+        [String.IsEqual(ListItem.HdrType,hdr10) | String.Contains(ListItem.FileNameAndPath,hdr10)
+        | [VideoPlayer.IsFullscreen + [String.IsEqual(VideoPlayer.HdrType,hdr10) | String.Contains(Player.FileNameAndPath,hdr10)]]] + !$EXP[IsVideoHDR10Plus]
+    </expression>
+
+    <expression name="IsVideoHDR">
+        [String.IsEmpty(ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(ListItem.FileNameAndPath,hdr)
+        | [VideoPlayer.IsFullscreen + String.Contains(Player.FileNameAndPath,hdr)]]] + !$EXP[IsVideoHDR10Plus] + !$EXP[IsVideoHDR10]
+    </expression>
+
+    <expression name="IsVideoHLG">
+        String.IsEqual(ListItem.HdrType,hlg) | String.Contains(ListItem.FileNameAndPath,hlg) | [VideoPlayer.IsFullscreen + [String.IsEqual(VideoPlayer.HdrType,hlg) | String.Contains(Player.FileNameAndPath,hlg)]]
+    </expression>
+
+    <expression name="IsVideoDolbyVision">
+        String.IsEqual(ListItem.HdrType,dolbyvision) | String.Contains(ListItem.FileNameAndPath,.dv.) | String.Contains(ListItem.FileNameAndPath,dolbyvision) | String.Contains(ListItem.FileNameAndPath,dolby-vision) | String.Contains(ListItem.FileNameAndPath,dolby vision) | [VideoPlayer.IsFullscreen + [String.IsEqual(VideoPlayer.HdrType, dolbyvision) | String.Contains(Player.FileNameAndPath,.dv.) | String.Contains(Player.FileNameAndPath,dolbyvision) | String.Contains(Player.FileNameAndPath,dolby-vision) | String.Contains(Player.FileNameAndPath,dolby vision)]]
+    </expression>
+
+    <expression name="HasNextAired">
+        [Container.Content(tvshows) | Container.Content(seasons) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]
+        + [!String.IsEmpty(Container(99950).ListItem.Property(Next_Aired)) | !String.IsEmpty(Container(99950).ListItem.Property(Last_Aired))]
+    </expression>
+
+    <expression name="IsTVShowInProgress">
+        [Container.Content(tvshows) | String.IsEqual(ListItem.DBType,tvshow) | Container.Content(season) | String.IsEqual(ListItem.DBType,season)] + !Integer.IsGreater(ListItem.Playcount,0) + Integer.IsGreater(ListItem.Property(WatchedEpisodes),0)
+    </expression>
+
+    <expression name="IsTVShowInProgress301">
+        [Container.Content(tvshows) | String.IsEqual(Container(301).ListItem.DBType,tvshow) | Container.Content(season) | String.IsEqual(Container(301).ListItem.DBType,season)] + !Integer.IsGreater(Container(301).ListItem.Playcount,0) + Integer.IsGreater(Container(301).ListItem.Property(WatchedEpisodes),0)
+    </expression>
+
+    <expression name="SortLetterIsAlphabet">[String.IsEqual(ListItem.SortLetter,A) | String.IsEqual(ListItem.SortLetter,À) | String.IsEqual(ListItem.SortLetter,Á) | String.IsEqual(ListItem.SortLetter,Â) | String.IsEqual(ListItem.SortLetter,Ä) | String.IsEqual(ListItem.SortLetter,B) | String.IsEqual(ListItem.SortLetter,C) | String.IsEqual(ListItem.SortLetter,Ç) | String.IsEqual(ListItem.SortLetter,D) | String.IsEqual(ListItem.SortLetter,E) | String.IsEqual(ListItem.SortLetter,É) | String.IsEqual(ListItem.SortLetter,Ë) | String.IsEqual(ListItem.SortLetter,È) | String.IsEqual(ListItem.SortLetter,Ê) | String.IsEqual(ListItem.SortLetter,F) | String.IsEqual(ListItem.SortLetter,G) | String.IsEqual(ListItem.SortLetter,H) | String.IsEqual(ListItem.SortLetter,I) | String.IsEqual(ListItem.SortLetter,Í) | String.IsEqual(ListItem.SortLetter,Ì) | String.IsEqual(ListItem.SortLetter,Î) | String.IsEqual(ListItem.SortLetter,Ï) | String.IsEqual(ListItem.SortLetter,J) | String.IsEqual(ListItem.SortLetter,K) | String.IsEqual(ListItem.SortLetter,L) | String.IsEqual(ListItem.SortLetter,M) | String.IsEqual(ListItem.SortLetter,N) | String.IsEqual(ListItem.SortLetter,Ñ) | String.IsEqual(ListItem.SortLetter,O) | String.IsEqual(ListItem.SortLetter,Ó) | String.IsEqual(ListItem.SortLetter,Ò) | String.IsEqual(ListItem.SortLetter,Ô) | String.IsEqual(ListItem.SortLetter,Ö) | String.IsEqual(ListItem.SortLetter,P) | String.IsEqual(ListItem.SortLetter,Q) | String.IsEqual(ListItem.SortLetter,R) | String.IsEqual(ListItem.SortLetter,S) | String.IsEqual(ListItem.SortLetter,T) | String.IsEqual(ListItem.SortLetter,U) | String.IsEqual(ListItem.SortLetter,Ú) | String.IsEqual(ListItem.SortLetter,Ù) | String.IsEqual(ListItem.SortLetter,Û) | String.IsEqual(ListItem.SortLetter,Ü) | String.IsEqual(ListItem.SortLetter,V) | String.IsEqual(ListItem.SortLetter,W) | String.IsEqual(ListItem.SortLetter,X) | String.IsEqual(ListItem.SortLetter,Y) | String.IsEqual(ListItem.SortLetter,Z)]</expression>
+
+    <expression name="IsNewMovie">
+        [Container.Content(movies) | Window.isVisible(Home.xml)]
+        + [
+            String.IsEqual(Window(Home).Property(LatestMovie.1.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.2.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.3.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.4.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.5.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.6.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.7.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.8.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.9.Title),ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.10.Title),ListItem.Label)
+          ]
+    </expression>
+    <expression name="IsNewTVShow">
+        [Container.Content(tvshows) | Window.isVisible(Home.xml)]
+        + [
+            String.IsEqual(Window(Home).Property(LatestEpisode.1.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.2.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.3.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.4.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.5.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.6.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.7.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.8.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.9.ShowTitle),ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.10.ShowTitle),ListItem.TvShowTitle)
+          ]
+    </expression>
+    <expression name="IsNewEpisode">
+        [Container.Content(episodes) | Window.isVisible(Home.xml)]
+        + [
+            String.IsEqual(Window(Home).Property(LatestEpisode.1.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.2.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.3.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.4.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.5.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.6.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.7.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.8.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.9.EpisodeTitle),ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.10.EpisodeTitle),ListItem.Title)
+          ]
+    </expression>
+
+    <expression name="IsNewMovie301">
+        [Container.Content(movies) | Window.isVisible(Home.xml)]
+        + [
+            String.IsEqual(Window(Home).Property(LatestMovie.1.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.2.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.3.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.4.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.5.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.6.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.7.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.8.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.9.Title),Container(301).ListItem.Label)
+            | String.IsEqual(Window(Home).Property(LatestMovie.10.Title),Container(301).ListItem.Label)
+          ]
+    </expression>
+    <expression name="IsNewTVShow301">
+        [Container.Content(tvshows) | Window.isVisible(Home.xml)]
+        + [
+            String.IsEqual(Window(Home).Property(LatestEpisode.1.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.2.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.3.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.4.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.5.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.6.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.7.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.8.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.9.ShowTitle),Container(301).ListItem.TvShowTitle)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.10.ShowTitle),Container(301).ListItem.TvShowTitle)
+          ]
+    </expression>
+    <expression name="IsNewEpisode301">
+        [Container.Content(episodes) | Window.isVisible(Home.xml)]
+        + [
+            String.IsEqual(Window(Home).Property(LatestEpisode.1.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.2.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.3.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.4.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.5.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.6.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.7.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.8.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.9.EpisodeTitle),Container(301).ListItem.Title)
+            | String.IsEqual(Window(Home).Property(LatestEpisode.10.EpisodeTitle),Container(301).ListItem.Title)
+          ]
+    </expression>
+
+    <expression name="InGameMode">
+        [ String.Contains(Container.FolderPath,plugin://plugin.program.ael)
+        | String.Contains(Container.FolderPath,plugin://plugin.program.advanced.launcher)
+        | String.Contains(Container.FolderPath,plugin://plugin.program.advanced.emulator.launcher)
+        | String.Contains(Container.FolderPath,plugin://plugin.program.akl)
+        | String.Contains(Container.FolderPath,plugin://plugin.program.advanced.MAME.launcher)
+        | String.Contains(Container.FolderPath,plugin://plugin.program.iagl)
+        | Window.IsActive(games)
+        | Container.Content(games) ]
+    </expression>
+
+</includes>

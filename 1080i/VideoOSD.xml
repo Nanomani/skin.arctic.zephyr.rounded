@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="2901">
+    <include condition="!Player.PauseEnabled">Def_OSD_FocusStop</include>
+    <include condition="Player.PauseEnabled">Def_OSD_FocusPause</include>
+    <onunload>ClearProperty(osdshowinfo,Home)</onunload>
+    <onload>ClearProperty(dontautoclose,Home)</onload>
+    <onload>ClearProperty(dialogvideoinfo,Home)</onload>
+    <onload>ClearProperty(wikipedia,Home)</onload>
+    <onunload>ClearProperty(dontautoclose,Home)</onunload>
+
+    <onload condition="Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + !Player.Paused">PlayerControl(Play)</onload>
+    <onunload condition="Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + Player.Paused + !Integer.IsEqual(Window(Home).Property(dialogvideoinfo),1) + !Integer.IsEqual(Window(Home).Property(wikipedia),1)">PlayerControl(Play)</onunload>
+
+    <controls>
+        <control type="group">
+            <animation effect="fade" start="100" end="0" time="250" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(enable.osd.video.hide.on.pause) + Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
+
+            <include>OSD_Video</include>
+
+        </control>
+
+        <!-- INFO OVERLAY -->
+
+        <include content="Def_Dialog_Info_Overlay">
+            <param name="headerinfo" value="$INFO[VideoPlayer.Title]" />
+            <param name="plotinfo" value="$INFO[VideoPlayer.Tagline,[B],[/B][CR][CR]]$INFO[VideoPlayer.Plot]" />
+            <param name="ondirection" value="14" />
+        </include>
+
+    </controls>
+</window>

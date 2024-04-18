@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="View_52_BigList_Pane">
+        <description>List View (id=52)</description>
+        <control type="group">
+            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
+            <include>Animation_Common</include>
+            <visible>Control.IsVisible(52)</visible>
+            <include>View_Slide_For_JumpBar</include>
+            <control type="panel" id="52">
+
+                <include>Def_On_Info</include>
+
+                <top>PosterPad</top>
+                <left>SidePad</left>
+                <width>1770</width>
+                <height>650</height>
+                <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
+                <onright>1625</onright>
+                <ondown>52</ondown>
+                <onup>52</onup>
+                <preloaditems>2</preloaditems>
+                <pagecontrol>1625</pagecontrol>
+                <orientation>vertical</orientation>
+                <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
+                    <param name="string" value="$LOCALIZE[31376]" />
+                </include>
+                <viewtype label="31376">list</viewtype>
+                <include>Animation_ScrolltimeViewsList</include>
+                <itemlayout height="130" width="442,2">
+                    <control type="image">
+                        <left>-7</left>
+                        <top>-4</top>
+                        <right>1</right>
+                        <height>136</height>
+                        <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>1</left>
+                        <top>4</top>
+                        <right>9</right>
+                        <height>120</height>
+                        <texture border="12" diffuse="diffuse/pvrinfo.png" colordiffuse="Panel">common/box.png</texture>
+                        <!-- <animation effect="fade" start="100" end="70" condition="true">Conditional</animation> -->
+                    </control>
+
+                    <include>View_52_BigList_ItemLayout</include>
+                </itemlayout>
+                <focusedlayout height="130" width="442,2">
+                    <include>View_52_BigList_FocusLayout</include>
+                </focusedlayout>
+            </control>
+            <control type="scrollbar" id="1625">
+                <include content="Object_Scrollbar_Vertical">
+                    <param name="scrollid" value="1625"/>
+                    <param name="idlayout" value="52"/>
+                </include>
+            </control>
+        </control>
+    </include>
+
+    <include name="View_52_BigList_ItemLayout">
+
+        <control type="image">
+            <left>14</left>
+            <top>22</top>
+            <width>84</width>
+            <height>84</height>
+            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+            <texture diffuse="diffuse/listicon80.png" background="true">$VAR[Image_Poster]</texture>
+            <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(favourites) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(actors) | Container.Content(files)</visible>
+            <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
+        </control>
+
+
+        <!-- Icon black -->
+        <control type="image">
+            <left>14</left>
+            <top>22</top>
+            <width>84</width>
+            <height>84</height>
+            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+            <texture colordiffuse="Dark1">$VAR[Image_Poster]</texture>
+            <visible>String.StartsWith(ListItem.Icon,Default)</visible>
+            <visible>[$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(actors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]]</visible>
+        </control>
+
+        <!-- Label -->
+        <control type="textbox">
+            <left>130</left>
+            <top>10</top>
+            <right>110</right>
+            <height>100</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$INFO[ListItem.Label]</label>
+            <animation effect="slide" start="0,0" end="-17,0" time="0" condition="true">Conditional</animation>
+            <visible>!ListItem.IsParentFolder</visible>
+        </control>
+
+        <!-- Label -->
+        <!-- <control type="label"> -->
+            <!-- <left>130</left> -->
+            <!-- <top>10</top> -->
+            <!-- <right>20</right> -->
+            <!-- <height>100</height> -->
+            <!-- <aligny>center</aligny> -->
+            <!-- <font>InfoNetflix</font> -->
+            <!-- <textcolor>PanelWhite70</textcolor> -->
+            <!-- <selectedcolor>PanelWhite70</selectedcolor> -->
+            <!-- <label>$INFO[ListItem.Label]</label> -->
+            <!-- <animation effect="slide" start="0,0" end="-17,0" time="0" condition="true">Conditional</animation> -->
+            <!-- <visible>!ListItem.IsParentFolder</visible> -->
+        <!-- </control> -->
+
+        <!-- Rating -->
+        <control type="label">
+            <left>130</left>
+            <top>10</top>
+            <right>80</right>
+            <align>right</align>
+            <height>100</height>
+            <aligny>center</aligny>
+            <font>SmallNavi</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$VAR[LabelRating]</label>
+            <animation effect="slide" start="0" end="40" time="0" condition="Skin.HasSetting(hide.markers) | $EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)">Conditional</animation>
+            <visible>[Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(albums) | Container.Content(songs) | $EXP[IsTMDbHelper]]</visible>
+            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+        </control>
+
+        <!-- Actor / Director Num item -->
+        <control type="label">
+            <left>130</left>
+            <top>10</top>
+            <right>80</right>
+            <align>right</align>
+            <height>100</height>
+            <aligny>center</aligny>
+            <font>SmallNavi</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$INFO[ListItem.Label2]</label>
+            <animation effect="slide" start="0" end="40" time="0" condition="Skin.HasSetting(hide.markers) | $EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)">Conditional</animation>
+            <visible>!Container.SortMethod(1)</visible>
+            <visible>Container.Content(actors) | Container.Content(directors)</visible>
+        </control>
+
+        <!-- Watched status -->
+        <control type="label">
+            <align>right</align>
+            <aligny>center</aligny>
+            <top>27</top>
+            <width>64</width>
+            <centerright>65</centerright>
+            <height>68</height>
+            <font>SymbolList</font>
+            <label>$VAR[WatchedLabelList]</label>
+            <visible>!ListItem.IsParentFolder + !Container.Content(files)</visible>
+            <visible>![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(actors) | Container.Content(studios) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons) | Container.Content(countries)]</visible>
+            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+        </control>
+    </include>
+
+    <include name="View_52_BigList_FocusLayout">
+
+        <control type="image">
+            <left>-7</left>
+            <top>-4</top>
+            <right>1</right>
+            <height>136</height>
+            <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+            <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+        </control>
+        <control type="image">
+            <left>1</left>
+            <top>4</top>
+            <right>9</right>
+            <height>120</height>
+            <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+        </control>
+
+        <control type="image">
+            <left>14</left>
+            <top>22</top>
+            <width>84</width>
+            <height>84</height>
+            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+            <texture diffuse="diffuse/listicon80.png" background="true">$VAR[Image_Poster]</texture>
+            <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(favourites) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(actors) | Container.Content(files)</visible>
+            <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
+        </control>
+
+        <!-- Icon black -->
+        <control type="image">
+            <left>14</left>
+            <top>22</top>
+            <width>84</width>
+            <height>84</height>
+            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+            <texture diffuse="diffuse/listicon80.png" colordiffuse="Selected">$VAR[Image_Poster]</texture>
+            <visible>[$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(actors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]]</visible>
+        </control>
+
+        <!-- Label -->
+        <control type="textbox">
+            <left>130</left>
+            <top>10</top>
+            <right>110</right>
+            <height>100</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>Selected</textcolor>
+            <selectedcolor>Selected</selectedcolor>
+            <label>$INFO[ListItem.Label]</label>
+            <animation effect="slide" start="0,0" end="-17,0" time="0" condition="true">Conditional</animation>
+            <visible>!ListItem.IsParentFolder</visible>
+        </control>
+
+        <!-- Label -->
+        <!-- <control type="label"> -->
+            <!-- <left>130</left> -->
+            <!-- <top>10</top> -->
+            <!-- <right>20</right> -->
+            <!-- <height>100</height> -->
+            <!-- <aligny>center</aligny> -->
+            <!-- <font>InfoNetflix</font> -->
+            <!-- <textcolor>Selected</textcolor> -->
+            <!-- <selectedcolor>Selected</selectedcolor> -->
+            <!-- <label>$INFO[ListItem.Label]</label> -->
+            <!-- <animation effect="slide" start="0,0" end="-17,0" time="0" condition="true">Conditional</animation> -->
+            <!-- <visible>!ListItem.IsParentFolder</visible> -->
+        <!-- </control> -->
+
+        <!-- Rating -->
+        <control type="label">
+            <left>130</left>
+            <top>10</top>
+            <right>80</right>
+            <align>right</align>
+            <height>100</height>
+            <aligny>center</aligny>
+            <font>SmallNavi</font>
+            <textcolor>Selected</textcolor>
+            <selectedcolor>Selected</selectedcolor>
+            <label>$VAR[LabelRating]</label>
+            <animation effect="slide" start="0" end="40" time="0" condition="Skin.HasSetting(hide.markers) | $EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)">Conditional</animation>
+            <visible>[Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(albums) | Container.Content(songs) | $EXP[IsTMDbHelper]]</visible>
+            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+        </control>
+
+
+        <!-- Actor / Director Num item -->
+        <control type="label">
+            <left>130</left>
+            <top>10</top>
+            <right>80</right>
+            <align>right</align>
+            <height>100</height>
+            <aligny>center</aligny>
+            <font>SmallNavi</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$INFO[ListItem.Label2]</label>
+            <animation effect="slide" start="0" end="40" time="0" condition="Skin.HasSetting(hide.markers) | $EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)">Conditional</animation>
+            <visible>!Container.SortMethod(1)</visible>
+            <visible>Container.Content(actors) | Container.Content(directors)</visible>
+        </control>
+
+        <!-- Watched status -->
+        <control type="label">
+            <align>right</align>
+            <aligny>center</aligny>
+            <top>27</top>
+            <width>64</width>
+            <centerright>65</centerright>
+            <height>68</height>
+            <font>SymbolList</font>
+            <label>$VAR[WatchedLabelListFocus]</label>
+            <visible>!ListItem.IsParentFolder + !Container.Content(files)</visible>
+            <visible>![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(actors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)]</visible>
+            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+        </control>
+    </include>
+</includes>

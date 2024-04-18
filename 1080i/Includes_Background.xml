@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+
+    <include name="Def_Dimensions_Fullscreen">
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>1920</width>
+        <height>1080</height>
+    </include>
+
+    <include name="Background_Overlay">
+        <control type="image">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture border="2">common/black-back.png</texture>
+        </control>
+    </include>
+
+    <variable name="StartupFanart">
+        <value condition="!String.IsEmpty(Skin.String(startupfanart.fallback))">$INFO[Skin.String(startupfanart.fallback)]</value>
+        <value>background/bgstartup3.jpg</value>
+    </variable>
+
+    <include name="Hidden_Video_Window">
+        <!--HIDDEN VIDEO WINDOW TO PREVENT AUDIO ERRORS-->
+        <control type="videowindow">
+            <include>Def_Dimensions_Fullscreen</include>
+        </control>
+    </include>
+
+    <include name="TrailerWindow">
+        <control type="videowindow">
+            <visible>[$EXP[TrailerWindowIsActive] | $EXP[VideoWindowFlixIsActive]] + !$EXP[Extended_Now_Playing_Is_Visible]</visible>
+            <include condition="![$EXP[Home_Is_Horizontal_Clean] + Window.IsVisible(Home)]">Def_Trailer_Video_Window_Small</include>
+            <include condition="$EXP[Home_Is_Horizontal_Clean] + Window.IsVisible(Home)">Def_Trailer_Video_Window_Full_Screen</include>
+        </control>
+        <control type="image" description="Background">
+            <animation effect="slide" start="0,0" end="0,-90" time="0" condition="Skin.HasSetting(home.netflix.autoplay.trailer.custom.window.force)">Conditional</animation>
+            <animation effect="slide" start="0,0" end="0,-50" time="0" condition="Skin.HasSetting(home.netflix.autoplay.trailer.custom.window) + String.IsEqual(VideoPlayer.VideoAspect,1.85) + !String.IsEmpty(VideoPlayer.VideoAspect)">Conditional</animation>
+            <animation effect="slide" start="0,0" end="0,-90" time="0" condition="Skin.HasSetting(home.netflix.autoplay.trailer.custom.window) + !String.IsEqual(VideoPlayer.VideoAspect,1.85) + !String.IsEqual(VideoPlayer.VideoAspect,1.78) + !String.IsEqual(VideoPlayer.VideoAspect,1.66) + !String.IsEqual(VideoPlayer.VideoAspect,1.37) + !String.IsEqual(VideoPlayer.VideoAspect,1.33) + !String.IsEmpty(VideoPlayer.VideoAspect)">Conditional</animation>
+            <visible>[$EXP[TrailerWindowIsActive] | $EXP[VideoWindowFlixIsActive]] + !$EXP[Extended_Now_Playing_Is_Visible] + ![$EXP[Home_Is_Horizontal_Clean] + Window.IsVisible(Home)]</visible>
+            <top>0</top>
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="Background">background/trailerwindow.png</texture>
+        </control>
+
+        <include content="Object_PauseSpinner">
+            <param name="centerleft" value="1300" />
+            <param name="centertop" value="260" />
+            <param name="visible" value="Player.Paused + !Skin.HasSetting(hide.play.pause.info) + $EXP[VideoWindowFlixIsActive]" />
+        </include>
+    </include>
+
+    <include name="FadetimeFast">
+        <fadetime>400</fadetime>
+    </include>
+
+    <include name="FadetimeDefault">
+        <fadetime>600</fadetime>
+    </include>
+
+    <include name="FadetimeSlow">
+        <fadetime>1800</fadetime>
+    </include>
+
+    <include name="FadetimeSuperSlow">
+        <fadetime>3600</fadetime>
+    </include>
+
+    <!-- FANART GLOBAL -->
+
+    <variable name="Global_Fanart_Background">
+
+         <!-- movie -->
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9506).ListItem.Art(fanart)) + Control.HasFocus(9506)">$INFO[Container(9506).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9556).ListItem.Art(fanart)) + Control.HasFocus(9556)">$INFO[Container(9556).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9514).ListItem.Art(fanart)) + Control.HasFocus(9514)">$INFO[Container(9514).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9515).ListItem.Art(fanart)) + Control.HasFocus(9515)">$INFO[Container(9515).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9502).ListItem.Art(fanart)) + Control.HasFocus(9502)">$INFO[Container(9502).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9517).ListItem.Art(fanart)) + Control.HasFocus(9517)">$INFO[Container(9517).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9503).ListItem.Art(fanart)) + Control.HasFocus(9503)">$INFO[Container(9503).ListItem.Art(fanart)]</value>
+
+        <!-- tvshow -->
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9579).ListItem.Art(fanart)) + Control.HasFocus(9579)">$INFO[Container(9579).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9520).ListItem.Art(fanart)) + Control.HasFocus(9520)">$INFO[Container(9520).ListItem.Art(fanart)]</value>
+
+         <!-- Person -->
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9552).ListItem.Art(fanart)) + Control.HasFocus(9552)">$INFO[Container(9552).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9553).ListItem.Art(fanart)) + Control.HasFocus(9553)">$INFO[Container(9553).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9558).ListItem.Art(fanart)) + Control.HasFocus(9558)">$INFO[Container(9558).ListItem.Art(fanart)]</value>
+         <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9559).ListItem.Art(fanart)) + Control.HasFocus(9559)">$INFO[Container(9559).ListItem.Art(fanart)]</value>
+
+        <!-- GLOBAL SEARCH BACKGROUND -->
+
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml)">$INFO[Skin.String(fanart.fallback.search)]</value>
+
+        <!-- MULTI WIDGETS WEATHER BACKGROUND -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !Container(301).IsUpdating + !String.IsEmpty(ListItem.Property(FanartCode)) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))">$INFO[Skin.String(weather.fanart.path)]$INFO[ListItem.Property(FanartCode),,.jpg]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !Container(301).IsUpdating + !String.IsEmpty(ListItem.Property(FanartCode)) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))">$INFO[Skin.String(weather.fanart.path)]$INFO[ListItem.Property(FanartCode)]/</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(weather) + !String.IsEmpty(Skin.String(weather.fanart.path))">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</value>
+
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + ![Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Player.Playing + !Skin.HasSetting(home.hide.nowplaying) + [$EXP[Home_Is_Horizontal] | $EXP[Home_Is_Vertical]]] + !String.IsEmpty(Skin.String(weather.fanart.path)) + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + String.Contains(Skin.String(weather.fanart.path),multi) + String.IsEmpty(Container(300).ListItem.Property(Background))">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</value> -->
+
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + ![Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Player.Playing + !Skin.HasSetting(home.hide.nowplaying) + [$EXP[Home_Is_Horizontal] | $EXP[Home_Is_Vertical]]] + !String.IsEmpty(Skin.String(weather.fanart.path)) + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + !String.Contains(Skin.String(weather.fanart.path),multi) + String.IsEmpty(Container(300).ListItem.Property(Background))">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode),,.jpg]</value> -->
+
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Control.GetLabel(4399)) + [!Skin.HasSetting(disable.background.addons.fanart) | [Skin.HasSetting(disable.background.addons.fanart) + !String.Contains(Control.GetLabel(4399),addons) + ![String.Contains(Control.GetLabel(4399),plugin) | String.Contains(Control.GetLabel(4399),script) | String.Contains(Control.GetLabel(4399),service)]]]">$INFO[Control.GetLabel(4399)]</value>
+
+        <!-- NOW PLAYING -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image)) + System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(disable.artist.slideshow) + Player.HasAudio">$INFO[Window(Visualisation).Property(ArtistSlideshow.Image)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + [Skin.HasSetting(enable.osd.music.visualisation.fanart) + !String.IsEmpty(Player.Art(fanart)) + [String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image)) | !System.AddonIsEnabled(script.artistslideshow) | Skin.HasSetting(disable.artist.slideshow)]] + Player.HasAudio + [!Skin.HasSetting(disable.background.addons.fanart) | [Skin.HasSetting(disable.background.addons.fanart) + !String.Contains(Player.Art(fanart),addons) + !$EXP[IsFanartAddonEmbeded]]]">$INFO[Player.Art(fanart)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + [!String.IsEmpty(Skin.String(fanart.fallback.music)) + Skin.HasSetting(enable.osd.music.visualisation.fanart)] + Player.HasAudio">$INFO[Skin.String(fanart.fallback.music)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Player.Art(thumb)) + Player.HasMedia + !String.IsEmpty(VideoPlayer.Episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Player.Art(thumb)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Player.Art(fanart)) + Player.HasMedia + [!Skin.HasSetting(disable.background.addons.fanart) | [Skin.HasSetting(disable.background.addons.fanart) + !String.Contains(Player.Art(fanart),addons) + !$EXP[IsFanartAddonEmbeded]]]">$INFO[Player.Art(fanart)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + String.IsEmpty(Player.Art(fanart)) + String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image)) + Player.HasMedia + String.IsEmpty(Container(300).ListItem.Property(background))">background/blur2.png</value>
+
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + String.IsEmpty(Player.Art(fanart)) + String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image)) + Player.HasMedia + String.IsEmpty(Container(300).ListItem.Property(background))">common/null.png</value> -->
+
+        <!-- CUSTOM WIDGET BACKGROUND -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEqual(Container(300).ListItem.Property(background),playlistBackground) + !String.IsEmpty(ListItem.Property(Background))">$INFO[ListItem.Property(Background)]</value>
+
+        <!--Multi Widget -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(ListItem.Art(thumb)) + String.IsEqual(ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[ListItem.Art(thumb)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(ListItem.Art(fanart)) + [!Skin.HasSetting(disable.background.addons.fanart) | [Skin.HasSetting(disable.background.addons.fanart) + !String.Contains(ListItem.Art(fanart),addons) + ![String.Contains(ListItem.Art(fanart),plugin) | String.Contains(ListItem.Art(fanart),script) | String.Contains(ListItem.Art(fanart),service)]]]">$INFO[ListItem.Art(fanart)]</value>
+
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(Container(300).ListItem.Property(background)) + String.Contains(ListItem.Property(path),plugin://plugin.audio.)">$INFO[Container(300).ListItem.Property(background)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
+
+        <!--Multi Widget -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(Container(301).ListItem.Art(thumb)) + Control.IsVisible(301) + String.IsEqual(Container(301).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301).ListItem.Art(thumb)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(Container(301).ListItem.Art(fanart)) + Control.IsVisible(301)">$INFO[Container(301).ListItem.Art(fanart)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(Container(301).ListItem.Property(fanart)) + Control.IsVisible(301)">$INFO[Container(301).ListItem.Property(fanart)]</value>
+
+        <!--Multi Widget Weather -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(home.vertical) + Window.IsVisible(Home) + !String.IsEmpty(Skin.String(weather.fanart.path)) + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + String.Contains(Skin.String(weather.fanart.path),multi)">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(home.vertical) + Window.IsVisible(Home) + !String.IsEmpty(Skin.String(weather.fanart.path)) + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + !String.Contains(Skin.String(weather.fanart.path),multi) + String.IsEmpty(Container(300).ListItem.Property(background)) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode),,.jpg]</value>
+
+        <!--Multi Widget User Background-->
+
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30111).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + Control.IsVisible(30111) + !Control.HasFocus(30111)">$INFO[Container(30111).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30121).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30121).ListItem.Property(Background)) + Control.IsVisible(30121) + !Control.HasFocus(30121)">$INFO[Container(30121).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30131).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30131).ListItem.Property(Background)) + Control.IsVisible(30131) + !Control.HasFocus(30131)">$INFO[Container(30131).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30141).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30141).ListItem.Property(Background)) + Control.IsVisible(30141) + !Control.HasFocus(30141)">$INFO[Container(30141).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30151).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30151).ListItem.Property(Background)) + Control.IsVisible(30151) + !Control.HasFocus(30151)">$INFO[Container(30151).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30161).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30161).ListItem.Property(Background)) + Control.IsVisible(30161) + !Control.HasFocus(30161)">$INFO[Container(30161).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30171).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30171).ListItem.Property(Background)) + Control.IsVisible(30171) + !Control.HasFocus(30171)">$INFO[Container(30171).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30181).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30181).ListItem.Property(Background)) + Control.IsVisible(30181) + !Control.HasFocus(30181)">$INFO[Container(30181).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(30191).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30191).ListItem.Property(Background)) + Control.IsVisible(30191) + !Control.HasFocus(30191)">$INFO[Container(30191).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301101).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301101).ListItem.Property(Background)) + Control.IsVisible(301101) + !Control.HasFocus(301101)">$INFO[Container(301101).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301111).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301111).ListItem.Property(Background)) + Control.IsVisible(301111) + !Control.HasFocus(301111)">$INFO[Container(301111).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301121).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301121).ListItem.Property(Background)) + Control.IsVisible(301121) + !Control.HasFocus(301121)">$INFO[Container(301121).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301131).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301131).ListItem.Property(Background)) + Control.IsVisible(301131) + !Control.HasFocus(301131)">$INFO[Container(301131).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301141).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301141).ListItem.Property(Background)) + Control.IsVisible(301141) + !Control.HasFocus(301141)">$INFO[Container(301141).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301151).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301151).ListItem.Property(Background)) + Control.IsVisible(301151) + !Control.HasFocus(301151)">$INFO[Container(301151).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + !String.IsEmpty(Container(301161).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301161).ListItem.Property(Background)) + Control.IsVisible(301161) + !Control.HasFocus(301161)">$INFO[Container(301161).ListItem.Property(Background)]</value>
+        <value condition="Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + String.IsEmpty(Container(3011).ListItem.Property(Background)) + String.IsEmpty(Container(3011).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(3011).ListItem.Property(Background)) + Control.IsVisible(3011)">$INFO[Container(3011).ListItem.Property(Background)]</value>
+
+
+        <!--Multi Widget First Widget -->
+
+        <!-- Episodes -->
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30111).ListItem.Art(thumb)) + String.IsEqual(Container(30111).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30111) + !Control.HasFocus(30111) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30111).ListItem.Art(thumb)]</value>
+
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30121).ListItem.Art(thumb)) + String.IsEqual(Container(30121).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30121) + !Control.HasFocus(30121) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30121).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30131).ListItem.Art(thumb)) + String.IsEqual(Container(30131).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30131) + !Control.HasFocus(30131) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30131).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30141).ListItem.Art(thumb)) + String.IsEqual(Container(30141).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30141) + !Control.HasFocus(30141) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30141).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30151).ListItem.Art(thumb)) + String.IsEqual(Container(30151).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30151) + !Control.HasFocus(30151) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30151).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30161).ListItem.Art(thumb)) + String.IsEqual(Container(30161).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30161) + !Control.HasFocus(30161) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30161).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30171).ListItem.Art(thumb)) + String.IsEqual(Container(30171).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30171) + !Control.HasFocus(30171) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30171).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30181).ListItem.Art(thumb)) + String.IsEqual(Container(30181).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30181) + !Control.HasFocus(30181) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30181).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30191).ListItem.Art(thumb)) + String.IsEqual(Container(30191).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(30191) + !Control.HasFocus(30191) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30191).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301101).ListItem.Art(thumb)) + String.IsEqual(Container(301101).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301101) + !Control.HasFocus(301101) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301101).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301111).ListItem.Art(thumb)) + String.IsEqual(Container(301111).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301111) + !Control.HasFocus(301111) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301111).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301121).ListItem.Art(thumb)) + String.IsEqual(Container(301121).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301121) + !Control.HasFocus(301121) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301121).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301131).ListItem.Art(thumb)) + String.IsEqual(Container(301131).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301131) + !Control.HasFocus(301131) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301131).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301141).ListItem.Art(thumb)) + String.IsEqual(Container(301141).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301141) + !Control.HasFocus(301141) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301141).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301151).ListItem.Art(thumb)) + String.IsEqual(Container(301151).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301151) + !Control.HasFocus(301151) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301151).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301161).ListItem.Art(thumb)) + String.IsEqual(Container(301161).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(301161) + !Control.HasFocus(301161) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301161).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(3011).ListItem.Property(Background)) + String.IsEmpty(Container(3011).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(3011).ListItem.Art(thumb)) + String.IsEqual(Container(3011).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes) + Control.IsVisible(3011) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(3011).ListItem.Art(thumb)]</value>
+
+        <!-- Other -->
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30111).ListItem.Art(fanart)) + Control.IsVisible(30111) + !Control.HasFocus(30111) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30111).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30121).ListItem.Art(fanart)) + Control.IsVisible(30121) + !Control.HasFocus(30121) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30121).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30131).ListItem.Art(fanart)) + Control.IsVisible(30131) + !Control.HasFocus(30131) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30131).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30141).ListItem.Art(fanart)) + Control.IsVisible(30141) + !Control.HasFocus(30141) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30141).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30151).ListItem.Art(fanart)) + Control.IsVisible(30151) + !Control.HasFocus(30151) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30151).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30161).ListItem.Art(fanart)) + Control.IsVisible(30161) + !Control.HasFocus(30161) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30161).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30171).ListItem.Art(fanart)) + Control.IsVisible(30171) + !Control.HasFocus(30171) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30171).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30181).ListItem.Art(fanart)) + Control.IsVisible(30181) + !Control.HasFocus(30181) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30181).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30191).ListItem.Art(fanart)) + Control.IsVisible(30191) + !Control.HasFocus(30191) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30191).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301101).ListItem.Art(fanart)) + Control.IsVisible(301101) + !Control.HasFocus(301101) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301101).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301111).ListItem.Art(fanart)) + Control.IsVisible(301111) + !Control.HasFocus(301111) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301111).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301121).ListItem.Art(fanart)) + Control.IsVisible(301121) + !Control.HasFocus(301121) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301121).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301131).ListItem.Art(fanart)) + Control.IsVisible(301131) + !Control.HasFocus(301131) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301131).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301141).ListItem.Art(fanart)) + Control.IsVisible(301141) + !Control.HasFocus(301141) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301141).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301151).ListItem.Art(fanart)) + Control.IsVisible(301151) + !Control.HasFocus(301151) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301151).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301161).ListItem.Art(fanart)) + Control.IsVisible(301161) + !Control.HasFocus(301161) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301161).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(3011).ListItem.Property(Background)) + String.IsEmpty(Container(3011).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(3011).ListItem.Art(fanart)) + Control.IsVisible(3011) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(3011).ListItem.Art(fanart)]</value>
+
+        <!--Multi Widget Second Widget (case First Widget become empty) -->
+        <!-- Episodes -->
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30112).ListItem.Art(thumb)) + Integer.IsEqual(Container(30111).NumItems,0) + Control.IsVisible(30112) + !Control.HasFocus(30112) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30112).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30112).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30122).ListItem.Art(thumb)) + Integer.IsEqual(Container(30121).NumItems,0) + Control.IsVisible(30122) + !Control.HasFocus(30122) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30122).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30122).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30132).ListItem.Art(thumb)) + Integer.IsEqual(Container(30131).NumItems,0) + Control.IsVisible(30132) + !Control.HasFocus(30132) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30132).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30132).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30142).ListItem.Art(thumb)) + Integer.IsEqual(Container(30141).NumItems,0) + Control.IsVisible(30142) + !Control.HasFocus(30142) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30142).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30142).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30152).ListItem.Art(thumb)) + Integer.IsEqual(Container(30151).NumItems,0) + Control.IsVisible(30152) + !Control.HasFocus(30152) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30152).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30152).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30162).ListItem.Art(thumb)) + Integer.IsEqual(Container(30161).NumItems,0) + Control.IsVisible(30162) + !Control.HasFocus(30162) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30162).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30162).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30172).ListItem.Art(thumb)) + Integer.IsEqual(Container(30171).NumItems,0) + Control.IsVisible(30172) + !Control.HasFocus(30172) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30172).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30172).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30182).ListItem.Art(thumb)) + Integer.IsEqual(Container(30181).NumItems,0) + Control.IsVisible(30182) + !Control.HasFocus(30182) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30182).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30182).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30192).ListItem.Art(thumb)) + Integer.IsEqual(Container(30191).NumItems,0) + Control.IsVisible(30192) + !Control.HasFocus(30192) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30192).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(30192).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301102).ListItem.Art(thumb)) + Integer.IsEqual(Container(301101).NumItems,0) + Control.IsVisible(301102) + !Control.HasFocus(301102) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(301102).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301102).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301112).ListItem.Art(thumb)) + Integer.IsEqual(Container(301111).NumItems,0) + Control.IsVisible(301112) + !Control.HasFocus(301112) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(301112).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301112).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301122).ListItem.Art(thumb)) + Integer.IsEqual(Container(301121).NumItems,0) + Control.IsVisible(301122) + !Control.HasFocus(301122) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(301122).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301122).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301132).ListItem.Art(thumb)) + Integer.IsEqual(Container(301131).NumItems,0) + Control.IsVisible(301132) + !Control.HasFocus(301132) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(301132).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301132).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301142).ListItem.Art(thumb)) + Integer.IsEqual(Container(301141).NumItems,0) + Control.IsVisible(301142) + !Control.HasFocus(301142) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(301142).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301142).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301152).ListItem.Art(thumb)) + Integer.IsEqual(Container(301151).NumItems,0) + Control.IsVisible(301152) + !Control.HasFocus(301152) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30112).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301152).ListItem.Art(thumb)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301162).ListItem.Art(thumb)) + Integer.IsEqual(Container(301161).NumItems,0) + Control.IsVisible(301162) + !Control.HasFocus(301162) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)] + String.IsEqual(Container(30112).ListItem.DBType,episode) + Skin.HasSetting(use.thumbnail.episodes)">$INFO[Container(301162).ListItem.Art(thumb)]</value>
+
+        <!-- Other -->
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30112).ListItem.Art(fanart)) + Integer.IsEqual(Container(30111).NumItems,0) + Control.IsVisible(30112) + !Control.HasFocus(30112) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30112).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30122).ListItem.Art(fanart)) + Integer.IsEqual(Container(30121).NumItems,0) + Control.IsVisible(30122) + !Control.HasFocus(30122) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30122).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30132).ListItem.Art(fanart)) + Integer.IsEqual(Container(30131).NumItems,0) + Control.IsVisible(30132) + !Control.HasFocus(30132) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30132).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30142).ListItem.Art(fanart)) + Integer.IsEqual(Container(30141).NumItems,0) + Control.IsVisible(30142) + !Control.HasFocus(30142) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30142).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30152).ListItem.Art(fanart)) + Integer.IsEqual(Container(30151).NumItems,0) + Control.IsVisible(30152) + !Control.HasFocus(30152) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30152).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30162).ListItem.Art(fanart)) + Integer.IsEqual(Container(30161).NumItems,0) + Control.IsVisible(30162) + !Control.HasFocus(30162) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30162).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30172).ListItem.Art(fanart)) + Integer.IsEqual(Container(30171).NumItems,0) + Control.IsVisible(30172) + !Control.HasFocus(30172) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30172).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30182).ListItem.Art(fanart)) + Integer.IsEqual(Container(30181).NumItems,0) + Control.IsVisible(30182) + !Control.HasFocus(30182) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30182).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(30192).ListItem.Art(fanart)) + Integer.IsEqual(Container(30191).NumItems,0) + Control.IsVisible(30192) + !Control.HasFocus(30192) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(30192).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301102).ListItem.Art(fanart)) + Integer.IsEqual(Container(301101).NumItems,0) + Control.IsVisible(301102) + !Control.HasFocus(301102) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301102).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301112).ListItem.Art(fanart)) + Integer.IsEqual(Container(301111).NumItems,0) + Control.IsVisible(301112) + !Control.HasFocus(301112) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301112).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301122).ListItem.Art(fanart)) + Integer.IsEqual(Container(301121).NumItems,0) + Control.IsVisible(301122) + !Control.HasFocus(301122) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301122).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301132).ListItem.Art(fanart)) + Integer.IsEqual(Container(301131).NumItems,0) + Control.IsVisible(301132) + !Control.HasFocus(301132) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301132).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301142).ListItem.Art(fanart)) + Integer.IsEqual(Container(301141).NumItems,0) + Control.IsVisible(301142) + !Control.HasFocus(301142) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301142).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301152).ListItem.Art(fanart)) + Integer.IsEqual(Container(301151).NumItems,0) + Control.IsVisible(301152) + !Control.HasFocus(301152) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301152).ListItem.Art(fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Container(301).ListItem.Property(Background)) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist)) + !String.IsEmpty(Container(301162).ListItem.Art(fanart)) + Integer.IsEqual(Container(301151).NumItems,0) + Control.IsVisible(301162) + !Control.HasFocus(301162) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(301162).ListItem.Art(fanart)]</value>
+
+        <!-- Fallback, Other -->
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Skin.HasSetting(use.thumbnail.episodes) + String.IsEqual(ListItem.DBType,episode) + !String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + !Skin.HasSetting(dont.use.landscape.seasons) + String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(ListItem.Art(landscape)) + !ListItem.IsParentFolder">$INFO[ListItem.Art(landscape)]</value>
+
+        <value condition="Window.IsVisible(Home) + !String.IsEmpty(Window(Home).Property(PVR.Artwork.fanart)) + String.IsEmpty(ListItem.Property(fanart)) + Skin.HasSetting(Skin_enablePvrArtwork)">$INFO[Window(Home).Property(PVR.Artwork.fanart)]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEmpty(Window(Home).Property(PVR.Artwork.fanart)) + !String.IsEmpty(Container(30111).ListItem.EpgEventIcon)">$INFO[Container(30111).ListItem.EpgEventIcon]</value>
+        <value condition="Window.IsVisible(Home) + String.IsEqual(Container(300).ListItem.Property(background),playlistBackground)">$INFO[Container(9988).ListItem.Art(fanart)]</value>
+
+        <value condition="Window.IsVisible(Home) + Skin.HasSetting(home.enable.menu.background) + [String.IsEmpty(Container(30111).ListItem.Art(fanart)) | String.IsEmpty(Container(30121).ListItem.Art(fanart)) | String.IsEmpty(Container(30131).ListItem.Art(fanart)) | String.IsEmpty(Container(30141).ListItem.Art(fanart)) | String.IsEmpty(Container(30151).ListItem.Art(fanart)) | String.IsEmpty(Container(30161).ListItem.Art(fanart)) | String.IsEmpty(Container(30171).ListItem.Art(fanart)) | String.IsEmpty(Container(30181).ListItem.Art(fanart)) | String.IsEmpty(Container(30191).ListItem.Art(fanart)) | String.IsEmpty(Container(301101).ListItem.Art(fanart)) | String.IsEmpty(Container(301111).ListItem.Art(fanart)) | String.IsEmpty(Container(301121).ListItem.Art(fanart)) | String.IsEmpty(Container(301131).ListItem.Art(fanart)) | String.IsEmpty(Container(301141).ListItem.Art(fanart)) | String.IsEmpty(Container(301151).ListItem.Art(fanart)) | String.IsEmpty(Container(301161).ListItem.Art(fanart)) | String.IsEmpty(Container(301171).ListItem.Art(fanart)) | String.IsEmpty(Container(301181).ListItem.Art(fanart)) | String.IsEmpty(Container(301191).ListItem.Art(fanart))] + !String.IsEmpty(Container(300).ListItem.Property(Background)) + !Control.HasFocus(9099) + [Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(300).ListItem.Property(Background)]</value>
+
+        <value condition="Window.IsVisible(Home) + [Skin.HasSetting(home.enable.menu.background) |  [!Skin.HasSetting(home.enable.menu.background)+ Window.IsVisible(Home) + String.IsEmpty(ListItem.Property(fanart))]] + !String.IsEmpty(Container(300).ListItem.Property(Background)) + !Control.HasFocus(9099) + ![Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(2011)]">$INFO[Container(300).ListItem.Property(Background)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !String.IsEmpty(Skin.String(weather.fanart.path)) + Skin.HasSetting(home.showweatherfanart) + [String.IsEmpty(Container(300).ListItem.Property(widget)) | Container(301).IsUpdating]">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</value>
+
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !Container(301).IsUpdating + !String.IsEmpty(Skin.String(fanart.fallback)) + String.IsEmpty(Container.Art(fanart))">$INFO[Skin.String(fanart.fallback)]</value> -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + String.IsEqual(Container(300).ListItem.Property(widgetType),system) + String.IsEmpty(Container(301).ListItem.Property(backgroundPlaylist))">special://skin/extras/backgrounds/systeminfo.jpg</value>
+        <value condition="Window.IsVisible(Home) + !Container(301).IsUpdating + !String.IsEmpty(Container(301).ListItem.Property(Background))">$INFO[Container(301).ListItem.Property(Background)]</value>
+
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !Container(301).IsUpdating + Skin.HasSetting(homemenu.netflix)">common/null.png</value> -->
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + !Container(301).IsUpdating">fallback/background.jpg</value> -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(tvchannels) + !String.IsEmpty(Window(Home).Property(PVR.Artwork.fanart)) + Skin.HasSetting(Skin_enablePvrArtwork)">$INFO[Window(Home).Property(PVR.Artwork.Fanart)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(tvchannels) + !String.IsEmpty(ListItem.EpgEventIcon)">$INFO[ListItem.EpgEventIcon]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(tvguide) + !String.IsEmpty(Window(Home).Property(PVR.Artwork.fanart)) +  Skin.HasSetting(Skin_enablePvrArtwork)">$INFO[Window(Home).Property(PVR.Artwork.Fanart)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(tvguide) + !String.IsEmpty(ListItem.EpgEventIcon)">$INFO[ListItem.EpgEventIcon]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9500).ListItem.Art(fanart))">$INFO[Container(9500).ListItem.Art(fanart)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Container(9506).ListItem.Art(fanart))">$INFO[Container(9506).ListItem.Art(fanart)]</value>
+
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(ListItem.Property(Fanart_Image))">$INFO[ListItem.Property(Fanart_Image)]</value> -->
+        <!-- <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(ListItem.Property(Fanart))">$INFO[ListItem.Property(Fanart)]</value> -->
+
+        <value condition="Window.IsVisible(Home) + !String.IsEmpty(Skin.String(fanart.fallback.search)) + Control.HasFocus(9099)">$INFO[Skin.String(fanart.fallback.search)]</value>
+
+        <!-- FANART FALLBACK -->
+
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.music)) + [Container.Content(songs) | Container.Content(albums) | Container.Content(artists) | Container.Content(musicvideos) | Container.Content(playlists)]">$INFO[Skin.String(fanart.fallback.music)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.tvshow)) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)]">$INFO[Skin.String(fanart.fallback.tvshow)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.favourite)) + Container.Content(favourites)">$INFO[Skin.String(fanart.fallback.favourite)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.weather)) + Window.IsVisible(MyWeather.xml)">$INFO[Skin.String(fanart.fallback.weather)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.pvr)) + [Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyPVRTimers.xml) | Window.IsVisible(MyPVRChannels.xml) | Window.IsVisible(MyPVRGuide.xml)]">$INFO[Skin.String(fanart.fallback.pvr)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.settings)) + [Window.IsVisible(Settings.xml) | Window.IsVisible(skinsettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(SettingsProfile.xml)]">$INFO[Skin.String(fanart.fallback.settings)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.movie)) + [Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | Container.Content(genres) | Container.Content(years) | Container.Content(directors)]">$INFO[Skin.String(fanart.fallback.movie)]</value>
+
+
+        <value condition="Skin.HasSetting(home.enable.menu.background) | [!Skin.HasSetting(home.enable.menu.background) + String.IsEmpty(ListItem.Property(fanart))]">$INFO[Container(300).ListItem.Property(background)]</value>
+
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value>
+
+        <value condition="!String.IsEmpty(Container.Art(fanart))">$INFO[Container.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(Container(99950).ListItem.Art(fanart))">$INFO[Container(99950).ListItem.Art(fanart)]</value>
+        <!-- <value condition="!String.IsEmpty(Container(99950).ListItem.Property(base_fanart))">$INFO[Container(99950).ListItem.Property(base_fanart)]</value> -->
+
+        <value>background/blur2.png</value>
+        <!-- <value>common/null.png</value> -->
+
+    </variable>
+
+    <!-- FANART FALLBACK -->
+
+    <variable name="Global_Fanart_Fallback">
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.music)) + [Container.Content(songs) | Container.Content(albums) | Container.Content(artists) | Container.Content(musicvideos) | Container.Content(playlists)]">$INFO[Skin.String(fanart.fallback.music)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.tvshow)) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)]">$INFO[Skin.String(fanart.fallback.tvshow)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.favourite)) + Container.Content(favourites)">$INFO[Skin.String(fanart.fallback.favourite)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.weather)) + Window.IsVisible(MyWeather.xml)">$INFO[Skin.String(fanart.fallback.weather)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.pvr)) + [Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyPVRTimers.xml) | Window.IsVisible(MyPVRChannels.xml) | Window.IsVisible(MyPVRGuide.xml)]">$INFO[Skin.String(fanart.fallback.pvr)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.settings)) + [Window.IsVisible(Settings.xml) | Window.IsVisible(skinsettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(SettingsProfile.xml)]">$INFO[Skin.String(fanart.fallback.settings)]</value>
+
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.movie)) + [Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | Container.Content(genres) | Container.Content(years) | Container.Content(directors)]">$INFO[Skin.String(fanart.fallback.movie)]</value>
+
+        <!-- <value condition="!String.IsEmpty(Skin.String(fanart.fallback.search)) + Control.HasFocus(9099)">$INFO[Skin.String(fanart.fallback.search)]</value> -->
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value>
+
+        <value condition="!String.IsEmpty(Container.Art(fanart))">$INFO[Container.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(Container(99950).ListItem.Art(fanart))">$INFO[Container(99950).ListItem.Art(fanart)]</value>
+        <value>background/blur2.png</value>
+        <!-- <value>common/null.png</value> -->
+    </variable>
+
+    <include name="Global_Video_Window">
+        <control type="image" description="Background">
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="Background">background/bg.jpg</texture>
+        </control>
+        <control type="image" description="Background">
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="ff000000">common/white.png</texture>
+            <visible>Player.HasVideo + Skin.HasSetting(global.showvideo)</visible>
+        </control>
+        <control type="videowindow">
+            <include>Def_Dimensions_Fullscreen</include>
+            <visible>Player.HasVideo + Skin.HasSetting(global.showvideo)</visible>
+        </control>
+    </include>
+
+    <include name="Global_Visualisation">
+        <control type="group">
+            <visible>Player.HasAudio</visible>
+            <control type="visualisation">
+                <visible>Skin.HasSetting(disable.artist.slideshow) | !System.AddonIsEnabled(script.artistslideshow) | Skin.HasSetting(OSDVisualisation.ShowFanart)</visible>
+                <description>visualisation</description>
+                <include>Def_Dimensions_Fullscreen</include>
+            </control>
+            <control type="image">
+
+                <!-- AS 3 -->
+                <aspectratio>scale</aspectratio>
+                <include>Def_Dimensions_Fullscreen</include>
+                <include>Background_Fanart_Fade_time</include>
+                <texture background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow.Image)]</texture>
+                <visible>System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(disable.artist.slideshow)</visible>
+                <animation effect="fade" start="100" end="65" time="0" condition="Skin.HasSetting(OSDVisualisation.ShowFanart)">Conditional</animation>
+                <animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(enable.artist.slideshow.animate)">Conditional</animation>
+                <animation effect="slide" start="-30,-30" end="30,30" time="6000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(enable.artist.slideshow.animate)">Conditional</animation>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Background_Brightness_Global">
+        <colordiffuse>FanartFade</colordiffuse>
+        <animation effect="fade" end="0" start="0" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),0) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="5" start="5" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),5) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="10" start="10" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),10) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="15" start="15" time="0" condition="[String.IsEmpty(Skin.String(Value_Background_Brightness_Global)) | Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),15)] + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="20" start="20" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),20) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="25" start="25" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),25) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="30" start="30" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),30) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="35" start="35" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),35) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="40" start="40" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),40) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="45" start="45" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),45) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="50" start="50" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),50) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="55" start="55" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),55) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="60" start="60" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),60) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="65" start="65" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),65) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="70" start="70" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Global),70) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]">Conditional</animation>
+        <animation effect="fade" end="60" start="60" time="0" condition="Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)">Conditional</animation>
+    </include>
+
+    <include name="Def_Background_Brightness_Global_Horizontal_Clean">
+        <colordiffuse>FanartFade</colordiffuse>
+        <animation effect="fade" end="25" start="25" time="0" condition="true">Conditional</animation>
+    </include>
+
+    <include name="Def_Background_Brightness_Blur">
+        <colordiffuse>FanartFadeBlur</colordiffuse>
+    </include>
+
+    <include name="Overlay510">
+        <colordiffuse>BackgroundNew</colordiffuse>
+    </include>
+
+    <include name="Overlay510Blur">
+        <colordiffuse>BackgroundNewBlur</colordiffuse>
+    </include>
+
+    <include name="IncludeFloorFade">
+        <colordiffuse>FloorFade</colordiffuse>
+    </include>
+
+    <include name="IncludeFloorFadeBlur">
+        <colordiffuse>FloorFadeBlur</colordiffuse>
+    </include>
+
+    <variable name="Background_Global_Image">
+        <value condition="Skin.HasSetting(enable.blur.effect)">$VAR[Image_Background_Flix_Art]</value>
+        <value condition="!Skin.HasSetting(enable.blur.effect)">$VAR[Global_Fanart_Background]</value>
+    </variable>
+
+    <!-- IMAGE PATH -->
+
+    <include name="Image_Path_Normal">
+        <imagepath background="true">$VAR[Global_Fanart_Background]</imagepath>
+    </include>
+
+    <include name="Image_Path_Blur_TMDb">
+        <imagepath background="true">$INFO[Container(99950).ListItem.Art(blurimage)]</imagepath>
+    </include>
+
+    <include name="Image_Path_Normal_Netflix">
+        <imagepath background="true" diffuse="background/homediffuse510.png">$VAR[Global_Fanart_Background]</imagepath>
+    </include>
+
+    <include name="Image_Path_Normal_Netflix_Full_Screen">
+        <imagepath background="true" diffuse="background/homediffuse510fs.png">$VAR[Global_Fanart_Background]</imagepath>
+    </include>
+
+    <!-- BACKGROUND FANART FADE TIME -->
+
+    <include name="Background_Fanart_Fade_time">
+        <include condition="Integer.IsEqual(Skin.String(Fadetime),600) | String.IsEmpty(Skin.String(Fadetime))">FadetimeDefault</include>
+        <include condition="Integer.IsEqual(Skin.String(Fadetime),1800)">FadetimeSlow</include>
+        <include condition="Integer.IsEqual(Skin.String(Fadetime),3600)">FadetimeSuperSlow</include>
+        <include condition="Integer.IsEqual(Skin.String(Fadetime),400)">FadetimeFast</include>
+    </include>
+
+    <!-- GLOBAL BACKGROUND -->
+
+    <include name="Background_Global">
+        <include condition="Skin.HasSetting(enable.blur.effect)">Image_Path_Blur_TMDb</include>
+        <include>Global_Video_Window</include>
+        <include condition="Skin.HasSetting(global.showvisualisation) + !String.IsEmpty(Visualisation.Name)">Global_Visualisation</include>
+        <control type="fadelabel" id="4399">
+            <top>-900</top>
+            <width>2560</width>
+            <height>0</height>
+            <scroll>false</scroll>
+            <scrollout>false</scrollout>
+            <randomize>true</randomize>
+            <resetonlabelchange>true</resetonlabelchange>
+            <visible>Skin.HasSetting(enable.extra.fanart)</visible>
+            <label>$INFO[ListItem.Art(fanart)]</label>
+            <label>$INFO[ListItem.Art(fanart1)]</label>
+            <label>$INFO[ListItem.Art(fanart2)]</label>
+            <label>$INFO[ListItem.Art(fanart3)]</label>
+            <label>$INFO[ListItem.Art(fanart4)]</label>
+            <label>$INFO[ListItem.Art(fanart5)]</label>
+            <label>$INFO[ListItem.Art(fanart6)]</label>
+            <label>$INFO[ListItem.Art(fanart7)]</label>
+            <label>$INFO[ListItem.Art(fanart8)]</label>
+            <label>$INFO[ListItem.Art(fanart9)]</label>
+            <label>$INFO[ListItem.Art(fanart10)]</label>
+            <label>$INFO[ListItem.Art(fanart11)]</label>
+            <label>$INFO[ListItem.Art(fanart12)]</label>
+            <label>$INFO[ListItem.Art(fanart13)]</label>
+            <label>$INFO[ListItem.Art(fanart14)]</label>
+            <label>$INFO[ListItem.Art(fanart15)]</label>
+            <label>$INFO[ListItem.Art(fanart16)]</label>
+            <label>$INFO[ListItem.Art(fanart17)]</label>
+            <label>$INFO[ListItem.Art(fanart18)]</label>
+            <label>$INFO[ListItem.Art(fanart19)]</label>
+            <label>$INFO[ListItem.Art(fanart20)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart1)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart2)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart3)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart4)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart5)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart6)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart7)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart8)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart9)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart10)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart11)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart12)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart13)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart14)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart15)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart16)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart17)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart18)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart19)]</label>
+            <label>$INFO[ListItem.Art(artist.fanart20)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart1)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart2)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart3)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart4)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart5)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart6)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart7)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart8)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart9)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart10)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart11)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart12)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart13)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart14)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart15)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart16)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart17)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart18)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart19)]</label>
+            <label>$INFO[ListItem.Art(tvshow.fanart20)]</label>
+            <pauseatend>Background_Fanart_Time_Before_Next_Image</pauseatend>
+        </control>
+
+        <!-- VISUALISATION OVERLAY -->
+
+        <control type="image" description="Background">
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="Background">background/bg.jpg</texture>
+            <visible>[Player.HasVideo + Skin.HasSetting(global.showvideo)] | [Player.HasAudio + Skin.HasSetting(global.showvisualisation) + !String.IsEmpty(Visualisation.Name)]</visible>
+            <animation effect="fade" start="100" end="75" time="0" condition="true">Conditional</animation>
+        </control>
+
+        <!-- TRAILER WINDOW HOME -->
+
+        <include condition="Skin.HasSetting(home.netflix.autoplay.trailer) | Skin.HasSetting(show.home.nowplaying.video.flix)">TrailerWindow</include>
+
+        <!-- GLOBAL FANART -->
+
+        <control type="multiimage" description="Fanart">
+            <visible>!Skin.HasSetting(enable.blur.effect)</visible>
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+
+            <include>Def_Background_Brightness_Global</include>
+            <include>Def_Dimensions_Fullscreen</include>
+            <!-- <include>Animation_Background_OpenClose</include> -->
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
+            <aspectratio>scale</aspectratio>
+            <imagepath background="true">$VAR[Global_Fanart_Background]</imagepath>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- BLUR GLOBAL FANART -->
+
+        <control type="multiimage" description="Fanart">
+            <visible>Skin.HasSetting(enable.blur.effect) + !Window.IsVisible(Home)</visible>
+            <include>Def_Background_Brightness_Blur</include>
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <!-- <include>Animation_Background_OpenClose</include> -->
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
+            <aspectratio>scale</aspectratio>
+            <include>Image_Path_Blur_TMDb</include>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- BLUR GLOBAL FANART HOME -->
+
+        <control type="multiimage" description="Fanart">
+            <visible>Skin.HasSetting(enable.blur.effect) + Window.IsVisible(Home)</visible>
+            <visible>Window.IsVisible(Home)</visible>
+            <include condition="!Skin.HasSetting(enable.blur.on.home)">Def_Background_Brightness_Global</include>
+            <include condition="Skin.HasSetting(enable.blur.on.home)">Def_Background_Brightness_Blur</include>
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <!-- <include>Animation_Background_OpenClose</include> -->
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
+            <aspectratio>scale</aspectratio>
+            <include condition="!Skin.HasSetting(enable.blur.on.home) + !$EXP[View_List_Dialog_Info_Settings]">Image_Path_Normal</include>
+            <include condition="!Skin.HasSetting(enable.blur.on.home) + [Window.IsVisible(MyVideoNav.xml) | Window.IsVisible(MyMusicNav.xml) | $EXP[View_List_Dialog_Info_Settings]]">Image_Path_Blur_TMDb</include>
+            <include condition="Skin.HasSetting(enable.blur.on.home)">Image_Path_Blur_TMDb</include>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- FALLBACK -->
+
+        <control type="image" description="Fanart Fallback always">
+            <include>Def_Background_Brightness_Global</include>
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <visible>[!Window.IsVisible(Home) | [Window.IsVisible(Home) + [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml)]]] + Skin.HasSetting(hide.global.fanart) + !Skin.HasSetting(enable.netflix.preview.noflix)</visible>
+            <!-- <include>Animation_Background_OpenClose</include> -->
+            <aspectratio>scale</aspectratio>
+            <texture background="true">$VAR[Global_Fanart_Fallback]</texture>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- NETFLIX PREVIEW WINDOW -->
+
+        <control type="multiimage" description="Fanart">
+            <visible>[[[Window.IsVisible(Home) + Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(hide.homemenu.netflix.preview)] | [[[Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(523) | Control.IsVisible(524)] + !Skin.HasSetting(hide.views.netflix.preview)]]] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(skin.arctic.zephyr.mod.script-gto-info.xml) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]]</visible>
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+            <visible>!Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) + !Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml)</visible>
+            <!-- <include>Animation_Background_OpenClose</include> -->
+            <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
+            <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
+            <animation effect="fade" end="30" start="30" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),30)">Conditional</animation>
+            <animation effect="fade" end="40" start="40" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),40)">Conditional</animation>
+            <animation effect="fade" end="50" start="50" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),50)">Conditional</animation>
+            <animation effect="fade" end="60" start="60" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),60) | String.IsEmpty(Skin.String(Value_Background_Brightness_Flix)) | String.IsEqual(Skin.String(Value_Background_Brightness_Flix),default)">Conditional</animation>
+            <animation effect="fade" end="70" start="70" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),70)">Conditional</animation>
+            <animation effect="fade" end="80" start="80" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),80)">Conditional</animation>
+            <animation effect="fade" end="90" start="90" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),90)">Conditional</animation>
+            <animation effect="fade" end="100" start="100" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix),100)">Conditional</animation>
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
+            <include condition="Skin.HasSetting(homemenu.netflix.preview.fullscreen)">Window_Flix_Full_Screen</include>
+            <include condition="!Skin.HasSetting(homemenu.netflix.preview.fullscreen)">Window_Flix</include>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- NETFLIX PREVIEW WINDOW  - VIEW NO FLIX -->
+
+        <control type="multiimage" description="Fanart">
+            <visible>Skin.HasSetting(enable.netflix.preview.noflix) + $EXP[View_List_Dialog_Info_Settings]</visible>
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+            <!-- <include>Animation_Background_OpenClose</include> -->
+            <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
+            <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
+            <animation effect="fade" end="10" start="10" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),10)">Conditional</animation>
+            <animation effect="fade" end="20" start="20" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),20)">Conditional</animation>
+            <animation effect="fade" end="30" start="30" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),30) | String.IsEmpty(Skin.String(Value_Background_Brightness_Flix_Dialog_Info)) | String.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),default)">Conditional</animation>
+            <animation effect="fade" end="40" start="40" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),40)">Conditional</animation>
+            <animation effect="fade" end="50" start="50" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),50)">Conditional</animation>
+            <animation effect="fade" end="60" start="60" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),60)">Conditional</animation>
+            <animation effect="fade" end="70" start="70" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),70)">Conditional</animation>
+            <animation effect="fade" end="80" start="80" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),80)">Conditional</animation>
+            <animation effect="fade" end="90" start="90" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),90)">Conditional</animation>
+            <animation effect="fade" end="100" start="100" time="0" condition="Integer.IsEqual(Skin.String(Value_Background_Brightness_Flix_Dialog_Info),100)">Conditional</animation>
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
+            <include condition="Skin.HasSetting(noflix.netflix.preview.fullscreen)">Window_Flix_Full_Screen</include>
+            <include condition="!Skin.HasSetting(noflix.netflix.preview.fullscreen)">Window_Flix</include>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- FINAL OVERLAYS -->
+
+
+        <!-- Home (not clean) / View flix -->
+        <control type="image" description="FanartOverlay">
+            <visible>[Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml)] | $EXP[View_Flix]</visible>
+            <visible>!Skin.HasSetting(homemenu.horizontal.clean)</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="FloorFade">background/combined_flixart.png</texture>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- All View (not flix) - home exclu -->
+        <control type="image" description="FanartOverlay">
+            <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml)]]</visible>
+
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="FloorFade">background/combined_flixart_dialog.png</texture>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- Home Horizontal Clean only -->
+        <control type="image" description="FanartOverlay">
+            <visible>Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="66" end="100" time="150"/>
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="fade" end="33" start="100" time="300"/>
+            </animation>
+            <texture colordiffuse="FloorFade">background/floor2.png</texture>
+        </control>
+    </include>
+
+    <include name="Background_Global_Extended">
+        <control type="image" description="Background">
+            <include>Def_Dimensions_Fullscreen</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
+            <texture colordiffuse="Background">background/bg.jpg</texture>
+        </control>
+        <control type="multiimage" description="Fanart">
+            <visible>!Skin.HasSetting(enable.blur.effect) | [Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.on.home)]</visible>
+            <include>Def_Background_Brightness_Global</include>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Skin.HasSetting(show.fallback.background)</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Def_Background_Brightness_Global_Horizontal_Clean</include>
+            <randomize>true</randomize>
+            <aspectratio>scale</aspectratio>
+            <imagepath background="true">$VAR[Global_Fanart_Background]</imagepath>
+            <include>Animation_Animate_Fanart</include>
+        </control>
+        <control type="multiimage" description="Fanart">
+            <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.on.home)</visible>
+            <visible>!Skin.HasSetting(hide.global.fanart) | Skin.HasSetting(show.fallback.background)</visible>
+            <include>Def_Dimensions_Fullscreen</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
+            <include>Def_Background_Brightness_Blur</include>
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Def_Background_Brightness_Global_Horizontal_Clean</include>
+            <randomize>true</randomize>
+            <aspectratio>scale</aspectratio>
+            <imagepath background="true">$VAR[Background_Global_Image]</imagepath>
+            <include>Animation_Animate_Fanart</include>
+        </control>
+
+        <control type="image" description="FanartOverlay">
+            <include>Def_Dimensions_Fullscreen</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
+            <texture colordiffuse="FloorFade">background/floor.png</texture>
+            <visible>![Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.on.home)]</visible>
+        </control>
+    </include>
+
+    <!-- PREVIEW WINDOWS NETFLIX - FULL SCREEN -->
+
+    <include name="Window_Flix_Full_Screen">
+        <aspectratio scalediffuse="false">scale</aspectratio>
+        <width>1280</width>
+        <height>720</height>
+        <right>0</right>
+        <top>0</top>
+        <include condition="!Skin.HasSetting(hide.homemenu.netflix.preview)">Image_Path_Normal_Netflix_Full_Screen</include>
+    </include>
+
+    <!-- PREVIEW WINDOWS NETFLIX -->
+
+    <include name="Window_Flix">
+        <aspectratio>scale</aspectratio>
+        <include>Def_Dimensions_Fullscreen</include>
+        <include condition="!Skin.HasSetting(hide.homemenu.netflix.preview)">Image_Path_Normal_Netflix</include>
+    </include>
+
+</includes>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+
+    <include name="53Content">
+        <height>1080</height>
+        <visible>$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(sets) | Container.Content(videos) | Container.Content(seasons)</visible>
+        <posy>96</posy>
+        <posx>-190</posx>
+        <width>2300</width>
+        <onup condition="!Skin.HasSetting(global.kioskmode)">9000</onup>
+        <ondown>1633</ondown>
+        <onleft>53</onleft>
+        <onright>53</onright>
+        <focusposition>1</focusposition>
+        <preloaditems>0</preloaditems>
+        <pagecontrol>1633</pagecontrol>
+        <orientation>horizontal</orientation>
+        <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
+            <param name="string" value="$LOCALIZE[31372]" />
+        </include>
+        <viewtype label="31372">list</viewtype>
+        <include>Animation_ScrolltimeViewsList</include>
+        <itemlayout width="270">
+            <control type="group">
+                <top>170</top>
+                <left>80</left>
+                <width>270</width>
+                <height>396</height>
+                <include content="Layout_Widget_Poster">
+                    <param name="id" value="55"/>
+                    <param name="height" value="396"/>
+                    <param name="reflections" value="Skin.HasSetting(show.reflections)"/>
+                    <param name="top" value="368"/>
+                    <param name="height_reflection" value="660"/>
+                </include>
+            </control>
+        </itemlayout>
+        <focusedlayout width="300">
+            <control type="group">
+                <posy>120</posy>
+                <animation condition="Container(53).OnNext | Container(53).OnPrevious" effect="zoom" start="60" end="100" delay="0" time="350" tween="sine" easing="out" center="213,276">Focus</animation>
+                <animation condition="Container(53).OnNext | Container(53).OnPrevious" effect="zoom" start="100" end="60" delay="0" time="250" tween="sine" easing="out" center="213,282">UnFocus</animation>
+                <control type="image">
+                    <top>PosterH</top>
+                    <width>PosterW</width>
+                    <height>PosterH</height>
+                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
+                    <visible>Skin.HasSetting(show.reflections)</visible>
+                </control>
+                <control type="image">
+                    <centertop>PosterH</centertop>
+                    <width>PosterW</width>
+                    <height>48</height>
+                    <aspectratio>stretch</aspectratio>
+                    <texture>diffuse/shadowspot.png</texture>
+                </control>
+                <control type="image">
+                    <left>-22</left>
+                    <top>-22</top>
+                    <width>PosterShadowW</width>
+                    <height>PosterShadowH</height>
+                    <texture border="40" infill="false">common/$VAR[shadow40]</texture>
+                </control>
+                <control type="image">
+                    <top>0</top>
+                    <left>0</left>
+                    <width>PosterW</width>
+                    <height>640</height>
+                    <texture colordiffuse="Fallback" border="12" background="true">common/box.png</texture>
+                </control>
+                <control type="image">
+                    <width>PosterW</width>
+                    <height>PosterH</height>
+                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                    <texture diffuse="diffuse/listposter.png" background="true">$VAR[Image_Poster]</texture>
+                </control>
+                <control type="group">
+                    <visible>Skin.HasSetting(enable.view.video.rating.num)</visible>
+                    <left>0</left>
+                    <bottom>305</bottom>
+                    <include>Def_Layout_Poster_rating_Info</include>
+                </control>
+                <include content="Layout_Indicator_Status" condition="!Skin.HasSetting(hide.markers)">
+                    <param name="right" value="-138" />
+                    <param name="top" value="-10" />
+                </include>
+            </control>
+        </focusedlayout>
+    </include>
+
+    <include name="53Wrap">
+        <include>View_Slide_For_JumpBar</include>
+        <control type="wraplist" id="53">
+            <include>53Content</include>
+        </control>
+    </include>
+
+    <include name="53Fixed">
+        <include>View_Slide_For_JumpBar</include>
+        <control type="fixedlist" id="53">
+            <include>53Content</include>
+        </control>
+    </include>
+
+    <include name="View_53_Poster">
+        <description>List View (id=53)</description>
+        <control type="group">
+            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
+            <include>Animation_Common</include>
+            <visible>Control.IsVisible(53)</visible>
+            <include condition="!Skin.HasSetting(disable.wrap.view.53)">53Wrap</include>
+            <include condition="Skin.HasSetting(disable.wrap.view.53)">53Fixed</include>
+            <control type="scrollbar" id="1633">
+                <include content="Object_Scrollbar_Horizontal">
+                    <param name="scrollid" value="1633"/>
+                </include>
+            </control>
+            <control type="grouplist">
+                <left>540</left>
+                <right>SidePad</right>
+                <top>690</top>
+                <orientation>vertical</orientation>
+                <visible>![Container(53).OnNext | Container(53).OnPrevious]</visible>
+                <animation effect="fade" start="0" end="100" delay="450" time="250" reversible="false">Visible</animation>
+                <control type="label">
+                    <font>SmallBold</font>
+                    <label>$INFO[ListItem.Label]</label>
+                    <textcolor>Dark1</textcolor>
+                    <height>40</height>
+                    <aligny>top</aligny>
+                </control>
+                <control type="label">
+                    <font>Tiny</font>
+                    <label>$VAR[LabelGenre]</label>
+                    <textcolor>Dark1</textcolor>
+                    <height>42</height>
+                    <aligny>top</aligny>
+                </control>
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <label>$VAR[LabelPlotBox]</label>
+                    <textcolor>Dark2</textcolor>
+                    <height>68</height>
+                    <align>justify</align>
+                </control>
+            </control>
+        </control>
+    </include>
+</includes>

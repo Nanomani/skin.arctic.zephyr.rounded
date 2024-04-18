@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <defaultcontrol always="true">50</defaultcontrol>
+    <onload condition="!String.IsEmpty(Container(50).ListItem.Art(poster))">SetProperty(poster,$ESCINFO[Container(50).ListItem.Art(poster)],Home)</onload>
+    <onload condition="String.IsEmpty(Container(50).ListItem.Art(poster))">SetProperty(thumb,$ESCINFO[Container(50).ListItem.Art(thumb)],Home)</onload>
+
+    <onunload>ClearProperty(poster,Home)</onunload>
+    <onunload>ClearProperty(thumb,Home)</onunload>
+    <controls>
+        <include>Background_Overlay</include>
+
+        <control type="group">
+            <width>1484</width>
+            <height>852</height>
+
+            <include>Def_Dialog_Background</include>
+
+            <control type="label" id="2">
+                <include>Def_Dialog_Header_Title</include>
+                <label>5</label>
+            </control>
+
+            <include>Def_Dialog_Header_Logo</include>
+            <include>Def_Dialog_Header_Line</include>
+
+            <include content="Def_Dialog_Line_Vertical">
+                <param name="bottom" value="110"/>
+            </include>
+
+            <!-- POSTER ON LEFT -->
+
+            <control type="group">
+                <control type="group" description="Poster">
+                    <include>Animation_PosterSlide</include>
+                    <left>40</left>
+                    <top>115</top>
+                    <control type="image">
+                        <centertop>PosterH</centertop>
+                        <width>PosterW</width>
+                        <height>48</height>
+                        <aspectratio>stretch</aspectratio>
+                        <texture>diffuse/shadowspot.png</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>-23</left>
+                        <top>-23</top>
+                        <width>PosterShadowW</width>
+                        <height>PosterShadowH</height>
+                        <texture border="40" infill="false">common/$VAR[shadow40]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <width>PosterW</width>
+                        <height>PosterH</height>
+                        <texture border="12" colordiffuse="Fallback">common/box.png</texture>
+                    </control>
+                    <control type="image">
+                        <width>PosterW</width>
+                        <height>PosterH</height>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/listposter2.png" background="true" fallback="DefaultVideo.png">$VAR[VideoVersionPosterVar]</texture>
+                    </control>
+                </control>
+
+                <control type="group"  id="100">
+                    <top>81</top>
+                    <left>510</left>
+                    <width>690</width>
+                    <height>720</height>
+
+                    <!-- VERSION -->
+
+                    <control type="group">
+                        <height>300</height>
+                        <control type="list" id="50">
+                            <description>version list</description>
+                            <top>34</top>
+                            <height>625</height>
+                            <onup>50</onup>
+                            <ondown>50</ondown>
+                            <onleft>9001</onleft>
+                            <onright>60</onright>
+                            <pagecontrol>60</pagecontrol>
+                            <scrolltime>200</scrolltime>
+
+                            <itemlayout height="125" width="616">
+                                <control type="label">
+                                    <left>30</left>
+                                    <top>0</top>
+                                    <right>20</right>
+                                    <height>60</height>
+                                    <font>Small</font>
+                                    <textcolor>Black70</textcolor>
+                                    <selectedcolor>Black70</selectedcolor>
+                                    <aligny>center</aligny>
+                                    <label>$VAR[MediaInfoListLabelVar]</label>
+                                </control>
+                                <control type="label">
+                                    <left>30</left>
+                                    <top>50</top>
+                                    <right>20</right>
+                                    <height>35</height>
+                                    <font>Mini</font>
+                                    <textcolor>Black70</textcolor>
+                                    <selectedcolor>Black70</selectedcolor>
+                                    <aligny>center</aligny>
+                                    <label>$INFO[ListItem.Duration,$LOCALIZE[180]: ]</label>
+                                </control>
+                                <control type="label">
+                                    <left>30</left>
+                                    <top>85</top>
+                                    <right>20</right>
+                                    <height>30</height>
+                                    <font>Mini</font>
+                                    <textcolor>Black70</textcolor>
+                                    <selectedcolor>Black70</selectedcolor>
+                                    <aligny>center</aligny>
+                                    <label>$VAR[VideoCodecVar,, ]$INFO[ListItem.VideoResolution,| , ]$VAR[VideoResolutionTypeVar,, ]$VAR[VideoHDRVar,| , ]$INFO[ListItem.VideoAspect,| ,:1 ]$VAR[AudioCodecVar,| , ]$VAR[AudioChannelsVar]</label>
+                                </control>
+                                <control type="image">
+                                    <right>30</right>
+                                    <centertop>50%</centertop>
+                                    <width>24</width>
+                                    <height>24</height>
+                                    <texture colordiffuse="Black70">osd/minicheck_big.png</texture>
+                                    <visible>ListItem.IsSelected</visible>
+                                </control>
+                            </itemlayout>
+                            <focusedlayout height="125" width="616">
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
+                                    <width>616</width>
+                                    <height>125</height>
+                                    <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
+                                    <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(50)">Conditional</animation>
+                                </control>
+                                <control type="label">
+                                    <left>30</left>
+                                    <top>0</top>
+                                    <right>20</right>
+                                    <height>60</height>
+                                    <aligny>center</aligny>
+                                    <scroll>true</scroll>
+                                    <font>Small</font>
+                                    <textcolor>Selected</textcolor>
+                                    <selectedcolor>Selected</selectedcolor>
+                                    <label>$VAR[MediaInfoListLabelVar]</label>
+                                </control>
+                                <control type="label">
+                                    <left>30</left>
+                                    <top>50</top>
+                                    <right>20</right>
+                                    <height>35</height>
+                                    <font>Mini</font>
+                                    <textcolor>Selected</textcolor>
+                                    <selectedcolor>Selected</selectedcolor>
+                                    <aligny>center</aligny>
+                                    <label>$INFO[ListItem.Duration,$LOCALIZE[180]: ]</label>
+                                </control>
+                                <control type="label">
+                                    <left>30</left>
+                                    <top>85</top>
+                                    <right>20</right>
+                                    <height>30</height>
+                                    <font>Mini</font>
+                                    <textcolor>Selected</textcolor>
+                                    <selectedcolor>Selected</selectedcolor>
+                                    <aligny>center</aligny>
+                                    <label>$VAR[VideoCodecVar,, ]$INFO[ListItem.VideoResolution,| , ]$VAR[VideoResolutionTypeVar,, ]$VAR[VideoHDRVar,| , ]$INFO[ListItem.VideoAspect,| ,:1 ]$VAR[AudioCodecVar,| , ]$VAR[AudioChannelsVar]</label>
+                                </control>
+                                <control type="image">
+                                    <right>30</right>
+                                    <centertop>50%</centertop>
+                                    <width>24</width>
+                                    <height>24</height>
+                                    <texture colordiffuse="Selected">osd/minicheck_big.png</texture>
+                                    <visible>ListItem.IsSelected</visible>
+                                </control>
+                            </focusedlayout>
+                        </control>
+                    </control>
+                </control>
+
+                <!-- BUTTON ON RIGHT -->
+
+                <control type="grouplist" id="101">
+                    <right>10</right>
+                    <top>-81</top>
+                    <width>320</width>
+                    <height>800</height>
+                    <onleft condition="Integer.IsGreater(Container(50).NumItems,0)">100</onleft>
+                    <itemgap>3</itemgap>
+                    <align>center</align>
+                    <scrolltime tween="quadratic">200</scrolltime>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="21" />
+                        <param name="label" value="$LOCALIZE[208]" />
+                    </include>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="22" />
+                        <param name="label" value="$LOCALIZE[40014]" />
+                        <param name="visible">Window.IsVisible(managevideoversions)</param>
+                    </include>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="23" />
+                        <param name="label" value="$LOCALIZE[40015]" />
+                        <param name="visible">Window.IsVisible(managevideoextras)</param>
+                    </include>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="27" />
+                        <param name="label" value="$LOCALIZE[13511]" />
+                    </include>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="24" />
+                        <param name="label" value="$LOCALIZE[118]" />
+                    </include>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="26" />
+                        <param name="label" value="$LOCALIZE[15015]" />
+                    </include>
+                    <include content="Def_Dialog_Button_Video_Manager">
+                        <param name="id" value="25" />
+                        <param name="label" value="$LOCALIZE[40023]" />
+                        <param name="visible">Window.IsVisible(managevideoversions)</param>
+                    </include>
+                </control>
+
+                <!-- PATH ITEM -->
+
+                <control type="label">
+                    <align>left</align>
+                    <bottom>20</bottom>
+                    <left>31</left>
+                    <right>31</right>
+                    <height>44</height>
+                    <scroll>true</scroll>
+                    <font>Tiny</font>
+                    <haspath>false</haspath>
+                    <label>$INFO[Container(50).ListItem.FileNameAndPath]</label>
+                    <visible>Control.HasFocus(50)</visible>
+                    <animation effect="fade" start="0" end="100" time="300" delay="300">WindowOpen</animation>
+                    <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+                    <animation effect="fade" start="0" end="100" time="300">Visible</animation>
+                    <animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

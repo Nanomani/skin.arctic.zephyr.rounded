@@ -1,0 +1,2235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="Dialog_Video_Info">
+        <control type="group">
+            <animation type="Conditional" reversible="true" condition="Window.IsVisible(FileBrowser.xml) | Window.IsVisible(DialogProgress.xml) | Window.IsVisible(DialogYesNo.xml) | Window.IsVisible(DialogOK.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)">
+                <effect type="zoom" end="95" start="100" time="200" center="auto" tween="quadratic" easing="in"/>
+            </animation>
+
+            <!--  POSTER   -->
+
+            <control type="group">
+                <include>Animation_Video_FadeOut</include>
+                <include>Animation_Wiki_FadeOut</include>
+                <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + !String.IsEmpty(Window(Home).Property(dontslide)) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+                <include>Animation_SidePoster</include>
+                <control type="group">
+                    <include>Animation_Delay_FadeIn</include>
+                    <visible>Control.HasFocus(9001) + !String.IsEqual(Window.Property(ShowDisc),1) + !String.IsEmpty(ListItem.Art(discart)) + Skin.HasSetting(Show.Discart.Video.Info)</visible>
+                    <centerbottom>1006</centerbottom>
+                    <height>16</height>
+                    <control type="image">
+                        <centerleft>290</centerleft>
+                        <top>8</top>
+                        <include>arrowdimensions</include>
+                        <texture colordiffuse="Dark1" flipy="true">common/arrow-small.png</texture>
+                    </control>
+                </control>
+                <control type="image">
+                    <animation type="Visible">
+                        <effect type="slide" start="0,0" end="0,-100" delay="0" time="400" tween="quadratic" easing="out"/>
+                    </animation>
+                    <animation type="Hidden">
+                        <effect type="slide" start="0,0" end="0,100" delay="0" time="200" tween="quadratic" easing="out"/>
+                    </animation>
+                    <animation type="Conditional" condition="String.IsEqual(Window.Property(ShowDisc),1)">
+                        <effect type="slide" start="0,0" end="0,-220" delay="0" time="200" tween="quadratic" easing="out"/>
+                    </animation>
+                    <visible>!String.IsEmpty(ListItem.Art(discart)) + String.IsEqual(Window.Property(moviecontent),1) + Skin.HasSetting(Show.Discart.Video.Info)</visible>
+                    <top>200</top>
+                    <left>90</left>
+                    <width>405</width>
+                    <height>405</height>
+                    <texture>$INFO[ListItem.Art(discart)]</texture>
+                </control>
+                <control type="group">
+                    <include>View_50_SidePoster</include>
+                </control>
+            </control>
+
+            <!-- RIGHT SIDE -->
+
+            <control type="group">
+                <include>Hidden_Up_Next_Episode</include>
+                <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + !String.IsEmpty(Window(Home).Property(dontslide)) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+                <include>Animation_RightSide</include>
+
+                <!-- CONTROL BUTTONS -->
+
+                <control type="group">
+                    <include>Animation_Wiki_FadeOut</include>
+                    <bottom>-80</bottom>
+                    <include>Animation_Video_FadeOut</include>
+                    <include>Def_Dialog_Info_Navigation_Video</include>
+                    <include>Def_Dialog_Info_Navigation_Video_2</include>
+                    <include content="Def_Navigation_Arrows">
+                        <param name="visible" value="[Integer.IsGreater(Container(9000).NumItems,8) + ControlGroup(9000).HasFocus()] | [Integer.IsGreater(Container(9090).NumItems,8) + ControlGroup(9090).HasFocus()]" />
+                    </include>
+                </control>
+
+                <!-- FOOTER LABEL -->
+
+                <control type="group">
+                    <top>930</top>
+                    <right>SidePad</right>
+                    <width>1400</width>
+                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <control type="label">
+                        <left>140</left>
+                        <height>50</height>
+                        <font>Mini</font>
+                        <scroll>true</scroll>
+                        <scrollspeed>40</scrollspeed>
+                        <scrollsuffix>  ••  </scrollsuffix>
+                        <textcolor>Dark3</textcolor>
+                        <label>$INFO[ListItem.FileNameAndPath]</label>
+                        <aligny>center</aligny>
+                        <align>right</align>
+                        <visible>Control.HasFocus(9010)</visible>
+                        <include>Animation_File_Name_And_Path_Video</include>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <left>0</left>
+                        <height>50</height>
+                        <font>Mini</font>
+                        <scroll>false</scroll>
+                        <textcolor>Dark3</textcolor>
+                        <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
+                        <aligny>center</aligny>
+                        <align>right</align>
+                        <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
+                        <include>Animation_Button_Label_Video</include>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                    </control>
+                    <control type="image">
+                        <top>5</top>
+                        <left>120</left>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <description>Busy animation</description>
+                        <width>45</width>
+                        <height>45</height>
+                        <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
+                        <texture colordiffuse="$VAR[Color_Highlight]">dialog/loading-spinner.png</texture>
+                        <aspectratio>keep</aspectratio>
+                        <include>Animation_Vertical_Widgets_Title_Loading</include>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) | Container(9506).IsUpdating | Container(9556).IsUpdating | Container(9514).IsUpdating | Container(9515).IsUpdating | Container(9502).IsUpdating | Container(9517).IsUpdating | Container(9503).IsUpdating | Container(9557).IsUpdating | Container(50).IsUpdating | Container(9554).IsUpdating | Container(9552).IsUpdating | Container(9553).IsUpdating | Container(9558).IsUpdating | Container(9559).IsUpdating | Container(9579).IsUpdating | Container(9520).IsUpdating | Container(95051).IsUpdating | Container(9504).IsUpdating</visible>
+                        <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set)</visible>
+                        <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                    </control>
+                     <control type="label">
+                        <align>left</align>
+                        <left>175</left>
+                        <height>50</height>
+                        <font>Mini</font>
+                        <scroll>false</scroll>
+                        <textcolor>Dark3</textcolor>
+                        <label>$LOCALIZE[31664]...</label>
+                        <aligny>center</aligny>
+                        <align>right</align>
+                        <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
+                        <include>Animation_Button_Label_Video</include>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) | Container(9506).IsUpdating | Container(9556).IsUpdating | Container(9514).IsUpdating | Container(9515).IsUpdating | Container(9502).IsUpdating | Container(9517).IsUpdating | Container(9503).IsUpdating | Container(9557).IsUpdating | Container(50).IsUpdating | Container(9554).IsUpdating | Container(9552).IsUpdating | Container(9553).IsUpdating | Container(9558).IsUpdating | Container(9559).IsUpdating | Container(9579).IsUpdating | Container(9520).IsUpdating | Container(95051).IsUpdating | Container(9504).IsUpdating</visible>
+                        <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set)</visible>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                    </control>
+                     <control type="label" id="1112">
+                        <align>left</align>
+                        <left>130</left>
+                        <height>50</height>
+                        <font>Mini</font>
+                        <scroll>false</scroll>
+                        <textcolor>Dark3</textcolor>
+                        <label>$VAR[Label_Dialog_Info_Footer_Tip_Left]</label>
+                        <aligny>center</aligny>
+                        <align>right</align>
+                        <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
+                        <include>Animation_Button_Label_Video</include>
+                        <visible>![!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) | Container(9506).IsUpdating | Container(9556).IsUpdating | Container(9514).IsUpdating | Container(9515).IsUpdating | Container(9502).IsUpdating | Container(9517).IsUpdating | Container(9503).IsUpdating | Container(9557).IsUpdating | Container(50).IsUpdating | Container(9554).IsUpdating | Container(9552).IsUpdating | Container(9553).IsUpdating | Container(9558).IsUpdating | Container(9559).IsUpdating | Container(9579).IsUpdating | Container(9520).IsUpdating | Container(95051).IsUpdating | Container(9504).IsUpdating]</visible>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                    </control>
+                </control>
+                <control type="group">
+                    <top>998</top>
+                    <width>auto</width>
+                    <control type="label">
+                        <left>90</left>
+                        <height>50</height>
+                        <font>tiny</font>
+                        <textcolor>Dark1</textcolor>
+                        <selectedcolor>Dark1</selectedcolor>
+                        <scroll>true</scroll>
+                        <scrollspeed>40</scrollspeed>
+                        <label>$INFO[ListItem.Path]</label>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <visible>Skin.HasSetting(DebugShow.path) + ControlGroup(9000).HasFocus()</visible>
+                    </control>
+                </control>
+
+                <!-- LABEL HEADER -->
+
+                <control type="group">
+                    <include>Animation_Video_FadeOut</include>
+                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <top>70</top>
+                    <left>570</left>
+                    <include content="Def_Width" condition="Player.HasMedia">
+                        <param name="width" value="550" />
+                    </include>
+                    <include content="Def_Width" condition="!Skin.HasSetting(show.header.clearlogo)">
+                        <param name="width" value="1250" />
+                    </include>
+                    <include content="Def_Width" condition="Skin.HasSetting(show.header.clearlogo)">
+                        <param name="width" value="850" />
+                    </include>
+
+                    <!-- icon -->
+                    <control type="image">
+                        <top>11</top>
+                        <width>80</width>
+                        <height>80</height>
+                        <texture colordiffuse="Panel">common/circle2.png</texture>
+                    </control>
+                    <control type="image">
+                        <top>7</top>
+                        <left>-4</left>
+                        <width>88</width>
+                        <height>88</height>
+                        <texture colordiffuse="PanelWhite100" border="12">$VAR[Image_Header_Icon]</texture>
+                    </control>
+
+                    <!-- Main header Title -->
+                    <control type="label">
+                        <left>104</left>
+                        <font>LargeNew</font>
+                        <description>Header Label</description>
+                        <textcolor>Dark1</textcolor>
+                        <label>$VAR[Label_Dialog_Info_Header_Video]</label>
+                    </control>
+
+                    <!-- Sub header Title -->
+                    <control type="label">
+                        <top>55</top>
+                        <left>104</left>
+                        <height>36</height>
+                        <font>Tiny</font>
+                        <textcolor>Dark1</textcolor>
+                        <label>$VAR[Label_Dialog_Info_Header_Tagline_Video]</label>
+                        <aligny>center</aligny>
+                    </control>
+                </control>
+
+                <!-- CLEARLOGO -->
+
+                <control type="image" description="clearlogo">
+                    <include>Animation_Video_FadeOut_Clearlogo</include>
+                    <visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
+                    <visible>Skin.HasSetting(show.dialog.info.clearlogo.video) + !Player.HasMedia</visible>
+                    <visible>![Control.HasFocus(9501) | Control.HasFocus(9506) | Control.HasFocus(95067) | Control.HasFocus(9514) | Control.HasFocus(9515) | Control.HasFocus(9560) | Control.HasFocus(9502) | Control.HasFocus(9507) | Control.HasFocus(9503) | Control.HasFocus(9504) | Control.HasFocus(9552) | Control.HasFocus(9553)]</visible>
+                    <include>Animation_Wiki_FadeOut</include>
+                    <centertop>120</centertop>
+                    <right>SidePad</right>
+                    <height>ClearLogoMaxHeight</height>
+                    <width>ClearLogoMaxWidth</width>
+                    <fadetime>ClearArtFadetime</fadetime>
+                    <aspectratio align="right">keep</aspectratio>
+                    <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation> -->
+                </control>
+
+                <!-- CLEARLOGO EXTENDED VIEW -->
+
+                <control type="image" description="clearlogo">
+                    <include>Animation_Video_FadeIn_Clearlogo</include>
+                    <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+                    <visible>Skin.HasSetting(show.dialog.info.clearlogo.video) + !Player.HasMedia</visible>
+                    <visible>Control.HasFocus(9501) | Control.HasFocus(9506) | Control.HasFocus(95067) | Control.HasFocus(9514) | Control.HasFocus(9515) | Control.HasFocus(9560) | Control.HasFocus(9502) | Control.HasFocus(9507) | Control.HasFocus(9503) | Control.HasFocus(9504) | Control.HasFocus(9517) | Control.HasFocus(9520) | Control.HasFocus(9552) | Control.HasFocus(9553) | Control.HasFocus(9556) | Control.HasFocus(9558) | Control.HasFocus(9559) | Control.HasFocus(9579)</visible>
+                    <include>Animation_Wiki_FadeOut</include>
+                    <centertop>120</centertop>
+                    <right>SidePad</right>
+                    <height>ClearLogoMaxHeight</height>
+                    <width>ClearLogoMaxWidth</width>
+                    <fadetime>ClearArtFadetime</fadetime>
+                    <aspectratio align="right">keep</aspectratio>
+                    <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation> -->
+                </control>
+
+                <!-- ARROWS -->
+
+                <include content="Def_Navigation_Arrows">
+                    <param name="visible" value="Control.HasFocus(95051) + Integer.IsGreater(Container(9505).NumItems,1)" />
+                    <param name="centerbottom" value="560" />
+                </include>
+
+                <!-- FANART -->
+
+                <control type="group">
+                    <visible>String.IsEqual(Window.Property(moviecontent),5)</visible>
+                    <include>Animation_FadeIn_DialogInfo</include>
+                    <include>Animation_FadeOut_DialogInfo</include>
+                    <left>570</left>
+                    <right>SidePad</right>
+                    <bottom>184</bottom>
+                    <top>335</top>
+                    <control type="image">
+                        <left>-8</left>
+                        <top>-126</top>
+                        <right>-8</right>
+                        <bottom>62</bottom>
+                        <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="group">
+                        <left>-7</left>
+                        <top>-126</top>
+                        <right>-7</right>
+                        <bottom>64</bottom>
+                        <control type="image">
+                            <texture border="18">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/selectbox_h.png</texture>
+                            <animation condition="Control.HasFocus(95051)" effect="fade" end="100" start="0" time="150">Conditional</animation>
+                            <animation condition="!Control.HasFocus(95051)" effect="fade" end="0" start="100" time="100">Conditional</animation>
+                        </control>
+                    </control>
+                    <control type="image">
+                        <height>607</height>
+                        <width>1268</width>
+                        <left>1</left>
+                        <top>-118</top>
+                        <texture colordiffuse="White100" border="12">common/box.png</texture>
+                        <animation effect="fade" start="100" end="40" condition="true">Conditional</animation>
+                    </control>
+
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),5)"/>
+                        <param name="controlid" value="9505"/>
+                        <param name="alignleft" value="810"/>
+                        <param name="alignbottom" value="240"/>
+                    </include>
+
+                    <control type="fixedlist" id="9505">
+                        <top>-118</top>
+                        <left>1</left>
+                        <ondown>9000</ondown>
+                        <onback>9000</onback>
+                        <onup>9000</onup>
+                        <width>1268</width>
+                        <preloaditems>2</preloaditems>
+                        <autoscroll time="5000">ControlGroup(9000).HasFocus()</autoscroll>
+                        <viewtype label="31008">fixedlist</viewtype>
+                        <orientation>horizontal</orientation>
+                        <include>Animation_ScrolltimeDetailsList</include>
+                        <visible allowhiddenfocus="true">!Skin.HasSetting(showartwork.video.tmdbhelper) | [!Container(9505).IsUpdating + Skin.HasSetting(showartwork.video.tmdbhelper)]</visible>
+                        <itemlayout width="1268" height="607">
+                            <control type="image">
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/bigwiderolodex.png" fallback="DefaultAddonPicture.png">$VAR[Image_Thumb_Label]</texture>
+                            </control>
+                        </itemlayout>
+                        <focusedlayout width="1268" height="607">
+                            <control type="image">
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/bigwiderolodex.png" fallback="DefaultAddonPicture.png">$VAR[Image_Thumb_Label]</texture>
+                            </control>
+                        </focusedlayout>
+                        <content>
+                            <item id="0">
+                                <label>$INFO[ListItem.Art(fanart)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="1">
+                                <label>$INFO[ListItem.Art(fanart1)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart1)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="2">
+                                <label>$INFO[ListItem.Art(fanart2)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart2)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="3">
+                                <label>$INFO[ListItem.Art(fanart3)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart3)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="4">
+                                <label>$INFO[ListItem.Art(fanart4)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart4)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="5">
+                                <label>$INFO[ListItem.Art(fanart5)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart5)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="6">
+                                <label>$INFO[ListItem.Art(fanart6)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart6)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="7">
+                                <label>$INFO[ListItem.Art(fanart7)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart7)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="8">
+                                <label>$INFO[ListItem.Art(fanart18)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart8)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="9">
+                                <label>$INFO[ListItem.Art(fanart9)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart9)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="10">
+                                <label>$INFO[ListItem.Art(fanart10)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart10)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="11">
+                                <label>$INFO[ListItem.Art(fanart11)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart11)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="12">
+                                <label>$INFO[ListItem.Art(tvshow.fanart)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="13">
+                                <label>$INFO[ListItem.Art(tvshow.fanart1)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart1)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="14">
+                                <label>$INFO[ListItem.Art(tvshow.fanart2)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart2)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="15">
+                                <label>$INFO[ListItem.Art(tvshow.fanart3)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart3)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="16">
+                                <label>$INFO[ListItem.Art(tvshow.fanart4)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart4)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="17">
+                                <label>$INFO[ListItem.Art(tvshow.fanart5)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart5)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="18">
+                                <label>$INFO[ListItem.Art(tvshow.fanart6)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart6)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="19">
+                                <label>$INFO[ListItem.Art(tvshow.fanart7)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart7)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="20">
+                                <label>$INFO[ListItem.Art(tvshow.fanart8)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart8)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="21">
+                                <label>$INFO[ListItem.Art(tvshow.fanart9)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart9)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="22">
+                                <label>$INFO[ListItem.Art(tvshow.fanart10)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart10)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="23">
+                                <label>$INFO[ListItem.Art(landscape)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(hide.artwork.video.landscape)</visible>
+                            </item>
+                        </content>
+                        <include condition="Skin.HasSetting(showartwork.video.tmdbhelper) + !Skin.HasSetting(hide.button.video.fanart)">Image_Content_Additional_Fanart</include>
+                    </control>
+                    <control type="image">
+                        <right>40</right>
+                        <bottom>100</bottom>
+                        <width>50</width>
+                        <height>50</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="88ffffff">common/lupe.png</texture>
+                        <visible>Control.HasFocus(95051)</visible>
+                        <include>Animation_Delay_FadeIn</include>
+                    </control>
+
+                </control>
+
+                <!-- VIDEO TRAILER WINDOWED -->
+
+                <control type="group">
+                    <visible>Control.HasFocus(7012)</visible>
+                    <visible>Player.HasVideo</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TrailerWindowedIsPlaying))</visible>
+
+                    <include>Animation_FadeIn_DialogInfo</include>
+                    <include>Animation_FadeOut_DialogInfo</include>
+                    <left>570</left>
+                    <right>SidePad</right>
+                    <bottom>184</bottom>
+                    <top>217</top>
+
+                    <control type="image">
+                        <top>-9</top>
+                        <left>-8</left>
+                        <height>625</height>
+                        <width>1286</width>
+                        <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>1</left>
+                        <height>607</height>
+                        <width>1268</width>
+                        <texture colordiffuse="black" border="12">common/box.png</texture>
+                    </control>
+
+                    <!-- VIDEO WINDOW -->
+
+                    <control type="group">
+                        <height>607</height>
+                        <width>1268</width>
+                        <control type="videowindow" />
+                    </control>
+
+                    <!-- PAUSED -->
+
+                    <include content="Object_PauseSpinner">
+                        <param name="centerleft" value="50%" />
+                        <param name="centertop" value="50%" />
+                    </include>
+
+                    <!-- LABEL INFO -->
+
+                    <control type="group">
+                        <bottom>60</bottom>
+                        <include>Object_OSD_Label_Info</include>
+                    </control>
+
+                    <!-- MINI PLAYER -->
+
+                    <control type="group">
+                        <left>20</left>
+                        <right>20</right>
+                        <bottom>80</bottom>
+                        <!-- <visible>Player.Seeking | Player.DisplayAfterSeek | Player.Paused</visible> -->
+                        <visible>Player.Seeking  | Player.DisplayAfterSeek | Player.Paused | Player.Forwarding | Player.Rewinding</visible>
+                        <include>Animation_FadeIn</include>
+                        <include>Animation_FadeOut</include>
+                        <include>Object_OSD_Seekbar_Bar</include>
+                    </control>
+
+                    <!-- BUTTON TRAILER -->
+
+                    <control type="button" id="7012">
+                        <include>Def_Hidden_Button</include>
+
+                        <texturenofocus />
+                        <texturefocus />
+
+                        <oninfo>9000</oninfo>
+                        <oninfo>ClearProperty(TrailerWindowedIsPlaying,Home)</oninfo>
+                        <oninfo condition="Player.HasVideo">Stop</oninfo>
+
+                        <onback>9000</onback>
+                        <onback>ClearProperty(TrailerWindowedIsPlaying,Home)</onback>
+                        <onback condition="Player.HasVideo">Stop</onback>
+
+                        <onclick condition="!Player.HasVideo">SetFocus(9000)</onclick>
+                        <onclick condition="!Player.HasVideo">ClearProperty(TrailerWindowedIsPlaying,Home)</onclick>
+                        <onclick condition="Player.HasVideo">PlayerControl(Play)</onclick>
+
+                        <onunfocus>SetFocus(9000)</onunfocus>
+                        <onunfocus>ClearProperty(TrailerWindowedIsPlaying,Home)</onunfocus>
+                        <onunfocus condition="Player.HasVideo">Stop</onunfocus>
+
+                        <onleft condition="!Player.HasVideo">SetFocus(9000)</onleft>
+                        <onleft condition="!Player.HasVideo">ClearProperty(TrailerWindowedIsPlaying,Home)</onleft>
+                        <onleft condition="Player.HasVideo">StepBack</onleft>
+
+                        <onright condition="!Player.HasVideo">SetFocus(9000)</onright>
+                        <onright condition="!Player.HasVideo">ClearProperty(TrailerWindowedIsPlaying,Home)</onright>
+                        <onright condition="Player.HasVideo">StepForward</onright>
+
+                        <onup>SetFocus(9000)</onup>
+                        <onup>ClearProperty(TrailerWindowedIsPlaying,Home)</onup>
+                        <onup condition="Player.HasVideo">Stop</onup>
+
+                        <ondown>SetFocus(9000)</ondown>
+                        <ondown>ClearProperty(TrailerWindowedIsPlaying,Home)</ondown>
+                        <ondown condition="Player.HasVideo">Stop</ondown>
+                    </control>
+                </control>
+
+                <!-- BOX TRAILER -->
+
+                <control type="group">
+                    <visible>String.IsEqual(Window.Property(moviecontent),6)</visible>
+                    <visible>!Control.HasFocus(7011)</visible>
+                    <visible>!Player.HasVideo</visible>
+                    <visible>String.IsEmpty(Window(Home).Property(TrailerWindowedIsPlaying))</visible>
+
+                    <include>Animation_FadeIn_DialogInfo</include>
+                    <include>Animation_FadeOut_DialogInfo</include>
+                    <left>570</left>
+                    <right>SidePad</right>
+                    <bottom>184</bottom>
+                    <top>217</top>
+
+                    <control type="image">
+                        <top>-9</top>
+                        <left>-8</left>
+                        <height>625</height>
+                        <width>1286</width>
+                        <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>1</left>
+                        <height>607</height>
+                        <width>1268</width>
+                        <texture colordiffuse="Panel" border="12">common/box.png</texture>
+                    </control>
+
+                    <control type="image">
+                        <left>1</left>
+                        <height>607</height>
+                        <width>1268</width>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/bigwiderolodex.png" fallback="DefaultAddonPicture.png">$INFO[ListItem.Art(fanart)]</texture>
+                        <animation effect="fade" end="10" start="100" time="100" condition="true" >Conditional</animation>
+                    </control>
+
+                    <control type="group">
+                        <left>0</left>
+                        <top>-120</top>
+                        <control type="group">
+                            <left>560</left>
+                            <control type="image" description="Back">
+                                <left>0</left>
+                                <centertop>55%</centertop>
+                                <width>100</width>
+                                <height>100</height>
+                                <aspectratio align="center" aligny="center">keep</aspectratio>
+                                <texture colordiffuse="Dark2">dialog/loading-back.png</texture>
+                                <animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
+                            </control>
+                            <control type="image" description="Back">
+                                <left>0</left>
+                                <centertop>55%</centertop>
+                                <width>100</width>
+                                <height>100</height>
+                                <aspectratio align="center" aligny="center">keep</aspectratio>
+                                <texture colordiffuse="Dark2">progress/play.png</texture>
+                            </control>
+                        </control>
+                    </control>
+                </control>
+
+                <!-- INFORMATION DETAILED -->
+
+                <control type="group">
+                    <visible>String.IsEqual(Window.Property(moviecontent),1)</visible>
+                    <include>Animation_FadeIn_DialogInfo</include>
+                    <include>Animation_FadeOut_DialogInfo</include>
+                    <left>570</left>
+                    <right>SidePad</right>
+                    <top>545</top>
+
+                    <!-- label -->
+                    <control type="grouplist">
+                        <orientation>vertical</orientation>
+                        <itemgap>-30</itemgap>
+                        <height>400</height>
+                        <width>195</width>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[31648][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(Container(99950).ListItem.Property(Creator))</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[20339][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Container(99950).ListItem.Director)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[20417][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Container(99950).ListItem.Writer)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[572][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Studio) | !String.IsEmpty(Container(99950).ListItem.Property(Studio))</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]IMDb[/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Rating(imdb)) | !String.IsEmpty(Container(99950).ListItem.Property(IMDb_Rating))</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[574][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Country) | !String.IsEmpty(Container(99950).ListItem.Country)</visible>
+                        </control>
+                        <control type="label">
+                            <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>!String.IsEqual(ListItem.Property(AudioLanguage.1),und) + !String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[445][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                        </control>
+                        <control type="label">
+                            <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[287][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                        </control>
+                        <control type="label">
+                            <visible>String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Container(99950).ListItem.Property(Provider.1.Icon))</visible>
+                            <font>Tiny</font>
+                            <textcolor>Dark1</textcolor>
+                            <label>[B]$LOCALIZE[19101][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                        </control>
+                    </control>
+
+                    <!-- value -->
+                    <control type="grouplist">
+                        <orientation>vertical</orientation>
+                        <itemgap>-30</itemgap>
+                        <height>400</height>
+                        <width>600</width>
+                        <left>210</left>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label>$INFO[Container(99950).ListItem.Property(Creator)]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(Container(99950).ListItem.Property(Creator))</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label fallback="19055">$VAR[Label_Director]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Container(99950).ListItem.Director)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label fallback="19055">$VAR[Label_Writer]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Container(99950).ListItem.Writer)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label fallback="19055">$VAR[Label_Studio]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Studio) | !String.IsEmpty(Container(99950).ListItem.Property(Studio))</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label>$VAR[Label_Imdb_Top250_Votes]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Rating(imdb)) | !String.IsEmpty(Container(99950).ListItem.Property(IMDb_Rating))</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label fallback="19055">$VAR[Label_Country]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Country) | !String.IsEmpty(Container(99950).ListItem.Country)</visible>
+                        </control>
+
+                        <control type="grouplist">
+                            <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>!String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
+                            <orientation>horizontal</orientation>
+                            <usecontrolcoords>true</usecontrolcoords>
+                            <height>68</height>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(AudioLanguage.1),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(AudioLanguage.2),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.2))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(AudioLanguage.3),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.3))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(AudioLanguage.4),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.4))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(AudioLanguage.5),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.5))</visible>
+                            </control>
+                        </control>
+
+                        <control type="grouplist">
+                            <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)</visible>
+                            <orientation>horizontal</orientation>
+                            <usecontrolcoords>true</usecontrolcoords>
+                            <height>68</height>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(SubtitleLanguage.1),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(SubtitleLanguage.2),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.2))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(SubtitleLanguage.3),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.3))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(SubtitleLanguage.4),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.4))</visible>
+                            </control>
+                            <control type="image">
+                                <top>20</top>
+                                <width>32</width>
+                                <height>28</height>
+                                <texture>$INFO[ListItem.Property(SubtitleLanguage.5),flags/lang/,.png]</texture>
+                                <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.5))</visible>
+                            </control>
+                        </control>
+
+                        <control type="grouplist">
+                            <usecontrolcoords>true</usecontrolcoords>
+                            <visible>String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Container(99950).ListItem.Property(Provider.1.Icon))</visible>
+                            <orientation>horizontal</orientation>
+                            <height>50</height>
+                            <include content="TvShowProviderIcon"><param name="icon" value="1" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="2" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="3" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="4" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="5" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="6" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="7" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="8" /></include>
+                            <include content="TvShowProviderIcon"><param name="icon" value="9" /></include>
+                            <control type="image">
+                                <top>20</top>
+                                <width>128</width>
+                                <height>30</height>
+                                <texture>misc/just_watch_icon.png</texture>
+                            </control>
+                        </control>
+                    </control>
+
+                    <control type="textbox">
+                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_Consensus)) + Skin.HasSetting(show.consensus)</visible>
+                        <width>400</width>
+                        <height>225</height>
+                        <top>28</top>
+                        <right>40</right>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>Consensus</font>
+                        <textcolor>Dark2</textcolor>
+                        <label>[LIGHT][I]"$INFO[Container(99950).ListItem.Property(RottenTomatoes_Consensus)]"[/I][/LIGHT]</label>
+                    </control>
+
+                    <control type="image" description="clearlogo">
+                        <fadetime>ClearArtFadetime</fadetime>
+                        <bottom>260</bottom>
+                        <right>5</right>
+                        <width>350</width>
+                        <aspectratio scalediffuse="true" align="left" aligny="bottom">keep</aspectratio>
+                        <texture background="true">$INFO[ListItem.Art(clearart)]</texture>
+                        <visible>Skin.HasSetting(show.clearart)</visible>
+                    </control>
+
+                    <control type="image" description="lign">
+                        <width>350</width>
+                        <right>5</right>
+                        <height>1</height>
+                        <bottom>260</bottom>
+                        <texture flipy="true" colordiffuse="Box_Home_Row">common/sch2.png</texture>
+                        <visible>!String.IsEmpty(ListItem.Art(clearart))</visible>
+                        <visible>Skin.HasSetting(show.clearart)</visible>
+                    </control>
+
+                    <control type="image">
+                        <height>109</height>
+                        <width>161</width>
+                        <bottom>260</bottom>
+                        <right>5</right>
+                        <texture colordiffuse="Dark1">$VAR[Image_Thumb_Studios_Dialog_Info]</texture>
+                        <visible>Skin.HasSetting(show.studiologos)</visible>
+                    </control>
+
+                    <control type="image">
+                        <height>109</height>
+                        <width>240</width>
+                        <bottom>260</bottom>
+                        <right>5</right>
+                        <aspectratio align="right" aligny="bottom">keep</aspectratio>
+                        <texture colordiffuse="Dark1">$VAR[RatingFlagVarInfo]</texture>
+                        <visible>!Skin.HasSetting(show.studiologos) + !Skin.HasSetting(show.clearart) + !Skin.HasSetting(show.consensus)</visible>
+                    </control>
+                </control>
+
+                <!-- INFORMATION -->
+
+                <control type="group">
+                    <visible>!String.IsEqual(Window.Property(moviecontent),5) + !String.IsEqual(Window.Property(moviecontent),6) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+                    <include>Animation_Video_FadeOut</include>
+                    <include condition="!String.IsEqual(ListItem.Property(item.type),person)">Furniture_Flags_DialogInfo_Video</include>
+                    <include>Animation_FadeIn_DialogInfo</include>
+                    <include>Animation_FadeOut_DialogInfo</include>
+                    <left>570</left>
+                    <bottom>224</bottom>
+                    <top>205</top>
+                    <control type="group">
+                        <right>SidePad</right>
+
+                        <!-- SETS -->
+
+                        <control type="grouplist">
+                            <visible>String.IsEqual(ListItem.DBType,set)</visible>
+                            <orientation>horizontal</orientation>
+                            <itemgap>15</itemgap>
+                            <top>5</top>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>195</width>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[345][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[31443][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>235</width>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[Container(99950).ListItem.Property(Set.Years)]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[Container(44023).NumItems]$INFO[Container(99950).ListItem.Property(Set.NumItems),/,] $LOCALIZE[342]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>195</width>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[515][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[563][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>600</width>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[Container(99950).ListItem.Property(Set.Genres)]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[Container(99950).ListItem.Property(Set.Rating)] ($INFO[Container(99950).ListItem.Property(Set.Votes)] votes)</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                        </control>
+
+                        <!-- MOVIE / TVSHOW -->
+
+                        <control type="grouplist">
+                            <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set)</visible>
+                            <orientation>horizontal</orientation>
+                            <itemgap>15</itemgap>
+                            <top>5</top>
+
+                             <!-- INFO LEFT -->
+
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>195</width>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[31184][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[2050][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>235</width>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$VAR[Label_Year]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$VAR[Label_Duration_Time_Check]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+
+                            <!-- INFO RIGHT -->
+
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>195</width>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[515][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$VAR[RatingTagsLabel][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>600</width>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$VAR[Label_Genre]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$VAR[RatingInfo]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                        </control>
+
+                        <!-- PERSON -->
+
+                        <control type="grouplist">
+                            <visible>String.IsEqual(ListItem.Property(item.type),person)</visible>
+                            <orientation>horizontal</orientation>
+                            <itemgap>15</itemgap>
+                            <top>5</top>
+
+                             <!-- INFO LEFT -->
+
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>195</width>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[31637][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[31639][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>235</width>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[ListItem.Property(Birthday)]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[ListItem.Property(Age)] $LOCALIZE[31644]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                            </control>
+
+                            <!-- INFO RIGHT -->
+
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>195</width>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[31638][/B]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <font>Tiny</font>
+                                    <height>36</height>
+                                    <textcolor>Dark1</textcolor>
+                                    <label>[B]$LOCALIZE[31642][/B]</label>
+                                    <aligny>center</aligny>
+                                    <visible>!String.IsEmpty(ListItem.Property(Deathday))</visible>
+                                </control>
+                            </control>
+                            <control type="grouplist">
+                                <orientation>vertical</orientation>
+                                <itemgap>0</itemgap>
+                                <width>600</width>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[ListItem.Property(Born)]</label>
+                                    <aligny>center</aligny>
+                                </control>
+                                <control type="label">
+                                    <height>36</height>
+                                    <font>Tiny</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label fallback="19055">$INFO[ListItem.Property(Deathday)]</label>
+                                    <aligny>center</aligny>
+                                    <visible>!String.IsEmpty(ListItem.Property(Deathday))</visible>
+                                </control>
+                            </control>
+                        </control>
+
+                        <!-- PLOT -->
+
+                        <control type="textbox">
+                            <visible>[[String.IsEqual(Container(50).NumItems,0) | Skin.HasSetting(HideActorImages)] + String.IsEmpty(Window.Property(moviecontent))] | String.IsEqual(ListItem.DBType,video) | String.IsEmpty(ListItem.DBType)</visible>
+                            <visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
+                            <right>0</right>
+                            <top>180</top>
+                            <left>0</left>
+                            <height>428</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <align>left</align>
+                            <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
+                        </control>
+                        <control type="textbox">
+                            <visible>[[String.IsEqual(Container(50).NumItems,0) | Skin.HasSetting(HideActorImages)] + !String.IsEmpty(Window.Property(moviecontent))] | [!String.IsEqual(Container(50).NumItems,0) + !Skin.HasSetting(HideActorImages)]</visible>
+                            <visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
+                            <right>0</right>
+                            <top>180</top>
+                            <left>0</left>
+                            <height>145</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <align>left</align>
+                            <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
+                        </control>
+
+                         <control type="textbox">
+                            <visible>[String.IsEqual(Container(50).NumItems,0) | Skin.HasSetting(HideActorImages)] + String.IsEmpty(Window.Property(moviecontent))</visible>
+                            <visible>String.IsEqual(ListItem.Property(item.type),person)</visible>
+                            <right>0</right>
+                            <top>110</top>
+                            <left>0</left>
+                            <height>498</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <align>left</align>
+                            <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
+                        </control>
+                        <control type="textbox">
+                            <visible>[[String.IsEqual(Container(50).NumItems,0) | Skin.HasSetting(HideActorImages)] + !String.IsEmpty(Window.Property(moviecontent))] | [!String.IsEqual(Container(50).NumItems,0) + !Skin.HasSetting(HideActorImages)]</visible>
+                            <visible>String.IsEqual(ListItem.Property(item.type),person)</visible>
+                            <right>0</right>
+                            <top>110</top>
+                            <left>0</left>
+                            <height>215</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <align>left</align>
+                            <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
+                        </control>
+                    </control>
+                </control>
+
+<!--                                                                -->
+<!--            Sets                                                -->
+<!--            -------------------------------------------         -->
+<!--            9550    SETS (SET TYPE)                             -->
+<!--                                                                -->
+<!--            Movie / tv show                                     -->
+<!--            -------------------------------------------         -->
+<!--            50      CAST                                        -->
+<!--            9506    DIRECTOR                                    -->
+<!--            9556    WRITER                                      -->
+<!--            9557    CREW                                        -->
+<!--            9514    YEAR                                        -->
+<!--            9515    SET (only movie)                            -->
+<!--            9502    SIMILAR                                     -->
+<!--            9517    RECOMENDATION                               -->
+<!--            9503    STUDIO                                      -->
+<!--                                                                -->
+<!--            tvshow                                              -->
+<!--            -------------------------------------------         -->
+<!--            9579    SEASONS                                     -->
+<!--            9520    CREATOR                                     -->
+<!--                                                                -->
+<!--            Person                                              -->
+<!--            -------------------------------------------         -->
+<!--            9552    MOVIES      LIST BY CAST                    -->
+<!--            9553    TVSHOWS     LIST BY CAST                    -->
+<!--            9558    MOVIES      LIST BY MEMBER CREW             -->
+<!--            9559    TVSHOWS     LIST BY MEMBER CREW             -->
+<!--            9554    PICTURES    LIST BY CAST                    -->
+<!--                                                                -->
+<!--            commun                                              -->
+<!--            -------------------------------------------         -->
+<!--            9504    YOUTUBE                                     -->
+<!--                                                                -->
+
+                <!-- EXTENDED VIEW - FURNITURE HEADER -->
+
+                <!-- MOVIE / TV SHOW  -->
+
+                <!-- Cast -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEmpty(Window.Property(moviecontent))"/>
+                    <param name="controlid" value="50"/>
+                </include>
+
+                <!-- Director -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.director)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),7)"/>
+                    <param name="controlid" value="9506"/>
+                </include>
+
+                <!-- writer -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.writer)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),14)"/>
+                    <param name="controlid" value="9556"/>
+                </include>
+
+                <!-- crew -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.crew)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17)"/>
+                    <param name="controlid" value="9557"/>
+                </include>
+
+                <!-- year -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.year)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),9)"/>
+                    <param name="controlid" value="9514"/>
+                </include>
+
+                <!-- set (movie) -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.set)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),8)"/>
+                    <param name="controlid" value="9515"/>
+                </include>
+
+                <!-- similar -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.video.similar)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),2)"/>
+                    <param name="controlid" value="9502"/>
+                </include>
+
+                <!-- recommendation -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.recommended)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),16)"/>
+                    <param name="controlid" value="9517"/>
+                </include>
+
+                <!-- studio -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.video.studio)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),3)"/>
+                    <param name="controlid" value="9503"/>
+                </include>
+
+                <!-- youtube -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.video.youtube)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),4)"/>
+                    <param name="controlid" value="9504"/>
+                </include>
+
+                <!-- TVSHOW -->
+
+                <!-- seasons -->
+                <include content="Furniture_Header_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.tvshow.season)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),15)"/>
+                    <param name="controlid" value="9579"/>
+                </include>
+
+                <!-- creator -->
+                 <include content="Furniture_Header_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.tvshow.creator)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),20)"/>
+                    <param name="controlid" value="9520"/>
+                </include>
+
+				<!-- PERSON -->
+
+                <!-- movies      list by cast -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),11)"/>
+                    <param name="controlid" value="9552"/>
+                </include>
+
+                <!-- tvshows      list by cast -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),12)"/>
+                    <param name="controlid" value="9553"/>
+                </include>
+
+                <!-- movies      list by member crew -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),18)"/>
+                    <param name="controlid" value="9558"/>
+                </include>
+
+                <!-- tvshows      list by member crew -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),19)"/>
+                    <param name="controlid" value="9559"/>
+                </include>
+
+                <!-- pictures     -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),13)"/>
+                    <param name="controlid" value="9554"/>
+                </include>
+
+                <!-- SETS -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) | String.IsEqual(Window.Property(moviecontent),10)"/>
+                    <param name="controlid" value="9550"/>
+                </include>
+
+
+                <!-- EXTENDED VIEW - DEFINITION -->
+
+                <control type="group">
+                    <top>200</top>
+                    <left>788</left>
+
+                    <!-- CAST LOCAL -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_50" condition="!String.IsEqual(ListItem.DBType,set)">
+                        <param name="arrowleft" value="-700"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="fallbackpicture" value="DefaultActor.png"/>
+                        <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + !Skin.HasSetting(HideActorImages) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/>
+                        <param name="visible.layouts" value="[Control.HasFocus(50) + !Window.IsVisible(DialogVideoManager.xml)] | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="false"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="50"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="condition.castfadeout" value="true"/>
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEmpty(Window.Property(moviecontent))"/>
+                        <param name="controlid" value="50"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+                    <!-- SETS -->
+
+                    <!-- <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.DBType,set)"> -->
+                        <!-- <param name="arrowleft" value="-598"/> -->
+                        <!-- <param name="arrowtop" value="342"/> -->
+                        <!-- <param name="arrowright" value="155"/> -->
+                        <!-- <param name="condition.issets" value="true"/> -->
+                        <!-- <param name="condition.isnotsets" value="false"/> -->
+                        <!-- <param name="visi" value="String.IsEqual(Window.Property(moviecontent),10) + !Skin.HasSetting(HideActorImages) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/> -->
+                        <!-- <param name="visible.layouts" value="Control.HasFocus(50) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/> -->
+                        <!-- <param name="storageicon.backgroundlist" value="false"/> -->
+                        <!-- <param name="onclick1" value="$VAR[Def_Item]"/> -->
+                        <!-- <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/> -->
+                        <!-- <param name="animation" value="Animation_cast"/> -->
+                        <!-- <param name="controlid" value="50"/> -->
+                        <!-- <param name="fallbackpicture" value="DefaultMovie.png"/> -->
+                        <!-- <param name="listleft" value="-840"/> -->
+                        <!-- <param name="labeltwovisible" value="true"/> -->
+                    <!-- </include> -->
+
+                    <!-- CAST TMDB -->
+
+                    <!-- <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)"> -->
+                        <!-- <param name="arrowleft" value="-598"/> -->
+                        <!-- <param name="arrowtop" value="342"/> -->
+                        <!-- <param name="arrowright" value="155"/> -->
+                        <!-- <param name="condition.includecontent" value="true"/> -->
+                        <!-- <param name="fallbackpicture" value="pbtmdb.png"/> -->
+                        <!-- <param name="visi" value="String.IsEqual(Window.Property(moviecontent),10) + !Skin.HasSetting(HideActorImages) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/> -->
+                        <!-- <param name="animation" value="Animation_cast"/> -->
+                        <!-- <param name="controlid" value="9550"/> -->
+                        <!-- <param name="ContentToLoad" value="$VAR[Def_List_Cast]"/> -->
+                        <!-- <param name="visible.layouts" value="Control.HasFocus(9550) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/> -->
+                        <!-- <param name="storageicon.backgroundlist" value="true"/> -->
+                        <!-- <param name="onclick1" value="$VAR[Def_Item_Cast]"/> -->
+                        <!-- <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/> -->
+                        <!-- <param name="listleft" value="-840"/> -->
+                        <!-- <param name="labeltwovisible" value="true"/> -->
+                        <!-- <param name="poster" value="true" /> -->
+                        <!-- <param name="thumb" value="false" /> -->
+                    <!-- </include> -->
+
+                    <!-- SETS -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.DBType,set)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.issets" value="true"/>
+                        <param name="condition.isnotsets" value="false"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + !Skin.HasSetting(HideActorImages) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9550"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Set]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="ascending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9550) | Control.HasFocus(95507) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + String.IsEqual(ListItem.DBType,set)"/>
+                        <param name="controlid" value="9550"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- MOVIES LIST BY CAST -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),11)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9552"/>
+                        <param name="ContentToLoad" value="$VAR[Def_Person_List_Movies]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9552) | Control.HasFocus(95527) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),11)"/>
+                        <param name="controlid" value="9552"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- TVSHOWS LIST BY CAST -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),12)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9553"/>
+                        <param name="ContentToLoad" value="$VAR[Def_Person_List_TvShows]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9553) | Control.HasFocus(95537) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),12)"/>
+                        <param name="controlid" value="9553"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- MOVIES LIST BY MEMBER CREW -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(filter.video.only.local)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),18)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9558"/>
+                        <param name="ContentToLoad" value="$VAR[Def_Person_List_Movies_Member_Crew]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9558) | Control.HasFocus(95587) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),18)"/>
+                        <param name="controlid" value="9558"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- TVSHOWS LIST BY MEMBER CREW -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(filter.video.only.local)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),19)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9559"/>
+                        <param name="ContentToLoad" value="$VAR[Def_Person_List_TvShows_Member_Crew]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9559) | Control.HasFocus(95597) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),19)"/>
+                        <param name="controlid" value="9559"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- SEASONS -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster"  condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.tvshow.season)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),15)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9579"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Seasons]"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9579) | Control.HasFocus(95797) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),15)"/>
+                        <param name="controlid" value="9579"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- PICTURES LIST BY CAST -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,set)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),13) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9554"/>
+                        <param name="ContentToLoad" value="$VAR[Def_Person_List_Picture]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9554) | Control.HasFocus(6) | Control.HasFocus(10) | Control.HasFocus(160) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="SetFocus(160)"/>
+                        <!-- <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/> -->
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),13)"/>
+                        <param name="controlid" value="9554"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- CREATOR -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.tvshow.creator) + !Skin.HasSetting(filter.video.only.local)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),20)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9520"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Creator]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9520) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),20)"/>
+                        <param name="controlid" value="9520"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- BY DIRECTOR -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.director)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),7)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9506"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Director]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9506) | Control.HasFocus(95067) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),7)"/>
+                        <param name="controlid" value="9506"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- WRITER -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.writer)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),14)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9556"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Writer]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9556) | Control.HasFocus(95567) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),14)"/>
+                        <param name="controlid" value="9556"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- CREW -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.crew) + !Skin.HasSetting(filter.video.only.local)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9557"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Crew]"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9557) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17)"/>
+                        <param name="controlid" value="9557"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- YEAR MOVIES / TV SHOWS -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.year)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),9)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9514"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Year]"/>
+                        <param name="sortby" value="country"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9514) | Control.HasFocus(95147) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),9)"/>
+                        <param name="controlid" value="9514"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- BY SETS -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.set)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),8)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9515"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Set]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="ascending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9515) | Control.HasFocus(95157) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),8)"/>
+                        <param name="controlid" value="9515"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- SIMILAR MOVIES / TV SHOWS  -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.similar)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),2)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9502"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Similar]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),2)"/>
+                        <param name="controlid" value="9502"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- RECOMENDATION MOVIES / TV SHOWS  -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.recommended) + !Skin.HasSetting(filter.video.only.local)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),16)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9517"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Recommendation]"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9517) | Control.HasFocus(95177) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),16)"/>
+                        <param name="controlid" value="9517"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- STUDIO MOVIES / TV SHOWS -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.studio)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),3)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9503"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Studio]"/>
+                        <param name="sortby" value="year"/>
+                        <param name="sortorder" value="descending"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9503) | Control.HasFocus(95037) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),3)"/>
+                        <param name="controlid" value="9503"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+
+                    <!-- YOUTUBE -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square" condition="[[[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.Property(item.type),person)] + !String.IsEqual(ListItem.DBType,set)] | $EXP[IsTMDbHelperItem]] + !Skin.HasSetting(hide.button.video.youtube)">
+                        <param name="arrowleft" value="-748"/>
+                        <param name="arrowright" value="384"/>
+                        <param name="fallbackpicture" value="DefaultVideo.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),4) + !Window.IsVisible(DialogContextMenu.xml)"/>
+                        <param name="Animation_new" value="Animation_CastInfo2"/>
+                        <param name="controlid" value="9504"/>
+                        <!-- <param name="focusposition" value="1"/> -->
+                        <param name="visible.layouts" value="Control.HasFocus(9504) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="ContentToLoad" value="$VAR[Def_Content_Youtube_Video]"/>
+                        <param name="onclick1" value="SetProperty(VideoYoutubeIsPlaying,$INFO[Container(9504).ListItem.FileNameAndPath],Home)"/>
+                        <param name="onclick2" value="SetFocus(7011)"/>
+                        <param name="onclick3" value="AlarmClock(LaunchYoutubeVideo,PlayMedia($ESCINFO[Window(Home).Property(VideoYoutubeIsPlaying)],False,1,playlist_type_hint=1),00:01,silent)"/>
+                        <param name="limit" value="25"/>
+                        <param name="sortby" value="file"/>
+                        <param name="target" value="videos"/>
+                        <param name="leftbackgroundlist" value="-227"/>
+                        <param name="alignleft" value="450"/>
+                        <param name="thumb" value="true"/>
+                        <param name="aspect" value="keep"/>
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),4)"/>
+                        <param name="controlid" value="9504"/>
+                        <param name="alignleft" value="450"/>
+                    </include>
+                </control>
+
+                <!-- EXTENDED VIEW - FURNITURE FOOTER / FLAG -->
+
+                <!-- MOVIE / TV SHOW  -->
+
+                <!-- Cast -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEmpty(Window.Property(moviecontent))"/>
+                    <param name="controlid" value="50"/>
+                </include>
+
+                <!-- Director -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.director)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),7)"/>
+                    <param name="controlid" value="9506"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),7)"/>
+                    <param name="controlid" value="9506"/>
+                </include>
+
+                <!-- writer -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.writer)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),14)"/>
+                    <param name="controlid" value="9556"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),14)"/>
+                    <param name="controlid" value="9556"/>
+                </include>
+
+                <!-- crew -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17)"/>
+                    <param name="controlid" value="9557"/>
+                </include>
+
+                <!-- year -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),9)"/>
+                    <param name="controlid" value="9514"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),9)"/>
+                    <param name="controlid" value="9514"/>
+                </include>
+
+                <!-- set (movie) -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.set)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),8)"/>
+                    <param name="controlid" value="9515"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),8)"/>
+                    <param name="controlid" value="9515"/>
+                </include>
+
+                <!-- similar -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.video.similar)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),2)"/>
+                    <param name="controlid" value="9502"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),2)"/>
+                    <param name="controlid" value="9502"/>
+                </include>
+
+                <!-- recommendation -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="Skin.HasSetting(show.button.video.recommended)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),16)"/>
+                    <param name="controlid" value="9517"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),16)"/>
+                    <param name="controlid" value="9517"/>
+                </include>
+
+                <!-- studio -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.video.studio)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),3)"/>
+                    <param name="controlid" value="9503"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),3)"/>
+                    <param name="controlid" value="9503"/>
+                </include>
+
+                <!-- youtube -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.video.youtube)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),4)"/>
+                    <param name="controlid" value="9504"/>
+                </include>
+
+                <!-- TVSHOW -->
+
+                <!-- seasons -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.tvshow.season)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),15)"/>
+                    <param name="controlid" value="9579"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),15)"/>
+                    <param name="controlid" value="9579"/>
+                </include>
+
+                <!-- creator -->
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="!Skin.HasSetting(hide.button.tvshow.creator)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),20)"/>
+                    <param name="controlid" value="9520"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),20)"/>
+                    <param name="controlid" value="9520"/>
+                </include>
+
+                <!-- PERSON -->
+
+                <!-- movies      list by cast -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),11)"/>
+                    <param name="controlid" value="9552"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),11)"/>
+                    <param name="controlid" value="9552"/>
+                </include>
+
+                <!-- tvshows      list by cast -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),12)"/>
+                    <param name="controlid" value="9553"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),12)"/>
+                    <param name="controlid" value="9553"/>
+                </include>
+
+                <!-- movies      list by member crew -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),18)"/>
+                    <param name="controlid" value="9558"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),18)"/>
+                    <param name="controlid" value="9558"/>
+                </include>
+
+                <!-- tvshows      list by member crew -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),19)"/>
+                    <param name="controlid" value="9559"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),19)"/>
+                    <param name="controlid" value="9559"/>
+                </include>
+
+                <!-- pictures     -->
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEqual(Window.Property(moviecontent),13)"/>
+                    <param name="controlid" value="9554"/>
+                </include>
+
+                <!-- SETS -->
+
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="String.IsEqual(ListItem.DBType,set)">
+                    <param name="visi" value="[String.IsEmpty(Window.Property(moviecontent)) | String.IsEqual(Window.Property(moviecontent),10)]"/>
+                    <param name="controlid" value="9550"/>
+                </include>
+                <include content="Furniture_Flags_DialogInfo_Extended" condition="String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.furniture.flags)">
+                    <param name="visi" value="[String.IsEmpty(Window.Property(moviecontent)) | String.IsEqual(Window.Property(moviecontent),10)]"/>
+                    <param name="controlid" value="9550"/>
+                </include>
+            </control>
+        </control>
+
+        <control type="button" id="95051">
+            <include>Def_Hidden_Button</include>
+            <onback>SetFocus(9505,0,absolute)</onback>
+            <ondown>SetFocus(9505,0,absolute)</ondown>
+            <onback>9000</onback>
+            <ondown>9000</ondown>
+            <onclick>SetFocus(166)</onclick>
+            <onleft>SetFocus(9505)</onleft>
+            <onleft>LEFT</onleft>
+            <onleft>SetFocus(95051)</onleft>
+            <onright>SetFocus(9505)</onright>
+            <onright>RIGHT</onright>
+            <onright>SetFocus(95051)</onright>
+        </control>
+
+        <control type="button" id="166">
+            <include>Def_Hidden_Button</include>
+            <ondown>SetFocus(9505,0,absolute)</ondown>
+            <onback>SetFocus(9505,0,absolute)</onback>
+            <ondown>9000</ondown>
+            <onback>9000</onback>
+            <onleft>SetFocus(9505)</onleft>
+            <onleft>LEFT</onleft>
+            <onleft>SetFocus(166)</onleft>
+            <onright>SetFocus(9505)</onright>
+            <onright>RIGHT</onright>
+            <onright>SetFocus(166)</onright>
+        </control>
+
+        <control type="button" id="160">
+            <include>Def_Hidden_Button</include>
+            <ondown>SetFocus(9554,0,absolute)</ondown>
+            <onback>SetFocus(9554,0,absolute)</onback>
+            <ondown>9000</ondown>
+            <onback>9000</onback>
+            <onleft>SetFocus(9554)</onleft>
+            <onleft>LEFT</onleft>
+            <onleft>SetFocus(160)</onleft>
+            <onright>SetFocus(9554)</onright>
+            <onright>RIGHT</onright>
+            <onright>SetFocus(160)</onright>
+        </control>
+
+        <control type="group">
+            <visible>Control.HasFocus(160) | Control.HasFocus(166)</visible>
+            <animation effect="fade" end="100" start="20" time="200" tween="sine" easing="in" condition="Control.HasFocus(160) | Control.HasFocus(166)">Conditional</animation>
+            <animation effect="fade" end="0" start="100" time="200" tween="sine" easing="in" condition="!Control.HasFocus(160) + !Control.HasFocus(166)">Hidden</animation>
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1920</width>
+                <height>1080</height>
+                <texture>common/black.png</texture>
+            </control>
+            <control type="image">
+                <height>1080</height>
+                <fadetime>ImageViewerFadetime</fadetime>
+                <aspectratio align="center">keep</aspectratio>
+                <texture fallback="DefaultBrokenImage.png" background="true">$VAR[Image_9505_Thumb_Label]</texture>
+            </control>
+        </control>
+
+        <include content="Container_NumItems">
+            <param name="id" value="9505" />
+            <param name="visible" value="Control.HasFocus(166)" />
+        </include>
+
+        <include content="ExtendedImage">
+            <param name="buttonid" value="160"/>
+            <param name="containerid" value="9554"/>
+        </include>
+
+        <include content="Container_NumItems">
+            <param name="id" value="9554" />
+            <param name="visible" value="Control.HasFocus(160)" />
+        </include>
+
+        <include>Def_Dialog_Custom_Settings</include>
+        <include>Dialog_Info_Video_Fullscreen</include>
+    </include>
+</includes>

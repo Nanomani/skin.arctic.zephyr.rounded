@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="0">
+
+    <defaultcontrol always="false">300</defaultcontrol>
+    <include>Action_Blur_Onload</include>
+
+    <onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|x1111|x1112|x1113|x1114|x1115|x1116|x1117|x1118|x1119|powermenu&amp;levels=6)</onload>
+    <onload condition="!String.IsEqual(Window(Home).Property(ClearArtAnimation),Container(300).ListItem.Label)">SetProperty(ClearArtAnimation,$INFO[Container(300).ListItem.Label],Home)</onload>
+
+    <onload condition="!String.IsEmpty(Window(Home).Property(SetBackMenu300AfterSubMenu302))">SetFocus(300)</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(SetBackMenu300AfterSubMenu302))">ClearProperty(SetBackMenu300AfterSubMenu302,Home)</onload>
+
+    <onload condition="!System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(filter.video.only.local)</onload>
+
+    <onunload>ClearProperty(ClearArtAnimation,Home)</onunload>
+    <onunload>ClearProperty(set.listitem.poster,Home)</onunload>
+
+    <!-- <onload condition="!System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(TMDbHelper.EnableCrop)</onload> -->
+
+    <!-- <onload condition="Skin.HasSetting(show.home.netflix.title.clearlogo)">Skin.SetBool(TMDbHelper.EnableCrop)</onload> -->
+    <!-- <onload condition="Skin.HasSetting(enable.blur.effect)">Skin.SetBool(TMDbHelper.EnableBlur)</onload> -->
+
+    <!-- <onload condition="![Skin.HasSetting(TMDbHelper.EnableCrop) | Skin.HasSetting(enable.blur.effect)]">Skin.SetBool(TMDbHelper.DisableArtwork)</onload> -->
+    <!-- <onload condition="[Skin.HasSetting(TMDbHelper.EnableCrop) | Skin.HasSetting(enable.blur.effect)]">Skin.Reset(TMDbHelper.DisableArtwork)</onload> -->
+
+
+    <!-- <onload condition="![Skin.HasSetting(TMDbHelper.EnableCrop) | Skin.HasSetting(TMDbHelper.EnableBlur)]">Skin.SetBool(TMDbHelper.DisableArtwork)</onload> -->
+    <!-- <onload condition="[Skin.HasSetting(TMDbHelper.EnableCrop) | Skin.HasSetting(TMDbHelper.EnableBlur)]">Skin.Reset(TMDbHelper.DisableArtwork)</onload> -->
+
+    <!-- START TMDBH SERVICE -->
+
+    <onload>Skin.SetString(TMDbHelper.MonitorContainer,99950)</onload>
+    <onload>ClearProperty(TMDbHelper.HideView,Home)</onload>
+    <onload>Skin.SetString(Wikipedia.Format.Link,[COLOR=$VAR[Color_Highlight]]{}[/COLOR])</onload>
+    <onload>Skin.SetBool(TMDbHelper.EnableCrop)</onload>
+
+    <onload>Skin.Reset(TMDbHelper.DirectCallAuto)</onload>
+    <!-- <onload>Skin.SetBool(TMDbHelper.DirectCallAuto)</onload> -->
+    <onload>Skin.Reset(TMDbHelper.DisableArtwork)</onload>
+
+    <onload>Skin.SetBool(TMDbHelper.EnableBlur)</onload>
+    <onload>SetProperty(TMDbHelper.WidgetContainer,301,Home)</onload>
+
+    <!-- AUTO SLIDE NOWPLAYING -->
+
+    <onload condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out,true)</onload>
+    <onunload condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out,true)</onunload>
+    <onunload>ClearProperty(TMDbHelper.WidgetContainer)</onunload>
+
+    <onunload condition="Skin.HasSetting(home.netflix.autoplay.trailer)">ClearProperty(listitem.trailer,Home)</onunload>
+
+    <controls>
+        <include>Defs_TMDbHelper_Loader</include>
+        <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
+        <include>Background_Global</include>
+
+        <!-- HIDDEN LISTS -->
+
+        <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutHomemenuButton</include>
+        <include>Home_Background_Playlist</include>
+        <include>Hidden_Album_Count</include>
+        <include>Hidden_Set_Count</include>
+        <include>Hidden_Actor_Info</include>
+        <include>Set_Artist_Search</include>
+        <include>Set_Album_Search</include>
+        <include>Hidden_Button_Search</include>
+
+        <!-- OTHER MENUS AND WIDGETS -->
+
+        <include condition="$EXP[Home_Is_Vertical]">Home_Vertical_Menu_Widgets</include>
+
+
+        <!-- FADE OUT ON HOME_IS_HORIZONTAL -->
+
+        <control type="group">
+            <include condition="$EXP[Home_Is_Horizontal]">Animation_Home_Is_Horizontal</include>
+            <include condition="$EXP[Home_Is_Horizontal]">Home_Horizontal_Widget_Info_Widgets</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Home_Header</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Home_Next_Recording</include>
+        </control>
+
+        <control type="group">
+            <include condition="$EXP[Home_Is_Horizontal]">Animation_Fade_Home_Row</include>
+            <include condition="!Skin.HasSetting(home.vertical)">Home_Horizontal_Row</include>
+        </control>
+
+        <!-- CLEARLOGO FOR MULTI WIDGETS -->
+
+        <control type="group">
+            <visible>[!Window.IsVisible(DialogVideoInfo.xml) + ![String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)]] | [!Window.IsVisible(DialogVideoInfo.xml) + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + String.IsEmpty(Skin.String(weather.fanart.path))]</visible>
+            <visible>!Window.IsVisible(DialogMusicInfo.xml)</visible>
+            <include condition="!Skin.HasSetting(home.vertical)">Home_ClearLogo</include>
+        </control>
+
+        <!-- HORIZONTAL - SUBMENUS -->
+
+        <include condition="!Skin.HasSetting(home.vertical) + Skin.HasSetting(home.submenu2) + !Skin.HasSetting(home.showicons)">Home_Horizontal_Sub_Menu_Horizontal</include>
+        <include condition="!Skin.HasSetting(home.vertical) + [!Skin.HasSetting(home.submenu2) | Skin.HasSetting(home.showicons)]">Home_Horizontal_Sub_Menu_Vertical</include>
+
+        <!-- BACKGROUND AND FURNITURE FOR DIALOGS -->
+
+        <control type="group">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <visible>Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(skin.arctic.zephyr.mod.script-gto-info.xml) | Window.IsVisible(DialogAddonInfo.xml)</visible>
+            <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Background_Global_Extended</include>
+        </control>
+
+        <!-- VERTICAL - LABEL MENU/ SUBMENU - ONLY ICON -->
+
+        <include condition="$EXP[Exp_Show_Label_Item_Menu]">Home_Vertical_Menu_Icon_Label</include>
+
+        <!-- VERTICAL - FLAGS INDICATORS  -->
+
+        <include condition="$EXP[Home_Is_Vertical] + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)">Home_Vertical_Widget_Flags</include>
+
+        <!-- DEBUG INFO -->
+
+        <include condition="Skin.HasSetting(DebugShow.path) + $EXP[Home_Is_Vertical]">Furniture_Debug_Path</include>
+        <include condition="Skin.HasSetting(DebugInfo.widget)">Furniture_DebugInfo_Item</include>
+
+    </controls>
+</window>

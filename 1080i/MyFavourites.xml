@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <defaultcontrol always="true">500</defaultcontrol>
+    <menucontrol>9000</menucontrol>
+    <views>50,550,500,547,555</views>
+
+    <onunload>ClearProperty(set.listitem.poster,Home)</onunload>
+
+    <include>Action_Blur_Onload</include>
+    <controls>
+        <include>Defs_TMDbHelper_Loader</include>
+        <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
+        <include>Background_Global</include>
+
+        <include condition="!Skin.HasSetting(50list.low)">View_50_List</include>
+        <include condition="Skin.HasSetting(50list.low)">View_50_LowList</include>
+        <include>View_555_Wall_Episodes</include>
+        <include>View_550_List_Square</include>
+        <include>View_500_Thumbnails</include>
+        <include>View_547_ThumbnailsSmall</include>
+
+        <include>Furniture_Header</include>
+        <include>Furniture_Header_Busy</include>
+        <include>Furniture_Header_NowPlaying</include>
+        <include>Furniture_Header_Clock_Right</include>
+        <include condition="Skin.HasSetting(show.furniture.footer)">Furniture_Footer</include>
+        <include>Object_Jumpbar_Horizontal</include>
+
+        <control type="group">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <visible>ControlGroup(9000).HasFocus()</visible>
+            <include>Background_Overlay</include>
+        </control>
+
+        <control type="group">
+            <height>682</height>
+            <include>Def_View_ContextMenu_Background</include>
+            <include>Def_View_ContextMenu_Arrows</include>
+
+            <control type="label">
+                <include>Def_Dialog_Header_Title</include>
+                <label>14018</label>
+            </control>
+            <include>Def_Dialog_Header_Logo</include>
+            <include>Def_Dialog_Header_Line</include>
+
+            <!-- WORKAROUND FOR MYVIDEONAV.XML SELECT "SORT" FOR "LABAEL" -->
+            <include>Def_View_ContextMenu_Button</include>
+
+            <control type="grouplist" id="9000">
+                <top>102</top>
+                <scrolltime>0</scrolltime>
+                <usecontrolcoords>true</usecontrolcoords>
+                <include content="Def_View_ContextMenu_GroupList"><param name="height" value="560" /></include>
+
+                <!-- FILTER -->
+
+                <control type="button" id="55553">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>587</label>
+                </control>
+                <control type="edit" id="19">
+                    <label>587</label>
+                    <description>Filter (hidden)</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <visible>!Container.CanFilterAdvanced</visible>
+                </control>
+
+                <!-- ALL VIEWS -->
+
+                <control type="button" id="55550">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>31269</label>
+                </control>
+
+                <!-- <control type="button" id="2"> -->
+                    <!-- <description>View</description> -->
+                    <!-- <include>Def_Button_Gradient_Context</include> -->
+                    <!-- <align>left</align> -->
+                <!-- </control> -->
+
+                <control type="button" id="6052">
+                    <description>Sort</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>$LOCALIZE[582]:</label>
+                    <label2>$INFO[Container.Viewmode]</label2>
+                    <visible>Control.IsEnabled(2)</visible>
+                    <onclick>SendClick(2)</onclick>
+                </control>
+
+                <control type="button" id="6053">
+                    <description>Sort</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>$LOCALIZE[31618]:</label>
+                    <label2>$INFO[Container.SortMethod]</label2>
+                    <visible>Control.IsEnabled(3)</visible>
+                    <onclick>SendClick(3)</onclick>
+                </control>
+                <control type="button" id="4">
+                    <description>Order Toggle</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>$LOCALIZE[31619]:</label>
+                    <label2>$INFO[Container.SortOrder]</label2>
+                </control>
+
+                <!-- <control type="button" id="3"> -->
+                    <!-- <description>Sort</description> -->
+                    <!-- <include>Def_Button_Gradient_Context</include> -->
+                    <!-- <align>left</align> -->
+                <!-- </control> -->
+                <!-- <control type="togglebutton" id="4"> -->
+                    <!-- <description>Ascending</description> -->
+                    <!-- <include>Def_Button_Gradient_Context</include> -->
+                    <!-- <align>left</align> -->
+                    <!-- <label>584</label> -->
+                    <!-- <altlabel>585</altlabel> -->
+                <!-- </control> -->
+
+                <!-- THIS VIEW  -->
+
+                <control type="button" id="55551">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>31060</label>
+                    <visible>Control.IsVisible(550)</visible>
+                </control>
+                <control type="radiobutton" id="90281">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31231</label>
+                    <selected>!Skin.HasSetting(disable.view.550.extended.list.video)</selected>
+                    <onclick>Skin.ToggleSetting(disable.view.550.extended.list.video)</onclick>
+                    <visible>Control.IsVisible(550)</visible>
+                </control>
+                <control type="radiobutton" id="9029" description="list.show.filename">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31489</label>
+                    <selected>Skin.HasSetting(list.show.filename)</selected>
+                    <onclick>Skin.ToggleSetting(list.show.filename)</onclick>
+                    <visible>Skin.HasSetting(enable.view.5x.51x.extended.list)</visible>
+                    <visible>Control.IsVisible(50) | Control.IsVisible(550)</visible>
+                </control>
+                <!-- <control type="radiobutton" id="9030"> -->
+                    <!-- <include>Def_Button_Gradient_Context</include> -->
+                    <!-- <align>left</align> -->
+                    <!-- <label>31229</label> -->
+                    <!-- <selected>!Skin.HasSetting(hide.poster.view.50)</selected> -->
+                    <!-- <onclick>Skin.ToggleSetting(hide.poster.view.50)</onclick> -->
+                    <!-- <onclick>ReloadSkin()</onclick> -->
+                    <!-- <visible>Control.IsVisible(550) + !Skin.HasSetting(50list.low)</visible> -->
+                <!-- </control> -->
+
+                <!-- GLOBAL -->
+
+                <control type="button" id="55552">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>31451</label>
+                </control>
+                <control type="radiobutton" id="90872">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>$LOCALIZE[31610]</label>
+                    <selected>Skin.HasSetting(show.furniture.footer)</selected>
+                    <onclick>Skin.ToggleSetting(show.furniture.footer)</onclick>
+                    <visible>[!Skin.HasSetting(55wall.showinfo) + Control.IsVisible(55)] | Control.IsVisible(547) | Control.IsVisible(550) | Control.IsVisible(555) | Control.IsVisible(557) | Control.IsVisible(511) | Control.IsVisible(512) | Control.IsVisible(517)</visible>
+                    <onclick>ReloadSkin()</onclick>
+                </control>
+                <control type="radiobutton" id="9080">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31487</label>
+                    <selected>Skin.HasSetting(show.reflections)</selected>
+                    <onclick>Skin.ToggleSetting(show.reflections)</onclick>
+                    <visible>Control.IsVisible(50) | Control.IsVisible(519) | Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(524) | Control.IsVisible(514) | Control.IsVisible(509) | Control.IsVisible(53) | Control.IsVisible(527)</visible>
+                </control>
+                <control type="radiobutton" id="9082">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31504</label>
+                    <selected>Skin.HasSetting(items.focus.zoom)</selected>
+                    <onclick>Skin.ToggleSetting(items.focus.zoom)</onclick>
+                    <onclick>ReloadSkin()</onclick>
+                </control>
+                <control type="button" id="9083">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>$LOCALIZE[31509]:</label>
+                    <label2>$VAR[Label_ItemsGlow]</label2>
+                    <onclick condition="!Skin.HasSetting(enable.items.focus.glow)">Skin.SetBool(enable.items.focus.glow)</onclick>
+                    <onclick condition="!Skin.HasSetting(enable.items.focus.glow)">Skin.SetBool(items.focus.glow.low)</onclick>
+                    <onclick condition="Skin.HasSetting(enable.items.focus.glow) + !Skin.HasSetting(enable.items.focus.glow.high) + Skin.HasSetting(items.focus.glow.low)">Skin.Reset(items.focus.glow.low)</onclick>
+                    <onclick condition="Skin.HasSetting(enable.items.focus.glow) + !Skin.HasSetting(enable.items.focus.glow.high) + !Skin.HasSetting(items.focus.glow.low)">Skin.SetBool(enable.items.focus.glow.high)</onclick>
+                    <onclick condition="Skin.HasSetting(enable.items.focus.glow) + Skin.HasSetting(enable.items.focus.glow.high)">Skin.Reset(enable.items.focus.glow)</onclick>
+                    <onclick condition="Skin.HasSetting(enable.items.focus.glow) + Skin.HasSetting(enable.items.focus.glow.high)">Skin.Reset(enable.items.focus.glow.high)</onclick>
+                </control>
+
+                <!-- OTHER OPTIONS -->
+
+                <control type="button" id="55554">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>31061</label>
+                </control>
+                <control type="button" id="9091">
+                    <description>Global Search</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>137</label>
+                    <onclick>SetFocus(50)</onclick>
+                    <onclick>ActivateWindow(1107)</onclick>
+                </control>
+                <include>ButtonPlaylist</include>
+                <control type="button" id="5555">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31168</label>
+                    <onclick>ReloadSkin()</onclick>
+                    <visible>Skin.HasSetting(DebugInfo)</visible>
+                </control>
+
+                <!-- MINI PLAYER -->
+
+                <control type="group" id="7878">
+                    <top>0</top>
+                    <width>450</width>
+                    <height>7</height>
+                    <visible>Player.HasMedia | Player.Playing</visible>
+                </control>
+                <include>Def_View_Menu_Control_Buttons</include>
+            </control>
+        </control>
+    </controls>
+</window>

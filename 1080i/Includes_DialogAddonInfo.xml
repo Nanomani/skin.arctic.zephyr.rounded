@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+
+    <include name="Dialog_Addon_Info">
+        <control type="group">
+            <animation type="Conditional" reversible="true" condition="Window.IsVisible(FileBrowser.xml) | Window.IsVisible(DialogConfirm.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)">
+                <effect type="zoom" end="95" start="100" time="200" center="auto" tween="quadratic" easing="in"/>
+            </animation>
+
+            <!-- Poster-->
+            <control type="group">
+                <include>Animation_SidePoster</include>
+                <include>View_50_SidePoster_Square</include>
+                <include>Animation_Video_FadeOut</include>
+            </control>
+
+            <!-- Main -->
+            <control type="group">
+                <include>Animation_RightSide</include>
+
+                <!-- Control Buttons -->
+                <control type="group">
+                    <bottom>-80</bottom>
+                    <include>Animation_Video_FadeOut</include>
+                    <include>Def_Dialog_Info_Navigation_Addon</include>
+                </control>
+
+                <!-- LABEL HEADER -->
+                <control type="group">
+                    <include>Animation_Video_FadeOut</include>
+                    <top>70</top>
+                    <left>785</left>
+                    <include content="Def_Width" condition="Player.HasMedia | Window.IsVisible(DialogNotification.xml)">
+                        <param name="width" value="350" />
+                    </include>
+                    <include content="Def_Width" condition="!Player.HasMedia | Window.IsVisible(DialogNotification.xml)">
+                        <param name="width" value="1070" />
+                    </include>
+
+                    <!-- icon -->
+                    <control type="image">
+                        <top>11</top>
+                        <width>80</width>
+                        <height>80</height>
+                        <texture colordiffuse="Panel">common/circle2.png</texture>
+                    </control>
+                    <control type="image">
+                        <top>7</top>
+                        <left>-4</left>
+                        <width>88</width>
+                        <height>88</height>
+                        <texture colordiffuse="PanelWhite100" border="12">$VAR[Image_Header_Icon]</texture>
+                        <visible>!Container.Scrolling</visible>
+                        <visible>!Window.IsVisible(DialogBusy.xml)</visible>
+                    </control>
+
+                    <!-- Main header Title -->
+                    <control type="label">
+                        <left>104</left>
+                        <font>LargeNew</font>
+                        <description>Header Label</description>
+                        <textcolor>Dark1</textcolor>
+                        <label fallback="19055">$INFO[ListItem.AddonSummary]</label>
+                    </control>
+
+                    <!-- Sub header Title -->
+                    <control type="label">
+                        <top>55</top>
+                        <left>104</left>
+                        <height>36</height>
+                        <font>Tiny</font>
+                        <textcolor>Dark1</textcolor>
+                        <label fallback="19055">$INFO[ListItem.AddonSummary]</label>
+                        <aligny>center</aligny>
+                        <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    </control>
+
+
+                    <!-- <control type="label"> -->
+                        <!-- <left>30</left> -->
+                        <!-- <font>LargeNew</font> -->
+                        <!-- <description>Header Label</description> -->
+                        <!-- <textcolor>Dark1</textcolor> -->
+                        <!-- <label>$INFO[ListItem.AddonName]</label> -->
+                    <!-- </control> -->
+                    <!-- <control type="label"> -->
+                        <!-- <left>30</left> -->
+                        <!-- <top>55</top> -->
+                        <!-- <height>36</height> -->
+                        <!-- <font>Tiny</font> -->
+                        <!-- <textcolor>Dark1</textcolor> -->
+                        <!-- <label fallback="19055">$INFO[ListItem.AddonSummary]</label> -->
+                        <!-- <aligny>center</aligny> -->
+                    <!-- </control> -->
+                </control>
+
+                <control type="group">
+                    <left>ListSquareX</left>
+                    <right>SidePad</right>
+                    <bottom>224</bottom>
+                    <top>DialogInfoTop</top>
+                    <control type="grouplist">
+                        <include>Animation_Video_FadeOut</include>
+                        <left>30</left>
+                        <itemgap>0</itemgap>
+                        <include content="Def_Dialog_Square_Info_Line">
+                            <param name="label" value="$LOCALIZE[467]" />
+                            <param name="value" value="$INFO[ListItem.AddonType]" />
+                        </include>
+                        <include content="Def_Dialog_Square_Info_Line">
+                            <param name="label" value="$LOCALIZE[19114]" />
+                            <param name="value" value="$INFO[ListItem.AddonVersion]" />
+                        </include>
+                        <include content="Def_Dialog_Square_Info_Line">
+                            <param name="label" value="$LOCALIZE[21863]" />
+                            <param name="value" value="$INFO[ListItem.AddonCreator]" />
+                        </include>
+                        <include content="Def_Dialog_Square_Info_Line">
+                            <param name="label" value="$LOCALIZE[560]" />
+                            <param name="value" value="$INFO[ListItem.Property(Addon.ID)]" />
+                        </include>
+                        <include content="Def_Dialog_Square_Info_Line">
+                            <param name="label" value="$LOCALIZE[12014]" />
+                            <param name="value" value="$VAR[Label_AddonLastUpdate]" />
+                        </include>
+                        <include content="Def_Dialog_Square_Info_Line">
+                            <param name="label" value="$LOCALIZE[31432]" />
+                            <param name="value" value="$INFO[ListItem.AddonOrigin]" />
+                        </include>
+                        <control type="group">
+                            <height>35</height>
+                        </control>
+                        <control type="textbox">
+                            <height>108</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <align>justify</align>
+                            <label>$INFO[ListItem.AddonDescription]$INFO[ListItem.AddonNews,[CR][CR][B]$LOCALIZE[24036][/B][CR]]$INFO[Window(Home).Property(ResetScroll)]</label>
+                            <visible>!String.IsEqual(Container(50).NumItems,0)</visible>
+                        </control>
+                        <control type="textbox">
+                            <height>366</height>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <align>justify</align>
+                            <label>$INFO[ListItem.AddonDescription]$INFO[ListItem.AddonNews,[CR][CR][B]$LOCALIZE[24036][/B][CR]]$INFO[Window(Home).Property(ResetScroll)]</label>
+                            <visible>String.IsEqual(Container(50).NumItems,0)</visible>
+                        </control>
+                    </control>
+                </control>
+
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEmpty(Window.Property(addoncontent))"/>
+                    <param name="controlid" value="50"/>
+                </include>
+
+                <control type="group">
+                    <top>200</top>
+                    <left>785</left>
+                    <include content="Def_List_Image_Addon">
+                        <param name="arrowleft" value="-12"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="87"/>
+                        <param name="visi" value="true"/>
+                        <param name="visible.layouts" value="Control.HasFocus(50) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="animation" value="Animation_Extended_Cast_Info_Music"/>
+                        <param name="fallbackpicture" value="DefaultAddonImages.png"/>
+                        <param name="controlid" value="50"/>
+                        <!-- <param name="focusposition" value="3"/> -->
+                        <param name="listbottom" value="30"/>
+                        <param name="listleft" value="-800"/>
+                        <param name="height" value="349"/>
+                        <param name="width" value="370"/>
+                        <param name="headerbottom" value="710"/>
+                        <param name="headerleft" value="-10"/>
+                        <param name="zoom" value="130"/>
+                        <param name="labelbottom" value="-90"/>
+                        <param name="labelleft" value="-20"/>
+                        <param name="labeltwovisible" value="false"/>
+                        <param name="labeltwobottom" value="-90"/>
+                        <param name="labeltwoleft" value="-30"/>
+                    </include>
+                </control>
+
+                <include content="Furniture_Footer_DialogInfo_Extended">
+                    <param name="visi" value="String.IsEmpty(Window.Property(moviecontent))"/>
+                    <param name="controlid" value="50"/>
+                </include>
+
+                <control type="label">
+                    <right>83</right>
+                    <bottom>100</bottom>
+                    <height>50</height>
+                    <font>Mini</font>
+                    <scroll>false</scroll>
+                    <textcolor>Dark3</textcolor>
+                    <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
+                    <aligny>center</aligny>
+                    <align>right</align>
+                    <visible>ControlGroup(9000).HasFocus()</visible>
+                    <include>Animation_FadeIn</include>
+                    <include>Animation_FadeOut</include>
+                </control>
+            </control>
+        </control>
+    </include>
+</includes>

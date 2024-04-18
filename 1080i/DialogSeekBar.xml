@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="115">
+    <defaultcontrol always="true">901</defaultcontrol>
+
+    <visible>[Window.IsActive(fullscreenvideo) + !Window.IsActive(script.pseudotv.TVOverlay.xml) + !Window.IsActive(script.pseudotv.live.TVOverlay.xml)] | Window.IsActive(MusicVisualisation.xml)</visible>
+    <allowoverlay>no</allowoverlay>
+
+    <visible>[VideoPlayer.IsFullscreen + [Window.IsVisible(videoosd) | Window.IsVisible(fullscreeninfo) | Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | !String.IsEmpty(Player.SeekNumeric) | !String.IsEmpty(PVR.Channel.Number.Input) | Player.Forwarding | Player.Rewinding | Player.ShowInfo | !String.IsEmpty(Window(Home).Property(osdshowinfo))]] | !String.IsEmpty(Window(Home).Property(osdinfo)) | Window.IsActive(MusicVisualisation.xml)</visible>
+
+    <visible>!Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(VideoOSDBookmarks.xml) + !Window.IsVisible(Custom_1121_OSD_Settings_Video.xml) + !Window.IsVisible(DialogSubtitles.xml)</visible>
+    <visible>!Window.IsVisible(DialogPVRChannelsOSD.xml) + !Window.IsVisible(DialogPVRChannelGuide.xml)</visible>
+    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+
+    <zorder>0</zorder>
+    <controls>
+
+        <control type="group">
+            <animation effect="fade" start="100" end="0" time="250" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(enable.osd.video.hide.on.pause) + Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
+            <include condition="VideoPlayer.IsFullscreen">OSD_Video_SeekBar</include>
+        </control>
+
+        <control type="group">
+            <include condition="!VideoPlayer.IsFullscreen">OSD_Music_SeekBar</include>
+        </control>
+
+        <include>Def_OSD_Channel_Number_Input</include>
+
+        <!-- Clock -->
+        <include>Object_OSD_Clock</include>
+    </controls>
+</window>

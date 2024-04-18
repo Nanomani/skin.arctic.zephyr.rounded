@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="2001">
+    <defaultcontrol always="true">9000</defaultcontrol>
+
+    <onload>RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Artist&amp;&amp;$INFO[ListItem.Artist]")</onload>
+    <onload>RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;window_id=Home&amp;window_prop=Encoded.ListItem.AlbumArtist&amp;&amp;$INFO[ListItem.AlbumArtist]")</onload>
+    <onload>RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Album&amp;&amp;$INFO[ListItem.Album]")</onload>
+    <onload>RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Title&amp;&amp;$INFO[ListItem.Title]")</onload>
+    <onload>RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Label&amp;&amp;$INFO[ListItem.Label]")</onload>
+
+    <onload>SetFocus(9501,0,absolute)</onload>
+    <onload>SetFocus(9502,3,absolute)</onload>
+    <onload>SetFocus(9508,0,absolute)</onload>
+
+    <onload>ClearProperty(musicyoutube)</onload>
+    <onload>ClearProperty(content)</onload>
+    <onload>ClearProperty(ShowDisc)</onload>
+    <onload>ClearProperty(musiccontent)</onload>
+
+    <onload>ClearProperty(ShowArtistInfo,Home)</onload>
+    <onload>ClearProperty(ShowAlbumInfo,Home)</onload>
+
+    <onload>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onload>
+
+    <!-- <onload condition="Control.HasFocus(9002) + String.IsEqual(ListItem.DBType,album)">SetFocus(9001)</onload> -->
+    <onload condition="Player.HasMedia + Control.IsVisible(9201)">SetFocus(9201)</onload>
+    <onload condition="Control.IsVisible(9001)">SetFocus(9001)</onload>
+    <onload condition="Control.IsVisible(9002)">SetFocus(9002)</onload>
+
+    <onunload>ClearProperty(SetUserRating,Home)</onunload>
+    <onunload>ClearProperty(ShowDisc)</onunload>
+
+    <onunload condition="!Window.IsVisible(MusicVisualisation.xml) + !String.IsEmpty(Window(Home).Property(shownowplayinginfo))">SetFocus(4000)</onunload>
+    <onunload condition="Player.PauseEnabled + Window.IsVisible(MusicVisualisation.xml) + Window.IsVisible(MusicOSD.xml)">SetFocus(14)</onunload>
+    <onunload condition="!Player.PauseEnabled + Window.IsVisible(MusicVisualisation.xml) + Window.IsVisible(MusicOSD.xml) ">SetFocus(15)</onunload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(shownowplayinginfo))">ClearProperty(shownowplayinginfo,Home)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(ShowArtistInfo))">ClearProperty(Encoded.ListItem.Artist,Home)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(ShowAlbumInfo))">ClearProperty(Encoded.ListItem.Album),Home</onunload>
+
+    <controls>
+        <include>Defs_TMDbHelper_Loader</include>
+        <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
+        <include>Background_Global</include>
+        <include>Dialog_Music_Info</include>
+        <include>Furniture_Header_NowPlaying</include>
+        <include content="Def_Dialog_Info_Overlay">
+            <param name="headerinfo" value="$INFO[ListItem.Artist]" />
+            <param name="plotinfo" value="$VAR[Label_Overlay_Info_Music_Plot]$VAR[Label_Overlay_Info_Music_TagLine]$VAR[Label_Overlay_Info_Music_Album_Tracks]" />
+        </include>
+    </controls>
+</window>

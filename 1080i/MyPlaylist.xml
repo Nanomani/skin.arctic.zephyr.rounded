@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="6">
+    <views>50,57</views>
     <defaultcontrol always="true">50</defaultcontrol>
     <menucontrol>9000</menucontrol>
     <include>Action_Blur_Onload</include>
 
-    <views>50,57</views>
+    <onload>RunScript(script.skinvariables,action=buildviews)</onload>
+
     <controls>
         <include>Defs_TMDbHelper_Loader</include>
         <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
@@ -12,10 +14,10 @@
         <include condition="Skin.HasSetting(DebugShow.path)">Furniture_Debug_Path</include>
         <include>Furniture_Header_Clock_Right</include>
 
-        <include>View_50_List_Square_Playlist</include>
+        <include condition="$EXP[Exp_View_50_Include]">View_50_List_Square_Playlist</include>
 
-        <include condition="!Skin.HasSetting(57list.low)">View_57_ExtraInfo_Playlist</include>
-        <include condition="Skin.HasSetting(57list.low)">View_57_ExtraInfo_Playlist_LowList</include>
+        <include condition="$EXP[Exp_View_57_Include] + !Skin.HasSetting(57list.low)">View_57_ExtraInfo_Playlist</include>
+        <include condition="$EXP[Exp_View_57_Include] + Skin.HasSetting(57list.low)">View_57_ExtraInfo_Playlist_LowList</include>
 
         <!-- <include>Furniture_Footer_Clock_Right</include> -->
 
@@ -118,11 +120,23 @@
                     <label>31269</label>
                 </control>
 
-                <control type="button" id="2">
-                    <description>View</description>
+                <!-- <control type="button" id="2"> -->
+                    <!-- <description>View</description> -->
+                    <!-- <include>Def_Button_Gradient_Context</include> -->
+                    <!-- <align>left</align> -->
+                <!-- </control> -->
+
+
+                <!-- OPEN CUSTOM_SETVIEWTYPE -->
+
+                <control type="button" id="9001">
                     <include>Def_Button_Gradient_Context</include>
                     <align>left</align>
+                    <label>$LOCALIZE[582]:</label>
+                    <label2>$INFO[Container.Viewmode]</label2>
+                    <onclick>Runscript(script.skinvariables,action=buildviews,contentid=$VAR[Items_ViewMode_Switch],pluginname=$INFO[Container.PluginName])</onclick>
                 </control>
+
                 <control type="button" id="6053">
                     <description>Sort</description>
                     <include>Def_Button_Gradient_Context</include>

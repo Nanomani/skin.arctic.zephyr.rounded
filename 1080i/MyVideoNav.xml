@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="6">
+    <!-- <include>View_MediaWindows_ID</include> -->
+    <views>50,550,57,501,507,509,511,512,513,56,53,55,555,557,54,58,52,515,516,517,519,521,522,524,526,527,547,5048,5218,5228</views>
     <defaultcontrol always="true">50</defaultcontrol>
     <menucontrol>9000</menucontrol>
     <include>Action_Blur_Onload</include>
-    <views>50,550,57,501,507,509,511,512,513,56,53,55,555,557,54,58,52,500,515,516,517,519,521,522,524,526,527,547,5048,5218,5228</views>
 
+    <onload>RunScript(script.skinvariables,action=buildviews)</onload>
     <onload>ClearProperty(WallMode,Home)</onload>
-
     <onload condition="Control.HasFocus(5218)">Container.SetViewMode(521)</onload>
     <onload condition="Control.HasFocus(5228)">Container.SetViewMode(522)</onload>
 
@@ -16,7 +17,6 @@
     <onunload condition="Skin.HasSetting(home.netflix.autoplay.trailer) + $EXP[TrailerIsPlaying] + !Skin.HasSetting(enable.trailer.playing.on.unfocus) + !Window.Next(FullScreenVideo)">ClearProperty(TrailerPath,Home)</onunload>
     <onunload condition="Skin.HasSetting(home.netflix.autoplay.trailer) + $EXP[TrailerIsPlaying] + !Skin.HasSetting(enable.trailer.playing.on.unfocus) + !Window.Next(FullScreenVideo)">Stop</onunload>
     <onunload condition="Skin.HasSetting(home.netflix.autoplay.trailer)">ClearProperty(listitem.trailer,Home)</onunload>
-
     <onunload>ClearProperty(WallMode,Home)</onunload>
 
     <controls>
@@ -24,42 +24,46 @@
         <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
         <include>Background_Global</include>
 
-        <include>View_550_List_Square</include>
+        <include condition="$EXP[Exp_View_550_Include]">View_550_List_Square</include>
 
-        <include condition="!Skin.HasSetting(50list.low)">View_50_List</include>
-        <include condition="Skin.HasSetting(50list.low)">View_50_LowList</include>
+        <include condition="$EXP[Exp_View_50_Include] + !Skin.HasSetting(50list.low)">View_50_List</include>
+        <include condition="$EXP[Exp_View_50_Include] + Skin.HasSetting(50list.low)">View_50_LowList</include>
+        <include condition="$EXP[Exp_View_52_Include]">View_52_BigList_Pane</include>
 
-        <include>View_52_BigList_Pane</include>
-        <include>View_53_Poster</include>
-        <include>View_54_Banner</include>
-        <include>View_515_SideCards</include>
-        <include>View_516_SeasonsInfo</include>
-        <include>View_526_SeasonsInfo_V2</include>
-        <include>View_555_Wall_Episodes</include>
-        <include>View_557_Wall_Small_Episodes</include>
-        <include>View_517_WallSmall</include>
-        <include>View_519_Shift_Horizontal</include>
-        <include condition="Skin.HasSetting(55wall.showinfo)">View_55_Wall_Info</include>
-        <include condition="Skin.HasSetting(55wall.showposter)">View_55_Wall_Poster</include>
-        <include condition="!Skin.HasSetting(55wall.showinfo) + !Skin.HasSetting(55wall.showposter)">View_55_Wall</include>
-        <include condition="!Skin.HasSetting(enable.view.56.info) + !Skin.HasSetting(56media.low)">View_56_MediaInfo</include>
-        <include condition="Skin.HasSetting(enable.view.56.info) + !Skin.HasSetting(56media.low)">View_56_MediaInfo2</include>
-        <include condition="Skin.HasSetting(56media.low)">View_56_MediaInfo3</include>
-        <include condition="!Skin.HasSetting(57list.low)">View_57_ExtraInfo</include>
-        <include condition="Skin.HasSetting(57list.low)">View_57_ExtraInfo_LowList</include>
-        <include>View_58_Cards</include>
-        <include>View_500_Thumbnails</include>
-        <include>View_547_ThumbnailsSmall</include>
-        <include>View_501_Fanart</include>
-        <include>View_507_Fanart2</include>
-        <include>View_509_Shift</include>
-        <include>View_521_Minimal_V2</include>
-        <include>View_522_Minimal_V2_Episodes</include>
-        <include>View_524_Minimal_V2_Seasons</include>
-        <include>View_511_Double_Banner</include>
-        <include>View_511_Double</include>
-        <include>View_513_Shifted</include>
-        <include>View_527_List_V2</include>
+        <include condition="$EXP[Exp_View_555_Include]">View_555_Wall_Episodes</include>
+        <include condition="$EXP[Exp_View_557_Include]">View_557_Wall_Small_Episodes</include>
+        <include condition="$EXP[Exp_View_517_Include]">View_517_WallSmall</include>
+        <include condition="$EXP[Exp_View_55_Include] + Skin.HasSetting(55wall.showinfo)">View_55_Wall_Info</include>
+        <include condition="$EXP[Exp_View_55_Include] + Skin.HasSetting(55wall.showposter)">View_55_Wall_Poster</include>
+        <include condition="$EXP[Exp_View_55_Include] + !Skin.HasSetting(55wall.showinfo) + !Skin.HasSetting(55wall.showposter)">View_55_Wall</include>
+        <include condition="$EXP[Exp_View_56_Include] + !Skin.HasSetting(enable.view.56.info) + !Skin.HasSetting(56media.low)">View_56_MediaInfo</include>
+        <include condition="$EXP[Exp_View_56_Include] + Skin.HasSetting(enable.view.56.info) + !Skin.HasSetting(56media.low)">View_56_MediaInfo2</include>
+        <include condition="$EXP[Exp_View_56_Include] + Skin.HasSetting(56media.low)">View_56_MediaInfo3</include>
+        <include condition="$EXP[Exp_View_57_Include] + !Skin.HasSetting(57list.low)">View_57_ExtraInfo</include>
+        <include condition="$EXP[Exp_View_57_Include] + Skin.HasSetting(57list.low)">View_57_ExtraInfo_LowList</include>
+        <include condition="$EXP[Exp_View_500_Include]">View_500_Thumbnails</include>
+        <include condition="$EXP[Exp_View_547_Include]">View_547_ThumbnailsSmall</include>
+
+        <include condition="$EXP[Exp_View_501_Include]">View_501_Fanart</include>
+        <include condition="$EXP[Exp_View_507_Include]">View_507_Fanart2</include>
+        <include condition="$EXP[Exp_View_512_Include]">View_512_Double_Banner</include>
+        <include condition="$EXP[Exp_View_511_Include]">View_511_Double</include>
+
+        <include condition="$EXP[Exp_View_509_Include]">View_509_Shift</include>
+        <include condition="$EXP[Exp_View_519_Include]">View_519_Shift_Horizontal</include>
+        <include condition="$EXP[Exp_View_521_Include]">View_521_Minimal_V2</include>
+        <include condition="$EXP[Exp_View_58_Include]">View_58_Cards</include>
+        <include condition="$EXP[Exp_View_515_Include]">View_515_SideCards</include>
+        <include condition="$EXP[Exp_View_53_Include]">View_53_Poster</include>
+
+        <!-- <include condition="$EXP[Exp_View_516_Include]">View_516_SeasonsInfo</include> -->
+        <!-- <include condition="$EXP[Exp_View_526_Include]">View_526_SeasonsInfo_V2</include> -->
+        <!-- <include condition="$EXP[Exp_View_524_Include]">View_524_Minimal_V2_Seasons</include> -->
+
+        <include condition="$EXP[Exp_View_522_Include]">View_522_Minimal_V2_Episodes</include>
+
+        <include condition="$EXP[Exp_View_513_Include]">View_513_Shifted</include>
+        <include condition="$EXP[Exp_View_527_Include]">View_527_List_V2</include>
 
         <include>Furniture_Header</include>
         <include>Furniture_Header_Busy</include>
@@ -165,62 +169,12 @@
 
                 <!-- OPEN CUSTOM_SETVIEWTYPE -->
 
-                <control type="button" id="9305">
+                <control type="button" id="9001">
                     <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
                     <label>$LOCALIZE[582]:</label>
                     <label2>$INFO[Container.Viewmode]</label2>
-                    <align>left</align>
-                    <onclick>ActivateWindow(1154)</onclick>
-                </control>
-
-                <!-- LIST SETVIEWTYPE -->
-
-                <control type="button" id="93050">
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <label>$LOCALIZE[31620]:</label>
-                    <label2>$VAR[ViewListSelectedLabel]</label2>
-                    <onclick condition="String.IsEmpty(Skin.String(ViewListSelected))">Skin.SetString(ViewListSelected,1)</onclick>
-                    <onclick condition="String.IsEqual(Skin.String(ViewListSelected),1)">Skin.SetString(ViewListSelected,2)</onclick>
-                    <onclick condition="String.IsEqual(Skin.String(ViewListSelected),2)">Skin.Reset(ViewListSelected)</onclick>
-                    <!-- <onclick>ActivateWindow(1154)</onclick> -->
-                </control>
-
-                <!-- LOCK THIS VIEW TYPE -->
-
-                <control type="radiobutton" id="1111">
-                    <selected>[Container.Content() + !String.IsEmpty(Skin.String(skin.view.forced.))]
-                    | [Container.Content(tags) + !String.IsEmpty(Skin.String(skin.view.forced.tags))]
-                    | [Container.Content(years) + !String.IsEmpty(Skin.String(skin.view.forced.years))]
-                    | [Container.Content(genres) + !String.IsEmpty(Skin.String(skin.view.forced.genres))]
-                    | [Container.Content(countries) + !String.IsEmpty(Skin.String(skin.view.forced.countries))]
-                    | [Container.Content(studios) + !String.IsEmpty(Skin.String(skin.view.forced.studios))]
-                    | [Container.Content(playlists) + !String.IsEmpty(Skin.String(skin.view.forced.playlists))]
-                    | [Container.Content(movies) + !String.IsEmpty(Skin.String(skin.view.forced.movies))]
-                    | [Container.Content(sets) + !String.IsEmpty(Skin.String(skin.view.forced.sets))]
-                    | [Container.Content(tvshows) + !String.IsEmpty(Skin.String(skin.view.forced.tvshows))]
-                    | [Container.Content(seasons) + !String.IsEmpty(Skin.String(skin.view.forced.seasons))]
-                    | [Container.Content(episodes) + !String.IsEmpty(Skin.String(skin.view.forced.episodes))]
-                    | [Container.Content(artists) + !String.IsEmpty(Skin.String(skin.view.forced.artists))]
-                    | [Container.Content(albums) + !String.IsEmpty(Skin.String(skin.view.forced.albums))]
-                    | [Container.Content(songs) + !String.IsEmpty(Skin.String(skin.view.forced.songs))]
-                    | [Container.Content(musicvideos) + !String.IsEmpty(Skin.String(skin.view.forced.musicvideos))]
-                    | [Container.Content(addons) + !String.IsEmpty(Skin.String(skin.view.forced.addons))]
-                    | [Container.Content(actors) + !String.IsEmpty(Skin.String(skin.view.forced.actors))]
-                    | [Container.Content(directors) + !String.IsEmpty(Skin.String(skin.view.forced.directors))]
-                    | [Container.Content(files) + !String.IsEmpty(Skin.String(skin.view.forced.files))]
-                    | [Container.Content(mixed) + !String.IsEmpty(Skin.String(skin.view.forced.mixed))]
-                    | [Container.Content(images) + !String.IsEmpty(Skin.String(skin.view.forced.images))]
-                    | [Container.Content(games) + !String.IsEmpty(Skin.String(skin.view.forced.games))]
-                    | [Container.Content(unknown) + !String.IsEmpty(Skin.String(skin.view.forced.unknown))]
-                    | [Container.Content(videos) + !String.IsEmpty(Skin.String(skin.view.forced.videos))]</selected>
-
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <label>$LOCALIZE[31373] $VAR[label_container]</label>
-                    <include>Def_Views_Unlock</include>
-                    <include>Def_Views_Lock</include>
-                    <visible>!String.IsEmpty(Container.Content) + Skin.HasSetting(enable.views.forced)</visible>
+                    <onclick>Runscript(script.skinvariables,action=buildviews,contentid=$VAR[Items_ViewMode_Switch],pluginname=$INFO[Container.PluginName])</onclick>
                 </control>
 
                 <!-- ALL VIEWS -->

@@ -116,7 +116,6 @@
 
     <include name="View_50_SidePoster_Square">
         <control type="group" description="Poster">
-            <visible>!Control.IsVisible(57)</visible>
             <include>Animation_PosterSlideSquare</include>
             <animation effect="rotatey" end="-180" start="0" center="400,0" time="350" condition="String.IsEqual(Window.Property(RotateCover),1)">Conditional</animation>
             <left>SidePad</left>
@@ -171,7 +170,7 @@
                 <fadetime>PosterFanartFadetime</fadetime>
                 <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                 <texture diffuse="diffuse/sideposter_square.png" background="true">$VAR[Image_Square_50_List]</texture>
-                <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(favourites) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files)</visible>
+                <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files)</visible>
 
                 <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
                 <visible>!ListItem.IsParentFolder</visible>
@@ -187,7 +186,7 @@
                 <visible>$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | [Container.Content() + String.StartsWith(Container.FolderPath,addons://)] | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content()]</visible>
             </control>
 
-            <!-- Pics -->
+            <!-- Pics / Favourites -->
 
             <control type="image">
                 <width>PosterH</width>
@@ -196,7 +195,7 @@
                 <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
                 <texture diffuse="diffuse/sideposter_square.png" background="true">$VAR[Image_Square_50_List]</texture>
                 <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
-                <visible>Container.Content(images)</visible>
+                <visible>Container.Content(images) | Container.Content(favourites)</visible>
             </control>
 
             <!-- Youtube -->
@@ -233,20 +232,18 @@
     <include name="View_50_List">
         <description>List View (id=50)</description>
         <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
             <include>Animation_Common</include>
-            <visible>Control.IsVisible(50)</visible>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <control type="panel" id="50">
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <include>Def_On_Info</include>
-
-                    <visible>![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | $EXP[IsYoutube] | Container.Content(addons)]</visible>
-
-                    <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
-                        <param name="string" value="$LOCALIZE[535]" />
-                    </include>
+                    <include>Animation_ScrolltimeViewsList</include>
 
                     <top>PosterPad</top>
                     <height>PosterH</height>
@@ -261,7 +258,6 @@
                     <ondown>50</ondown>
                     <pagecontrol>1627</pagecontrol>
                     <viewtype label="535">list</viewtype>
-                    <include>Animation_ScrolltimeViewsList</include>
 
                     <itemlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list) | Container.Content(files)" width="auto" height="64">
                         <include>50_56_57_516_550_item_layout_video</include>
@@ -292,20 +288,18 @@
         <description>List View (id=50)</description>
         <control type="group">
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
+
             <include>Animation_Common</include>
             <visible>Control.IsVisible(50)</visible>
+
             <include>View_Slide_For_JumpBar</include>
             <control type="group">
                 <posy>320</posy>
                 <control type="fixedlist" id="50">
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <include>Def_On_Info</include>
-
-                    <visible>![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(videos) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | $EXP[IsYoutube] | Container.Content(addons)]</visible>
-
-                    <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
-                        <param name="string" value="$LOCALIZE[535]" />
-                    </include>
+                    <include>Animation_ScrolltimeViewsList</include>
 
                     <top>PosterPad</top>
                     <height>320</height>
@@ -319,7 +313,7 @@
                     <movement>2</movement>
                     <pagecontrol>1653</pagecontrol>
                     <viewtype label="535">list</viewtype>
-                    <include>Animation_ScrolltimeViewsList</include>
+
                     <itemlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="ListW" height="64">
                         <include>50_56_57_516_550_item_layout_video</include>
                     </itemlayout>
@@ -360,23 +354,20 @@
 
     <!-- LIST - VIEW 50 - VIDEO - SQUARE -->
 
-    <include name="View_550_List_Square">
-        <description>List View (id=550)</description>
+    <include name="View_50_List_Square_Video">
+        <description>List View (id=50)</description>
         <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
             <include>Animation_Common</include>
-            <visible>Control.IsVisible(550)</visible>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
-                <control type="panel" id="550">
+                <control type="panel" id="50">
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <include>Def_On_Info</include>
-
-                    <visible>[$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)]</visible>
-
-                    <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
-                        <param name="string" value="$LOCALIZE[535]" />
-                    </include>
 
                     <top>PosterPad</top>
                     <height>PosterH</height>
@@ -384,8 +375,8 @@
                     <right>SidePad</right>
                     <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
                     <onright>60</onright>
-                    <onup>550</onup>
-                    <ondown>550</ondown>
+                    <onup>50</onup>
+                    <ondown>50</ondown>
                     <pagecontrol>60</pagecontrol>
                     <viewtype label="535">list</viewtype>
                     <scrolltime>200</scrolltime>
@@ -416,13 +407,16 @@
     <include name="View_50_List_Square">
         <description>List View (id=50)</description>
         <control type="group">
-            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
-
-            <include>Animation_Common</include>
             <visible>Control.IsVisible(50)</visible>
+
+            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
+            <include>Animation_Common</include>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <control type="panel" id="50">
+                    <visible>$EXP[Exp_View_50]</visible>
+
                     <top>PosterPad</top>
                     <height>PosterH</height>
                     <left>ListSquareX</left>
@@ -434,6 +428,7 @@
                     <pagecontrol>1679</pagecontrol>
                     <viewtype label="535">list</viewtype>
                     <scrolltime>200</scrolltime>
+
                     <itemlayout width="ListSquareW" height="64">
                         <include>50_57_item_layout_music</include>
                     </itemlayout>
@@ -456,18 +451,15 @@
     <include name="View_50_List_Square_Music">
         <description>List View (id=50)</description>
         <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
             <include>Animation_Common</include>
-            <visible>Control.IsVisible(50)</visible>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <control type="panel" id="50">
-
-                    <visible>![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(videos) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)]</visible>
-
-                    <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
-                        <param name="string" value="$LOCALIZE[535]" />
-                    </include>
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <top>PosterPad</top>
                     <height>PosterH</height>
@@ -513,19 +505,16 @@
     <include name="View_50_LowList_Square_Music">
         <description>List View (id=50)</description>
         <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
             <include>Animation_Common</include>
-            <visible>Control.IsVisible(50)</visible>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <posy>320</posy>
                 <control type="fixedlist" id="50">
-
-                    <visible>![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(videos) | Container.Content(favourites) | Container.Content(genres) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)]</visible>
-
-                    <include content="Def_Views_Forced" condition="Skin.HasSetting(enable.views.forced)">
-                        <param name="string" value="$LOCALIZE[535]" />
-                    </include>
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <top>PosterPad</top>
                     <height>320</height>
@@ -576,14 +565,15 @@
     <include name="View_50_List_Square_Playlist">
         <description>List View (id=50)</description>
         <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
             <include>Animation_Common</include>
-            <visible>Control.IsVisible(50)</visible>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <control type="panel" id="50">
-
-                    <visible>!Container.Content(artists) + !Container.Content(albums) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(genres) + !Container.Content(years) + !Container.Content(actors) + !Container.Content(playlists) + !Container.Content(plugins) + !Container.Content(studios) + !Container.Content(directors) + !Container.Content(sets) + !Container.Content(tags)</visible>
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <top>PosterPad</top>
                     <height>PosterH</height>
@@ -620,15 +610,15 @@
     <include name="View_50_List_Square_Addons">
         <description>List View (id=50)</description>
         <control type="group">
-            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
-
-            <include>Animation_Common</include>
             <visible>Control.IsVisible(50)</visible>
+
+            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
+            <include>Animation_Common</include>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <control type="panel" id="50">
-
-                    <visible>!Container.Content(artists) + !Container.Content(albums) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(musicvideos) + !Container.Content(genres) + !Container.Content(years) + !Container.Content(actors) + !Container.Content(playlists) + !Container.Content(plugins) + !Container.Content(studios) + !Container.Content(directors) + !Container.Content(sets) + !Container.Content(tags)</visible>
+                    <visible>$EXP[Exp_View_50]</visible>
 
                     <top>PosterPad</top>
                     <height>PosterH</height>
@@ -672,12 +662,15 @@
     <include name="View_51_List_Squarepics">
         <description>List View (id=51)</description>
         <control type="group">
+            <visible>Control.IsVisible(51)</visible>
+
             <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
             <include>Animation_Common</include>
-            <visible>Control.IsVisible(51)</visible>
             <include>View_Slide_For_JumpBar</include>
+
             <control type="group">
                 <control type="panel" id="51">
+                    <visible>$EXP[Exp_View_51]</visible>
                     <top>206</top>
                     <right>-47</right>
                     <width>1220</width>

@@ -21,8 +21,9 @@
 
             <include condition="!String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Background_Rating</include>
             <include condition="!String.IsEmpty(Window(Home).Property(SetIcon))">Def_Dialog_Background_Icon</include>
+            <include condition="!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Background_View_Type</include>
             <include condition="!String.IsEmpty(Window(Home).Property(ListVideoForCast))">Def_Dialog_Background_Cast_Video_Search</include>
-            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SetIcon))">Def_Dialog_Background</include>
+            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SetIcon)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Background</include>
 
             <!-- HEADER -->
 
@@ -39,23 +40,9 @@
                 <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCast))</visible>
             </control>
 
-            <include content="Def_Dialog_Header_Logo">
-                <param name="dimensions" value="40"/>
-                <param name="top" value="40"/>
-                <param name="left" value="40"/>
-            </include>
+            <include>Def_Dialog_Header_Logo</include>
+            <include>Def_Dialog_Header_Line</include>
 
-            <!-- LINES -->
-
-            <control type="image">
-                <top>95</top>
-                <left>40</left>
-                <right>40</right>
-                <height>1</height>
-                <bottom>10</bottom>
-                <colordiffuse>Black12</colordiffuse>
-                <texture>common/white.png</texture>
-            </control>
 
             <!-- DIALOG SELECT - USER RATING  -->
 
@@ -69,8 +56,9 @@
 
             <include condition="!String.IsEmpty(Window(Home).Property(SetIcon))">Def_Dialog_Select_Icon</include>
             <include condition="!String.IsEmpty(Window(Home).Property(ListVideoForCast))">Def_Dialog_Select_Cast_Video_Search</include>
+            <include condition="!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Select_View_Type</include>
             <include condition="Window.IsActive(selectvideoversion) | Window.IsActive(selectvideoextra)">Def_Dialog_Select_Video_Version</include>
-            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SetIcon)) + !Window.IsActive(selectvideoversion) + !Window.IsActive(selectvideoextra) + String.IsEmpty(Window(Home).Property(ListVideoForCast))">Def_Dialog_Select_Other</include>
+            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SetIcon)) + !Window.IsActive(selectvideoversion) + !Window.IsActive(selectvideoextra) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Select_Other</include>
 
             <!-- SCROLLBAR  -->
 
@@ -104,7 +92,14 @@
                 <param name="onleft" value="6"/>
                 <param name="onright" value="1888"/>
                 <param name="centerright" value="366"/>
-                <param name="visible" value="Control.IsVisible(6) + !Control.IsVisible(3) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd) + String.IsEmpty(Window(Home).Property(ListVideoForCast))" />
+                <param name="visible" value="Control.IsVisible(6) + !Control.IsVisible(3) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))" />
+            </include>
+            <include content="Object_Scrollbar_Dialog">
+                <param name="scrollid" value="1723"/>
+                <param name="onleft" value="6"/>
+                <param name="onright" value="6"/>
+                <param name="centerright" value="1272"/>
+                <param name="visible" value="Control.IsVisible(6) + !Control.IsVisible(3) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + !String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))" />
             </include>
 
             <!-- BUTTON ON RIGHT -->
@@ -141,6 +136,7 @@
                     <textcolor>Black70</textcolor>
                     <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
                     <visible>!Control.IsVisible(21)</visible>
+                    <visible>String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
                     <animation effect="slide" start="0" end="0,-80" condition="!Control.IsVisible(5)">Conditional</animation>
                 </control>
             </control>
@@ -156,7 +152,7 @@
                 <texture fallback="DefaultAddonNone.png">$VAR[Image_Dialog_Select_Big]</texture>
                 <aspectratio align="center" aligny="bottom">keep</aspectratio>
                 <visible>Control.IsVisible(6) + [!String.IsEmpty(Container(6).ListItem.Art(poster)) | !String.IsEmpty(ListItem.Icon)]</visible>
-                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast))</visible>
+                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
             </control>
 
             <control type="image">
@@ -168,7 +164,31 @@
                 <texture fallback="DefaultAddonNone.png" colordiffuse="Dark1">$VAR[Image_Dialog_Select_Big]</texture>
                 <aspectratio align="center" aligny="bottom">keep</aspectratio>
                 <visible>Control.IsVisible(6) + String.IsEmpty(Container(6).ListItem.Art(poster)) + String.IsEmpty(Container(6).ListItem.Art(poster)) + String.IsEmpty(ListItem.Icon)</visible>
-                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast))</visible>
+                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
+            </control>
+
+
+            <!-- VIEW TYPE ON RIGHT -->
+
+            <control type="image">
+                <right>25</right>
+                <posy>106</posy>
+                <width>1222</width>
+                <height>676</height>
+                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                <visible>!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
+            </control>
+            <control type="image">
+                <description>Large Icon Image</description>
+                <right>34</right>
+                <posy>115</posy>
+                <width>1204</width>
+                <height>658</height>
+                <fadetime>300</fadetime>
+                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                <texture diffuse="diffuse/viewtype_1204x658.png" background="true">$INFO[Container(6).ListITem.Icon]</texture>
+                <visible>!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
             </control>
 
             <!-- CAST PICTURE -->
@@ -220,11 +240,22 @@
             <control type="image">
                 <right>366</right>
                 <top>115</top>
-                <height>687</height>
+                <bottom>20</bottom>
                 <width>1</width>
                 <texture colordiffuse="Black12">common/white.png</texture>
-                <visible>!Control.IsVisible(21)</visible>
                 <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+                <visible>!Control.IsVisible(21)</visible>
+                <visible>String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
+            </control>
+
+            <control type="image">
+                <right>1272</right>
+                <top>115</top>
+                <bottom>20</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+                <visible>!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)</visible>
             </control>
 
             <!-- NUM ITEMS -->

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1152">
     <defaultcontrol>11</defaultcontrol>
+
+    <onload>SetProperty(SetViewHomeSelected,$VAR[Indicators_Colors_Selected],Home)</onload>
+    <onunload>ClearProperty(SetViewHomeSelected,Home)</onunload>
+
     <controls>
         <include>Background_Overlay</include>
         <control type="group">
-            <height>532</height>
-            <width>1110</width>
-
-            <include>Def_Dialog_Background</include>
+            <include>Def_Dialog_Background_View_Type</include>
 
             <control type="label">
                 <include>Def_Dialog_Header_Title</include>
@@ -17,160 +18,250 @@
             <include>Def_Dialog_Header_Logo</include>
             <include>Def_Dialog_Header_Line</include>
 
-            <control type="grouplist" id="11">
+            <control type="list" id="11">
                 <height>532</height>
-                <width>467</width>
+                <width>450</width>
                 <top>115</top>
                 <left>0</left>
+                <onup>11</onup>
+                <ondown>11</ondown>
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
                 <scrolltime>0</scrolltime>
+                <orientation>vertical</orientation>
+                <include>Animation_ScrolltimeViewsList</include>
+
+                <itemlayout width="450" height="70">
+                    <control type="label">
+                        <left>30</left>
+                        <right>25</right>
+                        <height>70</height>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <font>Small</font>
+                        <textcolor>PanelWhite100</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <right>25</right>
+                        <height>70</height>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <font>Small</font>
+                        <textcolor>$VAR[Color_Highlight]</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                    </control>
+                    <control type="image">
+                        <right>30</right>
+                        <centertop>50%</centertop>
+                        <width>28</width>
+                        <height>28</height>
+                        <texture colordiffuse="Black70">buttons/radio-off.png</texture>
+                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                    </control>
+                    <control type="image">
+                        <right>30</right>
+                        <centertop>50%</centertop>
+                        <width>28</width>
+                        <height>28</height>
+                        <texture colordiffuse="$VAR[Color_Highlight]">buttons/radio-on.png</texture>
+                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="450" height="70">
+                    <control type="image">
+                        <width>100%</width>
+                        <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <height>70</height>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <font>Small</font>
+                        <textcolor>Selected</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="image">
+                        <right>30</right>
+                        <centertop>50%</centertop>
+                        <width>28</width>
+                        <height>28</height>
+                        <texture colordiffuse="Selected">buttons/radio-off.png</texture>
+                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                    </control>
+                    <control type="image">
+                        <right>30</right>
+                        <centertop>50%</centertop>
+                        <width>28</width>
+                        <height>28</height>
+                        <texture colordiffuse="Selected">buttons/radio-on.png</texture>
+                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                    </control>
+                </focusedlayout>
 
                 <!-- VERTICAL MULTI WIDGETS FLIX -->
 
-                <control type="button" id="1">
-                    <include>Def_Button_Gradient_Viewtype</include>
-                    <label>$LOCALIZE[31218] $LOCALIZE[31007]</label>
-                    <include>Reset_View_types</include>
-                    <onclick>Skin.SetBool(home.vertical)</onclick>
-                    <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
-                    <onclick>Skin.SetBool(homemenu.netflix)</onclick>
-                    <onclick>Skin.SetBool(homemenu.slide)</onclick>
-                    <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
+                <content>
+                    <item id="1">
+                        <label>$LOCALIZE[31218] $LOCALIZE[31007]</label>
 
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(enable.blur.effect)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enabled.tmdb.helper.blur)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enable.blur.on.home)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(TMDbHelper.EnableBlur)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(TMDbHelper.DisableArtwork)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(hide.homemenu.netflix.preview)</onclick>
+                        <include>Reset_View_types</include>
+                        <onclick>Skin.SetBool(home.vertical)</onclick>
+                        <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
+                        <onclick>Skin.SetBool(homemenu.netflix)</onclick>
+                        <onclick>Skin.SetBool(homemenu.slide)</onclick>
+                        <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
 
-                    <onclick>Close</onclick>
-                </control>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(enable.blur.effect)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enabled.tmdb.helper.blur)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enable.blur.on.home)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(TMDbHelper.EnableBlur)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(TMDbHelper.DisableArtwork)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(hide.homemenu.netflix.preview)</onclick>
 
-                <!-- MODERN MULTI WIDGETS FLIX -->
+                        <onclick>Close</onclick>
+                    </item>
 
-                <control type="button" id="2">
-                    <include>Def_Button_Gradient_Viewtype</include>
-                    <label>$LOCALIZE[31254] $LOCALIZE[31007]</label>
-                    <include>Reset_View_types</include>
-                    <onclick>Skin.SetBool(home.horizontal)</onclick>
-                    <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
-                    <onclick>Skin.SetBool(homemenu.netflix)</onclick>
-                    <onclick>Skin.Reset(homemenu.slide)</onclick>
-                    <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
+                    <!-- VERTICAL MULTI WIDGETS -->
 
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(enable.blur.effect)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enabled.tmdb.helper.blur)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enable.blur.on.home)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(TMDbHelper.EnableBlur)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(TMDbHelper.DisableArtwork)</onclick>
-                    <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(hide.homemenu.netflix.preview)</onclick>
-                    <onclick>Skin.Reset(home.showicons)</onclick>
+                    <item id="2">
+                        <label>$LOCALIZE[31218]</label>
 
-                    <onclick>Close</onclick>
-                </control>
+                        <include>Reset_View_types</include>
+                        <onclick>Skin.SetBool(home.vertical)</onclick>
+                        <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
+                        <onclick>Skin.SetBool(homemenu.slide)</onclick>
+                        <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
 
-                <!-- VERTICAL MULTI WIDGETS -->
+                        <onclick condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.Reset(enable.blur.effect)</onclick>
+                        <onclick>Skin.Reset(enabled.tmdb.helper.blur)</onclick>
+                        <onclick>Skin.Reset(enable.blur.on.home)</onclick>
+                        <onclick>Skin.Reset(TMDbHelper.EnableBlur)</onclick>
+                        <onclick>Skin.SetBool(TMDbHelper.DisableArtwork)</onclick>
+                        <onclick>Skin.SetBool(hide.homemenu.netflix.preview)</onclick>
 
-                <control type="button" id="7">
-                    <include>Def_Button_Gradient_Viewtype</include>
-                    <label>$LOCALIZE[31218]</label>
-                    <include>Reset_View_types</include>
-                    <onclick>Skin.SetBool(home.vertical)</onclick>
-                    <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
-                    <onclick>Skin.SetBool(homemenu.slide)</onclick>
-                    <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
+                        <onclick>Close</onclick>
+                    </item>
 
-                    <onclick condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.Reset(enable.blur.effect)</onclick>
-                    <onclick>Skin.Reset(enabled.tmdb.helper.blur)</onclick>
-                    <onclick>Skin.Reset(enable.blur.on.home)</onclick>
-                    <onclick>Skin.Reset(TMDbHelper.EnableBlur)</onclick>
-                    <onclick>Skin.SetBool(TMDbHelper.DisableArtwork)</onclick>
-                    <onclick>Skin.SetBool(hide.homemenu.netflix.preview)</onclick>
+                    <!-- MODERN MULTI WIDGETS FLIX -->
 
-                    <onclick>Close</onclick>
-                </control>
+                    <item id="3">
+                        <label>$LOCALIZE[31254] $LOCALIZE[31007]</label>
 
-                <!-- MODERN MULTI WIDGETS -->
+                        <include>Reset_View_types</include>
+                        <onclick>Skin.SetBool(home.horizontal)</onclick>
+                        <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
+                        <onclick>Skin.SetBool(homemenu.netflix)</onclick>
+                        <onclick>Skin.Reset(homemenu.slide)</onclick>
+                        <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
 
-                <control type="button" id="4">
-                    <include>Def_Button_Gradient_Viewtype</include>
-                    <label>$LOCALIZE[31254]</label>
-                    <include>Reset_View_types</include>
-                    <onclick>Skin.SetBool(home.horizontal)</onclick>
-                    <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
-                    <onclick>Skin.Reset(homemenu.slide)</onclick>
-                    <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf) + System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(enable.blur.effect)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enabled.tmdb.helper.blur)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(enable.blur.on.home)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.SetBool(TMDbHelper.EnableBlur)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(TMDbHelper.DisableArtwork)</onclick>
+                        <onclick condition="!Skin.HasSetting(set.skin.config.perf)">Skin.Reset(hide.homemenu.netflix.preview)</onclick>
+                        <onclick>Skin.Reset(home.showicons)</onclick>
 
-                    <onclick condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.Reset(enable.blur.effect)</onclick>
-                    <onclick>Skin.Reset(enabled.tmdb.helper.blur)</onclick>
-                    <onclick>Skin.Reset(enable.blur.on.home)</onclick>
-                    <onclick>Skin.Reset(TMDbHelper.EnableBlur)</onclick>
-                    <onclick>Skin.SetBool(TMDbHelper.DisableArtwork)</onclick>
-                    <onclick>Skin.SetBool(hide.homemenu.netflix.preview)</onclick>
-                    <onclick>Skin.Reset(home.showicons)</onclick>
+                        <onclick>Close</onclick>
+                    </item>
 
-                    <onclick>Close</onclick>
-                </control>
+                    <!-- MODERN MULTI WIDGETS -->
 
-                <!-- MINIMAL AND CLEAN -->
+                    <item id="4">
+                        <label>$LOCALIZE[31254]</label>
 
-                <control type="button" id="9">
-                    <include>Def_Button_Gradient_Viewtype</include>
-                    <label>$LOCALIZE[31472]</label>
-                    <include>Reset_View_types</include>
-                    <onclick>Skin.SetBool(home.horizontal)</onclick>
-                    <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
-                    <onclick>Skin.SetBool(homemenu.netflix)</onclick>
-                    <onclick>Skin.SetBool(homemenu.horizontal.clean)</onclick>
-                    <onclick>Skin.SetBool(no.homemenu.clear)</onclick>
-                    <onclick>Skin.Reset(homemenu.slide)</onclick>
-                    <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
+                        <include>Reset_View_types</include>
+                        <onclick>Skin.SetBool(home.horizontal)</onclick>
+                        <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
+                        <onclick>Skin.Reset(homemenu.slide)</onclick>
+                        <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
 
-                    <onclick condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.Reset(enable.blur.effect)</onclick>
-                    <onclick>Skin.Reset(enabled.tmdb.helper.blur)</onclick>
-                    <onclick>Skin.Reset(enable.blur.on.home)</onclick>
-                    <onclick>Skin.Reset(TMDbHelper.EnableBlur)</onclick>
-                    <onclick>Skin.SetBool(TMDbHelper.DisableArtwork)</onclick>
-                    <onclick>Skin.SetBool(hide.homemenu.netflix.preview)</onclick>
+                        <onclick condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.Reset(enable.blur.effect)</onclick>
+                        <onclick>Skin.Reset(enabled.tmdb.helper.blur)</onclick>
+                        <onclick>Skin.Reset(enable.blur.on.home)</onclick>
+                        <onclick>Skin.Reset(TMDbHelper.EnableBlur)</onclick>
+                        <onclick>Skin.SetBool(TMDbHelper.DisableArtwork)</onclick>
+                        <onclick>Skin.SetBool(hide.homemenu.netflix.preview)</onclick>
+                        <onclick>Skin.Reset(home.showicons)</onclick>
 
-                    <onclick>Close</onclick>
-                </control>
+                        <onclick>Close</onclick>
+                    </item>
+
+                    <!-- MINIMAL AND CLEAN -->
+
+                    <item id="5">
+                        <label>$LOCALIZE[31472]</label>
+
+                        <include>Reset_View_types</include>
+                        <onclick>Skin.SetBool(home.horizontal)</onclick>
+                        <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
+                        <onclick>Skin.SetBool(homemenu.netflix)</onclick>
+                        <onclick>Skin.SetBool(homemenu.horizontal.clean)</onclick>
+                        <onclick>Skin.SetBool(no.homemenu.clear)</onclick>
+                        <onclick>Skin.Reset(homemenu.slide)</onclick>
+                        <onclick>Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
+
+                        <onclick condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.Reset(enable.blur.effect)</onclick>
+                        <onclick>Skin.Reset(enabled.tmdb.helper.blur)</onclick>
+                        <onclick>Skin.Reset(enable.blur.on.home)</onclick>
+                        <onclick>Skin.Reset(TMDbHelper.EnableBlur)</onclick>
+                        <onclick>Skin.SetBool(TMDbHelper.DisableArtwork)</onclick>
+                        <onclick>Skin.SetBool(hide.homemenu.netflix.preview)</onclick>
+
+                        <onclick>Close</onclick>
+                    </item>
+                </content>
             </control>
 
-            <control type="image">
-                <left>410</left>
-                <top>138</top>
-                <width>24</width>
-                <height>24</height>
-                <texture colordiffuse="Dark1">osd/minicheck_big.png</texture>
-                <animation effect="slide" end="0,66" time="0" condition="Skin.HasSetting(home.horizontal) + Skin.HasSetting(homemenu.netflix)">Conditional</animation>
-                <animation effect="slide" end="0,132" time="0" condition="Skin.HasSetting(home.vertical) + !Skin.HasSetting(homemenu.netflix)">Conditional</animation>
-                <animation effect="slide" end="0,198" time="0" condition="Skin.HasSetting(home.horizontal) + !Skin.HasSetting(homemenu.netflix)">Conditional</animation>
-                <animation effect="slide" end="0,198" time="0" condition="Skin.HasSetting(homemenu.horizontal.clean)">Conditional</animation>
-            </control>
-
-            <!-- LINES -->
+            <!-- LINE VERTICAL -->
 
             <control type="image">
-                <posx>460</posx>
+                <right>1272</right>
                 <top>115</top>
-                <height>330</height>
+                <bottom>20</bottom>
                 <width>1</width>
                 <texture colordiffuse="Black12">common/white.png</texture>
             </control>
 
+
+
+                <!-- <texture colordiffuse="$VAR[Color_Highlight]">buttons/radio-on.png</texture> -->
+                <!-- <animation effect="slide" end="0,66" time="0" condition="Skin.HasSetting(home.horizontal) + Skin.HasSetting(homemenu.netflix)">Conditional</animation> -->
+                <!-- <animation effect="slide" end="0,132" time="0" condition="Skin.HasSetting(home.vertical) + !Skin.HasSetting(homemenu.netflix)">Conditional</animation> -->
+                <!-- <animation effect="slide" end="0,198" time="0" condition="Skin.HasSetting(home.horizontal) + !Skin.HasSetting(homemenu.netflix)">Conditional</animation> -->
+                <!-- <animation effect="slide" end="0,198" time="0" condition="Skin.HasSetting(homemenu.horizontal.clean)">Conditional</animation> -->
+
+
+            <!-- VIEW TYPE ON RIGHT -->
+
             <control type="image">
-                <left>494</left>
-                <top>115</top>
-                <height>330</height>
-                <width>587</width>
-                <fadetime>150</fadetime>
-                <texture background="true">special://skin/extras/homemenu/$VAR[Image_Home_Menu_View_type].jpg</texture>
+                <right>25</right>
+                <posy>106</posy>
+                <width>1222</width>
+                <height>676</height>
+                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+            </control>
+            <control type="image">
+                <description>Large Icon Image</description>
+                <right>34</right>
+                <posy>115</posy>
+                <width>1204</width>
+                <height>658</height>
+                <fadetime>300</fadetime>
+                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                <texture diffuse="diffuse/viewtype_1204x658.png" background="true">special://skin/extras/homemenu/$VAR[Image_Home_Menu_View_type].jpg</texture>
             </control>
 
+            <!-- NUM ITEMS -->
+
             <include>Def_Dialog_Select_label_Num_Item</include>
+
         </control>
     </controls>
 </window>

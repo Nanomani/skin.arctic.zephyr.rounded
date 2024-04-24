@@ -1,6 +1,1260 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 
+    <!-- DEF WIDGET -->
+
+    <include name="Def_Widget_Selector_Info">
+        <width>100%</width>
+        <height>66</height>
+        <align>left</align>
+        <textoffsetx>20</textoffsetx>
+        <disabledcolor>Black70</disabledcolor>
+        <font>Button</font>
+    </include>
+
+    <variable name="Def_Widget_Content">
+        <value condition="[String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + !String.IsEmpty(Skin.String(weather.fanart))">noop</value>
+        <value condition="!String.IsEmpty(Container(300).ListItem.Property(Background))">noop</value>
+        <value condition="!String.IsEmpty(Skin.String(home.slideshowpath)) + String.IsEmpty(Container(300).ListItem.Property(widget))">noop</value>
+        <value condition="!String.IsEmpty(Skin.String(home.fallbackwidget))">$INFO[Skin.String(home.fallbackwidget)]</value>
+        <value condition="!String.IsEmpty(Skin.String(widgetSpotlightPath)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),fallback/background.jpg)">$INFO[Skin.String(widgetSpotlightPath)]</value>
+        <value condition="!Library.HasContent(Movies) + !Library.HasContent(TVShows)">$VAR[Def_Widget_Fallback]</value>
+        <value>$VAR[Def_Random_Movies]</value>
+    </variable>
+
+    <variable name="Def_Widget_Target">
+        <value condition="!String.IsEmpty(Skin.String(widgetTarget)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),fallback/background.jpg)">$INFO[Skin.String(widgetTarget)]</value>
+        <value>videos</value>
+    </variable>
+
+    <variable name="Value_Widget_Limit">
+        <value condition="!String.IsEmpty(Skin.String(WidgetLimit))">$INFO[Skin.String(WidgetLimit)]</value>
+        <value>$NUMBER[10]</value>
+    </variable>
+
+    <variable name="Def_Hub_Limit">
+        <value condition="!String.IsEmpty(Skin.String(HubLimit))">$INFO[Skin.String(HubLimit)]</value>
+        <value>$NUMBER[10]</value>
+    </variable>
+
+    <include name="Def_Home_Menu_Row_width_Reduce">
+        <right>508</right>
+    </include>
+
+    <include name="Def_Home_Menu_Row_width_Max">
+        <right>64</right>
+    </include>
+
+    <include name="Def_Hub_Window">
+        <include>Background_Global</include>
+        <include>Furniture_Header</include>
+        <include>Furniture_Header_Busy</include>
+        <include>Furniture_Header_NowPlaying</include>
+        <include>Furniture_Footer_Clock_Right</include>
+        <include>Furniture_Header_Clock_Right</include>
+        <include>Furniture_Flags_Hub</include>
+        <control type="group">
+            <include>Animation_Common</include>
+            <control type="group">
+               <top>PosterPad</top>
+               <left>SidePad</left>
+               <right>SidePad</right>
+               <height>640</height>
+               <control type="group">
+                    <control type="image">
+                       <left>-9</left>
+                       <width>1140</width>
+                       <top>-9</top>
+                       <bottom>-9</bottom>
+                       <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                       <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                       <left>0</left>
+                       <width>1122</width>
+                       <top>0</top>
+                       <bottom>0</bottom>
+                       <texture border="12" colordiffuse="Panel">common/box.png</texture>
+                    </control>
+                    <control type="image">
+                       <left>0</left>
+                       <width>1122</width>
+                       <top>0</top>
+                       <bottom>0</bottom>
+                       <texture background="true" diffuse="diffuse/home-fanart.png">fallback/background.jpg</texture>
+                       <visible>!Integer.IsGreater(Container(9500).NumItems,0)</visible>
+                    </control>
+                    <control type="wraplist" id="9500">
+                       <description>Widget</description>
+                       <left>0</left>
+                       <width>1122</width>
+                       <top>0</top>
+                       <bottom>0</bottom>
+                       <onright>9501</onright>
+                       <onleft>9000</onleft>
+                       <onup>9500</onup>
+                       <ondown>9500</ondown>
+                       <preloaditems>1</preloaditems>
+                       <orientation>vertical</orientation>
+                       <autoscroll time="10000">!Control.HasFocus(9500)</autoscroll>
+                       <include>Animation_ScrolltimeViewsList</include>
+                       <include>Animation_FadeIn</include>
+                       <include>Animation_FadeOut</include>
+                       <itemlayout width="1122" height="640">
+                          <control type="image">
+                              <width>100%</width>
+                              <height>100%</height>
+                              <texture background="true" diffuse="diffuse/bigwiderolodex.png">$VAR[Image_Fanart]</texture>
+                          </control>
+                       </itemlayout>
+                       <focusedlayout width="1122" height="640">
+                          <control type="image">
+                              <width>100%</width>
+                              <height>100%</height>
+                              <texture background="true" diffuse="diffuse/bigwiderolodex.png">$VAR[Image_Fanart]</texture>
+                          </control>
+                       </focusedlayout>
+                       <content limit="$VAR[Def_Hub_Limit]" target="$VAR[Def_Hub_Widget_Target]">$VAR[Def_Hub_Widget_Ref]</content>
+                    </control>
+                    <control type="group">
+                       <left>0</left>
+                       <width>1122</width>
+                       <bottom>0</bottom>
+                       <height>70</height>
+                       <visible>Integer.IsGreater(Container(9500).NumItems,0)</visible>
+                       <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+                       <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
+                       <visible>Skin.HasSetting(hub.showplot)</visible>
+                       <control type="image">
+                          <left>0</left>
+                          <right>0</right>
+                          <bottom>0</bottom>
+                          <height>210</height>
+                          <texture border="15" colordiffuse="OSDBack">common/shadowbottom.png</texture>
+                       </control>
+                       <control type="label">
+                          <posx>30</posx>
+                          <top>-80</top>
+                          <width>200</width>
+                          <font>InfoNetflix</font>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$INFO[Container(9500).ListItem.Year]</label>
+                       </control>
+                       <control type="label">
+                          <posx>120</posx>
+                          <top>-80</top>
+                          <width max="730">auto</width>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <font>InfoNetflix</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$INFO[Container(9500).ListItem.Label]</label>
+                       </control>
+                       <control type="label">
+                          <top>-80</top>
+                          <right>154</right>
+                          <width>500</width>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <align>right</align>
+                          <font>InfoNetflix</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$VAR[Label_Duration_Time_Check_9500]</label>
+                          <visible>!String.IsEqual(Container(9500).ListItem.DBType,tvshow)</visible>
+                       </control>
+                       <control type="label">
+                          <centerright>96</centerright>
+                          <width>50</width>
+                          <top>-72</top>
+                          <height>50</height>
+                          <textcolor>$VAR[WatchedLabelPosterColor]</textcolor>
+                          <font>SymbolPoster</font>
+                          <label>$VAR[LabelImage_Indicator_Status_9500]</label>
+                          <visible>!ListItem.IsParentFolder</visible>
+                       </control>
+                       <control type="label">
+                          <right>30</right>
+                          <width>500</width>
+                          <top>-80</top>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <align>right</align>
+                          <font>Small</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$VAR[RatingLabel9500]</label>
+                       </control>
+                       <control type="textbox">
+                          <top>-20</top>
+                          <left>30</left>
+                          <right>30</right>
+                          <height>67</height>
+                          <align>justify</align>
+                          <font>Tiny</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$INFO[Container(9500).ListItem.Plot]</label>
+                       </control>
+                    </control>
+                    <control type="group">
+                       <left>0</left>
+                       <width>1122</width>
+                       <bottom>0</bottom>
+                       <height>70</height>
+                       <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+                       <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
+                       <visible>!Skin.HasSetting(hub.showplot)</visible>
+                       <visible>Integer.IsGreater(Container(9500).NumItems,0)</visible>
+                       <control type="image">
+                          <left>0</left>
+                          <right>0</right>
+                          <bottom>0</bottom>
+                          <height>90</height>
+                          <texture border="15" colordiffuse="OSDBack">common/shadowbottomsmall.png</texture>
+                       </control>
+                       <control type="label">
+                          <posx>30</posx>
+                          <width>200</width>
+                          <font>InfoNetflix</font>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$INFO[Container(9500).ListItem.Year]</label>
+                       </control>
+                       <control type="label">
+                          <posx>120</posx>
+                          <width max="730">auto</width>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <font>InfoNetflix</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$INFO[Container(9500).ListItem.Label]</label>
+                       </control>
+                       <control type="label">
+                          <right>154</right>
+                          <width>500</width>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <align>right</align>
+                          <font>InfoNetflix</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$VAR[Label_Duration_Time_Check_9500]</label>
+                          <visible>!String.IsEqual(Container(9500).ListItem.DBType,tvshow)</visible>
+                       </control>
+                       <control type="label">
+                          <centerright>96</centerright>
+                          <width>50</width>
+                          <top>7</top>
+                          <height>50</height>
+                          <textcolor>$VAR[WatchedLabelPosterColor]</textcolor>
+                          <font>SymbolPoster</font>
+                          <label>$VAR[LabelImage_Indicator_Status_9500]</label>
+                          <visible>!ListItem.IsParentFolder</visible>
+                       </control>
+                       <control type="label">
+                          <right>30</right>
+                          <width>500</width>
+                          <aligny>center</aligny>
+                          <height>64</height>
+                          <align>right</align>
+                          <font>InfoNetflix</font>
+                          <textcolor>White100</textcolor>
+                          <selectedcolor>White100</selectedcolor>
+                          <label>$VAR[RatingLabel9500]</label>
+                       </control>
+                    </control>
+
+                    <control type="group">
+                        <left>-2</left>
+                        <width>1126</width>
+                        <top>-2</top>
+                        <height>644</height>
+                        <control type="image">
+                        <texture border="18">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/selectbox_h.png</texture>
+                        <visible>Control.HasFocus(9500)</visible>
+                        </control>
+                    </control>
+
+               </control>
+               <control type="group">
+                    <control type="list" id="9501">
+                       <description>Widget</description>
+                       <left>1140</left>
+                       <right>0</right>
+                       <top>0</top>
+                       <height>640</height>
+                       <onleft>9500</onleft>
+                       <onright>60</onright>
+                       <onup>9501</onup>
+                       <ondown>9501</ondown>
+                       <pagecontrol>60</pagecontrol>
+                       <preloaditems>2</preloaditems>
+                       <orientation>vertical</orientation>
+                       <include>Animation_ScrolltimeViewsList</include>
+                       <include>Animation_FadeIn</include>
+                       <include>Animation_FadeOut</include>
+                       <itemlayout width="620" height="80">
+                          <control type="image">
+                              <right>0</right>
+                              <top>5</top>
+                              <bottom>0</bottom>
+                              <width>70</width>
+                              <height>70</height>
+                              <texture colordiffuse="Dark2">$INFO[ListItem.Icon]</texture>
+                          </control>
+                          <control type="label">
+                              <left>30</left>
+                              <right>SidePad</right>
+                              <height>100%</height>
+                              <font>SmallNavi</font>
+                              <textcolor>Dark2</textcolor>
+                              <label>$INFO[ListItem.Label]</label>
+                          </control>
+                       </itemlayout>
+                       <focusedlayout width="620" height="80">
+                          <control type="group">
+                              <visible>Control.HasFocus(9501)</visible>
+                              <control type="image">
+                                  <width>100%</width>
+                                  <height>100%</height>
+                                  <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
+                              </control>
+                              <control type="image">
+                                  <right>0</right>
+                                  <top>5</top>
+                                  <bottom>0</bottom>
+                                  <width>70</width>
+                                  <height>70</height>
+                                  <texture colordiffuse="Light1">$INFO[ListItem.Icon]</texture>
+                              </control>
+                              <control type="label">
+                                  <left>30</left>
+                                  <right>SidePad</right>
+                                  <height>100%</height>
+                                  <font>SmallNavi</font>
+                                  <textcolor>Light1</textcolor>
+                                  <label>$INFO[ListItem.Label]</label>
+                              </control>
+                          </control>
+                          <control type="group">
+                              <visible>!Control.HasFocus(9501)</visible>
+                              <control type="image">
+                                  <right>0</right>
+                                  <top>0</top>
+                                  <bottom>0</bottom>
+                                  <width>80</width>
+                                  <texture colordiffuse="Dark1">$INFO[ListItem.Icon]</texture>
+                              </control>
+                              <control type="label">
+                                  <left>30</left>
+                                  <right>SidePad</right>
+                                  <height>100%</height>
+                                  <font>SmallNavi</font>
+                                  <textcolor>Dark2</textcolor>
+                                  <label>$INFO[ListItem.Label]</label>
+                              </control>
+                          </control>
+                       </focusedlayout>
+                       <content>
+                          <include>$PARAM[list]</include>
+                       </content>
+                    </control>
+               </control>
+            </control>
+            <control type="scrollbar" id="60">
+               <onback>9501</onback>
+               <centerright>60</centerright>
+               <posy>PosterPad</posy>
+               <height>PosterH</height>
+               <width>8</width>
+               <onleft>9501</onleft>
+               <onright>9501</onright>
+               <texturesliderbackground border="4" colordiffuse="Dark4">scrollbar/scrollv.png</texturesliderbackground>
+               <texturesliderbar border="4" colordiffuse="Dark3">scrollbar/scrollv.png</texturesliderbar>
+               <texturesliderbarfocus border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollv_h.png</texturesliderbarfocus>
+               <animation effect="fade" start="100" end="33" time="400" condition="!Control.HasFocus(60) + !Container.Scrolling">Conditional</animation>
+            </control>
+        </control>
+        <control type="group">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <visible>ControlGroup(9000).HasFocus()</visible>
+            <include>Background_Overlay</include>
+        </control>
+        <control type="group">
+            <height>483</height>
+            <include>Def_View_ContextMenu_Background</include>
+            <control type="group">
+               <control type="image">
+                    <description>arrow image</description>
+                    <centerleft>50%</centerleft>
+                    <posy>-16</posy>
+                    <include>arrowdimensions</include>
+                    <texture colordiffuse="White70" flipy="true">common/arrow-small.png</texture>
+               </control>
+               <control type="image">
+                    <description>arrow image</description>
+                    <centerleft>50%</centerleft>
+                    <posy>482</posy>
+                    <include>arrowdimensions</include>
+                    <texture colordiffuse="White70" flipy="false">common/arrow-small.png</texture>
+               </control>
+            </control>
+
+            <control type="label">
+                <include>Def_Dialog_Header_Title</include>
+                <label>14018</label>
+            </control>
+            <include>Def_Dialog_Header_Logo</include>
+            <include>Def_Dialog_Header_Line</include>
+
+            <control type="image">
+               <top>110</top>
+               <left>8</left>
+               <height>70</height>
+               <width>450</width>
+               <visible>ControlGroup(9000).HasFocus() + !ControlGroup(6150).HasFocus()</visible>
+               <animation effect="fade" start="100" end="100" delay="20" time="1">Visible</animation>
+               <animation effect="slide" end="0,70" time="0" condition="Integer.IsGreater(Container(9000).Position,0)">Conditional</animation>
+               <animation effect="slide" end="0,70" time="0" condition="Integer.IsGreater(Container(9000).Position,1)">Conditional</animation>
+               <animation effect="slide" end="0,70" time="0" condition="Integer.IsGreater(Container(9000).Position,2)">Conditional</animation>
+               <animation effect="slide" end="0,70" time="0" condition="Integer.IsGreater(Container(9000).Position,3)">Conditional</animation>
+               <animation effect="slide" end="0,70" time="0" condition="Integer.IsGreater(Container(9000).Position,4)">Conditional</animation>
+               <animation effect="slide" end="0,70" time="0" condition="Integer.IsGreater(Container(9000).Position,5)">Conditional</animation>
+            </control>
+            <control type="grouplist" id="9000">
+               <height>350</height>
+               <top>110</top>
+               <usecontrolcoords>true</usecontrolcoords>
+               <include>Def_View_ContextMenu_GroupList_Hub</include>
+               <scrolltime>0</scrolltime>
+               <control type="radiobutton" id="9296">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31264</label>
+                    <selected>Skin.HasSetting(hub.showplot)</selected>
+                    <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
+               </control>
+               <control type="radiobutton" id="9584">
+                    <include>Def_Button_Gradient_Context</include>
+                    <label>31009</label>
+                    <align>left</align>
+                    <selected>Skin.HasSetting(enable.furniture.flags.colored)</selected>
+                    <onclick>Skin.ToggleSetting(enable.furniture.flags.colored)</onclick>
+                    <visible>!Skin.HasSetting(hide.furniture.flags) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+               </control>
+               <control type="togglebutton" id="20">
+                    <description>Update</description>
+                    <align>left</align>
+                    <label>653</label>
+                    <altlabel>13353</altlabel>
+                    <include>Def_Button_Gradient_Context</include>
+                    <usealttexture>Library.IsScanningVideo</usealttexture>
+               </control>
+               <include>ButtonPlaylist</include>
+               <control type="button" id="5555">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31168</label>
+                    <onclick>ReloadSkin()</onclick>
+                    <visible>Skin.HasSetting(DebugInfo)</visible>
+               </control>
+            </control>
+        </control>
+    </include>
+
+    <variable name="Def_Hub_Widget_Ref">
+        <value condition="Window.IsVisible(1111) + !String.IsEmpty(Skin.String(Widget.1111))">$INFO[Skin.String(Widget.1111)]</value>
+        <value condition="Window.IsVisible(1112) + !String.IsEmpty(Skin.String(Widget.1112))">$INFO[Skin.String(Widget.1112)]</value>
+        <value condition="Window.IsVisible(1113) + !String.IsEmpty(Skin.String(Widget.1113))">$INFO[Skin.String(Widget.1113)]</value>
+        <value condition="Window.IsVisible(1114) + !String.IsEmpty(Skin.String(Widget.1114))">$INFO[Skin.String(Widget.1114)]</value>
+        <value condition="Window.IsVisible(1115) + !String.IsEmpty(Skin.String(Widget.1115))">$INFO[Skin.String(Widget.1115)]</value>
+        <value condition="Window.IsVisible(1116) + !String.IsEmpty(Skin.String(Widget.1116))">$INFO[Skin.String(Widget.1116)]</value>
+        <value condition="Window.IsVisible(1117) + !String.IsEmpty(Skin.String(Widget.1117))">$INFO[Skin.String(Widget.1117)]</value>
+        <value condition="Window.IsVisible(1118) + !String.IsEmpty(Skin.String(Widget.1118))">$INFO[Skin.String(Widget.1118)]</value>
+        <value condition="Window.IsVisible(1119) + !String.IsEmpty(Skin.String(Widget.1119))">$INFO[Skin.String(Widget.1119)]</value>
+        <value condition="Window.IsVisible(1112)">special://skin/extras/playlists/RandomEpisodes.xsp</value>
+        <value>special://skin/extras/playlists/RandomMovies.xsp</value>
+    </variable>
+
+    <variable name="Def_Hub_Widget_Target">
+        <value condition="Window.IsVisible(1111) + !String.IsEmpty(Skin.String(Widget.1111)) + !String.IsEmpty(Skin.String(Widget.1111.Content))">$INFO[Skin.String(Widget.1111.Content)]</value>
+        <value condition="Window.IsVisible(1112) + !String.IsEmpty(Skin.String(Widget.1112)) + !String.IsEmpty(Skin.String(Widget.1112.Content))">$INFO[Skin.String(Widget.1112.Content)]</value>
+        <value condition="Window.IsVisible(1113) + !String.IsEmpty(Skin.String(Widget.1113)) + !String.IsEmpty(Skin.String(Widget.1113.Content))">$INFO[Skin.String(Widget.1113.Content)]</value>
+        <value condition="Window.IsVisible(1114) + !String.IsEmpty(Skin.String(Widget.1114)) + !String.IsEmpty(Skin.String(Widget.1114.Content))">$INFO[Skin.String(Widget.1114.Content)]</value>
+        <value condition="Window.IsVisible(1115) + !String.IsEmpty(Skin.String(Widget.1115)) + !String.IsEmpty(Skin.String(Widget.1115.Content))">$INFO[Skin.String(Widget.1115.Content)]</value>
+        <value condition="Window.IsVisible(1116) + !String.IsEmpty(Skin.String(Widget.1116)) + !String.IsEmpty(Skin.String(Widget.1116.Content))">$INFO[Skin.String(Widget.1116.Content)]</value>
+        <value condition="Window.IsVisible(1117) + !String.IsEmpty(Skin.String(Widget.1117)) + !String.IsEmpty(Skin.String(Widget.1117.Content))">$INFO[Skin.String(Widget.1117.Content)]</value>
+        <value condition="Window.IsVisible(1118) + !String.IsEmpty(Skin.String(Widget.1118)) + !String.IsEmpty(Skin.String(Widget.1118.Content))">$INFO[Skin.String(Widget.1118.Content)]</value>
+        <value condition="Window.IsVisible(1119) + !String.IsEmpty(Skin.String(Widget.1119)) + !String.IsEmpty(Skin.String(Widget.1119.Content))">$INFO[Skin.String(Widget.1119.Content)]</value>
+        <value>videos</value>
+    </variable>
+
+    <include name="Def_Shortcuts_SetHub">
+        <control type="button" id="$PARAM[buttonid2]" description="Set HUB WIDGET">
+            <width>100%</width>
+            <label>31240</label>
+            <height>66</height>
+            <texturenofocus colordiffuse="Black12" border="12">common/box.png</texturenofocus>
+            <align>left</align>
+            <include>Def_Dialog_Buttons</include>
+            <label2>$INFO[Skin.String(Widget.$PARAM[hubid].Label)]</label2>
+            <visible>String.IsEqual(Container(211).ListItem.Label2,Hub $PARAM[hubid]) | String.IsEqual(Container(211).ListItem.Property(Path),ActivateWindow($PARAM[hubid]))</visible>
+            <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+            <onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;grouping=widget&amp;skinList=Widget.$PARAM[hubid]&amp;skinLabel=Widget.$PARAM[hubid].Label&amp;skinType=Widget.$PARAM[hubid].Type)</onclick>
+            <onunfocus condition="[String.Contains(Skin.String(Widget.$PARAM[hubid]),musicdb://) | String.Contains(Skin.String(Widget.$PARAM[hubid]),library://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),sources://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),plugin://plugin.audio)]">Skin.SetString(Widget.$PARAM[hubid].Content,music)</onunfocus>
+            <onunfocus condition="String.Contains(Skin.String(Widget.$PARAM[hubid]),Pictures)">Skin.SetString(Widget.$PARAM[hubid].Content,pictures)</onunfocus>
+            <onunfocus condition="!String.IsEmpty(Skin.String(Widget.$PARAM[hubid])) + ![String.Contains(Skin.String(Widget.$PARAM[hubid]),Pictures) | String.Contains(Skin.String(Widget.$PARAM[hubid]),musicdb://) | String.Contains(Skin.String(Widget.$PARAM[hubid]),library://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),sources://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),plugin://plugin.audio)]">Skin.SetString(Widget.$PARAM[hubid].Content,videos)</onunfocus>
+            <onback condition="[String.Contains(Skin.String(Widget.$PARAM[hubid]),musicdb://) | String.Contains(Skin.String(Widget.$PARAM[hubid]),library://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),sources://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),plugin://plugin.audio)]">Skin.SetString(Widget.$PARAM[hubid].Content,music)</onback>
+            <onback condition="String.Contains(Skin.String(Widget.$PARAM[hubid]),Pictures)">Skin.SetString(Widget.$PARAM[hubid].Content,pictures)</onback>
+            <onback condition="!String.IsEmpty(Skin.String(Widget.$PARAM[hubid])) + ![String.Contains(Skin.String(Widget.$PARAM[hubid]),Pictures) | String.Contains(Skin.String(Widget.$PARAM[hubid]),musicdb://) | String.Contains(Skin.String(Widget.$PARAM[hubid]),library://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),sources://music) | String.Contains(Skin.String(Widget.$PARAM[hubid]),plugin://plugin.audio)]">Skin.SetString(Widget.$PARAM[hubid].Content,videos)</onback>
+        </control>
+        <control type="button" id="$PARAM[buttonid2]99" description="Set HUB WIDGET">
+            <width>100%</width>
+            <label>$LOCALIZE[31529]</label>
+            <height>66</height>
+            <texturenofocus colordiffuse="Black12" border="12">common/box.png</texturenofocus>
+            <align>left</align>
+            <include>Def_Dialog_Buttons</include>
+            <label2>$INFO[Skin.String(Widget.$PARAM[hubid].Content)]</label2>
+            <visible>String.IsEqual(Container(211).ListItem.Label2,Hub $PARAM[hubid]) | String.IsEqual(Container(211).ListItem.Property(Path),ActivateWindow($PARAM[hubid]))</visible>
+            <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+            <onclick>SetProperty(Dialog.1.Label,$LOCALIZE[2])</onclick>
+            <onclick>SetProperty(Dialog.1.BuiltIn,Skin.SetString(Widget.$PARAM[hubid].Content,music))</onclick>
+            <onclick>SetProperty(Dialog.2.Label,$LOCALIZE[1])</onclick>
+            <onclick>SetProperty(Dialog.2.BuiltIn,Skin.SetString(Widget.$PARAM[hubid].Content,pictures))</onclick>
+            <onclick>SetProperty(Dialog.3.Label,$LOCALIZE[3])</onclick>
+            <onclick>SetProperty(Dialog.3.BuiltIn,Skin.SetString(Widget.$PARAM[hubid].Content,videos))</onclick>
+            <onclick>RunScript(script.embuary.helper,action=createselect,header=$LOCALIZE[31529])</onclick>
+        </control>
+        <control type="button" id="$PARAM[buttonid1]" description="Set HUB">
+            <width>100%</width>
+            <label>31154</label>
+            <height>66</height>
+            <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+            <align>left</align>
+            <include>Def_Dialog_Buttons</include>
+            <visible>String.IsEqual(Container(211).ListItem.Label2,Hub $PARAM[hubid]) | String.IsEqual(Container(211).ListItem.Property(Path),ActivateWindow($PARAM[hubid]))</visible>
+            <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+            <onclick>RunScript(script.skinshortcuts,type=manage&amp;group=x$PARAM[hubid])</onclick>
+        </control>
+    </include>
+
+    <include name="Def_Label_Info">
+        <control type="label">
+            <align>right</align>
+            <height>36</height>
+            <font>Tiny</font>
+            <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+            <label>$INFO[MusicPlayer.Duration]</label>
+        </control>
+        <control type="label">
+            <align>right</align>
+            <height>36</height>
+            <font>Tiny</font>
+            <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+            <label>$VAR[Label_MusicPlayerCodec]</label>
+        </control>
+        <control type="label">
+            <align>right</align>
+            <height>36</height>
+            <font>Tiny</font>
+            <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+            <label>$INFO[MusicPlayer.BitsPerSample] bit</label>
+        </control>
+        <control type="label">
+            <align>right</align>
+            <height>36</height>
+            <font>Tiny</font>
+            <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+            <label>$INFO[MusicPlayer.BitRate,, kbps]</label>
+        </control>
+    </include>
+
+    <include name="Def_Selectbox">
+        <control type="image">
+            <visible>Control.HasFocus($PARAM[FocusId])</visible>
+            <left>3</left>
+            <top>3</top>
+            <right>3</right>
+            <bottom>3</bottom>
+            <texture border="18">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/selectbox_h.png</texture>
+            <include>Animation_SelectBoxHome</include>
+        </control>
+    </include>
+
+    <include name="Def_Focus">
+        <control type="group">
+            <visible>$PARAM[visible]</visible>
+            <left>318</left>
+
+            <!-- <control type="image"> -->
+               <!-- <width>100%</width> -->
+               <!-- <height>100%</height> -->
+                <!-- <texture border="0" diffuse="common/white.png">$INFO[Container(6).ListItem.Icon]</texture> -->
+                <!-- <visible>Control.HasFocus(6)</visible> -->
+            <!-- </control> -->
+
+            <control type="image">
+               <width>100%</width>
+               <height>100%</height>
+               <texture colordiffuse="$INFO[Container(6).ListItem.Label2]" border="12">common/box.png</texture>
+                <!-- <animation effect="fade" start="100" end="50" time="0" condition="true">Conditional</animation> -->
+                <visible>Control.HasFocus(6)</visible>
+            </control>
+            <control type="image">
+               <width>100%</width>
+               <height>100%</height>
+               <texture colordiffuse="$VAR[Color_ColorPicker_Selected]" border="12">common/box.png</texture>
+               <visible>!Control.HasFocus(6)</visible>
+            </control>
+            <control type="image">
+               <width>100%</width>
+               <height>100%</height>
+               <texture colordiffuse="$PARAM[color]" border="12">common/gradient-box-wide-cut.png</texture>
+               <aspectratio>stretch</aspectratio>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Texte">
+        <control type="group">
+            <visible>$PARAM[visible]</visible>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture border="12">common/box.png</texture>
+                <colordiffuse>$INFO[Container(6).ListItem.Label2]</colordiffuse>
+                <visible>Control.HasFocus(6)</visible>
+            </control>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture border="12">common/box.png</texture>
+                <colordiffuse>$INFO[Container(6).ListItem.Label2]</colordiffuse>
+                <!-- <animation effect="fade" start="100" end="50" time="0" condition="true">Conditional</animation> -->
+                <visible>Control.HasFocus(6)</visible>
+            </control>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Color_ColorPicker_Selected]" border="12">common/box.png</texture>
+                <visible>!Control.HasFocus(6)</visible>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Flag">
+        <param name="left" value="$PARAM[left]" default="0"/>
+        <param name="visible" value="$PARAM[visible]" default="true"/>
+        <param name="color" value="$PARAM[color]" default="$VAR[Color_Rating_Kodi_Star]"/>
+        <param name="width" value="$PARAM[width]" default="37"/>
+        <definition>
+        <control type="image">
+            <left>$PARAM[left]</left>
+            <width>$PARAM[width]</width>
+            <height>$PARAM[width]</height>
+            <centertop>48%</centertop>
+            <texture colordiffuse="$PARAM[color]">misc/$VAR[$PARAM[Star]].png</texture>
+            <visible>$PARAM[visible]</visible>
+        </control>
+        </definition>
+    </include>
+
+    <include name="Def_Flag_Small">
+        <param name="left" value="$PARAM[left]" default="0"/>
+        <param name="visible" value="$PARAM[visible]" default="true"/>
+        <param name="color" value="$PARAM[color]" default="$VAR[Color_Rating_Kodi_Star]"/>
+        <definition>
+        <control type="image">
+            <posx>$PARAM[left]</posx>
+            <width>64</width>
+            <height>64</height>
+            <centertop>48%</centertop>
+            <texture colordiffuse="$PARAM[color]">flags/$VAR[$PARAM[Star]].png</texture>
+            <visible>$PARAM[visible]</visible>
+        </control>
+        </definition>
+    </include>
+
+    <include name="Def_Flags_Furniture_Small">
+        <param name="left" value="$PARAM[left]" default="0"/>
+        <param name="visible" value="$PARAM[visible]" default="true"/>
+        <definition>
+        <include content="Def_Flag_Small">
+            <param name="Star" value="$PARAM[Star]1" />
+            <param name="color" value="$PARAM[color]" />
+        </include>
+        <include content="Def_Flag_Small">
+            <param name="Star" value="$PARAM[Star]2" />
+            <param name="left" value="-20" />
+            <param name="visible" value="$PARAM[visible]" />
+            <param name="color" value="$PARAM[color]" />
+        </include>
+        <include content="Def_Flag_Small">
+            <param name="Star" value="$PARAM[Star]3" />
+            <param name="left" value="-20" />
+            <param name="visible" value="$PARAM[visible]" />
+            <param name="color" value="$PARAM[color]" />
+        </include>
+        <include content="Def_Flag_Small">
+            <param name="Star" value="$PARAM[Star]4" />
+            <param name="left" value="-20" />
+            <param name="visible" value="$PARAM[visible]" />
+            <param name="color" value="$PARAM[color]" />
+        </include>
+        <include content="Def_Flag_Small">
+            <param name="Star" value="$PARAM[Star]5" />
+            <param name="left" value="-20" />
+            <param name="visible" value="$PARAM[visible]" />
+            <param name="color" value="$PARAM[color]" />
+        </include>
+        </definition>
+    </include>
+
+    <include name="Def_Flags_Furniture_Small_Ext">
+
+        <!-- Star 1 -->
+        <control type="image">
+           <posx>0</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,0) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,1) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>0</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,0) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,1) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,0) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>0</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,0) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,1) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>0</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,0) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,1) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>0</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,0)</visible>
+        </control>
+
+        <!-- Star 2 -->
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,2) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,3) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,2) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,3) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,2) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,2) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,3) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,2) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,3) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,2) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+
+        <!-- Star 3 -->
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,4) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,5) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,4) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,5) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,4) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,4) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,5) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,4) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,5) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,4) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+
+        <!-- Star 4 -->
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,6) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,7) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,6) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,7) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,6) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,6) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,7) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,6) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,7) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,6) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+
+        <!-- Star 5 -->
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,8) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,9) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,8) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,9) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.UserRating,8) + Skin.HasSetting(userrating.stars.override.rating.stars) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,8) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,9) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star5.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,8) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,9) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+        <control type="image">
+           <posx>-20</posx>
+           <width>64</width>
+           <height>64</height>
+           <centertop>48%</centertop>
+           <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star0.png</texture>
+           <visible>!Skin.HasSetting(enable.flags.rating.numeric) + !Integer.IsGreater(Container($PARAM[controlid]).ListItem.Rating,8) + [[Skin.HasSetting(userrating.stars.override.rating.stars) + String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)] | !Skin.HasSetting(userrating.stars.override.rating.stars)]</visible>
+        </control>
+
+        <!-- Numeric Kodi rating  -->
+         <control type="image">
+            <posx>0</posx>
+            <width>64</width>
+            <height>64</height>
+            <centertop>48%</centertop>
+            <texture colordiffuse="$VAR[Color_Stars_Rating_Video_Ext]">flags/star10.png</texture>
+            <visible>!Skin.HasSetting(hide.flags.rating) + Skin.HasSetting(enable.flags.rating.numeric) + [[!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Skin.HasSetting(enable.user.rating.override.kodi.rating)] | String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)]</visible>
+        </control>
+        <control type="label">
+            <left>-6</left>
+            <width min="48">auto</width>
+            <centertop>50%</centertop>
+            <height>64</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <label>$INFO[Container($PARAM[controlid]).ListItem.Rating]</label>
+            <font>Tiny</font>
+            <textcolor>Dark2</textcolor>
+            <visible>!Skin.HasSetting(hide.flags.rating) + Skin.HasSetting(enable.flags.rating.numeric) + [[!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Skin.HasSetting(enable.user.rating.override.kodi.rating)] | String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating)]</visible>
+        </control>
+
+        <!-- Numeric User rating  -->
+        <control type="image">
+            <posx>0</posx>
+            <width>64</width>
+            <height>64</height>
+            <centertop>48%</centertop>
+            <texture colordiffuse="$VAR[Color_Stars_Rating_User_Video_Ext]">flags/star10.png</texture>
+           <visible>!Skin.HasSetting(hide.flags.rating) + Skin.HasSetting(enable.flags.rating.numeric) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(enable.user.rating.override.kodi.rating)</visible>
+        </control>
+        <control type="label">
+            <left>-6</left>
+            <width min="48">auto</width>
+            <centertop>50%</centertop>
+            <height>64</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating,,.0]</label>
+            <font>Tiny</font>
+            <textcolor>Dark2</textcolor>
+            <visible>!Skin.HasSetting(hide.flags.rating) + Skin.HasSetting(enable.flags.rating.numeric) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(enable.user.rating.override.kodi.rating)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Navigation_Arrows">
+        <param name="centerbottom" value="$PARAM[centerbottom]" default="257"/>
+        <param name="centerleft" value="$PARAM[centerleft]" default="550"/>
+        <param name="visible" value="$PARAM[visible]" default="false"/>
+        <definition>
+        <control type="group">
+            <include>Animation_Delay_FadeIn</include>
+            <visible>$PARAM[visible]</visible>
+            <centerbottom>$PARAM[centerbottom]</centerbottom>
+            <height>16</height>
+            <control type="image">
+               <centerleft>$PARAM[centerleft]</centerleft>
+               <include>arrowdimensions</include>
+               <texture colordiffuse="Dark1" flipx="true">common/arrow-small-right.png</texture>
+            </control>
+            <control type="image">
+               <centerright>61</centerright>
+               <include>arrowdimensions</include>
+               <texture colordiffuse="Dark1" flipx="false">common/arrow-small-right.png</texture>
+            </control>
+        </control>
+        </definition>
+    </include>
+
+
+    <!-- WIDGET CONTAINER -->
+
+    <include name="Def_Multi_Widget_Container">
+        <param name="height" value="$PARAM[height]" default="325"/>
+        <param name="orientation" value="$PARAM[orientation]" default="horizontal"/>
+        <param name="movement" value="$PARAM[movement]" default="0"/>
+        <param name="movement2" value="$PARAM[movement2]" default="0"/>
+        <param name="widgetaspect" value="$PARAM[widgetaspect]" default="Poster"/>
+
+        <definition>
+            <include content="Def_Top" condition="Skin.HasSetting(homemenu.horizontal.clean)">
+               <param name="top" value="200" />
+            </include>
+            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="top" value="440" />
+            </include>
+            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="top" value="60" />
+            </include>
+            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="top" value="465" />
+            </include>
+            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="top" value="50" />
+            </include>
+            <include content="Def_Width" condition="Skin.HasSetting(homemenu.horizontal.clean)">
+               <param name="width" value="225" />
+            </include>
+            <animation effect="fade" start="0" end="0" time="0" condition="Skin.HasSetting(homemenu.horizontal.clean)">Conditional</animation>
+            <include content="Def_Height" condition="Skin.HasSetting(homemenu.horizontal.clean)">
+               <param name="height" value="565" />
+            </include>
+            <include content="Def_Height" condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="height" value="325" />
+            </include>
+            <include content="Def_Height" condition="!Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="height" value="$PARAM[height]" />
+            </include>
+            <include content="Def_Height" condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="height" value="365" />
+            </include>
+            <include content="Def_Height" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
+               <param name="height" value="$PARAM[height2]" />
+            </include>
+            <height>$PARAM[height]</height>
+            <include content="Def_Left" condition="![$EXP[Home_Is_Horizontal] + !Skin.HasSetting(homemenu.horizontal.clean)]"><param name="left" value="70" /></include>
+            <left>0</left>
+
+            <include content="Def_Right" condition="$EXP[Home_Is_Vertical] + !Skin.HasSetting(homemenu.slide) + [[Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + !Player.HasMedia] | !Skin.HasSetting(hide.home.menu.with.nowplaying.extended) | !Skin.HasSetting(enable.furniture.home.nowplaying.extended)] + ![Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.only.icons)]"><param name="right" value="310" /></include>
+
+
+            <right>0</right>
+
+            <include content="Animation_FadeOut_Home_Fullscreen_Widget" condition="$EXP[Home_Is_Horizontal_Netflix] | $EXP[Home_Is_Vertical_Netflix]">
+               <param name="condition" value="$PARAM[animation_condition]"/>
+            </include>
+
+            <include>Animation_Vertical_Widgets_Container_Focus_Search</include>
+
+            <autoscroll time="$PARAM[AutoTime]" delay="1000">$PARAM[AutoScrollCondition]</autoscroll>
+
+            <onfocus>SetProperty(TMDbHelper.WidgetContainer,$PARAM[id],Home)</onfocus>
+            <onfocus>ClearProperty(SetBackMenu300AfterSubMenu302,Home)</onfocus>
+
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]1).NumItems,0)">SetProperty(BackToId,$PARAM[backid],Home)</onfocus>
+            <onfocus condition="Integer.IsEqual(Container(301$PARAM[idshort]1).NumItems,0) + Control.IsVisible(301$PARAM[idshort]2)">SetProperty(BackToId,301$PARAM[idshort]2,Home)</onfocus>
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out,true)</onfocus>
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out,true)</onfocus>
+
+            <!-- NowPlaying : Auto slide / Display  if Widget is focus -->
+            <onfocus condition="Skin.HasSetting(enable.furniture.home.nowplaying.extended) + Window.IsVisible(Home) + Skin.HasSetting(enable.home.auto.show.nowplaying.extended)">SetProperty(nowplaying.auto.show.timer,1,Home)</onfocus>
+
+            <onunfocus>ClearProperty(nowplaying.auto.show.timer,Home)</onunfocus>
+
+            <!-- Main Menu : Focus if inactivity -->
+            <onfocus condition="Window.IsVisible(Home) + Skin.HasSetting(homemenu.auto.back.to.main) + !Skin.HasSetting(homemenu.auto.back.to.main.only.from.submenu)">SetProperty(focus.main.menu.timer,1,Home)</onfocus>
+            <onunfocus>ClearProperty(focus.main.menu.timer,Home)</onunfocus>
+
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]1).NumItems,0) + Control.IsVisible(301$PARAM[idshort]1)">SetProperty(LastId,301$PARAM[idshort]1,Home)</onfocus>
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]2).NumItems,0) + Control.IsVisible(301$PARAM[idshort]2)">SetProperty(LastId,301$PARAM[idshort]2,Home)</onfocus>
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]3).NumItems,0) + Control.IsVisible(301$PARAM[idshort]3)">SetProperty(LastId,301$PARAM[idshort]3,Home)</onfocus>
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]4).NumItems,0) + Control.IsVisible(301$PARAM[idshort]4)">SetProperty(LastId,301$PARAM[idshort]4,Home)</onfocus>
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]5).NumItems,0) + Control.IsVisible(301$PARAM[idshort]5)">SetProperty(LastId,301$PARAM[idshort]5,Home)</onfocus>
+            <onfocus condition="Integer.IsGreater(Container(301$PARAM[idshort]6).NumItems,0) + Control.IsVisible(301$PARAM[idshort]6)">SetProperty(LastId,301$PARAM[idshort]6,Home)</onfocus>
+            <onback condition="[!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + !Skin.HasSetting(widget.items.onback.go.back.to.position.0)">PageUp</onback>
+            <onback condition="[!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + !Skin.HasSetting(widget.items.onback.go.back.to.position.0)">PageUp</onback>
+            <onback condition="[!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + !Skin.HasSetting(widget.items.onback.go.back.to.position.0)">PageUp</onback>
+            <onback condition="[!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + Skin.HasSetting(widget.items.onback.go.back.to.position.0)">SetFocus($PARAM[id],0,absolute)</onback>
+            <onback condition="[!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + Skin.HasSetting(widget.items.onback.go.back.to.position.0) + Skin.HasSetting(widget.items.onback.go.back.to.position.0.setfocus.home) + !Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(300)</onback>
+
+            <onback condition="!$EXP[Home_Is_Vertical] + [!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + Skin.HasSetting(widget.items.onback.go.back.to.position.0) + Skin.HasSetting(widget.items.onback.go.back.to.position.0.setfocus.home) + Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(4567)</onback>
+            <onback condition="$EXP[Home_Is_Vertical] + [!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + Skin.HasSetting(widget.items.onback.go.back.to.position.0) + Skin.HasSetting(widget.items.onback.go.back.to.position.0.setfocus.home) + Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(9567)</onback>
+
+            <onback condition="Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious + !Skin.HasSetting(disable.widgets.onback.go.back.to.position.0)">SetFocus($PARAM[backid])</onback>
+
+            <onback condition="!$EXP[Home_Is_Vertical] + Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious + !Skin.HasSetting(disable.widgets.onback.go.back.to.position.0)">SetFocus(4567)</onback>
+            <onback condition="$EXP[Home_Is_Vertical] + Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious + !Skin.HasSetting(disable.widgets.onback.go.back.to.position.0)">SetFocus(9567)</onback>
+
+            <onback condition="Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious + Skin.HasSetting(disable.widgets.onback.go.back.to.position.0)">SetFocus(300)</onback>
+            <onleft condition="$EXP[Home_Is_Vertical] + Skin.HasSetting(enable_widgets_to_position_0_onback_menu) + [!Skin.HasSetting(enable.onleft.go.to.last.item.widget) | [Skin.HasSetting(enable.onleft.go.to.last.item.widget) + Player.HasMedia]]">SetFocus(9567)</onleft>
+            <onleft condition="$EXP[Home_Is_Vertical] + !Skin.HasSetting(enable_widgets_to_position_0_onback_menu) + [!Skin.HasSetting(enable.onleft.go.to.last.item.widget) | [Skin.HasSetting(enable.onleft.go.to.last.item.widget) + Player.HasMedia]]">300</onleft>
+            <preloaditems>4</preloaditems>
+            <focusposition>0</focusposition>
+
+            <!-- WIDGET MOVEMENT -->
+
+            <include content="Def_Movement" condition="Skin.HasSetting(home.horizontal) | Skin.HasSetting(homemenu.slide)">
+                <param name="movement" value="$PARAM[movement]" />
+            </include>
+
+            <include content="Def_Movement_2" condition="Skin.HasSetting(home.vertical) + !Skin.HasSetting(homemenu.slide)">
+                <param name="movement2" value="$PARAM[movement2]" />
+            </include>
+
+            <orientation>$PARAM[orientation]</orientation>
+            <include>Animation_Scroll_time_Widgets_List</include>
+        </definition>
+    </include>
+
+    <include name="Widgets_Item_Plot_Definition">
+        <font>Tiny</font>
+        <width>100%</width>
+        <include content="Def_Text_Height" condition="Skin.HasSetting(homemenu.horizontal.clean)">
+            <param name="height_min" value="36" />
+            <param name="height_max" value="72" />
+        </include>
+        <include content="Def_Text_Height" condition="!Skin.HasSetting(homemenu.horizontal.clean)">
+            <param name="height_min" value="36" />
+            <param name="height_max" value="212" />
+        </include>
+        <align>left</align>
+        <textcolor>Dark2</textcolor>
+    </include>
+
+    <include name="Widgets_Widgets_Item_Plot_Definition_ClearLogo">
+        <font>Tiny</font>
+        <width>100%</width>
+        <height min="36" max="150">auto</height>
+        <align>left</align>
+        <textcolor>Dark2</textcolor>
+    </include>
+
+    <include name="Widgets_Item_Plot_Definition_Netflix">
+        <font>Tiny</font>
+        <width>100%</width>
+        <height min="36" max="176">auto</height>
+        <align>left</align>
+        <textcolor>Dark2</textcolor>
+    </include>
+
+    <include name="Widgets_Item_SubTitle_Info_Definition">
+        <font>InfoNetflix</font>
+        <width>auto</width>
+        <height>46</height>
+        <align>left</align>
+        <textcolor>Dark2</textcolor>
+    </include>
+
+    <include name="Def_SkinSettings_Addons">
+        <control type="radiobutton" id="$PARAM[id]1">
+            <width>1360</width>
+            <textoffsetx>80</textoffsetx>
+            <visible>$PARAM[visible]</visible>
+            <visible>System.HasAddon($PARAM[addonname]) + System.AddonIsEnabled($PARAM[addonname])</visible>
+            <include>Def_Button_Skin_Settings_Gradient</include>
+            <label>$PARAM[addonname]</label>
+            <label2>$INFO[System.AddonVersion($PARAM[addonname]),(,)]        </label2>
+            <selected>true</selected>
+            <onclick>Addon.OpenSettings($PARAM[addonname])</onclick>
+        </control>
+        <control type="radiobutton" id="$PARAM[id]2">
+            <width>1360</width>
+            <textoffsetx>80</textoffsetx>
+            <visible>$PARAM[visible]</visible>
+            <textcolor>Dark3</textcolor>
+            <visible>System.HasAddon($PARAM[addonname]) + !System.AddonIsEnabled($PARAM[addonname])</visible>
+            <include>Def_Button_Settings_Category_Gradient_Disabled</include>
+            <label>$PARAM[addonname]</label>
+            <label2>($LOCALIZE[31417])    $INFO[System.AddonVersion($PARAM[addonname]),(,)]        </label2>
+            <selected>true</selected>
+            <onclick>RunScript(script.embuary.helper,action=toggleaddons,addonid=$PARAM[addonname],enable=true)</onclick>
+            <onclick>Setproperty(DialogBusy,1,Home)</onclick>
+            <onclick>AlarmClock(Busy1,SetFocus(9608),00:01,silent)</onclick>
+            <onclick>AlarmClock(Busy2,ClearProperty(DialogBusy,Home),00:02,silent)</onclick>
+        </control>
+        <control type="radiobutton" id="$PARAM[id]3">
+            <width>1360</width>
+            <visible>$PARAM[visible]</visible>
+            <visible>!System.HasAddon($PARAM[addonname])</visible>
+            <include>Def_Button_Skin_Settings_Gradient</include>
+            <label>$PARAM[addonname]</label>
+            <label2>$INFO[System.AddonVersion($PARAM[addonname]),(,)]        </label2>
+            <selected>false</selected>
+            <onclick>InstallAddon($PARAM[addonname])</onclick>
+        </control>
+    </include>
+
+    <include name="CenterInfo">
+        <width>1550</width>
+        <align>center</align>
+        <left>180</left>
+    </include>
+
+    <include name="Image_Clear_Logo_Dim">
+        <control type="image">
+            <width>$PARAM[width]</width>
+            <right>$PARAM[right]</right>
+            <bottom>$PARAM[bottom]</bottom>
+            <aspectratio align="right" aligny="bottom">keep</aspectratio>
+            <texture background="true">$VAR[Image_ClearLogo]</texture>
+        </control>
+    </include>
+
 
    <!-- DEF WIDGET LAYOUTS -->
 

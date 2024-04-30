@@ -1781,7 +1781,6 @@
                 <visible>!Control.IsVisible(513)</visible>
                 <visible>!ListItem.IsParentFolder</visible>
                 <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + ![$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(files) | Container.Content(favourites) | Container.Content(years) | Container.Content(directors) | Container.Content(studios) | Container.Content(tags) | Container.Content(videoversions) | Container.Content(addons)]]</visible>
-
             </control>
 
             <!-- black -->
@@ -1966,6 +1965,33 @@
                 <bottom>10</bottom>
                 <texture colordiffuse="Fallback" border="12" background="true">common/diffuse_box.png</texture>
             </control>
+
+            <!-- FANART -->
+
+            <control type="image">
+                <left>10</left>
+                <top>10</top>
+                <right>10</right>
+                <bottom>10</bottom>
+                <aspectratio scalediffuse="false">scale</aspectratio>
+                <texture diffuse="diffuse/widgetfanart_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
+                <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + !$PARAM[small]</visible>
+            </control>
+
+            <!-- FANART SMALL -->
+
+            <control type="image">
+                <left>10</left>
+                <top>10</top>
+                <right>10</right>
+                <bottom>101</bottom>
+                <aspectratio scalediffuse="false">scale</aspectratio>
+                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
+                <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + $PARAM[small] + !$PARAM[poster]</visible>
+            </control>
+
+            <!-- FANART + POSTER -->
+
             <control type="image">
                 <left>10</left>
                 <top>10</top>
@@ -1979,24 +2005,6 @@
                 <visible>$PARAM[poster]</visible>
             </control>
             <control type="image">
-                <left>10</left>
-                <top>10</top>
-                <right>10</right>
-                <bottom>10</bottom>
-                <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
-                <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + !$PARAM[small]</visible>
-            </control>
-            <control type="image">
-                <left>10</left>
-                <top>10</top>
-                <right>10</right>
-                <bottom>101</bottom>
-                <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
-                <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + $PARAM[small] + !$PARAM[poster]</visible>
-            </control>
-            <control type="image">
                 <left>154</left>
                 <top>10</top>
                 <right>10</right>
@@ -2005,6 +2013,9 @@
                 <texture diffuse="diffuse/widgetfanart_topright.png" border="1" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
                 <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + $PARAM[small] + $PARAM[poster]</visible>
             </control>
+
+            <!-- STUDIO -->
+
             <control type="image">
                 <left>10</left>
                 <top>10</top>
@@ -2017,6 +2028,9 @@
                 <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Widget_Studio]</texture>
                 <visible>String.IsEqual(ListItem.DBType,studio)</visible>
             </control>
+
+            <!-- GENRES -->
+
             <control type="image">
                 <left>10</left>
                 <top>10</top>
@@ -2029,6 +2043,9 @@
                 <texture diffuse="diffuse/widgetfanart_new.png" border="1" background="true" fallback="DefaultGenre.png">$VAR[Image_Thumb_Genres]</texture>
                 <visible>String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)</visible>
             </control>
+
+            <!-- CLEARLOGO -->
+
             <control type="image">
                 <width>200</width>
                 <right>30</right>
@@ -2041,6 +2058,9 @@
                 <visible>$PARAM[clearlogo]</visible>
                 <visible>!String.IsEqual(ListItem.DBType,genre) + !String.EndsWith(Container.FolderPath,Genres)</visible>
             </control>
+
+             <!-- LABEL -->
+
             <control type="label">
                 <bottom>40</bottom>
                 <left>35</left>
@@ -2052,6 +2072,9 @@
                 <label>$INFO[ListItem.label]</label>
                 <visible>$PARAM[small]</visible>
             </control>
+
+             <!-- LABEL - 2nd LINE -->
+
             <control type="label">
                 <bottom>10</bottom>
                 <left>35</left>
@@ -2063,6 +2086,9 @@
                 <label>$VAR[LabelGenreHomeSmallWidget]</label>
                 <visible>$PARAM[small]</visible>
             </control>
+
+             <!-- RATING -->
+
             <control type="group">
                 <visible>Skin.HasSetting(enable.view.video.rating.num)</visible>
                 <left>5</left>
@@ -2072,9 +2098,15 @@
                 <bottom>-10</bottom>
                 <include>Def_Layout_Poster_rating_Info</include>
             </control>
+
+             <!-- WATCHED STATUS -->
+
             <include content="Layout_Indicator_Status" condition="!Skin.HasSetting(hide.markers)">
                 <param name="indicatorbackground" value="$PARAM[indicatorbackground]" />
             </include>
+
+             <!-- WIDGET "MORE" -->
+
             <include condition="Skin.HasSetting(enable.morewidget)">more</include>
         </definition>
     </include>

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="true">401</defaultcontrol>
+
     <onunload>ClearProperty(Backg,Home)</onunload>
+    <onunload>ClearProperty(skinshortcuts-Widget,Home)</onunload>
     <onunload condition="Control.IsVisible(9900)">ClearProperty(custommenu,Home)</onunload>
+
     <onunload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|x1111|x1112|x1113|x1114|x1115|x1116|x1117|x1118|x1119|powermenu&amp;levels=6)</onunload>
+
     <controls>
         <include>Background_Overlay</include>
 
         <control type="group">
-            <!-- <width>1600</width> -->
-            <!-- <height>690</height> -->
 
             <include content="Def_Dialog_InfoPanel"><param name="height" value="882" /><param name="width" value="1722" /></include>
 
@@ -20,9 +22,15 @@
             <include>Def_Dialog_Header_Logo</include>
             <include>Def_Dialog_Header_Line</include>
 
-            <!-- LEFT LIST: CURRENT SHORTCUTS -->
+            <!--------------------------------------->
+            <!--      LEFT LIST - MAIN MENU        -->
+            <!--------------------------------------->
+
+
+            <!-- LEFT LIST - CURRENT MAIN MENU -->
 
             <control type="list" id="211">
+                <visible>!ControlGroup(212).HasFocus() + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                 <description>Rules List Control</description>
                 <left>31</left>
                 <top>112</top>
@@ -93,7 +101,7 @@
                 </focusedlayout>
             </control>
 
-            <!-- SELECT ICON -->
+            <!-- LEFT LIST - SELECT ICON -->
 
             <control type="button" id="4000">
                 <include>Def_Hidden_Button</include>
@@ -106,9 +114,10 @@
                 <onclick>Sendclick(311)</onclick>
             </control>
 
-            <!-- BUTTON DELETE / ADD / UP / DOWN -->
+            <!-- LEFT LIST - BUTTON DELETE / ADD / UP / DOWN -->
 
             <control type="grouplist" id="9200">
+                <visible>!ControlGroup(212).HasFocus() + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                 <left>25</left>
                 <top>112</top>
                 <width>712</width>
@@ -166,9 +175,138 @@
                 </control>
             </control>
 
-            <!-- LIST MENU RIGHT -->
+            <!--------------------------------------->
+            <!--      LEFT LIST - WIDGETS          -->
+            <!--------------------------------------->
+
+            <control type="grouplist" id="212">
+                <visible allowhiddenfocus="true">ControlGroup(212).HasFocus() | !String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                <left>31</left>
+                <top>112</top>
+                <width>731</width>
+                <height>690</height>
+
+                <onup>212</onup>
+                <ondown>212</ondown>
+                <!-- <onleft>212</onleft> -->
+
+                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
+                <onleft>SetFocus(3050)</onleft>
+
+
+                <scrolltime>0</scrolltime>
+                <itemgap>3</itemgap>
+
+                <!-- WIDGET 1 -->
+
+                <control type="button" id="9101" description="Custom">
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>$LOCALIZE[31367]$VAR[LabelWidget1]</label>
+                    <label2>$VAR[LabelWidgetShortcutsName]</label2>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onfocus>SetProperty(skinshortcuts-Widget,1,Home)</onfocus>
+                    <onright>SetFocus(9451)</onright>
+                    <!-- <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible> -->
+                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
+                </control>
+
+                <!-- WIDGET 2 -->
+
+                <control type="button" id="9102" description="Custom">
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>$LOCALIZE[31368]$VAR[LabelWidget2]</label>
+                    <label2>$VAR[LabelWidgetShortcutsName2]</label2>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onfocus>SetProperty(skinshortcuts-Widget,2,Home)</onfocus>
+                    <onright>SetFocus(4197)</onright>
+                    <animation effect="fade" start="100" end="50" time="0" condition="!String.IsEqual(Container(211).ListItem.Property(widgetEnable.2),yes)">Conditional</animation>
+                    <!-- <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible> -->
+                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
+                </control>
+
+                <!-- WIDGET 3 -->
+
+                <control type="button" id="9103" description="Custom">
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>$LOCALIZE[31369]$VAR[LabelWidget3]</label>
+                    <label2>$VAR[LabelWidgetShortcutsName3]</label2>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onfocus>SetProperty(skinshortcuts-Widget,3,Home)</onfocus>
+                    <onright>SetFocus(4198)</onright>
+                    <animation effect="fade" start="100" end="50" time="0" condition="!String.IsEqual(Container(211).ListItem.Property(widgetEnable.3),yes)">Conditional</animation>
+                    <!-- <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible> -->
+                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
+                </control>
+
+                <!-- WIDGET 4 -->
+
+                <control type="button" id="9104" description="Custom">
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>$LOCALIZE[31370]$VAR[LabelWidget4]</label>
+                    <label2>$VAR[LabelWidgetShortcutsName4]</label2>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onfocus>SetProperty(skinshortcuts-Widget,4,Home)</onfocus>
+                    <onright>SetFocus(4199)</onright>
+                    <animation effect="fade" start="100" end="50" time="0" condition="!String.IsEqual(Container(211).ListItem.Property(widgetEnable.4),yes)">Conditional</animation>
+                    <!-- <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible> -->
+                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
+                </control>
+
+                <!-- WIDGET 5 -->
+
+                <control type="button" id="9105" description="Custom">
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>$LOCALIZE[31371]$VAR[LabelWidget5]</label>
+                    <label2>$VAR[LabelWidgetShortcutsName5]</label2>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onfocus>SetProperty(skinshortcuts-Widget,5,Home)</onfocus>
+                    <onright>SetFocus(4590)</onright>
+                    <animation effect="fade" start="100" end="50" time="0" condition="!String.IsEqual(Container(211).ListItem.Property(widgetEnable.5),yes)">Conditional</animation>
+                    <!-- <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible> -->
+                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
+                </control>
+
+                <!-- WIDGET 6 -->
+
+                <control type="button" id="9106" description="Custom">
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>$LOCALIZE[31425]$VAR[LabelWidget6]</label>
+                    <label2>$VAR[LabelWidgetShortcutsName6]</label2>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onfocus>SetProperty(skinshortcuts-Widget,6,Home)</onfocus>
+                    <onright>SetFocus(11001)</onright>
+                    <animation effect="fade" start="100" end="50" time="0" condition="!String.IsEqual(Container(211).ListItem.Property(widgetEnable.6),yes)">Conditional</animation>
+                    <!-- <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible> -->
+                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
+                </control>
+            </control>
+
+            <!------------------------------------------------->
+            <!--      RIGHT LIST - MAIN MENU - SETTINGS      -->
+            <!------------------------------------------------->
 
             <control type="grouplist" id="9100">
+                <visible>String.IsEmpty(Window(Home).Property(custommenu))</visible>
                 <top>112</top>
                 <scrolltime>0</scrolltime>
                 <onleft>4000</onleft>
@@ -179,9 +317,11 @@
                 <width>914</width>
                 <height>690</height>
                 <orientation>vertical</orientation>
-                <visible>String.IsEmpty(Window(Home).Property(custommenu))</visible>
                 <itemgap>3</itemgap>
                 <animation effect="fade" start="100" end="50" time="0" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
+
+                <!-- BUTTON - ACTIVATED / DESACTIVATED -->
+
                 <control type="button" id="313">
                     <description>Enable</description>
                     <width>100%</width>
@@ -193,6 +333,9 @@
                     <label>126</label>
                     <label2>$VAR[ItemStatus]</label2>
                 </control>
+
+                <!-- BUTTON - CHOOSE ACTION FOR MAIN MENU ITEM -->
+
                 <control type="button" id="401" description="Alt chooser">
                     <width>100%</width>
                     <height>66</height>
@@ -201,6 +344,9 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                 </control>
+
+                <!-- BUTTON - CHOOSE ACTION - DISPLAY COMMAND ACTION -->
+
                 <control type="button" id="307" description="Custom">
                     <width>100%</width>
                     <height>66</height>
@@ -211,6 +357,7 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                 </control>
+
                 <!-- <control type="radiobutton" id="9010" description="Custom"> -->
                     <!-- <radioposx>845</radioposx> -->
                     <!-- <width>100%</width> -->
@@ -223,6 +370,9 @@
                     <!-- <onclick>Skin.ToggleSetting(open.sub.menu.on.click)</onclick> -->
                     <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
                 <!-- </control> -->
+
+                <!-- BUTTON - SET LABEL -->
+
                 <control type="button" id="305" description="Set Label">
                     <width>100%</width>
                     <height>66</height>
@@ -233,7 +383,40 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                 </control>
-                <include>Def_Dialog_Widget_Selector</include>
+
+                <!-- LABEL - "WIDGETS" -->
+
+                <control type="button" id="4988">
+                    <include>Def_Skin_Shortcuts_Label_Title</include>
+                    <label>31121</label>
+                    <enable>false</enable>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                </control>
+
+                <!--BUTTON - DISPLAY - LIST WIDGETS - ON RIGHT -->
+
+                <control type="button" id="3050" description="Set Label">
+                    <visible allowhiddenfocus="true">String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                    <width>100%</width>
+                    <height>66</height>
+                    <label>31121</label>
+                    <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
+                    <align>left</align>
+                    <include>Def_Dialog_Buttons_Gradient</include>
+                    <onclick>SetFocus(9101)</onclick>
+                </control>
+
+                <!-- LABEL - "OPTIONS" -->
+
+                <control type="button" id="4989">
+                    <include>Def_Skin_Shortcuts_Label_Title</include>
+                    <label>33063</label>
+                    <enable>false</enable>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                </control>
+
+                <!-- BUTTON - SET BACKGROUND - MENU -->
+
                 <control type="button" id="310" description="Background">
                     <width>100%</width>
                     <height>66</height>
@@ -245,7 +428,7 @@
                     <visible>[String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))] | String.IsEqual(Window(Home).Property(Backg),yes)</visible>
                 </control>
 
-                <!-- SET SUBMENU -->
+                <!-- BUTTON - DISPLAY - SUB MENU - SETTINGS -->
 
                 <control type="button" id="405" description="Set Submenu">
                     <width>100%</width>
@@ -304,6 +487,9 @@
                     <param name="buttonid1" value="9309"/>
                     <param name="buttonid2" value="9509"/>
                 </include>
+
+                <!-- BUTTON - RESTORE / REINIT - DEFAULT MENU -->
+
                 <control type="button" id="308" description="Reset">
                     <width>100%</width>
                     <height>66</height>
@@ -314,7 +500,7 @@
                 </control>
             </control>
 
-            <!-- CUSTOM WIDGET CONFIGURATION -->
+            <!-- CUSTOM WIDGET CONFIGURATION ?????????????   -->
 
             <control type="grouplist" id="9900">
                 <scrolltime>0</scrolltime>
@@ -330,6 +516,9 @@
                 <itemgap>3</itemgap>
                 <visible>!String.IsEmpty(Window(Home).Property(custommenu))</visible>
                 <animation effect="fade" start="0" end="100" time="1000" delay="1000" reversible="false">Visible</animation>
+
+
+
                 <control type="button" id="401" description="Alt chooser">
                     <width>100%</width>
                     <height>66</height>
@@ -337,6 +526,9 @@
                     <align>left</align>
                     <include>Def_Dialog_Buttons_Gradient</include>
                 </control>
+
+
+
                 <control type="button" id="307" description="Custom">
                     <width>100%</width>
                     <height>66</height>
@@ -346,6 +538,9 @@
                     <align>left</align>
                     <include>Def_Dialog_Buttons_Gradient</include>
                 </control>
+
+
+
                 <control type="button" id="305" description="Set Label">
                     <width>100%</width>
                     <height>66</height>
@@ -355,6 +550,9 @@
                     <align>left</align>
                     <include>Def_Dialog_Buttons_Gradient</include>
                 </control>
+
+
+
                 <control type="button" id="310" description="Background">
                     <width>100%</width>
                     <height>66</height>
@@ -364,6 +562,9 @@
                     <align>left</align>
                     <include>Def_Dialog_Buttons_Gradient</include>
                 </control>
+
+
+
                 <control type="button" id="308" description="Reset">
                     <width>100%</width>
                     <height>66</height>
@@ -373,15 +574,18 @@
                 </control>
             </control>
 
-            <!-- WIDGET 1 -->
+            <!------------------------------------------------->
+            <!--      RIGHT LIST - WIDGETS - SETTINGS      -->
+            <!------------------------------------------------->
+
+            <!-- WIDGET 1 - SETTINGS -->
 
             <control type="grouplist" id="9300">
                 <top>112</top>
-                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
-                <onleft>SetFocus(7011)</onleft>
-                <onright>ClearProperty(skinshortcuts-Widget,Home)</onright>
-                <onright>SetFocus(7011)</onright>
-                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>SetFocus(9101)</onleft>
+                <onright>SetFocus(9101)</onright>
+
                 <onup>9300</onup>
                 <ondown>9300</ondown>
                 <right>40</right>
@@ -528,15 +732,14 @@
                 </control>
             </control>
 
-            <!-- WIDGET 2 -->
+            <!-- WIDGET 2 - SETTINGS -->
 
             <control type="grouplist" id="9400">
                 <top>112</top>
-                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
-                <onleft>SetFocus(7012)</onleft>
-                <onright>ClearProperty(skinshortcuts-Widget,Home)</onright>
-                <onright>SetFocus(7012)</onright>
-                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>SetFocus(9102)</onleft>
+                <onright>SetFocus(9102)</onright>
+
                 <onup>9400</onup>
                 <ondown>9400</ondown>
                 <right>40</right>
@@ -701,15 +904,14 @@
                 </control>
             </control>
 
-            <!-- WIDGET 3 -->
+            <!-- WIDGET 3 - SETTINGS -->
 
             <control type="grouplist" id="9500">
                 <top>112</top>
-                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
-                <onleft>SetFocus(7013)</onleft>
-                <onright>ClearProperty(skinshortcuts-Widget,Home)</onright>
-                <onright>SetFocus(7013)</onright>
-                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>SetFocus(9103)</onleft>
+                <onright>SetFocus(9103)</onright>
+
                 <onup>9500</onup>
                 <ondown>9500</ondown>
                 <right>40</right>
@@ -875,15 +1077,14 @@
                 </control>
             </control>
 
-            <!-- WIDGET 4 -->
+            <!-- WIDGET 4 - SETTINGS -->
 
             <control type="grouplist" id="9600">
                 <top>112</top>
-                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
-                <onleft>SetFocus(7014)</onleft>
-                <onright>ClearProperty(skinshortcuts-Widget,Home)</onright>
-                <onright>SetFocus(7014)</onright>
-                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>SetFocus(9104)</onleft>
+                <onright>SetFocus(9104)</onright>
+
                 <onup>9600</onup>
                 <ondown>9600</ondown>
                 <right>40</right>
@@ -1050,15 +1251,14 @@
                 </control>
             </control>
 
-            <!-- WIDGET 5 -->
+            <!-- WIDGET 5 - SETTINGS -->
 
             <control type="grouplist" id="9700">
                 <top>112</top>
-                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
-                <onleft>SetFocus(7015)</onleft>
-                <onright>ClearProperty(skinshortcuts-Widget,Home)</onright>
-                <onright>SetFocus(7015)</onright>
-                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>SetFocus(9105)</onleft>
+                <onright>SetFocus(9105)</onright>
+
                 <onup>9700</onup>
                 <ondown>9700</ondown>
                 <right>40</right>
@@ -1225,15 +1425,14 @@
                 </control>
             </control>
 
-            <!-- WIDGET 6 -->
+            <!-- WIDGET 6 - SETTINGS -->
 
             <control type="grouplist" id="11000">
                 <top>112</top>
-                <onleft>ClearProperty(skinshortcuts-Widget,Home)</onleft>
-                <onleft>SetFocus(7016)</onleft>
-                <onright>ClearProperty(skinshortcuts-Widget,Home)</onright>
-                <onright>SetFocus(7016)</onright>
-                <onback>ClearProperty(skinshortcuts-Widget,Home)</onback>
+
+                <onleft>SetFocus(9106)</onleft>
+                <onright>SetFocus(9106)</onright>
+
                 <onup>11000</onup>
                 <ondown>11000</ondown>
                 <right>40</right>
@@ -1407,12 +1606,12 @@
             <include>Def_Dialog_Select_label_Num_Item</include>
         </control>
 
-        <include content="Skin_Shortcuts_Back_Button"><param name="controlid" value="7011" /><param name="setfocus" value="9101" /></include>
-        <include content="Skin_Shortcuts_Back_Button"><param name="controlid" value="7012" /><param name="setfocus" value="9102" /></include>
-        <include content="Skin_Shortcuts_Back_Button"><param name="controlid" value="7013" /><param name="setfocus" value="9103" /></include>
-        <include content="Skin_Shortcuts_Back_Button"><param name="controlid" value="7014" /><param name="setfocus" value="9104" /></include>
-        <include content="Skin_Shortcuts_Back_Button"><param name="controlid" value="7015" /><param name="setfocus" value="9105" /></include>
-        <include content="Skin_Shortcuts_Back_Button"><param name="controlid" value="7016" /><param name="setfocus" value="9106" /></include>
+        <!-- <include content="Def_Skin_Shortcuts_Button_Back"><param name="controlid" value="7011" /><param name="setfocus" value="9101" /></include> -->
+        <!-- <include content="Def_Skin_Shortcuts_Button_Back"><param name="controlid" value="7012" /><param name="setfocus" value="9102" /></include> -->
+        <!-- <include content="Def_Skin_Shortcuts_Button_Back"><param name="controlid" value="7013" /><param name="setfocus" value="9103" /></include> -->
+        <!-- <include content="Def_Skin_Shortcuts_Button_Back"><param name="controlid" value="7014" /><param name="setfocus" value="9104" /></include> -->
+        <!-- <include content="Def_Skin_Shortcuts_Button_Back"><param name="controlid" value="7015" /><param name="setfocus" value="9105" /></include> -->
+        <!-- <include content="Def_Skin_Shortcuts_Button_Back"><param name="controlid" value="7016" /><param name="setfocus" value="9106" /></include> -->
 
         <control type="button" id="404">
             <visible allowhiddenfocus="true">false</visible>

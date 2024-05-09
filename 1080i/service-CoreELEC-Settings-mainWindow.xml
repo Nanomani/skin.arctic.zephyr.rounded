@@ -2,54 +2,53 @@
 <window id="3033">
     <defaultcontrol always="true">1000</defaultcontrol>
     <controls>
+        <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
         <include>Background_Global</include>
         <include>Furniture_Footer_Clock_Right</include>
         <include>Furniture_Header_NowPlaying</include>
         <include>Furniture_Header</include>
         <include>Furniture_Header_Busy</include>
         <include>Furniture_Header_Clock_Right</include>
+
         <control type="group">
-            <left>SidePad</left>
-
-            <!-- Main Menu (left) -->
-
             <include>Animation_Common</include>
-            <left>82</left>
-            <right>82</right>
-            <top>217</top>
-            <height>646</height>
-            <control type="image">
-                <left>-9</left>
-                <top>-9</top>
-                <right>-9</right>
-                <bottom>-9</bottom>
-                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+            <include>Def_Dialog_Settings</include>
+
+            <!-- LEFT - HEADER -->
+
+            <control type="label">
+                <left>30</left>
+                <width>390</width>
+                <top>18</top>
+                <font>MediumBold</font>
+                <label>5</label>
+                <textcolor>PanelWhite100</textcolor>
             </control>
-            <control type="image">
-                <width>100%</width>
-                <height>100%</height>
-                <texture border="12" colordiffuse="Panel">common/box.png</texture>
+            <control type="label">
+                <left>30</left>
+                <right>30</right>
+                <top>77</top>
+                <height>30</height>
+                <font>Tiny</font>
+                <textcolor>PanelWhite70</textcolor>
+                <scroll>true</scroll>
+                <align>left</align>
+                <textoffsetx>0</textoffsetx>
+                <label>$INFO[System.ProfileName]</label>
             </control>
-            <control type="image">
-                <top>19</top>
-                <left>501</left>
-                <width>1</width>
-                <bottom>19</bottom>
-                <colordiffuse>PanelWhite12</colordiffuse>
-                <texture>common/white.png</texture>
-            </control>
+
+            <!-- LEFT - GROUP -->
 
             <control type="list" id="1000">
-                <left>0</left>
                 <top>140</top>
-                <bottom>18</bottom>
-                <itemgap>0</itemgap>
-                <width>501</width>
+                <width>450</width>
                 <height>490</height>
-                <onleft>1500</onleft>
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
                 <include>Animation_Scrolltime_Views_List</include>
-                <itemlayout height="70" width="501">
+                <onleft>1500</onleft>
+
+                <itemlayout height="70" width="450">
                     <control type="label">
                         <left>30</left>
                         <width>240</width>
@@ -60,7 +59,7 @@
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                 </itemlayout>
-                <focusedlayout height="70" width="501">
+                <focusedlayout height="70" width="450">
                     <control type="image">
                         <height>70</height>
                         <width>100%</width>
@@ -78,36 +77,66 @@
                 </focusedlayout>
             </control>
 
-            <!-- Line -->
-            <control type="image">
-                <left>530</left>
-                <right>40</right>
-                <top>135</top>
-                <height>1</height>
-                <colordiffuse>PanelWhite12</colordiffuse>
-                <texture>common/white.png</texture>
-                <visible>!ControlGroup(9100).HasFocus(9108)</visible>
-            </control>
+            <!-- LINES - VERTICAL -->
+
+            <include content="Def_Dialog_Line_Vertical"><param name="top" value="17" /><param name="right" value="1310" /></include>
+
+            <!-- RIGHT - HEADER -->
 
             <control type="group">
-                <left>420</left>
-                <top>0</top>
-                <width>1256</width>
-                <height>638</height>
+                <visible>!ControlGroup(9100).HasFocus(9108)</visible>
+                <control type="label">
+                    <left>480</left>
+                    <width>390</width>
+                    <top>18</top>
+                    <font>MediumBold</font>
+                    <label>$ADDON[service.coreelec.settings 32363]</label>
+                    <textcolor>PanelWhite100</textcolor>
+                </control>
+                <control type="label" id="1400">
+                    <left>480</left>
+                    <right>30</right>
+                    <top>77</top>
+                    <height>30</height>
+                    <label>$INFO[Window.Property(InfoText)]</label>
+                    <align>left</align>
+                    <font>Tiny</font>
+                    <textcolor>PanelWhite70</textcolor>
+                    <scroll>true</scroll>
+                    <align>left</align>
+                    <textoffsetx>0</textoffsetx>
+                </control>
+            </control>
 
-                <!-- Other Content -->
+            <!-- RIGHT - LINE -->
+
+            <include content="Def_Dialog_Header_Line">
+                <param name="top" value="135" />
+                <param name="left" value="480" />
+                <param name="visi" value="!ControlGroup(9100).HasFocus(9108)" />
+            </include>
+
+            <!-- RIGHT - GROUP -->
+
+            <control type="group">
+                <left>450</left>
+                <top>0</top>
+                <width>1310</width>
+                <height>490</height>
+
+                <!-- OTHER CONTENT -->
 
                 <control type="group" id="1900">
-                    <left>60</left>
+                    <left>0</left>
                     <top>140</top>
                     <bottom>18</bottom>
                     <itemgap>0</itemgap>
-                    <width>1256</width>
+                    <width>1310</width>
                     <height>3</height>
                     <visible>String.IsEqual(Container(1000).ListItem.Property(listTyp),1900)</visible>
                     <include>Animation_Scrolltime_Views_List</include>
                     <control type="label">
-                        <left>60</left>
+                        <left>30</left>
                         <top>20</top>
                         <width>300</width>
                         <height>20</height>
@@ -127,7 +156,7 @@
                         <label>$INFO[Window.Property(Distri)] ($INFO[Window.Property(build)])</label>
                     </control>
                     <control type="label">
-                        <left>60</left>
+                        <left>30</left>
                         <top>60</top>
                         <width>300</width>
                         <height>20</height>
@@ -147,7 +176,7 @@
                         <label>$INFO[Window.Property(Version)]</label>
                     </control>
                     <control type="label">
-                        <left>60</left>
+                        <left>30</left>
                         <top>100</top>
                         <width>300</width>
                         <height>16</height>
@@ -167,18 +196,18 @@
                         <label>$INFO[Window.Property(Arch)]</label>
                     </control>
                     <control type="textbox">
-                        <left>60</left>
+                        <left>30</left>
+                        <right>30</right>
                         <top>150</top>
-                        <width>1200</width>
                         <height>250</height>
                         <font>Tiny</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$ADDON[service.coreelec.settings 609]</label>
                     </control>
                     <control type="textbox">
-                        <left>60</left>
+                        <left>30</left>
+                        <right>30</right>
                         <top>285</top>
-                        <width>1200</width>
                         <height>200</height>
                         <font>Tiny</font>
                         <textcolor>PanelWhite100</textcolor>
@@ -186,28 +215,29 @@
                     </control>
                 </control>
 
-                <!-- simple list content -->
+                <!-- SIMPLE LIST CONTENT -->
+
                 <control type="list" id="1100">
-                    <left>82</left>
+                    <left>0</left>
                     <top>140</top>
-                    <width>1286</width>
+                    <width>1310</width>
                     <height>490</height>
                     <onleft>1000</onleft>
                     <onright>1500</onright>
                     <include>Animation_Scrolltime_Views_List</include>
                     <pagecontrol>1097</pagecontrol>
                     <visible>String.IsEqual(Container(1000).ListItem.Property(listTyp),1100)</visible>
-                    <include>Animation_Scrolltime_Views_List</include>
+
                     <itemlayout height="70">
 
-                        <!-- entry name and text value -->
+                        <!-- ENTRY NAME AND TEXT VALUE -->
 
                         <control type="group">
                             <visible>!String.IsEqual(ListItem.Property(Typ), separator)</visible>
                             <control type="label">
                                 <aligny>center</aligny>
-                                <textoffsetx>80</textoffsetx>
-                                <width>1256</width>
+                                <textoffsetx>30</textoffsetx>
+                                <width>1310</width>
                                 <height>70</height>
                                 <textcolor>PanelWhite100</textcolor>
                                 <info>ListItem.Label</info>
@@ -216,7 +246,7 @@
                                 <align>right</align>
                                 <aligny>center</aligny>
                                 <textoffsetx>30</textoffsetx>
-                                <width>1256</width>
+                                <width>1310</width>
                                 <height>70</height>
                                 <textcolor>PanelWhite100</textcolor>
                                 <info>ListItem.Property(value)</info>
@@ -224,18 +254,18 @@
                             </control>
                         </control>
 
-                        <!-- section name / seperator -->
+                        <!-- SECTION NAME / SEPERATOR -->
 
                         <control type="group">
                             <visible>String.IsEqual(ListItem.Property(Typ), separator)</visible>
                             <control type="image">
-                                <width>1256</width>
+                                <width>1310</width>
                                 <height>70</height>
                             </control>
                             <control type="label">
                                 <aligny>center</aligny>
                                 <textoffsetx>30</textoffsetx>
-                                <width>1256</width>
+                                <width>1310</width>
                                 <height>70</height>
                                 <font>Button</font>
                                 <textcolor>$VAR[Color_Highlight]</textcolor>
@@ -244,12 +274,12 @@
                             </control>
                         </control>
 
-                        <!-- boolean value -->
+                        <!-- BOOLEAN VALUE -->
 
                         <control type="group">
                             <visible>String.IsEqual(ListItem.Property(Typ), bool)</visible>
                             <control type="image">
-                                <left>1200</left>
+                                <left>1250</left>
                                 <top>20</top>
                                 <width>30</width>
                                 <height>30</height>
@@ -257,7 +287,7 @@
                                 <visible>String.IsEqual(ListItem.Property(value), 0) | String.IsEqual(ListItem.Property(value), false) | String.IsEmpty(ListItem.Property(value))</visible>
                             </control>
                             <control type="image">
-                                <left>1200</left>
+                                <left>1250</left>
                                 <top>20</top>
                                 <width>30</width>
                                 <height>30</height>
@@ -269,7 +299,7 @@
 
                     <focusedlayout height="70">
 
-                        <!-- entry name and text value -->
+                        <!-- ENTRY NAME AND TEXT VALUE -->
 
                         <control type="group">
                             <visible>Control.HasFocus(1100)</visible>
@@ -277,14 +307,14 @@
                                 <visible>!String.IsEqual(ListItem.Property(Typ), separator)</visible>
                                 <control type="image">
                                     <height>70</height>
-                                    <width>1256</width>
+                                    <width>1310</width>
                                     <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
                                     <visible>Control.HasFocus(1100)</visible>
                                 </control>
                                 <control type="label">
                                     <aligny>center</aligny>
-                                    <textoffsetx>80</textoffsetx>
-                                    <width>1256</width>
+                                    <textoffsetx>30</textoffsetx>
+                                    <width>1310</width>
                                     <height>70</height>
                                     <textcolor>Selected</textcolor>
                                     <info>ListItem.Label</info>
@@ -293,7 +323,7 @@
                                     <align>right</align>
                                     <textoffsetx>30</textoffsetx>
                                     <aligny>center</aligny>
-                                    <width>1256</width>
+                                    <width>1310</width>
                                     <height>70</height>
                                     <textcolor>Selected</textcolor>
                                     <info>ListItem.Property(value)</info>
@@ -301,14 +331,14 @@
                                 </control>
                             </control>
 
-                            <!-- section name / seperator -->
+                            <!-- SECTION NAME / SEPERATOR -->
 
                             <control type="group">
                                 <visible>String.IsEqual(ListItem.Property(Typ), separator)</visible>
                                 <control type="label">
                                     <aligny>center</aligny>
                                     <textoffsetx>30</textoffsetx>
-                                    <width>1256</width>
+                                    <width>1310</width>
                                     <height>70</height>
                                     <font>Button</font>
                                     <textcolor>$VAR[Color_Highlight]</textcolor>
@@ -317,11 +347,12 @@
                                 </control>
                             </control>
 
-                            <!-- boolean value -->
+                            <!-- BOOLEAN VALUE -->
+
                             <control type="group">
                                 <visible>String.IsEqual(ListItem.Property(Typ), bool)</visible>
                                 <control type="image">
-                                    <left>1200</left>
+                                    <left>1250</left>
                                     <top>20</top>
                                     <width>30</width>
                                     <height>30</height>
@@ -329,7 +360,7 @@
                                     <visible>String.IsEqual(ListItem.Property(value), 0) | String.IsEqual(ListItem.Property(value), false) | String.IsEmpty(ListItem.Property(value))</visible>
                                 </control>
                                 <control type="image">
-                                    <left>1200</left>
+                                    <left>1250</left>
                                     <top>20</top>
                                     <width>30</width>
                                     <height>30</height>
@@ -345,8 +376,8 @@
                                 <visible>!String.IsEqual(ListItem.Property(Typ), separator)</visible>
                                 <control type="label">
                                     <aligny>center</aligny>
-                                    <textoffsetx>80</textoffsetx>
-                                    <width>1256</width>
+                                    <textoffsetx>30</textoffsetx>
+                                    <width>1310</width>
                                     <height>70</height>
                                     <textcolor>PanelWhite100</textcolor>
                                     <info>ListItem.Label</info>
@@ -355,7 +386,7 @@
                                     <align>right</align>
                                     <textoffsetx>30</textoffsetx>
                                     <aligny>center</aligny>
-                                    <width>1256</width>
+                                    <width>1310</width>
                                     <height>70</height>
                                     <textcolor>PanelWhite100</textcolor>
                                     <info>ListItem.Property(value)</info>
@@ -368,7 +399,7 @@
                                 <control type="label">
                                     <aligny>center</aligny>
                                     <textoffsetx>30</textoffsetx>
-                                    <width>1256</width>
+                                    <width>1310</width>
                                     <height>70</height>
                                     <font>Button</font>
                                     <textcolor>$VAR[Color_Highlight]</textcolor>
@@ -380,7 +411,7 @@
                             <control type="group">
                                 <visible>String.IsEqual(ListItem.Property(Typ), bool)</visible>
                                 <control type="image">
-                                    <left>1200</left>
+                                    <left>1250</left>
                                     <top>20</top>
                                     <width>30</width>
                                     <height>30</height>
@@ -388,7 +419,7 @@
                                     <visible>String.IsEqual(ListItem.Property(value), 0) | String.IsEqual(ListItem.Property(value), false) | String.IsEmpty(ListItem.Property(value))</visible>
                                 </control>
                                 <control type="image">
-                                    <left>1200</left>
+                                    <left>1250</left>
                                     <top>20</top>
                                     <width>30</width>
                                     <height>30</height>
@@ -401,12 +432,12 @@
                     </focusedlayout>
                 </control>
 
-                <!-- Network Menu Content -->
+                <!-- NETWORK MENU CONTENT -->
 
                 <control type="list" id="1200">
-                    <left>82</left>
+                    <left>0</left>
                     <top>140</top>
-                    <width>1256</width>
+                    <width>1310</width>
                     <height>490</height>
                     <onleft>1000</onleft>
                     <onright>1500</onright>
@@ -416,7 +447,7 @@
                     <itemlayout height="100">
                         <!-- Icon ethernet -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -426,7 +457,7 @@
                         </control>
                         <!-- Icon vpn -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -436,7 +467,7 @@
                         </control>
                         <!-- Icon wifi -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -468,7 +499,7 @@
                         </control>
                         <!-- Connection Address -->
                         <control type="label">
-                            <left>740</left>
+                            <left>790</left>
                             <top>49</top>
                             <width>290</width>
                             <height>20</height>
@@ -499,7 +530,7 @@
                         </control>
                         <!-- Signal strength value -->
                         <control type="label">
-                            <left>1050</left>
+                            <left>1100</left>
                             <top>49</top>
                             <width>40</width>
                             <height>20</height>
@@ -511,7 +542,7 @@
                         </control>
                         <!-- Online Symbol (top right) -->
                         <control type="image">
-                            <left>1190</left>
+                            <left>1250</left>
                             <top>16</top>
                             <width>32</width>
                             <height>32</height>
@@ -521,7 +552,7 @@
                         </control>
                         <!-- Favorite Symbol (bottom right) -->
                         <control type="image">
-                            <left>1190</left>
+                            <left>1250</left>
                             <top>48</top>
                             <width>32</width>
                             <height>32</height>
@@ -531,7 +562,7 @@
                         </control>
                         <!-- Secure Symbol (bottom right) -->
                         <control type="image">
-                            <left>1140</left>
+                            <left>1250</left>
                             <top>48</top>
                             <width>32</width>
                             <height>32</height>
@@ -541,7 +572,7 @@
                         </control>
                         <!-- Insecure Symbol (bottom right) -->
                         <control type="image">
-                            <left>1140</left>
+                            <left>1250</left>
                             <top>48</top>
                             <width>32</width>
                             <height>32</height>
@@ -555,12 +586,12 @@
                             <visible>Control.HasFocus(1200)</visible>
                             <control type="image">
                                 <height>100</height>
-                                <width>1256</width>
+                                <width>1310</width>
                                 <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
                             </control>
                             <!-- Icon ethernet -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -570,7 +601,7 @@
                             </control>
                             <!-- Icon vpn -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -580,7 +611,7 @@
                             </control>
                             <!-- Icon wifi -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -612,7 +643,7 @@
                             </control>
                             <!-- Connection Address -->
                             <control type="label">
-                                <left>740</left>
+                                <left>790</left>
                                 <top>49</top>
                                 <width>290</width>
                                 <height>20</height>
@@ -643,7 +674,7 @@
                             </control>
                             <!-- Signal strength value -->
                             <control type="label">
-                                <left>1050</left>
+                                <left>1100</left>
                                 <top>49</top>
                                 <width>40</width>
                                 <height>20</height>
@@ -655,7 +686,7 @@
                             </control>
                             <!-- Online Symbol (top right) -->
                             <control type="image">
-                                <left>1190</left>
+                                <left>1250</left>
                                 <top>16</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -665,7 +696,7 @@
                             </control>
                             <!-- Favorite Symbol (bottom right) -->
                             <control type="image">
-                                <left>1190</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -675,7 +706,7 @@
                             </control>
                             <!-- Secure Symbol (bottom right) -->
                             <control type="image">
-                                <left>1140</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -685,7 +716,7 @@
                             </control>
                             <!-- Insecure Symbol (bottom right) -->
                             <control type="image">
-                                <left>1140</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -699,7 +730,7 @@
                             <visible>!Control.HasFocus(1200)</visible>
                             <!-- Icon ethernet -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -709,7 +740,7 @@
                             </control>
                             <!-- Icon vpn -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -719,7 +750,7 @@
                             </control>
                             <!-- Icon wifi -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -751,7 +782,7 @@
                             </control>
                             <!-- Connection Address -->
                             <control type="label">
-                                <left>740</left>
+                                <left>790</left>
                                 <top>49</top>
                                 <width>290</width>
                                 <height>20</height>
@@ -782,7 +813,7 @@
                             </control>
                             <!-- Signal strength value -->
                             <control type="label">
-                                <left>1050</left>
+                                <left>1100</left>
                                 <top>49</top>
                                 <width>40</width>
                                 <height>20</height>
@@ -794,7 +825,7 @@
                             </control>
                             <!-- Online Symbol (top right) -->
                             <control type="image">
-                                <left>1190</left>
+                                <left>1250</left>
                                 <top>16</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -804,7 +835,7 @@
                             </control>
                             <!-- Favorite Symbol (bottom right) -->
                             <control type="image">
-                                <left>1190</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -814,7 +845,7 @@
                             </control>
                             <!-- Secure Symbol (bottom right) -->
                             <control type="image">
-                                <left>1140</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -824,7 +855,7 @@
                             </control>
                             <!-- Insecure Symbol (bottom right) -->
                             <control type="image">
-                                <left>1140</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -836,7 +867,7 @@
                     </focusedlayout>
                 </control>
 
-                <!-- Bluetooth Menu Content -->
+                <!-- BLUETOOTH MENU CONTENT -->
 
                 <control type="label" id="1301">
                     <align>center</align>
@@ -849,10 +880,11 @@
                     <textcolor>PanelWhite100</textcolor>
                     <visible>String.IsEqual(Container(1000).ListItem.Property(listTyp),1300) + String.IsEqual(Container(1300).NumItems,0)</visible>
                 </control>
+
                 <control type="list" id="1300">
-                    <left>82</left>
+                    <left>0</left>
                     <top>140</top>
-                    <width>1256</width>
+                    <width>1310</width>
                     <height>490</height>
                     <onleft>1000</onleft>
                     <onright>1500</onright>
@@ -863,7 +895,7 @@
 
                         <!-- default -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -873,7 +905,7 @@
                         </control>
                         <!-- modem -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -883,7 +915,7 @@
                         </control>
                         <!-- audio -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -893,7 +925,7 @@
                         </control>
                         <!-- Camera Photo -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -903,7 +935,7 @@
                         </control>
                         <!-- Icon phone -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -913,7 +945,7 @@
                         </control>
                         <!-- camera-video -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -923,7 +955,7 @@
                         </control>
                         <!-- input-mouse -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -933,7 +965,7 @@
                         </control>
                         <!-- input-gaming -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -943,7 +975,7 @@
                         </control>
                         <!-- input-keyboard -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -953,7 +985,7 @@
                         </control>
                         <!-- input-tablet -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -963,7 +995,7 @@
                         </control>
                         <!-- Printer -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -973,7 +1005,7 @@
                         </control>
                         <!-- Computer -->
                         <control type="image">
-                            <left>40</left>
+                            <left>30</left>
                             <top>10</top>
                             <width>64</width>
                             <height>64</height>
@@ -1014,7 +1046,7 @@
                         </control>
                         <!-- Paired Symbol (bottom right) -->
                         <control type="image">
-                            <left>1190</left>
+                            <left>1250</left>
                             <top>16</top>
                             <width>32</width>
                             <height>32</height>
@@ -1024,7 +1056,7 @@
                         </control>
                         <!-- Trusted Symbol (bottom right) -->
                         <control type="image">
-                            <left>1140</left>
+                            <left>1250</left>
                             <top>48</top>
                             <width>32</width>
                             <height>32</height>
@@ -1039,7 +1071,7 @@
 
                            <!-- default -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1049,7 +1081,7 @@
                             </control>
                             <!-- modem -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1059,7 +1091,7 @@
                             </control>
                             <!-- audio -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1069,7 +1101,7 @@
                             </control>
                             <!-- Camera Photo -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1079,7 +1111,7 @@
                             </control>
                             <!-- Icon phone -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1089,7 +1121,7 @@
                             </control>
                             <!-- camera-video -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1099,7 +1131,7 @@
                             </control>
                             <!-- input-mouse -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1109,7 +1141,7 @@
                             </control>
                             <!-- input-gaming -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1119,7 +1151,7 @@
                             </control>
                             <!-- input-keyboard -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1129,7 +1161,7 @@
                             </control>
                             <!-- input-tablet -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1139,7 +1171,7 @@
                             </control>
                             <!-- Printer -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1149,7 +1181,7 @@
                             </control>
                             <!-- Computer -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1190,7 +1222,7 @@
                             </control>
                             <!-- Paired Symbol (bottom right) -->
                             <control type="image">
-                                <left>1190</left>
+                                <left>1250</left>
                                 <top>16</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -1200,7 +1232,7 @@
                             </control>
                             <!-- Trusted Symbol (bottom right) -->
                             <control type="image">
-                                <left>1140</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -1215,13 +1247,13 @@
                             <visible>Control.HasFocus(1300)</visible>
                             <control type="image">
                                 <height>100</height>
-                                <width>1256</width>
+                                <width>1310</width>
                                 <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
                             </control>
 
                             <!-- default -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1231,7 +1263,7 @@
                             </control>
                             <!-- modem -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1241,7 +1273,7 @@
                             </control>
                             <!-- audio -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1251,7 +1283,7 @@
                             </control>
                             <!-- Camera Photo -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1261,7 +1293,7 @@
                             </control>
                             <!-- Icon phone -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1271,7 +1303,7 @@
                             </control>
                             <!-- camera-video -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1281,7 +1313,7 @@
                             </control>
                             <!-- input-mouse -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1291,7 +1323,7 @@
                             </control>
                             <!-- input-gaming -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1301,7 +1333,7 @@
                             </control>
                             <!-- input-keyboard -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1311,7 +1343,7 @@
                             </control>
                             <!-- input-tablet -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1321,7 +1353,7 @@
                             </control>
                             <!-- Printer -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1331,7 +1363,7 @@
                             </control>
                             <!-- Computer -->
                             <control type="image">
-                                <left>40</left>
+                                <left>30</left>
                                 <top>10</top>
                                 <width>64</width>
                                 <height>64</height>
@@ -1372,7 +1404,7 @@
                             </control>
                             <!-- Paired Symbol (bottom right) -->
                             <control type="image">
-                                <left>1190</left>
+                                <left>1250</left>
                                 <top>16</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -1382,7 +1414,7 @@
                             </control>
                             <!-- Trusted Symbol (bottom right) -->
                             <control type="image">
-                                <left>1140</left>
+                                <left>1250</left>
                                 <top>48</top>
                                 <width>32</width>
                                 <height>32</height>
@@ -1396,16 +1428,17 @@
                 </control>
             </control>
 
-            <!-- Buttons -->
+            <!-- BUTTONS -->
+
             <control type="grouplist">
-                <right>40</right>
+                <right>340</right>
                 <top>550</top>
                 <height>66</height>
                 <width>670</width>
                 <orientation>horizontal</orientation>
                 <itemgap>30</itemgap>
                 <control type="button" id="1501">
-                    <width>320</width>
+                    <width>300</width>
                     <font>Button</font>
                     <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
                     <texturenofocus colordiffuse="Black12" border="12">common/box.png</texturenofocus>
@@ -1417,7 +1450,7 @@
                     <visible>!String.IsEmpty(Control.GetLabel(1501))</visible>
                 </control>
                 <control type="button" id="1500">
-                    <width>320</width>
+                    <width>300</width>
                     <font>Button</font>
                     <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
                     <texturenofocus colordiffuse="Black12" border="12">common/box.png</texturenofocus>
@@ -1430,51 +1463,7 @@
                 </control>
             </control>
 
-            <!-- Header -->
-            <control type="label">
-                <left>30</left>
-                <width>390</width>
-                <top>18</top>
-                <font>MediumBold</font>
-                <label>5</label>
-                <textcolor>PanelWhite100</textcolor>
-            </control>
-            <control type="label">
-                <left>30</left>
-                <right>30</right>
-                <top>77</top>
-                <height>30</height>
-                <font>Tiny</font>
-                <textcolor>PanelWhite70</textcolor>
-                <scroll>true</scroll>
-                <align>left</align>
-                <textoffsetx>0</textoffsetx>
-                <label>$INFO[System.ProfileName]</label>
-            </control>
-            <control type="group">
-                <visible>!ControlGroup(9100).HasFocus(9108)</visible>
-                <control type="label">
-                    <left>540</left>
-                    <width>390</width>
-                    <top>18</top>
-                    <font>MediumBold</font>
-                    <label>$ADDON[service.coreelec.settings 32363]</label>
-                    <textcolor>PanelWhite100</textcolor>
-                </control>
-                <control type="label" id="1400">
-                    <left>540</left>
-                    <right>30</right>
-                    <top>77</top>
-                    <height>30</height>
-                    <label>$INFO[Window.Property(InfoText)]</label>
-                    <align>left</align>
-                    <font>Tiny</font>
-                    <textcolor>PanelWhite70</textcolor>
-                    <scroll>true</scroll>
-                    <align>left</align>
-                    <textoffsetx>0</textoffsetx>
-                </control>
-            </control>
+            <!-- LOGO -->
 
             <control type="image">
                 <description>LOGO</description>
@@ -1485,6 +1474,7 @@
                 <aspectratio>keep</aspectratio>
                 <texture>/usr/share/kodi/addons/service.coreelec.settings/resources/skins/Default/media/logo.png</texture>
             </control>
+
         </control>
     </controls>
 </window>

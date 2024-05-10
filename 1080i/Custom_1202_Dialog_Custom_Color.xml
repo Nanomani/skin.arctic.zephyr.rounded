@@ -2,34 +2,19 @@
 <window type="dialog" id="1202">
     <defaultcontrol always="true">9300</defaultcontrol>
 
-    <!-- <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1)">AlarmClock(SkinColor,Control.SetFocus(9300),00:00,silent)</onload> -->
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colorstring,$INFO[Skin.String(ColorHighlight.name)],Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colordesc,ColorHighlight.name,Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(gradient,ColorHighlight,Home)</onload>
 
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1)">SetProperty(colorstring,$INFO[Skin.String(ColorHighlight.name)],Home)</onload>
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1)">SetProperty(colordesc,ColorHighlight.name,Home)</onload>
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),1)">SetProperty(gradient,ColorHighlight,Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),2) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(gradient,IndicatorColorBackgroundWatched,Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),2) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundWatched.name)],Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),2) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colordesc,IndicatorColorBackgroundWatched.name,Home)</onload>
 
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),2)">SetProperty(gradient,IndicatorColorBackgroundWatched,Home)</onload>
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),2)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundWatched.name)],Home)</onload>
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),2)">SetProperty(colordesc,IndicatorColorBackgroundWatched.name,Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(gradient,KodiRatingStarColor,Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colorstring,$INFO[Skin.String(KodiRatingStarColor.name)],Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colordesc,KodiRatingStarColor.name,Home)</onload>
 
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3)">SetProperty(gradient,KodiRatingStarColor,Home)</onload>
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3)">SetProperty(colorstring,$INFO[Skin.String(KodiRatingStarColor.name)],Home)</onload>
-    <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3)">SetProperty(colordesc,KodiRatingStarColor.name,Home)</onload>
-
-    <!-- <onload>AlarmClock(SkinColor,Control.SetFocus(9300),00:00,silent)</onload> -->
-
-    <onload>9300</onload>
-
-    <!-- <onload condition="String.IsEmpty(Window(Home).Property(gradient))">SetProperty(gradient,ColorFocus,Home)</onload> -->
-
-    <!-- <onload>ClearProperty(color_focus,Home)</onload> -->
-    <!-- <onload>ClearProperty(color_picker_selected,Home)</onload> -->
-    <!-- <onload>ClearProperty(ColorFocus_colorpicker,Home)</onload> -->
-    <!-- <onload>ClearProperty(colorfocus_gradient_colorpicker,Home)</onload> -->
-
-    <!-- <onunload>ClearProperty(gradient,Home)</onunload> -->
-    <!-- <onunload>ClearProperty(colorpickerheader,Home)</onunload> -->
-    <!-- <onunload>ClearProperty(colorstring,Home)</onunload> -->
+    <onload>AlarmClock(SkinColor,Control.SetFocus(9300),00:01,silent)</onload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -94,35 +79,20 @@
                     <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlayingIcon)">Skin.SetString(IndicatorColorBackgroundIsPlayingicon.name,$INFO[ListItem.Label])</onclick>
 
                     <onclick>SetProperty(colorstring,$INFO[Container(3000).ListItem.Label2],Home)</onclick>
-                    <onclick>Control.SetFocus(9300)</onclick>
-
+                    <onclick>AlarmClock(SkinColor,Control.SetFocus(9300),00:01,silent)</onclick>
                     <include>Action_BuildTextures_Onclick_Reload_1202</include>
 
                     <itemlayout height="60" width="60">
-                        <include content="Object_Control">
-                            <param name="control" value="image" />
+                        <control type="image">
                             <include content="Def_Padding"><param name="pad">1</param></include>
                             <texture>$INFO[ListItem.Icon]</texture>
-                        </include>
+                        </control>
                     </itemlayout>
                     <focusedlayout height="60" width="60">
-
-                        <control type="button" id="9009" description="Helper">
-                            <include>Def_Hidden_Button</include>
-                            <onfocus>SetProperty(color_picker_selected,$INFO[Container(3000).ListItem.Label2],Home)</onfocus>
-                            <onfocus>SetProperty(color_focus,1,Home)</onfocus>
-                            <onfocus condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus)">SetProperty(ColorFocus_colorpicker,$INFO[Container(3000).ListItem.Label2],Home)</onfocus>
-                            <onfocus condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus)">SetProperty(colorfocus_gradient_colorpicker,$INFO[Skin.String(ColorFocusGradient.name)],Home)</onfocus>
-                            <onfocus condition="String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">SetProperty(colorfocus_gradient_colorpicker,$INFO[Container(3000).ListItem.Label2],Home)</onfocus>
-                            <onfocus condition="String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">SetProperty(ColorFocus_colorpicker,$INFO[Skin.String(ColorFocus.name)],Home)</onfocus>
-                            <visible allowhiddenfocus="true">Control.HasFocus(3000)</visible>
-                        </control>
-
-                        <include content="Object_Control">
-                            <param name="control" value="image" />
+                        <control type="image">
                             <include content="Def_Padding"><param name="pad">1</param></include>
                             <texture>$INFO[ListItem.Icon]</texture>
-                        </include>
+                        </control>
                     </focusedlayout>
                     <content>plugin://script.texturemaker/</content>
                 </control>
@@ -168,27 +138,21 @@
                     <animation effect="slide" end="960" condition="Container(3000).Column(16)">Conditional</animation>
                     <animation effect="slide" end="1020" condition="Container(3000).Column(17)">Conditional</animation>
 
-                    <include content="Object_Control">
-                        <param name="control" value="group" />
+                    <control type="group">
                         <include content="Def_Padding"><param name="pad">5</param></include>
                         <control type="image">
                             <include>Texture_Shadow_20</include>
                             <texture border="20" colordiffuse="ccffffff">common/box.png</texture>
                         </control>
-                    </include>
+                    </control>
                     <control type="image">
                         <bordersize>10</bordersize>
                         <texture colordiffuse="$INFO[Container(3000).ListItem.Label2]" border="12">common/box.png</texture>
                     </control>
                 </control>
-
-                <!-- <include content="Dialog_Scrollbar"> -->
-                    <!-- <onright>3000</onright> -->
-                    <!-- <onleft>9000</onleft> -->
-                <!-- </include> -->
             </control>
 
-            <!-- LIST LABEL COLOR - LEFT -->
+            <!-- LIST LABEL - COLOR - LEFT -->
 
             <control type="grouplist" id="9300">
                 <top>105</top>
@@ -201,25 +165,6 @@
                 <ondown>3600</ondown>
                 <orientation>vertical</orientation>
                 <!-- <visible allowhiddenfocus="true">ControlGroup(9100).HasFocus(9102)</visible> -->
-
-                <!--  MENU TITLE - Effect presets -->
-
-                <!-- <control type="grouplist" id="97101"> -->
-                    <!-- <orientation>horizontal</orientation> -->
-                    <!-- <enable>false</enable> -->
-                    <!-- <height>70</height> -->
-                    <!-- <control type="button"> -->
-                        <!-- <enable>false</enable> -->
-                        <!-- <textoffsetx>30</textoffsetx> -->
-                        <!-- <font>Button</font> -->
-                        <!-- <align>left</align> -->
-                        <!-- <width>600</width> -->
-                        <!-- <disabledcolor>$VAR[Color_Highlight]</disabledcolor> -->
-                        <!-- <height>70</height> -->
-                        <!-- <label>$LOCALIZE[33063]</label> -->
-                    <!-- </control> -->
-                <!-- </control> -->
-
 
                 <!--  TEXT FOCUS GRADIENT -->
 
@@ -592,7 +537,7 @@
                 </control>
             </control>
 
-            <!-- PREVIEW COLOR - RIGHT -->
+            <!-- PREVIEW - COLOR - RIGHT -->
 
             <control type="grouplist" id="9303">
                 <top>105</top>
@@ -772,18 +717,18 @@
 
             </control>
 
-            <!-- PREVIEW COLOR STAR RATING -->
+            <!-- PREVIEW - COLOR STAR RATING -->
 
             <control type="group">
                 <visible>String.IsEqual(Window(Home).Property(colorfilter),3)</visible>
                 <top>434</top>
 
-                <!-- LABEL ACTUAL / PREVIEW -->
-
                 <control type="grouplist">
                     <orientation>vertical</orientation>
                     <itemgap>0</itemgap>
                     <enable>false</enable>
+
+                    <!-- LABEL ACTUAL -->
 
                     <control type="button">
                         <enable>false</enable>
@@ -795,11 +740,13 @@
                         <label>$LOCALIZE[31211] :</label>
                     </control>
 
+                    <!-- LABEL PREVIEW -->
+
                     <control type="button">
                         <enable>false</enable>
                         <textoffsetx>30</textoffsetx>
                         <align>left</align>
-                        <width>600</width>
+                        <width>300</width>
                         <disabledcolor>PanelWhite100</disabledcolor>
                         <height>66</height>
                         <label>$LOCALIZE[1000] :</label>
@@ -824,10 +771,82 @@
                 </include>
             </control>
 
-            <!-- PREVIEW TEXT / FOCUS / GRADIENT -->
+            <!-- PREVIEW - COLOR TEXT -->
 
             <control type="group">
-                <visible>!String.IsEqual(Window(Home).Property(colorfilter),2)</visible>
+                <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
+                <top>434</top>
+
+                <control type="grouplist">
+                    <orientation>vertical</orientation>
+                    <left>0</left>
+                    <itemgap>0</itemgap>
+                    <enable>false</enable>
+
+                    <!-- LABEL ACTUAL -->
+
+                    <control type="button">
+                        <enable>false</enable>
+                        <textoffsetx>30</textoffsetx>
+                        <align>left</align>
+                        <width>300</width>
+                        <disabledcolor>PanelWhite100</disabledcolor>
+                        <height>66</height>
+                        <label>$LOCALIZE[31211] :</label>
+                    </control>
+
+                    <!-- LABEL PREVIEW -->
+
+                    <control type="button">
+                        <enable>false</enable>
+                        <textoffsetx>30</textoffsetx>
+                        <align>left</align>
+                        <width>300</width>
+                        <disabledcolor>PanelWhite100</disabledcolor>
+                        <height>66</height>
+                        <label>$LOCALIZE[1000] :</label>
+                    </control>
+                </control>
+
+                <control type="grouplist">
+                    <orientation>vertical</orientation>
+                    <right>30</right>
+                    <itemgap>0</itemgap>
+                    <enable>false</enable>
+
+                    <!-- ACTUAL COLOR TEXT -->
+
+                    <control type="button">
+                        <enable>false</enable>
+                        <textoffsetx>30</textoffsetx>
+                        <font>Button</font>
+                        <align>right</align>
+                        <width>600</width>
+                        <disabledcolor>$INFO[Window(Home).Property(colorstring)]</disabledcolor>
+                        <height>66</height>
+                        <label>$LOCALIZE[31211]</label>
+                    </control>
+
+                    <!-- PREVIEW COLOR TEXT -->
+
+                    <control type="button">
+                        <visible>Control.HasFocus(3000)</visible>
+                        <enable>false</enable>
+                        <textoffsetx>30</textoffsetx>
+                        <font>Button</font>
+                        <align>right</align>
+                        <width>600</width>
+                        <disabledcolor>$INFO[Container(3000).ListItem.Label2]</disabledcolor>
+                        <height>66</height>
+                        <label>$LOCALIZE[1000]</label>
+                    </control>
+                </control>
+            </control>
+
+            <!-- PREVIEW - COLOR FOCUS / GRADIENT -->
+
+            <control type="group">
+                <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
                 <width>498</width>
                 <height>66</height>
                 <top>500</top>
@@ -835,45 +854,36 @@
                 <!-- PREVIEW COLOR TEXT -->
 
                 <control type="grouplist" id="97101">
-                    <visible>String.IsEqual(Window(Home).Property(colorfilter),1)</visible>
                     <orientation>horizontal</orientation>
                     <enable>false</enable>
                     <height>66</height>
+
+                    <!-- LABEL ACTUAL -->
 
                     <control type="button">
                         <visible>!Control.HasFocus(3000)</visible>
                         <enable>false</enable>
                         <textoffsetx>30</textoffsetx>
-                        <font>Button</font>
                         <align>left</align>
-                        <width>600</width>
-                        <disabledcolor>$INFO[Window(Home).Property(colorstring)]</disabledcolor>
+                        <width>300</width>
+                        <disabledcolor>PanelWhite100</disabledcolor>
                         <height>66</height>
-                        <label>$LOCALIZE[1000] :</label>
+                        <label>$LOCALIZE[31211] :</label>
                     </control>
+
+                    <!-- LABEL PREVIEW -->
 
                     <control type="button">
                         <visible>Control.HasFocus(3000)</visible>
                         <enable>false</enable>
                         <textoffsetx>30</textoffsetx>
-                        <font>Button</font>
                         <align>left</align>
-                        <width>600</width>
-                        <disabledcolor>$INFO[Container(3000).ListItem.Label2]</disabledcolor>
+                        <width>300</width>
+                        <disabledcolor>PanelWhite100</disabledcolor>
                         <height>66</height>
                         <label>$LOCALIZE[1000] :</label>
                     </control>
                 </control>
-
-                <!-- <control type="label"> -->
-                    <!-- <left>20</left> -->
-                    <!-- <width>410</width> -->
-                    <!-- <top>15</top> -->
-                    <!-- <height>30</height> -->
-                    <!-- <font>Small</font> -->
-                    <!-- <textcolor>PanelWhite70</textcolor> -->
-                    <!-- <label>$LOCALIZE[1000]</label> -->
-                <!-- </control> -->
 
                 <!-- PREVIEW COLOR FOCUS / GRADIENT -->
 
@@ -903,6 +913,22 @@
                         <height>66</height>
                         <texture colordiffuse="$INFO[Container(3000).ListItem.Label]" border="12">common/gradient-box-wide-cut.png</texture>
                         <visible>String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient) + Control.HasFocus(3000)</visible>
+                    </control>
+                    <control type="image">
+                        <top>21</top>
+                        <left>10</left>
+                        <width>24</width>
+                        <height>24</height>
+                        <texture colordiffuse="Selected">buttons/radio-on.png</texture>
+                        <visible>String.IsEqual(Window(Home).Property(gradient),ColorFocus)</visible>
+                    </control>
+                    <control type="image">
+                        <top>21</top>
+                        <left>246</left>
+                        <width>24</width>
+                        <height>24</height>
+                        <texture colordiffuse="Selected">buttons/radio-on.png</texture>
+                        <visible>String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)</visible>
                     </control>
                 </control>
 
@@ -959,81 +985,66 @@
 
             </control>
 
-            <!-- PREVIEW MEDIA FLAG -->
+            <!-- PREVIEW - MEDIA FLAG -->
 
             <include content="Def_Color_Preview_Media_Status" condition="String.IsEqual(Window(Home).Property(colorfilter),2)">
                 <param name="right" value="960" />
                 <param name="top" value="600" />
             </include>
 
-            <!-- CODE COLOR SELECTED / CODE COLOR MANUAL -->
+            <!-- CODE COLOR MANUAL -->
 
-            <control type="grouplist" id="9000">
+            <control type="button" id="3600">
+
                 <visible>!String.IsEqual(Window(Home).Property(colorfilter),2)</visible>
-                <description>Control Area</description>
                 <left>0</left>
                 <width>600</width>
-                <top>566</top>
-                <height>138</height>
-                <orientation>vertical</orientation>
-                <pagecontrol>60</pagecontrol>
-                <usecontrolcoords>true</usecontrolcoords>
+                <top>590</top>
                 <ondown>9100</ondown>
                 <onup>9300</onup>
                 <onright>3000</onright>
                 <onleft>3000</onleft>
                 <onback>3100</onback>
-                <itemgap>0</itemgap>
 
-                <!-- Code color -->
+                <width>600</width>
+                <include>Def_Button_Settings_Gradient</include>
+                <label>$LOCALIZE[31569] :</label>
+                <label2>$VAR[Color_Picker]</label2>
 
-                <control type="button" id="3300">
-                    <width>600</width>
-                    <disabledcolor>PanelWhite100</disabledcolor>
-                    <label>$LOCALIZE[737] :</label>
-                    <label2>$INFO[Container(3000).ListItem.Label2,#,]</label2>
-                    <enable>false</enable>
-                    <include>Def_Dialog_ButtonsDefault</include>
-                </control>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">Skin.SetString(ColorHighlight.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus)">Skin.SetString(ColorFocus.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">Skin.SetString(ColorFocusGradient.name)</onclick>
 
-                <!-- <control type="button" id="3400"> -->
-                    <!-- <disabledcolor>PanelWhite100</disabledcolor> -->
-                    <!-- <include>Def_Dialog_ButtonsDefault</include> -->
-                    <!-- <label>$LOCALIZE[551]:</label> -->
-                    <!-- <label2>10005</label2> -->
-                    <!-- <visible>String.IsEmpty(Container(3000).ListItem.Label)</visible> -->
-                    <!-- <enable>false</enable> -->
-                <!-- </control> -->
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),KodiRatingStarColor)">Skin.SetString(KodiRatingStarColor.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),UserRatingStarColor)">Skin.SetString(UserRatingStarColor.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),MpaaCertifColor)">Skin.SetString(MpaaCertifColor.name)</onclick>
 
-                <!-- Set color code -->
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlaying)">Skin.SetString(IndicatorColorBackgroundIsPlaying.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundInProgress)">Skin.SetString(IndicatorColorBackgroundInProgress.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundUnWatched)">Skin.SetString(IndicatorColorBackgroundUnWatched.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundWatched)">Skin.SetString(IndicatorColorBackgroundWatched.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundNew)">Skin.SetString(IndicatorColorBackgroundNew.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)">Skin.SetString(IndicatorColorBackgroundLabel.name)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlayingIcon)">Skin.SetString(IndicatorColorBackgroundIsPlayingicon.name)</onclick>
 
-                <control type="button" id="3600">
-                    <width>600</width>
-                    <include>Def_Button_Settings_Gradient</include>
-                    <label>$LOCALIZE[31569] :</label>
-                    <label2>#$INFO[Window(Home).Property(colorstring)]</label2>
 
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">Skin.SetString(ColorHighlight.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus)">Skin.SetString(ColorFocus.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">Skin.SetString(ColorFocusGradient.name,$INFO[ListItem.Label])</onclick> -->
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetProperty(colorstring,$INFO[Skin.String(ColorHighlight.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus)">SetProperty(colorstring,$INFO[Skin.String(ColorFocus.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">SetProperty(colorstring,$INFO[Skin.String(ColorFocusGradient.name)],Home)</onclick>
 
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),KodiRatingStarColor)">Skin.SetString(KodiRatingStarColor.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),UserRatingStarColor)">Skin.SetString(UserRatingStarColor.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),MpaaCertifColor)">Skin.SetString(MpaaCertifColor.name,$INFO[ListItem.Label])</onclick> -->
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),KodiRatingStarColor)">SetProperty(colorstring,$INFO[Skin.String(KodiRatingStarColor.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),UserRatingStarColor)">SetProperty(colorstring,$INFO[Skin.String(UserRatingStarColor.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),MpaaCertifColor)">SetProperty(colorstring,$INFO[Skin.String(MpaaCertifColor.name)],Home)</onclick>
 
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlaying)">Skin.SetString(IndicatorColorBackgroundIsPlaying.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundInProgress)">Skin.SetString(IndicatorColorBackgroundInProgress.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundUnWatched)">Skin.SetString(IndicatorColorBackgroundUnWatched.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundWatched)">Skin.SetString(IndicatorColorBackgroundWatched.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundNew)">Skin.SetString(IndicatorColorBackgroundNew.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)">Skin.SetString(IndicatorColorBackgroundLabel.name,$INFO[ListItem.Label])</onclick> -->
-                    <!-- <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlayingIcon)">Skin.SetString(IndicatorColorBackgroundIsPlayingicon.name,$INFO[ListItem.Label])</onclick> -->
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlaying)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundIsPlaying.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundInProgress)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundInProgress.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundUnWatched)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundUnWatched.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundWatched)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundWatched.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundNew)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundNew.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundLabel.name)],Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlayingIcon)">SetProperty(colorstring,$INFO[Skin.String(IndicatorColorBackgroundIsPlayingicon.name)],Home)</onclick>
 
-                    <!-- <onclick>SetProperty(colorstring,$INFO[Container(3000).ListItem.Label2],Home)</onclick> -->
-                    <!-- <onclick>Control.SetFocus(9300)</onclick> -->
-
-                    <onclick>Skin.SetString($INFO[Window(Home).Property(colordesc)])</onclick>
-                </control>
+                <include>Action_BuildTextures_Onclick_Reload_1202</include>
             </control>
 
             <!-- BUTTON VALID / ACTUAL COLOR / PREVIEW COLOR -->
@@ -1081,18 +1092,6 @@
                     </include>
                 </control>
 
-                <!-- <control type="radiobutton" id="3200"> -->
-                    <!-- <label/> -->
-                    <!-- <onclick>Skin.Reset(colorpresent)</onclick> -->
-                    <!-- <onclick>Skin.SetString($INFO[Window(Home).Property(colordesc)],cc0385B5)</onclick> -->
-                    <!-- <onclick>Close</onclick> -->
-                    <!-- <include>Def_Button_Dimensions_Square_Blur</include> -->
-                    <!-- <include content="Def_Button_Textures"> -->
-                        <!-- <param name="icon" value="buttonsdialogs/uninstall.png"/> -->
-                        <!-- <param name="color" value="Black30" /> -->
-                    <!-- </include> -->
-                <!-- </control> -->
-
                 <control type="image">
                     <bottom>17</bottom>
                     <width>76</width>
@@ -1108,24 +1107,6 @@
                     <texture border="12">common/box.png</texture>
                     <colordiffuse>$INFO[Container(3000).ListItem.Label2]</colordiffuse>
                 </control>
-
-            <!-- <control type="button" id="9100"> -->
-                <!-- <description>Manual</description> -->
-                <!-- <left>34</left> -->
-                <!-- <bottom>115</bottom> -->
-                <!-- <width>300</width> -->
-                <!-- <height>66</height> -->
-                <!-- <align>center</align> -->
-                <!-- <label>15067</label> -->
-                <!-- <onright>3000</onright> -->
-                <!-- <onleft>3000</onleft> -->
-                <!-- <onup>3000</onup> -->
-                <!-- <ondown>3000</ondown> -->
-                <!-- <font>Button</font> -->
-                <!-- <textcolor>Black70</textcolor> -->
-                <!-- <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus> -->
-            <!-- </control> -->
-
             </control>
         </control>
     </controls>

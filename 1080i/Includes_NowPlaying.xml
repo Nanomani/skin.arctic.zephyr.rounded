@@ -8,11 +8,8 @@
         <param name="left" value="$PARAM[left]" default="0"/>
         <param name="visible" value="$PARAM[visible]" default="true"/>
         <control type="label">
-            <include content="Def_Font" condition="Skin.HasSetting(homemenu.netflix)">
+            <include content="Def_Font">
                 <param name="font" value="LargeNetflix" />
-            </include>
-            <include content="Def_Font" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="font" value="LargeNew" />
             </include>
             <width>100%</width>
             <left>$PARAM[left]</left>
@@ -47,16 +44,10 @@
 
     <include name="NowPlaying_ClearArt">
         <control type="group">
-            <include content="Def_Bottom" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="bottom" value="30" />
-            </include>
-            <include content="Def_Bottom" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="bottom" value="30" />
-            </include>
             <left>1360</left>
+            <bottom>30</bottom>
             <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation>
-            <animation effect="slide" start="0" end="0,40" time="0" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,10" time="0" condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,10" time="0" condition="Skin.HasSetting(home.widgets.show.reflections)">Conditional</animation>
             <animation effect="slide" start="0" end="-43,0" time="0" condition="$EXP[Home_Is_Vertical] + Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)">Conditional</animation>
             <animation effect="fade" start="100" end="0" time="400" condition="$EXP[Home_Is_Vertical] + [[Control.HasFocus(300) | Control.HasFocus(302) | Control.HasFocus(9099) | Control.HasFocus(399) | Control.HasFocus(222)] | [!Skin.HasSetting(homemenu.slide) + !Skin.HasSetting(hide.home.menu.with.nowplaying.extended)]] + ![Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)]">Conditional</animation>
             <animation type="WindowClose" condition="!$EXP[Home_Is_Vertical]">
@@ -138,18 +129,12 @@
         <definition>
         <control type="group">
             <width>100%</width>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">
+
+            <include content="Def_Top" condition="!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">
                 <param name="top" value="516" />
             </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">
-                <param name="top" value="136" />
-            </include>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="580" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="190" />
-            </include>
+
+            <top>580</top>
             <left>$PARAM[left]</left>
             <visible>$PARAM[visible]</visible>
             <control type="group">
@@ -498,15 +483,7 @@
             <control type="grouplist">
                 <usecontrolcoords>true</usecontrolcoords>
                 <height>40</height>
-
-                <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                    <param name="top" value="395" />
-                </include>
-
-                <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                    <param name="top" value="10" />
-                </include>
-
+                <top>395</top>
                 <orientation>horizontal</orientation>
                 <itemgap>10</itemgap>
 
@@ -527,22 +504,9 @@
             </control>
 
             <control type="grouplist">
-                <include content="Def_Width" condition="Skin.HasSetting(homemenu.netflix)">
-                    <param name="width" value="NetflixPlotWidth" />
-                </include>
-                <include content="Def_Width" condition="!Skin.HasSetting(homemenu.netflix)">
-                    <param name="width" value="100%" />
-                </include>
+                <top>20</top>
+                <width>NetflixPlotWidth</width>
                 <orientation>vertical</orientation>
-                <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                    <param name="top" value="20" />
-                </include>
-                <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-                    <param name="top" value="413" />
-                </include>
-                <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                    <param name="top" value="407" />
-                </include>
                 <itemgap>15</itemgap>
 
                 <!-- CLEARLOGO -->
@@ -569,7 +533,7 @@
                     <param name="visible" value="!Player.HasVideo" />
                 </include>
 
-                <include condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(show.home.netflix.title.clearlogo) | Skin.HasSetting(homemenu.horizontal.clean)">IntentButton</include>
+                <include condition="[Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(show.home.netflix.title.clearlogo)] | Skin.HasSetting(homemenu.horizontal.clean)">IntentButton</include>
 
                 <!-- VIDEO - SUB TILE + PLOT -->
 
@@ -579,7 +543,7 @@
                     <visible>Player.HasVideo</visible>
                     <itemgap>15</itemgap>
                     <usecontrolcoords>true</usecontrolcoords>
-                    <include condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(show.home.netflix.title.clearlogo) | Skin.HasSetting(homemenu.horizontal.clean)">IntentButton</include>
+                    <include condition="[Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(show.home.netflix.title.clearlogo)] | Skin.HasSetting(homemenu.horizontal.clean)">IntentButton</include>
 
                     <control type="label">
                         <include>Widgets_Item_SubTitle_Info_Definition</include>
@@ -587,16 +551,14 @@
                     </control>
 
                     <control type="textbox">
-                        <include condition="Skin.HasSetting(homemenu.netflix)">Widgets_Widgets_Item_Plot_Definition_ClearLogo</include>
-                        <include condition="!Skin.HasSetting(homemenu.netflix)">Widgets_Item_Plot_Definition</include>
+                        <include>Widgets_Widgets_Item_Plot_Definition_ClearLogo</include>
                         <label>$VAR[Label_NowPlaying_Plot]</label>
                         <visible>!String.IsEmpty(VideoPlayer.Plot)</visible>
                         <visible>Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo) + $EXP[Exp_Title_Clearlogo_PlayingNow_Available]</visible>
                     </control>
 
                     <control type="textbox">
-                        <include condition="Skin.HasSetting(homemenu.netflix)">Widgets_Item_Plot_Definition_Netflix</include>
-                        <include condition="!Skin.HasSetting(homemenu.netflix)">Widgets_Item_Plot_Definition</include>
+                        <include>Widgets_Item_Plot_Definition_Netflix</include>
                         <label>$VAR[Label_NowPlaying_Plot]</label>
                         <visible>!String.IsEmpty(VideoPlayer.Plot)</visible>
                         <visible>![Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo) + $EXP[Exp_Title_Clearlogo_PlayingNow_Available]]</visible>
@@ -619,14 +581,13 @@
                     </control>
 
                     <control type="textbox">
-                        <include condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo)">Widgets_Widgets_Item_Plot_Definition_ClearLogo</include>
+                        <include condition="Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo)">Widgets_Widgets_Item_Plot_Definition_ClearLogo</include>
                         <label>$VAR[Label_NowPlaying_Plot]</label>
                         <visible>!String.IsEmpty(MusicPlayer.Property(Artist_Description)) | !String.IsEmpty(MusicPlayer.Property(Album_Description))</visible>
                         <visible>Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo) + $EXP[Exp_Title_Clearlogo_PlayingNow_Available]</visible>
                     </control>
                     <control type="textbox">
-                        <include condition="Skin.HasSetting(homemenu.netflix)">Widgets_Item_Plot_Definition_Netflix</include>
-                        <include condition="!Skin.HasSetting(homemenu.netflix)">Widgets_Item_Plot_Definition</include>
+                        <include>Widgets_Item_Plot_Definition_Netflix</include>
                         <label>$VAR[Label_NowPlaying_Plot]</label>
                         <visible>!String.IsEmpty(MusicPlayer.Property(Artist_Description)) | !String.IsEmpty(MusicPlayer.Property(Album_Description))</visible>
                         <visible>![Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo) + $EXP[Exp_Title_Clearlogo_PlayingNow_Available]]</visible>
@@ -745,22 +706,12 @@
             <!-- SCROLLING TEXT -->
 
             <control type="group">
-                <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                    <param name="top" value="86" />
-                </include>
-                <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-                    <param name="top" value="456" />
-                </include>
-                <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                    <param name="top" value="450" />
-                </include>
-                <include content="Def_Left" condition="$EXP[Home_Is_Vertical]">
-                    <param name="left" value="0" />
-                </include>
+                <top>86</top>
                 <left>-80</left>
                 <width>1920</width>
                 <visible>Skin.HasSetting(home.extended.nowplaying.scrolling.text) + Player.HasAudio</visible>
                 <animation effect="fade" start="100" end="50" time="0" condition="true">Conditional</animation>
+
                 <control type="label">
                     <description>Now Playing</description>
                     <left>0</left>
@@ -834,12 +785,7 @@
 
     <include name="NowPlaying_AudioDiscArt">
         <control type="group">
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="460" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="75" />
-            </include>
+            <top>460</top>
             <left>158</left>
             <animation type="WindowClose" reversible="false">
                 <effect type="slide" start="0,0" end="-115,0" tween="sine" easing="out" time="300" delay="0"/>
@@ -878,12 +824,7 @@
         <definition>
         <control type="group">
             <visible>$PARAM[visible]</visible>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="460" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="75" />
-            </include>
+            <top>460</top>
             <left>$PARAM[left]</left>
             <animation type="WindowClose" reversible="false">
                 <effect type="slide" start="0,0" end="-106,0" tween="sine" easing="out" time="300" delay="0"/>
@@ -924,12 +865,7 @@
             <visible>Player.HasVideo</visible>
             <height>305</height>
             <width>553</width>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="455" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="70" />
-            </include>
+            <top>445</top>
             <control type="image">
                 <left>-9</left>
                 <top>-9</top>
@@ -973,12 +909,7 @@
             <height>325</height>
             <width>222</width>
             <left>$PARAM[left]</left>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="445" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="60" />
-            </include>
+            <top>445</top>
             <visible>$PARAM[visible]</visible>
             <visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
             <control type="image">
@@ -1028,12 +959,7 @@
             <height>325</height>
             <width>325</width>
             <left>$PARAM[left]</left>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="445" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
-                <param name="top" value="60" />
-            </include>
+            <top>445</top>
             <visible>$PARAM[visible]</visible>
             <visible>Player.HasAudio | VideoPlayer.Content(livetv)</visible>
             <control type="image">
@@ -1266,17 +1192,9 @@
             <animation effect="fade" start="100" end="0" tween="sine" reversible="false" easing="out" time="350" condition="!$EXP[Extended_Now_Playing_Is_Visible]">Conditional</animation>
             <animation effect="fade" start="0" end="100" tween="sine" reversible="false" easing="in" delay="350" time="450" condition="$EXP[Extended_Now_Playing_Is_Visible]">Conditional</animation>
             <height>770</height>
-            <include content="Def_Bottom" condition="!Skin.HasSetting(home.widgets.show.reflections)">
-                <param name="bottom" value="188" />
-            </include>
-            <include content="Def_Bottom" condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-                <param name="bottom" value="200" />
-            </include>
-            <include content="Def_Bottom" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-                <param name="bottom" value="230" />
-            </include>
+            <bottom>200</bottom>
             <width>1270</width>
-            <include content="Def_Left" condition="$EXP[Home_Is_Vertical]"><param name="left" value="526" /></include>
+            <include content="Def_Left" condition="$EXP[Home_Is_Vertical]"><param name="left" value="446" /></include>
             <left>SidePad</left>
 
             <!-- BASICS -->

@@ -235,7 +235,6 @@
                     <include condition="!Skin.HasSetting(home.showicons)">Home_Horizontal_Content_No_Icon</include>
 
                     <onfocus condition="String.IsEmpty(Window.Property(MenuSelect))">SetFocus(399)</onfocus>
-                    <onfocus condition="String.IsEmpty(Window.Property(MenuSelect))">SetProperty(TMDbHelper.WidgetContainer,301,Home)</onfocus>
 
                     <onfocus>ClearProperty(ContainerPosition,Home)</onfocus>
                     <onfocus>ClearProperty(listitem.trailer,Home)</onfocus>
@@ -332,12 +331,11 @@
                 </control>
             </control>
 
-            <!-- SET TMDBHELPER WIDGETCONTAINER -->
-
-            <include condition="Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)">Def_TMDB_Helper_Widget_Container</include>
+            <!-- Set TMDbHelper WidgetContainer -->
+            <!-- <include condition="Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)">Def_TMDB_Helper_Widget_Container</include> -->
 
             <!-- Auto slide menu -->
-            <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutItemsButton</include>
+            <!-- <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutItemsButton</include> -->
 
         </focusedlayout>
         <content>
@@ -442,10 +440,10 @@
             </control>
 
             <!-- Set TMDbHelper WidgetContainer -->
-            <include condition="Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)">Def_TMDB_Helper_Widget_Container</include>
+            <!-- <include condition="Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)">Def_TMDB_Helper_Widget_Container</include> -->
 
             <!-- Auto slide menu -->
-            <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutItemsButton</include>
+            <!-- <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutItemsButton</include> -->
 
         </focusedlayout>
         <content>
@@ -719,6 +717,7 @@
 
                 <orientation>vertical</orientation>
                 <include>Animation_Scrolltime_Views_List</include>
+
                 <itemlayout width="322" height="70">
                     <control type="image">
                         <left>12</left>
@@ -980,57 +979,34 @@
 
         <control type="button" id="399">
             <include>Def_Hidden_Button</include>
-
             <visible allowhiddenfocus="true">False</visible>
+
+            <!-- AUTO HIDE MENU -->
+
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation] + $EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">AlarmClock(slide_out,SetFocus(2011),00:05,silent)</onfocus>
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation] + Control.HasFocus(399)">SetProperty(LastMenuItem,300,Home)</onfocus>
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation] + Control.HasFocus(302)">SetProperty(LastMenuItem,302,Home)</onfocus>
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">ClearProperty(focus.main.menu.timer,Home)</onfocus>
+
+            <!-- BUTTON SEARCH -->
 
             <onleft condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(AnimationDirection)</onleft>
             <onleft condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">9099</onleft>
 
-            <!-- <onleft condition="Skin.HasSetting(Home.DisableSearchMenu) + String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">SetProperty(OptionsMenuFocused,303,Home)</onleft> -->
-            <!-- <onleft condition="Skin.HasSetting(Home.DisableSearchMenu) + String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">SetFocus(303)</onleft> -->
-
-            <!-- BUTOON SEARCH -->
-
             <onright condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">ClearProperty(AnimationDirection)</onright>
-            <onright condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">9099</onright>
+            <onright condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">SetFocus(300,0,absolute)</onright>
 
-            <!-- MAIN MENU - LEFT -->
+            <!-- MAIN MENU - LEFT / RIGHT -->
 
             <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">SetProperty(AnimationDirection,Left)</onleft>
             <!-- <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">SetProperty(WidgetWait,1,Home)</onleft> -->
             <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">Control.Move(300,-1)</onleft>
             <!-- <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">AlarmClock(WidgetWait,ClearProperty(WidgetWait,Home),00:00,silent)</onleft> -->
 
-            <!-- MAIN MENU - RIGHT -->
-
             <onright condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">SetProperty(AnimationDirection,Right)</onright>
             <!-- <onright condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">SetProperty(WidgetWait,1,Home)</onright> -->
             <onright condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">Control.Move(300,1)</onright>
-            <!-- <onright condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">AlarmClock(WidgetWait,ClearProperty(WidgetWait),00:00,silent)</onright> -->
-
-            <!-- <onfocus>ClearProperty(OptionsMenuFocused,Home)</onfocus> -->
-
-            <!-- <onfocus>SetProperty(TMDbHelper.WidgetContainer,301,Home)</onfocus> -->
-            <!-- <onfocus>$VAR[Set_TMDB_Helper_Widget_Container]</onfocus> -->
-
-            <onfocus>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onfocus>
-
-            <!-- <onright>$VAR[Set_TMDB_Helper_Widget_Container]</onright> -->
-            <!-- <onright>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onright> -->
-
-            <!-- <onleft>$VAR[Set_TMDB_Helper_Widget_Container]</onleft> -->
-            <!-- <onleft>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onleft> -->
-
-            <!-- <ondown condition="String.IsEmpty(Container(300).ListItem.Property(menuOnUpAction)) + String.IsEmpty(Skin.String(HomeMenu.OnUp)) + !Integer.IsEqual(Container(302).NumItems,0)">SetFocus(302,0,absolute)</ondown> -->
-
-            <!-- <ondown condition="String.IsEmpty(Container(300).ListItem.Property(menuOnUpAction)) + Skin.String(HomeMenu.OnUp,PowerMenu)">SetProperty(OptionsMenuFocused,303,Home)</ondown> -->
-            <!-- <ondown condition="String.IsEmpty(Container(300).ListItem.Property(menuOnUpAction)) + Skin.String(HomeMenu.OnUp,PowerMenu)">SetFocus(303)</ondown> -->
-
-            <!-- <ondown condition="!String.IsEmpty(Container(300).ListItem.Property(menuOnUpAction))">SetProperty(CustomHubHeader,$INFO[Container(300).ListItem.Label],Home)</ondown> -->
-
-            <!-- <ondown condition="!String.IsEmpty(Container(300).ListItem.Property(menuOnUpAction))">SetProperty(submenuVisibility,$INFO[Container(300).ListItem.Property(submenuVisibility)],Home)</ondown> -->
-            <!-- <ondown condition="!String.IsEmpty(Container(300).ListItem.Property(menuOnUpAction))">$INFO[Container(300).ListItem.Property(menuOnUpAction)]</ondown> -->
-
+            <!-- <onright condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">AlarmClock(WidgetWait,ClearProperty(WidgetWait,Home),00:00,silent)</onright> -->
 
             <!-- MAIN MENU 300 -->
 
@@ -1053,11 +1029,8 @@
             <!-- MAIN MENU : FOCUS IF INACTIVITY -->
 
             <onfocus condition="Window.IsVisible(Home)">ClearProperty(focus.main.menu.timer,Home)</onfocus>
-
             <onup condition="$EXP[Extended_Now_Playing_Is_Visible] + Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button) + Skin.HasSetting(home.extended.nowplaying.tracklist) + Integer.IsGreater(Container(778).NumItems,0) + Player.HasAudio">778</onup>
             <onup condition="$EXP[Extended_Now_Playing_Is_Visible] + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">777</onup>
-
-            <!-- <ondown condition="Integer.IsGreater(Container(302).NumItems,0) + [!Skin.HasSetting(submenu.only.on.click.if.main.menu.empty) | [Skin.HasSetting(submenu.only.on.click.if.main.menu.empty) + !String.StartsWith(Container(300).ListItem.Property(path),SetFocus(302,0))]]">SetFocus(302,0)</ondown> -->
 
             <!-- WIDGETS 301 -->
 
@@ -1065,8 +1038,29 @@
             <onup condition="!Player.HasVideo | !Skin.HasSetting(global.showvideo)">301</onup>
             <onup>301</onup>
 
+            <!-- SET TMDBHELPER WIDGET CONTAINER -->
+
+            <onfocus condition="Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)">$VAR[Set_TMDB_Helper_Widget_Container]</onfocus>
+
+            <onright condition="[Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)] + !String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">AlarmClock(slide_out,SetFocus(222),00:00,silent)</onright>
+
+            <onleft condition="[Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)] + !String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">AlarmClock(slide_out,SetFocus(222),00:00,silent)</onleft>
+
+
+            <onfocus>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onfocus>
+            <onleft>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onleft>
+            <onright>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onright>
+
+            <!-- OTHERS -->
+
+            <onfocus>ClearProperty(LaunchSearch,Home)</onfocus>
+            <onfocus>ClearProperty(listitem.trailer,Home)</onfocus>
         </control>
 
+        <control type="button" id="222">
+            <include>Def_Hidden_Button</include>
+            <onfocus>AlarmClock(slide_out,SetFocus(399),00:00,silent)</onfocus>
+        </control>
     </include>
 
     <!-- HORIZONTAL CLEAN - ITEM COUNT -->
@@ -1111,7 +1105,7 @@
 
             <animation effect="slide" start="0" end="-100" time="0" delay="0" condition="true">Conditional</animation>
 
-            <animation effect="slide" start="0" end="-270" time="300" delay="0" center="auto" tween="sine" easing="out" condition="[!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)] + ![Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)] + [Skin.HasSetting(homemenu.slide) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + Skin.HasSetting(enable.furniture.home.nowplaying.extended)]] + !Control.HasFocus(9099)">Conditional</animation>
+            <animation effect="slide" start="0" end="-270" time="300" delay="0" center="auto" tween="sine" easing="out" condition="[!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)] + ![Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)] + [Skin.HasSetting(homemenu.slide) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + Skin.HasSetting(enable.furniture.home.nowplaying.extended)]] + !Control.HasFocus(9099)">Conditional</animation>
 
             <!-- MAIN MENU - SUB MENU -->
 
@@ -1149,8 +1143,6 @@
                     <orientation>vertical</orientation>
 
                     <onfocus condition="String.IsEmpty(Window.Property(MenuSelect))">SetFocus(399)</onfocus>
-                    <onfocus condition="String.IsEmpty(Window.Property(MenuSelect))">SetProperty(TMDbHelper.WidgetContainer,301,Home)</onfocus>
-
 
                     <!-- MAIN MENU NOT FOCUSED -->
 
@@ -1216,7 +1208,7 @@
                             <width>80</width>
                             <height>80</height>
                             <texture colordiffuse="$VAR[Color_Highlight]">$INFO[Container(300).ListItem.Icon]</texture>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>Skin.HasSetting(home.showicons) + !Skin.HasSetting(homemenu.items.underlined)</visible>
                         </control>
 
@@ -1246,7 +1238,7 @@
                             <textcolor>$VAR[Color_Highlight]</textcolor>
                             <font>Home</font>
                             <label>$INFO[Container(300).ListItem.Label]</label>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>Skin.HasSetting(home.showicons) + !Skin.HasSetting(homemenu.items.underlined) + !Skin.HasSetting(homemenu.only.icons)</visible>
                         </control>
 
@@ -1260,7 +1252,7 @@
                             <control type="image">
                                 <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
                             </control>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(homemenu.items.underlined)</visible>
                         </control>
                         <control type="image">
@@ -1269,7 +1261,7 @@
                             <top>1</top>
                             <height>80</height>
                             <texture colordiffuse="Dark1">$INFO[ListItem.Icon]</texture>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(homemenu.items.underlined)</visible>
                         </control>
 
@@ -1291,7 +1283,7 @@
                                 <texturenofocus border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/underline_h.png</texturenofocus>
                                 <label>$INFO[Container(300).ListItem.Label]</label>
                             </control>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>!Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.items.underlined)</visible>
                         </control>
 
@@ -1323,7 +1315,7 @@
                                     <label>        $INFO[Container(300).ListItem.Label]</label>
                                 </control>
                             </control>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>!Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.items.underlined)</visible>
                         </control>
 
@@ -1554,7 +1546,7 @@
                                     <label>        $INFO[Container(302).ListItem.Label]</label>
                                 </control>
                             </control>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399)">Conditional</animation>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)">Conditional</animation>
                             <visible>!Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.items.underlined)</visible>
                         </control>
 
@@ -1662,6 +1654,7 @@
                 <onfocus>SetFocus($INFO[Window(Home).Property(BackToId)])</onfocus>
                 <onfocus>SetFocus(300)</onfocus>
             </control>
+
             <control type="button" id="9888">
                 <include>Def_Hidden_Button</include>
                 <onfocus condition="Integer.IsEqual(Container(301).NumItems,1) + Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(9567)</onfocus>
@@ -1669,7 +1662,8 @@
                 <onfocus condition="!Integer.IsEqual(Container(301).NumItems,1) + !Integer.IsEqual(Container(301).NumItems,0)">SetFocus($INFO[Window(Home).Property(LastId)])</onfocus>
                 <onfocus condition="Integer.IsEqual(Container(301).NumItems,0)">SetFocus(300)</onfocus>
             </control>
-             <control type="button" id="9808">
+
+            <control type="button" id="9808">
                 <include>Def_Hidden_Button</include>
                 <onfocus condition="Integer.IsEqual(Container(301).NumItems,1) + Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(9567)</onfocus>
                 <onfocus condition="Integer.IsEqual(Container(301).NumItems,1)">SetFocus(300)</onfocus>
@@ -1680,37 +1674,31 @@
 
             <control type="button" id="399">
                 <include>Def_Hidden_Button</include>
-
                 <visible allowhiddenfocus="true">False</visible>
 
 
+            <!-- AUTO HIDE MENU -->
 
-                <!-- BUTOON SEARCH -->
+                <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation] + $EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">AlarmClock(slide_out,SetFocus(2011),00:05,silent)</onfocus>
+                <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation] + Control.HasFocus(399)">SetProperty(LastMenuItem,300,Home)</onfocus>
+                <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation] + Control.HasFocus(302)">SetProperty(LastMenuItem,302,Home)</onfocus>
+                <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">ClearProperty(focus.main.menu.timer,Home)</onfocus>
 
-                <!-- <onup condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(AnimationDirection)</onup> -->
-                <!-- <onup condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">9099</onup> -->
-                <!-- <ondown condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">ClearProperty(AnimationDirection)</ondown> -->
-                <!-- <ondown condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">9099</ondown> -->
+                <!-- BUTTON SEARCH -->
 
-                <!-- MAIN MENU - LEFT -->
+                <onup condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(AnimationDirection)</onup>
+                <onup condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">9099</onup>
+
+                <ondown condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">ClearProperty(AnimationDirection)</ondown>
+                <ondown condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">9099</ondown>
+
+                <!-- MAIN MENU - UP / DOWN -->
 
                 <onup condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">SetProperty(AnimationDirection,Up)</onup>
                 <onup condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">Control.Move(300,-1)</onup>
-                <onup condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">SetProperty(TMDbHelper.WidgetContainer,301,Home)</onup>
-                <onup condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">9099</onup>
-
 
                 <ondown condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">SetProperty(AnimationDirection,Down)</ondown>
                 <ondown condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">Control.Move(300,1)</ondown>
-                <ondown condition="!String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">SetProperty(TMDbHelper.WidgetContainer,301,Home)</ondown>
-                <ondown condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">9099</ondown>
-
-                <!-- <onfocus>ClearProperty(OptionsMenuFocused,Home)</onfocus> -->
-
-                <!-- <onfocus>SetProperty(TMDbHelper.WidgetContainer,301,Home)</onfocus> -->
-                <!-- <onfocus>$VAR[Set_TMDB_Helper_Widget_Container]</onfocus> -->
-
-                <onfocus>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onfocus>
 
                 <!-- MAIN MENU 300 -->
 
@@ -1742,13 +1730,28 @@
                 <onback condition="Skin.HasSetting(home.onback.go.to.first.widget) + Integer.IsGreater(Container(301).NumItems,0)">SetFocus(301)</onback>
                 <onright>301</onright>
 
-                <!-- <onleft condition="!Skin.HasSetting(submenu.only.on.click.if.main.menu.empty)">302</onleft> -->
+                <!-- SET TMDBHELPER WIDGET CONTAINER -->
+
+                <onfocus condition="Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)">$VAR[Set_TMDB_Helper_Widget_Container]</onfocus>
+
+                <ondown condition="[Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)] + !String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">AlarmClock(slide_out,SetFocus(222),00:00,silent)</ondown>
+
+                <onup condition="[Skin.HasSetting(show.home.header.clearlogo) | Skin.HasSetting(show.home.netflix.title.clearlogo)] + !String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">AlarmClock(slide_out,SetFocus(222),00:00,silent)</onup>
+
+
+                <onfocus>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onfocus>
+                <ondown>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</ondown>
+                <onup>SetProperty(WindowTitle,$INFO[Container(300).ListItem.Label],Home)</onup>
+
+                <!-- OTHERS -->
 
                 <onfocus>ClearProperty(LaunchSearch,Home)</onfocus>
                 <onfocus>ClearProperty(listitem.trailer,Home)</onfocus>
+            </control>
 
-                <!-- MAIN MENU : FOCUS IF INACTIVITY -->
-
+            <control type="button" id="222">
+                <include>Def_Hidden_Button</include>
+                <onfocus>AlarmClock(slide_out,SetFocus(399),00:00,silent)</onfocus>
             </control>
 
         </control>

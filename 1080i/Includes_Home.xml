@@ -1327,11 +1327,11 @@
 
                         <!-- AUTO HIDE LABEL ITEM MENU -->
 
-                        <include condition="$EXP[Exp_Show_Label_Item_Menu]">ShowLabelMenuItemButton</include>
+                        <!-- <include condition="$EXP[Exp_Show_Label_Item_Menu]">ShowLabelMenuItemButton</include> -->
 
                         <!-- AUTO SLIDE MENU -->
 
-                        <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutItemsButton</include>
+                        <!-- <include condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">SlideOutItemsButton</include> -->
                     </focusedlayout>
 
                     <content>
@@ -1346,6 +1346,7 @@
                     <animation effect="slide" start="0,0" end="0,-8" time="0" condition="true">Conditional</animation>
                     <animation effect="fade" start="100" end="33" time="400" condition="Control.HasFocus(301)">Conditional</animation>
                     <include condition="![Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.only.icons)]">Animation_Slide_Vertical_Menu</include>
+
                     <include condition="[Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.only.icons)]" content="Animation_Slide_Vertical_Menu">
                         <param name="left" value="-50" />
                     </include>
@@ -1757,6 +1758,11 @@
 
                 <onfocus>ClearProperty(LaunchSearch,Home)</onfocus>
                 <onfocus>ClearProperty(listitem.trailer,Home)</onfocus>
+
+                <!-- AUTO HIDE LABEL ITEM MENU -->
+
+                <onfocus condition="$EXP[Exp_Show_Label_Item_Menu]">SetProperty(ShowMenuLabel,1,Home)</onfocus>
+
             </control>
 
             <control type="button" id="222">
@@ -1775,11 +1781,11 @@
         <control type="group">
             <visible>!String.IsEmpty(Window(Home).Property(ShowMenuLabel))</visible>
 
-            <animation type="Conditional" condition="Control.HasFocus(300)" reversible="false">
+            <animation type="Conditional" condition="Control.HasFocus(300) | Control.HasFocus(399)" reversible="false">
                 <effect type="fade" start="0" end="100" time="250" delay="0" tween="cubic" easing="inout"/>
                 <effect type="slide" start="0,48" end="0" center="auto" tween="back" easing="out" time="400" delay="0"/>
             </animation>
-            <animation effect="fade" end="0" start="100" time="350" condition="!Control.HasFocus(300)" reversible="false">Conditional</animation>
+            <animation effect="fade" end="0" start="100" time="350" condition="!Control.HasFocus(300) + !Control.HasFocus(399)" reversible="false">Conditional</animation>
             <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">Visible</animation>
             <animation effect="fade" start="100" end="0" tween="cubic" easing="out" time="350" reversible="false">Hidden</animation>
 

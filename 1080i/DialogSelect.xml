@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="2000">
     <defaultcontrol always="true">3</defaultcontrol>
+
     <onunload>ClearProperty(SetUserRating,Home)</onunload>
     <onload>ClearProperty(down)</onload>
     <onunload>ClearProperty(down)</onunload>
@@ -9,436 +10,164 @@
     <onload condition="!String.IsEmpty(Window(Home).Property(SetUserRating))">SetFocus(21)</onload>
 
     <controls>
-        <control type="group">
-            <!-- <visible>!Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd)</visible> -->
-            <include>Background_Overlay</include>
-        </control>
+        <include>Background_Overlay</include>
 
-        <control type="group">
-            <!-- <visible>!Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd)</visible> -->
+        <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)) + String.IsEmpty(Window(Home).Property(SetIcon)) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + !Window.IsActive(gamesaves) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(ingamesaves) + !Window.IsActive(selectvideoversion) + !Window.IsActive(selectvideoextra)">Def_Dialog_Select_Other</include>
 
-            <!-- BACKGROUND -->
+        <include condition="!String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Select_User_Rating</include>
+        <include condition="!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Select_View_Type</include>
+        <include condition="!String.IsEmpty(Window(Home).Property(SetIcon))">Def_Dialog_Select_Icon</include>
+        <include condition="!String.IsEmpty(Window(Home).Property(ListVideoForCast))">Def_Dialog_Select_Cast_Video_Search</include>
+        <include condition="Window.IsActive(selectvideoversion)">Def_Dialog_Select_Video_Version</include>
+        <include condition="Window.IsActive(selectvideoextra)">Def_Dialog_Select_Video_Extra</include>
 
-            <include content="Def_Dialog_InfoPanel" condition="!String.IsEmpty(Window(Home).Property(SetUserRating))"><param name="height" value="310" /><param name="width" value="452" /></include>
+        <!-- DIALOG - GAMES -->
 
-            <include content="Def_Dialog_Background" condition="!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))"><param name="height" value="882" /><param name="width" value="1722" /></include>
+        <include condition="Window.IsActive(gamesaves)">Def_Dialog_Select_Game_Save</include>
+        <include condition="Window.IsActive(gamevideofilter)">Def_Dialog_Select_Game_Filter</include>
+        <include condition="Window.IsActive(gamestretchmode)">Def_Dialog_Select_Game_View</include>
+        <include condition="Window.IsActive(gamevideorotation)">Def_Dialog_Select_Game_View</include>
+        <include condition="Window.IsActive(ingamesaves)">Def_Dialog_Select_Game_Save_In_Game</include>
 
-            <include content="Def_Dialog_Background" condition="!String.IsEmpty(Window(Home).Property(SetIcon))"><param name="height" value="882" /><param name="width" value="1412" /></include>
+        <!-- <control type="group"> -->
 
-            <include content="Def_Dialog_Background" condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SetIcon)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))"><param name="height" value="882" /><param name="width" value="1320" /></include>
+            <!-- <include content="Object_Scrollbar_Dialog"> -->
+                <!-- <param name="scrollid" value="1723"/> -->
+                <!-- <param name="onleft" value="11"/> -->
+                <!-- <param name="onright" value="1888"/> -->
+                <!-- <param name="centerright" value="360"/> -->
+                <!-- <param name="visible" value="Control.IsVisible(11) + !Control.IsVisible(6) + !Control.IsVisible(3) + [Window.IsActive(gamestretchmode) | Window.IsActive(gamevideofilter) | Window.IsActive(gamevideorotation) | Window.IsActive(gameosd)]" /> -->
+            <!-- </include> -->
+        <!-- </control> -->
 
-            <!-- HEADER -->
+        <!-- <control type="textbox" id="12"> -->
+            <!-- <description>Description Area</description> -->
+            <!-- <visible>false</visible> -->
+        <!-- </control> -->
 
-            <control type="label" id="1">
-                <include condition="String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Header_Title</include>
-                <include condition="!String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Header_User_Rating</include>
-                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast))</visible>
-                <label/>
-            </control>
+        <!-- <control type="group"> -->
+            <!-- <top>710</top> -->
+            <!-- <include>Animation_ZoomIn</include> -->
+            <!-- <include>Animation_FadeOut</include> -->
 
-            <control type="label">
-                <include>Def_Dialog_Header_Title</include>
-                <label>$LOCALIZE[31287] $INFO[Window(Home).Property(ListVideoForCast)]</label>
-                <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCast))</visible>
-            </control>
+            <!-- <control type="group"> -->
+                <!-- <width>242</width> -->
+                <!-- <height>270</height> -->
+                <!-- <top>20</top> -->
+                <!-- <left>SidePad</left> -->
+                <!-- <visible>!String.IsEmpty(Control.GetLabel(12))</visible> -->
+                <!-- <control type="image"> -->
+                    <!-- <width>100%</width> -->
+                    <!-- <height>100%</height> -->
+                    <!-- <texture colordiffuse="Light1" border="4">common/box.png</texture> -->
+                <!-- </control> -->
+                <!-- <control type="textbox"> -->
+                    <!-- <description>Description Area</description> -->
+                    <!-- <left>25</left> -->
+                    <!-- <top>22</top> -->
+                    <!-- <bottom>25</bottom> -->
+                    <!-- <right>25</right> -->
+                    <!-- <font>Tiny</font> -->
+                    <!-- <textcolor>Dark2</textcolor> -->
+                    <!-- <label>$INFO[Control.GetLabel(12)]</label> -->
+                <!-- </control> -->
+            <!-- </control> -->
 
-            <include>Def_Dialog_Header_Logo</include>
-            <include>Def_Dialog_Header_Line</include>
+            <!-- <control type="fixedlist" id="11"> -->
+                <!-- <animation effect="slide" start="0" end="260,0" condition="!String.IsEmpty(Control.GetLabel(12))">Conditional</animation> -->
+                <!-- <top>0</top> -->
+                <!-- <left>70</left> -->
+                <!-- <right>SidePad</right> -->
+                <!-- <height>310</height> -->
+                <!-- <movement>3</movement> -->
+                <!-- <preloaditems>2</preloaditems> -->
+                <!-- <orientation>horizontal</orientation> -->
+                <!-- <itemlayout width="440" height="310" condition="!Window.IsVisible(script-skinshortcuts.xml)"> -->
+                    <!-- <control type="image"> -->
+                        <!-- <top>20</top> -->
+                        <!-- <left>10</left> -->
+                        <!-- <width>424</width> -->
+                        <!-- <height>270</height> -->
+                        <!-- <texture colordiffuse="Light1" border="4">common/box.png</texture> -->
+                    <!-- </control> -->
+                    <!-- <control type="gamewindow"> -->
+                        <!-- <top>30</top> -->
+                        <!-- <left>10</left> -->
+                        <!-- <width>424</width> -->
+                        <!-- <height>200</height> -->
+                        <!-- <videofilter>$INFO[ListItem.Property(game.videofilter)]</videofilter> -->
+                        <!-- <stretchmode>$INFO[ListItem.Property(game.stretchmode)]</stretchmode> -->
+                        <!-- <rotation>$INFO[ListItem.Property(game.videorotation)]</rotation> -->
+                    <!-- </control> -->
+                    <!-- <control type="label"> -->
+                        <!-- <bottom>35</bottom> -->
+                        <!-- <height>40</height> -->
+                        <!-- <align>left</align> -->
+                        <!-- <left>10</left> -->
+                        <!-- <font>Tiny</font> -->
+                        <!-- <textoffsetx>20</textoffsetx> -->
+                        <!-- <label>$INFO[ListItem.Label]</label> -->
+                        <!-- <textcolor>Dark2</textcolor> -->
+                    <!-- </control> -->
+                    <!-- <control type="label"> -->
+                        <!-- <bottom>35</bottom> -->
+                        <!-- <height>40</height> -->
+                        <!-- <align>right</align> -->
+                        <!-- <right>10</right> -->
+                        <!-- <font>Tiny</font> -->
+                        <!-- <textoffsetx>20</textoffsetx> -->
+                        <!-- <label>$INFO[ListItem.Label2]</label> -->
+                        <!-- <textcolor>Dark2</textcolor> -->
+                    <!-- </control> -->
+                <!-- </itemlayout> -->
+                <!-- <focusedlayout width="440" height="310" condition="!Window.IsVisible(script-skinshortcuts.xml)"> -->
+                    <!-- <control type="image"> -->
+                        <!-- <top>20</top> -->
+                        <!-- <left>10</left> -->
+                        <!-- <width>424</width> -->
+                        <!-- <height>270</height> -->
+                        <!-- <texture colordiffuse="Light1" border="4">common/box.png</texture> -->
+                    <!-- </control> -->
+                    <!-- <control type="gamewindow"> -->
+                        <!-- <top>30</top> -->
+                        <!-- <left>10</left> -->
+                        <!-- <width>424</width> -->
+                        <!-- <height>200</height> -->
+                        <!-- <videofilter>$INFO[ListItem.Property(game.videofilter)]</videofilter> -->
+                        <!-- <stretchmode>$INFO[ListItem.Property(game.stretchmode)]</stretchmode> -->
+                        <!-- <rotation>$INFO[ListItem.Property(game.videorotation)]</rotation> -->
+                    <!-- </control> -->
+                    <!-- <control type="label"> -->
+                        <!-- <bottom>35</bottom> -->
+                        <!-- <height>40</height> -->
+                        <!-- <align>left</align> -->
+                        <!-- <left>10</left> -->
+                        <!-- <font>Tiny</font> -->
+                        <!-- <textoffsetx>20</textoffsetx> -->
+                        <!-- <label>$INFO[ListItem.Label]</label> -->
+                        <!-- <textcolor>Dark2</textcolor> -->
+                    <!-- </control> -->
+                    <!-- <control type="label"> -->
+                        <!-- <bottom>35</bottom> -->
+                        <!-- <height>40</height> -->
+                        <!-- <align>right</align> -->
+                        <!-- <right>10</right> -->
+                        <!-- <font>Tiny</font> -->
+                        <!-- <textoffsetx>20</textoffsetx> -->
+                        <!-- <label>$INFO[ListItem.Label2]</label> -->
+                        <!-- <textcolor>Dark2</textcolor> -->
+                    <!-- </control> -->
+                    <!-- <control type="image"> -->
+                        <!-- <include>Animation_SelectBoxHome</include> -->
+                        <!-- <left>5</left> -->
+                        <!-- <top>15</top> -->
+                        <!-- <right>0</right> -->
+                        <!-- <bottom>14</bottom> -->
+                        <!-- <texture border="18">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/selectbox_h.png</texture> -->
+                    <!-- </control> -->
+                <!-- </focusedlayout> -->
+            <!-- </control> -->
+        <!-- </control> -->
 
-
-            <!-- DIALOG SELECT - USER RATING  -->
-
-            <include condition="!String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Select_User_Rating</include>
-
-            <!-- DIALOG SELECT - ID 3  -->
-
-            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Select</include>
-
-            <!-- DIALOG SELECT - ID 6  -->
-
-            <include condition="!String.IsEmpty(Window(Home).Property(SetIcon))">Def_Dialog_Select_Icon</include>
-            <include condition="!String.IsEmpty(Window(Home).Property(ListVideoForCast))">Def_Dialog_Select_Cast_Video_Search</include>
-            <include condition="!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Select_View_Type</include>
-            <include condition="Window.IsActive(selectvideoversion) | Window.IsActive(selectvideoextra)">Def_Dialog_Select_Video_Version</include>
-            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SetIcon)) + !Window.IsActive(selectvideoversion) + !Window.IsActive(selectvideoextra) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))">Def_Dialog_Select_Other</include>
-
-            <!-- DIALOG GAMES -->
-
-            <include condition="Window.IsActive(gamesaves)">GameDialogSelectSaveLayout</include>
-            <include condition="Window.IsActive(gamevideofilter)">GameDialogSelectFilterLayout</include>
-            <include condition="Window.IsActive(gamestretchmode)">GameDialogSelectViewLayout</include>
-            <include condition="Window.IsActive(gamevideorotation)">GameDialogSelectViewLayout</include>
-            <include condition="Window.IsActive(ingamesaves)">GameDialogSelectSaveInGameLayout</include>
-
-            <!-- SCROLLBAR  -->
-
-            <!-- List video search for cast member -->
-            <include content="Object_Scrollbar_Dialog">
-                <param name="scrollid" value="1723"/>
-                <param name="onleft" value="3"/>
-                <param name="onright" value="1888"/>
-                <param name="centerright" value="360"/>
-                <param name="height" value="PosterH"/>
-                <param name="visible" value="!Control.IsVisible(3) + Control.IsVisible(6) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))" />
-            </include>
-
-            <include content="Object_Scrollbar_Dialog">
-                <param name="scrollid" value="1723"/>
-                <param name="onleft" value="3"/>
-                <param name="onright" value="1888"/>
-                <param name="centerright" value="360"/>
-                <param name="visible" value="Control.IsVisible(3) + !Control.IsVisible(6) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd)" />
-            </include>
-
-            <include content="Object_Scrollbar_Dialog">
-                <param name="scrollid" value="1723"/>
-                <param name="onleft" value="11"/>
-                <param name="onright" value="1888"/>
-                <param name="centerright" value="360"/>
-                <param name="visible" value="Control.IsVisible(11) + !Control.IsVisible(6) + !Control.IsVisible(3) + [Window.IsActive(gamestretchmode) | Window.IsActive(gamevideofilter) | Window.IsActive(gamevideorotation) | Window.IsActive(gameosd)]" />
-            </include>
-            <include content="Object_Scrollbar_Dialog">
-                <param name="scrollid" value="1723"/>
-                <param name="onleft" value="6"/>
-                <param name="onright" value="1888"/>
-                <param name="centerright" value="360"/>
-                <param name="visible" value="Control.IsVisible(6) + !Control.IsVisible(3) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))" />
-            </include>
-            <include content="Object_Scrollbar_Dialog">
-                <param name="scrollid" value="1723"/>
-                <param name="onleft" value="6"/>
-                <param name="onright" value="6"/>
-                <param name="centerright" value="1272"/>
-                <param name="visible" value="Control.IsVisible(6) + !Control.IsVisible(3) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(gameosd) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + !String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))" />
-            </include>
-
-            <!-- BUTTON ON RIGHT -->
-
-            <control type="group" id="1888">
-                <control type="button" id="5">
-                    <description>Manual</description>
-                    <right>30</right>
-                    <top>112</top>
-                    <width>300</width>
-                    <height>66</height>
-                    <align>center</align>
-                    <label>368</label>
-                    <onleft>1723</onleft>
-                    <onup>3</onup>
-                    <ondown>7</ondown>
-                    <font>Button</font>
-                    <textcolor>Black70</textcolor>
-                    <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                </control>
-
-                <control type="button" id="7">
-                    <description>Cancel</description>
-                    <right>30</right>
-                    <top>195</top>
-                    <width>300</width>
-                    <height>66</height>
-                    <align>center</align>
-                    <label>222</label>
-                    <onleft>1723</onleft>
-                    <onup>5</onup>
-                    <ondown>3</ondown>
-                    <font>Button</font>
-                    <textcolor>Black70</textcolor>
-                    <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                    <visible>!Control.IsVisible(21)</visible>
-                    <visible>String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-                    <animation effect="slide" start="0" end="0,-80" condition="!Control.IsVisible(5)">Conditional</animation>
-                </control>
-            </control>
-
-            <!-- PICTURE ON RIGHT -->
-
-            <control type="image">
-                <description>Large Icon Image</description>
-                <right>34</right>
-                <top>357</top>
-                <width>300</width>
-                <height>450</height>
-                <texture fallback="DefaultAddonNone.png">$VAR[Image_Dialog_Select_Big]</texture>
-                <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                <visible>Control.IsVisible(6) + [!String.IsEmpty(Container(6).ListItem.Art(poster)) | !String.IsEmpty(ListItem.Icon) | !Window.IsVisible(script-skinshortcuts.xml)]</visible>
-                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-            </control>
-
-            <control type="image">
-                <description>Large Icon Image</description>
-                <right>34</right>
-                <top>357</top>
-                <width>300</width>
-                <height>450</height>
-                <texture fallback="DefaultAddonNone.png" colordiffuse="PanelWhite100">$VAR[Image_Dialog_Select_Big]</texture>
-                <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                <visible>Control.IsVisible(6) + String.IsEmpty(Container(6).ListItem.Art(poster)) + String.IsEmpty(Container(6).ListItem.Art(poster)) + [String.IsEmpty(ListItem.Icon) | Window.IsVisible(script-skinshortcuts.xml)]</visible>
-                <visible>String.IsEmpty(Window(Home).Property(ListVideoForCast)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-            </control>
-
-
-            <!-- VIEW TYPE ON RIGHT -->
-
-            <control type="image">
-                <right>22</right>
-                <top>103</top>
-                <width>1228</width>
-                <height>698</height>
-                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
-                <visible>!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-            </control>
-            <control type="image">
-                <description>Large Icon Image</description>
-                <right>30</right>
-                <top>112</top>
-                <width>1210</width>
-                <height>680</height>
-                <fadetime>300</fadetime>
-                <aspectratio align="center" aligny="center" scalediffuse="false">stretch</aspectratio>
-                <texture diffuse="diffuse/viewtype_1210x680.png" background="true">$INFO[Container(6).ListITem.Icon]</texture>
-                <visible>!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-            </control>
-
-            <!-- CAST PICTURE -->
-
-            <control type="image">
-                <right>63</right>
-                <top>388</top>
-                <width>240</width>
-                <height>343</height>
-                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
-                <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCastIcon))</visible>
-            </control>
-            <control type="image">
-                <right>72</right>
-                <top>397</top>
-                <width>222</width>
-                <height>325</height>
-                <texture colordiffuse="Fallback" border="12" background="true">common/box.png</texture>
-                <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCastIcon))</visible>
-            </control>
-
-            <control type="image">
-                <description>Large Icon Image</description>
-                <right>72</right>
-                <top>397</top>
-                <width>222</width>
-                <height>325</height>
-                <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetposter_new.png" background="true" fallback="DefaultMovies.png">$INFO[Window(Home).Property(ListVideoForCastIcon)]</texture>
-                <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCastIcon))</visible>
-            </control>
-
-            <control type="label">
-                <align>center</align>
-                <top>726</top>
-                <left>960</left>
-                <!-- <width>222</width> -->
-                <right>20</right>
-                <height>44</height>
-                <scroll>true</scroll>
-                <font>Tiny</font>
-                <label>$INFO[Window(Home).Property(ListVideoForCast)]</label>
-                <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCastIcon))</visible>
-            </control>
-
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <right>360</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
-                <visible>!Control.IsVisible(21)</visible>
-                <visible>String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-            </control>
-
-            <control type="image">
-                <right>1272</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
-                <visible>!String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive))</visible>
-            </control>
-
-            <!-- NUM ITEMS -->
-
-            <include condition="String.IsEmpty(Window(Home).Property(SetUserRating))">Def_Dialog_Select_label_Num_Item</include>
-
-            <!-- PATH VIDEO VERSION -->
-
-            <control type="label">
-                <align>left</align>
-                <bottom>17</bottom>
-                <left>30</left>
-                <right>140</right>
-                <height>44</height>
-                <scroll>true</scroll>
-                <font>Tiny</font>
-                <haspath>false</haspath>
-                <label>$INFO[Container(6).ListItem.FileNameAndPath]</label>
-                <visible>Window.IsActive(selectvideoversion) | Window.IsActive(selectvideoextra)</visible>
-                <animation effect="fade" start="0" end="100" time="300" delay="300">WindowOpen</animation>
-                <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
-                <animation effect="fade" start="0" end="100" time="300">Visible</animation>
-                <animation effect="fade" start="100" end="0" time="200">Hidden</animation>
-            </control>
-
-            <!-- LABEL VIDEO SEARCH FOR CAST MEMBER -->
-
-            <control type="label">
-                <align>left</align>
-                <bottom>17</bottom>
-                <left>30</left>
-                <right>140</right>
-                <height>44</height>
-                <scroll>true</scroll>
-                <font>Small</font>
-                <haspath>false</haspath>
-                <label>$INFO[Container(6).ListItem.Label]</label>
-                <visible>!String.IsEmpty(Window(Home).Property(ListVideoForCast))</visible>
-                <animation effect="fade" start="0" end="100" time="300" delay="300">WindowOpen</animation>
-                <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
-                <animation effect="fade" start="0" end="100" time="300">Visible</animation>
-                <animation effect="fade" start="100" end="0" time="200">Hidden</animation>
-            </control>
-        </control>
-
-        <control type="textbox" id="12">
-            <description>Description Area</description>
-            <visible>false</visible>
-        </control>
-
-        <control type="group">
-            <top>710</top>
-            <include>Animation_ZoomIn</include>
-            <include>Animation_FadeOut</include>
-
-            <control type="group">
-                <width>242</width>
-                <height>270</height>
-                <top>20</top>
-                <left>SidePad</left>
-                <visible>!String.IsEmpty(Control.GetLabel(12))</visible>
-                <control type="image">
-                    <width>100%</width>
-                    <height>100%</height>
-                    <texture colordiffuse="Light1" border="4">common/box.png</texture>
-                </control>
-                <control type="textbox">
-                    <description>Description Area</description>
-                    <left>25</left>
-                    <top>22</top>
-                    <bottom>25</bottom>
-                    <right>25</right>
-                    <font>Tiny</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Control.GetLabel(12)]</label>
-                </control>
-            </control>
-
-            <control type="fixedlist" id="11">
-                <animation effect="slide" start="0" end="260,0" condition="!String.IsEmpty(Control.GetLabel(12))">Conditional</animation>
-                <top>0</top>
-                <left>70</left>
-                <right>SidePad</right>
-                <height>310</height>
-                <movement>3</movement>
-                <preloaditems>2</preloaditems>
-                <orientation>horizontal</orientation>
-                <itemlayout width="440" height="310" condition="!Window.IsVisible(script-skinshortcuts.xml)">
-                    <control type="image">
-                        <top>20</top>
-                        <left>10</left>
-                        <width>424</width>
-                        <height>270</height>
-                        <texture colordiffuse="Light1" border="4">common/box.png</texture>
-                    </control>
-                    <control type="gamewindow">
-                        <top>30</top>
-                        <left>10</left>
-                        <width>424</width>
-                        <height>200</height>
-                        <videofilter>$INFO[ListItem.Property(game.videofilter)]</videofilter>
-                        <stretchmode>$INFO[ListItem.Property(game.stretchmode)]</stretchmode>
-                        <rotation>$INFO[ListItem.Property(game.videorotation)]</rotation>
-                    </control>
-                    <control type="label">
-                        <bottom>35</bottom>
-                        <height>40</height>
-                        <align>left</align>
-                        <left>10</left>
-                        <font>Tiny</font>
-                        <textoffsetx>20</textoffsetx>
-                        <label>$INFO[ListItem.Label]</label>
-                        <textcolor>Dark2</textcolor>
-                    </control>
-                    <control type="label">
-                        <bottom>35</bottom>
-                        <height>40</height>
-                        <align>right</align>
-                        <right>10</right>
-                        <font>Tiny</font>
-                        <textoffsetx>20</textoffsetx>
-                        <label>$INFO[ListItem.Label2]</label>
-                        <textcolor>Dark2</textcolor>
-                    </control>
-                </itemlayout>
-                <focusedlayout width="440" height="310" condition="!Window.IsVisible(script-skinshortcuts.xml)">
-                    <control type="image">
-                        <top>20</top>
-                        <left>10</left>
-                        <width>424</width>
-                        <height>270</height>
-                        <texture colordiffuse="Light1" border="4">common/box.png</texture>
-                    </control>
-                    <control type="gamewindow">
-                        <top>30</top>
-                        <left>10</left>
-                        <width>424</width>
-                        <height>200</height>
-                        <videofilter>$INFO[ListItem.Property(game.videofilter)]</videofilter>
-                        <stretchmode>$INFO[ListItem.Property(game.stretchmode)]</stretchmode>
-                        <rotation>$INFO[ListItem.Property(game.videorotation)]</rotation>
-                    </control>
-                    <control type="label">
-                        <bottom>35</bottom>
-                        <height>40</height>
-                        <align>left</align>
-                        <left>10</left>
-                        <font>Tiny</font>
-                        <textoffsetx>20</textoffsetx>
-                        <label>$INFO[ListItem.Label]</label>
-                        <textcolor>Dark2</textcolor>
-                    </control>
-                    <control type="label">
-                        <bottom>35</bottom>
-                        <height>40</height>
-                        <align>right</align>
-                        <right>10</right>
-                        <font>Tiny</font>
-                        <textoffsetx>20</textoffsetx>
-                        <label>$INFO[ListItem.Label2]</label>
-                        <textcolor>Dark2</textcolor>
-                    </control>
-                    <control type="image">
-                        <include>Animation_SelectBoxHome</include>
-                        <left>5</left>
-                        <top>15</top>
-                        <right>0</right>
-                        <bottom>14</bottom>
-                        <texture border="18">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/selectbox_h.png</texture>
-                    </control>
-                </focusedlayout>
-            </control>
-
-        </control>
     </controls>
 </window>

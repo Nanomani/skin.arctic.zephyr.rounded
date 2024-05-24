@@ -352,6 +352,7 @@
         <param name="bottom" default="200"/>
         <param name="left" default="SidePad"/>
         <param name="width" default="1760"/>
+        <param name="scrollid" default=""/>
 
         <definition>
             <left>$PARAM[left]</left>
@@ -369,8 +370,9 @@
             <ondown condition="Window.IsVisible(MyMusicNav.xml) + Skin.HasSetting(enable.view.flix.scroll.wall.music) + $EXP[Is_View_Music_Flix] + [Container($PARAM[idlayout]).HasNext | Container($PARAM[idlayout]).HasPrevious]">Container.SetViewMode($PARAM[idlayout]8)</ondown>
             <ondown condition="Window.IsVisible(MyMusicNav.xml) + Skin.HasSetting(enable.view.flix.scroll.wall.music) + $EXP[Is_View_Music_Flix] + [Container($PARAM[idlayout]).HasNext | Container($PARAM[idlayout]).HasPrevious]">SetFocus(2$PARAM[idlayout]8)</ondown>
 
-            <ondown condition="Window.IsVisible(MyVideoNav.xml) + [[Skin.HasSetting(enable.view.flix.scroll.wall.video) + $EXP[Is_View_Video_Flix_Wall]] | !$EXP[Is_View_Video_Flix_Wall]] + $PARAM[jumpbar]">390001</ondown>
-            <ondown condition="Window.IsVisible(MyMusicNav.xml) + [[Skin.HasSetting(enable.view.flix.scroll.wall.music) + $EXP[Is_View_Music_Flix_Wall]] | !$EXP[Is_View_Music_Flix_Wall]] + $PARAM[jumpbar]">390001</ondown>
+            <ondown condition="Control.IsVisible($PARAM[scrollid]) + Window.IsVisible(MyVideoNav.xml) + [[Skin.HasSetting(enable.view.flix.scroll.wall.video) + $EXP[Is_View_Video_Flix_Wall]] | !$EXP[Is_View_Video_Flix_Wall]] + $PARAM[jumpbar]">SetFocus(390001)</ondown>
+
+            <ondown condition="Control.IsVisible($PARAM[scrollid]) + Window.IsVisible(MyMusicNav.xml) + [[Skin.HasSetting(enable.view.flix.scroll.wall.music) + $EXP[Is_View_Music_Flix_Wall]] | !$EXP[Is_View_Music_Flix_Wall]] + $PARAM[jumpbar]">SetFocus(390001)</ondown>
 
             <texturesliderbackground border="4" colordiffuse="Dark4">scrollbar/scrollh.png</texturesliderbackground>
             <texturesliderbar border="4" colordiffuse="Dark3">scrollbar/scrollh.png</texturesliderbar>
@@ -400,6 +402,138 @@
     </include>
 
     <!-- JUMBAR - HORIZONTALE -->
+
+    <!-- Code (modified) from jurialmunkey and arctic zephyr 2 skin -->
+    <include name="AlphabetLetter">
+        <control type="label">
+            <width>$PARAM[width]</width>
+            <height>$PARAM[height]</height>
+            <label>$PARAM[label]</label>
+            <align>center</align>
+            <aligny>center</aligny>
+            <textcolor>Dark2</textcolor>
+            <font>Tiny</font>
+            <visible>!String.IsEqual(ListItem.SortLetter,$PARAM[label])</visible>
+        </control>
+        <control type="label">
+            <width>$PARAM[width]</width>
+            <height>$PARAM[height]</height>
+            <label>[B]$PARAM[label][/B]</label>
+            <align>center</align>
+            <aligny>center</aligny>
+            <textcolor>$VAR[Color_Highlight]</textcolor>
+            <font>InfoNetflix</font>
+            <visible>String.IsEqual(ListItem.SortLetter,$PARAM[label])</visible>
+        </control>
+    </include>
+
+    <include name="AlphabetNumber">
+        <control type="label">
+            <width>$PARAM[width]</width>
+            <height>$PARAM[height]</height>
+            <label>#</label>
+            <align>center</align>
+            <aligny>center</aligny>
+            <textcolor>Dark1</textcolor>
+            <font>Tiny</font>
+            <visible>$EXP[SortLetterIsAlphabet]</visible>
+        </control>
+        <control type="label">
+            <width>$PARAM[width]</width>
+            <height>$PARAM[height]</height>
+            <label>[B]#[/B]</label>
+            <align>center</align>
+            <aligny>center</aligny>
+            <textcolor>$VAR[Color_Highlight]</textcolor>
+            <font>InfoNetflix</font>
+            <visible>!$EXP[SortLetterIsAlphabet]</visible>
+        </control>
+    </include>
+
+    <include name="Object_Jumpbar_Horizontal">
+        <control type="group">
+            <animation effect="slide" start="0,0" end="0,-162" time="600" tween="quadratic" condition="Control.HasFocus(390001)" reversible="false">Conditional</animation>
+            <animation effect="slide" start="0,-162" end="0,0" time="300" tween="quadratic" condition="!Control.HasFocus(390001)" reversible="false">Conditional</animation>
+            <animation effect="slide" start="0,0" end="0,162" time="300" tween="quadratic">WindowClose</animation>
+
+            <right>80</right>
+            <bottom>-89</bottom>
+            <width>1760</width>
+            <height>80</height>
+            <control type="image">
+                <left>-9</left>
+                <top>-9</top>
+                <right>-9</right>
+                <bottom>-9</bottom>
+                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+            </control>
+            <control type="image">
+                <texture border="12" colordiffuse="Panel">common/box.png</texture>
+            </control>
+
+            <control type="grouplist">
+
+                <left>24</left>
+                <top>28</top>
+                <width>1818</width>
+                <height>26</height>
+                <itemgap>-9</itemgap>
+                <orientation>horizontal</orientation>
+
+                <include content="AlphabetNumber"><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="A" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="B" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="C" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="D" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="E" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="F" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="G" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="H" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="I" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="J" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="K" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="L" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="M" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="N" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="O" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="P" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="Q" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="R" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="S" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="T" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="U" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="V" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="W" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="X" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="Y" /><param name="width" value="72" /><param name="height" value="26" /></include>
+                <include content="AlphabetLetter"><param name="label" value="Z" /><param name="width" value="72" /><param name="height" value="26" /></include>
+            </control>
+
+            <control type="button" id="390001">
+                <include>Def_Hidden_Button</include>
+                <!-- <visible allowhiddenfocus="true">false</visible> -->
+                <onup>50</onup>
+                <ondown>50</ondown>
+                <onback>50</onback>
+                <onclick>SetFocus(50)</onclick>
+                <onright>SetFocus(50)</onright>
+                <onright>Action(nextletter)</onright>
+                <onright condition="!Container.HasNext | String.IsEqual(ListItem.SortLetter,Z)">Action(jumpsms2)</onright>
+                <onright condition="!Container.HasNext | String.IsEqual(ListItem.SortLetter,Z)">Action(prevletter)</onright>
+                <onright condition="!Container.HasNext | String.IsEqual(ListItem.SortLetter,Z)">Action(prevletter)</onright>
+                <onright condition="!Container.HasNext | String.IsEqual(ListItem.SortLetter,Z)">Action(prevletter)</onright>
+                <onright>SetFocus(390001)</onright>
+                <onleft>SetFocus(50)</onleft>
+                <onleft>Action(prevletter)</onleft>
+                <onleft condition="!Container.HasPrevious | !$EXP[SortLetterIsAlphabet]">Action(jumpsms9)</onleft>
+                <onleft condition="!Container.HasPrevious | !$EXP[SortLetterIsAlphabet]">Action(nextletter)</onleft>
+                <onleft condition="!Container.HasPrevious | !$EXP[SortLetterIsAlphabet]">Action(nextletter)</onleft>
+                <onleft condition="!Container.HasPrevious | !$EXP[SortLetterIsAlphabet]">Action(nextletter)</onleft>
+                <onleft>SetFocus(390001)</onleft>
+            </control>
+        </control>
+    </include>
 
     <variable name="Set_On_Up_Down">
         <value condition="Control.IsVisible(50)">SetFocus(50)</value>
@@ -475,158 +609,161 @@
         <value condition="Control.IsVisible(5248)">5248</value>
     </variable>
 
-    <include name="Object_Jumpbar_Horizontal">
-        <control type="button" id="390001">
-            <include>Def_Hidden_Button</include>
-            <onfocus condition="!String.IsEqual(ListItem.SortLetter,A) + !String.IsEqual(ListItem.SortLetter,B) + !String.IsEqual(ListItem.SortLetter,C) + !String.IsEqual(ListItem.SortLetter,D) + !String.IsEqual(ListItem.SortLetter,E) + !String.IsEqual(ListItem.SortLetter,F) + !String.IsEqual(ListItem.SortLetter,G) + !String.IsEqual(ListItem.SortLetter,H) + !String.IsEqual(ListItem.SortLetter,I) + !String.IsEqual(ListItem.SortLetter,J) + !String.IsEqual(ListItem.SortLetter,K) + !String.IsEqual(ListItem.SortLetter,L) + !String.IsEqual(ListItem.SortLetter,M) + !String.IsEqual(ListItem.SortLetter,N) + !String.IsEqual(ListItem.SortLetter,O) + !String.IsEqual(ListItem.SortLetter,P) + !String.IsEqual(ListItem.SortLetter,Q) + !String.IsEqual(ListItem.SortLetter,R) + !String.IsEqual(ListItem.SortLetter,S) + !String.IsEqual(ListItem.SortLetter,T) + !String.IsEqual(ListItem.SortLetter,U) + !String.IsEqual(ListItem.SortLetter,V) + !String.IsEqual(ListItem.SortLetter,W) + !String.IsEqual(ListItem.SortLetter,X) + !String.IsEqual(ListItem.SortLetter,Y) + !String.IsEqual(ListItem.SortLetter,Z) + [Integer.IsGreater(Container(290002).NumItems,0) | Container(290002).IsUpdating]">SetFocus(290002,0,absolute)</onfocus>
-            <onfocus condition="!String.IsEqual(ListItem.SortLetter,A) + !String.IsEqual(ListItem.SortLetter,B) + !String.IsEqual(ListItem.SortLetter,C) + !String.IsEqual(ListItem.SortLetter,D) + !String.IsEqual(ListItem.SortLetter,E) + !String.IsEqual(ListItem.SortLetter,F) + !String.IsEqual(ListItem.SortLetter,G) + !String.IsEqual(ListItem.SortLetter,H) + !String.IsEqual(ListItem.SortLetter,I) + !String.IsEqual(ListItem.SortLetter,J) + !String.IsEqual(ListItem.SortLetter,K) + !String.IsEqual(ListItem.SortLetter,L) + !String.IsEqual(ListItem.SortLetter,M) + !String.IsEqual(ListItem.SortLetter,N) + !String.IsEqual(ListItem.SortLetter,O) + !String.IsEqual(ListItem.SortLetter,P) + !String.IsEqual(ListItem.SortLetter,Q) + !String.IsEqual(ListItem.SortLetter,R) + !String.IsEqual(ListItem.SortLetter,S) + !String.IsEqual(ListItem.SortLetter,T) + !String.IsEqual(ListItem.SortLetter,U) + !String.IsEqual(ListItem.SortLetter,V) + !String.IsEqual(ListItem.SortLetter,W) + !String.IsEqual(ListItem.SortLetter,X) + !String.IsEqual(ListItem.SortLetter,Y) + !String.IsEqual(ListItem.SortLetter,Z) + !Integer.IsGreater(Container(290002).NumItems,0) + !Container(290002).IsUpdating">SetFocus(50)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,A)">SetFocus(290002,1,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,B)">SetFocus(290002,2,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,C)">SetFocus(290002,3,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,D)">SetFocus(290002,4,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,E)">SetFocus(290002,5,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,F)">SetFocus(290002,6,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,G)">SetFocus(290002,7,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,H)">SetFocus(290002,8,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,I)">SetFocus(290002,9,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,J)">SetFocus(290002,10,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,K)">SetFocus(290002,11,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,L)">SetFocus(290002,12,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,M)">SetFocus(290002,13,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,N)">SetFocus(290002,14,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,O)">SetFocus(290002,15,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,P)">SetFocus(290002,16,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,Q)">SetFocus(290002,17,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,R)">SetFocus(290002,18,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,S)">SetFocus(290002,19,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,T)">SetFocus(290002,20,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,U)">SetFocus(290002,21,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,V)">SetFocus(290002,22,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,W)">SetFocus(290002,23,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,X)">SetFocus(290002,24,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,Y)">SetFocus(290002,25,absolute)</onfocus>
-            <onfocus condition="String.IsEqual(ListItem.SortLetter,Z)">SetFocus(290002,26,absolute)</onfocus>
-        </control>
+    <!-- <include name="Object_Jumpbar_Horizontal_old"> -->
+        <!-- <control type="button" id="390001"> -->
+            <!-- <include>Def_Hidden_Button</include> -->
+            <!-- <onfocus condition="!String.IsEqual(ListItem.SortLetter,A) + !String.IsEqual(ListItem.SortLetter,B) + !String.IsEqual(ListItem.SortLetter,C) + !String.IsEqual(ListItem.SortLetter,D) + !String.IsEqual(ListItem.SortLetter,E) + !String.IsEqual(ListItem.SortLetter,F) + !String.IsEqual(ListItem.SortLetter,G) + !String.IsEqual(ListItem.SortLetter,H) + !String.IsEqual(ListItem.SortLetter,I) + !String.IsEqual(ListItem.SortLetter,J) + !String.IsEqual(ListItem.SortLetter,K) + !String.IsEqual(ListItem.SortLetter,L) + !String.IsEqual(ListItem.SortLetter,M) + !String.IsEqual(ListItem.SortLetter,N) + !String.IsEqual(ListItem.SortLetter,O) + !String.IsEqual(ListItem.SortLetter,P) + !String.IsEqual(ListItem.SortLetter,Q) + !String.IsEqual(ListItem.SortLetter,R) + !String.IsEqual(ListItem.SortLetter,S) + !String.IsEqual(ListItem.SortLetter,T) + !String.IsEqual(ListItem.SortLetter,U) + !String.IsEqual(ListItem.SortLetter,V) + !String.IsEqual(ListItem.SortLetter,W) + !String.IsEqual(ListItem.SortLetter,X) + !String.IsEqual(ListItem.SortLetter,Y) + !String.IsEqual(ListItem.SortLetter,Z) + [Integer.IsGreater(Container(290002).NumItems,0) | Container(290002).IsUpdating]">SetFocus(290002,0,absolute)</onfocus> -->
 
-        <control type="group">
-            <animation effect="slide" start="0,0" end="0,-162" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(290002)" reversible="false">Conditional</animation>
-            <animation effect="slide" start="0,-162" end="0,0" time="300" tween="quadratic" easing="in" condition="!Control.HasFocus(290002)" reversible="false">Conditional</animation>
-            <animation effect="slide" start="0,0" end="0,162" time="300" tween="quadratic" easing="in">WindowClose</animation>
-            <right>80</right>
-            <bottom>-89</bottom>
-            <width>1760</width>
-            <height>80</height>
-            <control type="image">
-                <left>-9</left>
-                <top>-9</top>
-                <right>-9</right>
-                <bottom>-9</bottom>
-                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
-            </control>
-            <control type="image">
-                <texture border="12" colordiffuse="Panel">common/box.png</texture>
-            </control>
-            <control type="group">
-                <visible>Container(290002).IsUpdating</visible>
-                <include>Animation_FadeIn</include>
-                <include>Animation_FadeOut</include>
-                <centerleft>51</centerleft>
-                <top>295</top>
-                <control type="image">
-                    <width>50</width>
-                    <height>50</height>
-                    <texture>dialog/loading-back.png</texture>
-                    <aspectratio>keep</aspectratio>
-                </control>
-                <control type="image">
-                    <width>50</width>
-                    <height>50</height>
-                    <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
-                    <texture colordiffuse="$VAR[Color_Highlight]">dialog/loading-spinner.png</texture>
-                    <aspectratio>keep</aspectratio>
-                </control>
-            </control>
-            <control type="group">
-                <control type="image">
-                    <visible>!Container(290002).IsUpdating + !Integer.IsGreater(Container(290002).NumItems,0)</visible>
-                    <include>Animation_FadeIn</include>
-                    <include>Animation_FadeOut</include>
-                    <centerleft>44</centerleft>
-                    <top>295</top>
-                    <width>50</width>
-                    <height>50</height>
-                    <texture>buttons/delete.png</texture>
-                </control>
-            </control>
-            <control type="grouplist">
-                <left>-28</left>
-                <top>28</top>
-                <width>1818</width>
-                <height>26</height>
-                <onleft>290002</onleft>
-                <onright>290002</onright>
-                <itemgap>9</itemgap>
-                <onup>$VAR[Set_On_Up_Down]</onup>
-                <ondown>$VAR[Set_On_Up_Down]</ondown>
+            <!-- <onfocus condition="!String.IsEqual(ListItem.SortLetter,A) + !String.IsEqual(ListItem.SortLetter,B) + !String.IsEqual(ListItem.SortLetter,C) + !String.IsEqual(ListItem.SortLetter,D) + !String.IsEqual(ListItem.SortLetter,E) + !String.IsEqual(ListItem.SortLetter,F) + !String.IsEqual(ListItem.SortLetter,G) + !String.IsEqual(ListItem.SortLetter,H) + !String.IsEqual(ListItem.SortLetter,I) + !String.IsEqual(ListItem.SortLetter,J) + !String.IsEqual(ListItem.SortLetter,K) + !String.IsEqual(ListItem.SortLetter,L) + !String.IsEqual(ListItem.SortLetter,M) + !String.IsEqual(ListItem.SortLetter,N) + !String.IsEqual(ListItem.SortLetter,O) + !String.IsEqual(ListItem.SortLetter,P) + !String.IsEqual(ListItem.SortLetter,Q) + !String.IsEqual(ListItem.SortLetter,R) + !String.IsEqual(ListItem.SortLetter,S) + !String.IsEqual(ListItem.SortLetter,T) + !String.IsEqual(ListItem.SortLetter,U) + !String.IsEqual(ListItem.SortLetter,V) + !String.IsEqual(ListItem.SortLetter,W) + !String.IsEqual(ListItem.SortLetter,X) + !String.IsEqual(ListItem.SortLetter,Y) + !String.IsEqual(ListItem.SortLetter,Z) + !Integer.IsGreater(Container(290002).NumItems,0) + !Container(290002).IsUpdating">SetFocus(50)</onfocus> -->
 
-                <onback>$VAR[Set_On_Back]</onback>
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,A)">SetFocus(290002,1,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,B)">SetFocus(290002,2,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,C)">SetFocus(290002,3,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,D)">SetFocus(290002,4,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,E)">SetFocus(290002,5,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,F)">SetFocus(290002,6,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,G)">SetFocus(290002,7,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,H)">SetFocus(290002,8,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,I)">SetFocus(290002,9,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,J)">SetFocus(290002,10,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,K)">SetFocus(290002,11,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,L)">SetFocus(290002,12,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,M)">SetFocus(290002,13,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,N)">SetFocus(290002,14,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,O)">SetFocus(290002,15,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,P)">SetFocus(290002,16,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,Q)">SetFocus(290002,17,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,R)">SetFocus(290002,18,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,S)">SetFocus(290002,19,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,T)">SetFocus(290002,20,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,U)">SetFocus(290002,21,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,V)">SetFocus(290002,22,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,W)">SetFocus(290002,23,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,X)">SetFocus(290002,24,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,Y)">SetFocus(290002,25,absolute)</onfocus> -->
+            <!-- <onfocus condition="String.IsEqual(ListItem.SortLetter,Z)">SetFocus(290002,26,absolute)</onfocus> -->
+        <!-- </control> -->
 
-                <orientation>horizontal</orientation>
-                <align>center</align>
-                <control type="panel" id="290002">
-                    <height>26</height>
-                    <width>1733</width>
-                    <scrolltime>100</scrolltime>
-                    <focusposition>0</focusposition>
-                    <animation effect="fade" start="0" end="100" time="400" delay="300" condition="!Container(290002).IsUpdating" reversible="false">Conditional</animation>
-                    <animation effect="fade" start="100" end="0" time="0" condition="Container(290002).IsUpdating" reversible="false">Conditional</animation>
-                    <itemlayout height="26" width="63">
-                        <control type="label">
-                            <width>100%</width>
-                            <height>100%</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <left>$PARAM[left]</left>
-                            <label>$INFO[ListItem.Label]</label>
-                            <font>Small333</font>
-                            <textcolor>Black70</textcolor>
-                            <animation effect="fade" start="100" end="33" time="0" condition="!String.IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
-                        </control>
-                    </itemlayout>
-                    <focusedlayout height="26" width="63">
-                        <control type="label">
-                            <visible>String.IsEmpty(ListItem.Property(NotAvailable))</visible>
-                            <width>100%</width>
-                            <top>1</top>
-                            <height>100%</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <left>$PARAM[left]</left>
-                            <label>[B]$INFO[ListItem.Label][/B]</label>
-                            <font>InfoNetflix</font>
-                            <textcolor>$VAR[Color_Highlight]</textcolor>
-                        </control>
-                        <control type="label">
-                            <visible>!String.IsEmpty(ListItem.Property(NotAvailable))</visible>
-                            <width>100%</width>
-                            <top>1</top>
-                            <height>100%</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <left>$PARAM[left]</left>
-                            <label>[B]$INFO[ListItem.Label][/B]</label>
-                            <font>Small33</font>
-                            <textcolor>Black70</textcolor>
-                            <animation effect="fade" start="100" end="33" time="0" condition="true">Conditional</animation>
-                        </control>
-                    </focusedlayout>
-                    <content>plugin://script.embuary.helper/?info=jumptoletter&amp;showall=true&amp;reload=$INFO[Container.NumItems]</content>
-                </control>
-            </control>
-        </control>
-    </include>
+        <!-- <control type="group"> -->
+            <!-- <animation effect="slide" start="0,0" end="0,-162" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(290002)" reversible="false">Conditional</animation> -->
+            <!-- <animation effect="slide" start="0,-162" end="0,0" time="300" tween="quadratic" easing="in" condition="!Control.HasFocus(290002)" reversible="false">Conditional</animation> -->
+            <!-- <animation effect="slide" start="0,0" end="0,162" time="300" tween="quadratic" easing="in">WindowClose</animation> -->
+            <!-- <right>80</right> -->
+            <!-- <bottom>-89</bottom> -->
+            <!-- <width>1760</width> -->
+            <!-- <height>80</height> -->
+            <!-- <control type="image"> -->
+                <!-- <left>-9</left> -->
+                <!-- <top>-9</top> -->
+                <!-- <right>-9</right> -->
+                <!-- <bottom>-9</bottom> -->
+                <!-- <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture> -->
+                <!-- <visible>!Skin.HasSetting(global.hide.shadows)</visible> -->
+            <!-- </control> -->
+            <!-- <control type="image"> -->
+                <!-- <texture border="12" colordiffuse="Panel">common/box.png</texture> -->
+            <!-- </control> -->
+            <!-- <control type="group"> -->
+                <!-- <visible>Container(290002).IsUpdating</visible> -->
+                <!-- <include>Animation_FadeIn</include> -->
+                <!-- <include>Animation_FadeOut</include> -->
+                <!-- <centerleft>51</centerleft> -->
+                <!-- <top>295</top> -->
+                <!-- <control type="image"> -->
+                    <!-- <width>50</width> -->
+                    <!-- <height>50</height> -->
+                    <!-- <texture>dialog/loading-back.png</texture> -->
+                    <!-- <aspectratio>keep</aspectratio> -->
+                <!-- </control> -->
+                <!-- <control type="image"> -->
+                    <!-- <width>50</width> -->
+                    <!-- <height>50</height> -->
+                    <!-- <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation> -->
+                    <!-- <texture colordiffuse="$VAR[Color_Highlight]">dialog/loading-spinner.png</texture> -->
+                    <!-- <aspectratio>keep</aspectratio> -->
+                <!-- </control> -->
+            <!-- </control> -->
 
+            <!-- <control type="group"> -->
+                <!-- <control type="image"> -->
+                    <!-- <visible>!Container(290002).IsUpdating + !Integer.IsGreater(Container(290002).NumItems,0)</visible> -->
+                    <!-- <include>Animation_FadeIn</include> -->
+                    <!-- <include>Animation_FadeOut</include> -->
+                    <!-- <centerleft>44</centerleft> -->
+                    <!-- <top>295</top> -->
+                    <!-- <width>50</width> -->
+                    <!-- <height>50</height> -->
+                    <!-- <texture>buttons/delete.png</texture> -->
+                <!-- </control> -->
+            <!-- </control> -->
+
+            <!-- <control type="grouplist"> -->
+                <!-- <left>-28</left> -->
+                <!-- <top>28</top> -->
+                <!-- <width>1818</width> -->
+                <!-- <height>26</height> -->
+                <!-- <onleft>290002</onleft> -->
+                <!-- <onright>290002</onright> -->
+                <!-- <itemgap>9</itemgap> -->
+
+                <!-- <onup>$VAR[Set_On_Up_Down]</onup> -->
+                <!-- <ondown>$VAR[Set_On_Up_Down]</ondown> -->
+                <!-- <onback>$VAR[Set_On_Back]</onback> -->
+
+                <!-- <orientation>horizontal</orientation> -->
+                <!-- <align>center</align> -->
+                <!-- <control type="panel" id="290002"> -->
+                    <!-- <height>26</height> -->
+                    <!-- <width>1733</width> -->
+                    <!-- <scrolltime>100</scrolltime> -->
+                    <!-- <focusposition>0</focusposition> -->
+                    <!-- <animation effect="fade" start="0" end="100" time="400" delay="300" condition="!Container(290002).IsUpdating" reversible="false">Conditional</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" time="0" condition="Container(290002).IsUpdating" reversible="false">Conditional</animation> -->
+                    <!-- <itemlayout height="26" width="63"> -->
+                        <!-- <control type="label"> -->
+                            <!-- <width>100%</width> -->
+                            <!-- <height>100%</height> -->
+                            <!-- <align>center</align> -->
+                            <!-- <aligny>center</aligny> -->
+                            <!-- <left>$PARAM[left]</left> -->
+                            <!-- <label>$INFO[ListItem.Label]</label> -->
+                            <!-- <font>Small333</font> -->
+                            <!-- <textcolor>Black70</textcolor> -->
+                            <!-- <animation effect="fade" start="100" end="33" time="0" condition="!String.IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation> -->
+                        <!-- </control> -->
+                    <!-- </itemlayout> -->
+                    <!-- <focusedlayout height="26" width="63"> -->
+                        <!-- <control type="label"> -->
+                            <!-- <visible>String.IsEmpty(ListItem.Property(NotAvailable))</visible> -->
+                            <!-- <width>100%</width> -->
+                            <!-- <top>1</top> -->
+                            <!-- <height>100%</height> -->
+                            <!-- <align>center</align> -->
+                            <!-- <aligny>center</aligny> -->
+                            <!-- <left>$PARAM[left]</left> -->
+                            <!-- <label>[B]$INFO[ListItem.Label][/B]</label> -->
+                            <!-- <font>InfoNetflix</font> -->
+                            <!-- <textcolor>$VAR[Color_Highlight]</textcolor> -->
+                        <!-- </control> -->
+                        <!-- <control type="label"> -->
+                            <!-- <visible>!String.IsEmpty(ListItem.Property(NotAvailable))</visible> -->
+                            <!-- <width>100%</width> -->
+                            <!-- <top>1</top> -->
+                            <!-- <height>100%</height> -->
+                            <!-- <align>center</align> -->
+                            <!-- <aligny>center</aligny> -->
+                            <!-- <left>$PARAM[left]</left> -->
+                            <!-- <label>[B]$INFO[ListItem.Label][/B]</label> -->
+                            <!-- <font>Small33</font> -->
+                            <!-- <textcolor>Black70</textcolor> -->
+                            <!-- <animation effect="fade" start="100" end="33" time="0" condition="true">Conditional</animation> -->
+                        <!-- </control> -->
+                    <!-- </focusedlayout> -->
+                    <!-- <content>plugin://script.embuary.helper/?info=jumptoletter&amp;showall=true&amp;reload=$INFO[Container.NumItems]</content> -->
+                <!-- </control> -->
+            <!-- </control> -->
+        <!-- </control> -->
+    <!-- </include> -->
 
     <!-- DEF BASIC -->
 

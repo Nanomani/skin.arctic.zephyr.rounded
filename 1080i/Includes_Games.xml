@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 
-    <!-- GAMES -->
+    <!-- GAMES - LABEL -->
 
     <variable name="Label_Dialog_Game_Header">
         <value condition="Window.IsActive(gamesaves)">$LOCALIZE[35260]</value>
@@ -11,52 +11,54 @@
         <value condition="Window.IsActive(ingamesaves)">$LOCALIZE[35260]</value>
     </variable>
 
-    <variable name="GameTitle">
+    <variable name="Label_Game_Title">
         <value condition="!String.IsEmpty(Game.Title)">$INFO[Game.Title]</value>
         <value condition="!String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
         <value>$INFO[ListItem.Label]</value>
     </variable>
 
-    <variable name="GamePlot">
+    <variable name="Label_Game_Plot">
         <value condition="!String.IsEmpty(Game.Overview)">$INFO[Game.Overview]</value>
         <value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
         <value>$INFO[ListItem.AddonSummary]</value>
     </variable>
 
-    <variable name="GameStudio">
+    <variable name="Label_Game_Studio">
         <value condition="!String.IsEmpty(Game.Developer)">$INFO[Game.Developer]</value>
         <value>$INFO[ListItem.Studio]</value>
     </variable>
 
-    <variable name="GameGenre">
+    <variable name="Label_Game_Genre">
         <value condition="!String.IsEmpty(Game.Genres)">$INFO[Game.Genres]</value>
         <value>$INFO[ListItem.Genre]</value>
     </variable>
 
-    <variable name="GameYear">
+    <variable name="Label_Game_Year">
         <value condition="!String.IsEmpty(Game.Year)">$INFO[Game.Year]</value>
         <value>$INFO[ListItem.Year]</value>
     </variable>
 
-    <variable name="GameRating">
+    <variable name="Label_Game_Rating">
         <value>$INFO[ListItem.Rating]</value>
     </variable>
 
-    <variable name="GameESRB">
+    <variable name="Label_Game_ESRB">
         <value>$INFO[ListItem.Property(esrb)]</value>
     </variable>
 
-    <variable name="OneOrMoreLocalPlayersVar">
+    <variable name="Label_Number_Players_Local">
         <value condition="String.IsEqual(Container.ListItem.Property(nplayers),1) | String.IsEqual(ListItem.Property(nplayers),1)">$LOCALIZE[31563]</value>
         <value>$LOCALIZE[31564]</value>
     </variable>
 
-    <variable name="OneOrMoreOnlinePlayersVar">
+    <variable name="Label_Number_Players_On_Line">
         <value condition="String.IsEqual(Container.ListItem.Property(nplayers_online),1) | String.IsEqual(ListItem.Property(nplayers_online),1)">$LOCALIZE[31563]</value>
         <value>$LOCALIZE[31564]</value>
     </variable>
 
-    <variable name="GameAudioFlag">
+    <!-- GAMES - FLAGS -->
+
+    <variable name="Flag_Game_Audio">
         <value condition="String.Contains(ListItem.Property(tags),atmos)">atmos</value>
         <value condition="String.Contains(ListItem.Property(tags),dtsx) | String.Contains(ListItem.Property(tags),dts-x)">dtsx</value>
         <value condition="String.Contains(ListItem.Property(tags),dts) | String.Contains(ListItem.Property(tags),dca)">dts</value>
@@ -64,100 +66,171 @@
         <value condition="String.Contains(ListItem.Property(tags),dolby digital)">eac3</value>
     </variable>
 
-    <variable name="GameResolutionFlag">
+    <variable name="Flag_Game_Resolution">
         <value condition="String.Contains(ListItem.Property(tags),480)">480</value>
         <value condition="String.Contains(ListItem.Property(tags),720)">720</value>
         <value condition="String.Contains(ListItem.Property(tags),1080)">1080</value>
         <value condition="String.Contains(ListItem.Property(tags),4K)">4K</value>
     </variable>
 
-    <variable name="GameStudioFlag">
+    <variable name="Flag_Game_Studio">
         <value condition="!String.IsEmpty(Skin.String(game.logos.path))">$INFO[Skin.String(game.logos.path)]$INFO[ListItem.Studio,,.png]</value>
     </variable>
 
-    <variable name="GameESRBFlag">
+    <variable name="Flag_Game_ESRB">
         <value condition="!String.IsEmpty(Skin.String(game.logos.path))">$INFO[Skin.String(game.logos.path),,esrb/]$INFO[ListItem.Property(esrb),,.png]</value>
     </variable>
 
-    <variable name="GameMultiplayerTypeFlag">
+    <variable name="Flag_Game_Multi_Player_Type">
         <value condition="!String.IsEmpty(Skin.String(game.logos.path)) + String.Contains(ListItem.Property(tags),vs)">$INFO[Skin.String(game.logos.path),,flags/vs.png]</value>
         <value condition="!String.IsEmpty(Skin.String(game.logos.path)) + String.Contains(ListItem.Property(tags),co-op)">$INFO[Skin.String(game.logos.path),,flags/co-op.png]</value>
         <value condition="!String.IsEmpty(Skin.String(game.logos.path)) + String.Contains(ListItem.Property(tags),coop)">$INFO[Skin.String(game.logos.path),,flags/co-op.png]</value>
     </variable>
 
-    <variable name="GameThumb">
+    <!-- GAME - IMAGE -->
+
+    <variable name="Image_Game_Thumb">
         <value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
         <value condition="!String.IsEmpty(ListItem.Art(boxfront))">$INFO[ListItem.Art(boxfront)]</value>
         <value condition="!String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
         <value>DefaultAddonGame.png</value>
     </variable>
 
-    <include name="NumberOfPlayersFurniture">
+    <!-- GAME - DEF -->
+
+    <include name="Def_Game_Number_Of_Players">
         <control type="group" description="NumberOfPlayers">
-            <width>100</width>
-            <height>100</height>
-            <top>8</top>
+            <width>300</width>
+            <height>64</height>
+            <top>9</top>
             <visible>!String.IsEmpty(ListItem.Property($PARAM[nplayerfield]))</visible>
+
             <control type="image">
-                <left>-8</left>
-                <top>-1</top>
-                <height>118</height>
-                <width>118</width>
-                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                <left>0</left>
+                <top>18</top>
+                <height>64</height>
+                <width>300</width>
+                <texture border="12" colordiffuse="$VAR[Color_Background]">common/box.png</texture>
             </control>
+
             <control type="grouplist">
-                <width>100</width>
-                <itemgap>0</itemgap>
-                <orientation>vertical</orientation>
+                <top>14</top>
+                <width>300</width>
+                <itemgap>6</itemgap>
+                <orientation>horizontal</orientation>
+                <control type="image">
+                    <left>5</left>
+                    <width>50</width>
+                    <height>64</height>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
+                    <texture colordiffuse="Dark1">DefaultActor.png</texture>
+                </control>
                 <control type="label">
-                    <width>100%</width>
-                    <height>20</height>
+                    <left>60</left>
+                    <height>64</height>
+                    <width>auto</width>
+                    <label>$INFO[ListItem.Property($PARAM[nplayerfield])]</label>
                     <aligny>center</aligny>
-                    <align>center</align>
+                    <align>left</align>
                     <font>Flag</font>
                     <textcolor>Dark1</textcolor>
-                    <label>$LOCALIZE[$PARAM[textid]]</label>
-                </control>
-                <control type="group">
-                    <height>50</height>
-                    <width>100</width>
-                    <align>center</align>
-                    <control type="image">
-                        <left>5</left>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture colordiffuse="Dark1">DefaultActor.png</texture>
-                    </control>
-                    <control type="label">
-                        <left>60</left>
-                        <height>50</height>
-                        <label>$INFO[ListItem.Property($PARAM[nplayerfield])]</label>
-                        <aligny>center</aligny>
-                        <align>left</align>
-                        <font>Flag</font>
-                        <textcolor>Dark1</textcolor>
-                    </control>
                 </control>
                 <control type="label">
-                    <height>20</height>
+                    <height>64</height>
+                    <left>20</left>
+                    <width min="50">auto</width>
                     <aligny>center</aligny>
-                    <align>center</align>
                     <font>Flag</font>
                     <textcolor>Dark1</textcolor>
                     <label>$VAR[$PARAM[playersTextId]]</label>
                 </control>
+                <control type="label">
+                    <width min="50">auto</width>
+                    <height>64</height>
+                    <aligny>center</aligny>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <label>$LOCALIZE[$PARAM[textid]]</label>
+                </control>
             </control>
-        </control>
-        <control type="textbox">
-            <left>1</left>
-            <width>10</width>
-            <label></label>
-            <height>50</height>
         </control>
     </include>
 
-	<include name="GameDialogControllers">
+	<include name="Def_Agents_Controller_List">
+		<control type="gamecontrollerlist">
+			<description>Controller list which indicates the port a player's controller is connected to. Length should fit 13 listitems (12 controller items and one "input disabled" item).</description>
+			<right>0</right>
+			<width>1120</width>
+			<orientation>horizontal</orientation>
+			<align>right</align>
+			<enable>false</enable>
+			<itemlayout width="96" height="100">
+				<control type="gamecontroller">
+					<texture>$INFO[ListItem.Icon]</texture>
+					<controllerid>$INFO[ListItem.Property(game.controllerid)]</controllerid>
+					<peripherallocation>$INFO[ListItem.FilenameAndPath]</peripherallocation>
+					<controllerdiffuse>button_focus</controllerdiffuse>
+				</control>
+			</itemlayout>
+			<focusedlayout width="96" height="100">
+				<control type="gamecontroller">
+					<texture>$INFO[ListItem.Icon]</texture>
+					<controllerid>$INFO[ListItem.Property(game.controllerid)]</controllerid>
+					<peripherallocation>$INFO[ListItem.FilenameAndPath]</peripherallocation>
+					<controllerdiffuse>button_focus</controllerdiffuse>
+				</control>
+			</focusedlayout>
+			<!--
+				Note to skinners: this control can be populated
+				with static content for testing.
+			<content>
+				<item>
+					<icon>DefaultAddonNone.png</icon>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+				<item>
+					<property name="game.controllerid">game.controller.default</property>
+				</item>
+			</content>
+			-->
+		</control>
+	</include>
+
+    <!-- GAME - DIALOG -->
+
+    <include name="Def_Dialog_Game_Controllers">
         <control type="group">
             <include content="Def_Dialog_Background"><param name="height" value="959" /><param name="width" value="1844" /></include>
 
@@ -342,7 +415,7 @@
         </control>
 	</include>
 
-	<include name="GameDialogAgents">
+	<include name="Def_Dialog_Game_Agents">
 		<control type="group">
             <include content="Def_Dialog_Background"><param name="height" value="820" /><param name="width" value="1480" /></include>
 
@@ -473,7 +546,7 @@
                         <font>InfoNetflix</font>
                         <align>left</align>
                     </control>
-                    <include>AgentControllerList</include>
+                    <include>Def_Agents_Controller_List</include>
                 </itemlayout>
                 <focusedlayout width="1120" height="100">
                     <control type="image">
@@ -502,7 +575,7 @@
                         <align>left</align>
                         <visible>!Control.HasFocus(7)</visible>
                     </control>
-                    <include>AgentControllerList</include>
+                    <include>Def_Agents_Controller_List</include>
                 </focusedlayout>
                 <!--
                     Note to skinners: this control can be populated
@@ -575,7 +648,7 @@
 		</control>
 	</include>
 
-    <include name="GameDialogPorts">
+    <include name="Def_Dialog_Game_Ports">
 		<control type="group">
             <include content="Def_Dialog_Background"><param name="height" value="820" /><param name="width" value="1480" /></include>
 
@@ -733,78 +806,6 @@
             <!-- NUM ITEMS -->
 
             <include>Def_Dialog_Select_label_Num_Item</include>
-		</control>
-	</include>
-
-	<include name="AgentControllerList">
-		<control type="gamecontrollerlist">
-			<description>Controller list which indicates the port a player's controller is connected to. Length should fit 13 listitems (12 controller items and one "input disabled" item).</description>
-			<right>0</right>
-			<width>1120</width>
-			<orientation>horizontal</orientation>
-			<align>right</align>
-			<enable>false</enable>
-			<itemlayout width="96" height="100">
-				<control type="gamecontroller">
-					<texture>$INFO[ListItem.Icon]</texture>
-					<controllerid>$INFO[ListItem.Property(game.controllerid)]</controllerid>
-					<peripherallocation>$INFO[ListItem.FilenameAndPath]</peripherallocation>
-					<controllerdiffuse>button_focus</controllerdiffuse>
-				</control>
-			</itemlayout>
-			<focusedlayout width="96" height="100">
-				<control type="gamecontroller">
-					<texture>$INFO[ListItem.Icon]</texture>
-					<controllerid>$INFO[ListItem.Property(game.controllerid)]</controllerid>
-					<peripherallocation>$INFO[ListItem.FilenameAndPath]</peripherallocation>
-					<controllerdiffuse>button_focus</controllerdiffuse>
-				</control>
-			</focusedlayout>
-			<!--
-				Note to skinners: this control can be populated
-				with static content for testing.
-			<content>
-				<item>
-					<icon>DefaultAddonNone.png</icon>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-				<item>
-					<property name="game.controllerid">game.controller.default</property>
-				</item>
-			</content>
-			-->
 		</control>
 	</include>
 

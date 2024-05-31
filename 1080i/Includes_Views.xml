@@ -9,7 +9,7 @@
         <!-- <value condition="String.IsEmpty(Container.Content) + Window.IsVisible(MyGames.xml)">none-games</value> -->
         <!-- <value condition="Container.Content(tvshows) + String.IsEqual(Container.Property(param.info),episode_groups)">episode-groups-tvshows</value> -->
         <!-- <value condition="Container.Content(seasons) + String.IsEqual(Container.Property(param.info),episode_group_seasons)">episode-groups-seasons</value> -->
-        <value condition="Window.IsVisible(MyGames.xml)">games</value>
+        <value condition="Container.Content(games)">games</value>
         <value condition="Window.IsVisible(MyPlaylist.xml)">playlist</value>
         <value condition="Window.IsVisible(MyPrograms.xml)">programs</value>
         <value condition="Window.IsVisible(MyFavourites.xml)">favourites</value>
@@ -3629,6 +3629,8 @@
     <!-- MEDIA FLAG - GAMES -->
 
     <include name="Furniture_Flags_Games">
+
+        <!-- Black and white -->
         <control type="grouplist">
             <include>Animation_FurnitureVisible</include>
             <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
@@ -3652,19 +3654,46 @@
                 <width min="0" max="180">auto</width>
                 <height>100</height>
                 <centertop>50%</centertop>
-                <texture fallback="flags/empty_fallback.png">$VAR[GameStudioFlag]</texture>
+                <texture fallback="flags/empty_fallback.png">$VAR[Flag_Game_Studio]</texture>
                 <aspectratio align="left">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Studio)</visible>
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Studio) + !String.IsEmpty(Skin.String(game.logos.path))</visible>
             </control>
             <control type="image" description="Game Video Resolution">
                 <width min="20" max="70">auto</width>
                 <height>48</height>
                 <centertop>50%</centertop>
-                <texture colordiffuse="Dark1" fallback="flags/resolution/fallback.png">$VAR[GameResolutionFlag,flags/white/resolution/,.png]</texture>
+                <texture colordiffuse="Dark1" fallback="flags/resolution/fallback.png">$VAR[Flag_Game_Resolution,flags/white/resolution/,.png]</texture>
                 <aspectratio align="left">keep</aspectratio>
                 <visible>!String.IsEmpty(Control.GetLabel(6601))</visible>
                 <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution)</visible>
             </control>
+            <control type="image" description="Game Audio Codec">
+                <width min="20" max="108">auto</width>
+                <height>64</height>
+                <centertop>50%</centertop>
+                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[Flag_Game_Audio,flags3/audio/,.png]</texture>
+                <aspectratio align="center">keep</aspectratio>
+                <visible>!String.IsEmpty(Control.GetLabel(6602))</visible>
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
+            </control>
+            <control type="image" description="ESRB">
+                <width min="20" max="100">auto</width>
+                <height>100</height>
+                <centertop>50%</centertop>
+                <texture fallback="flags/fallback.png">$VAR[Flag_Game_ESRB]</texture>
+                <aspectratio align="center">keep</aspectratio>
+                <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
+            </control>
+            <include content="Def_Game_Number_Of_Players" description="NumberOfPlayers">
+                <param name="nplayerfield" value="nplayers" />
+                <param name="textid" value="31565" />
+                <param name="playersTextId" value="Label_Number_Players_Local"/>
+            </include>
+            <include content="Def_Game_Number_Of_Players" description="NumberOfPlayersOnline">
+                <param name="nplayerfield" value="nplayers_online" />
+                <param name="textid" value="31566" />
+                <param name="playersTextId" value="Label_Number_Players_On_Line"/>
+            </include>
             <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.rating)">
                 <param name="Star" value="Flagstar" />
                 <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" />
@@ -3683,34 +3712,9 @@
                 <visible>!String.IsEmpty(ListItem.Rating)</visible>
                 <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.rating)</visible>
             </control>
-            <control type="image" description="Game Audio Codec">
-                <width min="20" max="108">auto</width>
-                <height>64</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[GameAudioFlag,flags3/audio/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>!String.IsEmpty(Control.GetLabel(6602))</visible>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-            </control>
-            <control type="image" description="ESRB">
-                <width min="20" max="100">auto</width>
-                <height>100</height>
-                <centertop>50%</centertop>
-                <texture fallback="flags/fallback.png">$VAR[GameESRBFlag]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
-            </control>
-            <include content="NumberOfPlayersFurniture" description="NumberOfPlayers">
-                <param name="nplayerfield" value="nplayers" />
-                <param name="textid" value="31565" />
-                <param name="playersTextId" value="OneOrMoreLocalPlayersVar"/>
-            </include>
-            <include content="NumberOfPlayersFurniture" description="NumberOfPlayersOnline">
-                <param name="nplayerfield" value="nplayers_online" />
-                <param name="textid" value="31566" />
-                <param name="playersTextId" value="OneOrMoreOnlinePlayersVar"/>
-            </include>
         </control>
+
+        <!-- Color -->
         <control type="grouplist">
             <include>Animation_FurnitureVisible</include>
             <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
@@ -3730,24 +3734,51 @@
             <align>left</align>
             <itemgap>0</itemgap>
             <usecontrolcoords>true</usecontrolcoords>
-            <control type="image" id="6699" description="Studio">
-                <width min="0" max="180">auto</width>
-                <height>100</height>
-                <centertop>50%</centertop>
-                <texture fallback="flags/empty_fallback.png">$VAR[GameStudioFlag]</texture>
-                <aspectratio align="left">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Studio)</visible>
-            </control>
-            <control type="image" description="Game Video Resolution">
-                <width min="20" max="90">auto</width>
-                <height>70</height>
-                <left>-10</left>
-                <centertop>50%</centertop>
-                <texture fallback="flags/fallback.png">$VAR[GameResolutionFlag,flags/color/resolution/,.png]</texture>
-                <aspectratio align="left">keep</aspectratio>
-                <visible>!String.IsEmpty(Control.GetLabel(6601))</visible>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution)</visible>
-            </control>
+            <!-- <control type="image" id="6699" description="Studio"> -->
+                <!-- <width min="0" max="180">auto</width> -->
+                <!-- <height>100</height> -->
+                <!-- <centertop>50%</centertop> -->
+                <!-- <texture fallback="flags/empty_fallback.png">$VAR[Flag_Game_Studio]</texture> -->
+                <!-- <aspectratio align="left">keep</aspectratio> -->
+                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Studio) + !String.IsEmpty(Skin.String(game.logos.path))</visible> -->
+            <!-- </control> -->
+            <!-- <control type="image" description="Game Video Resolution"> -->
+                <!-- <width min="20" max="90">auto</width> -->
+                <!-- <height>70</height> -->
+                <!-- <left>-10</left> -->
+                <!-- <centertop>50%</centertop> -->
+                <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Resolution,flags/color/resolution/,.png]</texture> -->
+                <!-- <aspectratio align="left">keep</aspectratio> -->
+                <!-- <visible>!String.IsEmpty(Control.GetLabel(6601))</visible> -->
+                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution)</visible> -->
+            <!-- </control> -->
+            <!-- <control type="image" description="Game Audio Codec"> -->
+                <!-- <width min="20" max="108">auto</width> -->
+                <!-- <height>60</height> -->
+                <!-- <centertop>50%</centertop> -->
+                <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Audio,flags/color/audio/,.png]</texture> -->
+                <!-- <aspectratio align="center">keep</aspectratio> -->
+                <!-- <visible>!String.IsEmpty(Control.GetLabel(6602))</visible> -->
+                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec)</visible> -->
+            <!-- </control> -->
+            <!-- <control type="image" description="ESRB"> -->
+                <!-- <width min="20" max="100">auto</width> -->
+                <!-- <height>100</height> -->
+                <!-- <centertop>50%</centertop> -->
+                <!-- <texture fallback="flags/empty_fallback.png">$VAR[Flag_Game_ESRB]</texture> -->
+                <!-- <aspectratio align="center">keep</aspectratio> -->
+                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible> -->
+            <!-- </control> -->
+            <include content="Def_Game_Number_Of_Players" description="NumberOfPlayers">
+                <param name="nplayerfield" value="nplayers" />
+                <param name="textid" value="31565" />
+                <param name="playersTextId" value="Label_Number_Players_Local"/>
+            </include>
+            <include content="Def_Game_Number_Of_Players" description="NumberOfPlayersOnline">
+                <param name="nplayerfield" value="nplayers_online" />
+                <param name="textid" value="31566" />
+                <param name="playersTextId" value="Label_Number_Players_On_Line"/>
+            </include>
             <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.rating)">
                 <param name="Star" value="Flagstar" />
                 <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" />
@@ -3765,33 +3796,6 @@
                 <visible>!String.IsEmpty(ListItem.Rating)</visible>
                 <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.rating)</visible>
             </control>
-            <control type="image" description="Game Audio Codec">
-                <width min="20" max="108">auto</width>
-                <height>60</height>
-                <centertop>50%</centertop>
-                <texture fallback="flags/fallback.png">$VAR[GameAudioFlag,flags/color/audio/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>!String.IsEmpty(Control.GetLabel(6602))</visible>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec)</visible>
-            </control>
-            <control type="image" description="ESRB">
-                <width min="20" max="100">auto</width>
-                <height>100</height>
-                <centertop>50%</centertop>
-                <texture fallback="flags/empty_fallback.png">$VAR[GameESRBFlag]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
-            </control>
-            <include content="NumberOfPlayersFurniture" description="NumberOfPlayers">
-                <param name="nplayerfield" value="nplayers" />
-                <param name="textid" value="31565" />
-                <param name="playersTextId" value="OneOrMoreLocalPlayersVar"/>
-            </include>
-            <include content="NumberOfPlayersFurniture" description="NumberOfPlayersOnline">
-                <param name="nplayerfield" value="nplayers_online" />
-                <param name="textid" value="31566" />
-                <param name="playersTextId" value="OneOrMoreOnlinePlayersVar"/>
-            </include>
         </control>
     </include>
 

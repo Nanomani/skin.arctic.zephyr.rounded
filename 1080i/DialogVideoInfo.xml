@@ -58,7 +58,7 @@
     <menucontrol>9000</menucontrol>
 
     <onload condition="Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + !Player.Paused + !String.IsEmpty(VideoPlayer.DBID)">PlayerControl(Play)</onload>
-    <onload condition="Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + String.IsEmpty(Window(Home).Property(dialogvideoinfo))">SetProperty(dialogvideoinfo,1,Home)</onload>
+    <onload condition="Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + String.IsEmpty(Window(Home).Property(dialogvideoinfo)) + !String.IsEmpty(VideoPlayer.DBID)">SetProperty(dialogvideoinfo,1,Home)</onload>
     <onload condition="Skin.HasSetting(home.netflix.autoplay.trailer) + Skin.HasSetting(trailer.stop.on.dialogvideoinfo) + $EXP[TrailerIsPlaying] + Player.Playing">Stop</onload>
     <onload condition="Skin.HasSetting(home.netflix.autoplay.trailer) + Skin.HasSetting(trailer.pause.on.dialogvideoinfo) + $EXP[TrailerIsPlaying] + Player.Playing">Pause</onload>
 
@@ -88,7 +88,8 @@
     <onunload>ClearProperty(TrailerWindowedIsPlaying,Home)</onunload>
     <onunload>ClearProperty(VideoYoutubeIsPlaying,Home)</onunload>
 
-    <onunload condition="Skin.HasSetting(osd.open.auto.pause) + Integer.IsEqual(Window(Home).Property(dialogvideoinfo),1)">SetProperty(dialogvideoinfo,2,Home)</onunload>
+    <onunload condition="Skin.HasSetting(osd.open.auto.pause) + Integer.IsEqual(Window(Home).Property(dialogvideoinfo),1) + !String.IsEmpty(VideoPlayer.DBID)">SetProperty(dialogvideoinfo,2,Home)</onunload>
+    <onunload condition="!Player.HasMedia | String.IsEmpty(VideoPlayer.DBID)">ClearProperty(dialogvideoinfo,Home)</onunload>
     <onunload condition="Skin.HasSetting(home.netflix.autoplay.trailer) + Skin.HasSetting(trailer.pause.on.dialogvideoinfo) + $EXP[TrailerIsPlaying] + Player.Paused">Pause</onunload>
 
     <onunload condition="!String.IsEmpty(Window(Home).Property(shownowplayinginfo))">SetFocus(4000)</onunload>

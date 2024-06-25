@@ -212,160 +212,105 @@
         <control type="group">
 
             <visible>Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | Player.ShowInfo | Window.IsVisible(fullscreeninfo) | Window.IsVisible(videoosd) | !String.IsEmpty(Player.SeekNumeric)</visible>
+            <visible>!Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml)</visible>
+            <visible>Skin.HasSetting(show.osd.video.clock) + VideoPlayer.IsFullscreen</visible>
 
-            <visible>!Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml)</visible>
-
-            <right>72</right>
-            <top>72</top>
-            <width>550</width>
+            <top>80</top>
+            <right>66</right>
+            <width>562</width>
             <height>100</height>
             <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+
+            <!-- VIDEO -->
+
+            <control type="image">
+                <left>-9</left>
+                <top>-9</top>
+                <width>562</width>
+                <height>98</height>
+                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+            </control>
+            <control type="image">
+                <description>background image</description>
+                <width>544</width>
+                <height>80</height>
+                <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+                <texture border="12" colordiffuse="$VAR[Color_OSD_Panel]">common/box.png</texture>
+            </control>
+
+            <!-- HORLOGE -->
 
             <control type="group">
-                <visible>Skin.HasSetting(show.osd.video.clock) + VideoPlayer.IsFullscreen</visible>
-                <align>right</align>
+                <height>98</height>
+
                 <control type="image">
-                    <left>-1</left>
-                    <top>-1</top>
-                    <width>552</width>
-                    <height>102</height>
-                    <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                    <visible>!Skin.HasSetting(global.hide.shadows)</visible>
-                </control>
-                <control type="image">
-                    <description>background image</description>
-                    <left>8</left>
-                    <top>8</top>
-                    <width>534</width>
-                    <height>84</height>
-                    <colordiffuse>$VAR[Color_OSD_Panel]</colordiffuse>
-                    <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
-                    <texture border="12">common/box.png</texture>
-                    <visible>Player.HasVideo</visible>
-                </control>
-                <control type="image">
-                    <description>background image</description>
-                    <right>8</right>
-                    <top>8</top>
-                    <width>267</width>
-                    <height>84</height>
-                    <colordiffuse>$VAR[Color_OSD_Panel]</colordiffuse>
-                    <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
-                    <texture border="12">common/box.png</texture>
-                    <visible>!Player.HasVideo</visible>
+                    <left>40</left>
+                    <centertop>40</centertop>
+                    <width>48</width>
+                    <height>48</height>
+                    <aspectratio aligny="center">keep</aspectratio>
+                    <colordiffuse>$VAR[Color_OSD_Panel_White70]</colordiffuse>
+                    <texture>kaitoast/finishtime.png</texture>
                 </control>
 
-                <!-- HORLOGE -->
+                <control type="label">
+                    <visible>!VideoPlayer.Content(livetv)</visible>
+                    <right>50%</right>
+                    <left>80</left>
+                    <height>80</height>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <font>Small</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[Player.TimeRemaining]   •   </label>
+                </control>
+                <control type="label">
+                    <visible>!VideoPlayer.Content(livetv)</visible>
+                    <height>80</height>
+                    <left>30</left>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <font>Small</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[System.Time]</label>
+                </control>
+                <control type="label">
+                    <visible>VideoPlayer.Content(livetv)</visible>
+                    <height>80</height>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <font>Small</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[System.Time]</label>
+                </control>
 
-                <control type="group">
-                    <animation effect="slide" start="0" end="240" condition="!Player.HasVideo">Conditional</animation>
+                <control type="image">
+                    <left>350</left>
+                    <centertop>40</centertop>
+                    <width>48</width>
+                    <height>48</height>
+                    <aspectratio aligny="center">keep</aspectratio>
+                    <colordiffuse>$VAR[Color_OSD_Panel_White70]</colordiffuse>
+                    <texture>kaitoast/arrow.png</texture>
+                </control>
 
-                     <control type="image">
-                        <left>40</left>
-                        <centertop>50%</centertop>
-                        <width>48</width>
-                        <height>48</height>
-                        <aspectratio aligny="center">keep</aspectratio>
-                        <colordiffuse>$VAR[Color_OSD_Panel_White70]</colordiffuse>
-                        <texture>kaitoast/finishtime.png</texture>
-                    </control>
-
-                    <control type="label">
-                        <visible>!VideoPlayer.Content(livetv)</visible>
-                        <right>50%</right>
-                        <left>80</left>
-                        <height>100%</height>
-                        <align>center</align>
-                        <aligny>center</aligny>
-                        <font>Small</font>
-                        <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                        <label>$INFO[Player.TimeRemaining]   •   </label>
-                    </control>
-
-                    <!-- <control type="image"> -->
-                        <!-- <left>30</left> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <width>48</width> -->
-                        <!-- <height>48</height> -->
-                        <!-- <aspectratio aligny="center">keep</aspectratio> -->
-                        <!-- <colordiffuse>$VAR[Color_OSD_Panel_White70]</colordiffuse> -->
-                        <!-- <texture>kaitoast/clock.png</texture> -->
-                    <!-- </control> -->
-
-                    <control type="label">
-                        <visible>!VideoPlayer.Content(livetv)</visible>
-                        <!-- <right>55%</right> -->
-                        <!-- <left>SidePad</left> -->
-                        <height>100%</height>
-                        <left>30</left>
-                        <align>center</align>
-                        <aligny>center</aligny>
-                        <font>Small</font>
-                        <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                        <label>$INFO[System.Time]</label>
-                    </control>
-
-                    <control type="label">
-                        <visible>VideoPlayer.Content(livetv)</visible>
-                        <!-- <right>55%</right> -->
-                        <!-- <left>SidePad</left> -->
-                        <height>100%</height>
-                        <align>center</align>
-                        <aligny>center</aligny>
-                        <font>Small</font>
-                        <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                        <label>$INFO[System.Time]</label>
-                    </control>
-
-                    <control type="image">
-                        <!-- <centerleft>50%</centerleft> -->
-                         <left>350</left>
-                        <centertop>50%</centertop>
-                        <width>48</width>
-                        <height>48</height>
-                        <aspectratio aligny="center">keep</aspectratio>
-                        <colordiffuse>$VAR[Color_OSD_Panel_White70]</colordiffuse>
-                        <texture>kaitoast/arrow.png</texture>
-                        <visible>Player.HasVideo</visible>
-                    </control>
-
-                    <!-- <control type="image"> -->
-                        <!-- <right>30</right> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <width>48</width> -->
-                        <!-- <height>48</height> -->
-                        <!-- <aspectratio aligny="center">keep</aspectratio> -->
-                        <!-- <colordiffuse>$VAR[Color_OSD_Panel_White70]</colordiffuse> -->
-                        <!-- <texture>kaitoast/finishtime.png</texture> -->
-                        <!-- <visible>Player.HasVideo</visible> -->
-                    <!-- </control> -->
-
-                    <control type="label">
-                        <visible>!VideoPlayer.Content(livetv)</visible>
-                        <!-- <right>SidePad</right> -->
-                        <left>420</left>
-                        <height>100%</height>
-                        <!-- <align>center</align> -->
-                        <!-- <aligny>center</aligny> -->
-                        <font>Small</font>
-                        <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                        <label>$INFO[Player.FinishTime]</label>
-                        <visible>Player.HasVideo</visible>
-                    </control>
-
-                    <control type="label">
-                        <visible>VideoPlayer.Content(livetv)</visible>
-                        <!-- <right>SidePad</right> -->
-                        <left>420</left>
-                        <height>100%</height>
-                        <!-- <align>center</align> -->
-                        <!-- <aligny>center</aligny> -->
-                        <font>Small</font>
-                        <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                        <label>$INFO[PVR.EpgEventFinishTime]</label>
-                        <visible>Player.HasVideo</visible>
-                    </control>
-
+                <control type="label">
+                    <visible>!VideoPlayer.Content(livetv)</visible>
+                    <left>420</left>
+                    <height>80</height>
+                    <font>Small</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[Player.FinishTime]</label>
+                </control>
+                <control type="label">
+                    <visible>VideoPlayer.Content(livetv)</visible>
+                    <left>420</left>
+                    <height>80</height>
+                    <font>Small</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[PVR.EpgEventFinishTime]</label>
                 </control>
             </control>
         </control>

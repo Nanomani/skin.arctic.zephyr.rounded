@@ -1143,8 +1143,26 @@
                 <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)</visible>
                 <onfocus condition="!String.IsEqual(Window.Property(moviecontent),1)">ClearProperty(moviecontent)</onfocus>
                 <onfocus>SetProperty(moviecontent,1)</onfocus>
+
                 <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)]">RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[ListItem.TVShowTitle,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D]"',call_auto=1190)</onclick>
-                <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)]">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=play&amp;tmdb_type=tv&amp;tmdb_id=$INFO[Window(Home).Property(Set_Movie_TvShow_TMDb_id)],call_auto=1190)</onclick>
+                <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=play&amp;tmdb_type=tv&amp;tmdb_id=$INFO[Window(Home).Property(Set_Movie_TvShow_TMDb_id)]</onclick>
+
+
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Init_Value_TMDb,Home)</onclick>
+
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetYoutubeSearch)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetDirectorSelected,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetWriterSelected,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetCreatorSelected,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetStudioSelected,Home)</onclick>
+
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Director_Query,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Writer_Query,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Creator_Query,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Studio_Query,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Network_Query,Home)</onclick>
+
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/info.png"/>
@@ -1390,8 +1408,9 @@
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/image.png"/>
                 </include>
-                <visible>!Skin.HasSetting(hide.button.video.fanart)</visible>
+                <!-- <visible>!Skin.HasSetting(hide.button.video.fanart)</visible> -->
                 <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.DBType)</visible>
+                <visible>!String.IsEmpty(ListItem.Art(fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
                 <!-- <visible>!Integer.IsEqual(Container(9505).NumItems,0) + !Container(9505).IsUpdating</visible> -->
                 <!-- <visible>String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) + !String.IsEmpty(Window(Home).Property(Init_Value_TMDb))</visible> -->
             </control>

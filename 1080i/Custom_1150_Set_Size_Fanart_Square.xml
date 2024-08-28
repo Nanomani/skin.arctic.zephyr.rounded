@@ -2,9 +2,12 @@
 <window type="dialog" id="1150">
     <defaultcontrol>11</defaultcontrol>
 
-    <!-- <onload>SetProperty(SetViewHomeSelected,$VAR[View_Home_Selected],Home)</onload> -->
-    <!-- <onunload>ClearProperty(SetViewHomeSelected,Home)</onunload> -->
-    <onunload>ClearProperty(view.artwork.style,landscape,Home)</onunload>
+    <onload condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musicsquare)">SetProperty(SetViewSizeSelected,$VAR[523.square.size],Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),videolandscape)">SetProperty(SetViewSizeSelected,$VAR[522.landscape.size],Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musiclandscape)">SetProperty(SetViewSizeSelected,$VAR[522.landscape.size],Home)</onload>
+
+    <onunload>ClearProperty(SetViewSizeSelected,Home)</onunload>
+    <onunload>ClearProperty(ViewArtworkStyle,Home)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -44,7 +47,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEqual(Window(Home).property(SetViewSizeSelected),ListItem.Label)</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -55,7 +58,7 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_Highlight]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>String.IsEqual(Window(Home).property(SetViewSizeSelected),ListItem.Label)</visible>
                     </control>
                     <control type="image">
                         <right>30</right>
@@ -63,7 +66,7 @@
                         <width>28</width>
                         <height>28</height>
                         <texture colordiffuse="Black70">buttons/radio-off.png</texture>
-                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEqual(Window(Home).property(SetViewSizeSelected),ListItem.Label)</visible>
                     </control>
                     <control type="image">
                         <right>30</right>
@@ -71,7 +74,7 @@
                         <width>28</width>
                         <height>28</height>
                         <texture colordiffuse="$VAR[Color_Highlight]">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>String.IsEqual(Window(Home).property(SetViewSizeSelected),ListItem.Label)</visible>
                     </control>
                 </itemlayout>
                 <focusedlayout width="450" height="70">
@@ -94,7 +97,7 @@
                         <width>28</width>
                         <height>28</height>
                         <texture colordiffuse="Selected">buttons/radio-off.png</texture>
-                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEqual(Window(Home).property(SetViewSizeSelected),ListItem.Label)</visible>
                     </control>
                     <control type="image">
                         <right>30</right>
@@ -102,7 +105,7 @@
                         <width>28</width>
                         <height>28</height>
                         <texture colordiffuse="Selected">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>String.IsEqual(Window(Home).property(SetViewSizeSelected),ListItem.Label)</visible>
                     </control>
                 </focusedlayout>
 
@@ -112,9 +115,9 @@
 
                     <item id="1">
                         <label>$LOCALIZE[1438]</label>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),videolandscape)">Skin.SetString(522.landscape.size,2)</onclick>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),musiclandscape)">Skin.SetString(522.landscape.size,2)</onclick>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),musicsquare)">Skin.SetString(523.square.size,2)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),videolandscape)">Skin.SetString(522.landscape.size,2)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musiclandscape)">Skin.SetString(522.landscape.size,2)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musicsquare)">Skin.SetString(523.square.size,2)</onclick>
                         <onclick>close</onclick>
                         <onclick>ReloadSkin()</onclick>
                     </item>
@@ -122,10 +125,10 @@
                     <!-- MIDDLE -->
 
                     <item id="2">
-                        <label>$LOCALIZE[13507] </label>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),videolandscape)">Skin.SetString(522.landscape.size,1)</onclick>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),musiclandscape)">Skin.SetString(522.landscape.size,1)</onclick>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),musicsquare)">Skin.SetString(523.square.size,1)</onclick>
+                        <label>$LOCALIZE[13507]</label>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),videolandscape)">Skin.SetString(522.landscape.size,1)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musiclandscape)">Skin.SetString(522.landscape.size,1)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musicsquare)">Skin.SetString(523.square.size,1)</onclick>
                         <onclick>close</onclick>
                         <onclick>ReloadSkin()</onclick>
                     </item>
@@ -133,10 +136,10 @@
                     <!-- BIG -->
 
                     <item id="3">
-                        <label>$LOCALIZE[539] </label>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),videolandscape)">Skin.Reset(522.landscape.size)</onclick>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),musiclandscape)">Skin.Reset(522.landscape.size)</onclick>
-                        <onclick condition="String.IsEqual(Window(Home).Property(view.artwork.style),musicsquare)">Skin.Reset(523.square.size)</onclick>
+                        <label>$LOCALIZE[539]</label>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),videolandscape)">Skin.Reset(522.landscape.size)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musiclandscape)">Skin.Reset(522.landscape.size)</onclick>
+                        <onclick condition="String.IsEqual(Window(Home).Property(ViewArtworkStyle),musicsquare)">Skin.Reset(523.square.size)</onclick>
                         <onclick>close</onclick>
                         <onclick>ReloadSkin()</onclick>
                     </item>

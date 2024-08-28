@@ -82,7 +82,7 @@
                     <right>SidePad</right>
                     <width>1100</width>
                     <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
-                    <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>                    
+                    <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
                     <onright>1630</onright>
                     <onup>57</onup>
                     <ondown>57</ondown>
@@ -507,7 +507,7 @@
                             <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files) | Container.Content(favourites) | String.IsEqual(ListItem.Property(item.type),person)</visible>
 
                             <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
-                            <visible>!$EXP[IsYoutube]</visible>
+                            <!-- <visible>!$EXP[IsYoutubeItem]</visible> -->
                             <visible>!ListItem.IsParentFolder</visible>
                         </control>
 
@@ -546,7 +546,7 @@
                     </control>
                 </control>
 
-                <!-- TITLE -->
+                <!-- INFORMATIONS -->
 
                 <control type="group">
                     <visible>!$EXP[IsYoutube_Comments]</visible>
@@ -576,6 +576,8 @@
 
                         <!-- SUB TITLE -->
 
+                        <!-- Video -->
+
                         <control type="label">
                             <top>48</top>
                             <height>64</height>
@@ -584,7 +586,7 @@
                             <textcolor>PanelWhite70</textcolor>
                             <selectedcolor>PanelWhite70</selectedcolor>
                             <label>$VAR[Label_Year]$VAR[LabelGenre,  •  ,]</label>
-                            <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | $EXP[IsGameMode]]</visible>
+                            <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | $EXP[IsGameMode] | Container.Content(addons)]</visible>
                             <visible>!String.IsEmpty(ListItem.Year)</visible>
                         </control>
                         <control type="label">
@@ -594,10 +596,13 @@
                             <font>InfoNetflix</font>
                             <textcolor>PanelWhite70</textcolor>
                             <selectedcolor>PanelWhite70</selectedcolor>
-                            <label>$LOCALIZE[20094]</label>
-                            <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | $EXP[IsGameMode]]</visible>
+                            <label>$LOCALIZE[20094]$INFO[System.AddonVersion(Container.PluginName),  •  v ]</label>
+                            <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | $EXP[IsGameMode] | Container.Content(addons)]</visible>
                             <visible>String.IsEmpty(ListItem.Year) + !String.IsEmpty(Container.PluginName)</visible>
                         </control>
+
+                        <!-- Music -->
+
                         <control type="label">
                             <top>48</top>
                             <height>64</height>
@@ -608,6 +613,9 @@
                             <label>$VAR[Label_Music_Sub_Title]</label>
                             <visible>Container.Content(artists) | Container.Content(albums) | Container.Content(songs)</visible>
                         </control>
+
+                        <!-- Game -->
+
                         <control type="label">
                             <top>48</top>
                             <height>64</height>
@@ -617,6 +625,20 @@
                             <selectedcolor>PanelWhite70</selectedcolor>
                             <label>$VAR[Label_Game_Genre]</label>
                             <visible>$EXP[IsGameMode]</visible>
+                        </control>
+
+                        <!-- Addons -->
+
+                        <control type="label">
+                            <top>48</top>
+                            <height>64</height>
+                            <aligny>center</aligny>
+                            <font>InfoNetflix</font>
+                            <textcolor>PanelWhite70</textcolor>
+                            <selectedcolor>PanelWhite70</selectedcolor>
+                            <!-- <label>$INFO[ListItem.AddonVersion,v ,]</label> -->
+                            <label>$INFO[ListItem.AddonType]$INFO[ListItem.AddonVersion,  •  v ]</label>
+                            <visible>Container.Content(addons)</visible>
                         </control>
                     </control>
 
@@ -630,7 +652,7 @@
                         <textcolor>Dark2</textcolor>
                         <selectedcolor>Dark2</selectedcolor>
                         <label>$VAR[Label_Plot_Box_Video]</label>
-                        <visible>!Window.IsVisible(MyPlaylist.xml)</visible>
+                        <visible>!Window.IsVisible(MyPlaylist.xml) + !EXP[IsAnPlugin]</visible>
                     </control>
                     <control type="textbox">
                         <top>124</top>
@@ -642,7 +664,6 @@
                         <label>$VAR[Label_NowPlaying_Plot]</label>
                         <visible>Window.IsVisible(MyPlaylist.xml)</visible>
                     </control>
-
                 </control>
 
                 <!-- YOUTUBE -->

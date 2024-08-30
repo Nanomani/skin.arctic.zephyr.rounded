@@ -660,6 +660,7 @@
                             <aligny>center</aligny>
                             <align>left</align>
                             <visible>!String.IsEmpty(Container(99950).ListItem.Property(Creator))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,episode)</visible>
                         </control>
                         <control type="label">
                             <font>Tiny</font>
@@ -668,6 +669,7 @@
                             <aligny>center</aligny>
                             <align>left</align>
                             <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Container(99950).ListItem.Director)</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,season)</visible>
                         </control>
                         <control type="label">
                             <font>Tiny</font>
@@ -676,6 +678,7 @@
                             <aligny>center</aligny>
                             <align>left</align>
                             <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Container(99950).ListItem.Writer)</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,season)</visible>
                         </control>
                         <control type="label">
                             <font>Tiny</font>
@@ -742,6 +745,7 @@
                             <label>$INFO[Container(99950).ListItem.Property(Creator)]</label>
                             <aligny>center</aligny>
                             <visible>!String.IsEmpty(Container(99950).ListItem.Property(Creator))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,episode)</visible>
                         </control>
                         <control type="label">
                             <font>Tiny</font>
@@ -749,6 +753,7 @@
                             <label fallback="19055">$VAR[Label_Director]</label>
                             <aligny>center</aligny>
                             <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Container(99950).ListItem.Director)</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,season)</visible>
                         </control>
                         <control type="label">
                             <font>Tiny</font>
@@ -756,6 +761,7 @@
                             <label fallback="19055">$VAR[Label_Writer]</label>
                             <aligny>center</aligny>
                             <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Container(99950).ListItem.Writer)</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,season)</visible>
                         </control>
                         <control type="label">
                             <font>Tiny</font>
@@ -1405,32 +1411,32 @@
                         <!-- <param name="labeltwovisible" value="true"/> -->
                     <!-- </include> -->
 
-                    <!-- CAST TMDB -->
+                    <!-- CAST TMDB - SEASON ONLY -->
 
-                    <!-- <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)"> -->
-                        <!-- <param name="arrowleft" value="-598"/> -->
-                        <!-- <param name="arrowtop" value="342"/> -->
-                        <!-- <param name="arrowright" value="155"/> -->
-                        <!-- <param name="condition.includecontent" value="true"/> -->
-                        <!-- <param name="fallbackpicture" value="pbtmdb.png"/> -->
-                        <!-- <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)] + !Skin.HasSetting(filter.video.only.local)"/> -->
-                        <!-- <param name="animation" value="Animation_cast"/> -->
-                        <!-- <param name="controlid" value="9550"/> -->
-                        <!-- <param name="ContentToLoad" value="$VAR[Def_List_Cast]"/> -->
-                        <!-- <param name="visible.layouts" value="Control.HasFocus(9550) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/> -->
-                        <!-- <param name="storageicon.backgroundlist" value="true"/> -->
-                        <!-- <param name="onclick1" value="$VAR[Def_Item_Cast]"/> -->
-                        <!-- <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/> -->
-                        <!-- <param name="listleft" value="-840"/> -->
-                        <!-- <param name="labeltwovisible" value="true"/> -->
-                        <!-- <param name="poster" value="true" /> -->
-                        <!-- <param name="thumb" value="false" /> -->
-                    <!-- </include> -->
-                    <!-- <include content="Def_Dialog_Info_List_Updating"> -->
-                        <!-- <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + !Skin.HasSetting(filter.video.only.local)"/> -->
-                        <!-- <param name="controlid" value="9550"/> -->
-                        <!-- <param name="centerleft" value="430"/> -->
-                    <!-- </include> -->
+                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="String.IsEqual(ListItem.DBType,season) + !String.IsEqual(ListItem.DBType,set)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9550"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Cast]"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9550) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item_Cast]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + String.IsEqual(ListItem.DBType,season)"/>
+                        <param name="controlid" value="9550"/>
+                        <param name="centerleft" value="430"/>
+                    </include>
 
                     <!-- SETS -->
 
@@ -1695,7 +1701,7 @@
 
                     <!-- WRITER -->
 
-                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.writer)">
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.writer)">
                         <param name="arrowleft" value="-598"/>
                         <param name="arrowtop" value="342"/>
                         <param name="arrowright" value="155"/>
@@ -1724,7 +1730,7 @@
 
                     <!-- CREW -->
 
-                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.crew)">
+                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.crew)">
                         <param name="arrowleft" value="-598"/>
                         <param name="arrowtop" value="342"/>
                         <param name="arrowright" value="155"/>
@@ -1751,7 +1757,7 @@
 
                     <!-- YEAR MOVIES / TV SHOWS -->
 
-                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.year) + !String.IsEmpty(ListItem.Year)">
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.year) + !String.IsEmpty(ListItem.Year)">
                         <param name="arrowleft" value="-598"/>
                         <param name="arrowtop" value="342"/>
                         <param name="arrowright" value="155"/>
@@ -1809,7 +1815,7 @@
 
                     <!-- SIMILAR MOVIES / TV SHOWS  -->
 
-                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.similar)">
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.similar)">
                         <param name="arrowleft" value="-598"/>
                         <param name="arrowtop" value="342"/>
                         <param name="arrowright" value="155"/>
@@ -1838,7 +1844,7 @@
 
                     <!-- RECOMENDATION MOVIES / TV SHOWS  -->
 
-                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.recommended)">
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.recommended)">
                         <param name="arrowleft" value="-598"/>
                         <param name="arrowtop" value="342"/>
                         <param name="arrowright" value="155"/>
@@ -1865,7 +1871,7 @@
 
                     <!-- STUDIO MOVIES / TV SHOWS -->
 
-                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.studio)">
+                    <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.button.video.studio)">
                         <param name="arrowleft" value="-598"/>
                         <param name="arrowtop" value="342"/>
                         <param name="arrowright" value="155"/>
@@ -1998,6 +2004,10 @@
 
                 <include content="Furniture_Footer_DialogInfo_Extended" condition="String.IsEqual(ListItem.DBType,set)"><param name="controlid" value="9550"/></include>
                 <include content="Furniture_Flags_DialogInfo_Extended" condition="String.IsEqual(ListItem.DBType,set) + !Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9550"/></include>
+
+                <!-- CAST - SEASON -->
+
+                <include content="Furniture_Footer_DialogInfo_Extended" condition="String.IsEqual(ListItem.DBType,season)"><param name="controlid" value="9550"/></include>
             </control>
         </control>
 

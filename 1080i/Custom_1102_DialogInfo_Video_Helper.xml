@@ -14,19 +14,16 @@
     <!-- ============ -->
 
     <!-- Director -->
-    <onload condition="String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
-    <onload condition="!String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$INFO[ListItem.Director],Home)</onload>
+    <onload condition="!String.IsEmpty(ListItem.Director) + String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
+    <onload condition="!String.IsEmpty(ListItem.Director) + !String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$INFO[ListItem.Director],Home)</onload>
 
     <!-- Writer -->
-    <onload condition="String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$VAR[Path_Writer_Name],Home)</onload>
-    <onload condition="!String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$INFO[ListItem.Writer],Home)</onload>
-
-    <!-- Creator -->
-    <onload condition="String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SetCreatorSelected,$VAR[Path_Creator_Name],Home)</onload>
+    <onload condition="!String.IsEmpty(ListItem.Writer) + String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$VAR[Path_Writer_Name],Home)</onload>
+    <onload condition="!String.IsEmpty(ListItem.Writer) + !String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$INFO[ListItem.Writer],Home)</onload>
 
     <!-- Studio -->
-    <onload condition="String.IsEmpty(Window(Home).Property(SetStudioSelected)) + String.Contains(ListItem.Studio, / )">SetProperty(SetStudioSelected,$VAR[Path_Studio_Name],Home)</onload>
-    <onload condition="!String.Contains(ListItem.Studio, / )">SetProperty(SetStudioSelected,$INFO[ListItem.Studio],Home)</onload>
+    <onload condition="!String.IsEmpty(ListItem.Studio) + String.Contains(ListItem.Studio, / ) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$VAR[Path_Studio_Name],Home)</onload>
+    <onload condition="!String.IsEmpty(ListItem.Studio) + !String.Contains(ListItem.Studio, / ) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$INFO[ListItem.Studio],Home)</onload>
 
     <!-- ============ -->
     <!-- TMDB ON LINE -->
@@ -39,12 +36,13 @@
     <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Window(Home).Property(Writer_Query))">SetProperty(Writer_Query,$VAR[Path_Writer_TMDb_ID],Home)</onload>
 
     <!-- Creator -->
-    <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Window(Home).Property(Creator_Query))">SetProperty(Creator_Query,$VAR[Path_Creator_TMDb_ID],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SetCreatorSelected,$VAR[Path_Creator_Name],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Creator_Query))">SetProperty(Creator_Query,$VAR[Path_Creator_TMDb_ID],Home)</onload>
 
     <!-- Studio -->
     <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + String.IsEmpty(Window(Home).Property(Studio_Query))">SetProperty(Studio_Query,$VAR[Path_Studio_TMDb_ID],Home)</onload>
-    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Network_Query))">SetProperty(Network_Query,$VAR[Path_Network_TMDb_ID],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Network_Query))">SetProperty(Network_Query,$VAR[Path_Network_TMDb_ID],Home)</onload>
 
-    <onload>AlarmClock(Dialog_Info_Init_Value_TMDb,SetProperty(Init_Value_TMDb,1,Home),00:00,silent)</onload>
+    <onload>AlarmClock(Dialog_Info_Init_Value_TMDb,SetProperty(Init_Value_TMDb,1,Home),00:01,silent)</onload>
     <!-- <onunload>SetProperty(Init_Value_TMDb,1,Home)</onunload> -->
 </window>

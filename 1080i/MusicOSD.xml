@@ -36,6 +36,7 @@
                 <onleft>24</onleft>
                 <onright>12</onright>
                 <onup>8200</onup>
+                <onup>SetProperty(OSDArtistDetails,1,Home)</onup>
 
                 <include content="Def_OSD_Button">
                     <param name="autoclose" value="true" />
@@ -48,6 +49,7 @@
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
                     <onclick>PlayerControl(Repeat)</onclick>
+                    <onfocus>ClearProperty(OSDArtistDetails,Home)</onfocus>
                 </include>
 
                 <include content="Def_OSD_Button">
@@ -61,6 +63,7 @@
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
                     <onclick>PlayerControl(Random)</onclick>
+                    <onfocus>ClearProperty(OSDArtistDetails,Home)</onfocus>
                     <onleft>1</onleft>
                     <onright>2</onright>
                 </include>
@@ -136,6 +139,7 @@
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
                     <onclick>PlayerControl(Play)</onclick>
+                    <onfocus>ClearProperty(OSDArtistDetails,Home)</onfocus>
                     <enable>Player.PauseEnabled</enable>
                     <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
                 </include>
@@ -176,6 +180,7 @@
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
                     <onclick>PlayerControl(Next)</onclick>
+                    <onfocus>ClearProperty(OSDArtistDetails,Home)</onfocus>
                 </include>
             </control>
 
@@ -191,6 +196,7 @@
                 <onleft>17</onleft>
                 <onright>1</onright>
                 <onup>8200</onup>
+                <onup>SetProperty(OSDArtistDetails,1,Home)</onup>
 
                 <include content="Def_OSD_Button">
                     <param name="autoclose" value="true" />
@@ -203,6 +209,7 @@
                     <include>Def_OSD_UpDown_Music_Infos</include>
                     <onclick>Close</onclick>
                     <onclick>ActivateWindow(musicplaylist)</onclick>
+                    <onfocus>SetProperty(OSDArtistDetails,1,Home)</onfocus>
                 </include>
 
                  <include content="Def_OSD_Button" condition="System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)">
@@ -215,6 +222,7 @@
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
                     <onclick>runscript(script.audio.profiles,popup)</onclick>
+                    <onfocus>SetProperty(OSDArtistDetails,1,Home)</onfocus>
                     <disabledcolor>PanelWhite12</disabledcolor>
                 </include>
                 <!-- <include content="Def_OSD_Button" condition="!String.IsEmpty(MusicPlayer.DBID)"> -->
@@ -242,6 +250,7 @@
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
                     <onclick>SetRating</onclick>
+                    <onfocus>SetProperty(OSDArtistDetails,1,Home)</onfocus>
                     <include>OnFocusOnClick</include>
                     <include>ClearOnFocusOnClick</include>
                 </include>
@@ -255,10 +264,46 @@
                     <param name="groupid" value="7099" />
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
+                    <onfocus>SetProperty(OSDArtistDetails,1,Home)</onfocus>
                     <onclick>ActivateWindow(1120)</onclick>
                 </include>
             </control>
 
+            <!-- ARTIST BIOGRAPHY -->
+
+            <control type="group">
+                <visible>!String.IsEmpty(Window(Home).Property(OSDArtistDetails))</visible>
+                <visible>!Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
+                <animation type="Visible" reversible="false">
+                    <effect type="fade" start="0" end="100" time="600" delay="200" />
+                </animation>
+                <left>620</left>
+                <height>560</height>
+                <top>160</top>
+                <right>SidePadNewOSD</right>
+                <control type="textbox">
+                    <font>Medium</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+                    <label>$INFO[MusicPlayer.Property(Album_Description),,[CR]]$INFO[MusicPlayer.Property(Artist_Description)]$INFO[Window(Home).Property(ResetScroll)]</label>
+                    <autoscroll delay="12000" time="5000" repeat="12000">true</autoscroll>
+                    <!-- <include content="Defs_AutoScroll_TextBox"> -->
+                        <!-- <param name="condition">!String.IsEmpty(Window(Home).Property(OSDArtistDetails)) + !Control.HasFocus(9803)</param> -->
+                    <!-- </include> -->
+                    <pagecontrol>9803</pagecontrol>
+                    <bottom>-20</bottom>
+                </control>
+
+                <include content="Object_Scrollbar_Dialog_Vertical">
+                    <param name="scrollid" value="9803"/>
+                    <param name="onleft" value="SetFocus(14)"/>
+                    <param name="onright" value="SetFocus(14)"/>
+                    <param name="ondown" value="SetFocus(14)"/>
+                    <param name="onback" value="SetFocus(14)"/>
+                    <param name="height" value="570"/>
+                    <param name="top" value="10"/>
+                    <param name="centerright" value="1200"/>
+                </include>
+            </control>
 
             <!-- OSD FOOTER INFO TIPS -->
 
@@ -350,8 +395,10 @@
             <texturesliderbar />
             <textureslidernib />
             <textureslidernibfocus />
-            <onup>6002</onup>
-            <ondown>6002</ondown>
+            <onup>SetProperty(OSDArtistDetails,1,Home)</onup>
+            <onup>SetFocus(9803)</onup>
+            <ondown>ClearProperty(OSDArtistDetails,Home)</ondown>
+            <ondown>SetFocus(14)</ondown>
         </control>
 
     </controls>

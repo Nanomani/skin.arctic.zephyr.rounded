@@ -705,11 +705,13 @@
 
                 <onfocus>SetProperty(SetBackMenu300AfterSubMenu302,1,Home)</onfocus>
 
-                <!-- NowPlaying : Auto slide / Display  if Widget is focus -->
+                <!-- NOWPLAYING : AUTO SLIDE / DISPLAY  IF WIDGET IS FOCUS -->
+
                 <onfocus condition="$EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + Skin.HasSetting(enable.home.auto.show.nowplaying.extended)">SetProperty(nowplaying.auto.show.timer,1,Home)</onfocus>
                 <onunfocus>ClearProperty(nowplaying.auto.show.timer,Home)</onunfocus>
 
-                <!-- Main Menu : Focus if inactivity -->
+                <!-- MAIN MENU : FOCUS IF INACTIVITY -->
+
                 <onfocus condition="Window.IsVisible(Home) + Skin.HasSetting(homemenu.auto.back.to.main)">SetProperty(focus.main.menu.timer,1,Home)</onfocus>
                 <onunfocus>ClearProperty(focus.main.menu.timer,Home)</onunfocus>
 
@@ -793,6 +795,7 @@
             <animation type="WindowOpen" reversible="false">
                 <effect type="fade" start="0" end="100" time="450" delay="50" tween="sine" easing="in"/>
             </animation>
+
             <control type="list" id="302">
                 <description>Home Wraplist</description>
                 <left>SidePad</left>
@@ -800,6 +803,7 @@
                 <include condition="!Skin.HasSetting(show.home.header.clock.left) + [[Skin.HasSetting(furniture.clock.top.right) + Skin.HasSetting(homemenu.netflix)] | !Skin.HasSetting(furniture.clock.top.right)] + !Skin.HasSetting(hide.furniture.clock.bottom.right)">Def_Home_Menu_Row_width_Reduce</include>
                 <include condition="Skin.HasSetting(show.home.header.clock.left) | [Skin.HasSetting(furniture.clock.top.right) + !Skin.HasSetting(homemenu.netflix)] | Skin.HasSetting(hide.furniture.clock.bottom.right)">Def_Home_Menu_Row_width_Max</include>
 
+                <top>952</top>
                 <onup>300</onup>
                 <!-- <ondown>300</ondown> -->
                 <onleft>302</onleft>
@@ -807,10 +811,20 @@
                 <onback>300</onback>
 
                 <onfocus>SetProperty(SetBackMenu300AfterSubMenu302,1,Home)</onfocus>
-
                 <orientation>horizontal</orientation>
+
+                <!-- NOWPLAYING : AUTO SLIDE / DISPLAY  IF WIDGET IS FOCUS -->
+
+                <onfocus condition="$EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + Skin.HasSetting(enable.home.auto.show.nowplaying.extended)">SetProperty(nowplaying.auto.show.timer,1,Home)</onfocus>
+                <onunfocus>ClearProperty(nowplaying.auto.show.timer,Home)</onunfocus>
+
+                <!-- MAIN MENU : FOCUS IF INACTIVITY -->
+
+                <onfocus condition="Window.IsVisible(Home) + Skin.HasSetting(homemenu.auto.back.to.main)">SetProperty(focus.main.menu.timer,1,Home)</onfocus>
+                <onunfocus>ClearProperty(focus.main.menu.timer,Home)</onunfocus>
+
                 <include>Animation_Scrolltime_Views_List</include>
-                <top>952</top>
+
                 <itemlayout width="222" height="64">
                     <control type="label">
                         <align>center</align>
@@ -1028,6 +1042,9 @@
             <!-- MAIN MENU : FOCUS IF INACTIVITY -->
 
             <onfocus condition="Window.IsVisible(Home)">ClearProperty(focus.main.menu.timer,Home)</onfocus>
+
+            <!-- EXTENDED NOWPLAYING -->
+
             <onup condition="$EXP[Extended_Now_Playing_Is_Visible] + Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button) + Skin.HasSetting(home.extended.nowplaying.tracklist) + Integer.IsGreater(Container(778).NumItems,0) + Player.HasAudio">778</onup>
             <onup condition="$EXP[Extended_Now_Playing_Is_Visible] + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">777</onup>
 
@@ -1103,7 +1120,7 @@
             <animation effect="slide" start="0" end="-100" time="0" delay="0" condition="true">Conditional</animation>
             <animation effect="slide" start="0" end="-260" time="300" delay="0" center="auto" tween="sine" easing="out" condition="[!Control.HasFocus(300) + !Control.HasFocus(302) + !Control.HasFocus(399) + !Control.HasFocus(222)] + ![Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)] + [Skin.HasSetting(homemenu.slide) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable]]] + !Control.HasFocus(9099)">Conditional</animation>
 
-            <!-- MAIN MENU - SUB MENU -->
+            <!-- MAIN MENU / SUB MENU -->
 
             <control type="group">
                 <include>Animation_LeftSide_Vertical_Menu</include>

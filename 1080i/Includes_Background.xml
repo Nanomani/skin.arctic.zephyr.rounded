@@ -458,7 +458,9 @@
         <include condition="Integer.IsEqual(Skin.String(Fadetime),400)">FadetimeFast</include>
     </include>
 
+    <!-- ================= -->
     <!-- GLOBAL BACKGROUND -->
+    <!-- ================= -->
 
     <include name="Background_Global">
         <include condition="Skin.HasSetting(enable.blur.effect)">Image_Path_Blur_TMDb</include>
@@ -552,8 +554,6 @@
 
         <include condition="Skin.HasSetting(home.netflix.autoplay.trailer) | Skin.HasSetting(show.home.nowplaying.video.flix)">TrailerWindow</include>
 
-
-
         <!-- GLOBAL FANART -->
 
         <control type="multiimage" description="Fanart">
@@ -580,7 +580,7 @@
         <!-- BLUR GLOBAL FANART -->
 
         <control type="multiimage" description="Fanart">
-            <visible>Skin.HasSetting(enable.blur.effect)</visible>
+            <visible>Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake)</visible>
 
             <visible>!Window.IsVisible(Home) | [Window.IsVisible(Home) + [$EXP[View_List_Dialog_Info_Settings]]]</visible>
 
@@ -603,28 +603,105 @@
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
         </control>
 
-        <!-- BLUR GLOBAL FANART HOME -->
+        <!-- BLUR GLOBAL FANART HOME - FAKE -->
+
+        <control type="group">
+            <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.effect.fake)</visible>
+
+            <visible>!Window.IsVisible(Home) | [Window.IsVisible(Home) + [$EXP[View_List_Dialog_Info_Settings]]]</visible>
+
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+
+            <include condition="!Skin.HasSetting(enable.blur.on.home)">Def_Background_Brightness_Global</include>
+
+            <centertop>50%</centertop>
+            <height>108000</height>
+
+            <control type="multiimage" description="Fanart">
+
+                <width>192000</width>
+                <height>108000</height>
+                <centertop>64%</centertop>
+
+                <include>Background_Fanart_Fade_time</include>
+                <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+                <randomize>true</randomize>
+                <aspectratio>scale</aspectratio>
+
+                <colordiffuse>FanartFadeBlur</colordiffuse>
+
+                <include>Image_Path_Normal</include>
+
+                <include>Animation_Animate_Fanart</include>
+                <include>Animation_AutoTrailer_FadeOut_Background</include>
+                <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+                <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            </control>
+        </control>
+
+        <!-- BLUR GLOBAL FANART HOME - TMDB HELPER -->
 
         <control type="multiimage" description="Fanart">
-            <visible>Skin.HasSetting(enable.blur.effect) + Window.IsVisible(Home)</visible>
+            <visible>Skin.HasSetting(enable.blur.effect) + Window.IsVisible(Home) + !Skin.HasSetting(enable.blur.effect.fake)</visible>
             <visible>Window.IsVisible(Home)</visible>
             <visible>!Skin.HasSetting(homemenu.horizontal.clean) | [Skin.HasSetting(homemenu.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
-            <include condition="!Skin.HasSetting(enable.blur.on.home)">Def_Background_Brightness_Global</include>
+
             <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
             <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+
+            <include condition="!Skin.HasSetting(enable.blur.on.home)">Def_Background_Brightness_Global</include>
+
             <include>Def_Dimensions_Fullscreen</include>
             <!-- <include>Animation_Background_OpenClose</include> -->
             <include>Background_Fanart_Fade_time</include>
             <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
             <randomize>true</randomize>
             <aspectratio>scale</aspectratio>
+
             <include condition="!Skin.HasSetting(enable.blur.on.home) + !$EXP[View_List_Dialog_Info_Settings]">Image_Path_Normal</include>
             <include condition="!Skin.HasSetting(enable.blur.on.home) + [Window.IsVisible(MyVideoNav.xml) | Window.IsVisible(MyMusicNav.xml) | $EXP[View_List_Dialog_Info_Settings]]">Image_Path_Blur_TMDb</include>
             <include condition="Skin.HasSetting(enable.blur.on.home)">Image_Path_Blur_TMDb</include>
+            <include condition="Skin.HasSetting(enable.blur.on.home)">Image_Path_Blur_Fake</include>
+
             <include>Animation_Animate_Fanart</include>
             <include>Animation_AutoTrailer_FadeOut_Background</include>
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+        </control>
+
+        <!-- BLUR GLOBAL FANART HOME - FAKE -->
+
+        <control type="group">
+            <visible>Skin.HasSetting(enable.blur.effect) + Window.IsVisible(Home) + Skin.HasSetting(enable.blur.effect.fake)</visible>
+            <visible>Window.IsVisible(Home)</visible>
+            <visible>!Skin.HasSetting(homemenu.horizontal.clean) | [Skin.HasSetting(homemenu.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
+
+            <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+
+            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+
+            <centertop>50%</centertop>
+            <height>108000</height>
+
+            <control type="multiimage" description="Fanart">
+                <width>192000</width>
+                <height>108000</height>
+                <centertop>64%</centertop>
+
+                <include>Background_Fanart_Fade_time</include>
+                <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+                <randomize>true</randomize>
+                <aspectratio>scale</aspectratio>
+
+                <include>Image_Path_Normal</include>
+
+                <include>Animation_Animate_Fanart</include>
+                <include>Animation_AutoTrailer_FadeOut_Background</include>
+                <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+                <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            </control>
         </control>
 
         <!-- FALLBACK -->
@@ -745,7 +822,6 @@
             <texture colordiffuse="FloorFade">background/floor.png</texture>
         </control>
 
-
         <!-- View not flix (home clean)-->
         <!-- <control type="image" description="FanartOverlay"> -->
             <!-- <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml)]]</visible> -->
@@ -755,51 +831,51 @@
             <!-- <include>Animation_AutoTrailer_FadeOut_Background</include> -->
             <!-- <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include> -->
         <!-- </control> -->
-
     </include>
 
-    <include name="Background_Global_Extended">
-        <control type="image" description="Background">
-            <include>Def_Dimensions_Fullscreen</include>
-            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
-            <texture colordiffuse="Background">background/bg.jpg</texture>
-        </control>
-        <control type="multiimage" description="Fanart">
-            <visible>!Skin.HasSetting(enable.blur.effect) | [Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.on.home)]</visible>
-            <include>Def_Background_Brightness_Global</include>
-            <visible>!Skin.HasSetting(hide.global.fanart) | Skin.HasSetting(show.fallback.background)</visible>
-            <include>Def_Dimensions_Fullscreen</include>
-            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
-            <include>Background_Fanart_Fade_time</include>
-            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-            <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Def_Background_Brightness_Global_Horizontal_Clean</include>
-            <randomize>true</randomize>
-            <aspectratio>scale</aspectratio>
-            <imagepath background="true">$VAR[Global_Fanart_Background]</imagepath>
-            <include>Animation_Animate_Fanart</include>
-        </control>
-        <control type="multiimage" description="Fanart">
-            <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.on.home)</visible>
-            <visible>!Skin.HasSetting(hide.global.fanart) | Skin.HasSetting(show.fallback.background)</visible>
-            <include>Def_Dimensions_Fullscreen</include>
-            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
-            <colordiffuse>FanartFadeBlur</colordiffuse>
-            <include>Background_Fanart_Fade_time</include>
-            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-            <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Def_Background_Brightness_Global_Horizontal_Clean</include>
-            <randomize>true</randomize>
-            <aspectratio>scale</aspectratio>
-            <imagepath background="true">$VAR[Background_Global_Image]</imagepath>
-            <include>Animation_Animate_Fanart</include>
-        </control>
+    <!-- <include name="Background_Global_Extended"> -->
+        <!-- <control type="image" description="Background"> -->
+            <!-- <include>Def_Dimensions_Fullscreen</include> -->
+            <!-- <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include> -->
+            <!-- <texture colordiffuse="Background">background/bg.jpg</texture> -->
+        <!-- </control> -->
 
-        <control type="image" description="FanartOverlay">
-            <include>Def_Dimensions_Fullscreen</include>
-            <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include>
-            <texture colordiffuse="FloorFade">background/floor.png</texture>
-            <visible>![Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.on.home)]</visible>
-        </control>
-    </include>
+        <!-- <control type="multiimage" description="Fanart"> -->
+            <!-- <visible>!Skin.HasSetting(enable.blur.effect) | [Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.on.home)]</visible> -->
+            <!-- <include>Def_Background_Brightness_Global</include> -->
+            <!-- <visible>!Skin.HasSetting(hide.global.fanart) | Skin.HasSetting(show.fallback.background)</visible> -->
+            <!-- <include>Def_Dimensions_Fullscreen</include> -->
+            <!-- <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include> -->
+            <!-- <include>Background_Fanart_Fade_time</include> -->
+            <!-- <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage> -->
+            <!-- <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Def_Background_Brightness_Global_Horizontal_Clean</include> -->
+            <!-- <randomize>true</randomize> -->
+            <!-- <aspectratio>scale</aspectratio> -->
+            <!-- <imagepath background="true">$VAR[Global_Fanart_Background]</imagepath> -->
+            <!-- <include>Animation_Animate_Fanart</include> -->
+        <!-- </control> -->
+        <!-- <control type="image" description="FanartOverlay"> -->
+            <!-- <include>Def_Dimensions_Fullscreen</include> -->
+            <!-- <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include> -->
+            <!-- <texture colordiffuse="FloorFade">background/floor.png</texture> -->
+            <!-- <visible>![Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.on.home)]</visible> -->
+        <!-- </control> -->
+
+        <!-- <control type="multiimage" description="Fanart"> -->
+            <!-- <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.on.home)</visible> -->
+            <!-- <visible>!Skin.HasSetting(hide.global.fanart) | Skin.HasSetting(show.fallback.background)</visible> -->
+            <!-- <include>Def_Dimensions_Fullscreen</include> -->
+            <!-- <include condition="!Skin.HasSetting(home.vertical)">Animation_FadeFromHome</include> -->
+            <!-- <colordiffuse>FanartFadeBlur</colordiffuse> -->
+            <!-- <include>Background_Fanart_Fade_time</include> -->
+            <!-- <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage> -->
+            <!-- <include condition="Skin.HasSetting(homemenu.horizontal.clean)">Def_Background_Brightness_Global_Horizontal_Clean</include> -->
+            <!-- <randomize>true</randomize> -->
+            <!-- <aspectratio>scale</aspectratio> -->
+            <!-- <imagepath background="true">$VAR[Background_Global_Image]</imagepath> -->
+            <!-- <include>Animation_Animate_Fanart</include> -->
+        <!-- </control> -->
+    <!-- </include> -->
 
     <!-- PREVIEW WINDOWS NETFLIX - FULL SCREEN -->
 

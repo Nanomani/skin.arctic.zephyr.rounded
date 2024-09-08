@@ -497,6 +497,7 @@
                         <label>$LOCALIZE[31492]</label>
                         <selected>Skin.HasSetting(show.home.netflix.title.clearlogo)</selected>
                         <onclick>Skin.ToggleSetting(show.home.netflix.title.clearlogo)</onclick>
+                        <visible>Skin.HasSetting(homemenu.netflix)</visible>
                     </control>
 
                     <control type="radiobutton" id="9807" description="Flags">
@@ -863,6 +864,7 @@
                         <visible>Skin.HasSetting(set.expert.mode.background)</visible>
                         <selected>Skin.HasSetting(enable.blur.effect)</selected>
 
+
                         <!-- Install, if not installed -->
                         <onclick condition="!System.HasAddon(plugin.video.themoviedb.helper)">InstallAddon(plugin.video.themoviedb.helper)</onclick>
 
@@ -872,7 +874,11 @@
                         <selected>Skin.HasSetting(enabled.tmdb.helper.blur)</selected>
                         <onclick>Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
 
-                        <onclick>Skin.SetBool(TMDbHelper.EnableBlur)</onclick>
+                        <onclick condition="!Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake) + Skin.HasSetting(enabled.tmdb.helper.blur)">Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
+                        <!-- <onclick condition="!Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake)">Skin.SetBool(TMDbHelper.EnableBlur)</onclick> -->
+
+                        <onclick condition="Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake) + !Skin.HasSetting(enabled.tmdb.helper.blur)">Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
+                        <!-- <onclick condition="Skin.HasSetting(enable.blur.effect)">Skin.Reset(TMDbHelper.EnableBlur)</onclick> -->
                     </control>
 
                     <!--  ENABLE IN HOME  -->
@@ -901,8 +907,14 @@
                         <visible>Skin.HasSetting(set.expert.mode.background)</visible>
                         <selected>Skin.HasSetting(enable.blur.effect.fake)</selected>
                         <onclick>Skin.ToggleSetting(enable.blur.effect.fake)</onclick>
+
+                        <onclick condition="!Skin.HasSetting(enable.blur.effect.fake) + Skin.HasSetting(enabled.tmdb.helper.blur)">Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
+                        <onclick condition="Skin.HasSetting(enable.blur.effect.fake) + !Skin.HasSetting(enabled.tmdb.helper.blur)">Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
+                        <!-- <onclick condition="Skin.HasSetting(enable.blur.effect.fake)">Skin.Reset(TMDbHelper.EnableBlur)</onclick>                         -->
+
                         <visible>Skin.HasSetting(enable.blur.effect)</visible>
-                        <visible>!Skin.HasSetting(homemenu.horizontal.clean)</visible>
+
+                        <!-- <visible>!Skin.HasSetting(homemenu.horizontal.clean)</visible> -->
                     </control>
 
                     <!--  MENU TITLE - HOME NETFLIX SETTINGS -->
@@ -2820,6 +2832,8 @@
                         <label>Enable TMDb Blur</label>
                         <selected>Skin.HasSetting(enabled.tmdb.helper.blur)</selected>
                         <onclick>Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
+                        <onclick condition="!Skin.HasSetting(enabled.tmdb.helper.blur) + Skin.HasSetting(enable.blur.effect.fake)">Skin.ToggleSetting(enable.blur.effect.fake)</onclick>
+                        <onclick condition="Skin.HasSetting(enabled.tmdb.helper.blur) + !Skin.HasSetting(enable.blur.effect.fake)">Skin.ToggleSetting(enable.blur.effect.fake)</onclick>
                     </control>
                     <control type="radiobutton" id="9445" description="Reset Skin to Defaults">
                         <width>1310</width>
@@ -2836,6 +2850,7 @@
                         <label>Enable TMDb service</label>
                         <selected>Skin.HasSetting(enabled.tmdb.helper.service)</selected>
                         <onclick>Skin.ToggleSetting(enabled.tmdb.helper.service)</onclick>
+                        <onclick>ReloadSkin()</onclick>
                     </control>
                     <control type="radiobutton" id="9443" description="Reset Skin to Defaults">
                         <width>1310</width>
@@ -2863,7 +2878,6 @@
             </include>
         </control>
 
-
         <!-- LOGO -->
 
         <control type="grouplist">
@@ -2890,6 +2904,5 @@
                 <texture>misc/matrix_small.png</texture>
             </control>
         </control>
-
     </controls>
 </window>

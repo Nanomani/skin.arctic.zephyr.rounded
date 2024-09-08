@@ -59,8 +59,14 @@
                             <top>50</top>
                             <bottom>420</bottom>
                             <aspectratio align="right" aligny="bottom">keep</aspectratio>
-                            <texture background="true">$VAR[Image_Home_ClearLogo]</texture>
-                            <visible>Skin.HasSetting(dont.use.landscape.tvshows) + Skin.HasSetting(use.clearlogo.on.fanart.tvshows)</visible>
+                            <texture background="true">$VAR[Image_ClearLogo]</texture>
+                            <visible>[Skin.HasSetting(dont.use.landscape.tvshows) + Skin.HasSetting(use.clearlogo.on.fanart.tvshows) + String.IsEqual(ListItem.DBType,tvshow)] |
+                            [!Skin.HasSetting(dont.use.landscape.tvshows) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,tvshow)] |
+                            [Skin.HasSetting(dont.use.landscape.seasons) + Skin.HasSetting(use.clearlogo.on.fanart.seasons) + String.IsEqual(ListItem.DBType,season)] |
+                            [!Skin.HasSetting(dont.use.landscape.seasons) + String.IsEmpty(ListItem.Art(tvshow.landscape)) + String.IsEqual(ListItem.DBType,season)] |
+                            [Skin.HasSetting(dont.use.landscape.movies) + Skin.HasSetting(use.clearlogo.on.fanart.movies) + String.IsEqual(ListItem.DBType,movie)] |
+                            [!Skin.HasSetting(dont.use.landscape.movies) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,movie)] |
+                            [Skin.HasSetting(use.clearlogo.on.fanart.artists) + [String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]]</visible>
                             <visible>!String.IsEqual(ListItem.DBType,genre) + !String.EndsWith(Container.FolderPath,Genres)</visible>
                         </control>
                         <include condition="!Skin.HasSetting(hide.markers)">Layout_Indicator_Status</include>
@@ -85,7 +91,7 @@
                             <autoscroll>false</autoscroll>
                             <textcolor>Dark2</textcolor>
                             <selectedcolor>Dark2</selectedcolor>
-                            <label>$INFO[ListItem.Plot]</label>
+                            <label>$VAR[Label_Plot_Box_Video_Music]</label>
                         </control>
                         <control type="label">
                             <left>40</left>
@@ -98,7 +104,22 @@
                             <textcolor>Dark2</textcolor>
                             <selectedcolor>Dark2</selectedcolor>
                             <visible>!ListItem.IsParentFolder</visible>
-                            <label fallback="19055">$VAR[Label_Year,,  •  ]$VAR[LabelDuration,,  •  ]$VAR[RatingLabel]</label>
+                            <visible>!Container.Content(artists)</visible>
+                            <label>$VAR[Label_Year,,  •  ]$VAR[LabelDuration,,  •  ]$VAR[RatingLabel]</label>
+                        </control>
+                        <control type="label">
+                            <left>40</left>
+                            <right>40</right>
+                            <bottom>35</bottom>
+                            <aligny>center</aligny>
+                            <height>38</height>
+                            <align>right</align>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <selectedcolor>Dark2</selectedcolor>
+                            <visible>!ListItem.IsParentFolder</visible>
+                            <visible>Container.Content(artists)</visible>
+                            <label>$INFO[ListItem.Genre]</label>
                         </control>
                     </itemlayout>
                     <focusedlayout width="445" height="660">
@@ -131,8 +152,14 @@
                             <top>50</top>
                             <bottom>420</bottom>
                             <aspectratio align="right" aligny="bottom">keep</aspectratio>
-                            <texture background="true">$VAR[Image_Home_ClearLogo]</texture>
-                            <visible>Skin.HasSetting(dont.use.landscape.tvshows) + Skin.HasSetting(use.clearlogo.on.fanart.tvshows)</visible>
+                            <texture background="true">$VAR[Image_ClearLogo]</texture>
+                            <visible>[Skin.HasSetting(dont.use.landscape.tvshows) + Skin.HasSetting(use.clearlogo.on.fanart.tvshows) + String.IsEqual(ListItem.DBType,tvshow)] |
+                            [!Skin.HasSetting(dont.use.landscape.tvshows) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,tvshow)] |
+                            [Skin.HasSetting(dont.use.landscape.seasons) + Skin.HasSetting(use.clearlogo.on.fanart.seasons) + String.IsEqual(ListItem.DBType,season)] |
+                            [!Skin.HasSetting(dont.use.landscape.seasons) + String.IsEmpty(ListItem.Art(tvshow.landscape)) + String.IsEqual(ListItem.DBType,season)] |
+                            [Skin.HasSetting(dont.use.landscape.movies) + Skin.HasSetting(use.clearlogo.on.fanart.movies) + String.IsEqual(ListItem.DBType,movie)] |
+                            [!Skin.HasSetting(dont.use.landscape.movies) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,movie)] |
+                            [Skin.HasSetting(use.clearlogo.on.fanart.artists) + [String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]]</visible>
                             <visible>!String.IsEqual(ListItem.DBType,genre) + !String.EndsWith(Container.FolderPath,Genres)</visible>
                         </control>
                         <include condition="!Skin.HasSetting(hide.markers)">Layout_Indicator_Status</include>
@@ -156,7 +183,7 @@
                             <font>Tiny</font>
                             <textcolor>Light2</textcolor>
                             <selectedcolor>Light2</selectedcolor>
-                            <label>$INFO[ListItem.Plot]</label>
+                            <label>$VAR[Label_Plot_Box_Video_Music]</label>
                         </control>
                         <control type="label">
                             <left>40</left>
@@ -169,7 +196,22 @@
                             <textcolor>Light2</textcolor>
                             <selectedcolor>Light2</selectedcolor>
                             <visible>!ListItem.IsParentFolder</visible>
-                            <label fallback="19055">$VAR[Label_Year,,  •  ]$VAR[LabelDuration,,  •  ]$VAR[RatingLabel]</label>
+                            <visible>!Container.Content(artists)</visible>
+                            <label>$VAR[Label_Year,,  •  ]$VAR[LabelDuration,,  •  ]$VAR[RatingLabel]</label>
+                        </control>
+                        <control type="label">
+                            <left>40</left>
+                            <right>40</right>
+                            <bottom>35</bottom>
+                            <aligny>center</aligny>
+                            <height>38</height>
+                            <align>right</align>
+                            <font>Tiny</font>
+                            <textcolor>Light2</textcolor>
+                            <selectedcolor>Light2</selectedcolor>
+                            <visible>!ListItem.IsParentFolder</visible>
+                            <visible>Container.Content(artists)</visible>
+                            <label>$INFO[ListItem.Genre]</label>
                         </control>
                     </focusedlayout>
                 </control>
@@ -178,6 +220,11 @@
                         <param name="scrollid" value="1671"/>
                         <param name="bottom" value="204"/>
                     </include>
+                </control>
+
+                <control type="list" id="51581">
+                    <include>Def_Hidden_ListControl</include>
+                    <content>$INFO[Container($PARAM[id]).ListItem.DBID,musicdb://artists/,/]</content>
                 </control>
             </control>
         </control>

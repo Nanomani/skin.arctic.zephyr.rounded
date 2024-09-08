@@ -88,68 +88,6 @@
         </control>
     </include>
 
-    <!-- HOME - HEADER - CLEARLOGO -->
-
-    <include name="Home_ClearLogo">
-
-        <!-- Featured > bottomright > Dont have Disable UpWidget  -->
-        <control type="image" description="clearlogo">
-            <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + [!Skin.HasSetting(home.vertical) + !Skin.HasSetting(home.dontautoshowwidget)] + !Skin.HasSetting(home.horizontal)</visible>
-            <visible>!Player.HasVideo | !Skin.HasSetting(global.showvideo)</visible>
-            <animation effect="fade" start="100" end="0" time="0" condition="Player.HasAudio + Skin.HasSetting(global.showvisualisation) + !String.IsEmpty(Visualisation.Name)">Conditional</animation>
-            <include>Animation_FadeIn</include>
-            <fadetime>ClearArtFadetime</fadetime>
-            <animation effect="slide" start="0" end="0,130" time="500" tween="back" reversible="false" easing="out" condition="Control.HasFocus(301)">Conditional</animation>
-            <animation effect="slide" end="0" start="0,130" time="150" reversible="false" condition="!Control.HasFocus(301)">Conditional</animation>
-            <top>550</top>
-            <right>SidePad</right>
-            <width>275</width>
-            <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-            <texture background="true">$VAR[Image_Home_ClearLogo]</texture>
-            <animation effect="fade" start="100" end="0" time="500">VisibleChange</animation>
-            <animation effect="fade" start="100" end="0" time="150">WindowClose</animation>
-            <animation effect="slide" end="0,-260" start="0,0" time="1" reversible="false" condition="Skin.HasSetting(home.horizontal)">Conditional</animation>
-        </control>
-
-        <!-- Featured > bottomright > have Disable UpWidget  -->
-        <control type="image" description="clearlogo">
-            <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + [!Skin.HasSetting(home.vertical) + Skin.HasSetting(home.dontautoshowwidget)] + !Skin.HasSetting(home.horizontal)</visible>
-            <visible>!Player.HasVideo | !Skin.HasSetting(global.showvideo)</visible>
-            <animation effect="fade" start="100" end="0" time="0" condition="Player.HasAudio + Skin.HasSetting(global.showvisualisation) + !String.IsEmpty(Visualisation.Name)">Conditional</animation>
-            <include>Animation_FadeIn</include>
-            <fadetime>ClearArtFadetime</fadetime>
-            <animation effect="slide" start="0" end="0,130" time="500" tween="back" reversible="false" easing="out" condition="Control.HasFocus(301)">Conditional</animation>
-            <animation effect="slide" end="0" start="0,130" time="150" reversible="false" condition="!Control.HasFocus(301)">Conditional</animation>
-            <top>550</top>
-            <right>SidePad</right>
-            <width>275</width>
-            <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-            <texture background="true">$VAR[Image_Home_ClearLogo]</texture>
-            <animation effect="fade" start="100" end="0" time="500">VisibleChange</animation>
-            <animation effect="fade" start="100" end="0" time="150">WindowClose</animation>
-        </control>
-
-        <!-- Vertical > TopRight Header > With Header  -->
-        <control type="image" description="clearlogo">
-            <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + [Skin.HasSetting(home.vertical)] + !Skin.HasSetting(home.horizontal)</visible>
-            <visible>[!Player.HasVideo | !Skin.HasSetting(global.showvideo)] + ![String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)]</visible>
-            <animation effect="fade" start="100" end="0" time="0" condition="Player.HasAudio + Skin.HasSetting(global.showvisualisation)">Conditional</animation>
-            <include>Animation_FadeIn</include>
-            <fadetime>ClearArtFadetime</fadetime>
-            <include content="Def_Top" condition="Skin.HasSetting(hide.furniture.header)"><param name="top" value="-570" /></include>
-            <include content="Def_Top" condition="!Skin.HasSetting(hide.furniture.header)"><param name="top" value="-540" /></include>
-            <right>SidePad</right>
-            <width>275</width>
-            <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-            <texture background="true">$VAR[Image_Home_ClearLogo]</texture>
-            <animation effect="slide" end="0,145" start="0,0" time="0" condition="String.IsEqual(Container(300).ListItem.Property(widgetBanner),yes) + Control.HasFocus(301)">Conditional</animation>
-            <animation effect="slide" end="400,145" start="0,0" time="0" condition="String.IsEqual(Container(300).ListItem.Property(widgetBanner),yes) + !Control.HasFocus(301)">Conditional</animation>
-            <animation effect="fade" start="0" end="100" time="350" delay="300" reversible="false" condition="String.IsEqual(Container(300).ListItem.Property(widgetBanner),yes) + Control.HasFocus(301)">Conditional</animation>
-            <animation effect="fade" start="100" end="0" time="500">VisibleChange</animation>
-            <animation effect="fade" start="100" end="0" time="150">WindowClose</animation>
-        </control>
-    </include>
-
     <!-- HORIZONTAL - HEADER -->
 
     <include name="Home_Header">
@@ -2061,7 +1999,7 @@
 
             <orientation>vertical</orientation>
 
-            <!-- LABEL - HEADER VIDEO -->
+            <!-- LABEL - HEADER - VIDEO -->
 
             <control type="label">
                 <include content="Def_Font" condition="Skin.HasSetting(homemenu.netflix)">
@@ -2083,11 +2021,13 @@
                 <textcolor>Dark1</textcolor>
                 <label>$PARAM[label]</label>
                 <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+
                 <visible>$PARAM[visible] + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,album)</visible>
-                <visible>[Skin.HasSetting(show.home.netflix.title.clearlogo) + !$EXP[Exp_Title_Clearlogo_Available]] | !Skin.HasSetting(show.home.netflix.title.clearlogo)</visible>
+
+                <visible>[Skin.HasSetting(show.home.netflix.title.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)) + String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))] | !Skin.HasSetting(show.home.netflix.title.clearlogo)</visible>
             </control>
 
-            <!-- LABEL - HEADER ARTIST -->
+            <!-- LABEL - HEADER - ALBUM -->
 
             <control type="label">
                 <include content="Def_Font" condition="Skin.HasSetting(homemenu.netflix)">
@@ -2110,22 +2050,63 @@
                 <label>$INFO[Container($PARAM[id]).ListItem.Artist]</label>
                 <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
                 <visible>$PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,album)</visible>
-                <visible>[Skin.HasSetting(show.home.netflix.title.clearlogo) + !$EXP[Exp_Title_Clearlogo_Available]] | !Skin.HasSetting(show.home.netflix.title.clearlogo)</visible>
+                <visible>[Skin.HasSetting(show.home.netflix.title.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))] | !Skin.HasSetting(show.home.netflix.title.clearlogo)</visible>
             </control>
 
-             <!-- CLEARLOGO - HEADER MOVIE / TVSHOW / MUSIC ARTIST -->
+             <!-- CLEARLOGO CROP - HEADER - MOVIE / TVSHOW / MUSIC / ARTIST -->
 
             <control type="image">
                 <height>ClearLogoTitleMaxHeight</height>
                 <width>ClearLogoTitleMaxWidth</width>
                 <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-                <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+                <texture background="true">$VAR[Image_Home_ClearLogo_Crop]</texture>
                 <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
                 <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
-                <visible>$PARAM[visible] + $EXP[Exp_Title_Clearlogo_Available]</visible>
+                <visible>$PARAM[visible] + $EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
                 <visible>Skin.HasSetting(show.home.netflix.title.clearlogo)</visible>
             </control>
 
+             <!-- CLEARLOGO - HEADER - MOVIE / VIDEO / TVSHOW / ARTIST -->
+
+            <control type="image">
+                <height>ClearLogoTitleMaxHeight</height>
+                <width>ClearLogoTitleMaxWidth</width>
+                <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(clearlogo)]</texture>
+                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                <visible>$PARAM[visible] + !$EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
+                <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) | String.IsEmpty(Container($PARAM[id]).ListItem.DBType)</visible>
+            </control>
+
+             <!-- CLEARLOGO - HEADER - SEASON / EPISODE -->
+
+            <control type="image">
+                <height>ClearLogoTitleMaxHeight</height>
+                <width>ClearLogoTitleMaxWidth</width>
+                <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)]</texture>
+                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                <visible>$PARAM[visible] + !$EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
+                <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo))</visible>
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,season) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)</visible>
+            </control>
+
+             <!-- CLEARLOGO - HEADER - ALBUM -->
+
+            <control type="image">
+                <height>ClearLogoTitleMaxHeight</height>
+                <width>ClearLogoTitleMaxWidth</width>
+                <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(artist.clearlogo)]</texture>
+                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                <visible>$PARAM[visible] + !$EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
+                <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))</visible>
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,album)</visible>
+            </control>
         </definition>
     </include>
 

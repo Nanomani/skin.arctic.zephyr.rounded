@@ -607,7 +607,7 @@
 
     <include name="Furniture_Header">
 
-        <!-- HEADER CLEARLOGO  -->
+        <!-- VIEWS - HEADER - CLEARLOGO - CROP - NO CROP -->
 
         <control type="image" description="clearlogo">
             <include>Animation_FadeIn</include>
@@ -632,15 +632,16 @@
             <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
         </control>
 
-        <!-- HOME - HEADER CLEARLOGO  -->
+        <!-- HOME - HEADER - CLEARLOGO - CROP -->
 
         <control type="image" description="clearlogo home">
             <include>Animation_FadeIn</include>
             <include>Animation_FadeOut</include>
             <include>Animation_ClearLogo.FadeOut</include>
-            <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(show.home.header.clearlogo)</visible>
+            <visible>Skin.HasSetting(show.home.header.clearlogo) + $EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
+            <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
             <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
-            <visible>[!Skin.HasSetting(home.hide.nowplaying) + !Player.HasAudio] | [$EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Extended_Now_Playing_Is_Visible] + Player.HasAudio]</visible>
+            <visible>Skin.HasSetting(home.hide.nowplaying) | [!Skin.HasSetting(home.hide.nowplaying) + !Player.HasAudio] | [$EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Extended_Now_Playing_Is_Visible] + Player.HasAudio]</visible>
             <visible>ControlGroup(301).HasFocus()</visible>
 
             <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
@@ -658,7 +659,109 @@
             <width>ClearLogoMaxWidth</width>
             <fadetime>ClearArtFadetime</fadetime>
             <aspectratio align="right">keep</aspectratio>
-            <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+            <texture background="true">$VAR[Image_Home_ClearLogo_Crop]</texture>
+            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
+            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
+        </control>
+
+        <!-- HOME - HEADER - CLEARLOGO - MOVIE / VIDEO / TVSHOW / ARTIST -->
+
+        <control type="image" description="clearlogo home">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <include>Animation_ClearLogo.FadeOut</include>
+
+            <visible>Skin.HasSetting(show.home.header.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
+            <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
+            <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
+            <visible>Skin.HasSetting(home.hide.nowplaying) | [!Skin.HasSetting(home.hide.nowplaying) + !Player.HasAudio] | [$EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Extended_Now_Playing_Is_Visible] + Player.HasAudio]</visible>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) | String.IsEmpty(Container($PARAM[id]).ListItem.DBType)</visible>
+            <visible>ControlGroup(301).HasFocus()</visible>
+
+            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+
+            <!-- Hide with NowPlaying -->
+            <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
+                <effect type="slide" start="0,0" end="350,0" tween="sine" easing="out" time="300" delay="0"/>
+                <effect type="fade" start="100" end="0" time="150" delay="0"/>
+            </animation>
+
+            <centertop>60</centertop>
+            <right>SidePad</right>
+            <height>ClearLogoMaxHeight</height>
+            <width>ClearLogoMaxWidth</width>
+            <fadetime>ClearArtFadetime</fadetime>
+            <aspectratio align="right">keep</aspectratio>
+            <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(clearlogo)]</texture>
+            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
+            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
+        </control>
+
+        <!-- HOME - HEADER - CLEARLOGO - SEASON / EPISODE -->
+
+        <control type="image" description="clearlogo home">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <include>Animation_ClearLogo.FadeOut</include>
+
+            <visible>Skin.HasSetting(show.home.header.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo))</visible>
+            <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
+            <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
+            <visible>Skin.HasSetting(home.hide.nowplaying) | [!Skin.HasSetting(home.hide.nowplaying) + !Player.HasAudio] | [$EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Extended_Now_Playing_Is_Visible] + Player.HasAudio]</visible>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,season) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)</visible>
+            <visible>ControlGroup(301).HasFocus()</visible>
+
+            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+
+            <!-- Hide with NowPlaying -->
+            <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
+                <effect type="slide" start="0,0" end="350,0" tween="sine" easing="out" time="300" delay="0"/>
+                <effect type="fade" start="100" end="0" time="150" delay="0"/>
+            </animation>
+
+            <centertop>60</centertop>
+            <right>SidePad</right>
+            <height>ClearLogoMaxHeight</height>
+            <width>ClearLogoMaxWidth</width>
+            <fadetime>ClearArtFadetime</fadetime>
+            <aspectratio align="right">keep</aspectratio>
+            <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)]</texture>
+            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
+            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
+        </control>
+
+        <!-- HOME - HEADER - CLEARLOGO - ALBUM -->
+
+        <control type="image" description="clearlogo home">
+            <include>Animation_FadeIn</include>
+            <include>Animation_FadeOut</include>
+            <include>Animation_ClearLogo.FadeOut</include>
+
+            <visible>Skin.HasSetting(show.home.header.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))</visible>
+            <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
+            <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
+            <visible>Skin.HasSetting(home.hide.nowplaying) | [!Skin.HasSetting(home.hide.nowplaying) + !Player.HasAudio] | [$EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Extended_Now_Playing_Is_Visible] + Player.HasAudio]</visible>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,album)</visible>
+            <visible>ControlGroup(301).HasFocus()</visible>
+
+            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+
+            <!-- Hide with NowPlaying -->
+            <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
+                <effect type="slide" start="0,0" end="350,0" tween="sine" easing="out" time="300" delay="0"/>
+                <effect type="fade" start="100" end="0" time="150" delay="0"/>
+            </animation>
+
+            <centertop>60</centertop>
+            <right>SidePad</right>
+            <height>ClearLogoMaxHeight</height>
+            <width>ClearLogoMaxWidth</width>
+            <fadetime>ClearArtFadetime</fadetime>
+            <aspectratio align="right">keep</aspectratio>
+            <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(artist.clearlogo)]</texture>
             <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
             <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
         </control>
@@ -1118,7 +1221,7 @@
         <control type="group">
             <include>Animation_FurnitureVisible_footer</include>
             <visible>Skin.HasSetting(show.furniture.footer) | Control.IsVisible(5048) | Control.IsVisible(5218) | Control.IsVisible(5238)</visible>
-            <visible>[!Skin.HasSetting(55wall.showinfo) + Control.IsVisible(55)] | Control.IsVisible(506) | Control.IsVisible(52) | Control.IsVisible(500) | Control.IsVisible(511) | Control.IsVisible(512) | Control.IsVisible(517) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5048) | Control.IsVisible(5218) | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)] | Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(5238) | Window.IsVisible(FileManager.xml) | Window.IsVisible(script-globalsearch.xml)</visible>
+            <visible>[!Skin.HasSetting(55wall.showinfo) + Control.IsVisible(55)] | Control.IsVisible(506) | Control.IsVisible(52) | Control.IsVisible(500) | Control.IsVisible(515) | Control.IsVisible(511) | Control.IsVisible(512) | Control.IsVisible(517) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5048) | Control.IsVisible(5218) | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)] | Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(5238) | Window.IsVisible(FileManager.xml) | Window.IsVisible(script-globalsearch.xml)</visible>
             <left>SidePad</left>
             <centerbottom>100</centerbottom>
             <orientation>horizontal</orientation>
@@ -1294,7 +1397,7 @@
                 <label>$INFO[ListItem.Artist]</label>
                 <visible>!String.IsEmpty(ListItem.Artist)</visible>
                 <visible>Container.Content(songs) | Container.Content(albums) | Container.Content(artists)</visible>
-                <visible>Control.IsVisible(50) | Control.IsVisible(52) | Control.IsVisible(503) | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | [Control.IsVisible(5238) + String.IsEqual(Skin.String(523.square.size),2)] | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)]</visible>
+                <visible>Control.IsVisible(515) | Control.IsVisible(50) | Control.IsVisible(52) | Control.IsVisible(503) | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | [Control.IsVisible(5238) + String.IsEqual(Skin.String(523.square.size),2)] | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)]</visible>
             </control>
 
             <!-- FILES MANAGER -->
@@ -1332,7 +1435,7 @@
         <control type="group">
             <include>Animation_FurnitureVisible_footer</include>
             <visible>Skin.HasSetting(show.furniture.footer) | Control.IsVisible(5048) | Control.IsVisible(5218) | Window.IsVisible(FileManager.xml)</visible>
-            <visible>[!Skin.HasSetting(55wall.showinfo) + Control.IsVisible(55)] | Control.IsVisible(506) | Control.IsVisible(550) | Control.IsVisible(50) | Control.IsVisible(56) | Control.IsVisible(57) | Control.IsVisible(500) | Control.IsVisible(511) | Control.IsVisible(52) | Control.IsVisible(512) | Control.IsVisible(517) | Control.IsVisible(547) | Control.IsVisible(555) | Control.IsVisible(557) | Control.IsVisible(5048) | Control.IsVisible(5218) | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)] | [Control.IsVisible(5228) + Container.Content(artists)] | Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(547) | [Control.IsVisible(5238) + String.IsEqual(Skin.String(523.square.size),2)] | [Control.IsVisible(5238) + Container.Content(artists)] | Window.IsVisible(script-globalsearch.xml) | Window.IsVisible(FileManager.xml)</visible>
+            <visible>[!Skin.HasSetting(55wall.showinfo) + Control.IsVisible(55)] | Control.IsVisible(506) | Control.IsVisible(550) | Control.IsVisible(50) | Control.IsVisible(56) | Control.IsVisible(57) | Control.IsVisible(500) | Control.IsVisible(511) | Control.IsVisible(52) | Control.IsVisible(512) | Control.IsVisible(515) | Control.IsVisible(517) | Control.IsVisible(547) | Control.IsVisible(555) | Control.IsVisible(557) | Control.IsVisible(5048) | Control.IsVisible(5218) | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)] | [Control.IsVisible(5228) + Container.Content(artists)] | Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(547) | [Control.IsVisible(5238) + String.IsEqual(Skin.String(523.square.size),2)] | [Control.IsVisible(5238) + Container.Content(artists)] | Window.IsVisible(script-globalsearch.xml) | Window.IsVisible(FileManager.xml)</visible>
             <centerbottom>100</centerbottom>
             <orientation>horizontal</orientation>
             <align>right</align>
@@ -1586,7 +1689,7 @@
                 <textcolor>Dark2</textcolor>
                 <label>$VAR[Label_Music_Sub_Title]</label>
                 <visible>Container.Content(songs) | Container.Content(albums) | Container.Content(artists)</visible>
-                <visible>Control.IsVisible(52) | Control.IsVisible(503) | [Control.IsVisible(500) + Container.Content(artists)] | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5228) | Control.IsVisible(5238) | Window.IsVisible(script-globalsearch.xml)</visible>
+                <visible>Control.IsVisible(52) | Control.IsVisible(503) | [Control.IsVisible(515) + Container.Content(artists)] | [Control.IsVisible(500) + Container.Content(artists)] | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5228) | Control.IsVisible(5238) | Window.IsVisible(script-globalsearch.xml)</visible>
                 <visible>!Window.IsVisible(MyPrograms.xml) + !$EXP[IsPluginRadio_DeItem] + !ListItem.IsParentFolder</visible>
             </control>
         </control>

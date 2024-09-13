@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="1102" type="dialog">
-    <visible>System.IdleTime(2) + Window.IsVisible(DialogVideoInfo.xml) + String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) + !Window.IsVisible(DialogSelect.xml)</visible>
+    <visible>System.IdleTime(3) + Window.IsVisible(DialogVideoInfo.xml) + String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) + !Window.IsVisible(DialogSelect.xml)</visible>
 
     <!-- ============ -->
     <!-- TMDB ON LINE -->
@@ -14,16 +14,16 @@
     <!-- ============ -->
 
     <!-- Director -->
-    <onload condition="!String.IsEmpty(ListItem.Director) + String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
-    <onload condition="!String.IsEmpty(ListItem.Director) + !String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$INFO[ListItem.Director],Home)</onload>
+    <onload condition="Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Director) + String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
+    <onload condition="Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Director) + !String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$INFO[ListItem.Director],Home)</onload>
 
     <!-- Writer -->
-    <onload condition="!String.IsEmpty(ListItem.Writer) + String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$VAR[Path_Writer_Name],Home)</onload>
-    <onload condition="!String.IsEmpty(ListItem.Writer) + !String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$INFO[ListItem.Writer],Home)</onload>
+    <onload condition="Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Writer) + String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$VAR[Path_Writer_Name],Home)</onload>
+    <onload condition="Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Writer) + !String.Contains(ListItem.Writer, / ) + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$INFO[ListItem.Writer],Home)</onload>
 
     <!-- Studio -->
-    <onload condition="!String.IsEmpty(ListItem.Studio) + String.Contains(ListItem.Studio, / ) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$VAR[Path_Studio_Name],Home)</onload>
-    <onload condition="!String.IsEmpty(ListItem.Studio) + !String.Contains(ListItem.Studio, / ) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$INFO[ListItem.Studio],Home)</onload>
+    <onload condition="Skin.HasSetting(filter.video.only.local) + !String.IsEmpty(ListItem.Studio) + String.Contains(ListItem.Studio, / ) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$VAR[Path_Studio_Name],Home)</onload>
+    <onload condition="Skin.HasSetting(filter.video.only.local) + !String.IsEmpty(ListItem.Studio) + !String.Contains(ListItem.Studio, / ) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$INFO[ListItem.Studio],Home)</onload>
 
     <!-- Encode label studio -->
     <onload condition="Skin.HasSetting(filter.video.only.local)">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Studio&amp;&amp;$INFO[Window(Home).Property(SetStudioSelected)]")</onload>
@@ -36,18 +36,44 @@
     <!-- ============ -->
 
     <!-- Director -->
-    <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Window(Home).Property(Director_Query))">SetProperty(Director_Query,$VAR[Path_Director_TMDb_ID],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Director_Query))">SetProperty(Director_Query,$VAR[Path_Director_TMDb_ID],Home)</onload>
 
     <!-- Writer -->
-    <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Window(Home).Property(Writer_Query))">SetProperty(Writer_Query,$VAR[Path_Writer_TMDb_ID],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(SetWriterSelected))">SetProperty(SetWriterSelected,$VAR[Path_Writer_Name],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Writer_Query))">SetProperty(Writer_Query,$VAR[Path_Writer_TMDb_ID],Home)</onload>
 
     <!-- Creator -->
-    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SetCreatorSelected,$VAR[Path_Creator_Name],Home)</onload>
-    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Creator_Query))">SetProperty(Creator_Query,$VAR[Path_Creator_TMDb_ID],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SetCreatorSelected,$VAR[Path_Creator_Name],Home)</onload>
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + String.IsEmpty(Window(Home).Property(Creator_Query))">SetProperty(Creator_Query,$VAR[Path_Creator_TMDb_ID],Home)</onload>
 
-    <!-- Studio -->
+    <!-- Studio (movie) -->
+    <onload condition="!Skin.HasSetting(filter.video.only.local) + !String.IsEmpty(ListItem.Studio) + String.IsEmpty(Window(Home).Property(SetStudioSelected))">SetProperty(SetStudioSelected,$VAR[Path_Studio_Name],Home)</onload>
     <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + String.IsEmpty(Window(Home).Property(Studio_Query))">SetProperty(Studio_Query,$VAR[Path_Studio_TMDb_ID],Home)</onload>
+
+    <!-- Network (tvshow) -->
     <onload condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Network_Query))">SetProperty(Network_Query,$VAR[Path_Network_TMDb_ID],Home)</onload>
+
+    <!-- Encode label sets -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,set)">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Label&amp;&amp;$INFO[ListItem.Label]")</onload> -->
+
+    <!-- DEBUG -->
+
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_1,$INFO[Container(99950).ListItem.Property(Director.1.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_2,$INFO[Container(99950).ListItem.Property(Director.2.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_3,$INFO[Container(99950).ListItem.Property(Director.3.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_4,$INFO[Container(99950).ListItem.Property(Director.4.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_5,$INFO[Container(99950).ListItem.Property(Director.5.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_6,$INFO[Container(99950).ListItem.Property(Director.6.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_7,$INFO[Container(99950).ListItem.Property(Director.7.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_8,$INFO[Container(99950).ListItem.Property(Director.8.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_9,$INFO[Container(99950).ListItem.Property(Director.9.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_10,$INFO[Container(99950).ListItem.Property(Director.10.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_11,$INFO[Container(99950).ListItem.Property(Director.11.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_12,$INFO[Container(99950).ListItem.Property(Director.12.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_13,$INFO[Container(99950).ListItem.Property(Director.13.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_14,$INFO[Container(99950).ListItem.Property(Director.14.TMDb_ID)],Home)</onload> -->
+    <!-- <onload condition="!Skin.HasSetting(filter.video.only.local)">SetProperty(Director_15,$INFO[Container(99950).ListItem.Property(Director.15.TMDb_ID)],Home)</onload> -->
 
     <onload>AlarmClock(Dialog_Info_Init_Value_TMDb,SetProperty(Init_Value_TMDb,1,Home),00:01,silent)</onload>
     <!-- <onunload>SetProperty(Init_Value_TMDb,1,Home)</onunload> -->

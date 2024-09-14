@@ -760,7 +760,9 @@
 
         <!-- <value condition="Container.Content(albums) + Skin.HasSetting(show.view.netflix.title.clearlogo.music)">$INFO[ListItem.Label]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value> -->
 
-        <value condition="Container.Content(albums)">$INFO[ListItem.Label]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
+        <value condition="Container.Content(albums) + String.StartsWith(ListItem.Label,$LOCALIZE[427])">$INFO[ListItem.Album,,  •  ]$INFO[ListItem.Label]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
+
+        <value condition="Container.Content(albums) + !String.StartsWith(ListItem.Label,$LOCALIZE[427])">$INFO[ListItem.Label]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
 
         <value condition="Control.IsVisible(57) + Container.Content(songs)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]</value>
         <value condition="Control.IsVisible(523) + Container.Content(songs)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]</value>
@@ -1269,8 +1271,14 @@
     </variable>
 
     <variable name="label_music_list">
-        <value condition="String.IsEqual(ListItem.DBType,song) + Window.IsVisible(MyMusicNav.xml) + Skin.HasSetting(enable.view.5x.51x.extended.list) + !$EXP[IsAnPlugin]">$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value>
-        <value condition="String.IsEqual(ListItem.DBType,song) + Window.IsVisible(MyPlaylist.xml) + Skin.HasSetting(enable.view.5x.51x.extended.list.playlist) + !$EXP[IsAnPlugin]">$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value>
+        <value condition="String.IsEqual(ListItem.DBType,song) + Window.IsVisible(MyMusicNav.xml) + Skin.HasSetting(enable.view.5x.51x.extended.list) + !$EXP[IsAnPlugin] + !Integer.IsGreater(ListItem.Property(Album_Totaldiscs),1)">$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value>
+
+        <!-- <value condition="String.IsEqual(ListItem.DBType,song) + Window.IsVisible(MyMusicNav.xml) + Skin.HasSetting(enable.view.5x.51x.extended.list) + $EXP[IsAnPlugin] + Integer.IsGreater(ListItem.Property(Album_Totaldiscs),1)">$LOCALIZE[427] $INFO[ListItem.DiscNumber,, - ]$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value> -->
+
+        <value condition="String.IsEqual(ListItem.DBType,song) + Window.IsVisible(MyPlaylist.xml) + Skin.HasSetting(enable.view.5x.51x.extended.list.playlist) + !$EXP[IsAnPlugin] + !$EXP[IsAnPlugin] + !Integer.IsGreater(ListItem.Property(Album_Totaldiscs),1)">$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value>
+
+        <!-- <value condition="String.IsEqual(ListItem.DBType,song) + Window.IsVisible(MyPlaylist.xml) + Skin.HasSetting(enable.view.5x.51x.extended.list.playlist) + !$EXP[IsAnPlugin] + !$EXP[IsAnPlugin] + Integer.IsGreater(ListItem.Property(Album_Totaldiscs),1)">$LOCALIZE[427] $INFO[ListItem.DiscNumber,, - ,$LOCALIZE[427]]$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value> -->
+
         <value>$INFO[ListItem.Label]</value>
     </variable>
 

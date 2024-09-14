@@ -2037,10 +2037,11 @@
                 <width>ClearLogoTitleMaxWidth</width>
                 <aspectratio scalediffuse="true" align="left">keep</aspectratio>
                 <texture background="true">$VAR[Image_Home_ClearLogo_Crop]</texture>
-                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation>
                 <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
                 <visible>$PARAM[visible] + $EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
                 <visible>Skin.HasSetting(show.home.netflix.title.clearlogo)</visible>
+                <fadetime>ClearArtFadetime</fadetime>
             </control>
 
              <!-- CLEARLOGO - HEADER - MOVIE / VIDEO / TVSHOW / ARTIST -->
@@ -2050,11 +2051,12 @@
                 <width>ClearLogoTitleMaxWidth</width>
                 <aspectratio scalediffuse="true" align="left">keep</aspectratio>
                 <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(clearlogo)]</texture>
-                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation>
                 <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
                 <visible>$PARAM[visible] + !$EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
                 <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) | String.IsEmpty(Container($PARAM[id]).ListItem.DBType)</visible>
+                <fadetime>ClearArtFadetime</fadetime>
             </control>
 
              <!-- CLEARLOGO - HEADER - SEASON / EPISODE -->
@@ -2064,11 +2066,12 @@
                 <width>ClearLogoTitleMaxWidth</width>
                 <aspectratio scalediffuse="true" align="left">keep</aspectratio>
                 <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)]</texture>
-                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation>
                 <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
                 <visible>$PARAM[visible] + !$EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
                 <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo))</visible>
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,season) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)</visible>
+                <fadetime>ClearArtFadetime</fadetime>
             </control>
 
              <!-- CLEARLOGO - HEADER - ALBUM -->
@@ -2078,11 +2081,12 @@
                 <width>ClearLogoTitleMaxWidth</width>
                 <aspectratio scalediffuse="true" align="left">keep</aspectratio>
                 <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(artist.clearlogo)]</texture>
-                <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation>
                 <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
                 <visible>$PARAM[visible] + !$EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
                 <visible>Skin.HasSetting(show.home.netflix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))</visible>
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,album)</visible>
+                <fadetime>ClearArtFadetime</fadetime>
             </control>
         </definition>
     </include>
@@ -2285,14 +2289,14 @@
                     <label> $INFO[Control.GetLabel(9967)]</label>
                     <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
                     <visible>ControlGroup(301).HasFocus()</visible>
-                    <visible>![Integer.IsEqual(Container(44022).NumItems,2) | Integer.IsEqual(Container(44022).NumItems,3) | Integer.IsEqual(Container(44022).NumItems,4)]</visible>
+                    <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.Property(Album_Totaldiscs),1)</visible>
                 </control>
                 <control type="label">
                     <include>Widgets_Item_SubTitle_Info_Definition</include>
                     <label> $INFO[Control.GetLabel(9970)]</label>
                     <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
                     <visible>ControlGroup(301).HasFocus()</visible>
-                    <visible>Integer.IsEqual(Container(44022).NumItems,2) | Integer.IsEqual(Container(44022).NumItems,3) | Integer.IsEqual(Container(44022).NumItems,4)</visible>
+                    <visible>Integer.IsGreater(Container($PARAM[id]).ListItem.Property(Album_Totaldiscs),1)</visible>
                 </control>
                 <control type="label">
                     <include>Widgets_Item_SubTitle_Info_Definition</include>

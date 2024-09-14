@@ -116,7 +116,7 @@
                         <texture colordiffuse="$VAR[Color_Highlight]">dialog/loading-spinner.png</texture>
                         <aspectratio>keep</aspectratio>
                         <include>Animation_Vertical_Widgets_Title_Loading</include>
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | Container(9506).IsUpdating | Container(9556).IsUpdating | Container(9514).IsUpdating | Container(9515).IsUpdating | Container(9502).IsUpdating | Container(9517).IsUpdating | Container(9503).IsUpdating | Container(9557).IsUpdating | Container(50).IsUpdating | Container(9554).IsUpdating | Container(9552).IsUpdating | Container(9553).IsUpdating | Container(9558).IsUpdating | Container(9559).IsUpdating | Container(9579).IsUpdating | Container(9520).IsUpdating | Container(95051).IsUpdating | Container(9504).IsUpdating</visible>
+                        <visible>$EXP[DialogVideoInfo_IsUpadttingInfo]</visible>
                         <visible>!String.IsEqual(ListItem.DBType,set)</visible>
                         <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
                         <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
@@ -134,7 +134,7 @@
                         <align>right</align>
                         <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
                         <include>Animation_Button_Label_Video</include>
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | Container(9506).IsUpdating | Container(9556).IsUpdating | Container(9514).IsUpdating | Container(9515).IsUpdating | Container(9502).IsUpdating | Container(9517).IsUpdating | Container(9503).IsUpdating | Container(9557).IsUpdating | Container(50).IsUpdating | Container(9554).IsUpdating | Container(9552).IsUpdating | Container(9553).IsUpdating | Container(9558).IsUpdating | Container(9559).IsUpdating | Container(9579).IsUpdating | Container(9520).IsUpdating | Container(95051).IsUpdating | Container(9504).IsUpdating</visible>
+                        <visible>$EXP[DialogVideoInfo_IsUpadttingInfo]</visible>
                         <visible>!String.IsEqual(ListItem.DBType,set)</visible>
                         <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
                         <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
@@ -151,7 +151,7 @@
                         <align>right</align>
                         <visible>ControlGroup(9000).HasFocus() | ControlGroup(9090).HasFocus()</visible>
                         <include>Animation_Button_Label_Video</include>
-                        <visible>![!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | Container(9506).IsUpdating | Container(9556).IsUpdating | Container(9514).IsUpdating | Container(9515).IsUpdating | Container(9502).IsUpdating | Container(9517).IsUpdating | Container(9503).IsUpdating | Container(9557).IsUpdating | Container(50).IsUpdating | Container(9554).IsUpdating | Container(9552).IsUpdating | Container(9553).IsUpdating | Container(9558).IsUpdating | Container(9559).IsUpdating | Container(9579).IsUpdating | Container(9520).IsUpdating | Container(95051).IsUpdating | Container(9504).IsUpdating]</visible>
+                        <visible>!$EXP[DialogVideoInfo_IsUpadttingInfo]</visible>
                         <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9090).HasFocus()">Conditional</animation>
                         <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
                     </control>
@@ -1385,7 +1385,7 @@
                         <param name="arrowright" value="155"/>
                         <param name="fallbackpicture" value="DefaultActor.png"/>
                         <param name="visi" value="String.IsEmpty(Window.Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]"/>
-                        <param name="visible.layouts" value="[Control.HasFocus(50) + !Window.IsVisible(DialogVideoManager.xml)] | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="visible.layouts" value="[Control.HasFocus(50) + !Window.IsVisible(DialogVideoManager.xml)] | Control.HasFocus(507) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
                         <param name="storageicon.backgroundlist" value="false"/>
                         <param name="animation" value="Animation_cast"/>
                         <param name="controlid" value="50"/>
@@ -1678,6 +1678,33 @@
                         <param name="centerleft" value="430"/>
                     </include>
 
+                    <!-- CREW -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.crew)">
+                        <param name="arrowleft" value="-598"/>
+                        <param name="arrowtop" value="342"/>
+                        <param name="arrowright" value="155"/>
+                        <param name="condition.includecontent" value="true"/>
+                        <param name="fallbackpicture" value="pbtmdb.png"/>
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17)"/>
+                        <param name="animation" value="Animation_cast"/>
+                        <param name="controlid" value="9557"/>
+                        <param name="ContentToLoad" value="$VAR[Def_List_Crew]"/>
+                        <param name="visible.layouts" value="Control.HasFocus(9557) | Control.HasFocus(95577) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
+                        <param name="storageicon.backgroundlist" value="true"/>
+                        <param name="onclick1" value="$VAR[Def_Item]"/>
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
+                        <param name="listleft" value="-840"/>
+                        <param name="labeltwovisible" value="true"/>
+                        <param name="poster" value="true" />
+                        <param name="thumb" value="false" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17) + Control.HasFocus(9057)"/>
+                        <param name="controlid" value="9557"/>
+                        <param name="centerleft" value="640"/>
+                    </include>
+
                     <!-- BY DIRECTOR -->
 
                     <include content="Def_Layout_Dialog_Info_Video_Wall_Poster" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.director)">
@@ -1734,33 +1761,6 @@
                         <param name="visi" value="String.IsEqual(Window.Property(moviecontent),14) + Control.HasFocus(9056)"/>
                         <param name="controlid" value="9556"/>
                         <param name="centerleft" value="430"/>
-                    </include>
-
-                    <!-- CREW -->
-
-                    <include content="Def_Layout_Dialog_Info_Video_List_Cast_9050" condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set) + Skin.HasSetting(show.button.video.crew)">
-                        <param name="arrowleft" value="-598"/>
-                        <param name="arrowtop" value="342"/>
-                        <param name="arrowright" value="155"/>
-                        <param name="condition.includecontent" value="true"/>
-                        <param name="fallbackpicture" value="pbtmdb.png"/>
-                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17)"/>
-                        <param name="animation" value="Animation_cast"/>
-                        <param name="controlid" value="9557"/>
-                        <param name="ContentToLoad" value="$VAR[Def_List_Crew]"/>
-                        <param name="visible.layouts" value="Control.HasFocus(9557) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)"/>
-                        <param name="storageicon.backgroundlist" value="true"/>
-                        <param name="onclick1" value="$VAR[Def_Item]"/>
-                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)"/>
-                        <param name="listleft" value="-840"/>
-                        <param name="labeltwovisible" value="true"/>
-                        <param name="poster" value="true" />
-                        <param name="thumb" value="false" />
-                    </include>
-                    <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visi" value="String.IsEqual(Window.Property(moviecontent),17) + Control.HasFocus(9057)"/>
-                        <param name="controlid" value="9557"/>
-                        <param name="centerleft" value="640"/>
                     </include>
 
                     <!-- YEAR MOVIES / TV SHOWS -->

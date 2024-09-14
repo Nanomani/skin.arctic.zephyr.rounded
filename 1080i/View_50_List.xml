@@ -365,6 +365,7 @@
                     </include>
                 </control>
             </control>
+
             <include>View_50_SidePoster</include>
         </control>
     </include>
@@ -417,6 +418,71 @@
                 <include>Object_Scrollbar_View_PVR</include>
             </control>
             <include>View_50_SidePoster_Square</include>
+        </control>
+    </include>
+
+    <include name="View_550_List_Square_Video_LowList">
+        <description>List View (id=550)</description>
+        <control type="group">
+            <visible>Control.IsVisible(550)</visible>
+
+            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
+            <include>Animation_Common</include>
+            <include>View_Slide_For_JumpBar</include>
+
+            <control type="group">
+                <top>275</top>
+                <control type="panel" id="550">
+                    <visible>$EXP[Exp_View_550]</visible>
+
+                    <include>Def_On_Info</include>
+
+                    <top>PosterPad</top>
+                    <height>365</height>
+                    <right>SidePad</right>
+                    <left>ListSquareX</left>
+
+                    <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
+                    <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
+                    <onright>60</onright>
+                    <onup>550</onup>
+                    <ondown>550</ondown>
+                    <pagecontrol>60</pagecontrol>
+                    <viewtype label="535">list</viewtype>
+                    <include>Animation_Scrolltime_Views_List</include>
+
+                    <itemlayout condition="Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="64">
+                        <include>50_56_57_516_550_item_layout_video</include>
+                    </itemlayout>
+                    <focusedlayout condition="Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="64">
+                        <include>50_56_57_516_550_focus_layout_video</include>
+                    </focusedlayout>
+
+                    <itemlayout condition="!Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="91.4">
+                        <include>50_56_57_516_550_item_layout_video_info</include>
+                    </itemlayout>
+                    <focusedlayout condition="!Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="91.4">
+                        <include>50_56_57_516_550_focus_layout_video_info</include>
+                    </focusedlayout>
+                </control>
+
+                <control type="scrollbar" id="1652">
+                    <include content="Object_Scrollbar_Views_Vertical">
+                        <param name="scrollid" value="1652"/>
+                        <param name="top" value="216"/>
+                        <param name="height" value="365"/>
+                        <param name="idlayout" value="57"/>
+                    </include>
+                </control>
+            </control>
+
+            <include>LowList_Title</include>
+
+            <include content="Fanart_Info">
+                <param name="left" value="70"/>
+                <param name="top" value="490"/>
+                <param name="visible" value="Container.Content(movies) | Container.Content(tvshows)"/>
+            </include>
         </control>
     </include>
 
@@ -621,7 +687,15 @@
                     <content>$INFO[Container($PARAM[id]).ListItem.DBID,musicdb://artists/,/]</content>
                 </control>
             </control>
-            <include>View_50_SidePoster_Square</include>
+            <include>LowList_Title</include>
+
+            <include content="Fanart_Info">
+                <param name="left" value="70"/>
+                <param name="top" value="490"/>
+                <param name="visible" value="Container.Content(songs) | Container.Content(albums)"/>
+            </include>
+
+            <!-- <include>View_50_SidePoster_Square</include> -->
         </control>
     </include>
 

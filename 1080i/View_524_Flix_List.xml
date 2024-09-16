@@ -21,10 +21,13 @@
                     <top>PosterPad</top>
                     <height>358</height>
                     <right>SidePad</right>
-                    <left>ListSquareX</left>
+
+                    <include content="Def_Left" condition="!Skin.HasSetting(show.view.524.poster.movies)"><param name="left" value="752" /></include>
+                    <include content="Def_Left" condition="Skin.HasSetting(show.view.524.poster.movies)"><param name="left" value="387" /></include>
 
                     <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
                     <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
+
                     <onright>1654</onright>
                     <onup>524</onup>
                     <ondown>524</ondown>
@@ -40,17 +43,17 @@
                     <viewtype label="535">list</viewtype>
                     <include>Animation_Scrolltime_Views_List</include>
 
-                    <itemlayout condition="Skin.HasSetting(disable.view.524.extended.list.video)" width="ListSquareW" height="64">
+                    <itemlayout condition="Skin.HasSetting(disable.view.524.extended.list.video)" height="64">
                         <include>50_56_57_516_550_item_layout_video</include>
                     </itemlayout>
-                    <focusedlayout condition="Skin.HasSetting(disable.view.524.extended.list.video)" width="ListSquareW" height="64">
+                    <focusedlayout condition="Skin.HasSetting(disable.view.524.extended.list.video)" height="64">
                         <include>50_56_57_516_550_focus_layout_video</include>
                     </focusedlayout>
 
-                    <itemlayout condition="!Skin.HasSetting(disable.view.524.extended.list.video)" width="ListSquareW" height="91.4">
+                    <itemlayout condition="!Skin.HasSetting(disable.view.524.extended.list.video)" height="91.4">
                         <include>50_56_57_516_550_item_layout_video_info</include>
                     </itemlayout>
-                    <focusedlayout condition="!Skin.HasSetting(disable.view.524.extended.list.video)" width="ListSquareW" height="91.4">
+                    <focusedlayout condition="!Skin.HasSetting(disable.view.524.extended.list.video)" height="91.4">
                         <include>50_56_57_516_550_focus_layout_video_info</include>
                     </focusedlayout>
                 </control>
@@ -67,11 +70,8 @@
 
             <include>View_524_Flix_Info_Video</include>
 
-            <include content="Fanart_Info">
-                <param name="left" value="70"/>
-                <param name="top" value="522"/>
-                <param name="visible" value="true"/>
-            </include>
+            <include condition="Skin.HasSetting(show.view.524.poster.movies)">View_524_Poster</include>
+            <include condition="!Skin.HasSetting(show.view.524.poster.movies)">View_524_Fanart</include>
         </control>
     </include>
 
@@ -95,7 +95,9 @@
                     <top>PosterPad</top>
                     <height>358</height>
                     <right>SidePad</right>
-                    <left>ListSquareX</left>
+
+                    <include content="Def_Left" condition="Skin.HasSetting(show.view.524.fanart.artist)"><param name="left" value="752" /></include>
+                    <include content="Def_Left" condition="!Skin.HasSetting(show.view.524.fanart.artist)"><param name="left" value="477" /></include>
 
                     <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
                     <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
@@ -114,17 +116,17 @@
                     <viewtype label="535">list</viewtype>
                     <include>Animation_Scrolltime_Views_List</include>
 
-                    <itemlayout condition="Skin.HasSetting(disable.view.524.extended.list.music)" width="ListSquareW" height="64">
+                    <itemlayout condition="Skin.HasSetting(disable.view.524.extended.list.music)" height="64">
                         <include>50_57_item_layout_music</include>
                     </itemlayout>
-                    <focusedlayout condition="Skin.HasSetting(disable.view.524.extended.list.music)" width="ListSquareW" height="64">
+                    <focusedlayout condition="Skin.HasSetting(disable.view.524.extended.list.music)" height="64">
                         <include>50_57_focus_layout_music</include>
                     </focusedlayout>
 
-                    <itemlayout condition="!Skin.HasSetting(disable.view.524.extended.list.music)" width="ListSquareW" height="91.4">
+                    <itemlayout condition="!Skin.HasSetting(disable.view.524.extended.list.music)" height="91.4">
                         <include>50_57_item_layout_music_info</include>
                     </itemlayout>
-                    <focusedlayout condition="!Skin.HasSetting(disable.view.524.extended.list.music)" width="ListSquareW" height="91.4">
+                    <focusedlayout condition="!Skin.HasSetting(disable.view.524.extended.list.music)" height="91.4">
                         <include>50_57_focus_layout_music_info</include>
                     </focusedlayout>
                 </control>
@@ -147,11 +149,8 @@
             <include>View_524_Flix_Info_Music</include>
             <!-- <include>LowList_Title</include> -->
 
-            <include content="Fanart_Info">
-                <param name="left" value="70"/>
-                <param name="top" value="522"/>
-                <param name="visible" value="true"/>
-            </include>
+            <include condition="!Skin.HasSetting(show.view.524.fanart.artist)">View_524_Album</include>
+            <include condition="Skin.HasSetting(show.view.524.fanart.artist)">View_524_Fanart</include>
         </control>
     </include>
 
@@ -559,5 +558,235 @@
                 </control>
             </control>
         </control>
+    </include>
+
+    <include name="View_524_Fanart">
+        <param name="top" value="$PARAM[top]" default="522"/>
+        <param name="left" value="$PARAM[left]" default="70"/>
+        <param name="visible" value="$PARAM[visible]" default="true"/>
+        <param name="width" value="$PARAM[width]" default="645"/>
+        <param name="height" value="$PARAM[height]" default="370"/>
+        <definition>
+            <control type="group">
+                <visible>$EXP[Exp_View_524]</visible>
+
+                <visible>$PARAM[visible]</visible>
+
+                <top>$PARAM[top]</top>
+                <left>$PARAM[left]</left>
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
+
+                <control type="group">
+                    <control type="image">
+                        <left>1</left>
+                        <top>1</top>
+                        <right>1</right>
+                        <bottom>1</bottom>
+                        <texture border="18" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <texture colordiffuse="Fallback" border="12" background="true">common/box.png</texture>
+                    </control>
+
+                    <!-- FANART  -->
+
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/fanart_645x370_v57.png" background="true">$VAR[Image_Fanart]</texture>
+
+                        <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files) | Container.Content(favourites) | String.IsEqual(ListItem.Property(item.type),person)</visible>
+
+                        <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
+                        <!-- <visible>!$EXP[IsYoutubeItem]</visible> -->
+                        <visible>!ListItem.IsParentFolder</visible>
+                    </control>
+
+                    <!-- ICON BLACK -->
+
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/fanart_645x370_v57.png" background="true" colordiffuse="Dark1">$VAR[Image_Fanart]</texture>
+                        <visible>String.StartsWith(ListItem.Icon,Default)</visible>
+                        <visible>$EXP[IsGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | [Container.Content() + String.StartsWith(Container.FolderPath,addons://)] | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content()]</visible>
+                    </control>
+
+                    <!-- CLEARLOGO -->
+
+                    <control type="image">
+                        <height>100</height>
+                        <width>240</width>
+                        <right>40</right>
+                        <bottom>30</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="right" aligny="bottom">keep</aspectratio>
+                        <texture background="true">$VAR[Image_ClearLogo]</texture>
+                        <visible>[Skin.HasSetting(dont.use.landscape.tvshows) + Skin.HasSetting(use.clearlogo.on.fanart.tvshows) + String.IsEqual(ListItem.DBType,tvshow)] |
+                        [!Skin.HasSetting(dont.use.landscape.tvshows) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,tvshow)] |
+                        [Skin.HasSetting(dont.use.landscape.seasons) + Skin.HasSetting(use.clearlogo.on.fanart.seasons) + String.IsEqual(ListItem.DBType,season)] |
+                        [!Skin.HasSetting(dont.use.landscape.seasons) + String.IsEmpty(ListItem.Art(tvshow.landscape)) + String.IsEqual(ListItem.DBType,season)] |
+                        [Skin.HasSetting(dont.use.landscape.movies) + Skin.HasSetting(use.clearlogo.on.fanart.movies) + String.IsEqual(ListItem.DBType,movie)] |
+                        [!Skin.HasSetting(dont.use.landscape.movies) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,movie)] |
+                        [Skin.HasSetting(use.clearlogo.on.fanart.artists) + [String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]]</visible>
+                    </control>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="View_524_Album">
+        <param name="top" value="$PARAM[top]" default="522"/>
+        <param name="left" value="$PARAM[left]" default="70"/>
+        <param name="width" value="$PARAM[width]" default="370"/>
+        <param name="height" value="$PARAM[height]" default="370"/>
+
+        <param name="visible" value="$PARAM[visible]" default="true"/>
+        <definition>
+            <control type="group">
+                <visible>$EXP[Exp_View_524]</visible>
+
+                <visible>$PARAM[visible]</visible>
+
+                <top>$PARAM[top]</top>
+                <left>$PARAM[left]</left>
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
+
+                <control type="group">
+                    <control type="image">
+                        <left>1</left>
+                        <top>1</top>
+                        <right>1</right>
+                        <bottom>1</bottom>
+                        <texture border="18" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <texture colordiffuse="Fallback" border="12" background="true">common/box.png</texture>
+                    </control>
+
+                    <!-- SQUARE  -->
+
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/widgetsquare_new.png" background="true">$VAR[Image_Poster]</texture>
+
+                        <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files) | Container.Content(favourites) | String.IsEqual(ListItem.Property(item.type),person)</visible>
+
+                        <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
+                        <!-- <visible>!$EXP[IsYoutubeItem]</visible> -->
+                        <visible>!ListItem.IsParentFolder</visible>
+                    </control>
+
+                    <!-- ICON BLACK -->
+
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/widgetsquare_new.png" background="true" colordiffuse="Dark1">$VAR[Image_Fanart]</texture>
+                        <visible>String.StartsWith(ListItem.Icon,Default)</visible>
+                        <visible>$EXP[IsGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | [Container.Content() + String.StartsWith(Container.FolderPath,addons://)] | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content()]</visible>
+                    </control>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="View_524_Poster">
+        <param name="top" value="$PARAM[top]" default="522"/>
+        <param name="left" value="$PARAM[left]" default="70"/>
+        <param name="visible" value="$PARAM[visible]" default="true"/>
+        <param name="width" value="$PARAM[width]" default="280"/>
+        <param name="height" value="$PARAM[height]" default="370"/>
+        <definition>
+            <control type="group">
+                <visible>$EXP[Exp_View_524]</visible>
+
+                <visible>$PARAM[visible]</visible>
+
+                <top>$PARAM[top]</top>
+                <left>$PARAM[left]</left>
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
+
+                <control type="group">
+                    <control type="image">
+                        <left>1</left>
+                        <top>1</top>
+                        <right>1</right>
+                        <bottom>1</bottom>
+                        <texture border="18" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <texture colordiffuse="Fallback" border="12" background="true">common/box.png</texture>
+                    </control>
+
+                    <!-- POSTER -->
+
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/widgetposter_new.png" background="true">$VAR[Image_Poster]</texture>
+
+                        <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files) | Container.Content(favourites) | String.IsEqual(ListItem.Property(item.type),person)</visible>
+
+                        <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
+                        <!-- <visible>!$EXP[IsYoutubeItem]</visible> -->
+                        <visible>!ListItem.IsParentFolder</visible>
+                    </control>
+
+                    <!-- ICON BLACK -->
+
+                    <control type="image">
+                        <left>10</left>
+                        <top>10</top>
+                        <right>10</right>
+                        <bottom>10</bottom>
+                        <fadetime>PosterFanartFadetime</fadetime>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/widgetposter_new.png" background="true" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
+                        <visible>String.StartsWith(ListItem.Icon,Default)</visible>
+                        <visible>$EXP[IsGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | [Container.Content() + String.StartsWith(Container.FolderPath,addons://)] | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content()]</visible>
+                    </control>
+                </control>
+            </control>
+        </definition>
     </include>
 </includes>

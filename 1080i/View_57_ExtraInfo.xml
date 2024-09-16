@@ -145,10 +145,16 @@
 
             <include content="LowList_Info">
                 <param name="left" value="70"/>
-                <param name="visible" value="!Container.Content(songs) + !Container.Content(albums)"/>
+                <param name="visible" value="!$EXP[IsAnPlugin]"/>
             </include>
 
             <include>LowList_Title</include>
+
+            <include content="View_524_Fanart">
+                <param name="left" value="70"/>
+                <param name="top" value="490"/>
+                <param name="visible" value="$EXP[IsAnPlugin]"/>
+            </include>
         </control>
     </include>
 
@@ -202,6 +208,7 @@
                     </include>
                 </control>
             </control>
+
             <control type="list" id="5781">
                 <include>Def_Hidden_ListControl</include>
                 <content>$INFO[Container($PARAM[id]).ListItem.DBID,musicdb://artists/,/]</content>
@@ -290,10 +297,12 @@
                     </include>
                 </control>
             </control>
+
             <control type="list" id="5781">
                 <include>Def_Hidden_ListControl</include>
                 <content>$INFO[Container($PARAM[id]).ListItem.DBID,musicdb://artists/,/]</content>
             </control>
+
             <include content="LowList_Info">
                 <param name="left" value="70"/>
                 <param name="visible" value="!Container.Content(songs) + !Container.Content(albums)"/>
@@ -460,24 +469,25 @@
             </include>
             <width>645</width>
 
-            <control type="label">
-                <bottom>560</bottom>
+            <control type="textbox">
+                <bottom>640</bottom>
                 <aligny>bottom</aligny>
                 <align>left</align>
-                <height>200</height>
-                <width>845</width>
+                <height>240</height>
+                <width>745</width>
                 <font>EpisodeNumberNew</font>
                 <label>$VAR[Label_Main_Title_Fanart_56_57]</label>
-                <visible>Container.Content(songs) | Container.Content(albums) | Container.Content(movies)</visible>
+                <visible>Container.Content(songs) | Container.Content(albums) | $EXP[IsAnPlugin] | !$EXP[Exp_Title_Clearlogo_Available]</visible>
+                <visible></visible>
             </control>
             <control type="image" description="clearlogo">
-                <height>270</height>
-                <width>600</width>
-                <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                <height>230</height>
+                <width>560</width>
+                <aspectratio scalediffuse="true" align="center">keep</aspectratio>
                 <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
                 <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
                 <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
-                <visible>![Container.Content(songs) | Container.Content(albums) | Container.Content(movies)]</visible>
+                <visible>![Container.Content(songs) | Container.Content(albums) | $EXP[IsAnPlugin]]</visible>
             </control>
         </control>
     </include>
@@ -510,17 +520,45 @@
                         <visible>![Container.Content(songs) | Container.Content(albums)]</visible>
                     </control>
 
-                    <!-- SUB TITLE -->
+                    <!-- SUB TITLE - OTHERS -->
 
                     <control type="label">
                         <top>50</top>
                         <height>64</height>
                         <aligny>center</aligny>
-                        <font>Tiny</font>
-                        <textcolor>Dark1</textcolor>
-                        <selectedcolor>Dark1</selectedcolor>
+                        <font>InfoNetflix</font>
+                        <textcolor>PanelWhite70</textcolor>
+                        <selectedcolor>PanelWhite70</selectedcolor>
                         <label>$VAR[Label_Year]$VAR[LabelGenre,  •  ,]</label>
+                        <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(files)]</visible>
                     </control>
+
+                    <!-- SUB TITLE - MUSIC -->
+
+                    <control type="label">
+                        <top>50</top>
+                        <height>64</height>
+                        <aligny>center</aligny>
+                        <font>InfoNetflix</font>
+                        <textcolor>PanelWhite70</textcolor>
+                        <selectedcolor>PanelWhite70</selectedcolor>
+                        <label>$VAR[Label_Music_Sub_Title]</label>
+                        <visible>Container.Content(artists) | Container.Content(albums) | Container.Content(songs)</visible>
+                    </control>
+
+                    <!-- SUB TITLE - FILES -->
+
+                    <control type="label">
+                        <top>50</top>
+                        <height>64</height>
+                        <aligny>center</aligny>
+                        <font>InfoNetflix</font>
+                        <textcolor>PanelWhite70</textcolor>
+                        <selectedcolor>PanelWhite70</selectedcolor>
+                        <label>$LOCALIZE[19076] $INFO[Container(44025).NumItems,  •  , $LOCALIZE[31083]]</label>
+                        <visible>Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !$EXP[IsAnPlugin]]</visible>
+                    </control>
+
                     <control type="textbox">
                         <top>125</top>
                         <bottom>-50</bottom>
@@ -628,9 +666,12 @@
 
                 <control type="group">
                     <visible>!$EXP[IsYoutube_Comments]</visible>
-                    <visible>![Skin.HasSetting(57list.low) + [Container.Content(songs) | Container.Content(albums)] + !Window.IsVisible(MyPlaylist.xml)]</visible>
-                    <visible>![Skin.HasSetting(57list.low) + [Container.Content(movies)]</visible>
-                    <visible>![Skin.HasSetting(57list.low.playlist) + [Container.Content(songs) | Container.Content(albums)] + Window.IsVisible(MyPlaylist.xml)]</visible>
+
+                    <visible>![Skin.HasSetting(57list.low) + !Window.IsVisible(MyPlaylist.xml) + [Container.Content(songs) | Container.Content(albums)]]</visible>
+                    <visible>![Skin.HasSetting(57list.low.playlist) + Window.IsVisible(MyPlaylist.xml) + [Container.Content(songs) | Container.Content(albums)]]</visible>
+                    <visible>![Skin.HasSetting(57list.low) + Window.IsVisible(MyVideoNav.xml) + Container.Content(movies)]</visible>
+                    <!-- <visible>![Skin.HasSetting(57list.low) + $EXP[IsAnPlugin]]</visible> -->
+
                     <left>10</left>
                     <right>10</right>
                     <top>370</top>

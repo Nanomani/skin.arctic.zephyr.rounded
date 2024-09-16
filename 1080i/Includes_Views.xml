@@ -240,6 +240,160 @@
         <textcolor>Dark2</textcolor>
     </include>
 
+    <!-- VIEW FLIX -->
+
+    <include name="View_Flix_Minimal_Content">
+        <control type="group">
+            <left>SidePad</left>
+            <include content="Def_Top" condition="!Skin.HasSetting(home.widgets.show.reflections)">
+                <param name="top" value="195" />
+            </include>
+            <include content="Def_Top" condition="Skin.HasSetting(home.widgets.show.reflections)">
+                <param name="top" value="191" />
+            </include>
+            <width>NetflixPlotWidth</width>
+
+            <!-- CLERALOGO ENABLE - CLEARLOGO NOT AVAILABLE / DISABLE -->
+
+            <control type="grouplist">
+                <orientation>vertical</orientation>
+                <itemgap>0</itemgap>
+
+                <!-- CLERALOGO -->
+
+                <control type="image" description="clearlogo">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <width>ClearLogoTitleMaxWidth</width>
+                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                    <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+                    <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
+                    <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
+                    <fadetime>ClearArtFadetime</fadetime>
+                    <visible>$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
+                    <visible>$EXP[Exp_Title_Clearlogo_Available]</visible>
+                </control>
+
+                <!-- MAIN TITLE - TEXT -->
+
+                <control type="label">
+                    <!-- <height condtion="!$EXP[View_Flix_Show_Clearlogo_Enable]">ClearLogoTitleMaxHeight</height> -->
+                    <height>40</height>
+                    <textcolor>Dark1</textcolor>
+                    <font>LargeNew</font>
+                    <label fallback="19055">$VAR[Label_View_Flix_Main_Title]</label>
+                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+                    <visible>[$EXP[View_Flix_Show_Clearlogo_Enable] + !$EXP[Exp_Title_Clearlogo_Available]] | !$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
+                </control>
+                <control type="textbox">
+                    <height>15</height>
+                </control>
+
+                <!-- SUB TITLE -->
+
+                <include>Label_View_Flix_Sub_Title</include>
+
+                <!-- PLOT -->
+
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <height min="36" max="176">auto</height>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[Label_Plot_Box_Video_Music]</label>
+                    <visible>!$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
+                    <!-- <visible>!ListItem.IsFolder</visible> -->
+                </control>
+
+                <!-- PLOT -->
+
+                <control type="textbox">
+                    <font>Tiny</font>
+                    <height min="36" max="140">auto</height>
+                    <textcolor>Dark2</textcolor>
+                    <selectedcolor>Dark2</selectedcolor>
+                    <label>$VAR[Label_Plot_Box_Video_Music]</label>
+                    <visible>$EXP[View_Flix_Show_Clearlogo_Enable] + !$EXP[Exp_Title_Clearlogo_Available]</visible>
+                    <!-- <visible>!ListItem.IsFolder</visible> -->
+                </control>
+            </control>
+        </control>
+
+        <control type="list" id="52281">
+            <include>Def_Hidden_ListControl</include>
+            <content>$INFO[Container($PARAM[id]).ListItem.DBID,musicdb://artists/,/]</content>
+        </control>
+    </include>
+
+    <include name="Label_View_Flix_Sub_Title">
+
+        <!-- SUB TITLE - FILES -->
+
+        <control type="label">
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>PanelWhite70</textcolor>
+            <selectedcolor>PanelWhite70</selectedcolor>
+            <label>$LOCALIZE[19076] $INFO[Container(44025).NumItems,  •  , $LOCALIZE[31083]]</label>
+            <visible>Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !$EXP[IsAnPlugin]]</visible>
+        </control>
+
+        <!-- SUB TITLE - PLUGIN -->
+
+        <control type="label">
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>PanelWhite70</textcolor>
+            <selectedcolor>PanelWhite70</selectedcolor>
+            <label>$LOCALIZE[20094]$INFO[System.AddonVersion(Container.PluginName),  •  v ]</label>
+            <visible>$EXP[IsAnPlugin]</visible>
+            <visible>!$EXP[IsYoutube]</visible>
+        </control>
+
+        <!-- SUB TITLE - ADDONS -->
+
+        <control type="label">
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>PanelWhite70</textcolor>
+            <selectedcolor>PanelWhite70</selectedcolor>
+            <label>$INFO[ListItem.AddonType]$INFO[ListItem.AddonVersion,  •  v ]</label>
+            <visible>Container.Content(addons)</visible>
+        </control>
+
+        <!-- SUB TITLE - GAMES -->
+
+        <control type="label">
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>PanelWhite70</textcolor>
+            <selectedcolor>PanelWhite70</selectedcolor>
+            <label>$VAR[Label_View_Flix_Sub_Title]</label>
+            <visible>$EXP[IsGameMode]</visible>
+        </control>
+
+        <!-- ALBUMS / SONGS -->
+
+        <control type="label">
+            <font>InfoNetflix</font>
+            <textcolor>PanelWhite70</textcolor>
+            <selectedcolor>PanelWhite70</selectedcolor>
+            <label>$VAR[Label_View_Flix_Sub_Title_Music]</label>
+            <visible>Container.Content(albums) | Container.Content(songs) | container.content(artists)</visible>
+        </control>
+
+        <!-- SUB TITLE - OTHERS -->
+
+        <control type="label">
+            <aligny>center</aligny>
+            <font>InfoNetflix</font>
+            <textcolor>PanelWhite70</textcolor>
+            <selectedcolor>PanelWhite70</selectedcolor>
+            <label>$VAR[Label_View_Flix_Sub_Title]</label>
+            <visible>![container.content(files) | Container.Content(addons) | $EXP[IsGameMode] | [$EXP[IsAnPlugin] + !$EXP[IsYoutube]]]</visible>
+            <visible>![Container.Content(albums) | Container.Content(songs) | container.content(artists)]</visible>
+        </control>
+    </include>
+
     <include name="Label_Header_Sub_Info">
         <control type="group">
             <centertop>60</centertop>
@@ -1685,7 +1839,7 @@
                 <height>42</height>
                 <font>InfoNetflix</font>
                 <textcolor>Dark2</textcolor>
-                <label>$VAR[Label_Music_Sub_Title]</label>
+                <label>$VAR[Label_View_Flix_Sub_Title_Music]</label>
                 <visible>Container.Content(songs) | Container.Content(albums) | Container.Content(artists)</visible>
                 <visible>Control.IsVisible(52) | Control.IsVisible(503) | [Control.IsVisible(515) + Container.Content(artists)] | [Control.IsVisible(500) + Container.Content(artists)] | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5228) | Control.IsVisible(5238) | Window.IsVisible(script-globalsearch.xml)</visible>
                 <visible>!Window.IsVisible(MyPrograms.xml) + !$EXP[IsPluginRadio_DeItem] + !ListItem.IsParentFolder</visible>
@@ -1727,7 +1881,7 @@
             <visible>!Skin.HasSetting(hide.furniture.clock.bottom.right)</visible>
 
             <visible>!Control.IsVisible(5238) + !Control.IsVisible(5228) + !Control.IsVisible(5218) + !Control.IsVisible(5048)</visible>
-            
+
             <visible>!Skin.HasSetting(furniture.clock.top.right) | [Skin.HasSetting(furniture.clock.top.right) + !$EXP[View_Not_Flix]] | [Skin.HasSetting(furniture.clock.top.right) + Window.IsActive(Home) + Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(show.home.header.clock.left)]</visible>
 
             <!-- Hide with NowPlaying -->

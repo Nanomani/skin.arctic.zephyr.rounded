@@ -267,7 +267,7 @@
                     <aspectratio scalediffuse="true" align="left">keep</aspectratio>
                     <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
                     <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-                    <!-- <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation> -->
+                    <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
                     <fadetime>ClearArtFadetime</fadetime>
                     <visible>$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
                     <visible>$EXP[Exp_Title_Clearlogo_Available]</visible>
@@ -289,23 +289,29 @@
                     <visible>[$EXP[View_Flix_Show_Clearlogo_Enable] + !$EXP[Exp_Title_Clearlogo_Available]] | !$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
                 </control>
 
-                <!-- <control type="textbox"> -->
-                    <!-- <height>15</height> -->
-                    <!-- <visible>!$EXP[View_Flix_Show_Clearlogo_Enable]</visible> -->
-                <!-- </control> -->
-
                 <!-- SUB TITLE -->
 
                 <include content="Label_View_Flix_Sub_Title">
+                    <param name="visible" value="!$EXP[View_Flix_Show_Clearlogo_Enable]"/>
                     <param name="top" value="45"/>
+                </include>
+                <include content="Label_View_Flix_Sub_Title">
+                    <param name="visible" value="$EXP[View_Flix_Show_Clearlogo_Enable]"/>
+                    <param name="top" value="105"/>
                 </include>
 
                 <!-- PLOT -->
 
                 <include content="Label_View_Flix_Plot">
+                    <param name="visible" value="!$EXP[View_Flix_Show_Clearlogo_Enable]"/>
                     <param name="top" value="120"/>
+                    <param name="height" value="176"/>
                 </include>
-
+                <include content="Label_View_Flix_Plot">
+                    <param name="visible" value="$EXP[View_Flix_Show_Clearlogo_Enable]"/>
+                    <param name="top" value="180"/>
+                    <param name="height" value="140"/>
+                </include>
             </control>
         </control>
     </include>
@@ -317,9 +323,7 @@
 
         <definition>
             <control type="group">
-
                 <visible>$PARAM[visible]</visible>
-
                 <top>$PARAM[top]</top>
                 <left>$PARAM[left]</left>
                 <height>$PARAM[height]</height>
@@ -402,37 +406,20 @@
     <include name="Label_View_Flix_Plot">
         <param name="top" value="$PARAM[top]" default="100"/>
         <param name="width" value="$PARAM[width]" default="100%"/>
+        <param name="align" value="$PARAM[align]" default="left"/>
         <param name="visible" value="$PARAM[visible]" default="true"/>
-
         <definition>
             <control type="group">
                 <visible>$PARAM[visible]</visible>
-
                 <top>$PARAM[top]</top>
                 <width>$PARAM[width]</width>
-
-                <!-- PLOT -->
-
                 <control type="textbox">
                     <font>Tiny</font>
-                    <height min="36" max="176">auto</height>
+                    <height>$PARAM[height]</height>
+                    <align>$PARAM[align]</align>
                     <textcolor>Dark2</textcolor>
                     <selectedcolor>Dark2</selectedcolor>
                     <label>$VAR[Label_Plot_Box_Video_Music]</label>
-                    <visible>!$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
-                    <!-- <visible>!ListItem.IsFolder</visible> -->
-                </control>
-
-                <!-- PLOT -->
-
-                <control type="textbox">
-                    <font>Tiny</font>
-                    <height min="36" max="140">auto</height>
-                    <textcolor>Dark2</textcolor>
-                    <selectedcolor>Dark2</selectedcolor>
-                    <label>$VAR[Label_Plot_Box_Video_Music]</label>
-                    <visible>$EXP[View_Flix_Show_Clearlogo_Enable]</visible>
-                    <!-- <visible>!ListItem.IsFolder</visible> -->
                 </control>
             </control>
         </definition>

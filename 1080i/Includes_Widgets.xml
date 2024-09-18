@@ -524,7 +524,7 @@
 
             <visible>!Control.IsVisible(503) + !String.StartsWith(ListItem.Path,pvr://channels)</visible>
 
-            <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(favourites) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(actors) | Container.Content(files) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Window.IsVisible(FileBrowser.xml)</visible>
+            <visible>Container.Content(addons) | Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsAnPlugin] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(actors) | Container.Content(files) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Window.IsVisible(FileBrowser.xml)</visible>
 
             <visible>!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path))] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))]]]</visible>
         </control>
@@ -539,8 +539,6 @@
             <visible>String.StartsWith(ListItem.Icon,Default)</visible>
 
             <visible>[$EXP[IsGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(actors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | [String.StartsWith(Container.FolderPath,videodb://movies) + String.IsEmpty(ListItem.DBType)] | [String.StartsWith(Container.FolderPath,videodb://tvshows) + String.IsEmpty(ListItem.DBType)] | [$EXP[IsAnPlugin] + String.IsEmpty(ListItem.DBType)] ]</visible>
-
-            <!-- <visible>[$EXP[IsGameMode] | Container.Content(musicvideos) | Container.Content(files) | [Container.Content(studios) + String.IsEmpty(Skin.String(studio.logos.path))] | [Container.Content(countries) + String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + String.IsEmpty(Skin.String(genre.icons.path))] | Container.Content(directors) | Container.Content(actors) | Container.Content(tags) | Container.Content(years) | Container.Content(favourites) | Container.Content(videoversions) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | [Container.Content(files) + $EXP[IsPluginShortlist]] | ListItem.IsParentFolder | Container.Content(playlists) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]]</visible> -->
         </control>
 
         <!-- use onfy for file browser for chose artwork -->
@@ -558,6 +556,19 @@
             <visible>Window.IsVisible(FileBrowser.xml)</visible>
         </control>
 
+        <!-- FAVOURITES -->
+
+        <control type="image">
+            <left>$PARAM[distance]</left>
+            <top>$PARAM[distance]</top>
+            <right>$PARAM[distance]</right>
+            <bottom>$PARAM[distance]</bottom>
+            <aspectratio scalediffuse="false">keep</aspectratio>
+            <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
+            <visible>String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)</visible>
+            <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+        </control>
+
         <!-- ADDONS -->
 
         <control type="image">
@@ -568,7 +579,6 @@
             <aspectratio scalediffuse="false">keep</aspectratio>
             <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultMovies.png" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
             <visible>String.StartsWith(ListItem.Icon,Default) + Container.Content(addons)</visible>
-
         </control>
 
         <!-- VIEW 503 -->
@@ -629,7 +639,8 @@
             <texture colordiffuse="White70" border="12" background="true">common/box.png</texture>
         </control>
 
-        <!-- All others -->
+        <!-- ALL OTHERS -->
+
         <control type="image">
             <left>10</left>
             <top>10</top>
@@ -637,7 +648,20 @@
             <height>204</height>
             <aspectratio scalediffuse="false">scale</aspectratio>
             <texture diffuse="diffuse/widgetsquare_new_small.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
-            <!-- <visible>!String.StartsWith(ListItem.Path,pvr://channels) + !String.IsEqual(ListItem.Path,favourites://) + !Control.IsVisible(503)</visible> -->
+            <visible>![String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)]</visible>
+        </control>
+
+        <!-- FAVOURITES -->
+
+        <control type="image">
+            <left>10</left>
+            <top>10</top>
+            <right>10</right>
+            <height>204</height>
+            <aspectratio scalediffuse="false">keep</aspectratio>
+            <texture diffuse="diffuse/widgetsquare_new_small.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
+            <visible>String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)</visible>
+            <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
         </control>
 
         <control type="textbox">
@@ -848,7 +872,7 @@
                 <font>Tiny</font>
                 <textcolor>PanelWhite30</textcolor>
                 <selectedcolor>PanelWhite30</selectedcolor>
-                <label>$VAR[LabelGenreHomeSmallWidget]</label>
+                <label>$VAR[Label_Genre_Home_Smal_lWidget]</label>
                 <visible>$PARAM[small]</visible>
             </control>
             <control type="group">
@@ -1187,7 +1211,7 @@
                 <font>Tiny</font>
                 <textcolor>PanelWhite70</textcolor>
                 <selectedcolor>PanelWhite70</selectedcolor>
-                <label>$VAR[LabelGenreHomeSmallWidget]</label>
+                <label>$VAR[Label_Genre_Home_Smal_lWidget]</label>
                 <visible>$PARAM[small]</visible>
             </control>
 

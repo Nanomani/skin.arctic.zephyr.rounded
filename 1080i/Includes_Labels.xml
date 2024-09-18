@@ -805,6 +805,15 @@
         <value condition="!String.IsEmpty(ListItem.Year)">$INFO[ListItem.Year,  •  ,]</value>
     </variable>
 
+    <variable name="Label_Actors">
+        <value condition="[Container.Content(actors) | Container.Content(directors)] + !Container.SortMethod(1) + !$EXP[IsAnPlugin] + !String.IsEmpty(ListItem.Label2) + !String.IsEqual(ListItem.Label2,1)">$INFO[ListItem.Label2] $LOCALIZE[36901]</value>
+        <value condition="[Container.Content(actors) | Container.Content(directors)] + !Container.SortMethod(1) + !$EXP[IsAnPlugin] + !String.IsEmpty(ListItem.Label2) + String.IsEqual(ListItem.Label2,1)">$INFO[ListItem.Label2] $LOCALIZE[36900]</value>
+
+        <value condition="Container.Content(actors) + !String.IsEmpty(ListItem.Property(Gender))">$INFO[ListItem.Property(Gender)]$INFO[ListItem.Property(Age),  •  , $LOCALIZE[31644]]$INFO[ListItem.Property(Department),  •  ,]</value>
+
+        <value condition="Container.Content(actors) + !String.IsEmpty(ListItem.Property(Department))">$INFO[ListItem.Property(Department)]</value>
+    </variable>
+
     <!-- LABEL - VIEWS FLIX -->
 
     <variable name="Label_View_Flix_Main_Title">
@@ -826,30 +835,28 @@
 
         <!-- TVSHOWS -->
 
-        <value condition="Container.Content(tvshows)">$INFO[ListItem.Year,,  •  ]$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[Container($PARAM[id]).ListItem.Rating,  •  ]</value>
+        <value condition="Container.Content(tvshows)">$INFO[ListItem.Year,,  •  ]$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[ListItem.Rating,  •  ]</value>
 
         <!-- SEASONS -->
 
-        <value condition="Container.Content(seasons) + String.IsEmpty(ListItem.Season)">$LOCALIZE[20366]  •  $INFO[ListItem.Year,,  •  ]$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[Container($PARAM[id]).ListItem.Rating,  •  ]</value>
-        <value condition="Container.Content(seasons)">$LOCALIZE[20373] $INFO[ListItem.Season,,  •  ]$INFO[ListItem.Year,,  •  ]$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[Container($PARAM[id]).ListItem.Rating,  •  ]</value>
+        <value condition="Container.Content(seasons) + String.IsEmpty(ListItem.Season)">$LOCALIZE[20366]  •  $INFO[ListItem.Year,,  •  ]$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[ListItem.Rating,  •  ]</value>
+        <value condition="Container.Content(seasons)">$LOCALIZE[20373] $INFO[ListItem.Season,,  •  ]$INFO[ListItem.Year,,  •  ]$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[ListItem.Rating,  •  ]</value>
 
         <!-- EPISODES -->
 
         <value condition="Container.Content(episodes) + !$EXP[IsYoutube]">$INFO[ListItem.Season,$LOCALIZE[20373] ,]$INFO[ListItem.Episode,  •  $LOCALIZE[20359] ,]$VAR[Label_Premiered_Year]$VAR[Label_Duration_Time_Check,  •  ,]$VAR[RatingLabel,  •  ,]</value>
 
-        <!-- ACTORS -->
+        <!-- ACTORS / PEOPLE -->
 
-        <value condition="Container.Content(actors) + !Container.SortMethod(1) + !$EXP[IsAnPlugin]">$INFO[ListItem.Label2] $LOCALIZE[38026]</value>
-        <value condition="Container.Content(actors) + !String.IsEmpty(ListItem.Property(Gender))">$INFO[ListItem.Property(Gender)]$INFO[ListItem.Property(Age),  •  , $LOCALIZE[31644]]$INFO[ListItem.Property(Department),  •  ,]</value>
-        <value condition="Container.Content(actors) + !String.IsEmpty(ListItem.Property(Department))">$INFO[ListItem.Property(Department)]</value>
+        <value condition="Container.Content(actors)">$VAR[Label_Actors]</value>
 
         <!-- MOVIES / SETS -->
 
-        <value condition="Container.Content(movies) | Container.Content(sets)">$INFO[ListItem.Year]$VAR[Label_Genre,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]$INFO[Container($PARAM[id]).ListItem.Rating,  •  ]</value>
+        <value condition="Container.Content(movies) | Container.Content(sets)">$INFO[ListItem.Year]$VAR[Label_Genre,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]$INFO[ListItem.Rating,  •  ]</value>
 
         <!-- YOUTUBE -->
 
-        <value condition="$EXP[IsYoutube] + !ListItem.IsFolder">$INFO[Container($PARAM[id]).ListItem.Year]$INFO[Container($PARAM[id]).ListItem.DateAdded,  •  ,]$INFO[Container($PARAM[id]).ListItem.Duration(mins),  •  , $LOCALIZE[31084]]</value>
+        <value condition="$EXP[IsYoutube] + !ListItem.IsFolder">$INFO[ListItem.Year]$INFO[ListItem.DateAdded,  •  ,]$INFO[ListItem.Duration(mins),  •  , $LOCALIZE[31084]]</value>
 
         <!-- OTHERS -->
 

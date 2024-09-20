@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="6">
-    <views>50,57,523,5238</views>
+    <views>50,524,57,523,5238</views>
     <defaultcontrol always="true">50</defaultcontrol>
     <menucontrol>9000</menucontrol>
     <include condition="Skin.HasSetting(enabled.tmdb.helper.blur)">Action_Blur_Onload</include>
@@ -18,7 +18,9 @@
         <include condition="$EXP[Exp_View_50_Include]">View_50_List_Square_Playlist</include>
         <include condition="$EXP[Exp_View_57_Include] + !Skin.HasSetting(57list.low.playlist)">View_57_ExtraInfo_Playlist</include>
         <include condition="$EXP[Exp_View_57_Include] + Skin.HasSetting(57list.low.playlist)">View_57_ExtraInfo_Playlist_LowList</include>
-                <include condition="$EXP[Exp_View_523_Include]">View_523_Flix_Square</include>
+        <include condition="$EXP[Exp_View_523_Include]">View_523_Flix_Square</include>
+        <include condition="$EXP[Exp_View_524_Include]">View_524_Flix_List_Music</include>
+
         <!-- <include>Furniture_Footer_Clock_Right</include> -->
 
         <include>Object_Jumpbar_Horizontal</include>
@@ -40,6 +42,7 @@
         </control>
 
         <control type="group">
+            <animation effect="slide" start="0" end="-265" time="200" condition="Window.IsVisible(1110)">Conditional</animation>
             <include content="Def_View_ContextMenu_Background"><param name="height" value="689" /></include>
             <include content="Def_View_ContextMenu_Arrows"><param name="arrow_bottom" value="699" /></include>
 
@@ -75,7 +78,7 @@
 
                 <!-- PLAYLISTS -->
 
-                <control type="button" id="55552">
+                <control type="button" id="55553">
                     <include>Def_Context_Menu_Label</include>
                     <label>559</label>
                 </control>
@@ -139,7 +142,7 @@
                 <control type="button" id="55551">
                     <include>Def_Context_Menu_Label</include>
                     <label>31060</label>
-                    <visible>Control.IsVisible(50) | Control.IsVisible(57) | Control.IsVisible(523)</visible>
+                    <visible>Control.IsVisible(50) | Control.IsVisible(57) | Control.IsVisible(523) | Control.IsVisible(524)</visible>
                 </control>
                 <control type="radiobutton" id="9029">
                     <include>Def_Button_Gradient_Context</include>
@@ -167,6 +170,14 @@
                     <visible>Control.IsVisible(57) | Control.IsVisible(50)</visible>
                     <!-- <visible>!Container.Content(songs)</visible> -->
                 </control>
+                <control type="radiobutton" id="9028">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31231</label>
+                    <selected>!Skin.HasSetting(disable.view.524.extended.list.music)</selected>
+                    <onclick>Skin.ToggleSetting(disable.view.524.extended.list.music)</onclick>
+                    <visible>Control.IsVisible(524)</visible>
+                </control>
                 <control type="radiobutton" id="9031">
                     <include>Def_Button_Gradient_Context</include>
                     <align>left</align>
@@ -192,14 +203,23 @@
                     <visible>Control.IsVisible(57)</visible>
                     <visible>Container.Content(songs)</visible>
                 </control>
-
                 <control type="radiobutton" id="9025788">
                     <include>Def_Button_Gradient_Context</include>
                     <align>left</align>
                     <label>31492</label>
                     <selected>Skin.HasSetting(show.view.netflix.title.clearlogo.music)</selected>
                     <onclick>Skin.ToggleSetting(show.view.netflix.title.clearlogo.music)</onclick>
-                    <visible>Control.IsVisible(523)</visible>
+                    <onclick>ReloadSkin()</onclick>
+                    <visible>Control.IsVisible(523) | Control.IsVisible(524)</visible>
+                </control>
+                <control type="radiobutton" id="903">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>$LOCALIZE[31102]</label>
+                    <selected>Skin.HasSetting(show.view.524.fanart.artist)</selected>
+                    <onclick>Skin.ToggleSetting(show.view.524.fanart.artist)</onclick>
+                    <onclick>ReloadSkin()</onclick>
+                    <visible>Control.IsVisible(524)</visible>
                 </control>
                 <control type="radiobutton" id="90445">
                     <include>Def_Button_Gradient_Context</include>
@@ -260,19 +280,17 @@
 
                 <!-- GLOBAL -->
 
-                <control type="button" id="55553">
+                <control type="button" id="55552">
                     <include>Def_Context_Menu_Label</include>
                     <label>31451</label>
-                    <visible>Control.IsVisible(50)</visible>
                 </control>
-                <control type="radiobutton" id="90872">
+
+                <control type="button" id="9305">
                     <include>Def_Button_Gradient_Context</include>
+                    <label>$LOCALIZE[5]</label>
                     <align>left</align>
-                    <label>$LOCALIZE[31610]</label>
-                    <selected>Skin.HasSetting(show.furniture.footer)</selected>
-                    <onclick>Skin.ToggleSetting(show.furniture.footer)</onclick>
-                    <visible>Control.IsVisible(50)</visible>
-                    <onclick>ReloadSkin()</onclick>
+                    <onright>ActivateWindow(1110)</onright>
+                    <onclick>ActivateWindow(1110)</onclick>
                 </control>
             </control>
         </control>

@@ -53,7 +53,7 @@
                 <visible>$EXP[View_Artwork_Condition]</visible>
                 <visible>$EXP[View_Artwork_Specific]</visible>
                 <visible>!ListItem.IsParentFolder</visible>
-                <visible>![$EXP[IsYoutube] | String.IsEqual(ListItem.DBType,genre) | String.IsEqual(ListItem.DBType,country)]</visible>
+                <visible>!$EXP[IsYoutube]</visible>
             </control>
 
             <!-- icon black -->
@@ -64,32 +64,7 @@
                 <fadetime>PosterFanartFadetime</fadetime>
                 <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                 <texture diffuse="diffuse/listposter2.png" background="true" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
-                <visible>String.StartsWith(ListItem.Icon,Default)</visible>
                 <visible>$EXP[View_Icon_Black]</visible>
-            </control>
-
-            <!-- Genres -->
-
-            <control type="image">
-                <width>PosterW</width>
-                <height>PosterH</height>
-                <fadetime>PosterFanartFadetime</fadetime>
-                <aspectratio align="center" aligny="center" scalediffuse="false">stretch</aspectratio>
-                <texture diffuse="diffuse/sideposter_square.png" background="true" fallback="DefaultGenre.png">$VAR[Image_Thumb_Genres]</texture>
-                <visible>String.IsEqual(ListItem.DBType,genre)</visible>
-                <visible>!ListItem.IsParentFolder</visible>
-            </control>
-
-            <!-- Countries -->
-
-            <control type="image">
-                <width>PosterH</width>
-                <height>PosterH</height>
-                <fadetime>PosterFanartFadetime</fadetime>
-                <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/sideposter_square.png" background="true" fallback="DefaultGenre.png">$VAR[Image_Thumb_Countries]</texture>
-                <visible>String.IsEqual(ListItem.DBType,country)</visible>
-                <visible>!ListItem.IsParentFolder</visible>
             </control>
 
             <!-- Youtube -->
@@ -281,83 +256,6 @@
         </control>
     </include>
 
-    <include name="View_50_LowList">
-        <description>List View (id=50)</description>
-        <control type="group">
-            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
-
-            <include>Animation_Common</include>
-            <visible>Control.IsVisible(50)</visible>
-
-            <include>View_Slide_For_JumpBar</include>
-            <control type="group">
-                <top>275</top>
-                <control type="fixedlist" id="50">
-                    <visible>$EXP[Exp_View_50]</visible>
-
-                    <include>Def_On_Info</include>
-                    <include>Animation_Scrolltime_Views_List</include>
-
-                    <top>PosterPad</top>
-                    <height>365</height>
-                    <left>ListX</left>
-                    <right>SidePad</right>
-                    <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
-                    <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
-                    <onright>1653</onright>
-                    <onup>50</onup>
-                    <ondown>50</ondown>
-
-                    <focusposition>1</focusposition>
-                    <include content="Def_Movement" condition="Skin.HasSetting(enable.view.5x.51x.extended.list)">
-                        <param name="movement" value="2" />
-                    </include>
-                    <include content="Def_Movement" condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)">
-                        <param name="movement" value="3" />
-                    </include>
-
-                    <pagecontrol>1653</pagecontrol>
-                    <viewtype label="535">list</viewtype>
-
-                    <itemlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="ListW" height="64">
-                        <include>50_56_57_516_550_item_layout_video</include>
-                    </itemlayout>
-                    <focusedlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="ListW" height="64">
-                        <control type="group">
-                            <visible>Control.HasFocus(50)</visible>
-                            <include>50_56_57_516_550_focus_layout_video</include>
-                        </control>
-                        <control type="group">
-                            <visible>!Control.HasFocus(50)</visible>
-                            <include>50_56_57_516_550_item_layout_video</include>
-                        </control>
-                    </focusedlayout>
-                    <itemlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list) + [Container.Content(movies) | Container.Content(tvshows)]" width="ListW" height="90">
-                        <include>50_56_57_516_550_item_layout_video_info</include>
-                    </itemlayout>
-                    <focusedlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list) + [Container.Content(movies) | Container.Content(tvshows)]" width="ListW" height="90">
-                        <control type="group">
-                            <visible>Control.HasFocus(50)</visible>
-                            <include>50_56_57_516_550_focus_layout_video_info</include>
-                        </control>
-                        <control type="group">
-                            <visible>!Control.HasFocus(50)</visible>
-                            <include>50_56_57_516_550_item_layout_video_info</include>
-                        </control>
-                    </focusedlayout>
-                </control>
-                <control type="scrollbar" id="1653">
-                    <include content="Object_Scrollbar_Views_Vertical">
-                        <param name="scrollid" value="1653"/>
-                        <param name="height" value="365"/>
-                    </include>
-                </control>
-            </control>
-
-            <include>View_50_SidePoster</include>
-        </control>
-    </include>
-
     <!-- LIST - VIEW 550 - VIDEO - SQUARE -->
 
     <include name="View_550_List_Square_Video">
@@ -406,80 +304,6 @@
                 <include>Object_Scrollbar_View_PVR</include>
             </control>
             <include>View_50_SidePoster_Square</include>
-        </control>
-    </include>
-
-    <include name="View_550_List_Square_Video_LowList">
-        <description>List View (id=550)</description>
-        <control type="group">
-            <visible>Control.IsVisible(550)</visible>
-
-            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
-            <include>Animation_Common</include>
-            <include>View_Slide_For_JumpBar</include>
-
-            <control type="group">
-                <top>275</top>
-                <control type="panel" id="550">
-                    <visible>$EXP[Exp_View_550]</visible>
-
-                    <include>Def_On_Info</include>
-
-                    <top>PosterPad</top>
-                    <height>365</height>
-                    <right>SidePad</right>
-                    <left>ListSquareX</left>
-
-                    <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
-                    <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
-                    <onright>60</onright>
-                    <onup>550</onup>
-                    <ondown>550</ondown>
-
-                    <focusposition>1</focusposition>
-                    <include content="Def_Movement" condition="!Skin.HasSetting(disable.view.550.extended.list.video)">
-                        <param name="movement" value="2" />
-                    </include>
-                    <include content="Def_Movement" condition="Skin.HasSetting(disable.view.550.extended.list.video)">
-                        <param name="movement" value="3" />
-                    </include>
-
-                    <pagecontrol>60</pagecontrol>
-                    <viewtype label="535">list</viewtype>
-                    <include>Animation_Scrolltime_Views_List</include>
-
-                    <itemlayout condition="Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="64">
-                        <include>50_56_57_516_550_item_layout_video</include>
-                    </itemlayout>
-                    <focusedlayout condition="Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="64">
-                        <include>50_56_57_516_550_focus_layout_video</include>
-                    </focusedlayout>
-
-                    <itemlayout condition="!Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="91.4">
-                        <include>50_56_57_516_550_item_layout_video_info</include>
-                    </itemlayout>
-                    <focusedlayout condition="!Skin.HasSetting(disable.view.550.extended.list.video)" width="ListSquareW" height="91.4">
-                        <include>50_56_57_516_550_focus_layout_video_info</include>
-                    </focusedlayout>
-                </control>
-
-                <control type="scrollbar" id="1652">
-                    <include content="Object_Scrollbar_Views_Vertical">
-                        <param name="scrollid" value="1652"/>
-                        <param name="top" value="216"/>
-                        <param name="height" value="365"/>
-                        <param name="idlayout" value="57"/>
-                    </include>
-                </control>
-            </control>
-
-            <include>57_LowList_Big_Title</include>
-
-            <include content="524_Fanart">
-                <param name="left" value="70"/>
-                <param name="top" value="490"/>
-                <param name="visible" value="Container.Content(movies) | Container.Content(tvshows)"/>
-            </include>
         </control>
     </include>
 
@@ -535,76 +359,6 @@
                 <include content="Def_Hidden_List_Artist_Album_Count"><param name="id" value="50" /></include>
             </control>
             <include>View_50_SidePoster_Square</include>
-        </control>
-    </include>
-
-    <include name="View_50_LowList_Square_Music">
-        <description>List View (id=50)</description>
-        <control type="group">
-            <visible>Control.IsVisible(50)</visible>
-
-            <include condition="!Skin.HasSetting(furniture.weather.home.only) + !Skin.HasSetting(show.furniture.footer)">Furniture_Footer_Clock_Right</include>
-            <include>Animation_Common</include>
-            <include>View_Slide_For_JumpBar</include>
-
-            <control type="group">
-                <top>275</top>
-                <control type="fixedlist" id="50">
-                    <visible>$EXP[Exp_View_50]</visible>
-
-                    <top>PosterPad</top>
-                    <height>365</height>
-                    <left>ListSquareX</left>
-                    <right>SidePad</right>
-                    <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
-                    <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
-                    <onright>1699</onright>
-                    <onup>50</onup>
-                    <ondown>50</ondown>
-
-                    <focusposition>1</focusposition>
-                    <include content="Def_Movement" condition="!Skin.HasSetting(disable.view.50.extended.list.music)">
-                        <param name="movement" value="2" />
-                    </include>
-                    <include content="Def_Movement" condition="Skin.HasSetting(disable.view.50.extended.list.music)">
-                        <param name="movement" value="3" />
-                    </include>
-
-                    <pagecontrol>1699</pagecontrol>
-                    <viewtype label="535">list</viewtype>
-                    <include>Animation_Scrolltime_Views_List</include>
-
-                    <itemlayout condition="Skin.HasSetting(disable.view.50.extended.list.music)" width="ListSquareW" height="64">
-                        <include>50_57_item_layout_music</include>
-                    </itemlayout>
-                    <focusedlayout condition="Skin.HasSetting(disable.view.50.extended.list.music)" width="ListSquareW" height="64">
-                        <include>50_57_focus_layout_music</include>
-                    </focusedlayout>
-
-                    <itemlayout condition="!Skin.HasSetting(disable.view.50.extended.list.music)" width="ListSquareW" height="91.4">
-                        <include>50_57_item_layout_music_info</include>
-                    </itemlayout>
-                    <focusedlayout condition="!Skin.HasSetting(disable.view.50.extended.list.music)" width="ListSquareW" height="91.4">
-                        <include>50_57_focus_layout_music_info</include>
-                    </focusedlayout>
-
-                </control>
-                <control type="scrollbar" id="1699">
-                    <include content="Object_Scrollbar_Views_Vertical">
-                        <param name="scrollid" value="1699"/>
-                        <param name="height" value="365"/>
-                    </include>
-                </control>
-
-                <include content="Def_Hidden_List_Artist_Album_Count"><param name="id" value="50" /></include>
-            </control>
-
-            <include>57_LowList_Big_Title</include>
-
-            <include content="524_Fanart">
-                <param name="left" value="70"/>
-                <param name="top" value="490"/>
-            </include>
         </control>
     </include>
 

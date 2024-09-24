@@ -327,6 +327,13 @@
     </include>
 
     <include name="Object_OSD_Plot_Video">
+        <param name="textcolor" default="$VAR[Color_OSD_Panel_White70Music]" />
+        <param name="label" default="$INFO[VideoPlayer.Plot]" />
+        <param name="top" default="160" />
+        <param name="height" default="560" />
+        <param name="left" default="620" />
+        <param name="right" default="SidePadNewOSD" />
+        <param name="visible" default="true" />
         <definition>
             <control type="group">
                 <visible>$PARAM[visible]</visible>
@@ -336,15 +343,15 @@
                 <animation effect="fade" start="100" end="0" time="150" condition="Window.IsVisible(DialogPlayerProcessInfo.xml)">Conditional</animation>
                 <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(videoosd)">Conditional</animation>
 
-                <left>620</left>
-                <height>560</height>
-                <top>160</top>
-                <right>SidePadNewOSD</right>
+                <top>$PARAM[top]</top>
+                <height>$PARAM[height]</height>
+                <left>$PARAM[left]</left>
+                <right>$PARAM[right]</right>
 
                 <control type="textbox">
                     <font>Medium</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
-                    <label>$INFO[VideoPlayer.Plot]</label>
+                    <textcolor>$PARAM[textcolor]</textcolor>
+                    <label>$PARAM[label]</label>
                     <autoscroll delay="12000" time="5000" repeat="12000">true</autoscroll>
                     <pagecontrol>$PARAM[scrollid]</pagecontrol>
                     <bottom>-20</bottom>
@@ -800,9 +807,6 @@
                 <include content="Def_Width" condition="!$PARAM[vertical]">
                     <param name="width">0</param>
                 </include>
-                <!-- <include content="Def_Top" condition="$PARAM[vertical]"> -->
-                    <!-- <param name="top">-$PARAM[itemgap]</param> -->
-                <!-- </include> -->
                 <include content="Def_Height" condition="$PARAM[vertical]">
                     <param name="height">0</param>
                 </include>
@@ -810,9 +814,6 @@
                     <include content="Def_Left" condition="!$PARAM[vertical]">
                         <param name="left">$PARAM[left]</param>
                     </include>
-                    <!-- <include content="Def_Top" condition="$PARAM[vertical]"> -->
-                        <!-- <param name="top">-$PARAM[size]</param> -->
-                    <!-- </include> -->
                     <visible>$PARAM[visible]</visible>
                     <control type="image">
                         <bordersize>$PARAM[bordersize]</bordersize>
@@ -891,6 +892,7 @@
 
         <!-- UP - 1 - Displaying info -->
         <onup condition="String.IsEmpty(Window(Home).Property(osdshowinfo))">SetProperty(osdshowinfo,1,Home)</onup>
+        <onup condition="String.IsEmpty(Window(Home).Property(osdshowinfo))">ClearProperty(fullscreeninfo,Home)</onup>
 
         <!-- UP - 2 - Displaying info + plot -->
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo))">SetProperty(OSDVideoDetails,1,Home)</onup>
@@ -902,8 +904,6 @@
         <!-- Close info + plot -->
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + !String.IsEmpty(Window(Home).Property(OSDVideoDetails))">ClearProperty(osdshowinfo,Home)</onup>
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + !String.IsEmpty(Window(Home).Property(OSDVideoDetails))">ClearProperty(OSDVideoDetails,Home)</onup>
-
-
 
         <!-- Close plot -->
         <ondown condition="!String.IsEmpty(Window(Home).Property(OSDVideoDetails))">ClearProperty(OSDVideoDetails,Home)</ondown>
@@ -960,34 +960,6 @@
         </control>
     </include>
 
-    <!-- OSD - MAIN TITLE -->
-
-    <include name="Def_OSD_Player_Title">
-        <control type="label" description="Show">
-            <width>$PARAM[width]</width>
-            <top>30</top>
-            <height>40</height>
-            <font>MediumBold</font>
-            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-            <label>$VAR[Label_OSD_Title_Big]</label>
-            <visible>$PARAM[visible]</visible>
-            <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
-        </control>
-    </include>
-
-    <include name="Def_OSD_Player_TVShow_Title">
-        <control type="label" description="Show">
-            <width>$PARAM[width]</width>
-            <top>30</top>
-            <height>40</height>
-            <font>MediumBold</font>
-            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-            <label>$INFO[VideoPlayer.TVShowTitle]</label>
-            <visible>$PARAM[visible]</visible>
-            <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
-        </control>
-    </include>
-
     <!-- OSD - LABEL -->
 
     <variable name="Label_OSD_Player_Rating_Video">
@@ -1010,7 +982,441 @@
         <value>$LOCALIZE[591]</value>
     </variable>
 
-    <!-- OSD - VIDEO -->
+    <!-- OSD - BUTTON - CENTER - VIDEO -->
+
+    <include name="OSD_Video_Controls">
+        <include content="Def_OSD_Button" condition="VideoPlayer.Content(livetv)">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="$VAR[Image_OSD_Record]" />
+            <param name="flipx" value="false" />
+            <param name="id" value="9003" />
+            <param name="groupid" value="5099" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PVR.ToggleRecordPlayingChannel</onclick>
+            <enable>PVR.CanRecordPlayingChannel</enable>
+            <animation effect="fade" start="100" end="33" time="100" condition="!PVR.CanRecordPlayingChannel">Conditional</animation>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/next.png" />
+            <param name="flipx" value="true" />
+            <param name="id" value="12" />
+            <param name="groupid" value="5199" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PlayerControl(Previous)</onclick>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/ff.png" />
+            <param name="flipx" value="true" />
+            <param name="id" value="13" />
+            <param name="groupid" value="5299" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PlayerControl(Rewind)</onclick>
+            <onfocus>ClearProperty(OSDVideoDetails,Home)</onfocus>
+            <enable>Player.SeekEnabled</enable>
+            <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="$VAR[Image_OSD_PlayPause]" />
+            <param name="id" value="14" />
+            <param name="groupid" value="5399" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PlayerControl(Play)</onclick>
+            <enable>Player.PauseEnabled</enable>
+            <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/stop.png" />
+            <param name="id" value="15" />
+            <param name="groupid" value="5499" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PlayerControl(Stop)</onclick>
+            <onfocus>ClearProperty(OSDVideoDetails,Home)</onfocus>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/ff.png" />
+            <param name="id" value="16" />
+            <param name="groupid" value="5599" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PlayerControl(Forward)</onclick>
+            <onup>9906</onup>
+            <enable>Player.SeekEnabled</enable>
+            <animation effect="fade" start="100" end="33" time="100" condition="!Player.SeekEnabled">Conditional</animation>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/next.png" />
+            <param name="id" value="17" />
+            <param name="groupid" value="5699" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>PlayerControl(Next)</onclick>
+        </include>
+
+        <include content="Def_OSD_Button" condition="System.HasMediadvd">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/eject.png" />
+            <param name="id" value="9002" />
+            <param name="groupid" value="6599" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>EjectTray()</onclick>
+        </include>
+
+        <!-- <control type="button" id="9002"> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/eject.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/eject.png</texturenofocus> -->
+            <!-- <onclick>EjectTray()</onclick> -->
+            <!-- <visible>System.HasMediadvd</visible> -->
+        <!-- </control> -->
+
+        <include content="Def_OSD_Button" condition="Player.TempoEnabled">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/tempo.png" />
+            <param name="id" value="20" />
+            <param name="groupid" value="6599" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>SetFocus(9800)</onclick>
+        </include>
+
+        <!-- <control type="button" id="20"> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <onclick>SetFocus(9800)</onclick> -->
+            <!-- <onup>SetFocus(9800)</onup> -->
+            <!-- <visible>Player.TempoEnabled</visible> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]" flipx="true">osd/tempo.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]" flipx="true">osd/tempo.png</texturenofocus> -->
+        <!-- </control> -->
+
+        <!-- PLOT -->
+
+        <!-- <include content="Def_OSD_Button"> -->
+            <!-- <param name="autoclose" value="true" /> -->
+            <!-- <param name="visible" value="true" /> -->
+            <!-- <param name="icon" value="osd/plot.png" /> -->
+            <!-- <param name="id" value="18" /> -->
+            <!-- <param name="groupid" value="6699" /> -->
+            <!-- <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" /> -->
+            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
+            <!-- <onclick>SetFocus(9601)</onclick> -->
+            <!-- <onclick>SetProperty(dontautoclose,1,Home)</onclick> -->
+        <!-- </include> -->
+
+
+        <!-- <control type="button" id="18"> -->
+            <!-- <description>Settings</description> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/plot.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/plot.png</texturenofocus> -->
+            <!-- <onclick>SetFocus(9601)</onclick> -->
+            <!-- <onclick>SetProperty(dontautoclose,1,Home)</onclick> -->
+        <!-- </control> -->
+
+        <!-- <control type="button" id="31"> -->
+            <!-- <description>Settings</description> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]" flipx="true">osd/teletext.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]" flipx="true">osd/teletext.png</texturenofocus> -->
+            <!-- <onclick>ActivateWindow(Teletext)</onclick> -->
+            <!-- <visible>VideoPlayer.HasTeletext</visible> -->
+        <!-- </control> -->
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="Integer.IsGreater(Playlist.Length(video),1) + !Pvr.IsPlayingTv" />
+            <param name="icon" value="osd/playlist2.png" />
+            <param name="id" value="33" />
+            <param name="groupid" value="6799" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>Dialog.Close(all,true)</onclick>
+            <onclick>ActivateWindow(videoplaylist)</onclick>
+        </include>
+
+        <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="icon" value="osd/preset.png" />
+            <param name="id" value="19" />
+            <param name="groupid" value="5799" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <include>Def_OSD_UpDown_Video_Info</include>
+            <onclick>ActivateWindow(1121)</onclick>
+            <!-- <onclick>SetFocus(9000)</onclick> -->
+        </include>
+
+    </include>
+
+    <!-- OSD - BUTTONS - RIGHT - VIDEO -->
+
+    <include name="OSD_Right_Bookmark">
+
+         <include content="Def_OSD_Button" condition="VideoPlayer.IsStereoscopic">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/3d.png" />
+            <param name="id" value="5" />
+            <param name="groupid" value="6099" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>StereoMode</onclick>
+            <disabledcolor>PanelWhite12</disabledcolor>
+        </include>
+
+         <include content="Def_OSD_Button" condition="System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/headphones.png" />
+            <param name="id" value="7" />
+            <param name="groupid" value="7199" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>runscript(script.audio.profiles,popup)</onclick>
+            <disabledcolor>PanelWhite12</disabledcolor>
+        </include>
+
+        <!-- <control type="button" id="5"> -->
+            <!-- <description>3D Mode</description> -->
+            <!-- <align>right</align> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]" flipx="true">osd/3d.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]" flipx="true">osd/3d.png</texturenofocus> -->
+            <!-- <onclick>StereoMode</onclick> -->
+            <!-- <visible>VideoPlayer.IsStereoscopic</visible> -->
+            <!-- <disabledcolor>PanelWhite12</disabledcolor> -->
+        <!-- </control> -->
+
+         <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/bookmarks2.png" />
+            <param name="id" value="6" />
+            <param name="groupid" value="5999" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>ActivateWindow(125)</onclick>
+        </include>
+    </include>
+
+    <include name="OSD_Right_PVR">
+
+         <include content="Def_OSD_Button" condition="System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/headphones.png" />
+            <param name="id" value="7" />
+            <param name="groupid" value="7199" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>runscript(script.audio.profiles,popup)</onclick>
+            <disabledcolor>PanelWhite12</disabledcolor>
+        </include>
+
+         <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/channels.png" />
+            <param name="id" value="4" />
+            <param name="groupid" value="5899" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>ActivateWindow(pvrosdchannels)</onclick>
+        </include>
+
+        <!-- <control type="button" id="4"> -->
+            <!-- <description>CHANNELS</description> -->
+            <!-- <align>right</align> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/channels.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/channels.png</texturenofocus> -->
+
+            <!-- <onclick>ActivateWindow(pvrosdchannels)</onclick> -->
+        <!-- </control> -->
+
+         <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/timeline.png" />
+            <param name="id" value="5" />
+            <param name="groupid" value="6299" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>ActivateWindow(pvrchannelguide)</onclick>
+        </include>
+
+        <!-- <control type="button" id="5"> -->
+            <!-- <description>EPG</description> -->
+            <!-- <align>right</align> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/timeline.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/timeline.png</texturenofocus> -->
+
+            <!-- <onclick>ActivateWindow(pvrchannelguide)</onclick> -->
+        <!-- </control> -->
+
+         <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/guide.png" />
+            <param name="id" value="6" />
+            <param name="groupid" value="3299" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>Close</onclick>
+            <onclick>ActivateWindow(tvguide,,return)</onclick>
+        </include>
+
+        <!-- <control type="button" id="6"> -->
+            <!-- <description>TIMELINE</description> -->
+            <!-- <align>right</align> -->
+            <!-- <width>48</width> -->
+            <!-- <height>48</height> -->
+            <!-- <label/> -->
+            <!-- <font /> -->
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/guide.png</texturefocus> -->
+            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/guide.png</texturenofocus> -->
+
+            <!-- <onclick>Close</onclick> -->
+            <!-- <onclick>ActivateWindow(tvguide,,return)</onclick> -->
+        <!-- </control> -->
+    </include>
+
+    <include name="OSD_Right_DVD_Menu">
+
+         <include content="Def_OSD_Button" condition="VideoPlayer.HasMenu">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/dvdmenu.png" />
+            <param name="id" value="4" />
+            <param name="groupid" value="5899" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <onclick>PlayerControl(ShowVideoMenu)</onclick>
+            <disabledcolor>White12</disabledcolor>
+        </include>
+
+        <!-- <control type="button" id="4"> -->
+            <!-- <description>DVD Menu</description> -->
+            <!-- <label>$LOCALIZE[31098]</label> -->
+            <!-- <align>right</align> -->
+
+            <!-- <onclick>PlayerControl(ShowVideoMenu)</onclick> -->
+            <!-- <visible>VideoPlayer.HasMenu</visible> -->
+            <!-- <disabledcolor>White12</disabledcolor> -->
+        <!-- </control> -->
+    </include>
+
+    <include name="OSD_Right_ExtraInfo_TvShows">
+         <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/info.png" />
+            <param name="id" value="4" />
+            <param name="groupid" value="5899" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <onup condition="!Player.Paused">PlayerControl(Play)</onup>
+            <onup>Dialog.Close(VideoOSD)</onup>
+            <onup>SetProperty(wikipedia,1,Home)</onup>
+            <onup>RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.TvShowTitle],tmdb_type=tv,language=$VAR[Def_Wiki_Language])</onup>
+            <enable>Player.PauseEnabled</enable>
+            <onclick>Close</onclick>
+            <onclick>SetProperty(dialogvideoinfo,1,Home)</onclick>
+            <onclick>RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[VideoPlayer.TvShowTitle,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D]"',call_auto=1190)</onclick>
+        </include>
+
+    </include>
+
+    <include name="OSD_Right_ExtraInfo_Movies">
+
+         <include content="Def_OSD_Button">
+            <param name="autoclose" value="true" />
+            <param name="visible" value="true" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/info.png" />
+            <param name="id" value="4" />
+            <param name="groupid" value="5899" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <align>right</align>
+            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
+            <enable>Player.PauseEnabled</enable>
+            <onclick>Close</onclick>
+            <onclick>SetProperty(dialogvideoinfo,1,Home)</onclick>
+            <onclick>RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[VideoPlayer.Title,videodb://movies/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22movies%22%7D]"',call_auto=1190)</onclick>
+        </include>
+    </include>
+
+    <!-- OSD - VIDEO - ALL BUTTONS -->
 
     <include name="OSD_Video">
         <control type="group">
@@ -1253,7 +1659,6 @@
                 </control>
                 <visible>ControlGroup(101).HasFocus() | ControlGroup(102).HasFocus()</visible>
             </control>
-
         </control>
     </include>
 
@@ -1283,955 +1688,494 @@
         </control>
     </include>
 
-    <!-- OSD - VIDEO - INFO - MEDIA FLAG -->
+    <!-- INFO - VIDEO -->
 
     <include name="OSD_Video_Info">
         <animation effect="slide" start="0" end="0,-39" time="150" condition="VideoPlayer.Content(livetv) + Skin.HasSetting(pvr.showtechnicalinfo)">Conditional</animation>
-        <right>0</right>
 
-        <!-- FLAG BLACK / WHITE -->
-
-        <control type="grouplist">
-            <visible>!Skin.HasSetting(show.osd.video.colored.icons)</visible>
-            <right>0</right>
-            <centertop>50</centertop>
-            <width>1400</width>
-            <height>64</height>
-            <orientation>horizontal</orientation>
-            <align>right</align>
-            <itemgap>2</itemgap>
-            <usecontrolcoords>true</usecontrolcoords>
-            <control type="image">
-                <width min="20" max="60">auto</width>
-                <height>34</height>
-                <centertop>53%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.VideoResolution,flags/resolution/,.png]</texture>
-                <aspectratio align="left">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoResolution)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="100">auto</width>
-                <height>46</height>
-                <centertop>53%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.VideoCodec,flags/white/source/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoCodec)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="80">auto</width>
-                <height>42</height>
-                <centertop>53%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.VideoAspect,flags/aspectratio/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoAspect)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="80">auto</width>
-                <height>42</height>
-                <centertop>53%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$VAR[ListItemAudioCodec,flags3/audio/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="70">auto</width>
-                <height>42</height>
-                <centertop>53%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.AudioChannels,flags/channels/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioChannels)</visible>
-            </control>
-
-            <control type="image" description="HDR10+">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hdr10plus.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10Plus]</visible>
-            </control>
-            <control type="image" description="HDR10">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hdr10.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10]</visible>
-            </control>
-            <control type="image" description="HDR">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hdr.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR]</visible>
-            </control>
-            <control type="image" description="HLG">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hlg.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHLG]</visible>
-            </control>
-            <control type="image" description="Dolby Vision">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/dolbyvision.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoDolbyVision]</visible>
-            </control>
-             <control type="image">
-                <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
-                <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                <centertop>53%</centertop>
-                <width>44</width>
-                <height>28</height>
-                <left>26</left>
-                <aspectratio align="center">keep</aspectratio>
-                <texture colordiffuse="$VAR[Color_OSD_Panel_White70]">misc/imdb_white.png</texture>
-            </control>
-            <control type="label">
-                <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
-                <centertop>53%</centertop>
-                <width min="48">auto</width>
-                <height>64</height>
-                <font>Flag</font>
-                <left>13</left>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[VideoPlayer.Rating(imdb)]</label>
-            </control>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo1" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="Dark1" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo2" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="Dark1" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo3" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="Dark1" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo4" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="Dark1" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo5" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="Dark1" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo1" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="Dark1" />
-            </include>
-            <control type="label">
-                <width>auto</width>
-                <height>64</height>
-                <label>$VAR[Label_OSD_Player_Rating_Video]</label>
-                <aligny>center</aligny>
-                <align>right</align>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <font>Flag</font>
-                <textcolor>Dark1</textcolor>
-                <visible>Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + [Integer.IsGreater(VideoPlayer.Rating,0) | [Integer.IsGreater(VideoPlayer.UserRating,0) + Skin.HasSetting(enable.user.rating.override.kodi.rating)]]</visible>
-            </control>
-        </control>
-
-        <!-- FLAG COLORED -->
-
-        <control type="grouplist">
-            <visible>Skin.HasSetting(show.osd.video.colored.icons)</visible>
-            <right>0</right>
-            <centertop>50</centertop>
-            <width>1400</width>
-            <height>64</height>
-            <orientation>horizontal</orientation>
-            <align>right</align>
-            <itemgap>2</itemgap>
-            <usecontrolcoords>true</usecontrolcoords>
-            <control type="image">
-                <width min="20" max="80">auto</width>
-                <height>46</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">$INFO[VideoPlayer.VideoResolution,flags/color/resolution/,.png]</texture>
-                <aspectratio align="left">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoResolution)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="100">auto</width>
-                <height>46</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">$INFO[VideoPlayer.VideoCodec,flags/color/source/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoCodec)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="80">auto</width>
-                <height>42</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">$INFO[VideoPlayer.VideoAspect,flags/color/aspectratio/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoAspect)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="80">auto</width>
-                <height>45</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">$VAR[ListItemAudioCodec,flags/color/audio/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
-            </control>
-            <control type="image">
-                <width min="20" max="70">auto</width>
-                <height>42</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">$INFO[VideoPlayer.AudioChannels,flags/color/channels/,.png]</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioChannels)</visible>
-            </control>
-            <control type="image" description="HDR10+">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">flags/color/other/hdr10plus.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10Plus]</visible>
-            </control>
-            <control type="image" description="HDR10">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">flags/color/other/hdr10.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10]</visible>
-            </control>
-            <control type="image" description="HDR">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">flags/color/other/hdrnew.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR]</visible>
-            </control>
-            <control type="image" description="HLG">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">flags/color/other/hlg.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHLG]</visible>
-            </control>
-            <control type="image" description="Dolby Vision">
-                <width min="20" max="100">auto</width>
-                <height>60</height>
-                <centertop>53%</centertop>
-                <texture fallback="flags/fallback.png">flags/color/other/dolbyvision.png</texture>
-                <aspectratio align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoDolbyVision]</visible>
-            </control>
-             <control type="image">
-                <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
-                <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                <centertop>53%</centertop>
-                <width>44</width>
-                <height>28</height>
-                <left>26</left>
-                <aspectratio align="center">keep</aspectratio>
-                <texture background="true">misc/imdb.png</texture>
-            </control>
-            <control type="label">
-                <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
-                <height>60</height>
-                <centertop>53%</centertop>
-                <width min="48">auto</width>
-                <font>Flag</font>
-                <left>13</left>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[VideoPlayer.Rating(imdb)]</label>
-            </control>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo1" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo2" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo3" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo4" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo5" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
-            </include>
-            <include content="Def_Flag">
-                <param name="Star" value="FlagstarVideo1" />
-                <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
-                <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
-            </include>
-            <control type="label">
-                <width>auto</width>
-                <height>64</height>
-                <label>$VAR[Label_OSD_Player_Rating_Video]</label>
-                <aligny>center</aligny>
-                <align>right</align>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <font>Flag</font>
-                <textcolor>Dark1</textcolor>
-                <visible>Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + [Integer.IsGreater(VideoPlayer.Rating,0) | [Integer.IsGreater(VideoPlayer.UserRating,0) + Skin.HasSetting(enable.user.rating.override.kodi.rating)]]</visible>
-            </control>
-        </control>
-
-        <!-- CLEARLOGO -->
-
-        <control type="image">
-            <left>0</left>
-            <bottom>90</bottom>
-            <height>ClearLogoTitleMaxHeight</height>
-            <width>ClearLogoTitleMaxWidth</width>
-            <texture>$VAR[Image_Crop_ClearLogo_Player]</texture>
-            <aspectratio align="left" aligny="bottom">keep</aspectratio>
-            <visible>Skin.HasSetting(show.osd.video.clearlogo)</visible>
-            <animation effect="slide" start="0,0" end="-318,0" time="150" condition="!String.IsEmpty(Window(Home).Property(OSDVideoDetails))">Conditional</animation>
-        </control>
-
-        <!-- MAIN TITLE TVSHOWS INFO -->
+        <!-- LEFT SIDE -->
 
         <control type="group">
             <animation effect="slide" start="0,0" end="-318,0" time="150" condition="!String.IsEmpty(Window(Home).Property(OSDVideoDetails))">Conditional</animation>
-            <!-- Content of the episodes -->
+            <animation effect="slide" end="0,0" start="-318,0" time="150" condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(fullscreeninfo))">Conditional</animation>
 
             <left>0</left>
-            <visible>VideoPlayer.Content(episodes)</visible>
-            <visible>!Skin.HasSetting(show.osd.video.clearlogo) | [Skin.HasSetting(show.osd.video.clearlogo) + !$EXP[Exp_Title_Clearlogo_Player_Available]] </visible>
 
-            <!-- WITH POSTER -->
-            <include content="Def_OSD_Player_TVShow_Title">
-                <param name="width" value="1220"/>
-                <param name="visible" value="Skin.HasSetting(show.osd.video.numeric.rating) + !Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-            <include content="Def_OSD_Player_TVShow_Title">
-                <param name="width" value="1080"/>
-                <param name="visible" value="!Skin.HasSetting(show.osd.video.numeric.rating) + !Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-            <include content="Def_OSD_Player_TVShow_Title">
-                <param name="width" value="770"/>
-                <param name="visible" value="Skin.HasSetting(show.osd.video.numeric.rating) + Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-            <include content="Def_OSD_Player_TVShow_Title">
-                <param name="width" value="630"/>
-                <param name="visible" value="!Skin.HasSetting(show.osd.video.numeric.rating) + Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-        </control>
+            <!-- LEFT - CLEARLOGO -->
 
-        <!-- MAIN TITLE - MOVIES INFO -->
-
-        <control type="group">
-            <animation effect="slide" start="0,0" end="-318,0" time="150" condition="!String.IsEmpty(Window(Home).Property(OSDVideoDetails))">Conditional</animation>
-
-            <!-- Content everything except episodes -->
-
-            <visible>!VideoPlayer.Content(episodes)</visible>
-            <visible>!Skin.HasSetting(show.osd.video.clearlogo) | [Skin.HasSetting(show.osd.video.clearlogo) + !$EXP[Exp_Title_Clearlogo_Player_Available]] </visible>
-
-            <left>0</left>
-            <align>left</align>
-
-            <include content="Def_OSD_Player_Title">
-                <param name="width" value="1220"/>
-                <param name="visible" value="Skin.HasSetting(show.osd.video.numeric.rating) + !Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-            <include content="Def_OSD_Player_Title">
-                <param name="width" value="1080"/>
-                <param name="visible" value="!Skin.HasSetting(show.osd.video.numeric.rating) + !Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-            <include content="Def_OSD_Player_Title">
-                <param name="width" value="770"/>
-                <param name="visible" value="Skin.HasSetting(show.osd.video.numeric.rating) + Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-            <include content="Def_OSD_Player_Title">
-                <param name="width" value="630"/>
-                <param name="visible" value="!Skin.HasSetting(show.osd.video.numeric.rating) + Skin.HasSetting(show.osd.video.flags.icons)"/>
-            </include>
-        </control>
-
-        <!-- VIDEO INFO - SUB TITLE  -->
-
-        <!-- LEFT INFO - MOVIES / TVSHOWS  -->
-
-        <control type="group">
-            <visible>!VideoPlayer.Content(livetv)</visible>
-            <animation effect="slide" start="0,0" end="-318,0" time="150" condition="!String.IsEmpty(Window(Home).Property(OSDVideoDetails))">Conditional</animation>
-            <control type="label">
-                <left>0</left>
-                <width>1050</width>
-                <bottom>30</bottom>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</label>
-                <visible>!VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Genre)</visible>
+            <control type="image">
+                <bottom>90</bottom>
+                <height>ClearLogoTitleMaxHeight</height>
+                <width>ClearLogoTitleMaxWidth</width>
+                <texture>$VAR[Image_Crop_ClearLogo_Player]</texture>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                <visible>Skin.HasSetting(show.osd.video.clearlogo)</visible>
             </control>
-            <control type="label">
-                <left>0</left>
-                <width>1050</width>
-                <bottom>30</bottom>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[VideoPlayer.Premiered]</label>
-                <visible>!VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Premiered) + String.IsEmpty(VideoPlayer.Genre)</visible>
-            </control>
-            <control type="label">
-                <visible>VideoPlayer.Content(episodes)</visible>
-                <left>0</left>
-                <width>1050</width>
-                <bottom>30</bottom>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Season ,  •  $LOCALIZE[20373] ]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,]$INFO[Player.FinishTime ,  •  $LOCALIZE[31006] ]</label>
-            </control>
-        </control>
 
-        <!-- LEFT INFO - PVR  -->
+            <!-- LEFT - MAIN TITLE - MOVIES INFO -->
 
-        <control type="group">
-            <visible>VideoPlayer.Content(livetv)</visible>
-            <control type="fadelabel">
-                <visible>!String.IsEmpty(VideoPlayer.NextTitle)</visible>
-                <left>0</left>
-                <width>1050</width>
-                <bottom>30</bottom>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <pauseatend>6000</pauseatend>
-                <scroll>false</scroll>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$VAR[Label_OSD_Player_Video_Status]</label>
-                <label>$INFO[VideoPlayer.ChannelNumberLabel,,. ]$INFO[VideoPlayer.ChannelName]</label>
-                <label>$INFO[VideoPlayer.Season,$LOCALIZE[20373] ,]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,  •  ]$INFO[VideoPlayer.Premiered]</label>
-                <label>$INFO[VideoPlayer.NextTitle,$LOCALIZE[19031]: ]$INFO[VideoPlayer.NextStartTime, (,]$INFO[VideoPlayer.NextEndTime, - ,)]</label>
+            <control type="group">
+                <visible>!Skin.HasSetting(show.osd.video.clearlogo) | [Skin.HasSetting(show.osd.video.clearlogo) + !$EXP[Exp_Title_Clearlogo_Player_Available]] </visible>
+
+                <align>left</align>
+
+                <include content="Def_Width" condition="Skin.HasSetting(show.osd.video.numeric.rating) + !Skin.HasSetting(show.osd.video.flags.icons)">
+                    <param name="width" value="1220"/>
+                </include>
+                <include content="Def_Width" condition="!Skin.HasSetting(show.osd.video.numeric.rating) + !Skin.HasSetting(show.osd.video.flags.icons)">
+                    <param name="width" value="1080"/>
+                </include>
+                <include content="Def_Width" condition="Skin.HasSetting(show.osd.video.numeric.rating) + Skin.HasSetting(show.osd.video.flags.icons)">
+                    <param name="width" value="770"/>
+                </include>
+                <include content="Def_Width" condition="!Skin.HasSetting(show.osd.video.numeric.rating) + Skin.HasSetting(show.osd.video.flags.icons)">
+                    <param name="width" value="630"/>
+                </include>
+
+                <control type="label" description="Show">
+                    <bottom>85</bottom>
+                    <height>40</height>
+                    <font>LargeNew</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$VAR[Label_OSD_Title_Big]</label>
+                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+                </control>
             </control>
-            <control type="label">
-                <visible>String.IsEmpty(VideoPlayer.NextTitle)</visible>
-                <left>0</left>
-                <width>1050</width>
-                <bottom>30</bottom>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <scroll>false</scroll>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$VAR[Label_OSD_Player_Video_Status]</label>
+
+            <!-- LEFT - SUB TITLE - INFO - MOVIES / TVSHOWS  -->
+
+            <control type="group">
+                <visible>!VideoPlayer.Content(livetv)</visible>
+
+                <control type="label">
+                        <width>1050</width>
+                    <bottom>30</bottom>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</label>
+                    <visible>!VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Genre)</visible>
+                </control>
+                <control type="label">
+                        <width>1050</width>
+                    <bottom>30</bottom>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[VideoPlayer.Premiered]</label>
+                    <visible>!VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Premiered) + String.IsEmpty(VideoPlayer.Genre)</visible>
+                </control>
+                <control type="label">
+                    <visible>VideoPlayer.Content(episodes)</visible>
+                        <width>1050</width>
+                    <bottom>30</bottom>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Season ,  •  $LOCALIZE[20373] ]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,]$INFO[Player.FinishTime ,  •  $LOCALIZE[31006] ]</label>
+                </control>
             </control>
-        </control>
 
-        <!-- RIGHT INFO -->
+            <!-- LEFT - SUB TITLE - INFO - PVR  -->
 
-        <control type="grouplist">
-            <right>0</right>
-            <centertop>122</centertop>
-            <width>100%</width>
-            <height>64</height>
-            <orientation>horizontal</orientation>
-            <align>right</align>
-
-            <!-- <control type="label" description="Chapter-OSD"> -->
-                <!-- <left>380</left> -->
-                <!-- <align>right</align> -->
-                <!-- <width>auto</width> -->
-                <!-- <height>40</height> -->
-                <!-- <font>InfoNetflix</font> -->
-                <!-- <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor> -->
-                <!-- <label>$INFO[Player.Chapter]$INFO[Player.ChapterCount, / ,  •  ]</label> -->
-                <!-- <visible>!VideoPlayer.Content(livetv) + Player.HasVideo + !String.IsEqual(Player.ChapterCount,0) + !String.IsEqual(Player.ChapterCount,00)</visible> -->
-            <!-- </control> -->
-
-            <control type="label" description="Total Time">
-                <width>auto</width>
-                <align>right</align>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[Player.Time]$INFO[Player.Duration,  /  ]</label>
-                <visible>!VideoPlayer.Content(livetv) + String.IsEmpty(Player.SeekNumeric)</visible>
-            </control>
-            <control type="label" description="Total Time">
-                <width>auto</width>
-                <align>right</align>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[Player.SeekNumeric(hh:mm:ss)]$INFO[Player.Duration,  /  ]</label>
-                <visible>!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.SeekNumeric)</visible>
-            </control>
-            <control type="label" description="Total Time">
-                <width>auto</width>
-                <align>right</align>
-                <height>40</height>
-                <font>InfoNetflix</font>
-                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                <label>$INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration,  /  ]</label>
+            <control type="group">
                 <visible>VideoPlayer.Content(livetv)</visible>
+                <control type="fadelabel">
+                    <visible>!String.IsEmpty(VideoPlayer.NextTitle)</visible>
+                        <width>1050</width>
+                    <bottom>30</bottom>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <pauseatend>6000</pauseatend>
+                    <scroll>false</scroll>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$VAR[Label_OSD_Player_Video_Status]</label>
+                    <label>$INFO[VideoPlayer.ChannelNumberLabel,,. ]$INFO[VideoPlayer.ChannelName]</label>
+                    <label>$INFO[VideoPlayer.Season,$LOCALIZE[20373] ,]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,  •  ]$INFO[VideoPlayer.Premiered]</label>
+                    <label>$INFO[VideoPlayer.NextTitle,$LOCALIZE[19031]: ]$INFO[VideoPlayer.NextStartTime, (,]$INFO[VideoPlayer.NextEndTime, - ,)]</label>
+                </control>
+                <control type="label">
+                    <visible>String.IsEmpty(VideoPlayer.NextTitle)</visible>
+                        <width>1050</width>
+                    <bottom>30</bottom>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <scroll>false</scroll>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$VAR[Label_OSD_Player_Video_Status]</label>
+                </control>
+            </control>
+        </control>
+
+        <!-- RIGHT SIDE -->
+
+        <control type="group">
+            <right>0</right>
+
+            <!-- RIGHT - FLAG BLACK / WHITE -->
+
+            <control type="grouplist">
+                <visible>!Skin.HasSetting(show.osd.video.colored.icons)</visible>
+                <right>0</right>
+                <centertop>60</centertop>
+                <width>1400</width>
+                <height>64</height>
+                <orientation>horizontal</orientation>
+                <align>right</align>
+                <itemgap>2</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="image">
+                    <width min="20" max="60">auto</width>
+                    <height>34</height>
+                    <centertop>53%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.VideoResolution,flags/resolution/,.png]</texture>
+                    <aspectratio align="left">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoResolution)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="100">auto</width>
+                    <height>46</height>
+                    <centertop>53%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.VideoCodec,flags/white/source/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoCodec)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>42</height>
+                    <centertop>53%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.VideoAspect,flags/aspectratio/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoAspect)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>42</height>
+                    <centertop>53%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$VAR[ListItemAudioCodec,flags3/audio/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="70">auto</width>
+                    <height>42</height>
+                    <centertop>53%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.AudioChannels,flags/channels/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioChannels)</visible>
+                </control>
+
+                <control type="image" description="HDR10+">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hdr10plus.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10Plus]</visible>
+                </control>
+                <control type="image" description="HDR10">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hdr10.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10]</visible>
+                </control>
+                <control type="image" description="HDR">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hdr.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR]</visible>
+                </control>
+                <control type="image" description="HLG">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/hlg.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHLG]</visible>
+                </control>
+                <control type="image" description="Dolby Vision">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">flags/other/dolbyvision.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoDolbyVision]</visible>
+                </control>
+                 <control type="image">
+                    <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>53%</centertop>
+                    <width>44</width>
+                    <height>28</height>
+                    <left>26</left>
+                    <aspectratio align="center">keep</aspectratio>
+                    <texture colordiffuse="$VAR[Color_OSD_Panel_White70]">misc/imdb_white.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <centertop>53%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Flag</font>
+                    <left>13</left>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[VideoPlayer.Rating(imdb)]</label>
+                </control>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo1" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="Dark1" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo2" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="Dark1" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo3" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="Dark1" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo4" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="Dark1" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo5" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="Dark1" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo1" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="Dark1" />
+                </include>
+                <control type="label">
+                    <width>auto</width>
+                    <height>64</height>
+                    <label>$VAR[Label_OSD_Player_Rating_Video]</label>
+                    <aligny>center</aligny>
+                    <align>right</align>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <visible>Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + [Integer.IsGreater(VideoPlayer.Rating,0) | [Integer.IsGreater(VideoPlayer.UserRating,0) + Skin.HasSetting(enable.user.rating.override.kodi.rating)]]</visible>
+                </control>
+            </control>
+
+            <!-- RIGHT - FLAG COLORED -->
+
+            <control type="grouplist">
+                <visible>Skin.HasSetting(show.osd.video.colored.icons)</visible>
+                <right>0</right>
+                <centertop>60</centertop>
+                <width>1400</width>
+                <height>64</height>
+                <orientation>horizontal</orientation>
+                <align>right</align>
+                <itemgap>2</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>46</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[VideoPlayer.VideoResolution,flags/color/resolution/,.png]</texture>
+                    <aspectratio align="left">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoResolution)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="100">auto</width>
+                    <height>46</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[VideoPlayer.VideoCodec,flags/color/source/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoCodec)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>42</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[VideoPlayer.VideoAspect,flags/color/aspectratio/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoAspect)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>45</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">$VAR[ListItemAudioCodec,flags/color/audio/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="70">auto</width>
+                    <height>42</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[VideoPlayer.AudioChannels,flags/color/channels/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioChannels)</visible>
+                </control>
+                <control type="image" description="HDR10+">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">flags/color/other/hdr10plus.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10Plus]</visible>
+                </control>
+                <control type="image" description="HDR10">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">flags/color/other/hdr10.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10]</visible>
+                </control>
+                <control type="image" description="HDR">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">flags/color/other/hdrnew.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR]</visible>
+                </control>
+                <control type="image" description="HLG">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">flags/color/other/hlg.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHLG]</visible>
+                </control>
+                <control type="image" description="Dolby Vision">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>53%</centertop>
+                    <texture fallback="flags/fallback.png">flags/color/other/dolbyvision.png</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoDolbyVision]</visible>
+                </control>
+                 <control type="image">
+                    <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>53%</centertop>
+                    <width>44</width>
+                    <height>28</height>
+                    <left>26</left>
+                    <aspectratio align="center">keep</aspectratio>
+                    <texture background="true">misc/imdb.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <height>60</height>
+                    <centertop>53%</centertop>
+                    <width min="48">auto</width>
+                    <font>Flag</font>
+                    <left>13</left>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[VideoPlayer.Rating(imdb)]</label>
+                </control>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo1" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo2" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo3" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo4" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo5" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + !Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
+                </include>
+                <include content="Def_Flag">
+                    <param name="Star" value="FlagstarVideo1" />
+                    <param name="visible" value="[Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + !VideoPlayer.Content(livetv)]" />
+                    <param name="color" value="$VAR[Color_OSD_Stars_User_Rating_Override_Video]" />
+                </include>
+                <control type="label">
+                    <width>auto</width>
+                    <height>64</height>
+                    <label>$VAR[Label_OSD_Player_Rating_Video]</label>
+                    <aligny>center</aligny>
+                    <align>right</align>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <visible>Skin.HasSetting(show.osd.video.rating) + Skin.HasSetting(show.osd.video.numeric.rating) + [Integer.IsGreater(VideoPlayer.Rating,0) | [Integer.IsGreater(VideoPlayer.UserRating,0) + Skin.HasSetting(enable.user.rating.override.kodi.rating)]]</visible>
+                </control>
+            </control>
+
+            <!-- RIGHT - INFO -->
+
+            <control type="grouplist">
+                <right>0</right>
+                <centertop>122</centertop>
+                <width>100%</width>
+                <height>64</height>
+                <orientation>horizontal</orientation>
+                <align>right</align>
+
+                <!-- <control type="label" description="Chapter-OSD"> -->
+                    <!-- <left>380</left> -->
+                    <!-- <align>right</align> -->
+                    <!-- <width>auto</width> -->
+                    <!-- <height>40</height> -->
+                    <!-- <font>InfoNetflix</font> -->
+                    <!-- <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor> -->
+                    <!-- <label>$INFO[Player.Chapter]$INFO[Player.ChapterCount, / ,  •  ]</label> -->
+                    <!-- <visible>!VideoPlayer.Content(livetv) + Player.HasVideo + !String.IsEqual(Player.ChapterCount,0) + !String.IsEqual(Player.ChapterCount,00)</visible> -->
+                <!-- </control> -->
+
+                <control type="label" description="Total Time">
+                    <width>auto</width>
+                    <align>right</align>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[Player.Time]$INFO[Player.Duration,  /  ]</label>
+                    <visible>!VideoPlayer.Content(livetv) + String.IsEmpty(Player.SeekNumeric)</visible>
+                </control>
+                <control type="label" description="Total Time">
+                    <width>auto</width>
+                    <align>right</align>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[Player.SeekNumeric(hh:mm:ss)]$INFO[Player.Duration,  /  ]</label>
+                    <visible>!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.SeekNumeric)</visible>
+                </control>
+                <control type="label" description="Total Time">
+                    <width>auto</width>
+                    <align>right</align>
+                    <height>40</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                    <label>$INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration,  /  ]</label>
+                    <visible>VideoPlayer.Content(livetv)</visible>
+                </control>
             </control>
         </control>
     </include>
 
-    <!-- OSD - VIDEO - BUTTON - CENTER -->
-
-    <include name="OSD_Video_Controls">
-
-        <include content="Def_OSD_Button" condition="VideoPlayer.Content(livetv)">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="$VAR[Image_OSD_Record]" />
-            <param name="flipx" value="false" />
-            <param name="id" value="9003" />
-            <param name="groupid" value="5099" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PVR.ToggleRecordPlayingChannel</onclick>
-            <enable>PVR.CanRecordPlayingChannel</enable>
-            <animation effect="fade" start="100" end="33" time="100" condition="!PVR.CanRecordPlayingChannel">Conditional</animation>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/next.png" />
-            <param name="flipx" value="true" />
-            <param name="id" value="12" />
-            <param name="groupid" value="5199" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PlayerControl(Previous)</onclick>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/ff.png" />
-            <param name="flipx" value="true" />
-            <param name="id" value="13" />
-            <param name="groupid" value="5299" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PlayerControl(Rewind)</onclick>
-            <onfocus>ClearProperty(OSDVideoDetails,Home)</onfocus>
-            <enable>Player.SeekEnabled</enable>
-            <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="$VAR[Image_OSD_PlayPause]" />
-            <param name="id" value="14" />
-            <param name="groupid" value="5399" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PlayerControl(Play)</onclick>
-            <enable>Player.PauseEnabled</enable>
-            <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/stop.png" />
-            <param name="id" value="15" />
-            <param name="groupid" value="5499" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PlayerControl(Stop)</onclick>
-            <onfocus>ClearProperty(OSDVideoDetails,Home)</onfocus>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/ff.png" />
-            <param name="id" value="16" />
-            <param name="groupid" value="5599" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PlayerControl(Forward)</onclick>
-            <onup>9906</onup>
-            <enable>Player.SeekEnabled</enable>
-            <animation effect="fade" start="100" end="33" time="100" condition="!Player.SeekEnabled">Conditional</animation>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/next.png" />
-            <param name="id" value="17" />
-            <param name="groupid" value="5699" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>PlayerControl(Next)</onclick>
-        </include>
-
-        <include content="Def_OSD_Button" condition="System.HasMediadvd">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/eject.png" />
-            <param name="id" value="9002" />
-            <param name="groupid" value="6599" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>EjectTray()</onclick>
-        </include>
-
-        <!-- <control type="button" id="9002"> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/eject.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/eject.png</texturenofocus> -->
-            <!-- <onclick>EjectTray()</onclick> -->
-            <!-- <visible>System.HasMediadvd</visible> -->
-        <!-- </control> -->
-
-        <include content="Def_OSD_Button" condition="Player.TempoEnabled">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/tempo.png" />
-            <param name="id" value="20" />
-            <param name="groupid" value="6599" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>SetFocus(9800)</onclick>
-        </include>
-
-        <!-- <control type="button" id="20"> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <onclick>SetFocus(9800)</onclick> -->
-            <!-- <onup>SetFocus(9800)</onup> -->
-            <!-- <visible>Player.TempoEnabled</visible> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]" flipx="true">osd/tempo.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]" flipx="true">osd/tempo.png</texturenofocus> -->
-        <!-- </control> -->
-
-        <!-- PLOT -->
-
-        <!-- <include content="Def_OSD_Button"> -->
-            <!-- <param name="autoclose" value="true" /> -->
-            <!-- <param name="visible" value="true" /> -->
-            <!-- <param name="icon" value="osd/plot.png" /> -->
-            <!-- <param name="id" value="18" /> -->
-            <!-- <param name="groupid" value="6699" /> -->
-            <!-- <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" /> -->
-            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
-            <!-- <onclick>SetFocus(9601)</onclick> -->
-            <!-- <onclick>SetProperty(dontautoclose,1,Home)</onclick> -->
-        <!-- </include> -->
-
-
-        <!-- <control type="button" id="18"> -->
-            <!-- <description>Settings</description> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/plot.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/plot.png</texturenofocus> -->
-            <!-- <onclick>SetFocus(9601)</onclick> -->
-            <!-- <onclick>SetProperty(dontautoclose,1,Home)</onclick> -->
-        <!-- </control> -->
-
-        <!-- <control type="button" id="31"> -->
-            <!-- <description>Settings</description> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]" flipx="true">osd/teletext.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]" flipx="true">osd/teletext.png</texturenofocus> -->
-            <!-- <onclick>ActivateWindow(Teletext)</onclick> -->
-            <!-- <visible>VideoPlayer.HasTeletext</visible> -->
-        <!-- </control> -->
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="Integer.IsGreater(Playlist.Length(video),1) + !Pvr.IsPlayingTv" />
-            <param name="icon" value="osd/playlist2.png" />
-            <param name="id" value="33" />
-            <param name="groupid" value="6799" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>Dialog.Close(all,true)</onclick>
-            <onclick>ActivateWindow(videoplaylist)</onclick>
-        </include>
-
-        <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="icon" value="osd/preset.png" />
-            <param name="id" value="19" />
-            <param name="groupid" value="5799" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <include>Def_OSD_UpDown_Video_Info</include>
-            <onclick>ActivateWindow(1121)</onclick>
-            <!-- <onclick>SetFocus(9000)</onclick> -->
-        </include>
-
-    </include>
-
-    <!-- OSD - VIDEO - BUTTONS - RIGHT -->
-
-    <include name="OSD_Right_Bookmark">
-
-         <include content="Def_OSD_Button" condition="VideoPlayer.IsStereoscopic">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/3d.png" />
-            <param name="id" value="5" />
-            <param name="groupid" value="6099" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>StereoMode</onclick>
-            <disabledcolor>PanelWhite12</disabledcolor>
-        </include>
-
-         <include content="Def_OSD_Button" condition="System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/headphones.png" />
-            <param name="id" value="7" />
-            <param name="groupid" value="7199" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>runscript(script.audio.profiles,popup)</onclick>
-            <disabledcolor>PanelWhite12</disabledcolor>
-        </include>
-
-        <!-- <control type="button" id="5"> -->
-            <!-- <description>3D Mode</description> -->
-            <!-- <align>right</align> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]" flipx="true">osd/3d.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]" flipx="true">osd/3d.png</texturenofocus> -->
-            <!-- <onclick>StereoMode</onclick> -->
-            <!-- <visible>VideoPlayer.IsStereoscopic</visible> -->
-            <!-- <disabledcolor>PanelWhite12</disabledcolor> -->
-        <!-- </control> -->
-
-         <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/bookmarks2.png" />
-            <param name="id" value="6" />
-            <param name="groupid" value="5999" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>ActivateWindow(125)</onclick>
-        </include>
-    </include>
-
-    <include name="OSD_Right_PVR">
-
-         <include content="Def_OSD_Button" condition="System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/headphones.png" />
-            <param name="id" value="7" />
-            <param name="groupid" value="7199" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>runscript(script.audio.profiles,popup)</onclick>
-            <disabledcolor>PanelWhite12</disabledcolor>
-        </include>
-
-         <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/channels.png" />
-            <param name="id" value="4" />
-            <param name="groupid" value="5899" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>ActivateWindow(pvrosdchannels)</onclick>
-        </include>
-
-        <!-- <control type="button" id="4"> -->
-            <!-- <description>CHANNELS</description> -->
-            <!-- <align>right</align> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/channels.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/channels.png</texturenofocus> -->
-
-            <!-- <onclick>ActivateWindow(pvrosdchannels)</onclick> -->
-        <!-- </control> -->
-
-         <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/timeline.png" />
-            <param name="id" value="5" />
-            <param name="groupid" value="6299" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>ActivateWindow(pvrchannelguide)</onclick>
-        </include>
-
-        <!-- <control type="button" id="5"> -->
-            <!-- <description>EPG</description> -->
-            <!-- <align>right</align> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/timeline.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/timeline.png</texturenofocus> -->
-
-            <!-- <onclick>ActivateWindow(pvrchannelguide)</onclick> -->
-        <!-- </control> -->
-
-         <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/guide.png" />
-            <param name="id" value="6" />
-            <param name="groupid" value="3299" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>Close</onclick>
-            <onclick>ActivateWindow(tvguide,,return)</onclick>
-        </include>
-
-        <!-- <control type="button" id="6"> -->
-            <!-- <description>TIMELINE</description> -->
-            <!-- <align>right</align> -->
-            <!-- <width>48</width> -->
-            <!-- <height>48</height> -->
-            <!-- <label/> -->
-            <!-- <font /> -->
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <!-- <texturefocus colordiffuse="$VAR[Color_Highlight]">osd/guide.png</texturefocus> -->
-            <!-- <texturenofocus colordiffuse="$VAR[Color_OSD_Panel_White30]">osd/guide.png</texturenofocus> -->
-
-            <!-- <onclick>Close</onclick> -->
-            <!-- <onclick>ActivateWindow(tvguide,,return)</onclick> -->
-        <!-- </control> -->
-    </include>
-
-    <include name="OSD_Right_DVD_Menu">
-
-         <include content="Def_OSD_Button" condition="VideoPlayer.HasMenu">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/dvdmenu.png" />
-            <param name="id" value="4" />
-            <param name="groupid" value="5899" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <onclick>PlayerControl(ShowVideoMenu)</onclick>
-            <disabledcolor>White12</disabledcolor>
-        </include>
-
-        <!-- <control type="button" id="4"> -->
-            <!-- <description>DVD Menu</description> -->
-            <!-- <label>$LOCALIZE[31098]</label> -->
-            <!-- <align>right</align> -->
-
-            <!-- <onclick>PlayerControl(ShowVideoMenu)</onclick> -->
-            <!-- <visible>VideoPlayer.HasMenu</visible> -->
-            <!-- <disabledcolor>White12</disabledcolor> -->
-        <!-- </control> -->
-    </include>
-
-    <include name="OSD_Right_ExtraInfo_TvShows">
-         <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/info.png" />
-            <param name="id" value="4" />
-            <param name="groupid" value="5899" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <onup condition="!Player.Paused">PlayerControl(Play)</onup>
-            <onup>Dialog.Close(VideoOSD)</onup>
-            <onup>SetProperty(wikipedia,1,Home)</onup>
-            <onup>RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.TvShowTitle],tmdb_type=tv,language=$VAR[Def_Wiki_Language])</onup>
-            <enable>Player.PauseEnabled</enable>
-            <onclick>Close</onclick>
-            <onclick>SetProperty(dialogvideoinfo,1,Home)</onclick>
-            <onclick>RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[VideoPlayer.TvShowTitle,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D]"',call_auto=1190)</onclick>
-        </include>
-
-    </include>
-
-    <include name="OSD_Right_ExtraInfo_Movies">
-
-         <include content="Def_OSD_Button">
-            <param name="autoclose" value="true" />
-            <param name="visible" value="true" />
-            <param name="left" value="-47" />
-            <param name="icon" value="osd/info.png" />
-            <param name="id" value="4" />
-            <param name="groupid" value="5899" />
-            <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-            <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <enable>Player.PauseEnabled</enable>
-            <onclick>Close</onclick>
-            <onclick>SetProperty(dialogvideoinfo,1,Home)</onclick>
-            <onclick>RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[VideoPlayer.Title,videodb://movies/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22movies%22%7D]"',call_auto=1190)</onclick>
-        </include>
-
-    </include>
-
-    <!-- OSD - VIDEO - SEEKBAR -->
+    <!-- OSD - SEEKBAR - VIDEO -->
 
     <include name="OSD_Video_SeekBar">
         <control type="group">
@@ -2240,7 +2184,7 @@
             <animation effect="fade" start="0" end="100" time="250">WindowOpen</animation>
             <animation effect="fade" end="0" start="100" time="250">WindowClose</animation>
 
-             <!-- OSD VIDEO BACKGROUND -->
+             <!-- OSD - SEEKBAR - BACKGROUND -->
 
             <control type="image">
                 <top>830r</top>
@@ -2257,14 +2201,16 @@
             </control>
         </control>
 
-        <!-- OSD VIDEO INFO -->
+        <!-- OSD - SEEKBAR - VIDEO -->
 
         <control type="group">
-
             <animation effect="fade" start="100" end="0" time="150" condition="Window.IsVisible(DialogPlayerProcessInfo.xml)">Conditional</animation>
             <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(videoosd)">Conditional</animation>
 
             <bottom>80</bottom>
+
+            <!-- SEEKBAR - INFOS / ARTWORKS - WITH "SHOW INFO" -->
+
             <control type="group">
                 <top>180r</top>
                 <bottom>0</bottom>
@@ -2276,7 +2222,11 @@
                 <animation effect="fade" end="0" start="100" time="200">Hidden</animation>
                 <animation effect="fade" end="0" start="100" time="200">WindowClose</animation>
 
+                <!-- ARTWORK -->
+
                 <control type="group">
+                    <animation effect="slide" end="0,0" start="-318,0" time="150" condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(fullscreeninfo))">Conditional</animation>
+
                     <left>SidePadNewOSD</left>
                     <right>SidePadNewOSD</right>
                     <top>-10</top>
@@ -2420,8 +2370,17 @@
                         <aspectratio>scale</aspectratio>
                         <texture diffuse="diffuse/osdsquare_270.png">$INFO[Player.Art(thumb)]</texture>
                     </control>
+                </control>
 
-                    <!-- OSD INFO - VIDEO / TVSHOWS / PVR INFO - WITH POSTER / THUMB -->
+                <!-- OSD INFO - VIDEO / TVSHOWS / PVR -->
+
+                <control type="group">
+                    <left>SidePadNewOSD</left>
+                    <right>SidePadNewOSD</right>
+                    <top>-10</top>
+                    <bottom>50</bottom>
+
+                    <!-- WITH POSTER / THUMB -->
 
                     <control type="group">
                         <left>318</left>
@@ -2436,79 +2395,68 @@
                         </control>
                     </control>
 
-                    <!-- OSD INFO - VIDEO / TVSHOWS / PVR INFO - WITHOUT POSTER / THUMB -->
+                    <!-- WITHOUT POSTER / THUMB -->
 
                     <control type="group">
                         <left>0</left>
-                        <visible>String.IsEmpty(Player.Art(tvshow.poster)) + String.IsEmpty(Player.Art(poster)) + String.IsEmpty(Player.Art(thumb)) + !VideoPlayer.Content(livetv)</visible>
+                        <visible>!VideoPlayer.Content(livetv) + String.IsEmpty(Player.Art(tvshow.poster)) + String.IsEmpty(Player.Art(poster)) + String.IsEmpty(Player.Art(thumb))</visible>
                         <include>OSD_Video_Info</include>
                     </control>
                 </control>
             </control>
 
-            <!-- SEEKBAR -->
+            <!-- SEEKBAR - INFOS ONLY - WITHOUT "SHOW INFO" -->
 
             <control type="group">
                 <visible>!Player.Paused | !Skin.HasSetting(osd.showinfoonpause)</visible>
                 <visible>!Window.IsVisible(fullscreeninfo)  + String.IsEmpty(Window(Home).Property(osdinfo)) + !Player.ShowInfo + String.IsEmpty(Window(Home).Property(osdshowinfo))</visible>
                 <visible>Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | !String.IsEmpty(Player.SeekNumeric) | !String.IsEmpty(PVR.Channel.Number.Input) | Window.IsVisible(videoosd)</visible>
+
                 <animation effect="fade" start="0" end="100" delay="150" time="250">Visible</animation>
                 <animation effect="fade" start="0" end="100" delay="150" time="250">WindowOpen</animation>
                 <animation effect="fade" end="0" start="100" time="200">Hidden</animation>
                 <animation effect="fade" end="0" start="100" time="200">WindowClose</animation>
+
+                <animation effect="slide" start="0,0" end="0,-10" time="0" condition="true">Conditional</animation>
+
                 <top>110r</top>
                 <bottom>0</bottom>
                 <width>100%</width>
-                <animation effect="slide" start="0,0" end="0,-10" time="0" condition="true">Conditional</animation>
 
-                <!-- SEEKBAR - MAIN TITLE -->
-
-                <control type="label" description="Title">
-                    <include>Animation_OSD_Fade</include>
-                    <left>130</left>
-                    <bottom>110</bottom>
-                    <height>40</height>
-                    <width>950</width>
-                    <font>MediumBold</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
-                    <label>$VAR[Label_OSD_Title_Big]</label>
-                    <!-- <visible>!Player.Forwarding + !Player.Rewinding + !Player.Seeking + !Player.IsTempo + !Player.Paused</visible> -->
-                    <visible>!Skin.HasSetting(show.osd.video.clearlogo) | [Skin.HasSetting(show.osd.video.clearlogo) + !$EXP[Exp_Title_Clearlogo_Player_Available]] </visible>
-                </control>
-
-                <!-- CLEARLOGO -->
-
-                <control type="image">
-                    <left>130</left>
-                    <bottom>110</bottom>
-                    <height>ClearLogoTitleMaxHeight</height>
-                    <width>ClearLogoTitleMaxWidth</width>
-                    <texture>$VAR[Image_Crop_ClearLogo_Player]</texture>
-                    <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                    <visible>Skin.HasSetting(show.osd.video.clearlogo)</visible>
-                </control>
-
-                <!-- SEEKBAR - STATUS -->
-
-                <control type="label" description="Title">
-                    <include>Animation_OSD_Fade</include>
-                    <right>130</right>
-                    <align>right</align>
-                    <bottom>110</bottom>
-                    <height>40</height>
-                    <width>950</width>
-                    <font>MediumBold</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
-                    <label>$VAR[Label_OSD_Player_Video_Status]</label>
-                </control>
-
-                <!-- SEEKBAR - SUBTITLE TITLE - INFO LEFT -->
+                <!-- INFO LEFT -->
 
                 <control type="group">
-                    <left>130</left>
-                    <right>SidePadNewOSD</right>
+                    <left>SidePadNewOSD</left>
                     <top>20</top>
                     <bottom>20</bottom>
+
+                    <!-- CLEARLOGO -->
+
+                    <control type="image">
+                        <bottom>110</bottom>
+                        <height>ClearLogoTitleMaxHeight</height>
+                        <width>ClearLogoTitleMaxWidth</width>
+                        <texture>$VAR[Image_Crop_ClearLogo_Player]</texture>
+                        <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                        <visible>Skin.HasSetting(show.osd.video.clearlogo)</visible>
+                    </control>
+
+                    <!-- MAIN TITLE -->
+
+                    <control type="label" description="Title">
+                        <include>Animation_OSD_Fade</include>
+                        <bottom>85</bottom>
+                        <height>40</height>
+                        <width>950</width>
+                        <font>LargeNew</font>
+                        <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+                        <label>$VAR[Label_OSD_Title_Big]</label>
+                        <!-- <visible>!Player.Forwarding + !Player.Rewinding + !Player.Seeking + !Player.IsTempo + !Player.Paused</visible> -->
+                        <visible>!Skin.HasSetting(show.osd.video.clearlogo) | [Skin.HasSetting(show.osd.video.clearlogo) + !$EXP[Exp_Title_Clearlogo_Player_Available]] </visible>
+                    </control>
+
+                    <!-- SUB TITLE -->
+
                     <control type="label" description="Finishes Time">
                         <width>940</width>
                         <bottom>30</bottom>
@@ -2536,6 +2484,26 @@
                         <label>$VAR[Label_OSD_Player_Video_Status]</label>
                         <visible>VideoPlayer.Content(livetv)</visible>
                     </control>
+                </control>
+
+                <!-- INFO RIGHT -->
+
+                <control type="group">
+                    <right>SidePadNewOSD</right>
+                    <top>20</top>
+                    <bottom>20</bottom>
+
+                    <!-- INFO RIGHT - STATUS - LIGN 1 -->
+
+                    <control type="label" description="Title">
+                        <include>Animation_OSD_Fade</include>
+                        <align>right</align>
+                        <bottom>85</bottom>
+                        <height>40</height>
+                        <font>MediumBold</font>
+                        <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
+                        <label>$VAR[Label_OSD_Player_Video_Status]</label>
+                    </control>
 
                     <!-- INFO RIGHT -->
 
@@ -2551,10 +2519,12 @@
                             <!-- <label>$INFO[Player.Chapter]$INFO[Player.ChapterCount, / ,  •  ]</label> -->
                             <!-- <visible>!VideoPlayer.Content(livetv) + Player.HasVideo + !String.IsEqual(Player.ChapterCount,0) + !String.IsEqual(Player.ChapterCount,00)</visible> -->
                         <!-- </control> -->
+
                         <control type="label" description="Duration Total Time">
                             <width>auto</width>
                             <bottom>30</bottom>
                             <height>40</height>
+                            <align>right</align>
                             <font>InfoNetflix</font>
                             <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
                             <label>$INFO[Player.Time]$INFO[Player.Duration,  /  ,]</label>
@@ -2564,6 +2534,7 @@
                             <width>auto</width>
                             <bottom>30</bottom>
                             <height>40</height>
+                            <align>right</align>
                             <font>InfoNetflix</font>
                             <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
                             <label>$INFO[Player.SeekNumeric(hh:mm:ss)]$INFO[Player.Duration,  /  ,]</label>
@@ -2572,6 +2543,7 @@
                         <control type="label" description="Duration Total Time">
                             <width>auto</width>
                             <bottom>30</bottom>
+                            <align>right</align>
                             <height>40</height>
                             <font>InfoNetflix</font>
                             <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
@@ -2580,6 +2552,7 @@
                         </control>
                         <control type="label" description="Total Time">
                             <width>auto</width>
+                            <bottom>30</bottom>
                             <align>right</align>
                             <height>40</height>
                             <font>InfoNetflix</font>
@@ -2590,6 +2563,8 @@
                     </control>
                 </control>
             </control>
+
+            <!-- SEEKBAR - PROGRESS BAR -->
 
             <control type="group">
                 <!-- <visible>!Player.Paused | !Skin.HasSetting(osd.showinfoonpause)</visible> -->
@@ -2620,7 +2595,7 @@
         </control>
     </include>
 
-    <!-- OSD - MUSIC - SEEKBAR - INFO -->
+    <!-- OSD - SEEKBAR - INFO - MUSIC -->
 
     <include name="OSD_Music_SeekBar">
         <control type="group">
@@ -2813,7 +2788,7 @@
                             <bottom>85</bottom>
                             <height>40</height>
                             <width>950</width>
-                            <font>MediumBold</font>
+                            <font>LargeNew</font>
                             <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
                             <label>$VAR[Label_OSD_Player_Audio_Status]</label>
                         </control>

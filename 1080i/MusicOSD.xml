@@ -21,7 +21,6 @@
             <animation type="WindowClose">
                 <effect type="fade" end="0" start="100" time="150"/>
             </animation>
-
             <animation type="Conditional" condition="[Window.IsVisible(script-cu-lrclyrics-main.xml) + Skin.HasSetting(HideMusicOSDOnLyrics)]">
                 <effect type="fade" start="100" end="0" time="150"/>
             </animation>
@@ -221,25 +220,10 @@
                     <param name="id" value="25" />
                     <param name="groupid" value="7199" />
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
-                    <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
                     <onclick>runscript(script.audio.profiles,popup)</onclick>
                     <onfocus>SetProperty(OSDArtistDetails,1,Home)</onfocus>
                     <disabledcolor>PanelWhite12</disabledcolor>
                 </include>
-                <!-- <include content="Def_OSD_Button" condition="!String.IsEmpty(MusicPlayer.DBID)"> -->
-                    <!-- <param name="autoclose" value="true" /> -->
-                    <!-- <param name="visible" value="true" /> -->
-                    <!-- <param name="left" value="-63" /> -->
-                    <!-- <param name="icon" value="osd/info.png" /> -->
-                    <!-- <param name="id" value="127" /> -->
-                    <!-- <param name="groupid" value="16799" /> -->
-                    <!-- <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" /> -->
-                    <!-- <include>Def_OSD_UpDown_Music_Info</include> -->
-                    <!-- <onclick condition="!Container(997).IsUpdating + Integer.IsGreater(Container(997).NumItems,0)">SetFocus(997)</onclick> -->
-                    <!-- <onclick condition="!Container(997).IsUpdating + Integer.IsGreater(Container(997).NumItems,0)">Action(info)</onclick> -->
-                    <!-- <oninfo condition="!Container(997).IsUpdating + Integer.IsGreater(Container(997).NumItems,0)">SetFocus(997)</oninfo> -->
-                    <!-- <oninfo condition="!Container(997).IsUpdating + Integer.IsGreater(Container(997).NumItems,0)">Action(info)</oninfo> -->
-                <!-- </include> -->
 
                 <include content="Def_OSD_Button" condition="!String.IsEmpty(MusicPlayer.DBID)">
                     <param name="autoclose" value="true" />
@@ -272,39 +256,14 @@
 
             <!-- ARTIST BIOGRAPHY -->
 
-            <control type="group">
-                <visible>!String.IsEmpty(Window(Home).Property(OSDArtistDetails))</visible>
-                <visible>!Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
-                <animation type="Visible" reversible="false">
-                    <effect type="fade" start="0" end="100" time="600" delay="200" />
-                </animation>
-                <left>620</left>
-                <height>560</height>
-                <top>160</top>
-                <right>SidePadNewOSD</right>
-
-                <control type="textbox">
-                    <font>Medium</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70Music]</textcolor>
-                    <label>$INFO[MusicPlayer.Property(Album_Description),,[CR]]$INFO[MusicPlayer.Property(Artist_Description)]$INFO[Window(Home).Property(ResetScroll)]</label>
-                    <autoscroll delay="12000" time="5000" repeat="12000">true</autoscroll>
-                    <!-- <include content="Defs_AutoScroll_TextBox"> -->
-                        <!-- <param name="condition">!String.IsEmpty(Window(Home).Property(OSDArtistDetails)) + !Control.HasFocus(9803)</param> -->
-                    <!-- </include> -->
-                    <pagecontrol>9803</pagecontrol>
-                    <bottom>-20</bottom>
-                </control>
-
-                <include content="Object_Scrollbar_Dialog_Vertical">
-                    <param name="scrollid" value="9803"/>
-                    <param name="onleft" value="SetFocus(14)"/>
-                    <param name="onright" value="SetFocus(14)"/>
-                    <param name="onback" value="SetFocus(14)"/>
-                    <param name="height" value="570"/>
-                    <param name="top" value="10"/>
-                    <param name="centerright" value="1200"/>
-                </include>
-            </control>
+            <include content="Object_OSD_Plot_Video">
+                <param name="visible" value="!String.IsEmpty(Window(Home).Property(OSDArtistDetails)) + !Window.IsVisible(script-cu-lrclyrics-main.xml)" />
+                <param name="onleft" value="SetFocus(14)"/>
+                <param name="onright" value="SetFocus(14)"/>
+                <param name="onback" value="SetFocus(14)"/>
+                <param name="scrollid" value="9803" />
+                <param name="label" value="$INFO[MusicPlayer.Property(Album_Description),,[CR]]$INFO[MusicPlayer.Property(Artist_Description)]$INFO[Window(Home).Property(ResetScroll)]" />
+            </include>
 
             <!-- OSD FOOTER INFO TIPS -->
 
@@ -342,23 +301,6 @@
                 <visible>ControlGroup(6002).HasFocus() | Control.HasFocus(8200)</visible>
                 <visible>!Control.HasFocus(9803)</visible>
             </control>
-
-            <!-- <control type="group" id="6060"> -->
-                <!-- <top>966</top> -->
-                <!-- <right>SidePadNewOSD</right> -->
-                <!-- <width>1400</width> -->
-                <!-- <control type="label"> -->
-                    <!-- <left>0</left> -->
-                    <!-- <height>50</height> -->
-                    <!-- <font>Mini</font> -->
-                    <!-- <scroll>false</scroll> -->
-                    <!-- <textcolor>$VAR[Color_OSD_Button_Background]</textcolor> -->
-                    <!-- <label>$VAR[Label_OSD_Footer_Tip]</label> -->
-                    <!-- <aligny>center</aligny> -->
-                    <!-- <align>right</align> -->
-                    <!-- <visible>ControlGroup(6003).HasFocus()</visible> -->
-                <!-- </control> -->
-            <!-- </control> -->
 
             <control type="list" id="997">
                 <include>Def_Hidden_ListControl</include>

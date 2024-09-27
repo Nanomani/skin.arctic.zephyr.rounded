@@ -154,17 +154,11 @@
             <include content="Def_Top" condition="Skin.HasSetting(homemenu.horizontal.clean)">
                <param name="top" value="200" />
             </include>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix)">
                <param name="top" value="440" />
             </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix)">
                <param name="top" value="60" />
-            </include>
-            <include content="Def_Top" condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-               <param name="top" value="465" />
-            </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-               <param name="top" value="50" />
             </include>
             <include content="Def_Width" condition="Skin.HasSetting(homemenu.horizontal.clean)">
                <param name="width" value="225" />
@@ -173,18 +167,13 @@
             <include content="Def_Height" condition="Skin.HasSetting(homemenu.horizontal.clean)">
                <param name="height" value="565" />
             </include>
-            <include content="Def_Height" condition="Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+            <include content="Def_Height" condition="Skin.HasSetting(homemenu.netflix)">
                <param name="height" value="325" />
             </include>
-            <include content="Def_Height" condition="!Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(home.widgets.show.reflections)">
+            <include content="Def_Height" condition="!Skin.HasSetting(homemenu.netflix)">
                <param name="height" value="$PARAM[height]" />
             </include>
-            <include content="Def_Height" condition="Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-               <param name="height" value="365" />
-            </include>
-            <include content="Def_Height" condition="!Skin.HasSetting(homemenu.netflix) + Skin.HasSetting(home.widgets.show.reflections)">
-               <param name="height" value="$PARAM[height2]" />
-            </include>
+
             <height>$PARAM[height]</height>
             <include content="Def_Left" condition="![$EXP[Home_Is_Horizontal] + !Skin.HasSetting(homemenu.horizontal.clean)]"><param name="left" value="70" /></include>
             <left>0</left>
@@ -1416,9 +1405,7 @@
    <!-- INCLUDES WIDGET LAYOUTS -->
 
     <include name="Layout_Widget_Poster">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="height_reflection" value="$PARAM[height_reflection]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
             <control type="group">
@@ -1427,40 +1414,13 @@
                     <param name="indicatorbackground" value="$PARAM[indicatorbackground]" />
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Poster_Focus">
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <param name="zoom_condition" value="$PARAM[zoom_condition]" default="Skin.HasSetting(items.focus.zoom)"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="$PARAM[zoom_condition]" content="Animation_Focus_Zoom">
                     <param name="zoom" value="$PARAM[zoom]"/>
@@ -1482,9 +1442,7 @@
     </include>
 
     <include name="Layout_Widget_Season">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="height_reflection" value="$PARAM[height_reflection]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
             <control type="group">
@@ -1493,65 +1451,12 @@
                     <param name="indicatorbackground" value="$PARAM[indicatorbackground]" />
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>212</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster_Only]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>212</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Season]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Season_Focus">
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>212</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster_Only]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>212</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Season]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
                 <height>$PARAM[height]</height>
@@ -1571,9 +1476,7 @@
     </include>
 
     <include name="Layout_Widget_Square">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="height_reflection" value="$PARAM[height_reflection]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
             <control type="group">
@@ -1583,40 +1486,12 @@
                     <param name="distance" value="$PARAM[distance]"/>
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>$PARAM[distance]</left>
-                    <top>$PARAM[distance]</top>
-                    <right>$PARAM[distance]</right>
-                    <bottom>$PARAM[distance]</bottom>
-                    <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Square_Focus">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="height_reflection" value="$PARAM[height_reflection]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>$PARAM[distance]</left>
-                    <top>$PARAM[distance]</top>
-                    <right>$PARAM[distance]</right>
-                    <bottom>$PARAM[distance]</bottom>
-                    <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
                 <height>$PARAM[height]</height>
@@ -1637,9 +1512,7 @@
     </include>
 
     <include name="Layout_Widget_Square_Small">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="height_reflection" value="$PARAM[height_reflection]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
             <control type="group">
@@ -1650,40 +1523,12 @@
                     <param name="distance" value="$PARAM[distance]"/>
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Square_Small_Focus">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="height_reflection" value="$PARAM[height_reflection]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height_reflection]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>$PARAM[distance]</left>
-                    <top>$PARAM[distance]</top>
-                    <right>$PARAM[distance]</right>
-                    <bottom>$PARAM[distance]</bottom>
-                    <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
                 <height>$PARAM[height]</height>
@@ -1722,7 +1567,6 @@
     </include>
 
     <include name="Layout_Widget_Fanart">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <param name="small" value="$PARAM[smallfanart]" default="false"/>
@@ -1734,40 +1578,13 @@
                     <param name="small" value="$PARAM[small]" default="false"/>
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Widget_Fanart]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Fanart_Focus">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
         <param name="small" value="$PARAM[smallfanart]" default="false"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Widget_Fanart]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
                 <height>$PARAM[height]</height>
@@ -1790,7 +1607,6 @@
     <include name="Layout_Widget_Landscape">
         <param name="height" value="$PARAM[height]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="small" value="$PARAM[small]" default="false"/>
         <definition>
             <control type="group">
@@ -1801,40 +1617,13 @@
                     <param name="small" value="$PARAM[small]"/>
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Fanart]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Landscape_Focus">
         <param name="height" value="$PARAM[height]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="small" value="$PARAM[small]" default="false"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Fanart]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
                 <height>$PARAM[height]</height>
@@ -1856,7 +1645,6 @@
     </include>
 
     <include name="Layout_Widget_Banner">
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="height" value="$PARAM[height]" default="325"/>
         <definition>
             <control type="group">
@@ -1865,24 +1653,10 @@
                     <param name="indicatorbackground" value="$PARAM[indicatorbackground]" />
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>305</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Banner]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Banner_Focus">
         <param name="height" value="$PARAM[height]" default="325"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <definition>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
@@ -1899,26 +1673,12 @@
                     <param name="glow_right" value="$PARAM[glow_right]"/>
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>305</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Banner]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
 
     <include name="Layout_Widget_Thumb">
         <param name="height" value="$PARAM[height]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="small" value="$PARAM[smallthumb]" default="false"/>
         <definition>
             <control type="group">
@@ -1930,40 +1690,13 @@
                     <param name="poster" value="$PARAM[poster]" />
                 </include>
             </control>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Poster]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
         </definition>
     </include>
     <include name="Layout_Widget_Thumb_Focus">
         <param name="height" value="$PARAM[height]" default="325"/>
         <param name="top" value="$PARAM[top]" default="305"/>
-        <param name="reflections" value="$PARAM[reflections]" default="false"/>
         <param name="small" value="$PARAM[smallthumb]" default="false"/>
         <definition>
-            <control type="group">
-                <height>$PARAM[height]</height>
-                <top>$PARAM[top]</top>
-                <control type="image">
-                    <left>10</left>
-                    <top>10</top>
-                    <right>10</right>
-                    <bottom>10</bottom>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="true">$VAR[Image_Widget_Thumb]</texture>
-                    <visible>$PARAM[reflections]</visible>
-                </control>
-            </control>
             <control type="group">
                 <include condition="Skin.HasSetting(items.focus.zoom)">Animation_Focus_Zoom</include>
                 <height>$PARAM[height]</height>

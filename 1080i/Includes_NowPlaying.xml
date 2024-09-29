@@ -137,6 +137,8 @@
         <param name="left" value="$PARAM[left]" default="-42"/>
         <definition>
             <control type="group">
+                <animation effect="slide" start="0" end="-222,0" time="150" reversible="false" condition="!VideoPlayer.Content(livetv) + VideoPlayer.Content(files)">condition</animation>
+
                 <width>100%</width>
 
                 <include content="Def_Top" condition="!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">
@@ -146,7 +148,9 @@
                 <top>580</top>
                 <left>$PARAM[left]</left>
                 <visible>$PARAM[visible]</visible>
+
                 <control type="group">
+
                     <left>252</left>
 
                     <include content="Def_Top" condition="!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">
@@ -157,8 +161,16 @@
                     <visible>Player.HasMedia + Player.HasVideo</visible>
 
                     <control type="group">
+
+                        <!-- PLAY / PAUSE INDICATOR -->
+
                         <include>NowPlaying_PlayPause</include>
+
+                        <!-- TIME -->
+
                         <include>NowPlaying_Time</include>
+
+                        <!-- SUB LABEL -->
 
                         <control type="label">
                             <top>55</top>
@@ -170,14 +182,14 @@
                                 <effect type="fade" end="100" start="0" time="400" delay="300"/>
                             </animation>
                             <visible>!Control.HasFocus(25) | [Control.HasFocus(25) + !Container(999).IsUpdating + !Integer.IsGreater(Container(999).NumItems,0)]</visible>
-                            <visible>![VideoPlayer.Content(files) + !VideoPlayer.Content(livetv)]</visible>
+                            <visible>!VideoPlayer.Content(files) | [VideoPlayer.Content(livetv) + $EXP[Label_PVR_Info_Available]]</visible>
                         </control>
 
                         <!-- FLAG BLACK / WHITE -->
 
                         <control type="grouplist">
                             <!-- <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible> -->
-                            <visible>VideoPlayer.Content(files) + !VideoPlayer.Content(livetv)</visible>
+                            <visible>[VideoPlayer.Content(files) + !VideoPlayer.Content(livetv)] | [VideoPlayer.Content(livetv) + !$EXP[Label_PVR_Info_Available]]</visible>
                             <top>55</top>
                             <left>-2</left>
                             <width>450</width>
@@ -279,6 +291,7 @@
                             <!-- </control> -->
                         <!-- </control> -->
 
+                        <!-- IF INFORMATION AVAILABLE ON CLICK POSTER -->
 
                         <control type="label">
                             <top>55</top>
@@ -290,6 +303,7 @@
                             </animation>
                             <visible>Control.HasFocus(25) + !Container(999).IsUpdating + Integer.IsGreater(Container(999).NumItems,0)</visible>
                         </control>
+
                         <animation effect="slide" start="0,0" end="0,-70" time="0" condition="!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">Conditional</animation>
                     </control>
                     <control type="group">
@@ -934,7 +948,7 @@
                 <left>$PARAM[left]</left>
                 <top>445</top>
                 <visible>$PARAM[visible]</visible>
-                <visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
+                <visible>Player.HasVideo + !VideoPlayer.Content(files) + !VideoPlayer.Content(livetv)</visible>
                 <control type="image">
                     <left>1</left>
                     <right>1</right>
@@ -984,7 +998,7 @@
                 <left>$PARAM[left]</left>
                 <top>445</top>
                 <visible>$PARAM[visible]</visible>
-                <visible>Player.HasAudio | VideoPlayer.Content(livetv)</visible>
+                <visible>Player.HasAudio | !VideoPlayer.Content(files) | VideoPlayer.Content(livetv)</visible>
                 <control type="image">
                     <left>1</left>
                     <right>1</right>

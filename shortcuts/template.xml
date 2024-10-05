@@ -42,13 +42,14 @@
             <control type="grouplist" id="$PYTHON[int(mainmenuid) * 1000 + 400]">
 
                 <include>Animation_Common</include>
-                <include>Animation_Foreground_FadeInOut</include>
 
                 <include>Animation_NowPlaying_Widget_Fade</include>
                 <include>Animation_Scrolltime_Widgets_Container</include>
 
                 <usecontrolcoords>true</usecontrolcoords>
+
                 <itemgap>0</itemgap>
+
                 <orientation>vertical</orientation>
 
                 <!-- HOME HORIZONTAL -->
@@ -131,12 +132,6 @@
             <property name="layoutheight" tag="property" attribute="name|widgetFullscreen" value="yes">710</property>
             <property name="layoutheight">325</property>
 
-            <property name="layoutheight2" tag="property" attribute="name|widgetaspect" value="SquareMediumSubmenu">185</property>
-            <property name="layoutheight2" tag="property" attribute="name|widgetaspect" value="SquareSmallSubmenu">135</property>
-            <property name="layoutheight2" tag="property" attribute="name|widget" value="mysubmenu">365</property>
-            <property name="layoutheight2" tag="property" attribute="name|widgetFullscreen" value="yes">780</property>
-            <property name="layoutheight2">365</property>
-
             <!--- LAYOUT FULLSCREEN ? -->
 
             <property name="isfullscreenwidget" tag="property" attribute="name|widgetFullscreen" value="yes">true</property>
@@ -154,14 +149,12 @@
             <property name="widgetName" tag="label" />
             <property name="widgetName">$LOCALIZE[31087]</property>
 
-            <!-- <property name="content" tag="property" attribute="name|widgetPath"/> -->
-            <!-- <property name="content">$VAR[Def_Widget_Content]</property> -->
+            <!-- ITEM MORE -->
 
             <property name="morevisible" tag="property" attribute="name|widgetTarget" value="system">false</property>
             <property name="morevisible" tag="property" attribute="name|widgetTarget" value="weather">false</property>
             <property name="morevisible" tag="property" attribute="name|widgetTarget" value="pvr">pvr</property>
             <property name="morevisible" tag="property" attribute="name|widget" value="mysubmenu">false</property>
-
             <property name="morevisible">true</property>
 
             <property name="widgetauto" tag="property" attribute="name|widgetAuto" value="$NUMBER[5000]">5000</property>
@@ -235,9 +228,12 @@
 
                 <control type="group"  id="$PYTHON[int(mainmenuid) * 1000 + 900 + int(id)]">
 
-                    <visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility]) + [Integer.IsGreater(Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).NumItems,0) | Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).IsUpdating]</visible>
+                    <visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])</visible>
+                    <visible>[Integer.IsGreater(Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).NumItems,0) | Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).IsUpdating]</visible>
 
-                    <include>Animation_Foreground_FadeInOut</include>
+                    <include content="Animation_Widget_Direction" condition="$EXP[Home_Is_Vertical]">
+                        <param name="visible" value="[String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])]" />
+                    </include>
 
                     <control type="grouplist"  id="$PYTHON[int(mainmenuid) * 1000 + 800 + int(id)]">
                         <include content="Widget_Title_Label" condition="!Skin.HasSetting(hide.widget.title)">
@@ -245,6 +241,7 @@
                             <param name="idshort" value="$PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]"/>
                             <param name="animation_condition" value="!Control.HasFocus($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)])" />
                             <param name="submenuVisibility">$SKINSHORTCUTS[submenuVisibility]</param>
+                            <param name="isfullscreenwidget">$SKINSHORTCUTS[isfullscreenwidget]</param>
                             <param name="widget_label" value="$SKINSHORTCUTS[widgetName]" />
                             <param name="busy_visible" value="Integer.IsEqual(Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).NumItems,0) | Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).IsUpdating" />
                         </include>
@@ -255,14 +252,16 @@
 
                 <control type="group" id="$PYTHON[int(mainmenuid) * 1000 + 700 + int(id)]">
 
-                    <visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility]) + [Integer.IsGreater(Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).NumItems,0) | Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).IsUpdating]</visible>
-
+                    <visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])</visible>
+                    <visible>[Integer.IsGreater(Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).NumItems,0) | Container($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]).IsUpdating]</visible>
                     <visible>[$SKINSHORTCUTS[isfullscreenwidget] | Skin.HasSetting(homemenu.netflix)]</visible>
-
-                    <include>Animation_Foreground_FadeInOut</include>
 
                     <include content="Animation_FadeOut_Home_Fullscreen_Widget">
                         <param name="condition" value="!Control.HasFocus($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)])"/>
+                    </include>
+
+                    <include content="Animation_Widget_Direction" condition="$EXP[Home_Is_Vertical]">
+                        <param name="visible" value="[String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])]" />
                     </include>
 
                     <control type="grouplist">
@@ -270,6 +269,7 @@
                             <param name="id" value="$PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]"/>
                             <param name="labelisvisible" value="$SKINSHORTCUTS[labelisvisible]"/>
                             <param name="submenuVisibility">$SKINSHORTCUTS[submenuVisibility]</param>
+                            <param name="isfullscreenwidget">$SKINSHORTCUTS[isfullscreenwidget]</param>
                         </include>
                     </control>
 
@@ -302,7 +302,6 @@
                     <include content="Def_Multi_Widget_Container">
                         <param name="id" value="$PYTHON[int(mainmenuid) * 1000 + 600 + int(id)]"/>
                         <param name="height" value="$SKINSHORTCUTS[layoutheight]"/>
-                        <param name="height2" value="$SKINSHORTCUTS[layoutheight2]"/>
                         <param name="idshort" value="$PYTHON[int(mainmenuid) * 100 + 60]"/>
                         <param name="backid" value="$PYTHON[int(mainmenuid) * 1000 + 600 + 1]"/>
                         <param name="AutoTime" value="$SKINSHORTCUTS[widgetauto]"/>
@@ -313,6 +312,7 @@
                         <param name="animation_condition" value="!Control.HasFocus($PYTHON[int(mainmenuid) * 1000 + 600 + int(id)])" />
                         <param name="visible" value="String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])" />
                         <param name="submenuVisibility">$SKINSHORTCUTS[submenuVisibility]</param>
+                        <param name="isfullscreenwidget">$SKINSHORTCUTS[isfullscreenwidget]</param>
                     </include>
 
                     <!-- ITEM LAYOUTS -->

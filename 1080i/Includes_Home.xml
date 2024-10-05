@@ -1822,6 +1822,9 @@
             <control type="group">
                 <!-- <visible>Control.HasFocus($PARAM[id])</visible> -->
 
+                <!-- <animation effect="slide" start="0" end="0,-380" condition="$PARAM[isfullscreenwidget] + !Control.HasFocus($PARAM[id])">Conditional</animation> -->
+                <!-- <animation effect="fade" start="100" end="0" time="150" condition="$PARAM[isfullscreenwidget] + !Control.HasFocus($PARAM[id])">Conditional</animation> -->
+
                 <animation effect="slide" start="0" end="0,385" time="0" condition="[Integer.IsEqual(Container(301).NumItems,1) + !String.IsEqual(Container(300).ListItem.Property(widgetFullscreen),yes)] + !Skin.HasSetting(homemenu.netflix)">Conditional</animation>
 
                 <animation effect="slide" start="0" end="0,10" time="0" condition="!Skin.HasSetting(homemenu.netflix)">Conditional</animation>
@@ -2527,6 +2530,7 @@
         <visible>![!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button) + !String.IsEmpty(Window(Home).Property(controlsvisible))]</visible>
 
         <animation effect="fade" start="100" end="0" time="150" condition="!ControlGroup(301).HasFocus() + Skin.HasSetting(home.hide.netflix.plot) + Skin.HasSetting(homemenu.horizontal.clean)">Conditional</animation>
+        <animation effect="slide" start="0" end="0,-380" condition="$PARAM[isfullscreenwidget] + !Skin.HasSetting(homemenu.netflix)">Conditional</animation>
 
         <include content="Animation_FadeOut_Home_Fullscreen_Widget" condition="Skin.HasSetting(homemenu.horizontal.clean)">
             <param name="condition" value="$PARAM[animation_condition]"/>
@@ -2887,7 +2891,7 @@
     <include name="Home_Widget_ClearArt">
         <top>-226</top>
         <width>400</width>
-        <right>SidePad</right>
+        <right>0</right>
         <visible>!Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(hide.home.multiwidgets.clearart) + [![$EXP[Home_Is_Vertical] + !Skin.HasSetting(homemenu.slide) + !Skin.HasSetting(hide.home.menu.with.nowplaying.extended)] | [$EXP[Home_Is_Vertical] + !Skin.HasSetting(homemenu.slide) + !Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Skin.HasSetting(home.showicons) + Skin.HasSetting(homemenu.only.icons)]]</visible>
 
         <animation effect="slide" start="0" end="-110,0" time="0" condition="$EXP[Home_Is_Horizontal]">Conditional</animation>
@@ -2915,19 +2919,17 @@
     </include>
 
     <include name="Home_Widget_ClearArt_Image">
-        <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation>
-
-        <animation effect="slide" start="0" end="6,0" time="0" condition="$EXP[Home_Is_Vertical]">Conditional</animation>
-        <animation effect="slide" start="0" end="0,-50" time="0" condition="$EXP[Home_Is_Vertical]">Conditional</animation>
+        <animation effect="slide" start="0" end="-80,0" time="0" condition="$EXP[Home_Is_Vertical]">Conditional</animation>
         <animation effect="slide" start="0" end="-50,0" time="0" condition="$EXP[Home_Is_Vertical] + Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)">Conditional</animation>
 
-        <animation effect="slide" start="0" end="0,385" time="0" condition="Integer.IsEqual(Container(301).NumItems,1) + !String.Contains(Container(300).ListItem.Property(widgetFullscreen),yes)">Conditional</animation>
+        <!-- <animation effect="slide" start="0" end="0,385" time="0" condition="Integer.IsEqual(Container(301).NumItems,1) + !String.Contains(Container(300).ListItem.Property(widgetFullscreen),yes)">Conditional</animation> -->
 
         <animation type="WindowClose" condition="!$EXP[Home_Is_Vertical]">
             <effect type="slide" start="0" end="0,250" time="150"/>
             <effect type="fade" start="100" end="20" time="150"/>
         </animation>
         <animation effect="slide" start="0,150" end="0" time="130" reversible="false" condition="String.IsEqual(Container(300).ListItem.Label,Window(Home).Property(ClearArtAnimation))">Conditional</animation>
+
         <animation effect="fade" start="20" end="100" time="150" reversible="false" condition="String.IsEqual(Container(300).ListItem.Label,Window(Home).Property(ClearArtAnimation))">Conditional</animation>
         <!-- <animation effect="fade" start="100" end="0" time="400" condition="!ControlGroup(301).HasFocus() + $EXP[Home_Is_Vertical] + ![Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)]">Conditional</animation> -->
         <animation effect="fade" start="100" end="0" time="400" condition="[!Skin.HasSetting(homemenu.slide) | [Skin.HasSetting(homemenu.slide) + !ControlGroup(301).HasFocus()]] + $EXP[Home_Is_Vertical] + ![Skin.HasSetting(homemenu.only.icons) + Skin.HasSetting(home.showicons)]">Conditional</animation>

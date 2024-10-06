@@ -3,19 +3,19 @@
 
     <!-- SCRIPT SKINSHORTCUTS -->
 
-    <include name="Action_SkinShortcuts_ContentType_AutoSetOnFocus">
+    <include name="Set_SkinShortcuts_Content_Type_On_Focus">
         <onfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SetProperty(customProperty,widgetTarget)</onfocus>
-        <onfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SetProperty(customValue,$VAR[Action_SkinShortcuts_ContentType])</onfocus>
+        <onfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SetProperty(customValue,$VAR[Label_SkinShortcuts_Content_Type])</onfocus>
         <onfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SendClick(404)</onfocus>
     </include>
 
-    <include name="Action_SkinShortcuts_ContentType_AutoSetOnUnFocus">
+    <include name="Set_SkinShortcuts_Content_Type_On_UnFocus">
         <onunfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SetProperty(customProperty,widgetTarget)</onunfocus>
-        <onunfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SetProperty(customValue,$VAR[Action_SkinShortcuts_ContentType])</onunfocus>
+        <onunfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SetProperty(customValue,$VAR[Label_SkinShortcuts_Content_Type])</onunfocus>
         <onunfocus condition="String.IsEmpty(Container(211).ListItem.Property(widgetTarget))">SendClick(404)</onunfocus>
     </include>
 
-    <variable name="Action_SkinShortcuts_ContentType">
+    <variable name="Label_SkinShortcuts_Content_Type">
         <value condition="String.StartsWith(Container(211).ListItem.Label2,Video)">videos</value>
         <value condition="String.StartsWith(Container(211).ListItem.Label2,Music)">music</value>
         <value condition="String.StartsWith(Container(211).ListItem.Label2,Program)">programs</value>
@@ -32,11 +32,109 @@
         <value condition="String.Contains(Container(211).ListItem.Property(path),favourites)">favouritesbrowser</value>
     </variable>
 
+    <variable name="Label_Widget_Content">
+        <value condition="String.StartsWith(Container(211).ListItem.Label2,Video)">$LOCALIZE[3]</value>
+        <value condition="String.StartsWith(Container(211).ListItem.Label2,Music)">$LOCALIZE[2]</value>
+        <value condition="String.StartsWith(Container(211).ListItem.Label2,Program)">$LOCALIZE[0]</value>
+        <value condition="String.StartsWith(Container(211).ListItem.Label2,Picture)">$LOCALIZE[1]</value>
+        <value condition="String.StartsWith(Container(211).ListItem.Label2,PVR)">$LOCALIZE[4]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),Videos)">$LOCALIZE[3]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),Music)">$LOCALIZE[2]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),Programs)">$LOCALIZE[0]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),Pictures)">$LOCALIZE[1]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),pvr://)">$LOCALIZE[4]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),Weather)">$LOCALIZE[8]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),SystemInfoContent)">$LOCALIZE[130]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),SettingsInfoContent)">$LOCALIZE[5]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(path),favourites)">$LOCALIZE[1036]</value>
+    </variable>
+
     <variable name="Label_SkinShortcuts_Title">
         <value condition="!String.IsEmpty(Window(Home).Property(header-widget))">$LOCALIZE[31422] : $INFO[Container(211).ListItem.Label]</value>
         <value condition="String.IsEqual(Window.Property(groupname),mainmenu)">$LOCALIZE[31091] : $INFO[Container(211).ListItem.Label]</value>
         <value condition="String.IsEqual(Window.Property(groupname),powermenu)">$LOCALIZE[31317]</value>
         <value>$ADDON[script.skinshortcuts 32072] : $INFO[Container(211).ListItem.Label]</value>
+    </variable>
+    <!-- HOME - WIDGET LABEL -->
+
+    <variable name="Label_Widget_List_Type">
+        <value condition="String.IsEmpty(Container(211).ListItem.Property(widgetListType))">$LOCALIZE[571]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetListType),fixedlist)">$LOCALIZE[31305]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetListType),wraplist)">$LOCALIZE[31125]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetListType),list)">$LOCALIZE[31304]</value>
+    </variable>
+
+    <variable name="Label_Widget_Type">
+        <value condition="$EXP[Home_Is_Horizontal_Clean]">$LOCALIZE[31472]</value>
+        <value condition="String.Contains(Container(211).ListItem.Property(widget),weather) + !String.IsEmpty(Container(211).ListItem.Property(widgetaspect)) + ![String.IsEqual(Container(211).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),Poster) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),Square)]">[COLOR=FFFF0000]![/COLOR]</value>
+        <value condition="!String.IsEmpty(Container(211).ListItem.Property(widgetaspect)) + ![String.IsEqual(Container(211).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareSmall) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareSmallSubmenu) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareMediumSubmenu)] + String.IsEqual(Container(211).ListItem.Property(widget),mysubmenu)">[COLOR=FFFF0000]![/COLOR]</value>
+        <value condition="!String.IsEmpty(Container(211).ListItem.Property(widgetaspect)) + [String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareSmallSubmenu) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareMediumSubmenu)] + !String.IsEqual(Container(211).ListItem.Property(widget),mysubmenu)">[COLOR=FFFF0000]![/COLOR]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgettarget),system)">$LOCALIZE[31230]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widget),epg)">$LOCALIZE[31218]</value>
+        <value condition="String.IsEmpty(Container(211).ListItem.Property(widgetaspect)) + String.IsEqual(Container(211).ListItem.Property(widget),mysubmenu)">$LOCALIZE[31230]</value>
+        <value condition="[String.IsEmpty(Container(211).ListItem.Property(widgetaspect)) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),Poster)] + !String.IsEqual(Container(211).ListItem.Property(widget),mysubmenu)">$LOCALIZE[31229]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),FanartSmall)">$LOCALIZE[31572]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),ThumbnailSmall)">$LOCALIZE[31573]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),ThumbnailPosterSmall)">$LOCALIZE[31574]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),Square)">$LOCALIZE[31230]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareSmall)">$LOCALIZE[31361]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareSmallSubmenu)">$LOCALIZE[31361]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),SquareMediumSubmenu)">$LOCALIZE[31362]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),Fanart)">$LOCALIZE[31412]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),Banner)">$LOCALIZE[20020]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetaspect),Thumbnail)">$LOCALIZE[31232]</value>
+    </variable>
+
+    <variable name="Label_Widget_Sort_Order">
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSort),ascending)">$LOCALIZE[584]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSort),descending)">$LOCALIZE[585]</value>
+        <value>$LOCALIZE[571]</value>
+    </variable>
+
+    <variable name="Label_Widget_Edge_Distance">
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetEdgeDistance),yes)">$LOCALIZE[31404]</value>
+        <value>$LOCALIZE[602]</value>
+    </variable>
+
+    <variable name="Label_Widget_Aspect_Ratio">
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAspectRatio),scale)">$LOCALIZE[31358]</value>
+        <value>$LOCALIZE[602]</value>
+    </variable>
+
+    <variable name="Label_Widget_Sort_By">
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),lastplayed)">$LOCALIZE[568]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),title)">$LOCALIZE[369]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),tvshowtitle)">$LOCALIZE[36902]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),date)">$LOCALIZE[552]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),artist)">$LOCALIZE[557]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),album)">$LOCALIZE[558]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),tracknumber)">$LOCALIZE[554]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),channelnumber)">$LOCALIZE[19029]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),year)">$LOCALIZE[345]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),dateadded)">$LOCALIZE[570]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),random)">$LOCALIZE[590]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),rating)">$LOCALIZE[563]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),userrating)">$LOCALIZE[33067]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),lastused)">$LOCALIZE[12012]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),file)">$LOCALIZE[561]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetSortby),genre)">$LOCALIZE[515]</value>
+        <value>$LOCALIZE[571]</value>
+    </variable>
+
+    <variable name="Label_Widget_AutoScroll_Time">
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAuto),5000)"> 5 $LOCALIZE[31378]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAuto),7000)"> 7 $LOCALIZE[31378]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAuto),10000)"> 10 $LOCALIZE[31378]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAuto),15000)"> 15 $LOCALIZE[31378]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAuto),20000)"> 20 $LOCALIZE[31378]</value>
+        <value condition="String.IsEqual(Container(211).ListItem.Property(widgetAuto),25000)"> 25 $LOCALIZE[31378]</value>
+        <value>$LOCALIZE[1223]</value>
+    </variable>
+
+    <variable name="Label_Fallback_Widget_Name">
+        <value condition="String.IsEqual(Skin.String(home.slideshowpath),fallback/background.jpg)">$LOCALIZE[16018]</value>
+        <value condition="!String.IsEmpty(Skin.String(home.slideshowpath))">$INFO[Skin.String(home.slideshowpath)]</value>
+        <value>$LOCALIZE[31087]</value>
     </variable>
 
     <variable name="Def_Hub_Widget_Ref">
@@ -1030,10 +1128,10 @@
 
             <control type="image">
                 <include content="Def_Height" condition="$PARAM[small]">
-                   <param name="height" value="50" />
+                   <param name="height" value="60" />
                 </include>
-                <include content="Def_width" condition="$PARAM[small]">
-                   <param name="width" value="50" />
+                <include content="Def_Width" condition="$PARAM[small]">
+                   <param name="width" value="160" />
                 </include>
                 <height>84</height>
                 <width>200</width>

@@ -3,15 +3,30 @@
     <defaultcontrol always="true">9500</defaultcontrol>
     <onunload>ClearProperty(content)</onunload>
     <controls>
+        <include condition="Skin.HasSetting(enabled.tmdb.helper.service)">Defs_TMDbHelper_Loader</include>
+        <include condition="!Skin.HasSetting(global.showvideo)">Hidden_Video_Window</include>
         <include>Background_Global</include>
         <include>Furniture_Header</include>
         <include>Furniture_Header_Busy</include>
         <include>Furniture_Header_NowPlaying</include>
         <include>Furniture_Header_Clock_Right</include>
         <include>Furniture_Footer_Clock_Right</include>
+
         <control type="group">
             <top>40</top>
             <include>Animation_Common</include>
+
+            <control type="group">
+                <include>Animation_FadeIn</include>
+                <include>Animation_FadeOut</include>
+                <include content="Object_Spinner_Busy">
+                    <param name="haslabel" value="false" />
+                    <param name="centerleft" value="50%" />
+                    <param name="centertop" value="50%" />
+                    <param name="visible" value="Container(9500).IsUpdating" />
+                </include>
+            </control>
+
             <control type="grouplist" id="9510">
                 <top>156</top>
                 <height>100</height>
@@ -65,16 +80,7 @@
                     <texturefocus />
                 </control>
             </control>
-            <control type="group">
-                <centerleft>50%</centerleft>
-                <centertop>39%</centertop>
-                <width>450</width>
-                <height>117</height>
-                <visible>Container(9500).IsUpdating</visible>
-                <include>Animation_FadeIn</include>
-                <include>Animation_FadeOut</include>
-                <include>Object_Spinner_Busy</include>
-            </control>
+
             <control type="list" id="9500">
                 <visible allowhiddenfocus="true">!Container(9500).IsUpdating</visible>
                 <include>Animation_FadeIn</include>
@@ -107,6 +113,7 @@
                 </focusedlayout>
                 <content>$VAR[Def_Content_DB_Video]</content>
             </control>
+
             <control type="grouplist">
                 <visible>!Container(9500).IsUpdating</visible>
                 <include>Animation_FadeIn</include>
@@ -115,7 +122,7 @@
                 <right>160</right>
                 <orientation>vertical</orientation>
                 <top>600</top>
-                <itemgap>-10</itemgap>
+                <itemgap>0</itemgap>
                 <control type="label">
                     <font>MediumBold</font>
                     <width>100%</width>
@@ -124,11 +131,11 @@
                     <label>$INFO[Container(9500).ListItem.Label]</label>
                 </control>
                 <control type="label">
-                    <font>Tiny</font>
+                    <font>InfoNetflix</font>
                     <width>100%</width>
                     <align>center</align>
-                    <textcolor>Dark2</textcolor>
-                    <label>$VAR[Label_Rating_9500]</label>
+                    <textcolor>PanelWhite70</textcolor>
+                    <label>$VAR[Label_Info_9500]</label>
                 </control>
                 <control type="textbox">
                     <font>Tiny</font>

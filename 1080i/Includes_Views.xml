@@ -932,17 +932,11 @@
         <!-- VIEWS - HEADER - CLEARLOGO - CROP - NO CROP -->
 
         <control type="image" description="clearlogo">
-            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
-            <fadetime>ClearArtFadetime</fadetime>
-
             <visible>[!Window.IsVisible(Home) + Skin.HasSetting(show.header.clearlogo)]</visible>
             <visible>![Window.IsVisible(Home) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
             <visible>![Window.IsVisible(Home) + Skin.HasSetting(show.home.netflix.title.clearlogo) + $EXP[Home_Is_Vertical]]</visible>
             <visible>![Control.IsVisible(509) + Skin.HasSetting(show.view.509.title.clearlogo)]</visible>
-            <visible>![Control.IsVisible(521) + Skin.HasSetting(show.view.netflix.title.clearlogo.video)]</visible>
-            <visible>![Control.IsVisible(522) + Skin.HasSetting(show.view.netflix.title.clearlogo.video)]</visible>
-            <visible>![Control.IsVisible(523) + Skin.HasSetting(show.view.netflix.title.clearlogo.music)]</visible>
+            <visible>$EXP[View_Not_Flix]</visible>
             <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
             <centertop>120</centertop>
             <centerleft>50%</centerleft>
@@ -958,18 +952,13 @@
         <!-- HOME - HEADER - CLEARLOGO - CROP -->
 
         <control type="image" description="clearlogo home">
-            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
-            <fadetime>ClearArtFadetime</fadetime>
-
             <visible>Skin.HasSetting(show.home.header.clearlogo) + $EXP[Exp_Title_Clearlogo_Home_Crop]</visible>
             <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
             <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
             <visible>Skin.HasSetting(home.hide.nowplaying) | [!Skin.HasSetting(home.hide.nowplaying) + !Player.HasAudio] | [$EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Extended_Now_Playing_Is_Visible] + Player.HasAudio]</visible>
             <visible>ControlGroup(301).HasFocus()</visible>
 
-            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,60" time="0" condition="[$EXP[Home_Is_Vertical] | $EXP[Home_Is_Horizontal]] + Window.IsVisible(Home.xml)">Conditional</animation>
 
             <!-- Hide with NowPlaying -->
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
@@ -991,10 +980,6 @@
         <!-- HOME - HEADER - CLEARLOGO - MOVIE / VIDEO / TVSHOW / ARTIST -->
 
         <control type="image" description="clearlogo home">
-            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
-            <fadetime>ClearArtFadetime</fadetime>
-
             <visible>Skin.HasSetting(show.home.header.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
             <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
             <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
@@ -1002,8 +987,7 @@
             <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) | String.IsEmpty(Container($PARAM[id]).ListItem.DBType)</visible>
             <visible>ControlGroup(301).HasFocus()</visible>
 
-            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,60" time="0" condition="[$EXP[Home_Is_Vertical] | $EXP[Home_Is_Horizontal]] + Window.IsVisible(Home.xml)">Conditional</animation>
 
             <!-- Hide with NowPlaying -->
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
@@ -1025,10 +1009,6 @@
         <!-- HOME - HEADER - CLEARLOGO - SEASON / EPISODE -->
 
         <control type="image" description="clearlogo home">
-            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
-            <fadetime>ClearArtFadetime</fadetime>
-
             <visible>Skin.HasSetting(show.home.header.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo))</visible>
             <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
             <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
@@ -1036,8 +1016,7 @@
             <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,season) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)</visible>
             <visible>ControlGroup(301).HasFocus()</visible>
 
-            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,60" time="0" condition="[$EXP[Home_Is_Vertical] | $EXP[Home_Is_Horizontal]] + Window.IsVisible(Home.xml)">Conditional</animation>
 
             <!-- Hide with NowPlaying -->
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
@@ -1059,10 +1038,6 @@
         <!-- HOME - HEADER - CLEARLOGO - ALBUM -->
 
         <control type="image" description="clearlogo home">
-            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-            <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation>
-            <fadetime>ClearArtFadetime</fadetime>
-
             <visible>Skin.HasSetting(show.home.header.clearlogo) + !$EXP[Exp_Title_Clearlogo_Home_Crop] + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))</visible>
             <visible>Window.IsVisible(Home) + !Skin.HasSetting(homemenu.netflix)</visible>
             <visible>![Window.IsVisible(DialogMusicInfo.xml) + Window.IsVisible(DialogVideoInfo.xml)]</visible>
@@ -1070,10 +1045,10 @@
             <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,album)</visible>
             <visible>ControlGroup(301).HasFocus()</visible>
 
-            <animation effect="slide" start="0" end="0,60" time="0" condition="$EXP[Home_Is_Horizontal] + Window.IsVisible(Home.xml)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,40" time="0" condition="$EXP[Home_Is_Vertical] + Window.IsVisible(Home.xml)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,60" time="0" condition="[$EXP[Home_Is_Vertical] | $EXP[Home_Is_Horizontal]] + Window.IsVisible(Home.xml)">Conditional</animation>
 
             <!-- Hide with NowPlaying -->
+
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
                 <effect type="slide" start="0,0" end="350,0" tween="sine" easing="out" time="300" delay="0"/>
                 <effect type="fade" start="100" end="0" time="150" delay="0"/>

@@ -855,16 +855,16 @@
 
                 <!-- <onfocus>SetProperty(WallMode,$INFO[Container.FolderPath],Home)</onfocus> -->
             </control>
-            <control type="image">
-                <left>0</left>
-                <right>0</right>
-                <height>100</height>
-                <top>0</top>
-                <texture>common/dim-top.png</texture>
-                <animation effect="fade" start="0" end="100" time="500" tween="cubic" easing="inout" reversible="false">Visible</animation>
-                <animation effect="fade" start="100" end="0" time="500" tween="cubic" easing="inout" reversible="false">Hidden</animation>
-                <visible>Container($PARAM[id]).HasPrevious</visible>
-            </control>
+            <!-- <control type="image"> -->
+                <!-- <left>0</left> -->
+                <!-- <right>0</right> -->
+                <!-- <height>100</height> -->
+                <!-- <top>0</top> -->
+                <!-- <texture>common/dim-top.png</texture> -->
+                <!-- <animation effect="fade" start="0" end="100" time="500" tween="cubic" easing="inout" reversible="false">Visible</animation> -->
+                <!-- <animation effect="fade" start="100" end="0" time="500" tween="cubic" easing="inout" reversible="false">Hidden</animation> -->
+                <!-- <visible>Container($PARAM[id]).HasPrevious</visible> -->
+            <!-- </control> -->
         </control>
     </include>
 
@@ -881,17 +881,18 @@
 
             <!-- Focused List -->
             <control type="$PARAM[control-type]" id="$PARAM[id]">
+                <visible>String.IsEqual(Window(Home).Property(WallMode),Container.FolderPath) | String.IsEmpty(Window(Home).Property(WallMode))</visible>
                 <top>206</top>
                 <right>70</right>
                 <left>70</left>
                 <height>672</height>
+
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft condition="!Skin.HasSetting(global.kioskmode)">9000</onleft>
                 <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
                 <onright>162$PARAM[id]</onright>
 
-                <visible>String.IsEqual(Window(Home).Property(WallMode),Container.FolderPath) | String.IsEmpty(Window(Home).Property(WallMode))</visible>
                 <onback>ClearProperty(WallMode,Home)</onback>
 
                 <onback>Container.SetViewMode($PARAM[onbackid])</onback>
@@ -902,6 +903,7 @@
                 <orientation>$PARAM[orientation]</orientation>
                 <include>Animation_Scrolltime_Views_List</include>
                 <focusposition>$PARAM[focusposition]</focusposition>
+
                 <viewtype label="536">list</viewtype>
                 <itemlayout height="$PARAM[height]" width="$PARAM[width]">
                     <control type="group">

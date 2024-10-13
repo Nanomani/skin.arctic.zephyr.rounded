@@ -521,10 +521,13 @@
         <!-- FALLBACK -->
 
         <control type="image" description="Fanart Fallback always">
-            <include>Def_Background_Brightness_Global</include>
             <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
+
+            <visible>[!Window.IsVisible(Home) | [Window.IsVisible(Home) + $EXP[Exp_InfoDialogs]]] + Skin.HasSetting(hide.global.fanart) + !Skin.HasSetting(enable.netflix.preview.noflix)</visible>
+
+            <include>Def_Background_Brightness_Global</include>
             <include>Def_Dimensions_Fullscreen</include>
-            <visible>[!Window.IsVisible(Home) | [Window.IsVisible(Home) + [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]]] + Skin.HasSetting(hide.global.fanart) + !Skin.HasSetting(enable.netflix.preview.noflix)</visible>
+
             <!-- <include>Animation_Background_OpenClose</include> -->
             <aspectratio>scale</aspectratio>
             <texture background="true">$VAR[Global_Fanart_Fallback]</texture>
@@ -536,7 +539,7 @@
         <!-- NETFLIX PREVIEW WINDOW -->
 
         <control type="multiimage" description="Fanart">
-            <visible>[[[Window.IsVisible(Home) + Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(hide.homemenu.netflix.preview)] | [[$EXP[View_Flix] + !Skin.HasSetting(hide.views.netflix.preview)]]] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]]</visible>
+            <visible>[[[Window.IsVisible(Home) + Skin.HasSetting(homemenu.netflix) + !Skin.HasSetting(hide.homemenu.netflix.preview)] | [[$EXP[View_Flix] + !Skin.HasSetting(hide.views.netflix.preview)]]] + !$EXP[Exp_InfoDialogs] + ![Skin.HasSetting(homemenu.horizontal.clean) + Window.IsVisible(Home)]]</visible>
 
             <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio] | [Skin.HasSetting(global.showvisualisation) + String.IsEmpty(Visualisation.Name) + Player.HasAudio]</visible>
 
@@ -606,7 +609,7 @@
 
         <!-- Home (not clean) / View flix -->
         <control type="image" description="FanartOverlay">
-            <visible>[Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml)] | $EXP[View_Flix]</visible>
+            <visible>[Window.IsVisible(Home) + !$EXP[Exp_InfoDialogs]] | $EXP[View_Flix]</visible>
             <visible>!Skin.HasSetting(homemenu.horizontal.clean) | [Skin.HasSetting(homemenu.horizontal.clean) + $EXP[View_Flix]]</visible>
             <include>Def_Dimensions_Fullscreen</include>
             <texture colordiffuse="FloorFade">background/combined_flixart.png</texture>
@@ -616,7 +619,7 @@
 
         <!-- All View (not flix) - home exclu -->
         <control type="image" description="FanartOverlay">
-            <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]]</visible>
+            <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + $EXP[Exp_InfoDialogs]]</visible>
             <visible>!Skin.HasSetting(homemenu.horizontal.clean) | [Skin.HasSetting(homemenu.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
             <visible>!$EXP[View_Flix]</visible>
             <include>Def_Dimensions_Fullscreen</include>
@@ -641,7 +644,7 @@
 
         <!-- View not flix (home clean)-->
         <!-- <control type="image" description="FanartOverlay"> -->
-            <!-- <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]]</visible> -->
+            <!-- <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + $EXP[Exp_InfoDialogs]]</visible> -->
             <!-- <visible>Skin.HasSetting(homemenu.horizontal.clean)</visible> -->
             <!-- <include>Def_Dimensions_Fullscreen</include> -->
             <!-- <texture colordiffuse="FloorFade">background/combined_fanart.png</texture> -->
@@ -725,7 +728,7 @@
     <!-- =================================== -->
 
         <value condition="!Skin.HasSetting(hide.global.fanart) + Window.IsVisible(Home) + Control.HasFocus(9099) + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
-        <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml)">$INFO[Skin.String(fanart.fallback.search)]</value>
+        <value condition="!Skin.HasSetting(hide.global.fanart) + !String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !$EXP[Exp_InfoDialogs]">$INFO[Skin.String(fanart.fallback.search)]</value>
 
     <!-- =================================== -->
     <!--           MULTI FANART              -->
@@ -997,17 +1000,25 @@
 
     <variable name="Global_Fanart_Fallback">
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.music)) + [Container.Content(songs) | Container.Content(albums) | Container.Content(artists) | Container.Content(musicvideos) | Container.Content(playlists)]">$INFO[Skin.String(fanart.fallback.music)]</value>
+
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.tvshow)) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)]">$INFO[Skin.String(fanart.fallback.tvshow)]</value>
+
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.favourite)) + Container.Content(favourites)">$INFO[Skin.String(fanart.fallback.favourite)]</value>
+
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.weather)) + Window.IsVisible(MyWeather.xml)">$INFO[Skin.String(fanart.fallback.weather)]</value>
+
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.pvr)) + [Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyPVRTimers.xml) | Window.IsVisible(MyPVRChannels.xml) | Window.IsVisible(MyPVRGuide.xml)]">$INFO[Skin.String(fanart.fallback.pvr)]</value>
-        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.settings)) + [Window.IsVisible(Settings.xml) | Window.IsVisible(skinsettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(MyPrograms.xml)]">$INFO[Skin.String(fanart.fallback.settings)]</value>
+
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.settings)) + [Window.IsVisible(Settings.xml) | Window.IsVisible(skinsettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(MyPrograms.xml) | Window.IsVisible(EventLog.xml)]">$INFO[Skin.String(fanart.fallback.settings)]</value>
 
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.movie)) + [Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | Container.Content(genres) | Container.Content(years) | Container.Content(directors)]">$INFO[Skin.String(fanart.fallback.movie)]</value>
 
         <!-- <value condition="!String.IsEmpty(Skin.String(fanart.fallback.search)) + Control.HasFocus(9099)">$INFO[Skin.String(fanart.fallback.search)]</value> -->
+
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value>
+
         <value condition="!String.IsEmpty(Container(99950).ListItem.Art(fanart))">$INFO[Container(99950).ListItem.Art(fanart)]</value>
+
         <value>background/blur2.png</value>
         <!-- <value>common/null.png</value> -->
     </variable>

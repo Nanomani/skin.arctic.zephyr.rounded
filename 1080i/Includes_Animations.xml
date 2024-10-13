@@ -59,7 +59,7 @@
     </include>
 
     <include name="Animation_Fade_Home_Row">
-        <visible>![Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]</visible>
+        <visible>!$EXP[Exp_InfoDialogs]</visible>
         <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">WindowOpen</animation>
         <animation effect="fade" start="100" end="0" tween="cubic" easing="out" time="350" reversible="false">WindowClose</animation>
         <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">Visible</animation>
@@ -372,13 +372,6 @@
         <animation effect="fade" start="0" end="100" time="350" tween="cubic" easing="inout">WindowOpen</animation>
     </include>
 
-    <include name="Animation_FadeIn_Gradient">
-        <param name="delay" value="$PARAM[delay]" default="1"/>
-        <definition>
-        <animation effect="fade" start="100" end="100" delay="$PARAM[delay]" time="1">Visible</animation>
-        </definition>
-    </include>
-
     <include name="Animation_FadeIn_WeatherDelay">
         <animation effect="fade" start="0" end="100" time="350" tween="cubic" easing="inout" reversible="false" delay="200">Visible</animation>
     </include>
@@ -563,8 +556,8 @@
     </include>
 
     <include name="Animation_FurnitureVisible_footer">
-        <animation effect="fade" end="0" start="100" condition="Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml) | Control.HasFocus(390001)" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
-        <animation effect="fade" end="100" start="0" condition="![Control.HasFocus(390001) | [Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]]" time="150">Conditional</animation>
+        <animation effect="fade" end="0" start="100" condition="$EXP[Exp_InfoDialogs] | Control.HasFocus(390001)" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
+        <animation effect="fade" end="100" start="0" condition="![Control.HasFocus(390001) | $EXP[Exp_InfoDialogs]]" time="150">Conditional</animation>
 
         <animation effect="fade" end="100" start="0" time="450" delay="0" tween="sine" easing="in">WindowOpen</animation>
         <animation effect="fade" end="0" start="100" time="250">WindowClose</animation>
@@ -573,8 +566,8 @@
     </include>
 
     <include name="Animation_FurnitureVisible">
-        <animation effect="fade" end="0" start="100" condition="Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
-        <animation effect="fade" end="100" start="0" condition="![Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]" time="150">Conditional</animation>
+        <animation effect="fade" end="0" start="100" condition="$EXP[Exp_InfoDialogs]" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
+        <animation effect="fade" end="100" start="0" condition="!$EXP[Exp_InfoDialogs]" time="150">Conditional</animation>
 
         <animation effect="fade" end="100" start="0" time="450" delay="0" tween="sine" easing="in">WindowOpen</animation>
         <animation effect="fade" end="0" start="100" time="250">WindowClose</animation>
@@ -593,8 +586,8 @@
     </include>
 
     <include name="Animation_Furniture_Visible_Home_Label">
-        <animation effect="fade" end="0" start="100" condition="Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Control.HasFocus(301) | Window.IsVisible(DialogAddonInfo.xml)" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
-        <animation effect="fade" end="100" start="0" condition="![Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Control.HasFocus(301) | Window.IsVisible(DialogAddonInfo.xml)]" time="150">Conditional</animation>
+        <animation effect="fade" end="0" start="100" condition="$EXP[Exp_InfoDialogs]" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
+        <animation effect="fade" end="100" start="0" condition="!$EXP[Exp_InfoDialogs]" time="150">Conditional</animation>
 
         <animation effect="fade" end="100" start="0" time="450" delay="0" tween="sine" easing="in">WindowOpen</animation>
         <animation effect="fade" end="0" start="100" time="150">WindowClose</animation>
@@ -607,12 +600,6 @@
         <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
         <animation effect="fade" start="0" end="100" time="150" condition="![Window.Previous(Home) + Skin.HasSetting(home.vertical)] + ![Window.IsVisible(Home) + Skin.HasSetting(home.vertical)]">WindowOpen</animation>
         <animation effect="fade" end="0" start="100" time="150" condition="![Window.Next(Home) + Skin.HasSetting(home.vertical)] + ![Window.IsVisible(Home) + Skin.HasSetting(home.vertical)]">WindowClose</animation>
-    </include>
-
-    <include name="Animation_TestOut">
-        <animation type="Conditional" condition="!Container().OnNext + !Container().OnPrevious + !ListItem.IsCollection" reversible="false">
-            <effect type="fade" start="100" end="0" time="400" delay="2000"/>
-        </animation>
     </include>
 
     <include name="Animation_FadeIn_DialogWIP">
@@ -673,6 +660,7 @@
     <include name="Animation_Music_FadeIn_Clearlogo">
         <animation condition="Control.HasFocus(9501) | Control.HasFocus(160) | Control.HasFocus(9502) | Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(95027)" effect="fade" end="100" start="0" time="300">Conditional</animation>
     </include>
+
 <!--            Def_Layout_Dialog_Info_Video_Wall_Poster            -->
 <!--                                                                -->
 <!--            Sets                                                -->
@@ -724,7 +712,7 @@
     </include>
 
     <include name="Animation_Home_Is_Horizontal">
-        <visible>![Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(DialogMusicInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(DialogAddonInfo.xml)]</visible>
+        <visible>!$EXP[Exp_InfoDialogs]</visible>
         <animation type="WindowOpen" reversible="false">
             <effect type="fade" start="0" end="100" time="450" delay="0" tween="sine" easing="in"/>
         </animation>

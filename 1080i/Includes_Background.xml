@@ -270,6 +270,9 @@
         <include condition="Skin.HasSetting(enable.blur.effect)">Image_Path_Blur_TMDb</include>
         <include>Global_Video_Window</include>
         <include condition="Skin.HasSetting(show.global.visualisation.music.artist) + !String.IsEmpty(Visualisation.Name)">Global_Visualisation</include>
+
+        <!-- EXTRA FANART -->
+
         <control type="fadelabel" id="4399">
             <top>-900</top>
             <width>2560</width>
@@ -374,56 +377,61 @@
 
             <include>Def_Background_Brightness_Global</include>
             <include>Def_Dimensions_Fullscreen</include>
+
             <!-- <include>Animation_Background_OpenClose</include> -->
+
+            <randomize>true</randomize>
+
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
             <include>Background_Fanart_Fade_time</include>
             <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-            <randomize>true</randomize>
+
             <aspectratio>scale</aspectratio>
             <imagepath background="true">$VAR[Global_Fanart_Background]</imagepath>
-            <include>Animation_Animate_Fanart</include>
-            <include>Animation_AutoTrailer_FadeOut_Background</include>
-            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
         </control>
 
-        <!-- BLUR GLOBAL FANART -->
+        <!-- BLUR GLOBAL - FAKE - HOME -->
 
-        <control type="multiimage" description="Fanart">
-            <visible>Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake)</visible>
+        <!-- Code from https://github.com/jurialmunkey/skin.arctic.fuse -->
 
-            <visible>!Window.IsVisible(Home) | [Window.IsVisible(Home) + [$EXP[View_List_Dialog_Info_Settings]]]</visible>
-
+        <control type="group">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.effect.fake)</visible>
+            
+            <visible>Window.IsVisible(Home) + Skin.HasSetting(enable.blur.on.home)</visible>
 
-            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+            <visible>!Skin.HasSetting(home.style.horizontal.clean) | [Skin.HasSetting(home.style.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
 
-            <include>Def_Dimensions_Fullscreen</include>
-            <!-- <include>Animation_Background_OpenClose</include> -->
-            <include>Background_Fanart_Fade_time</include>
+            <centertop>50%</centertop>
+            <height>108000</height>
 
-            <colordiffuse>FanartFadeBlur</colordiffuse>
-            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-            <randomize>true</randomize>
-            <aspectratio>scale</aspectratio>
-            <include>Image_Path_Blur_TMDb</include>
-            <include>Animation_Animate_Fanart</include>
-            <include>Animation_AutoTrailer_FadeOut_Background</include>
-            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            <control type="multiimage" description="Fanart">
+                <width>192000</width>
+                <height>108000</height>
+                <centertop>64%</centertop>
+
+                <include>Animation_Animate_Fanart</include>
+                <include>Animation_AutoTrailer_FadeOut_Background</include>
+                <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+                <include>Background_Fanart_Fade_time</include>
+                <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+                <randomize>true</randomize>
+
+                <aspectratio>scale</aspectratio>
+                <include>Image_Path_Normal</include>
+            </control>
         </control>
 
         <!-- BLUR GLOBAL - FAKE -->
 
         <control type="group">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
-
             <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.effect.fake)</visible>
 
             <visible>[Window.IsVisible(Home) + Skin.HasSetting(home.style.flix) + !Skin.HasSetting(hide.home.flix.preview)] |
-            [$EXP[View_Flix] + !Skin.HasSetting(hide.views.flix.preview)] |
-            [$EXP[View_List_Dialog_Info_Settings] + Skin.HasSetting(enable.netflix.preview.noflix)]</visible>
-
-            <!-- <visible>!Window.IsVisible(Home) | [Window.IsVisible(Home) + [$EXP[View_List_Dialog_Info_Settings]]]</visible> -->
-            <!-- <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible> -->
-            <!-- <include condition="!Skin.HasSetting(home.style.flix)">Def_Background_Brightness_Global</include> -->
+            $EXP[View_Flix] | $EXP[View_List_Dialog_Info_Settings]</visible>
 
             <centertop>50%</centertop>
             <height>108000</height>
@@ -434,120 +442,104 @@
                 <height>108000</height>
                 <centertop>64%</centertop>
 
-                <include>Background_Fanart_Fade_time</include>
-                <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-                <randomize>true</randomize>
-                <aspectratio>scale</aspectratio>
-
-                <colordiffuse>FanartFadeBlur</colordiffuse>
-
-                <include>Image_Path_Normal</include>
-
                 <include>Animation_Animate_Fanart</include>
                 <include>Animation_AutoTrailer_FadeOut_Background</include>
                 <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+                <include>Background_Fanart_Fade_time</include>
+                <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+                <randomize>true</randomize>
+
+                <colordiffuse>FanartFadeBlur</colordiffuse>
+
+                <aspectratio>scale</aspectratio>
+                <include>Image_Path_Normal</include>
             </control>
         </control>
 
-        <!-- BLUR GLOBAL FANART HOME - TMDB HELPER -->
+        <!-- BLUR GLOBAL - TMDB HELPER - HOME -->
 
         <control type="multiimage" description="Fanart">
+            <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+
             <visible>Window.IsVisible(Home) + Skin.HasSetting(enable.blur.on.home)</visible>
 
             <visible>Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake)</visible>
 
             <visible>!Skin.HasSetting(home.style.horizontal.clean) | [Skin.HasSetting(home.style.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
 
-            <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
-
-            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
+            <include>Animation_Animate_Fanart</include>
+            <include>Animation_AutoTrailer_FadeOut_Background</include>
+            <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
 
             <include condition="!Skin.HasSetting(home.style.flix)">Def_Background_Brightness_Global</include>
 
             <include>Def_Dimensions_Fullscreen</include>
-            <!-- <include>Animation_Background_OpenClose</include> -->
-            <include>Background_Fanart_Fade_time</include>
-            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-            <randomize>true</randomize>
             <aspectratio>scale</aspectratio>
 
             <include condition="!Skin.HasSetting(enable.blur.on.home) + !$EXP[View_List_Dialog_Info_Settings]">Image_Path_Normal</include>
             <include condition="!Skin.HasSetting(enable.blur.on.home) + [Window.IsVisible(MyVideoNav.xml) | Window.IsVisible(MyMusicNav.xml) | $EXP[View_List_Dialog_Info_Settings]]">Image_Path_Blur_TMDb</include>
             <include condition="Skin.HasSetting(enable.blur.on.home)">Image_Path_Blur_TMDb</include>
+        </control>
+
+        <!-- BLUR GLOBAL - TMDB HELPER -->
+
+        <control type="multiimage" description="Fanart">
+            <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+
+            <visible>Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake)</visible>
+            <visible>!Window.IsVisible(Home) | [Window.IsVisible(Home) + [$EXP[View_List_Dialog_Info_Settings]]]</visible>
 
             <include>Animation_Animate_Fanart</include>
             <include>Animation_AutoTrailer_FadeOut_Background</include>
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
-        </control>
+            <include>Background_Fanart_Fade_time</include>
+            <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
+            <randomize>true</randomize>
 
-        <!-- BLUR GLOBAL FANART HOME - FAKE -->
+            <include>Def_Dimensions_Fullscreen</include>
+            <aspectratio>scale</aspectratio>
 
-        <!-- Code from https://github.com/jurialmunkey/skin.arctic.fuse -->
-
-        <control type="group">
-            <visible>Window.IsVisible(Home) + Skin.HasSetting(enable.blur.on.home)</visible>
-            <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.effect.fake)</visible>
-
-            <visible>!Skin.HasSetting(home.style.horizontal.clean) | [Skin.HasSetting(home.style.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
-
-            <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
-
-            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
-
-            <centertop>50%</centertop>
-            <height>108000</height>
-
-            <control type="multiimage" description="Fanart">
-                <width>192000</width>
-                <height>108000</height>
-                <centertop>64%</centertop>
-
-                <include>Animation_Animate_Fanart</include>
-                <include>Animation_AutoTrailer_FadeOut_Background</include>
-                <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
-                <include>Background_Fanart_Fade_time</include>
-                <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-                <randomize>true</randomize>
-
-                <aspectratio>scale</aspectratio>
-
-                <include>Image_Path_Normal</include>
-            </control>
+            <colordiffuse>FanartFadeBlur</colordiffuse>
+            <include>Image_Path_Blur_TMDb</include>
         </control>
 
         <!-- FALLBACK - IF hide.global.fanart ENABLE -->
 
         <control type="image" description="Fanart Fallback always">
-            <visible>Skin.HasSetting(hide.global.fanart)</visible>
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
 
-            <visible>[!Window.IsVisible(Home) | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]]] + !Skin.HasSetting(enable.netflix.preview.noflix)</visible>
+            <visible>Skin.HasSetting(hide.global.fanart)</visible>
+            <visible>!Skin.HasSetting(enable.blur.effect)</visible>
 
-            <include>Def_Background_Brightness_Global</include>
-            <include>Def_Dimensions_Fullscreen</include>
+            <!-- <visible>!Skin.HasSetting(enable.blur.effect) | -->
+            <!-- [Window.IsVisible(Home) + !Skin.HasSetting(enable.blur.effect) + $EXP[View_Info_Dialog]]</visible> -->
 
-            <!-- <include>Animation_Background_OpenClose</include> -->
-            <aspectratio>scale</aspectratio>
-            <texture background="true">$VAR[Global_Fanart_Fallback]</texture>
+
+            <!-- <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.effect.fake)</visible> -->
+            <!-- <visible>[Window.IsVisible(Home) + Skin.HasSetting(home.style.flix) + !Skin.HasSetting(hide.home.flix.preview)] | -->
+            <!-- $EXP[View_Flix] | $EXP[View_List_Dialog_Info_Settings]</visible> -->
+
             <include>Animation_Animate_Fanart</include>
             <include>Animation_AutoTrailer_FadeOut_Background</include>
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+
+            <include>Def_Dimensions_Fullscreen</include>
+            <include>Def_Background_Brightness_Global</include>
+
+            <aspectratio>scale</aspectratio>
+            <texture background="true">$VAR[Global_Fanart_Background]</texture>
         </control>
 
-        <!-- NETFLIX PREVIEW WINDOW - VIEW FLIX / HOME -->
+        <!-- WINDOW FLIX - VIEW FLIX / HOME -->
 
         <control type="multiimage" description="Fanart">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
 
-            <visible>[Window.IsVisible(Home) + Skin.HasSetting(home.style.flix) + !Skin.HasSetting(hide.home.flix.preview)] |
-            [$EXP[View_Flix] + !Skin.HasSetting(hide.views.flix.preview)] |
-            [$EXP[View_Info_Dialog] + Skin.HasSetting(enable.netflix.preview.noflix)]</visible>
-
-            <!-- <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible> -->
-
-            <visible>!Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) + !Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml)</visible>
-
-            <!-- <include>Animation_Background_OpenClose</include> -->
+            <visible>[Window.IsVisible(Home) + Skin.HasSetting(home.style.flix) + !Skin.HasSetting(hide.home.flix.preview) + !$EXP[View_Info_Dialog]] |
+            [$EXP[View_Flix] + !Skin.HasSetting(hide.view.flix.preview)]</visible>
 
             <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
             <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
@@ -568,20 +560,21 @@
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
             <include>Background_Fanart_Fade_time</include>
             <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-
             <randomize>true</randomize>
+
             <include>Window_Flix_Full_Screen</include>
         </control>
 
-        <!-- NETFLIX PREVIEW WINDOW  - VIEW NO FLIX -->
+        <!-- WINDOW FLIX  - VIEW NO FLIX -->
 
         <control type="multiimage" description="Fanart">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
 
             <visible>Skin.HasSetting(enable.netflix.preview.noflix) + $EXP[View_List_Dialog_Info_Settings]</visible>
-            <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible>
 
+            <!-- <visible>!Skin.HasSetting(hide.global.fanart) | Window.IsVisible(Home) | Skin.HasSetting(show.fallback.background)</visible> -->
             <!-- <include>Animation_Background_OpenClose</include> -->
+
             <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
             <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
 
@@ -601,8 +594,8 @@
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
             <include>Background_Fanart_Fade_time</include>
             <timeperimage>Background_Fanart_Time_Before_Next_Image</timeperimage>
-
             <randomize>true</randomize>
+
             <include>Window_Flix_Full_Screen</include>
         </control>
 
@@ -612,10 +605,12 @@
         <control type="image" description="FanartOverlay">
             <visible>[Window.IsVisible(Home) + !$EXP[View_Info_Dialog]] | $EXP[View_Flix]</visible>
             <visible>!Skin.HasSetting(home.style.horizontal.clean) | [Skin.HasSetting(home.style.horizontal.clean) + $EXP[View_Flix]]</visible>
-            <include>Def_Dimensions_Fullscreen</include>
-            <texture colordiffuse="FloorFade">background/combined_flixart.png</texture>
+
             <include>Animation_AutoTrailer_FadeOut_Background</include>
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="FloorFade">background/combined_flixart.png</texture>
         </control>
 
         <!-- All View (not flix) - home exclu -->
@@ -623,22 +618,26 @@
             <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]]</visible>
             <visible>!Skin.HasSetting(home.style.horizontal.clean) | [Skin.HasSetting(home.style.horizontal.clean) + $EXP[View_List_Dialog_Info_Settings]]</visible>
             <visible>!$EXP[View_Flix]</visible>
-            <include>Def_Dimensions_Fullscreen</include>
-            <texture colordiffuse="FloorFade">background/combined_flixart_dialog.png</texture>
+
             <include>Animation_AutoTrailer_FadeOut_Background</include>
             <include>Animation_VideoHomeWindowsFlix_FadeOut_Background</include>
+
+            <include>Def_Dimensions_Fullscreen</include>
+            <texture colordiffuse="FloorFade">background/combined_flixart_dialog.png</texture>
         </control>
 
         <!-- Home Horizontal Clean only -->
         <control type="image" description="FanartOverlay">
             <visible>Skin.HasSetting(home.style.horizontal.clean) + Window.IsVisible(Home)</visible>
-            <include>Def_Dimensions_Fullscreen</include>
+
             <animation type="WindowOpen" reversible="false">
                 <effect type="fade" start="66" end="100" time="150"/>
             </animation>
             <animation type="WindowClose" reversible="false">
                 <effect type="fade" end="33" start="100" time="300"/>
             </animation>
+
+            <include>Def_Dimensions_Fullscreen</include>
             <texture colordiffuse="FloorFade">background/floor.png</texture>
         </control>
 
@@ -996,66 +995,4 @@
         <value>background/blur2.png</value>
     </variable>
 
-    <!-- FANART FALLBACK -->
-
-    <variable name="Global_Fanart_Fallback">
-
-        <!-- APPLE PODCASTS -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.podcasts)) + $EXP[IsItunesItem]">$INFO[Skin.String(fanart.fallback.podcasts)]</value>
-
-        <!-- YOUTUBE -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.youtube)) + $EXP[IsYoutubeItem]">$INFO[Skin.String(fanart.fallback.youtube)]</value>
-
-        <!-- WEATHER -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.weather)) + Window.IsVisible(MyWeather.xml)">$INFO[Skin.String(fanart.fallback.weather)]</value>
-
-        <!-- FAVOURITES -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.favourite)) + [Container.Content(favourites) | String.IsEqual(ListItem.Path,favourites://)]">$INFO[Skin.String(fanart.fallback.favourite)]</value>
-
-        <!-- IMAGES -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.image)) + [Container.Content(images) | Window.IsVisible(MyPics.xml)]">$INFO[Skin.String(fanart.fallback.image)]</value>
-
-        <!-- GAMES -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.game)) + [Container.Content(games) | Window.IsVisible(MyGames.xml)]">$INFO[Skin.String(fanart.fallback.game)]</value>
-
-        <!-- PERSON (VIDEOS) -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.person)) + [Container.Content(directors) | Container.Content(actors) | String.IsEqual(ListItem.Property(item.type),person) | String.IsEqual(ListItem.DBType,actor) | String.IsEqual(ListItem.DBType,director)]">$INFO[Skin.String(fanart.fallback.person)]</value>
-
-        <!-- LIVE TV -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.pvr)) + [Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyPVRTimers.xml) | Window.IsVisible(MyPVRChannels.xml) | Window.IsVisible(MyPVRGuide.xml)]">$INFO[Skin.String(fanart.fallback.pvr)]</value>
-
-        <!-- MUSIC -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.music)) + [Container.Content(songs) | Container.Content(albums) | Container.Content(artists) | Container.Content(musicvideos) | String.IsEqual(Container.FolderPath,playlistmusic://) | String.StartsWith(ListItem.FolderPath,library://music/) | String.IsEqual(Container.FolderPath,special://musicplaylists/) | [Window.IsVisible(MyMusicNav.xml) + Container.Content(files)] | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,song) | String.IsEqual(Container.FolderPath,sources://music/) | String.IsEqual(Container.FolderPath,addons://sources/audio)]">$INFO[Skin.String(fanart.fallback.music)]</value>
-
-        <!-- TVSHOW -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.tvshow)) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(Container.FolderPath,library://video/tvshows/)]">$INFO[Skin.String(fanart.fallback.tvshow)]</value>
-
-        <!-- MOVIE -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.movie)) + [Container.Content(movies) | Container.Content(videoversions) | [Window.IsVisible(MyVideoNav.xml) + Container.Content(files)] | [Window.IsVisible(MyVideoNav.xml) + Container.Content(playlists)] | String.IsEqual(Container.FolderPath,library://video/movies/) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,video) | String.StartsWith(Container.FolderPath,videodb://movies/) | String.IsEqual(Container.FolderPath,sources://video/) | String.IsEqual(Container.FolderPath,addons://sources/video)]">$INFO[Skin.String(fanart.fallback.movie)]</value>
-
-        <!-- SETTINGS -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.settings)) + [Window.IsVisible(Settings.xml) | Window.IsVisible(skinsettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(SettingsProfile.xml)]">$INFO[Skin.String(fanart.fallback.settings)]</value>
-
-        <!-- PROGRAMS -->
-
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.programs)) + [Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(MyPrograms.xml) | Window.IsVisible(EventLog.xml) | $EXP[IsPluginItem] | $EXP[IsScriptItem] | [$EXP[IsAnPlugin] + Container.Content()]]">$INFO[Skin.String(fanart.fallback.programs)]</value>
-
-        <!-- FALLBACK -->
-
-        <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value>
-
-        <value>background/blur2.png</value>
-    </variable>
 </includes>

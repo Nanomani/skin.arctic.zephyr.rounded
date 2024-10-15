@@ -25,15 +25,15 @@
 
     <!-- SHOW VIDEO IN HOME IN WINDOWS FLIX -->
 
-    <expression name="VideoWindowFlixIsActive">!$EXP[Extended_Now_Playing_Is_Enable] + Skin.HasSetting(show.home.nowplaying.video.flix) + !Skin.HasSetting(home.hide.nowplaying)  + [Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Netflix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Netflix]]] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !$EXP[TrailerWindowIsActive]</expression>
+    <expression name="VideoWindowFlixIsActive">!$EXP[Extended_Now_Playing_Is_Enable] + Skin.HasSetting(show.home.nowplaying.video.flix) + !Skin.HasSetting(home.hide.nowplaying)  + [Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Flix]]] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml) + !$EXP[TrailerWindowIsActive]</expression>
 
     <!-- TMDB HELPER IS UPDATING ? -->
 
-    <expression name="Exp_TMDbHelper_IsUpdating">[!String.IsEmpty(Window(Home).Property(TMDBHelper.IsUpdating)) | !String.IsEmpty(Window(Home).Property(TMDBHelper.IsUpdatingRating))]</expression>
+    <expression name="TMDbHelper_Is_Updating">[!String.IsEmpty(Window(Home).Property(TMDBHelper.IsUpdating)) | !String.IsEmpty(Window(Home).Property(TMDBHelper.IsUpdatingRating))]</expression>
 
     <!-- TMDB HELPER IS NEEDED IN HOME ? -->
 
-    <expression name="TMDbHelper_Is_Needed">[Skin.HasSetting(enabled.tmdb.helper.service) + !Container(300).Scrolling + !Container(300).OnScrollNext + !Container(300).OnScrollPrevious + !Skin.HasSetting(home.hide.netflix.plot) + [$EXP[Home_Is_Vertical_Netflix] | $EXP[Home_Is_Horizontal_Netflix] | $EXP[Home_Is_Horizontal_Clean]]]</expression>
+    <expression name="TMDbHelper_Is_Needed">[Skin.HasSetting(enabled.tmdb.helper.service) + !Container(300).Scrolling + !Container(300).OnScrollNext + !Container(300).OnScrollPrevious + !Skin.HasSetting(home.hide.netflix.plot) + [$EXP[Home_Is_Vertical_Flix] | $EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Horizontal_Clean]]]</expression>
 
     <!-- Skin.HasSetting(enabled.tmdb.helper.service) -->
 
@@ -44,13 +44,13 @@
 
     <expression name="View_Flix_Show_Clearlogo_Enable">[[Skin.HasSetting(show.view.netflix.title.clearlogo.game) + Window.IsVisible(MyGames.xml)] | [Skin.HasSetting(show.view.netflix.title.clearlogo.video) + Window.IsVisible(MyVideoNav.xml)] | [Skin.HasSetting(show.view.netflix.title.clearlogo.music) + Window.IsVisible(MyMusicNav.xml)] | [Skin.HasSetting(show.view.netflix.title.clearlogo.playlist) + Window.IsVisible(MyPlaylist.xml)]]</expression>
 
-    <expression name="Exp_Title_Clearlogo_Available">[!String.IsEmpty(Container(99950).ListItem.Art(cropimage)) | !String.IsEmpty(Container(99950).ListItem.Property(base_clearlogo)) | !String.IsEmpty(ListItem.Art(clearlogo)) | !String.IsEmpty(ListItem.Art(tvshow.clearlogo)) | !String.IsEmpty(ListItem.Art(artist.clearlogo)) | !String.IsEmpty(Player.Art(artist.clearlogo))]</expression>
+    <expression name="Title_Clearlogo_Available">[!String.IsEmpty(Container(99950).ListItem.Art(cropimage)) | !String.IsEmpty(Container(99950).ListItem.Property(base_clearlogo)) | !String.IsEmpty(ListItem.Art(clearlogo)) | !String.IsEmpty(ListItem.Art(tvshow.clearlogo)) | !String.IsEmpty(ListItem.Art(artist.clearlogo)) | !String.IsEmpty(Player.Art(artist.clearlogo))]</expression>
 
-    <expression name="Exp_Title_Clearlogo_Player_Available">[!String.IsEmpty(Window(Home).Property(TMDBHelper.Player.CropImage)) | !String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo))]</expression>
+    <expression name="Title_Clearlogo_Player_Available">[!String.IsEmpty(Window(Home).Property(TMDBHelper.Player.CropImage)) | !String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo))]</expression>
 
-    <expression name="Exp_Title_Clearlogo_Home_Crop">[Skin.HasSetting(enabled.tmdb.helper.crop) + [!String.IsEmpty(Container(99950).ListItem.Art(cropimage)) | !String.IsEmpty(Container(99950).ListItem.Property(base_clearlogo))]]</expression>
+    <expression name="Title_Clearlogo_Home_Crop">[Skin.HasSetting(enabled.tmdb.helper.crop) + [!String.IsEmpty(Container(99950).ListItem.Art(cropimage)) | !String.IsEmpty(Container(99950).ListItem.Property(base_clearlogo))]]</expression>
 
-    <expression name="Exp_Title_Clearlogo_PlayingNow_Available">[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(artist.clearlogo))]</expression>
+    <expression name="Title_Clearlogo_PlayingNow_Available">[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(artist.clearlogo))]</expression>
 
     <!-- CONTEXT MENU  -->
 
@@ -96,7 +96,7 @@
 
     <!-- PLUGIN RADIO_DE - LISTITEM -->
 
-    <expression name="IsPluginRadio_DeItem">String.Contains(ListItem.FolderPath,plugin://plugin.audio.radio_de)</expression>
+    <expression name="IsPluginRadio">String.Contains(ListItem.FolderPath,plugin://plugin.audio.radio)</expression>
 
     <!-- IS LIBRARY ? -->
 
@@ -153,8 +153,8 @@
 
     <!-- HOME LAYOUT TYPE -->
 
-    <expression name="Home_Is_Vertical_Netflix">Skin.HasSetting(home.vertical) + !Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(home.style.flix)</expression>
-    <expression name="Home_Is_Horizontal_Netflix">!Skin.HasSetting(home.vertical) + !Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(home.style.flix) + Skin.HasSetting(home.horizontal)</expression>
+    <expression name="Home_Is_Vertical_Flix">Skin.HasSetting(home.vertical) + !Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(home.style.flix)</expression>
+    <expression name="Home_Is_Horizontal_Flix">!Skin.HasSetting(home.vertical) + !Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(home.style.flix) + Skin.HasSetting(home.horizontal)</expression>
     <expression name="Home_Is_Vertical">Skin.HasSetting(home.vertical)</expression>
     <expression name="Home_Is_Horizontal">!Skin.HasSetting(home.vertical) + Skin.HasSetting(home.horizontal)</expression>
 
@@ -190,6 +190,10 @@
     <!-- VIEW INFO DIALOG -->
 
     <expression name="Is_Person_Info">[String.IsEqual(ListItem.Property(item.type),person) | String.IsEqual(ListItem.Property(tmdb_type),person)]</expression>
+
+    <!-- HOME BACKGROUND ON MENU -->
+
+    <expression name="Home_Background_On_Menu">!Skin.HasSetting(hide.global.fanart) + !Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + [Control.HasFocus(302) | Control.HasFocus(2011) | Control.HasFocus(399)]</expression>
 
     <!-- <expression name="Is_Info_Dialogs">[$EXP[View_Info_Dialog] | Window.IsVisible(script-globalsearch-main.xml) | Window.IsVisible(script-globalsearch-infodialog.xml)]</expression> -->
 
@@ -243,7 +247,7 @@
     <expression name="IsVideo">Player.HasVideo + !VideoPlayer.Content(livetv)</expression>
     <expression name="MusicSeekbarIsVisible">!Window.IsVisible(musicosd) + [Player.ShowInfo | Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding]</expression>
 
-    <expression name="TrailerWindowIsActive">Skin.HasSetting(home.netflix.autoplay.trailer) + [[Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Netflix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Netflix]]] | Control.IsVisible(521) | Control.IsVisible(522)] + !Window.IsVisible(DialogVideoInfo.xml) + String.IsEqual(Window(Home).Property(TrailerPath2),Player.FileNameAndPath) + !String.IsEmpty(Player.FileNameAndPath)</expression>
+    <expression name="TrailerWindowIsActive">Skin.HasSetting(home.netflix.autoplay.trailer) + [[Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Flix]]] | Control.IsVisible(521) | Control.IsVisible(522)] + !Window.IsVisible(DialogVideoInfo.xml) + String.IsEqual(Window(Home).Property(TrailerPath2),Player.FileNameAndPath) + !String.IsEmpty(Player.FileNameAndPath)</expression>
 
     <expression name="TrailerIsReady">Skin.HasSetting(home.netflix.autoplay.trailer) + [Window.IsVisible(Home) | Window.IsVisible(MyVideoNav.xml) | $EXP[IsGameMode]] + !Control.HasFocus(300) + !Player.HasMedia + !String.IsEmpty(Window(Home).Property(listitem.trailer)) + !System.HasVisibleModalDialog + !Window.IsVisible(script-globalsearch.xml) + !String.IsEqual(Window(Home).Property(TrailerPath),Window(Home).Property(listitem.trailer)) + !System.IdleTime(30)</expression>
 

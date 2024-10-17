@@ -104,13 +104,13 @@
         <value condition="!String.IsEmpty(Container(300).ListItem.Property(Background))">noop</value>
         <value condition="!String.IsEmpty(Skin.String(home.slideshowpath)) + String.IsEmpty(Container(300).ListItem.Property(widget))">noop</value>
         <value condition="!String.IsEmpty(Skin.String(home.fallbackwidget))">$INFO[Skin.String(home.fallbackwidget)]</value>
-        <value condition="!String.IsEmpty(Skin.String(widgetSpotlightPath)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),fallback/background.jpg)">$INFO[Skin.String(widgetSpotlightPath)]</value>
+        <value condition="!String.IsEmpty(Skin.String(widgetSpotlightPath)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),background/bg_fallback.jpg)">$INFO[Skin.String(widgetSpotlightPath)]</value>
         <value condition="!Library.HasContent(Movies) + !Library.HasContent(TVShows)">$VAR[Def_Widget_Fallback]</value>
         <!-- <value>$VAR[Def_Random_Movies]</value> -->
     </variable>
 
     <variable name="Def_Widget_Target">
-        <value condition="!String.IsEmpty(Skin.String(widgetTarget)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),fallback/background.jpg)">$INFO[Skin.String(widgetTarget)]</value>
+        <value condition="!String.IsEmpty(Skin.String(widgetTarget)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),background/bg_fallback.jpg)">$INFO[Skin.String(widgetTarget)]</value>
         <value>videos</value>
     </variable>
 
@@ -230,7 +230,7 @@
     </variable>
 
     <variable name="Label_Fallback_Widget_Name">
-        <value condition="String.IsEqual(Skin.String(home.slideshowpath),fallback/background.jpg)">$LOCALIZE[16018]</value>
+        <value condition="String.IsEqual(Skin.String(home.slideshowpath),background/bg_fallback.jpg)">$LOCALIZE[16018]</value>
         <value condition="!String.IsEmpty(Skin.String(home.slideshowpath))">$INFO[Skin.String(home.slideshowpath)]</value>
         <value>$LOCALIZE[31087]</value>
     </variable>
@@ -1007,6 +1007,8 @@
         </control>
     </include>
 
+
+    <!-- landscape -->
     <include name="Def_Widget_Fanart">
         <param name="indicatorbackground" value="$PARAM[indicatorbackground]" default="false"/>
         <param name="small" value="$PARAM[smallfanart]" default="false"/>
@@ -1032,7 +1034,7 @@
                 <right>10</right>
                 <bottom>10</bottom>
                 <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Fanart]</texture>
+                <texture diffuse="diffuse/widgetfanart_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Thumb]</texture>
                 <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + !$PARAM[small]</visible>
             </control>
             <control type="image">
@@ -1041,7 +1043,7 @@
                 <right>10</right>
                 <bottom>101</bottom>
                 <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Fanart]</texture>
+                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Thumb]</texture>
                 <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + $PARAM[small]</visible>
             </control>
             <control type="image">
@@ -1065,7 +1067,7 @@
                 </include>
                 <bottom>10</bottom>
                 <aspectratio scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Widget_Studio]</texture>
+                <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Thumb_Studios]</texture>
                 <visible>String.IsEqual(ListItem.DBType,studio)</visible>
             </control>
 
@@ -1198,7 +1200,7 @@
                <!-- <right>10</right> -->
                <!-- <bottom>10</bottom> -->
                <!-- <aspectratio scalediffuse="false">keep</aspectratio> -->
-               <!-- <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Widget_Studio]</texture> -->
+               <!-- <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Thumb_Studios]</texture> -->
                <!-- <visible>String.IsEqual(ListItem.DBType,studio)</visible> -->
             <!-- </control> -->
 
@@ -1299,6 +1301,7 @@
         </definition>
     </include>
 
+    <!-- Fanart / Small Fanart -->
     <include name="Def_Widget_Thumb">
         <param name="indicatorbackground" value="$PARAM[indicatorbackground]" default="false"/>
         <param name="clearlogo" value="$PARAM[clearlogo]" default="false"/>
@@ -1329,7 +1332,7 @@
                 <right>10</right>
                 <bottom>10</bottom>
                 <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
+                <texture diffuse="diffuse/widgetfanart_new.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Fanart]</texture>
                 <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + !$PARAM[small]</visible>
             </control>
 
@@ -1341,11 +1344,11 @@
                 <right>10</right>
                 <bottom>101</bottom>
                 <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
+                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Fanart]</texture>
                 <visible>!String.StartsWith(ListItem.Path,pvr://channels) + !String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + $PARAM[small] + !$PARAM[poster]</visible>
             </control>
 
-            <!-- FANART SMALL -->
+            <!-- FANART SMALL - PVR -->
 
             <control type="image">
                 <left>10</left>
@@ -1353,7 +1356,7 @@
                 <right>10</right>
                 <bottom>101</bottom>
                 <aspectratio scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
+                <texture diffuse="diffuse/widgetfanart_top.png" background="true" fallback="DefaultMovies.png">$VAR[Image_Fanart]</texture>
                 <visible>String.StartsWith(ListItem.Path,pvr://channels)</visible>
             </control>
 
@@ -1377,7 +1380,7 @@
                 <right>10</right>
                 <bottom>101</bottom>
                 <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/widgetfanart_topright.png" border="1" background="true" fallback="DefaultMovies.png">$VAR[Image_Widget_Thumb]</texture>
+                <texture diffuse="diffuse/widgetfanart_topright.png" border="1" background="true" fallback="DefaultMovies.png">$VAR[Image_Fanart]</texture>
                 <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + $PARAM[small] + $PARAM[poster]</visible>
             </control>
 
@@ -1392,7 +1395,7 @@
                 </include>
                 <bottom>10</bottom>
                 <aspectratio scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Widget_Studio]</texture>
+                <texture diffuse="diffuse/widgetsquare_new.png" background="true" fallback="DefaultStudios.png">$VAR[Image_Thumb_Studios]</texture>
                 <visible>String.IsEqual(ListItem.DBType,studio)</visible>
             </control>
 

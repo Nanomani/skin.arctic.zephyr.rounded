@@ -36,7 +36,7 @@
 
     <variable name="StartupFanart">
         <value condition="!String.IsEmpty(Skin.String(startupfanart.fallback))">$INFO[Skin.String(startupfanart.fallback)]</value>
-        <value>background/bgstartup3.jpg</value>
+        <value>background/bg_startup.jpg</value>
     </variable>
 
     <include name="Hidden_Video_Window">
@@ -483,10 +483,13 @@
             <visible>!Skin.HasSetting(hide.view.flix.preview)</visible>
             <visible>!Skin.HasSetting(hide.global.fanart)</visible>
 
-            <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Flix] + !$EXP[View_Info_Dialog]] | [!Window.IsVisible(Home) + $EXP[View_Flix]]</visible>
+            <!-- <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Flix] + !$EXP[View_Info_Dialog]] | [!Window.IsVisible(Home) + $EXP[View_Flix]]</visible> -->
+            <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Flix]] | [!Window.IsVisible(Home) + $EXP[View_Flix]]</visible>
+            <animation effect="fade" end="0" start="70" time="150" condition="$EXP[View_Info_Dialog] + Window.IsVisible(Home)">Conditional</animation>
 
-            <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
-            <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
+            <animation effect="fade" start="0" end="70" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
+            <animation effect="fade" end="0" start="70" time="150">Hidden</animation>
+
             <animation effect="fade" end="10" start="10" time="0" condition="Integer.IsEqual(Skin.String(Value_Brightness_Flix),10)">Conditional</animation>
             <animation effect="fade" end="20" start="20" time="0" condition="Integer.IsEqual(Skin.String(Value_Brightness_Flix),20)">Conditional</animation>
             <animation effect="fade" end="30" start="30" time="0" condition="Integer.IsEqual(Skin.String(Value_Brightness_Flix),30)">Conditional</animation>
@@ -518,8 +521,9 @@
 
             <visible>[!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]]</visible>
 
-            <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
-            <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
+            <animation effect="fade" start="0" end="50" time="350" tween="sine" easing="in" reversible="false">Visible</animation>
+            <animation effect="fade" end="0" start="50" time="150">Hidden</animation>
+
             <animation effect="fade" end="10" start="10" time="0" condition="Integer.IsEqual(Skin.String(Value_Brightness_NoFlix),10)">Conditional</animation>
             <animation effect="fade" end="20" start="20" time="0" condition="Integer.IsEqual(Skin.String(Value_Brightness_NoFlix),20)">Conditional</animation>
             <animation effect="fade" end="30" start="30" time="0" condition="Integer.IsEqual(Skin.String(Value_Brightness_NoFlix),30) | String.IsEmpty(Skin.String(Value_Brightness_NoFlix)) | String.IsEqual(Skin.String(Value_Brightness_NoFlix),default)">Conditional</animation>
@@ -628,7 +632,7 @@
         <!-- <value>$INFO[ListItem.Art(thumb)]</value> -->
         <!-- <value>$INFO[ListItem.Art(landscape)]</value> -->
         <!-- <value>$INFO[ListItem.Icon]</value> -->
-        <!-- <value>background/blur2.png</value> -->
+        <!-- <value>background/bg_fallback.jpg</value> -->
         <!-- <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value> -->
         <!-- <value>$INFO[ListItem.Art(fanart)]</value> -->
 
@@ -680,6 +684,18 @@
         <!-- OTHERS -->
 
         <value condition="!Skin.HasSetting(hide.global.fanart) + $EXP[Extended_Now_Playing_Is_Visible] + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + !String.IsEmpty(Player.Art(fanart)) + Player.HasMedia">$INFO[Player.Art(fanart)]</value>
+
+    <!-- =================================== -->
+    <!--         VIEW PLAYLIST               -->
+    <!-- =================================== -->
+
+        <!-- MUSIC -->
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + String.IsEqual(Container.FolderPath,playlistmusic://) + !String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image)) + System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(disable.artist.slideshow) + Player.HasAudio">$INFO[Window(Visualisation).Property(ArtistSlideshow.Image)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + String.IsEqual(Container.FolderPath,playlistmusic://) + [Skin.HasSetting(enable.osd.music.visualisation.fanart) + !String.IsEmpty(Player.Art(fanart)) + [String.IsEmpty(Window(Visualisation).Property(ArtistSlideshow.Image)) | !System.AddonIsEnabled(script.artistslideshow) | Skin.HasSetting(disable.artist.slideshow)]] + Player.HasAudio">$INFO[Player.Art(fanart)]</value>
+
+        <value condition="!Skin.HasSetting(hide.global.fanart) + String.IsEqual(Container.FolderPath,playlistmusic://) + !String.IsEmpty(Skin.String(fanart.fallback.music)) + Skin.HasSetting(enable.osd.music.visualisation.fanart) + Player.HasAudio">$INFO[Skin.String(fanart.fallback.music)]</value>
 
     <!-- =================================== -->
     <!--               SEARCH                -->
@@ -924,15 +940,15 @@
 
         <!-- MUSIC -->
 
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.music)) + [Container.Content(songs) | Container.Content(albums) | Container.Content(artists) | Container.Content(musicvideos) | String.IsEqual(Container.FolderPath,playlistmusic://) | String.StartsWith(ListItem.FolderPath,library://music/) | String.IsEqual(Container.FolderPath,special://musicplaylists/) | [Window.IsVisible(MyMusicNav.xml) + Container.Content(files)] | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,song) | String.IsEqual(Container.FolderPath,sources://music/) | String.IsEqual(Container.FolderPath,addons://sources/audio) | [Window.IsVisible(Home) + String.Contains(Container(300).ListItem.Property(Path),Music)]]">$INFO[Skin.String(fanart.fallback.music)]</value>
+        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.music)) + [Container.Content(songs) | Container.Content(albums) | Container.Content(artists) | Container.Content(musicvideos) | String.IsEqual(Container.FolderPath,playlistmusic://) | String.StartsWith(ListItem.FolderPath,library://music/) | String.IsEqual(Container.FolderPath,special://musicplaylists/) | [Window.IsVisible(MyMusicNav.xml) + Container.Content(files)] | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,song) | String.IsEqual(Container.FolderPath,sources://music/) | String.IsEqual(Container.FolderPath,addons://sources/audio) | String.StartsWith(Container.FolderPath,musicdb://) | [Window.IsVisible(Home) + String.Contains(Container(300).ListItem.Property(Path),Music)]]">$INFO[Skin.String(fanart.fallback.music)]</value>
 
-        <!-- TVSHOW -->
+        <!-- TVSHOWS -->
 
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.tvshow)) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(Container.FolderPath,library://video/tvshows/) | [Window.IsVisible(Home) + [String.Contains(Container(300).ListItem.Property(widgetType),tvshows) | String.Contains(Container(300).ListItem.Property(defaultID),tvshows)]]]">$INFO[Skin.String(fanart.fallback.tvshow)]</value>
+        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.tvshow)) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(Container.FolderPath,library://video/tvshows/) | [Window.IsVisible(Home) + [String.Contains(Container(300).ListItem.Property(widgetType),tvshows) | String.Contains(Container(300).ListItem.Property(path),library://video/tvshows) | String.Contains(Container(300).ListItem.Property(defaultID),tvshows)]]]">$INFO[Skin.String(fanart.fallback.tvshow)]</value>
 
-        <!-- MOVIE -->
+        <!-- MOVIES -->
 
-        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.movie)) + [Container.Content(movies) | Container.Content(videoversions) | [Window.IsVisible(MyVideoNav.xml) + Container.Content(files)] | [Window.IsVisible(MyVideoNav.xml) + Container.Content(playlists)] | String.IsEqual(Container.FolderPath,library://video/movies/) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,video) | String.StartsWith(Container.FolderPath,videodb://movies/) | String.IsEqual(Container.FolderPath,sources://video/) | String.IsEqual(Container.FolderPath,addons://sources/video) | [Window.IsVisible(Home) + String.Contains(Container(300).ListItem.Property(Path),Videos)]]">$INFO[Skin.String(fanart.fallback.movie)]</value>
+        <value condition="!Skin.HasSetting(global.show.fallback.only) + !String.IsEmpty(Skin.String(fanart.fallback.movie)) + [Container.Content(movies) | Container.Content(videoversions) | [Window.IsVisible(MyVideoNav.xml) + Container.Content(files)] | [Window.IsVisible(MyVideoNav.xml) + Container.Content(playlists)] | String.IsEqual(Container.FolderPath,library://video/movies/) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,video) | String.StartsWith(Container.FolderPath,videodb://movies/) | String.IsEqual(Container.FolderPath,sources://video/) | String.IsEqual(Container.FolderPath,addons://sources/video) | [Container.Content() + String.StartsWith(ListItem.FolderPath,library://video_flat/)] | [Window.IsVisible(Home) + String.Contains(Container(300).ListItem.Property(Path),Videos)]]">$INFO[Skin.String(fanart.fallback.movie)]</value>
 
         <!-- SETTINGS -->
 
@@ -951,6 +967,6 @@
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value>
 
         <!-- Last chance -->
-        <value>background/blur2.png</value>
+        <value>background/bg_fallback.jpg</value>
     </variable>
 </includes>

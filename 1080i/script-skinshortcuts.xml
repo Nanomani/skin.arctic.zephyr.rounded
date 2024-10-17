@@ -67,6 +67,7 @@
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
                         <visible>!Control.HasFocus(4000) + !ControlGroup(9200).HasFocus()</visible>
+                        <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                     <control type="image">
                         <right>15</right>
@@ -78,6 +79,8 @@
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
                         <visible>Control.HasFocus(4000) | ControlGroup(9200).HasFocus()</visible>
+                        <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
+
                     </control>
                 </itemlayout>
                 <focusedlayout width="731" height="69">
@@ -101,9 +104,10 @@
                         <width>66</width>
                         <height>66</height>
                         <texture colordiffuse="Black30" fallback="special://skin/extras/icons/addtile.png">$INFO[ListItem.Icon]</texture>
-                        <visible>!Control.HasFocus(4000) + !ControlGroup(9200).HasFocus()</visible>
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
+                        <visible>!Control.HasFocus(4000) + !ControlGroup(9200).HasFocus()</visible>
+                        <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                     <control type="image">
                         <right>15</right>
@@ -111,31 +115,21 @@
                         <width>66</width>
                         <height>66</height>
                         <texture colordiffuse="Selected" fallback="special://skin/extras/icons/addtile.png">$INFO[ListItem.Icon]</texture>
-                        <visible>Control.HasFocus(4000) | ControlGroup(9200).HasFocus()</visible>
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
+                        <visible>Control.HasFocus(4000) | ControlGroup(9200).HasFocus()</visible>
+                        <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                 </focusedlayout>
-            </control>
-
-            <!-- LEFT LIST - SELECT ICON -->
-
-            <control type="button" id="4000">
-                <include>Def_Hidden_Button</include>
-                <onup>Control.Move(211,-1)</onup>
-                <ondown>Control.Move(211,1)</ondown>
-                <onleft>304</onleft>
-                <!-- <onright condition="Control.IsVisible(9900)">9900</onright> -->
-                <onright>9100</onright>
-                <onback>ClearProperty(header-widget,Home)</onback>
-                <onclick>SetProperty(SetIcon,1,Home)</onclick>
-                <onclick>Sendclick(311)</onclick>
             </control>
 
             <!-- LEFT LIST - BUTTON DELETE / ADD / UP / DOWN -->
 
             <control type="grouplist" id="9200">
                 <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+
+                <animation effect="slide" end="66,0" condition="$EXP[Script_SkinShortcuts_Widget]">Conditional</animation>
+
                 <left>25</left>
                 <top>112</top>
                 <width>712</width>
@@ -199,6 +193,22 @@
                 </control>
             </control>
 
+
+            <!-- LEFT LIST - SELECT ICON -->
+
+            <control type="button" id="4000">
+                <include>Def_Hidden_Button</include>
+                <onup>Control.Move(211,-1)</onup>
+                <ondown>Control.Move(211,1)</ondown>
+                <onleft>304</onleft>
+                <!-- <onright condition="Control.IsVisible(9900)">9900</onright> -->
+                <onright>9100</onright>
+                <onback>ClearProperty(header-widget,Home)</onback>
+                <onclick>SetProperty(SetIcon,1,Home)</onclick>
+                <onclick>Sendclick(311)</onclick>
+                <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
+            </control>
+
             <!-- =========================================== -->
             <!--      RIGHT LIST - MAIN MENU - SETTINGS      -->
             <!-- =========================================== -->
@@ -242,12 +252,7 @@
                     <align>left</align>
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.5)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.4)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.3)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.2)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.1)</visible>
-                    <visible>!String.IsEqual(Window.Property(groupname),searchmenu)</visible>
+                    <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     <onfocus>SetProperty(TMDbHelper.IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
@@ -262,7 +267,7 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <onclick>SetProperty(custom-grouping,widget)</onclick>
                     <onclick>SendClick(401)</onclick>
-                    <visible>String.EndsWith(Window.Property(groupname),.1) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.5)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <include>Set_SkinShortcuts_Content_Type_On_UnFocus</include>
                 </control>
 
@@ -278,11 +283,7 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.1)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.2)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.3)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.4)</visible>
-                    <visible>!String.EndsWith(Window.Property(groupname),.5)</visible>
+                    <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     <onfocus>SetProperty(IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
@@ -298,7 +299,7 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.1) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.5)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <onfocus>ClearProperty(TMDbHelper.IsStandardSkinShortcut,Home)</onfocus>
                     <onclick>SetProperty(custom-grouping,widget)</onclick>
                     <onclick>SendClick(307)</onclick>
@@ -406,7 +407,7 @@
                     <enable>!String.IsEqual(Container(211).ListItem.Property(widget),mysubmenu) + !Skin.HasSetting(home.style.flix)</enable>
 
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                 </control>
 
                 <!-- WIDGETS - STYLE -->
@@ -422,7 +423,7 @@
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <enable>!String.IsEqual(Container(211).ListItem.Property(widgettarget),system) + !String.IsEqual(Container(211).ListItem.Property(widget),epg) + !Skin.HasSetting(home.style.horizontal.clean)</enable>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                 </control>
 
                 <!-- WIDGETS - CONTENT TYPE -->
@@ -437,7 +438,7 @@
                     <!-- <label2>$INFO[Container(211).ListItem.Property(widgetTarget)]</label2> -->
                     <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1) | String.IsEqual(Window.Property(groupname),searchmenu)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <include>Set_SkinShortcuts_Content_Type_On_Focus</include>
                 </control>
 
@@ -457,7 +458,7 @@
                     <onclick condition="String.IsEqual(Container(211).ListItem.Property(widgetClearLogoThumb),no)">SetProperty(customValue,)</onclick>
                     <onclick>SendClick(404)</onclick>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(widget),epg)</visible>
                     <visible>String.IsEqual(Container(211).ListItem.Property(widgetaspect),Thumbnail) | String.IsEqual(Container(211).ListItem.Property(widgetaspect),ThumbnailSmall)</visible>
                 </control>
@@ -507,7 +508,7 @@
                     <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                 </control>
 
                 <!-- WIDGETS - SORT ORDER -->
@@ -523,7 +524,7 @@
                     <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                 </control>
 
                 <!-- WIDGETS - ENABLE AUTO SCROLL -->
@@ -534,7 +535,7 @@
                     <height>66</height>
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <texturenofocus colordiffuse="Black12">common/white.png</texturenofocus>
                     <align>left</align>
                     <label>$LOCALIZE[31302]</label>
@@ -552,7 +553,7 @@
                     <align>left</align>
                     <include>Def_Dialog_Buttons_Gradient</include>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.EndsWith(Window.Property(groupname),.5) | String.EndsWith(Window.Property(groupname),.4) | String.EndsWith(Window.Property(groupname),.3) | String.EndsWith(Window.Property(groupname),.2) | String.EndsWith(Window.Property(groupname),.1)</visible>
+                    <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <visible>!$EXP[Home_Is_Horizontal_Clean]</visible>
                 </control>
 

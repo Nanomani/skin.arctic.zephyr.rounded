@@ -2618,7 +2618,7 @@
                         <width min="20" max="128">auto</width>
                         <height>64</height>
                         <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[ListItemAudioCodec2,flags3/audio/,.png]</texture>
+                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags3/audio/,.png]</texture>
                         <aspectratio align="center">keep</aspectratio>
                         <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
                     </control>
@@ -2685,7 +2685,7 @@
                         <align>left</align>
                         <left>15</left>
                         <aligny>center</aligny>
-                        <label>$VAR[Label_Duration_Time_Check_EXT]  </label>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31070]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31071]]  </label>
                         <font>Flag</font>
                         <textcolor>Dark2</textcolor>
                         <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
@@ -2736,8 +2736,9 @@
                         <!-- <visible>String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,dvd) + !String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,hddvd)</visible> -->
                     <!-- </control> -->
 
-                    <include condition="Skin.HasSetting(show.flags.audio.country)">Furniture_Flags_Audiostreams</include>
-                    <include condition="Skin.HasSetting(show.flags.subtitles)">Furniture_Flags_Subtitles</include>
+                    <include content="Furniture_Flags_DialogInfo_Extended_Audiostreams" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]"/></include>
+                    <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]"/></include>
+
                     <control type="image" description="Rotten Tomatoes">
                         <visible>!String.IsEmpty(Container(99950).ListItem.Property(Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
@@ -2940,7 +2941,7 @@
                         <width min="20" max="108">auto</width>
                         <height>60</height>
                         <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$VAR[ListItemAudioCodec2,flags/color/audio/,.png]</texture>
+                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/color/audio/,.png]</texture>
                         <aspectratio align="center">keep</aspectratio>
                         <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec)</visible>
                     </control>
@@ -3012,7 +3013,7 @@
                         <align>left</align>
                         <left>15</left>
                         <aligny>center</aligny>
-                        <label>$VAR[Label_Duration_Time_Check_EXT]</label>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31070]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31071]]</label>
                         <font>Flag</font>
                         <textcolor>Dark2</textcolor>
                         <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
@@ -3060,8 +3061,9 @@
                         <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible> -->
                         <!-- <visible>String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,dvd) + !String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,hddvd)</visible> -->
                     <!-- </control> -->
-                    <include condition="Skin.HasSetting(show.flags.audio.country)">Furniture_Flags_DialogInfo_Extended_Audiostreams</include>
-                    <include condition="Skin.HasSetting(show.flags.subtitles)">Furniture_Flags_DialogInfo_Extended_Subtitle</include>
+
+                    <include content="Furniture_Flags_DialogInfo_Extended_Audiostreams" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]"/></include>
+                    <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]"/></include>
 
                     <control type="image">
                         <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3203,6 +3205,7 @@
                     <!-- TMDB -->
                     <control type="image">
                         <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!Control.IsVisible(5161)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>40</width>
@@ -3212,6 +3215,7 @@
                     </control>
                     <control type="label">
                         <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!Control.IsVisible(5161)</visible>
                         <centertop>50%</centertop>
                         <width min="48">auto</width>
                         <height>64</height>
@@ -3228,111 +3232,117 @@
         </definition>
     </include>
 
-    <include name="Furniture_Flags_DialogInfo_Extended_Subtitle">
-        <control type="image">
-            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
-            <centertop>50%</centertop>
-            <width>41</width>
-            <height>30</height>
-            <left>20</left>
-            <texture background="true" colordiffuse="Dark1">flags/cc_white.png</texture>
-        </control>
-        <control type="grouplist">
-            <centertop>64%</centertop>
-            <width>250</width>
-            <height>64</height>
-            <left>10</left>
-            <orientation>horizontal</orientation>
-            <visible>Skin.HasSetting(show.flags.subtitles.country)</visible>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
+    <include name="Furniture_Flags_DialogInfo_Extended_Audiostreams">
+        <param name="controlid" value="$PARAM[controlid]"/>
+        <definition>
+            <control type="image" description="Audio">
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                <centertop>50%</centertop>
+                <width>58</width>
+                <height>74</height>
+                <aspectratio aligny="center" align="left">scale</aspectratio>
+                <texture colordiffuse="Dark1">flags/audio.png</texture>
             </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2))</visible>
+            <control type="grouplist">
+                <centertop>65%</centertop>
+                <width>250</width>
+                <height>64</height>
+                <left>4</left>
+                <orientation>horizontal</orientation>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.3),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.3)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.4),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.4)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.5),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.5)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                </control>
             </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3))</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4))</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5))</visible>
-            </control>
-        </control>
+        </definition>
     </include>
 
-    <include name="Furniture_Flags_DialogInfo_Extended_Audiostreams">
-        <control type="image" description="Audio">
-            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            <centertop>50%</centertop>
-            <width>58</width>
-            <height>74</height>
-            <aspectratio aligny="center" align="left">scale</aspectratio>
-            <texture colordiffuse="Dark1">flags/audio.png</texture>
-        </control>
-        <control type="grouplist">
-            <centertop>65%</centertop>
-            <width>250</width>
-            <height>64</height>
-            <left>4</left>
-            <orientation>horizontal</orientation>
+    <include name="Furniture_Flags_DialogInfo_Extended_Subtitle">
+        <param name="controlid" value="$PARAM[controlid]"/>
+        <definition>
             <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
+                <centertop>50%</centertop>
+                <width>41</width>
+                <height>30</height>
+                <left>20</left>
+                <texture background="true" colordiffuse="Dark1">flags/cc_white.png</texture>
             </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+            <control type="grouplist">
+                <centertop>64%</centertop>
+                <width>250</width>
+                <height>64</height>
+                <left>10</left>
+                <orientation>horizontal</orientation>
+                <visible>Skin.HasSetting(show.flags.subtitles.country)</visible>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2))</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3))</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4))</visible>
+                </control>
+                <control type="image">
+                    <top>20</top>
+                    <width>32</width>
+                    <height>28</height>
+                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5),flags/lang/,.png]</texture>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5))</visible>
+                </control>
             </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.3),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.3)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.4),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.4)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.5),flags/lang/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.5)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-        </control>
+        </definition>
     </include>
 
     <!-- DIALOG INFO - MUSIC -->

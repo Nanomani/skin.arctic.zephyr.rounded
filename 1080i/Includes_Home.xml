@@ -267,19 +267,20 @@
     <include name="Home_Horizontal_Content_Icon">
         <top>848</top>
         <itemlayout width="222" height="220">
-            <control type="image">
-                <include content="Def_Width" condition="Skin.HasSetting(home.show.menu.icons)">
-                    <param name="width" value="100"/>
-                </include>
-                <include content="Def_Height" condition="Skin.HasSetting(home.show.menu.icons)">
-                    <param name="height" value="100"/>
-                </include>
 
+            <!-- MAIN MENU - ONLY ICON - UNDERLINED / NOT UNDERLINED -->
+
+            <control type="image">
+                <height>100</height>
+                <width>100</width>
                 <centerleft>45.7%</centerleft>
                 <centertop>45%</centertop>
                 <texture colordiffuse="Dark3">$INFO[ListItem.Icon]</texture>
                 <animation effect="slide" start="0,0" end="0,20" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
             </control>
+
+            <!-- LIGN VERTICAL -->
+
             <control type="image" description="BottomBG">
                 <width>1</width>
                 <height>50</height>
@@ -287,43 +288,68 @@
                 <left>210</left>
                 <animation effect="fade" start="100" end="30" time="0" condition="true">Conditional</animation>
                 <texture colordiffuse="Dark1">common/white.png</texture>
-                <visible>Skin.HasSetting(home.show.menu.icons)</visible>
             </control>
         </itemlayout>
         <focusedlayout width="222" height="220">
-            <control type="group">
-                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
-                <control type="image">
-                    <include content="Def_Width" condition="Skin.HasSetting(home.show.menu.icons)">
-                        <param name="width" value="100"/>
-                    </include>
-                    <include content="Def_Height" condition="Skin.HasSetting(home.show.menu.icons)">
-                        <param name="height" value="100"/>
-                    </include>
 
-                    <centerleft>45.7%</centerleft>
-                    <centertop>45%</centertop>
-                    <texture colordiffuse="$VAR[Color_Highlight]">$INFO[ListItem.Icon]</texture>
-                    <animation effect="slide" start="0,0" end="0,20" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
-                </control>
-                <control type="image" description="BottomBG">
-                    <width>1</width>
-                    <height>50</height>
-                    <bottom>75</bottom>
-                    <left>210</left>
-                    <animation effect="fade" start="100" end="30" time="0" condition="true">Conditional</animation>
-                    <texture colordiffuse="Dark1">common/white.png</texture>
-                    <visible>Skin.HasSetting(home.show.menu.icons)</visible>
-                </control>
+            <!-- MAIN MENU - ONLY ICON - NOT UNDERLINED -->
+
+            <control type="image">
+                <height>100</height>
+                <width>100</width>
+                <centerleft>45.7%</centerleft>
+                <centertop>45%</centertop>
+                <animation effect="slide" start="0,0" end="0,20" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
+                <texture colordiffuse="$VAR[Color_Highlight]">$INFO[Container(300).ListItem.Icon]</texture>
+                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
+                <visible>!Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+            </control>
+
+            <!-- MAIN MENU - ONLY ICON - UNDERLINED -->
+
+            <control type="image">
+                <height>100</height>
+                <width>100</width>
+                <centerleft>45.7%</centerleft>
+                <centertop>45%</centertop>
+                <animation effect="slide" start="0,0" end="0,20" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
+                <texture colordiffuse="Dark1">$INFO[Container(300).ListItem.Icon]</texture>
+                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
+                <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+            </control>
+            <control type="group">
+                <centerleft>45.7%</centerleft>
+                <bottom>60</bottom>
+                <width>50</width>
+                <height>8</height>
                 <control type="image">
-                    <bottom>30</bottom>
-                    <centerleft>45.7%</centerleft>
-                    <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="$VAR[Color_Highlight]">common/arrow-small.png</texture>
-                    <visible>Control.HasFocus(300)</visible>
-                    <visible>Integer.IsGreater(Container(302).NumItems,0) + [!Skin.HasSetting(show.submenu.on.click.main.menu) | [Skin.HasSetting(show.submenu.on.click.main.menu) + !String.StartsWith(Container(300).ListItem.Property(path),SetFocus(302,0))]]</visible>
-                    <animation effect="fade" end="100" start="0" delay="300" time="400" reversible="false">Focus</animation>
+                    <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
                 </control>
+                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
+                <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+            </control>
+
+            <!-- LIGN VERTICAL -->
+
+            <control type="image" description="BottomBG">
+                <width>1</width>
+                <height>50</height>
+                <bottom>75</bottom>
+                <left>210</left>
+                <animation effect="fade" start="100" end="30" time="0" condition="true">Conditional</animation>
+                <texture colordiffuse="Dark1">common/white.png</texture>
+            </control>
+
+            <!-- ARROW -->
+
+            <control type="image">
+                <bottom>30</bottom>
+                <centerleft>45.7%</centerleft>
+                <include>Def_Arrow_Size</include>
+                <texture colordiffuse="$VAR[Color_Highlight]">common/arrow-small.png</texture>
+                <visible>Control.HasFocus(300)</visible>
+                <visible>Integer.IsGreater(Container(302).NumItems,0) + [!Skin.HasSetting(show.submenu.on.click.main.menu) | [Skin.HasSetting(show.submenu.on.click.main.menu) + !String.StartsWith(Container(300).ListItem.Property(path),SetFocus(302,0))]]</visible>
+                <animation effect="fade" end="100" start="0" delay="300" time="400" reversible="false">Focus</animation>
             </control>
 
             <!-- Set TMDbHelper WidgetContainer -->
@@ -1056,6 +1082,15 @@
 
                         <!-- MAIN MENU - ONLY ICON - UNDERLINED -->
 
+                        <control type="image">
+                            <left>262</left>
+                            <width>80</width>
+                            <top>1</top>
+                            <height>80</height>
+                            <texture colordiffuse="Dark1">$INFO[ListItem.Icon]</texture>
+                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
+                            <visible>Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+                        </control>
                         <control type="group">
                             <top>68</top>
                             <left>277</left>
@@ -1064,15 +1099,6 @@
                             <control type="image">
                                 <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
                             </control>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
-                            <visible>Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
-                        </control>
-                        <control type="image">
-                            <left>262</left>
-                            <width>80</width>
-                            <top>1</top>
-                            <height>80</height>
-                            <texture colordiffuse="Dark1">$INFO[ListItem.Icon]</texture>
                             <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
                             <visible>Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
                         </control>
@@ -1088,23 +1114,6 @@
                             <textcolor>$VAR[Color_Highlight]</textcolor>
                             <font>Home</font>
                             <label>$INFO[Container(300).ListItem.Label]</label>
-                            <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!Control.HasFocus(300) + !Control.HasFocus(302)">Conditional</animation>
-                            <visible>!Skin.HasSetting(home.show.menu.icons) + !Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
-                        </control>
-
-                        <!-- MAIN MENU - LABEL + ICON - NOT UNDERLINED -->
-
-                        <control type="label">
-                            <left>100</left>
-                            <!-- <left>0</left> -->
-                            <align>left</align>
-                            <aligny>center</aligny>
-                            <height>100%</height>
-                            <textcolor>$VAR[Color_Highlight]</textcolor>
-                            <font>Home</font>
-                            <label>$INFO[Container(300).ListItem.Label]</label>
-                            <scroll>true</scroll>
-                            <scrollspeed>60</scrollspeed>
                             <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
                             <visible>!Skin.HasSetting(home.show.menu.icons) + !Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
                         </control>

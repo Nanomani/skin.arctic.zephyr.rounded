@@ -261,8 +261,10 @@
 
     <variable name="Def_Hub_Limit">
         <value condition="!String.IsEmpty(Skin.String(HubLimit))">$INFO[Skin.String(HubLimit)]</value>
-        <value>$NUMBER[10]</value>
+        <value>$NUMBER[25]</value>
     </variable>
+
+    <!-- HOME -->
 
     <include name="Def_Home_Menu_Row_width_Reduce">
         <right>508</right>
@@ -2042,7 +2044,9 @@
         <include>Furniture_Header_NowPlaying</include>
         <include condition="!Skin.HasSetting(show.clock.date.weather.home.only)">Furniture_Footer_Clock_Right</include>
         <include>Furniture_Header_Clock_Right</include>
-        <include>Furniture_Flags_Hub</include>
+        <include content="Furniture_Flags_DialogInfo_Extended" condition="!Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9500"/></include>
+        <!-- <include>Furniture_Flags_Hub</include> -->
+        <include>Furniture_Footer</include>
 
         <control type="group">
             <include>Animation_Common</include>
@@ -2050,222 +2054,225 @@
             <control type="group">
                 <top>PosterPad</top>
                 <left>SidePad</left>
-                <right>SidePad</right>
                 <height>640</height>
+                <width>1122</width>
 
                 <!-- FANART -->
 
                 <control type="group">
                     <control type="image">
-                       <left>-9</left>
-                       <width>1140</width>
-                       <top>-9</top>
-                       <bottom>-9</bottom>
-                       <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
-                       <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                        <left>-9</left>
+                        <top>-9</top>
+                        <right>-9</right>
+                        <bottom>-9</bottom>
+                        <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                        <visible>!Skin.HasSetting(global.hide.shadows)</visible>
                     </control>
                     <control type="image">
-                       <left>0</left>
-                       <width>1122</width>
-                       <top>0</top>
-                       <bottom>0</bottom>
-                       <texture border="12" colordiffuse="Panel">common/box.png</texture>
+                        <width>100%</width>
+                        <height>100%</height>
+                        <texture border="12" colordiffuse="Panel">common/box.png</texture>
                     </control>
                     <control type="image">
-                       <left>0</left>
-                       <width>1122</width>
-                       <top>0</top>
-                       <bottom>0</bottom>
-                       <texture background="true" diffuse="diffuse/home-fanart.png">background/bg_fallback.jpg</texture>
-                       <visible>!Integer.IsGreater(Container(9500).NumItems,0)</visible>
+                        <width>100%</width>
+                        <height>100%</height>
+                        <texture background="true" diffuse="diffuse/home-fanart.png">background/bg_fallback.jpg</texture>
+                        <visible>!Integer.IsGreater(Container(9500).NumItems,0)</visible>
                     </control>
 
                     <control type="wraplist" id="9500">
-                       <description>Widget</description>
-                       <left>0</left>
-                       <width>1122</width>
-                       <top>0</top>
-                       <bottom>0</bottom>
-                       <onright>60</onright>
-                       <onleft>9501</onleft>
-                       <onup>9500</onup>
-                       <ondown>9500</ondown>
-                       <preloaditems>0</preloaditems>
-                       <orientation>vertical</orientation>
-                       <autoscroll time="10000">!Control.HasFocus(9500)</autoscroll>
-                       <include>Animation_Scrolltime_Views_List</include>
-                       <include>Animation_FadeIn</include>
-                       <include>Animation_FadeOut</include>
-                       <itemlayout width="1122" height="640">
-                          <control type="image">
-                              <width>100%</width>
-                              <height>100%</height>
-                              <texture background="true" diffuse="diffuse/bigwiderolodex.png">$VAR[Image_Fanart]</texture>
-                          </control>
-                       </itemlayout>
-                       <focusedlayout width="1122" height="640">
-                          <control type="image">
-                              <width>100%</width>
-                              <height>100%</height>
-                              <texture background="true" diffuse="diffuse/bigwiderolodex.png">$VAR[Image_Fanart]</texture>
-                          </control>
-                       </focusedlayout>
-                       <content limit="$VAR[Def_Hub_Limit]" target="$VAR[Def_Hub_Widget_Target]">$VAR[Def_Hub_Widget_Ref]</content>
+                        <description>Widget</description>
+                        <left>0</left>
+                        <height>640</height>
+                        <width>1122</width>
+                        <top>0</top>
+                        <bottom>0</bottom>
+                        <onright>60</onright>
+                        <onleft>9501</onleft>
+                        <onup>9500</onup>
+                        <ondown>9500</ondown>
+                        <preloaditems>0</preloaditems>
+                        <orientation>vertical</orientation>
+                        <autoscroll time="10000">!Control.HasFocus(9500)</autoscroll>
+                        <include>Animation_Scrolltime_Views_List</include>
+                        <include>Animation_FadeIn</include>
+                        <include>Animation_FadeOut</include>
+
+                        <itemlayout>
+                            <control type="image">
+                                <width>100%</width>
+                                <height>100%</height>
+                                <texture background="true" diffuse="diffuse/bigwiderolodex.png">$VAR[Image_Fanart]</texture>
+                            </control>
+                        </itemlayout>
+                        <focusedlayout>
+                            <control type="image">
+                                <width>100%</width>
+                                <height>100%</height>
+                                <texture background="true" diffuse="diffuse/bigwiderolodex.png">$VAR[Image_Fanart]</texture>
+                            </control>
+                        </focusedlayout>
+
+                        <content limit="$VAR[Def_Hub_Limit]" target="$VAR[Def_Hub_Widget_Target]" browse="never">$VAR[Def_Hub_Widget_Ref]</content>
                     </control>
+
                     <control type="group">
-                       <left>0</left>
-                       <width>1122</width>
-                       <bottom>0</bottom>
-                       <height>70</height>
-                       <visible>Integer.IsGreater(Container(9500).NumItems,0)</visible>
-                       <animation effect="fade" start="0" end="100" time="500">Visible</animation>
-                       <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
-                       <visible>Skin.HasSetting(hub.showplot)</visible>
-                       <control type="image">
-                          <left>0</left>
-                          <right>0</right>
-                          <bottom>0</bottom>
-                          <height>210</height>
-                          <texture border="15" colordiffuse="OSDBack">common/shadowbottom.png</texture>
-                       </control>
-                       <control type="label">
-                          <left>30</left>
-                          <top>-80</top>
-                          <width>200</width>
-                          <font>SmallNavi</font>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$INFO[Container(9500).ListItem.Year]</label>
-                       </control>
-                       <control type="label">
-                          <left>120</left>
-                          <top>-80</top>
-                          <width max="730">auto</width>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <font>InfoNetflix</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$INFO[Container(9500).ListItem.Label]</label>
-                       </control>
-                       <control type="label">
-                          <top>-80</top>
-                          <right>154</right>
-                          <width>500</width>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <align>right</align>
-                          <font>SmallNavi</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$VAR[Label_Duration_Time_Check_9500]</label>
-                          <visible>!String.IsEqual(Container(9500).ListItem.DBType,tvshow)</visible>
-                       </control>
-                       <control type="label">
-                          <centerright>96</centerright>
-                          <width>50</width>
-                          <top>-72</top>
-                          <height>50</height>
-                          <textcolor>$VAR[Label_Watched_Poster_Color]</textcolor>
-                          <font>SymbolPoster</font>
-                          <label>$VAR[Label_Image_Indicator_Status_9500]</label>
-                          <visible>!ListItem.IsParentFolder</visible>
-                       </control>
-                       <control type="label">
-                          <right>30</right>
-                          <width>500</width>
-                          <top>-80</top>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <align>right</align>
-                          <font>SmallNavi</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$VAR[Label_Rating_9500]</label>
-                       </control>
-                       <control type="textbox">
-                          <top>-20</top>
-                          <left>30</left>
-                          <right>30</right>
-                          <height>67</height>
-                          <align>justify</align>
-                          <font>Tiny</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$INFO[Container(9500).ListItem.Plot]</label>
-                       </control>
+                        <visible>Skin.HasSetting(hub.showplot)</visible>
+                        <visible>Integer.IsGreater(Container(9500).NumItems,0)</visible>
+                        <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+                        <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
+
+                        <left>0</left>
+                        <width>1122</width>
+                        <bottom>0</bottom>
+                        <height>70</height>
+
+                        <control type="image">
+                            <left>0</left>
+                            <right>0</right>
+                            <bottom>0</bottom>
+                            <height>210</height>
+                            <texture border="15" colordiffuse="OSDBack">common/shadowbottom.png</texture>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <top>-80</top>
+                            <width>200</width>
+                            <font>SmallNavi</font>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$INFO[Container(9500).ListItem.Year]</label>
+                        </control>
+                        <control type="label">
+                            <left>120</left>
+                            <top>-80</top>
+                            <width max="730">auto</width>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <font>InfoNetflix</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$INFO[Container(9500).ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <top>-80</top>
+                            <right>154</right>
+                            <width>500</width>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <align>right</align>
+                            <font>SmallNavi</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$VAR[Label_Duration_Time_Check_9500]</label>
+                            <visible>!String.IsEqual(Container(9500).ListItem.DBType,tvshow)</visible>
+                        </control>
+                        <control type="label">
+                            <centerright>96</centerright>
+                            <width>50</width>
+                            <top>-72</top>
+                            <height>50</height>
+                            <textcolor>$VAR[Label_Watched_Poster_Color]</textcolor>
+                            <font>SymbolPoster</font>
+                            <label>$VAR[Label_Image_Indicator_Status_9500]</label>
+                            <visible>!ListItem.IsParentFolder</visible>
+                        </control>
+                        <control type="label">
+                            <right>30</right>
+                            <width>500</width>
+                            <top>-80</top>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <align>right</align>
+                            <font>SmallNavi</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$VAR[Label_Rating_9500]</label>
+                        </control>
+                        <control type="textbox">
+                            <top>-20</top>
+                            <left>30</left>
+                            <right>30</right>
+                            <height>67</height>
+                            <align>justify</align>
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$INFO[Container(9500).ListItem.Plot]</label>
+                        </control>
                     </control>
+
                     <control type="group">
-                       <left>0</left>
-                       <width>1122</width>
-                       <bottom>0</bottom>
-                       <height>70</height>
-                       <animation effect="fade" start="0" end="100" time="500">Visible</animation>
-                       <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
-                       <visible>!Skin.HasSetting(hub.showplot)</visible>
-                       <visible>Integer.IsGreater(Container(9500).NumItems,0)</visible>
-                       <control type="image">
-                          <left>0</left>
-                          <right>0</right>
-                          <bottom>0</bottom>
-                          <height>90</height>
-                          <texture border="15" colordiffuse="OSDBack">common/shadowbottomsmall.png</texture>
-                       </control>
-                       <control type="label">
-                          <left>30</left>
-                          <width>200</width>
-                          <font>SmallNavi</font>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$INFO[Container(9500).ListItem.Year]</label>
-                       </control>
-                       <control type="label">
-                          <left>120</left>
-                          <width max="730">auto</width>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <font>InfoNetflix</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$INFO[Container(9500).ListItem.Label]</label>
-                       </control>
-                       <control type="label">
-                          <right>154</right>
-                          <width>500</width>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <align>right</align>
-                          <font>SmallNavi</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$VAR[Label_Duration_Time_Check_9500]</label>
-                          <visible>!String.IsEqual(Container(9500).ListItem.DBType,tvshow)</visible>
-                       </control>
-                       <control type="label">
-                          <centerright>96</centerright>
-                          <width>50</width>
-                          <top>7</top>
-                          <height>50</height>
-                          <textcolor>$VAR[Label_Watched_Poster_Color]</textcolor>
-                          <font>SymbolPoster</font>
-                          <label>$VAR[Label_Image_Indicator_Status_9500]</label>
-                          <visible>!ListItem.IsParentFolder</visible>
-                       </control>
-                       <control type="label">
-                          <right>30</right>
-                          <width>500</width>
-                          <aligny>center</aligny>
-                          <height>64</height>
-                          <align>right</align>
-                          <font>SmallNavi</font>
-                          <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                          <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
-                          <label>$VAR[Label_Rating_9500]</label>
-                       </control>
+                        <left>0</left>
+                        <width>1122</width>
+                        <bottom>0</bottom>
+                        <height>70</height>
+                        <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+                        <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
+                        <visible>!Skin.HasSetting(hub.showplot)</visible>
+                        <visible>Integer.IsGreater(Container(9500).NumItems,0)</visible>
+                        <control type="image">
+                            <left>0</left>
+                            <right>0</right>
+                            <bottom>0</bottom>
+                            <height>90</height>
+                            <texture border="15" colordiffuse="OSDBack">common/shadowbottomsmall.png</texture>
+                        </control>
+                        <control type="label">
+                            <left>30</left>
+                            <width>200</width>
+                            <font>SmallNavi</font>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$INFO[Container(9500).ListItem.Year]</label>
+                        </control>
+                        <control type="label">
+                            <left>120</left>
+                            <width max="730">auto</width>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <font>InfoNetflix</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$INFO[Container(9500).ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <right>154</right>
+                            <width>500</width>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <align>right</align>
+                            <font>SmallNavi</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$VAR[Label_Duration_Time_Check_9500]</label>
+                            <visible>!String.IsEqual(Container(9500).ListItem.DBType,tvshow)</visible>
+                        </control>
+                        <control type="label">
+                            <centerright>96</centerright>
+                            <width>50</width>
+                            <top>7</top>
+                            <height>50</height>
+                            <textcolor>$VAR[Label_Watched_Poster_Color]</textcolor>
+                            <font>SymbolPoster</font>
+                            <label>$VAR[Label_Image_Indicator_Status_9500]</label>
+                            <visible>!ListItem.IsParentFolder</visible>
+                        </control>
+                        <control type="label">
+                            <right>30</right>
+                            <width>500</width>
+                            <aligny>center</aligny>
+                            <height>64</height>
+                            <align>right</align>
+                            <font>SmallNavi</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <label>$VAR[Label_Rating_9500]</label>
+                        </control>
                     </control>
 
                     <control type="group">
@@ -2285,8 +2292,8 @@
                 <control type="group">
                     <control type="list" id="9501">
                        <description>Widget</description>
-                       <left>1150</left>
-                       <width>610</width>
+                       <left>1160</left>
+                       <width>600</width>
                        <right>0</right>
                        <top>0</top>
                        <height>640</height>
@@ -2302,69 +2309,69 @@
                        <include>Animation_FadeOut</include>
 
                        <itemlayout height="80">
-                          <control type="label">
-                              <left>30</left>
-                              <right>SidePad</right>
-                              <height>100%</height>
-                              <font>SmallNavi</font>
-                              <textcolor>Dark2</textcolor>
-                              <label>$INFO[ListItem.Label]</label>
-                          </control>
-                          <control type="image">
-                              <right>16</right>
-                              <top>5</top>
-                              <bottom>0</bottom>
-                              <width>70</width>
-                              <height>70</height>
-                              <texture colordiffuse="Dark2">$INFO[ListItem.Icon]</texture>
-                          </control>
+                            <control type="label">
+                                <left>30</left>
+                                <right>SidePad</right>
+                                <height>100%</height>
+                                <font>SmallNavi</font>
+                                <textcolor>Dark2</textcolor>
+                                <label>$INFO[ListItem.Label]</label>
+                            </control>
+                            <control type="image">
+                                <right>16</right>
+                                <top>5</top>
+                                <bottom>0</bottom>
+                                <width>70</width>
+                                <height>70</height>
+                                <texture colordiffuse="Dark2">$INFO[ListItem.Icon]</texture>
+                            </control>
                        </itemlayout>
                        <focusedlayout height="80">
-                          <control type="group">
-                              <visible>Control.HasFocus(9501)</visible>
-                              <control type="image">
-                                  <width>100%</width>
-                                  <height>100%</height>
-                                  <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
-                              </control>
-                              <control type="label">
-                                  <left>30</left>
-                                  <right>SidePad</right>
-                                  <height>100%</height>
-                                  <font>SmallNavi</font>
-                                  <textcolor>Selected</textcolor>
-                                  <label>$INFO[ListItem.Label]</label>
-                              </control>
-                              <control type="image">
-                                  <right>16</right>
-                                  <top>5</top>
-                                  <bottom>0</bottom>
-                                  <width>70</width>
-                                  <height>70</height>
-                                  <texture colordiffuse="Selected">$INFO[ListItem.Icon]</texture>
-                              </control>
-                          </control>
-                          <control type="group">
-                              <visible>!Control.HasFocus(9501)</visible>
-                              <control type="label">
-                                  <left>30</left>
-                                  <right>SidePad</right>
-                                  <height>100%</height>
-                                  <font>SmallNavi</font>
-                                  <textcolor>Dark2</textcolor>
-                                  <label>$INFO[ListItem.Label]</label>
-                              </control>
-                              <control type="image">
-                                  <right>16</right>
-                                  <top>0</top>
-                                  <bottom>0</bottom>
-                                  <width>80</width>
-                                  <texture colordiffuse="Dark1">$INFO[ListItem.Icon]</texture>
-                              </control>
-                          </control>
+                            <control type="group">
+                                <visible>Control.HasFocus(9501)</visible>
+                                <control type="image">
+                                    <width>100%</width>
+                                    <height>100%</height>
+                                    <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+                                </control>
+                                <control type="label">
+                                    <left>30</left>
+                                    <right>SidePad</right>
+                                    <height>100%</height>
+                                    <font>SmallNavi</font>
+                                    <textcolor>Selected</textcolor>
+                                    <label>$INFO[ListItem.Label]</label>
+                                </control>
+                                <control type="image">
+                                    <right>16</right>
+                                    <top>5</top>
+                                    <bottom>0</bottom>
+                                    <width>70</width>
+                                    <height>70</height>
+                                    <texture colordiffuse="Selected">$INFO[ListItem.Icon]</texture>
+                                </control>
+                            </control>
+                            <control type="group">
+                                <visible>!Control.HasFocus(9501)</visible>
+                                <control type="label">
+                                    <left>30</left>
+                                    <right>SidePad</right>
+                                    <height>100%</height>
+                                    <font>SmallNavi</font>
+                                    <textcolor>Dark2</textcolor>
+                                    <label>$INFO[ListItem.Label]</label>
+                                </control>
+                                <control type="image">
+                                    <right>16</right>
+                                    <top>0</top>
+                                    <bottom>0</bottom>
+                                    <width>80</width>
+                                    <texture colordiffuse="Dark1">$INFO[ListItem.Icon]</texture>
+                                </control>
+                            </control>
                        </focusedlayout>
                        <content>
-                          <include>$PARAM[list]</include>
+                            <include>$PARAM[list]</include>
                        </content>
                     </control>
                </control>
@@ -2377,7 +2384,7 @@
                 <include content="Object_Scrollbar_Views_Vertical">
                     <param name="scrollid" value="60"/>
                     <param name="idlayout" value="9501"/>
-                    <param name="centerleft" value="1220"/>
+                    <param name="centerleft" value="1222"/>
                 </include>
             </control>
         </control>
@@ -2434,6 +2441,14 @@
                     <label>31221</label>
                     <selected>Skin.HasSetting(hub.showplot)</selected>
                     <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
+                </control>
+                <control type="button" id="9842">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31134</label>
+                    <label2>$VAR[Def_Hub_Limit]</label2>
+                    <onclick>SetProperty(includesetting,Value_Hub_Limit,Home)</onclick>
+                    <onclick>ActivateWindow(1248)</onclick>
                 </control>
                 <control type="radiobutton" id="9584">
                     <include>Def_Button_Gradient_Context</include>

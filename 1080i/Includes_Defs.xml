@@ -2399,8 +2399,63 @@
         </control>
 
         <control type="group">
-            <include content="Def_View_ContextMenu_Background"><param name="height" value="619" /></include>
-            <include content="Def_View_ContextMenu_Arrows"><param name="arrow_bottom" value="629" /></include>
+            <visible allowhiddenfocus="true">ControlGroup(9000).HasFocus()</visible>
+            <include>Animation_ZoomIn</include>
+            <include>Animation_FadeOut</include>
+            <top>184</top>
+            <centerleft>50%</centerleft>
+            <height>689</height>
+            <width>470</width>
+
+            <!-- CONTEXT BACKGROUND -->
+
+            <control type="image">
+                <left>-9</left>
+                <top>-9</top>
+                <right>-9</right>
+                <bottom>-9</bottom>
+                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                <visible>Player.HasMedia</visible>
+            </control>
+            <control type="image">
+                <texture colordiffuse="White100" border="12">common/box.png</texture>
+                <visible>Player.HasMedia</visible>
+            </control>
+
+            <control type="image">
+                <top>-9</top>
+                <left>-9</left>
+                <right>-9</right>
+                <height>497</height>
+                <texture border="18" background="true" infill="false">common/$VAR[shadow18]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                <visible>!Player.HasMedia</visible>
+            </control>
+            <control type="image">
+                <height>479</height>
+                <texture colordiffuse="White100" border="12">common/box.png</texture>
+                <visible>!Player.HasMedia</visible>
+            </control>
+
+            <!-- ARROWS -->
+
+            <control type="group">
+                <visible>Integer.IsGreater(Container(9000).NumItems,0)</visible>
+                <control type="image">
+                    <centerleft>50%</centerleft>
+                    <top>-24</top>
+                    <include>Def_Arrow_Size</include>
+                    <texture colordiffuse="White70" flipy="true">common/arrow-small.png</texture>
+                </control>
+                <control type="image">
+                    <centerleft>50%</centerleft>
+                    <top>699</top>
+                    <include>Def_Arrow_Size</include>
+                    <texture colordiffuse="White70" flipy="false">common/arrow-small.png</texture>
+                    <animation effect="slide" end="0,-210" time="0" condition="!Player.HasMedia">Conditional</animation>
+                </control>
+            </control>
 
             <control type="label">
                 <include>Def_Dialog_Header_Title</include>
@@ -2435,13 +2490,6 @@
                     <include>Def_Context_Menu_Label</include>
                     <label>31051</label>
                 </control>
-                <control type="radiobutton" id="9296">
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <label>31221</label>
-                    <selected>Skin.HasSetting(hub.showplot)</selected>
-                    <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
-                </control>
                 <control type="button" id="9842">
                     <include>Def_Button_Gradient_Context</include>
                     <align>left</align>
@@ -2449,6 +2497,13 @@
                     <label2>$VAR[Def_Hub_Limit]</label2>
                     <onclick>SetProperty(includesetting,Value_Hub_Limit,Home)</onclick>
                     <onclick>ActivateWindow(1248)</onclick>
+                </control>
+                <control type="radiobutton" id="9296">
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>31221</label>
+                    <selected>Skin.HasSetting(hub.showplot)</selected>
+                    <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
                 </control>
                 <control type="radiobutton" id="9584">
                     <include>Def_Button_Gradient_Context</include>

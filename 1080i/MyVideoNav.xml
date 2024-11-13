@@ -83,7 +83,7 @@
         <control type="group">
             <include>Animation_FadeIn</include>
             <include>Animation_FadeOut</include>
-            <visible>ControlGroup(9000).HasFocus()</visible>
+            <visible>ControlGroup(9000).HasFocus() | Control.HasFocus(9070)</visible>
             <include>Background_Overlay</include>
         </control>
 
@@ -105,8 +105,9 @@
 
             <control type="grouplist" id="9000">
                 <top>112</top>
+                <pagecontrol>9070</pagecontrol>
                 <usecontrolcoords>true</usecontrolcoords>
-                <include content="Def_View_ContextMenu_GroupList"><param name="height" value="560" /></include>
+                <include content="Def_View_ContextMenu_GroupList_scrollbar"><param name="height" value="560" /><param name="scrollid" value="9070" /></include>
                 <include>Animation_Scrolltime_Views_List</include>
 
                 <!-- NOW PLAYING -->
@@ -715,7 +716,6 @@
                     <include>Def_Button_Gradient_Context</include>
                     <label>$LOCALIZE[5]</label>
                     <align>left</align>
-                    <onright>ActivateWindow(1109)</onright>
                     <onclick>ActivateWindow(1109)</onclick>
                 </control>
 
@@ -781,6 +781,17 @@
                     <usealttexture>Library.IsScanningVideo</usealttexture>
                 </control>
             </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="9070"/>
+                <param name="top" value="112"/>
+                <param name="onleft" value="9000"/>
+                <param name="onright" value="ActivateWindow(1109)"/>
+                <param name="height" value="560"/>
+                <param name="centerright" value="4"/>
+            </include>
         </control>
 
         <include condition="Skin.HasSetting(DebugInfo.widget)">Furniture_DebugInfo_Item</include>

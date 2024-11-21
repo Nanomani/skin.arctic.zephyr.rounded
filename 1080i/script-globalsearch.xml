@@ -4,8 +4,8 @@
     <views>50</views>
 
     <controls>
-        <include condition="Skin.HasSetting(enabled.tmdb.helper.service)">Defs_TMDbHelper_Loader</include>
-        <include condition="!Skin.HasSetting(show.global.visualisation.background.video)">Hidden_Video_Window</include>
+        <include condition="Skin.HasSetting(enabled.tmdb.helper.service) ">Defs_TMDbHelper_Loader</include>
+        <include condition="!Skin.HasSetting(show.global.visualisation.background.video) ">Hidden_Video_Window</include>
         <include>Background_Global</include>
         <include>Furniture_Header_NowPlaying</include>
         <include>Furniture_Header_Clock_Right</include>
@@ -94,8 +94,8 @@
                         <include>Def_Hidden_Button</include>
                         <include content="Object_OnDirection_Action"><param name="ondirection" value="9000" /></include>
                         <onclick>ClearProperty(GlobalSearchWindowOpen,Home)</onclick>
-                        <onclick condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen))">SetFocus(9000)</onclick>
-                        <onclick condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen))">SetProperty(GlobalSearchWindowOpen,1,Home)</onclick>
+                        <onclick condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen)) ">SetFocus(9000)</onclick>
+                        <onclick condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen)) ">SetProperty(GlobalSearchWindowOpen,1,Home)</onclick>
                         <!-- <visible allowhiddenfocus="true">Control.HasFocus(990)</visible> -->
                         <animation effect="fade" time="300" start="0" end="0">Focus</animation>
                     </control>
@@ -116,9 +116,17 @@
                         <onleft>50</onleft>
                         <onright>50</onright>
                         <scrolltime tween="cubic" easing="out">500</scrolltime>
+
                         <itemlayout height="64" width="462">
+                            <control type="image">
+                                <left>18</left>
+                                <top>1</top>
+                                <width>62</width>
+                                <height>62</height>
+                                <texture colordiffuse="Dark2">$INFO[ListItem.Icon]</texture>
+                            </control>
                             <control type="label">
-                                <left>84</left>
+                                <left>98</left>
                                 <width>auto</width>
                                 <aligny>center</aligny>
                                 <height>64</height>
@@ -143,10 +151,17 @@
                                 <height>100%</height>
                                 <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
                                 <include>View_List_Scroll_Anim</include>
-                                <animation effect="fade" start="100" end="33" condition="!Control.HasFocus(9000)">Conditional</animation>
+                                <animation effect="fade" start="100" end="33" condition="!Control.HasFocus(9000) ">Conditional</animation>
+                            </control>
+                            <control type="image">
+                                <left>18</left>
+                                <top>1</top>
+                                <width>62</width>
+                                <height>62</height>
+                                <texture colordiffuse="Selected">$INFO[ListItem.Icon]</texture>
                             </control>
                             <control type="label">
-                                <left>84</left>
+                                <left>98</left>
                                 <width>300</width>
                                 <aligny>center</aligny>
                                 <height>64</height>
@@ -173,8 +188,8 @@
                 <!-- RIGHT LIST RESULT -->
 
                 <control type="panel" id="50">
-                    <left>542</left>
                     <top>205</top>
+                    <left>542</left>
                     <width>1900</width>
                     <height>674</height>
                     <onleft>9000</onleft>
@@ -186,15 +201,15 @@
 
                     <include>Def_On_Info</include>
 
-                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen))">SetFocus(9000)</onfocus>
-                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen))">DOWN</onfocus>
-                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen))">UP</onfocus>
-                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen))">SetProperty(GlobalSearchWindowOpen,1,Home)</onfocus>
+                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen)) ">SetFocus(9000)</onfocus>
+                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen)) ">DOWN</onfocus>
+                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen)) ">UP</onfocus>
+                    <onfocus condition="String.IsEmpty(Window(Home).Property(GlobalSearchWindowOpen)) ">SetProperty(GlobalSearchWindowOpen,1,Home)</onfocus>
                     <animation effect="fade" time="200">VisibleChange</animation>
+
                     <include>Animation_Scrolltime_Views_List</include>
 
-
-                    <itemlayout height="337" width="222" condition="Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)">
+                    <itemlayout height="337" width="222" condition="Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) ">
                         <control type="group">
                             <height>325</height>
                             <include content="Layout_Widget_Poster">
@@ -204,7 +219,19 @@
                             </include>
                         </control>
                     </itemlayout>
-                    <itemlayout height="337" width="444" condition="Container.Content(episodes) | Container.Content(musicvideos)">
+                    <focusedlayout height="337" width="222" condition="Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) ">
+                        <control type="group">
+                            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)</visible>
+                            <height>325</height>
+                            <include content="Layout_Widget_Poster_Focus">
+                                <param name="texture_diffuse" value="poster_w202_h305" />
+                                <param name="id" value="50"/>
+                                <param name="indicatorbackground" value="true"/>
+                            </include>
+                        </control>
+                    </focusedlayout>
+
+                    <itemlayout height="337" width="444" condition="Container.Content(episodes) | Container.Content(musicvideos) ">
                         <control type="group">
                             <height>245</height>
                             <include content="Layout_Widget_Landscape">
@@ -252,40 +279,7 @@
                             <label>$VAR[Label_Duration]</label>
                         </control>
                     </itemlayout>
-                    <itemlayout height="337" width="299.33" condition="Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(actors) | Container.Content(directors) | Container.Content(livetv)">
-                        <control type="group">
-                            <height>280</height>
-                            <width>280</width>
-                            <include content="Layout_Widget_Square">
-                                <param name="texture_diffuse" value="square_w260_h260" />
-                                <param name="id" value="50"/>
-                                <param name="height" value="280"/>
-                                <param name="image_height" value="280"/>
-                            </include>
-                        </control>
-                        <control type="label">
-                            <left>15</left>
-                            <right>30</right>
-                            <bottom>20</bottom>
-                            <height>50</height>
-                            <align>center</align>
-                            <font>Tiny</font>
-                            <label>$INFO[ListItem.Label]</label>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                    </itemlayout>
-
-                    <focusedlayout height="337" width="222" condition="Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)">
-                        <control type="group">
-                            <height>325</height>
-                            <include content="Layout_Widget_Poster_Focus">
-                                <param name="texture_diffuse" value="poster_w202_h305" />
-                                <param name="id" value="50"/>
-                                <param name="indicatorbackground" value="true"/>
-                            </include>
-                        </control>
-                    </focusedlayout>
-                    <focusedlayout height="337" width="444" condition="Container.Content(episodes) | Container.Content(musicvideos)">
+                    <focusedlayout height="337" width="444" condition="Container.Content(episodes) | Container.Content(musicvideos) ">
                         <control type="group">
                             <height>245</height>
                             <include content="Layout_Widget_Landscape_Focus">
@@ -337,7 +331,31 @@
                             <label>$VAR[Label_Duration]</label>
                         </control>
                     </focusedlayout>
-                    <focusedlayout height="337" width="299.33" condition="Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(actors) | Container.Content(directors) | Container.Content(livetv)">
+
+
+                    <itemlayout height="337" width="299.33" condition="Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(actors) | Container.Content(directors) | Container.Content(livetv) ">
+                        <control type="group">
+                            <height>280</height>
+                            <width>280</width>
+                            <include content="Layout_Widget_Square">
+                                <param name="texture_diffuse" value="square_w260_h260" />
+                                <param name="id" value="50"/>
+                                <param name="height" value="280"/>
+                                <param name="image_height" value="280"/>
+                            </include>
+                        </control>
+                        <control type="label">
+                            <left>15</left>
+                            <right>30</right>
+                            <bottom>20</bottom>
+                            <height>50</height>
+                            <align>center</align>
+                            <font>Tiny</font>
+                            <label>$INFO[ListItem.Label]</label>
+                            <textcolor>Dark1</textcolor>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout height="337" width="299.33" condition="Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(actors) | Container.Content(directors) | Container.Content(livetv) ">
                         <control type="group">
                             <height>280</height>
                             <width>280</width>

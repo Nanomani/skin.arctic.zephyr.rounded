@@ -466,6 +466,8 @@
         <param name="image_height" value="$PARAM[image_height]" default="325" />
         <param name="middle" value="$PARAM[smallfanart]" default="false" />
         <param name="small" value="$PARAM[smallfanart]" default="false" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
+
         <definition>
             <include>Def_Widget_Background</include>
 
@@ -476,7 +478,7 @@
 
                 <control type="image">
                     <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
                     <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
                     <visible>$EXP[View_Artwork_Condition]</visible>
                     <visible>$EXP[View_Artwork_Specific]</visible>
@@ -490,18 +492,6 @@
                     <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                     <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
                     <visible>$EXP[View_Icon_Black]</visible>
-                </control>
-
-                <!-- use onfy for file browser for chose artwork -->
-
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
-                    <visible>!Container.Content(favourites) + !Control.IsVisible(503) + !String.StartsWith(ListItem.Path,pvr://channels)</visible>
-                    <visible>String.StartsWith(ListItem.Icon,Default) + !String.StartsWith(ListItem.FolderPath,addons://)</visible>
-                    <visible>Container.Content(tvshows) | Container.Content(sets) | Container.Content(movies) | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | !Control.IsVisible(547) | $EXP[IsAnPlugin] | Container.Content(actors)</visible>
-                    <visible>Window.IsVisible(FileBrowser.xml)</visible>
                 </control>
 
                 <!-- FAVOURITES -->

@@ -3,8 +3,9 @@
     <controls>
         <control type="group">
             <visible>!Window.IsVisible(DialogVolumeBar.xml) | Player.Muted</visible>
-            <visible>!VideoPlayer.IsFullscreen + !Window.IsVisible(MusicVisualisation.xml)</visible>
-            <visible>!Window.IsVisible(DialogSeekBar.xml)</visible>
+
+            <!-- <visible>VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)</visible> -->
+            <!-- <visible>Window.IsVisible(DialogSeekBar.xml)</visible> -->
 
             <include>Animation_Fade_In</include>
             <include>Animation_Fade_Out</include>
@@ -15,7 +16,15 @@
             <height>80</height>
             <width>660</width>
 
-            <include>Def_Image_Background</include>
+            <include content="Def_Image_Background">
+                <param name="colordiffuse" value="$VAR[Color_OSD_Panel]" />
+                <param name="condition_fade" value="true" />
+                <param name="visible" value="VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)" />
+            </include>
+            <include content="Def_Image_Background">
+                <param name="colordiffuse" value="White70" />
+                <param name="visible" value="![VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)]" />
+            </include>
 
             <control type="image" id="400">
                 <top>4</top>
@@ -33,7 +42,7 @@
                 <height>24</height>
                 <aligny>center</aligny>
                 <font>InfoNetflix</font>
-                <textcolor>Dark1</textcolor>
+                <textcolor>$VAR[Color_Label_Dialog_Notification_Sub_Title]</textcolor>
                 <scroll>true</scroll>
                 <scrollspeed>60</scrollspeed>
             </control>
@@ -44,7 +53,7 @@
                 <height>24</height>
                 <aligny>center</aligny>
                 <font>Small24</font>
-                <textcolor>PanelWhite70</textcolor>
+                <textcolor>$VAR[Color_Label_Dialog_Notification_Sub_Title]</textcolor>
                 <scroll>true</scroll>
                 <scrollspeed>60</scrollspeed>
             </control>

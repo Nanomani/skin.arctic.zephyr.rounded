@@ -1236,7 +1236,7 @@
                 </include>
 
                 <onclick condition="Player.HasMedia">PlayerControl(Stop)</onclick>
-                <onclick condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Container(99950).ListItem.Trailer],False,1)</onclick>
+                <onclick condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Window(Home).Property(TMDbHelper.ListItem.Trailer)],False,1)</onclick>
                 <onclick condition="!String.IsEmpty(ListItem.Trailer)">PlayMedia($INFO[ListItem.Trailer],1)</onclick>
                 <onclick>SetProperty(TrailerWindowedIsPlaying,1,Home)</onclick>
                 <onclick>SetFocus(7011)</onclick>
@@ -1244,7 +1244,7 @@
                 <!-- <onclick>Close</onclick> -->
                 <!-- <onclick condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.Path.Current))">RunScript(plugin.video.themoviedb.helper,close_dialog=1190)</onclick> -->
 
-                <visible>!String.IsEmpty(ListItem.Trailer) | !String.IsEmpty(Container(99950).ListItem.Trailer)</visible>
+                <visible>!String.IsEmpty(ListItem.Trailer) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trailer))</visible>
                 <visible>!Skin.HasSetting(PlayTrailerWindowed)</visible>
                 <visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
                 <visible>System.AddonIsEnabled(plugin.video.youtube)</visible>
@@ -1261,18 +1261,18 @@
                     <param name="icon" value="buttonsdialogs/trailer.png" />
                 </include>
 
-                <onup condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Container(99950).ListItem.Trailer],False,1)</onup>
+                <onup condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Window(Home).Property(TMDbHelper.ListItem.Trailer)],False,1)</onup>
                 <onup condition="!String.IsEmpty(ListItem.Trailer)">PlayMedia($INFO[ListItem.Trailer],1)</onup>
                 <onup condition="!Player.HasVideo">SetProperty(TrailerWindowedIsPlaying,1,Home)</onup>
                 <onup>SetFocus(7012)</onup>
 
                 <onclick condition="Player.HasMedia">PlayerControl(Stop)</onclick>
-                <onclick condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Container(99950).ListItem.Trailer],False,1)</onclick>
+                <onclick condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Window(Home).Property(TMDbHelper.ListItem.Trailer)],False,1)</onclick>
                 <onclick condition="!String.IsEmpty(ListItem.Trailer)">PlayMedia($INFO[ListItem.Trailer],1)</onclick>
                 <onclick>SetProperty(TrailerWindowedIsPlaying,1,Home)</onclick>
                 <onclick>SetFocus(7012)</onclick>
 
-                <visible>!String.IsEmpty(ListItem.Trailer) | !String.IsEmpty(Container(99950).ListItem.Trailer)</visible>
+                <visible>!String.IsEmpty(ListItem.Trailer) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trailer))</visible>
                 <visible>Skin.HasSetting(PlayTrailerWindowed)</visible>
                 <visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
                 <visible>System.AddonIsEnabled(plugin.video.youtube)</visible>
@@ -1513,8 +1513,8 @@
                     <param name="icon" value="buttonsdialogs/trakt.png" />
                 </include>
                 <onclick condition="!String.IsEmpty(ListItem.Property(tmdb_id))">RunScript(plugin.video.themoviedb.helper,sync_trakt=watchlist,tmdb_id=$INFO[ListItem.Property(tmdb_id)],cache_refresh)</onclick>
-                <onclick condition="String.IsEmpty(ListItem.Property(tmdb_id))">RunScript(plugin.video.themoviedb.helper,sync_trakt=watchlist,tmdb_id=$INFO[Container(99950).ListItem.Property(tmdb_id)],$VAR[DB_type],cache_refresh)</onclick>
-                <visible>!Skin.HasSetting(hide.button.video.trakt) + [!String.IsEmpty(ListItem.Property(tmdb_id)) | !String.IsEmpty(Container(99950).ListItem.Property(tmdb_id))] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.TraktIsAuth))</visible>
+                <onclick condition="String.IsEmpty(ListItem.Property(tmdb_id))">RunScript(plugin.video.themoviedb.helper,sync_trakt=watchlist,tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)],$VAR[DB_type],cache_refresh)</onclick>
+                <visible>!Skin.HasSetting(hide.button.video.trakt) + [!String.IsEmpty(ListItem.Property(tmdb_id)) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.TraktIsAuth))</visible>
                 <enable>System.AddonIsEnabled(plugin.video.themoviedb.helper) + Skin.HasSetting(enabled.tmdb.helper.service)</enable>
             </control>
 
@@ -2306,10 +2306,10 @@
                     <height>42</height>
                     <font>InfoNetflix</font>
                     <textcolor>Dark2</textcolor>
-                    <label>$VAR[Label_Genre]$INFO[Container(99950).ListItem.Property(Duration_H),  •  ,$LOCALIZE[31061]] $INFO[Container(99950).ListItem.Property(Duration_M),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                    <label>$VAR[Label_Genre]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_H),  •  ,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_M),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
                     <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
                     <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Container(99950).ListItem.Genre) + !String.IsEmpty(Container(99950).ListItem.Property(Duration))</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration))</visible>
                     <visible>!Skin.HasSetting(filter.video.only.local)</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
                 </control>
@@ -2342,7 +2342,7 @@
                     <height>42</height>
                     <font>InfoNetflix</font>
                     <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container(99950).ListItem.Property(Genre.1.Name)]$INFO[Container(99950).ListItem.Property(Genre.2.Name), / ,]$INFO[Container(99950).ListItem.Property(Genre.3.Name), / ,]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container(99950).ListItem.Rating,  •  ]</label>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.3.Name), / ,]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),  •  ]</label>
                     <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
                     <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre)</visible>
@@ -2378,7 +2378,7 @@
                     <height>42</height>
                     <font>InfoNetflix</font>
                     <textcolor>Dark2</textcolor>
-                    <label>$LOCALIZE[20373] $INFO[Container(99950).ListItem.Season]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container(99950).ListItem.Rating,  •  ]</label>
+                    <label>$LOCALIZE[20373] $INFO[Window(Home).Property(TMDbHelper.ListItem.Season)]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),  •  ]</label>
                     <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
                     <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
                     <visible>!Skin.HasSetting(filter.video.only.local)</visible>
@@ -2675,7 +2675,7 @@
                     <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]" /></include>
 
                     <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>38</width>
                         <height>38</height>
@@ -2683,14 +2683,14 @@
                         <texture colordiffuse="Dark1" background="true">misc/mc_white.png</texture>
                     </control>
                     <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(Metacritic_Rating)]%</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)]%</label>
                     </control>
                     <control type="image">
                         <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -2711,7 +2711,7 @@
                         <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
                     </control>
                     <control type="image">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>38</width>
@@ -2720,17 +2720,17 @@
                         <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_White]</texture>
                     </control>
                     <control type="label">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(RottenTomatoes_Rating)]%</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)]%</label>
                     </control>
                     <control type="image">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>38</width>
@@ -2739,19 +2739,19 @@
                         <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_Audience_White]</texture>
                     </control>
                     <control type="label">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(RottenTomatoes_UserMeter)]%</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)]%</label>
                     </control>
 
                     <!-- IMDb B/W -->
                     <control type="image">
-                        <visible>[!String.IsEmpty(Container(99950).ListItem.Property(IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>64</width>
@@ -2771,14 +2771,14 @@
                         <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
                     </control>
                     <control type="label">
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Container(99950).ListItem.Property(IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width min="48">auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(IMDb_Rating)]</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
                     </control>
 
                     <!-- IMDb top 250 B/W -->
@@ -2789,7 +2789,7 @@
                         <left>10</left>
                         <aspectratio aligny="center" align="center">keep</aspectratio>
                         <texture colordiffuse="Dark1">flags/imdb.png</texture>
-                        <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Container(99950).ListItem.Property(Top250))]</visible>
+                        <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
                     </control>
                     <control type="label" description="IMDB Top 250">
                         <centertop>50%</centertop>
@@ -2808,8 +2808,8 @@
                         <font>Tiny</font>
                         <left>-15</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(Top250),#,]</label>
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Container(99950).ListItem.Property(Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
+                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
                     </control>
 
                     <!-- Star Kodi / user rating B/W -->
@@ -3020,7 +3020,7 @@
                         <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
                     </control>
                     <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>40</width>
                         <height>40</height>
@@ -3028,17 +3028,17 @@
                         <texture background="true">misc/mc.png</texture>
                     </control>
                     <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(Metacritic_Rating)]%</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)]%</label>
                     </control>
                     <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>40</width>
@@ -3047,17 +3047,17 @@
                         <texture background="true">$VAR[Image_RottenTomatoes_Colored]</texture>
                     </control>
                     <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(RottenTomatoes_Rating)]%</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)]%</label>
                     </control>
                     <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_UserMeter)) + !ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>40</width>
@@ -3066,19 +3066,19 @@
                         <texture background="true">$VAR[Image_RottenTomatoes_Audience_Colored]</texture>
                     </control>
                     <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Container(99950).ListItem.Property(RottenTomatoes_UserMeter)) + !ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width>auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(RottenTomatoes_UserMeter)]%</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)]%</label>
                     </control>
 
                     <!-- IMDb -->
                     <control type="image">
-                        <visible>[!String.IsEmpty(Container(99950).ListItem.Property(IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <fadetime>ExtendedFlagIconsFadetime</fadetime>
                         <centertop>50%</centertop>
                         <width>64</width>
@@ -3098,14 +3098,14 @@
                         <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
                     </control>
                     <control type="label">
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Container(99950).ListItem.Property(IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection  + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                         <centertop>50%</centertop>
                         <width min="48">auto</width>
                         <height>64</height>
                         <font>Tiny</font>
                         <left>13</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(IMDb_Rating)]</label>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
                     </control>
 
                     <!-- IMDb Top 250 -->
@@ -3115,7 +3115,7 @@
                         <height>50</height>
                         <aspectratio aligny="center" align="center">keep</aspectratio>
                         <texture colordiffuse="Dark1">flags/imdb.png</texture>
-                        <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Container(99950).ListItem.Property(Top250))]</visible>
+                        <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
                     </control>
                     <control type="label" description="IMDB Top 250">
                         <centertop>50%</centertop>
@@ -3134,8 +3134,8 @@
                         <font>Tiny</font>
                         <left>-3</left>
                         <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container(99950).ListItem.Property(Top250),#,]</label>
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Container(99950).ListItem.Property(Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
+                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
                     </control>
 
                     <!-- TMDB -->

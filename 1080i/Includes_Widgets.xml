@@ -428,22 +428,14 @@
         <definition>
             <include>Def_Widget_Background</include>
 
-            <!-- All others -->
+            <!-- ALL OTHERS -->
 
-            <control type="image">
-                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                <aspectratio scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
-                <visible>$EXP[View_Artwork_Condition]</visible>
-                <visible>$EXP[View_Artwork_Specific]</visible>
-                <visible>!ListItem.IsParentFolder</visible>
-            </control>
-            <control type="image">
-                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                <aspectratio scalediffuse="false">keep</aspectratio>
-                <texture colordiffuse="Dark1">$VAR[Image_Poster]</texture>
-                <visible>$EXP[View_Icon_Black]</visible>
-            </control>
+            <include content="Def_Image_Art_Default">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="aspectratio" value="scale" />
+                <param name="texture" value="$VAR[Image_Poster]" />
+                <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+            </include>
 
             <control type="group">
                 <visible>Skin.HasSetting(enable.view.video.rating.num)</visible>
@@ -476,50 +468,49 @@
 
                 <!-- ALL OTHERS -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
-                    <visible>$EXP[View_Artwork_Condition]</visible>
-                    <visible>$EXP[View_Artwork_Specific]</visible>
-                    <visible>!ListItem.IsParentFolder</visible>
-                    <visible>!String.StartsWith(ListItem.Path,pvr://channels)</visible>
-                    <visible>![String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)]</visible>
-                </control>
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio align="center" aligny="center" scalediffuse="false">$PARAM[aspectratio]</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
-                    <visible>$EXP[View_Icon_Black]</visible>
-                </control>
+                <include content="Def_Image_Art_Default">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="scale" />
+                    <param name="texture" value="$VAR[Image_Poster]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="visible" value="!String.StartsWith(ListItem.Path,pvr://channels) + ![String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)]" />
+                </include>
 
                 <!-- FAVOURITES -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
-                    <visible>String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)</visible>
-                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
-                </control>
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Poster]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="DefaultMovies" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="[String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)] + !String.StartsWith(ListItem.Icon,Default)" />
+                </include>
 
                 <!-- ADDONS -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png" colordiffuse="Dark1">$VAR[Image_Poster]</texture>
-                    <visible>String.StartsWith(ListItem.Icon,Default) + Container.Content(addons)</visible>
-                </control>
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Poster]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="DefaultAddon" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.StartsWith(ListItem.Icon,Default) + Container.Content(addons)" />
+                </include>
 
                 <!-- PVR -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Poster]</texture>
-                    <visible>String.StartsWith(ListItem.Path,pvr://channels)</visible>
-                </control>
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Poster]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="defaultpvrchannels" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.StartsWith(ListItem.Path,pvr://channels)" />
+                </include>
             </control>
 
             <control type="group">
@@ -647,41 +638,51 @@
             <control type="group">
                 <height>$PARAM[image_height]</height>
 
-                <!-- FANART -->
+                <!-- ALL OTHERS -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Thumb]</texture>
-                    <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres) + !String.StartsWith(ListItem.Path,pvr://channels)</visible>
-                </control>
+                <include content="Def_Image_Art_Default">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="scale" />
+                    <param name="texture" value="$VAR[Image_Thumb]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="visible" value="!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + ![String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)] + !String.StartsWith(ListItem.Path,pvr://channels)" />
+                </include>
 
                 <!-- PVR -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Thumb]</texture>
-                    <visible>String.StartsWith(ListItem.Path,pvr://channels)</visible>
-                </control>
-
-                <!-- STUDIO -->
-
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultStudios.png">$VAR[Image_Thumb_Studios]</texture>
-                    <visible>String.IsEqual(ListItem.DBType,studio)</visible>
-                </control>
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Thumb]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="defaultpvrchannels" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.StartsWith(ListItem.Path,pvr://channels)" />
+                </include>
 
                 <!-- GENRES -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultGenre.png">$VAR[Image_Thumb_Genres]</texture>
-                    <visible>String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)</visible>
-                </control>
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Thumb_Genres]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="DefaultGenre" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)" />
+                </include>
+
+                <!-- STUDIO -->
+
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Thumb_Studios]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="DefaultStudios" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.IsEqual(ListItem.DBType,studio)" />
+                </include>
             </control>
 
             <control type="group">
@@ -782,26 +783,53 @@
             <control type="group">
                 <height>$PARAM[image_height]</height>
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Fanart]</texture>
-                    <visible>!String.IsEqual(ListItem.DBType,genre) + !String.IsEqual(ListItem.DBType,studio) + !String.EndsWith(Container.FolderPath,Genres)</visible>
-                </control>
+                <!-- ALL OTHERS -->
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultGenre.png">$VAR[Image_Thumb_Genres]</texture>
-                    <visible>String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)</visible>
-                </control>
+                <include content="Def_Image_Art_Default">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="scale" />
+                    <param name="texture" value="$VAR[Image_Fanart]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="visible" value="![String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)] + !String.IsEqual(ListItem.DBType,studio) + !String.StartsWith(ListItem.Path,pvr://channels)" />
+                </include>
 
-                <control type="image">
-                    <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultStudios.png">$VAR[Image_Thumb_Studios]</texture>
-                    <visible>String.IsEqual(ListItem.DBType,studio)</visible>
-                </control>
+                <!-- PVR -->
+
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Thumb]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="defaultpvrchannels" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.StartsWith(ListItem.Path,pvr://channels)" />
+                </include>
+
+                <!-- GENRES -->
+
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Thumb_Genres]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="DefaultGenre" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)" />
+                </include>
+
+                <!-- STUDIO -->
+
+                <include content="Def_Image_Art">
+                    <param name="pad_image" value="$PARAM[pad_image]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Thumb_Studios]" />
+                    <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="fallback" value="DefaultStudios" />
+                    <param name="condition_fadetime" value="false" />
+                    <param name="visible" value="String.IsEqual(ListItem.DBType,studio)" />
+                </include>
+
+
             </control>
 
             <!-- CLEARLOGO -->
@@ -887,39 +915,36 @@
         <definition>
             <include>Def_Widget_Background</include>
 
-            <!-- color -->
-            <control type="image">
-                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-                <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultMovies.png">$VAR[Image_Fanart]</texture>
-                <visible>$EXP[View_Artwork_Condition]</visible>
-                <visible>$EXP[View_Artwork_Specific]</visible>
-                <visible>!ListItem.IsParentFolder</visible>
-            </control>
-
-            <!-- black -->
-            <control type="image">
-                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" colordiffuse="Dark1">$VAR[Image_Fanart]</texture>
-                <visible>$EXP[View_Icon_Black]</visible>
-            </control>
+            <!-- all others -->
+            <include content="Def_Image_Art_Default">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="aspectratio" value="scale" />
+                <param name="texture" value="$VAR[Image_Fanart]" />
+                <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                <param name="visible" value="![String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)] + !String.IsEqual(ListItem.DBType,studio)" />
+            </include>
 
             <!-- genres -->
-            <control type="image">
-               <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-               <aspectratio scalediffuse="false">keep</aspectratio>
-               <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultGenre.png">$VAR[Image_Thumb_Genres]</texture>
-               <visible>String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)</visible>
-            </control>
+            <include content="Def_Image_Art">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="aspectratio" value="keep" />
+                <param name="texture" value="$VAR[Image_Thumb_Genres]" />
+                <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                <param name="fallback" value="DefaultGenre" />
+                <param name="condition_fadetime" value="false" />
+                <param name="visible" value="String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)" />
+            </include>
 
             <!-- studio -->
-            <control type="image">
-               <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-               <aspectratio scalediffuse="false">keep</aspectratio>
-               <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="DefaultStudios.png">$VAR[Image_Thumb_Studios]</texture>
-               <visible>String.IsEqual(ListItem.DBType,studio)</visible>
-            </control>
+            <include content="Def_Image_Art">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="aspectratio" value="keep" />
+                <param name="texture" value="$VAR[Image_Thumb_Studios]" />
+                <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                <param name="fallback" value="DefaultStudios" />
+                <param name="condition_fadetime" value="false" />
+                <param name="visible" value="String.IsEqual(ListItem.DBType,studio)" />
+            </include>
 
             <!-- CLEARLOGO -->
 
@@ -943,18 +968,15 @@
             <control type="group">
                 <visible>Skin.HasSetting(enable.view.video.rating.num)</visible>
                 <left>5</left>
-               <!-- <include content="Def_Bottom" condition="$PARAM[small]"> -->
-                  <!-- <param name="bottom" value="82" /> -->
-               <!-- </include> -->
                 <bottom>-10</bottom>
                 <include>Def_Layout_Poster_rating_Info</include>
             </control>
 
-            <include content="Image_Clear_Logo_Dim" condition="$PARAM[clearlogo]">
-                <param name="width" value="250" />
-                <param name="right" value="30" />
-                <param name="bottom" value="20" />
-            </include>
+            <!-- <include content="Image_Clear_Logo_Dim" condition="$PARAM[clearlogo]"> -->
+                <!-- <param name="width" value="250" /> -->
+                <!-- <param name="right" value="30" /> -->
+                <!-- <param name="bottom" value="20" /> -->
+            <!-- </include> -->
 
             <include content="Layout_Indicator_Status" condition="!Skin.HasSetting(hide.markers)">
                 <param name="indicatorbackground" value="$PARAM[indicatorbackground]" />

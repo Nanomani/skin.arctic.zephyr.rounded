@@ -215,6 +215,60 @@
         </definition>
     </include>
 
+    <include name="Def_Image_Art">
+        <param name="pad_image" value="$PARAM[pad_image]" default="0" />
+        <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Poster]" />
+        <param name="texture_diffuse" value="$PARAM[texture_diffuse]" default="poster_w428_h640" />
+        <param name="fallback" value="$PARAM[fallback]" default="DefaultMovies" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
+        <param name="fadetime" value="$PARAM[fadetime]" default="PosterFanartFadetime" />
+        <param name="condition_fadetime" value="$PARAM[condition_fadetime]" default="true" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
+        <definition>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                <include content="Def_Fadetime" condition="$PARAM[condition_fadetime]"><param name="fadetime">$PARAM[fadetime]</param></include>
+                <aspectratio align="center" aligny="center" scalediffuse="false">$PARAM[aspectratio]</aspectratio>
+                <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="$PARAM[fallback].png">$PARAM[texture]</texture>
+                <visible>$PARAM[visible]</visible>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Def_Image_Art_Default">
+        <param name="pad_image" value="$PARAM[pad_image]" default="0" />
+        <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Poster]" />
+        <param name="texture_diffuse" value="$PARAM[texture_diffuse]" default="poster_w428_h640" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="Dark1" />
+        <param name="fallback" value="$PARAM[fallback]" default="DefaultMovies" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
+
+        <param name="fadetime" value="$PARAM[fadetime]" default="PosterFanartFadetime" />
+        <param name="condition_fadetime" value="$PARAM[condition_fadetime]" default="false" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
+
+        <definition>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                <include content="Def_Fadetime" condition="$PARAM[condition_fadetime]"><param name="fadetime">$PARAM[fadetime]</param></include>
+                <aspectratio align="center" aligny="center" scalediffuse="false">$PARAM[aspectratio]</aspectratio>
+                <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" fallback="$PARAM[fallback].png">$PARAM[texture]</texture>
+                <visible>$EXP[View_Artwork_Condition]</visible>
+                <visible>$EXP[View_Artwork_Specific]</visible>
+                <visible>!ListItem.IsParentFolder</visible>
+                <visible>$PARAM[visible]</visible>
+            </control>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                <include content="Def_Fadetime" condition="$PARAM[condition_fadetime]"><param name="fadetime">$PARAM[fadetime]</param></include>
+                <aspectratio align="center" aligny="center" scalediffuse="false">$PARAM[aspectratio]</aspectratio>
+                <texture diffuse="diffuse/$PARAM[texture_diffuse].png" background="true" colordiffuse="$PARAM[colordiffuse]">$PARAM[texture]</texture>
+                <visible>$EXP[View_Icon_Black]</visible>
+                <!-- <visible>$PARAM[visible]</visible> -->
+            </control>
+        </definition>
+    </include>
+
     <include name="Def_Image_Shadow">
         <param name="pad_shadow" value="$PARAM[pad_shadow]" default="-9" />
         <param name="visible" value="$PARAM[visible]" default="true" />

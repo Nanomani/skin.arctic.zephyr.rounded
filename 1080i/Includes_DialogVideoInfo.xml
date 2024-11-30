@@ -2,7 +2,7 @@
 <includes>
     <include name="Dialog_Video_Info">
         <control type="group">
-            <animation type="Conditional" reversible="true" condition="Window.IsVisible(FileBrowser.xml) | Window.IsVisible(DialogProgress.xml) | Window.IsVisible(DialogYesNo.xml) | Window.IsVisible(DialogOK.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)">
+            <animation type="Conditional" reversible="true" condition="Window.IsVisible(FileBrowser.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)">
                 <effect type="zoom" end="95" start="100" time="200" center="auto" tween="quadratic" easing="in" />
             </animation>
 
@@ -11,7 +11,7 @@
             <control type="group">
                 <include>Animation_Video_Fade_Out</include>
                 <include>Animation_Wiki_Fade_Out</include>
-                <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + !String.IsEmpty(Window(Home).Property(dontslide)) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+                <!-- <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + !String.IsEmpty(Window(Home).Property(dontslide)) + !Skin.HasSetting(hide.button.video.wiki)]</visible> -->
                 <include>Animation_SidePoster</include>
                 <control type="group">
                     <include>Animation_Delay_Fade_In_200</include>
@@ -35,7 +35,7 @@
                     <animation type="Conditional" condition="String.IsEqual(Window.Property(ShowDisc),1)">
                         <effect type="slide" start="0,0" end="0,-220" delay="0" time="200" tween="quadratic" easing="out" />
                     </animation>
-                    <visible>!String.IsEmpty(ListItem.Art(discart)) + String.IsEqual(Window.Property(moviecontent),1) + Skin.HasSetting(Show.Discart.Video.Info)</visible>
+                    <visible>!String.IsEmpty(ListItem.Art(discart)) + String.IsEqual(Window(Home).Property(moviecontent),1) + Skin.HasSetting(Show.Discart.Video.Info)</visible>
                     <top>200</top>
                     <left>90</left>
                     <width>405</width>
@@ -51,7 +51,7 @@
 
             <control type="group">
                 <include>Hidden_Up_Next_Episode</include>
-                <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + !String.IsEmpty(Window(Home).Property(dontslide)) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+                <!-- <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + !String.IsEmpty(Window(Home).Property(dontslide)) + !Skin.HasSetting(hide.button.video.wiki)]</visible> -->
                 <include>Animation_RightSide</include>
 
                 <!-- CONTROL BUTTONS -->
@@ -242,7 +242,7 @@
 
                 <control type="image" description="clearlogo">
                     <include>Animation_Video_Fade_Out_Clearlogo</include>
-                    <visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
+                    <visible>!String.IsEqual(ListItem.Property(item.type),person) + !Window.IsActive(DialogNotification.xml)</visible>
                     <visible>Skin.HasSetting(show.dialog.info.clearlogo.video) + [!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying)]</visible>
                     <visible>![Control.HasFocus(9501) | Control.HasFocus(9506) | Control.HasFocus(95067) | Control.HasFocus(9514) | Control.HasFocus(9515) | Control.HasFocus(9560) | Control.HasFocus(9502) | Control.HasFocus(9507) | Control.HasFocus(9503) | Control.HasFocus(9504) | Control.HasFocus(9552) | Control.HasFocus(9553)]</visible>
                     <include>Animation_Wiki_Fade_Out</include>
@@ -286,7 +286,7 @@
                 <!-- FANART -->
 
                 <control type="group">
-                    <visible>String.IsEqual(Window.Property(moviecontent),5)</visible>
+                    <visible>String.IsEqual(Window(Home).Property(moviecontent),5)</visible>
                     <include>Animation_Fade_In_DialogInfo</include>
                     <include>Animation_Fade_Out_DialogInfo</include>
 
@@ -311,7 +311,7 @@
                     </control>
 
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),5)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),5)" />
                         <param name="controlid" value="9505" />
                         <param name="centerleft" value="640" />
                         <param name="centertop" value="210" />
@@ -455,7 +455,72 @@
                         <visible>Control.HasFocus(95051)</visible>
                         <include>Animation_Delay_Fade_In_200</include>
                     </control>
+                </control>
 
+                <!-- BOX TRAILER -->
+
+                <control type="group">
+                    <visible>String.IsEqual(Window(Home).Property(moviecontent),6)</visible>
+                    <include>Animation_Fade_In_DialogInfo</include>
+                    <include>Animation_Fade_Out_DialogInfo</include>
+
+                    <top>View_Top</top>
+                    <left>570</left>
+                    <height>607</height>
+                    <width>1268</width>
+
+                    <include content="Def_Image_Background">
+                        <param name="colordiffuse" value="Panel" />
+                    </include>
+
+                    <control type="image">
+                        <height>100%</height>
+                        <width>100%</width>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/fanart_w1268_h607.png" fallback="DefaultAddonPicture.png">$INFO[ListItem.Art(fanart)]</texture>
+                        <animation effect="fade" end="10" start="100" time="100" condition="true">Conditional</animation>
+                    </control>
+
+                    <!-- LOGO PLAY -->
+
+                    <control type="group">
+                        <visible>!Window.IsVisible(DialogBusy.xml)</visible>
+                        <centertop>50%</centertop>
+                        <centerleft>50%</centerleft>
+                        <width>100</width>
+                        <height>100</height>
+
+                        <control type="image" description="Back">
+                            <height>100%</height>
+                            <width>100%</width>
+                            <aspectratio align="center" aligny="center">keep</aspectratio>
+                            <texture colordiffuse="Dark2">dialog/loading-back.png</texture>
+                            <animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
+                        </control>
+                        <control type="image" description="Back">
+                            <height>100%</height>
+                            <width>100%</width>
+                            <aspectratio align="center" aligny="center">keep</aspectratio>
+                            <texture colordiffuse="Dark2">progress/play.png</texture>
+                        </control>
+                    </control>
+
+                    <!-- SPINNER LOADING -->
+
+                    <control type="group">
+                        <visible>Window.IsVisible(DialogBusy.xml)</visible>
+                        <centertop>50%</centertop>
+                        <centerleft>50%</centerleft>
+                        <width>450</width>
+                        <height>100</height>
+                        <include>Animation_Delay_Fade_In_200</include>
+                        <include content="Object_Spinner_Busy">
+                            <param name="show_label_spinner" value="true" />
+                            <param name="label" value="$LOCALIZE[20410] $LOCALIZE[13413]..." />
+                            <param name="centerleft" value="50%" />
+                            <param name="centertop" value="50%" />
+                        </include>
+                    </control>
                 </control>
 
                 <!-- VIDEO TRAILER WINDOWED -->
@@ -465,8 +530,10 @@
                     <visible>Player.HasVideo</visible>
                     <visible>!String.IsEmpty(Window(Home).Property(TrailerWindowedIsPlaying))</visible>
 
-                    <include>Animation_Fade_In_DialogInfo</include>
-                    <include>Animation_Fade_Out_DialogInfo</include>
+                    <include>Animation_Fade_In</include>
+                    <include>Animation_Fade_Out</include>
+                    <!-- <include>Animation_Fade_In_DialogInfo</include> -->
+                    <!-- <include>Animation_Fade_Out_DialogInfo</include> -->
 
                     <top>View_Top</top>
                     <left>570</left>
@@ -482,42 +549,35 @@
                     <control type="group">
                         <height>607</height>
                         <width>1268</width>
+
+                        <animation type="Visible" reversible="false">
+                            <effect type="fade" start="0" end="100" time="150" />
+                        </animation>
+
+                        <animation type="Hidden" reversible="false">
+                            <effect type="fade" start="100" end="0" time="150" />
+                        </animation>
+
+                        <animation type="WindowClose" reversible="false">
+                            <effect type="zoom" center="auto" start="100" end="0" time="1" />
+                        </animation>
+                        <animation type="WindowOpen" reversible="false">
+                            <effect type="zoom" center="auto" start="0" end="100" time="1" />
+                        </animation>
+
+                        <aspectratio aligny="center" scalediffuse="false">scale</aspectratio>
+
                         <control type="videowindow" />
                     </control>
 
-                    <!-- PAUSED -->
+                    <!-- SPINNER PAUSE -->
 
                     <include content="Object_Spinner_Pause">
                         <param name="centerleft" value="50%" />
                         <param name="centertop" value="50%" />
                     </include>
 
-                    <control type="image">
-                        <visible>Player.Seeking | Player.DisplayAfterSeek | Player.Paused | Player.Forwarding | Player.Rewinding | !String.IsEmpty(Window(Home).Property(show_mini_osd))</visible>
-                        <left>0</left>
-                        <right>0</right>
-                        <bottom>0</bottom>
-                        <height>110</height>
-                        <texture border="12" colordiffuse="OSD_Black">common/shadowbottomsmall.png</texture>
-                    </control>
-
-                    <!-- LABEL INFO -->
-
-                    <include>Object_OSD_Label_Info</include>
-
-                    <!-- MINI PLAYER -->
-
-                    <control type="group">
-                        <visible>Player.Seeking | Player.DisplayAfterSeek | Player.Paused | Player.Forwarding | Player.Rewinding | !String.IsEmpty(Window(Home).Property(show_mini_osd))</visible>
-                        <include>Animation_Fade_In</include>
-                        <include>Animation_Fade_Out</include>
-
-                        <left>20</left>
-                        <right>20</right>
-                        <bottom>20</bottom>
-
-                        <include>Object_OSD_Seekbar_Bar</include>
-                    </control>
+                    <include>Object_OSD_Mini_Player</include>
 
                     <!-- BUTTON TRAILER -->
 
@@ -569,62 +629,10 @@
                     </control>
                 </control>
 
-                <!-- BOX TRAILER -->
-
-                <control type="group">
-                    <visible>String.IsEqual(Window.Property(moviecontent),6)</visible>
-                    <visible>!Control.HasFocus(7011)</visible>
-                    <visible>!Player.HasVideo</visible>
-                    <visible>String.IsEmpty(Window(Home).Property(TrailerWindowedIsPlaying))</visible>
-
-                    <include>Animation_Fade_In_DialogInfo</include>
-                    <include>Animation_Fade_Out_DialogInfo</include>
-
-                    <top>View_Top</top>
-                    <left>570</left>
-                    <height>607</height>
-                    <width>1268</width>
-
-                    <include content="Def_Image_Background">
-                        <param name="colordiffuse" value="Panel" />
-                    </include>
-
-                    <control type="image">
-                        <height>100%</height>
-                        <width>100%</width>
-                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-                        <texture diffuse="diffuse/fanart_w1268_h607.png" fallback="DefaultAddonPicture.png">$INFO[ListItem.Art(fanart)]</texture>
-                        <animation effect="fade" end="10" start="100" time="100" condition="true">Conditional</animation>
-                    </control>
-
-                    <!-- LOGO PLAY -->
-
-                    <control type="group">
-                        <centertop>50%</centertop>
-                        <centerleft>50%</centerleft>
-                        <width>100</width>
-                        <height>100</height>
-
-                        <control type="image" description="Back">
-                            <height>100%</height>
-                            <width>100%</width>
-                            <aspectratio align="center" aligny="center">keep</aspectratio>
-                            <texture colordiffuse="Dark2">dialog/loading-back.png</texture>
-                            <animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
-                        </control>
-                        <control type="image" description="Back">
-                            <height>100%</height>
-                            <width>100%</width>
-                            <aspectratio align="center" aligny="center">keep</aspectratio>
-                            <texture colordiffuse="Dark2">progress/play.png</texture>
-                        </control>
-                    </control>
-                </control>
-
                 <!-- INFORMATION DETAILED -->
 
                 <control type="group">
-                    <visible>String.IsEqual(Window.Property(moviecontent),1)</visible>
+                    <visible>String.IsEqual(Window(Home).Property(moviecontent),1)</visible>
                     <include>Animation_Fade_In_DialogInfo</include>
                     <include>Animation_Fade_Out_DialogInfo</include>
                     <left>570</left>
@@ -917,7 +925,7 @@
                 <!-- INFORMATION -->
 
                 <control type="group">
-                    <visible>!String.IsEqual(Window.Property(moviecontent),5) + !String.IsEqual(Window.Property(moviecontent),6) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+                    <visible>!String.IsEqual(Window(Home).Property(moviecontent),5) + !String.IsEqual(Window(Home).Property(moviecontent),6) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
                     <include>Animation_Video_Fade_Out</include>
                     <include condition="!String.IsEqual(ListItem.Property(item.type),person)">Furniture_Flags_DialogInfo_Video</include>
                     <include>Animation_Fade_In_DialogInfo</include>
@@ -1201,7 +1209,7 @@
 
                         <!-- Movie / TvShow / episode -->
                         <control type="textbox">
-                            <visible>[String.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Window.Property(moviecontent))] | String.IsEqual(ListItem.DBType,video) | String.IsEmpty(ListItem.DBType)</visible>
+                            <visible>[String.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Window(Home).Property(moviecontent))] | String.IsEqual(ListItem.DBType,video) | String.IsEmpty(ListItem.DBType)</visible>
                             <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,season)</visible>
                             <right>0</right>
                             <top>180</top>
@@ -1213,7 +1221,7 @@
                             <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
                         </control>
                         <control type="textbox">
-                            <visible>[String.IsEqual(Container(50).NumItems,0) + !String.IsEmpty(Window.Property(moviecontent))] | !String.IsEqual(Container(50).NumItems,0)</visible>
+                            <visible>[String.IsEqual(Container(50).NumItems,0) + !String.IsEmpty(Window(Home).Property(moviecontent))] | !String.IsEqual(Container(50).NumItems,0)</visible>
                             <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEqual(ListItem.DBType,season)</visible>
                             <right>0</right>
                             <top>180</top>
@@ -1227,7 +1235,7 @@
 
                         <!-- Season -->
                         <control type="textbox">
-                            <visible>[String.IsEqual(Container(9550).NumItems,0) + String.IsEmpty(Window.Property(moviecontent))]</visible>
+                            <visible>[String.IsEqual(Container(9550).NumItems,0) + String.IsEmpty(Window(Home).Property(moviecontent))]</visible>
                             <visible>String.IsEqual(ListItem.DBType,season)</visible>
                             <right>0</right>
                             <top>180</top>
@@ -1239,7 +1247,7 @@
                             <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
                         </control>
                         <control type="textbox">
-                            <visible>[String.IsEqual(Container(9550).NumItems,0) + !String.IsEmpty(Window.Property(moviecontent))] | !String.IsEqual(Container(9550).NumItems,0)</visible>
+                            <visible>[String.IsEqual(Container(9550).NumItems,0) + !String.IsEmpty(Window(Home).Property(moviecontent))] | !String.IsEqual(Container(9550).NumItems,0)</visible>
                             <visible>String.IsEqual(ListItem.DBType,season)</visible>
                             <right>0</right>
                             <top>180</top>
@@ -1253,7 +1261,7 @@
 
                         <!-- Person -->
                         <control type="textbox">
-                            <visible>String.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Window.Property(moviecontent))</visible>
+                            <visible>String.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Window(Home).Property(moviecontent))</visible>
                             <visible>String.IsEqual(ListItem.Property(item.type),person)</visible>
                             <right>0</right>
                             <top>110</top>
@@ -1265,7 +1273,7 @@
                             <label fallback="19055">$INFO[ListItem.Plot]$INFO[Window(Home).Property(ResetScroll)]</label>
                         </control>
                         <control type="textbox">
-                            <visible>[String.IsEqual(Container(50).NumItems,0) + !String.IsEmpty(Window.Property(moviecontent))] | !String.IsEqual(Container(50).NumItems,0)</visible>
+                            <visible>[String.IsEqual(Container(50).NumItems,0) + !String.IsEmpty(Window(Home).Property(moviecontent))] | !String.IsEqual(Container(50).NumItems,0)</visible>
                             <visible>String.IsEqual(ListItem.Property(item.type),person)</visible>
                             <right>0</right>
                             <top>110</top>
@@ -1359,7 +1367,7 @@
                         <param name="arrowtop" value="342" />
                         <param name="arrowright" value="155" />
                         <param name="fallbackpicture" value="DefaultActor.png" />
-                        <param name="visible" value="String.IsEmpty(Window.Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
+                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
                         <param name="visible.layouts" value="[Control.HasFocus(50) + !Window.IsVisible(DialogVideoManager.xml)] | Control.HasFocus(507) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)" />
                         <param name="storageicon.backgroundlist" value="false" />
                         <param name="animation" value="Animation_cast" />
@@ -1369,7 +1377,7 @@
                         <param name="condition.castfadeout" value="true" />
                     </include>
                     <!-- <include content="Def_Dialog_Info_List_Updating"> -->
-                        <!-- <param name="visible" value="String.IsEmpty(Window.Property(moviecontent))" /> -->
+                        <!-- <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" /> -->
                         <!-- <param name="controlid" value="50" /> -->
                         <!-- <param name="centerleft" value="430" /> -->
                     <!-- </include> -->
@@ -1382,7 +1390,7 @@
                         <!-- <param name="arrowright" value="155" /> -->
                         <!-- <param name="condition.issets" value="true" /> -->
                         <!-- <param name="condition.isnotsets" value="false" /> -->
-                        <!-- <param name="visible" value="String.IsEqual(Window.Property(moviecontent),10) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" /> -->
+                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),10) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" /> -->
                         <!-- <param name="visible.layouts" value="Control.HasFocus(50) | Control.HasFocus(6) | Control.HasFocus(10) | Window.IsVisible(DialogBusy.xml)" /> -->
                         <!-- <param name="storageicon.backgroundlist" value="false" /> -->
                         <!-- <param name="onclick1" value="$VAR[Def_Item]" /> -->
@@ -1402,7 +1410,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEmpty(Window.Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
+                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9550" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Cast]" />
@@ -1416,7 +1424,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEmpty(Window.Property(moviecontent)) + String.IsEqual(ListItem.DBType,season)" />
+                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent)) + String.IsEqual(ListItem.DBType,season)" />
                         <param name="controlid" value="9550" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1431,7 +1439,7 @@
                         <param name="condition.isnotsets" value="false" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEmpty(Window.Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
+                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9550" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Set]" />
@@ -1447,7 +1455,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEmpty(Window.Property(moviecontent)) + String.IsEqual(ListItem.DBType,set) + !Control.HasFocus(9550)" />
+                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent)) + String.IsEqual(ListItem.DBType,set) + !Control.HasFocus(9550)" />
                         <param name="controlid" value="9550" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1460,7 +1468,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),11)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),11)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9552" />
                         <param name="ContentToLoad" value="$VAR[Def_Person_List_Movies]" />
@@ -1476,7 +1484,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),11) + Control.HasFocus(9052)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),11) + Control.HasFocus(9052)" />
                         <param name="controlid" value="9552" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1489,7 +1497,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),12)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),12)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9553" />
                         <param name="ContentToLoad" value="$VAR[Def_Person_List_TvShows]" />
@@ -1505,7 +1513,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),12) + Control.HasFocus(9053)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),12) + Control.HasFocus(9053)" />
                         <param name="controlid" value="9553" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1518,7 +1526,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),18)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),18)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9558" />
                         <param name="ContentToLoad" value="$VAR[Def_Person_List_Movies_Member_Crew]" />
@@ -1534,7 +1542,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),18) + Control.HasFocus(9058)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),18) + Control.HasFocus(9058)" />
                         <param name="controlid" value="9558" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1547,7 +1555,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),19)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),19)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9559" />
                         <param name="ContentToLoad" value="$VAR[Def_Person_List_TvShows_Member_Crew]" />
@@ -1563,7 +1571,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),19) + Control.HasFocus(9059)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),19) + Control.HasFocus(9059)" />
                         <param name="controlid" value="9559" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1576,7 +1584,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),15)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),15)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9579" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Seasons]" />
@@ -1590,7 +1598,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),15) + Control.HasFocus(9079)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),15) + Control.HasFocus(9079)" />
                         <param name="controlid" value="9579" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1603,7 +1611,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),13) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),13) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9554" />
                         <param name="ContentToLoad" value="$VAR[Def_Person_List_Picture]" />
@@ -1619,7 +1627,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),13) + [Control.HasFocus(9054) | Control.HasFocus(9201) | Control.HasFocus(9013) | Control.HasFocus(90122)]" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),13) + [Control.HasFocus(9054) | Control.HasFocus(9201) | Control.HasFocus(9013) | Control.HasFocus(90122)]" />
                         <param name="controlid" value="9554" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1632,7 +1640,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),20)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),20)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9520" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Creator]" />
@@ -1648,7 +1656,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),20) + Control.HasFocus(9020)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),20) + Control.HasFocus(9020)" />
                         <param name="controlid" value="9520" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1661,7 +1669,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),17)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),17)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9557" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Crew]" />
@@ -1675,7 +1683,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),17) + Control.HasFocus(9057)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),17) + Control.HasFocus(9057)" />
                         <param name="controlid" value="9557" />
                         <param name="centerleft" value="640" />
                     </include>
@@ -1688,7 +1696,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),7)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),7)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9506" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Director]" />
@@ -1704,7 +1712,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),7) + Control.HasFocus(9006)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),7) + Control.HasFocus(9006)" />
                         <param name="controlid" value="9506" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1717,7 +1725,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),14)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),14)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9556" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Writer]" />
@@ -1733,7 +1741,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),14) + Control.HasFocus(9056)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),14) + Control.HasFocus(9056)" />
                         <param name="controlid" value="9556" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1746,7 +1754,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),9)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),9)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9514" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Year]" />
@@ -1762,7 +1770,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),9) + Control.HasFocus(9014)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),9) + Control.HasFocus(9014)" />
                         <param name="controlid" value="9514" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1775,7 +1783,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),8)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),8)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9515" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Set]" />
@@ -1791,7 +1799,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),8) + Control.HasFocus(9015)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),8) + Control.HasFocus(9015)" />
                         <param name="controlid" value="9515" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1804,7 +1812,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),2)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),2)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9502" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Similar]" />
@@ -1820,7 +1828,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),2) + Control.HasFocus(9002)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),2) + Control.HasFocus(9002)" />
                         <param name="controlid" value="9502" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1833,7 +1841,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),16)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),16)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9517" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Recommendation]" />
@@ -1847,7 +1855,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),16) + Control.HasFocus(9017)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),16) + Control.HasFocus(9017)" />
                         <param name="controlid" value="9517" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1860,7 +1868,7 @@
                         <param name="arrowright" value="155" />
                         <param name="condition.includecontent" value="true" />
                         <param name="fallbackpicture" value="pbtmdb.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),3)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),3)" />
                         <param name="animation" value="Animation_cast" />
                         <param name="controlid" value="9503" />
                         <param name="ContentToLoad" value="$VAR[Def_List_Studio]" />
@@ -1876,7 +1884,7 @@
                         <param name="thumb" value="false" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),3) + Control.HasFocus(9003)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),3) + Control.HasFocus(9003)" />
                         <param name="controlid" value="9503" />
                         <param name="centerleft" value="430" />
                     </include>
@@ -1887,7 +1895,7 @@
                         <param name="arrowleft" value="-748" />
                         <param name="arrowright" value="384" />
                         <param name="fallbackpicture" value="DefaultVideo.png" />
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),4) + !Window.IsVisible(DialogContextMenu.xml)" />
+                        <param name="visible" value="[String.IsEqual(Window(Home).Property(moviecontent),4) + !Window.IsVisible(DialogContextMenu.xml)] | Control.HasFocus(7011)" />
                         <param name="Animation_new" value="Animation_CastInfo2" />
                         <param name="controlid" value="9504" />
                         <!-- <param name="focusposition" value="1" /> -->
@@ -1905,7 +1913,7 @@
                         <param name="aspect" value="keep" />
                     </include>
                     <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window.Property(moviecontent),4) + Control.HasFocus(9004)" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),4) + Control.HasFocus(9004)" />
                         <param name="controlid" value="9504" />
                         <param name="alignleft" value="640" />
                     </include>

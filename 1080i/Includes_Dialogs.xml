@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-    <!-- DEF DIALOG -->
+    <!-- DEF - DIALOG -->
+
+    <include name="Def_Dialog_Header_Font">
+        <font>MediumBold</font>
+    </include>
 
     <include name="Def_Dialog_Header_Title">
         <param name="left" value="$PARAM[left]" default="LabelLeft" />
@@ -11,7 +15,7 @@
             <left>$PARAM[left]</left>
             <top>$PARAM[top]</top>
             <width>$PARAM[width]</width>
-            <include>FontTop</include>
+            <include>Def_Dialog_Header_Font</include>
             <textcolor>Dark2</textcolor>
         </definition>
     </include>
@@ -71,7 +75,7 @@
         <itemgap>28</itemgap>
     </include>
 
-    <!-- DIALOG - BACKGROUND -->
+    <!-- DEF - DIALOG - BACKGROUND -->
 
     <include name="Def_Dialog_InfoPanel">
         <param name="height" default="840" />
@@ -162,7 +166,7 @@
         </definition>
     </include>
 
-    <!-- DIALOG SETTINGS MOVIE / TVSHOW / MUSIC DIALOG INFO -->
+    <!-- DEF - DIALOG SETTINGS MOVIE / TVSHOW / MUSIC DIALOG INFO -->
 
     <include name="Def_Dialog_Custom_Settings">
         <control type="group" id="9800">
@@ -381,24 +385,6 @@
                 <textcolor>Black70</textcolor>
                 <label>$VAR[Label_Dialog_Select_Num_Item]</label>
             </control>
-        </definition>
-    </include>
-
-    <include name="Def_OSD_Dialog_InfoPanel">
-        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="$VAR[Color_OSD_Panel]" />
-        <param name="pad_shadow" value="$PARAM[pad_shadow]" default="-9" />
-        <param name="pad_image" value="$PARAM[pad_image]" default="0" />
-        <definition>
-            <include>Animation_Fade_In_Slide</include>
-            <include>Animation_Fade_Out</include>
-            <!-- <centertop>50%</centertop> -->
-            <centerleft>50%</centerleft>
-            <include content="Def_Image_Background">
-                <param name="colordiffuse" value="$PARAM[colordiffuse]" />
-                <param name="pad_shadow" value="$PARAM[pad_shadow]" />
-                <param name="pad_image" value="$PARAM[pad_image]" />
-                <param name="condition_fade" value="false" />
-            </include>
         </definition>
     </include>
 
@@ -739,7 +725,192 @@
         <height>70</height>
     </include>
 
-    <!-- DIALOG INFO NAVIGATION -->
+    <!-- DEF - DIALOG INFO NAVIGATION -->
+
+    <include name="Def_Dialog_Info_Navigation_Addon">
+        <control type="grouplist" id="9000">
+            <bottom>224</bottom>
+            <left>783</left>
+            <right>View_SidePad</right>
+            <include>Def_List_Dimension</include>
+            <ondown>9601</ondown>
+            <onup condition="Control.IsVisible(50)">50</onup>
+            <orientation>horizontal</orientation>
+
+            <!-- launch -->
+            <control type="radiobutton" id="12">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/launch.png" />
+                </include>
+                <textcolor>Dark4</textcolor>
+                <font>Null</font>
+                <visible>Control.IsEnabled(12)</visible>
+            </control>
+
+            <!-- install / uninstall -->
+            <control type="radiobutton" id="6">
+                <include>Def_Button_Dimensions_Square</include>
+                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
+                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/uninstall.png</textureradioonfocus>
+                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/uninstall.png</textureradioonnofocus>
+                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/install.png</textureradioofffocus>
+                <textureradiooffnofocus colordiffuse="Dark2">buttonsdialogs/install.png</textureradiooffnofocus>
+                <visible>!Skin.HasSetting(global.kioskmode)</visible>
+                <visible>Control.IsEnabled(6)</visible>
+                <textcolor>Dark4</textcolor>
+                <font>Null</font>
+                <selected>ListItem.Property(addon.isinstalled) | !Window.IsActive(addonbrowser)</selected>
+            </control>
+
+            <!-- desactived -->
+            <control type="radiobutton" id="7">
+                <include>Def_Button_Dimensions_Square</include>
+                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
+                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/disable.png</textureradioonfocus>
+                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/disable.png</textureradioonnofocus>
+                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/enabled.png</textureradioofffocus>
+                <textureradiooffnofocus colordiffuse="Dark3">buttonsdialogs/enabled.png</textureradiooffnofocus>
+                <visible>!Skin.HasSetting(global.kioskmode)</visible>
+                <visible>Control.IsEnabled(7)</visible>
+                <textcolor>Dark4</textcolor>
+                <font>Null</font>
+                <selected>!String.StartsWith(Control.GetLabel(7),$LOCALIZE[24022]) | !Window.IsActive(addonbrowser)</selected>
+            </control>
+
+            <!-- settings -->
+            <control type="radiobutton" id="9">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/configure.png" />
+                </include>
+                <visible>Control.IsEnabled(9)</visible>
+            </control>
+
+
+            <control type="radiobutton" id="8">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/install.png" />
+                </include>
+                <visible>Control.IsEnabled(8)</visible>
+            </control>
+
+            <!-- version ? -->
+            <control type="radiobutton" id="14">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/update.png" />
+                </include>
+                <visible>Control.IsEnabled(14)</visible>
+            </control>
+
+            <!-- auto update / manual update ? -->
+            <control type="radiobutton" id="13">
+                <include>Def_Button_Dimensions_Square</include>
+                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
+                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/autoupdate.png</textureradioonfocus>
+                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/autoupdate.png</textureradioonnofocus>
+                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/autoupdateon.png</textureradioofffocus>
+                <textureradiooffnofocus colordiffuse="Dark3">buttonsdialogs/autoupdateon.png</textureradiooffnofocus>
+                <visible>!Skin.HasSetting(global.kioskmode)</visible>
+                <visible>Control.IsEnabled(13)</visible>
+                <textcolor>Dark4</textcolor>
+                <font>Null</font>
+            </control>
+
+            <!-- dependency -->
+            <control type="radiobutton" id="10">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/dependency.png" />
+                </include>
+                <visible>Control.IsEnabled(10)</visible>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Dialog_Info_Navigation_PVR">
+        <control type="grouplist" id="9000">
+            <bottom>224</bottom>
+            <left>783</left>
+            <right>View_SidePad</right>
+            <include>Def_List_Dimension</include>
+            <onup>50</onup>
+            <ondown>9601</ondown>
+            <orientation>horizontal</orientation>
+            <control type="radiobutton" id="5">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/launch.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo)</visible>
+            </control>
+            <control type="radiobutton" id="4">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/similar.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo)</visible>
+            </control>
+            <control type="radiobutton" id="6">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/record2.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo)</visible>
+            </control>
+            <control type="radiobutton" id="8">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/play_record.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo) | Window.IsVisible(PVRRecordingInfo)</visible>
+            </control>
+            <control type="radiobutton" id="9">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/timer.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo)</visible>
+            </control>
+            <control type="radiobutton" id="11">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/ring.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo)</visible>
+            </control>
+            <control type="radiobutton" id="666">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/record2.png" />
+                </include>
+                <onclick>Action(close)</onclick>
+                <onclick>RunScript(plugin.video.iptv.recorder,$ESCINFO[ListItem.ChannelName],$ESCINFO[ListItem.Title],$ESCINFO[ListItem.Date],$ESCINFO[ListItem.Duration],$ESCINFO[ListItem.Plot])</onclick>
+                <visible>System.AddonIsEnabled(plugin.video.iptv.recorder)</visible>
+            </control>
+            <control type="radiobutton" id="667">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/play_record.png" />
+                </include>
+                <onclick>Action(close)</onclick>
+                <onclick>ActivateWindow(10025,&quot;plugin://plugin.video.iptv.recorder/recordings&quot;,return)</onclick>
+                <visible>System.AddonIsEnabled(plugin.video.iptv.recorder)</visible>
+            </control>
+            <control type="radiobutton" id="10">
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/play.png" />
+                </include>
+                <visible>Window.IsVisible(PVRGuideInfo)</visible>
+            </control>
+        </control>
+    </include>
 
     <include name="Def_Dialog_Info_Navigation_Music">
         <control type="grouplist" id="9000">
@@ -1855,192 +2026,7 @@
         </control>
     </include>
 
-    <include name="Def_Dialog_Info_Navigation_Addon">
-        <control type="grouplist" id="9000">
-            <bottom>224</bottom>
-            <left>783</left>
-            <right>View_SidePad</right>
-            <include>Def_List_Dimension</include>
-            <ondown>9601</ondown>
-            <onup condition="Control.IsVisible(50)">50</onup>
-            <orientation>horizontal</orientation>
-
-            <!-- launch -->
-            <control type="radiobutton" id="12">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/launch.png" />
-                </include>
-                <textcolor>Dark4</textcolor>
-                <font>Null</font>
-                <visible>Control.IsEnabled(12)</visible>
-            </control>
-
-            <!-- install / uninstall -->
-            <control type="radiobutton" id="6">
-                <include>Def_Button_Dimensions_Square</include>
-                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
-                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/uninstall.png</textureradioonfocus>
-                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/uninstall.png</textureradioonnofocus>
-                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/install.png</textureradioofffocus>
-                <textureradiooffnofocus colordiffuse="Dark2">buttonsdialogs/install.png</textureradiooffnofocus>
-                <visible>!Skin.HasSetting(global.kioskmode)</visible>
-                <visible>Control.IsEnabled(6)</visible>
-                <textcolor>Dark4</textcolor>
-                <font>Null</font>
-                <selected>ListItem.Property(addon.isinstalled) | !Window.IsActive(addonbrowser)</selected>
-            </control>
-
-            <!-- desactived -->
-            <control type="radiobutton" id="7">
-                <include>Def_Button_Dimensions_Square</include>
-                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
-                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/disable.png</textureradioonfocus>
-                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/disable.png</textureradioonnofocus>
-                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/enabled.png</textureradioofffocus>
-                <textureradiooffnofocus colordiffuse="Dark3">buttonsdialogs/enabled.png</textureradiooffnofocus>
-                <visible>!Skin.HasSetting(global.kioskmode)</visible>
-                <visible>Control.IsEnabled(7)</visible>
-                <textcolor>Dark4</textcolor>
-                <font>Null</font>
-                <selected>!String.StartsWith(Control.GetLabel(7),$LOCALIZE[24022]) | !Window.IsActive(addonbrowser)</selected>
-            </control>
-
-            <!-- settings -->
-            <control type="radiobutton" id="9">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/configure.png" />
-                </include>
-                <visible>Control.IsEnabled(9)</visible>
-            </control>
-
-
-            <control type="radiobutton" id="8">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/install.png" />
-                </include>
-                <visible>Control.IsEnabled(8)</visible>
-            </control>
-
-            <!-- version ? -->
-            <control type="radiobutton" id="14">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/update.png" />
-                </include>
-                <visible>Control.IsEnabled(14)</visible>
-            </control>
-
-            <!-- auto update / manual update ? -->
-            <control type="radiobutton" id="13">
-                <include>Def_Button_Dimensions_Square</include>
-                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
-                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/autoupdate.png</textureradioonfocus>
-                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/autoupdate.png</textureradioonnofocus>
-                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/autoupdateon.png</textureradioofffocus>
-                <textureradiooffnofocus colordiffuse="Dark3">buttonsdialogs/autoupdateon.png</textureradiooffnofocus>
-                <visible>!Skin.HasSetting(global.kioskmode)</visible>
-                <visible>Control.IsEnabled(13)</visible>
-                <textcolor>Dark4</textcolor>
-                <font>Null</font>
-            </control>
-
-            <!-- dependency -->
-            <control type="radiobutton" id="10">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/dependency.png" />
-                </include>
-                <visible>Control.IsEnabled(10)</visible>
-            </control>
-        </control>
-    </include>
-
-    <include name="Def_Dialog_Info_Navigation_PVR">
-        <control type="grouplist" id="9000">
-            <bottom>224</bottom>
-            <left>783</left>
-            <right>View_SidePad</right>
-            <include>Def_List_Dimension</include>
-            <onup>50</onup>
-            <ondown>9601</ondown>
-            <orientation>horizontal</orientation>
-            <control type="radiobutton" id="5">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/launch.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo)</visible>
-            </control>
-            <control type="radiobutton" id="4">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/similar.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo)</visible>
-            </control>
-            <control type="radiobutton" id="6">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/record2.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo)</visible>
-            </control>
-            <control type="radiobutton" id="8">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/play_record.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo) | Window.IsVisible(PVRRecordingInfo)</visible>
-            </control>
-            <control type="radiobutton" id="9">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/timer.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo)</visible>
-            </control>
-            <control type="radiobutton" id="11">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/ring.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo)</visible>
-            </control>
-            <control type="radiobutton" id="666">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/record2.png" />
-                </include>
-                <onclick>Action(close)</onclick>
-                <onclick>RunScript(plugin.video.iptv.recorder,$ESCINFO[ListItem.ChannelName],$ESCINFO[ListItem.Title],$ESCINFO[ListItem.Date],$ESCINFO[ListItem.Duration],$ESCINFO[ListItem.Plot])</onclick>
-                <visible>System.AddonIsEnabled(plugin.video.iptv.recorder)</visible>
-            </control>
-            <control type="radiobutton" id="667">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/play_record.png" />
-                </include>
-                <onclick>Action(close)</onclick>
-                <onclick>ActivateWindow(10025,&quot;plugin://plugin.video.iptv.recorder/recordings&quot;,return)</onclick>
-                <visible>System.AddonIsEnabled(plugin.video.iptv.recorder)</visible>
-            </control>
-            <control type="radiobutton" id="10">
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/play.png" />
-                </include>
-                <visible>Window.IsVisible(PVRGuideInfo)</visible>
-            </control>
-        </control>
-    </include>
-
-    <!-- FULL SCREEN PLOT OVERLAY -->
+    <!-- DEF - FULL SCREEN PLOT OVERLAY -->
 
     <include name="Def_Dialog_Info_Overlay">
         <param name="ondirection" value="$PARAM[ondirection]" default="9000" />
@@ -2180,7 +2166,7 @@
         </definition>
     </include>
 
-    <!-- FULL SCREEN WIKIPEDIA OVERLAY -->
+    <!-- DEF - FULL SCREEN WIKIPEDIA OVERLAY -->
 
     <include name="Def_Dialog_Info_Overlay_Wiki">
         <control type="group">
@@ -2195,7 +2181,7 @@
         </control>
     </include>
 
-    <!-- VIDEO TRAILER FULLSCREEN -->
+    <!-- DEF - VIDEO TRAILER FULLSCREEN -->
 
     <include name="Def_Dialog_Info_Video_Fullscreen">
         <control type="group">
@@ -2273,5 +2259,60 @@
                 <ondown condition="Player.HasVideo">Stop</ondown>
            </control>
         </control>
+    </include>
+
+    <!-- DEF - DIALOG - VIDEO INFO - MISC -->
+
+    <include name="Def_Dialog_Info_Video_Image_Extended">
+        <control type="button" id="$PARAM[buttonid]">
+            <include>Def_Hidden_Button</include>
+            <onleft>SetFocus($PARAM[containerid])</onleft>
+            <onleft>LEFT</onleft>
+            <onleft>SetFocus($PARAM[buttonid])</onleft>
+            <onright>SetFocus($PARAM[containerid])</onright>
+            <onright>RIGHT</onright>
+            <onright>SetFocus($PARAM[buttonid])</onright>
+            <ondown>Close</ondown>
+        </control>
+        <control type="group">
+            <visible>Control.HasFocus($PARAM[buttonid])</visible>
+            <animation effect="fade" end="100" start="20" time="200" delay="200" easing="out">Visible</animation>
+            <animation effect="fade" end="0" start="100" time="200" easing="out">Hidden</animation>
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1920</width>
+                <height>1080</height>
+                <texture>common/black.png</texture>
+            </control>
+            <control type="image">
+                <height>1080</height>
+                <fadetime>ImageViewerFadetime</fadetime>
+                <aspectratio align="center">keep</aspectratio>
+                <texture background="true">$INFO[Container($PARAM[containerid]).ListItem.Art(thumb)]</texture>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Image_TvShow_Provider">
+        <control type="image">
+            <top>21</top>
+            <width>28</width>
+            <height>28</height>
+            <texture diffuse="common/box.png">$INFO[Window(Home).Property(TMDbHelper.ListItem.Provider.$PARAM[icon].Icon)]</texture>
+            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Provider.$PARAM[icon].Icon))</visible>
+            <aspectratio align="center">keep</aspectratio>
+        </control>
+    </include>
+
+    <!-- MISC -->
+
+    <include name="OnFocusOnClick">
+        <onclick>SetProperty(SetUserRating,mixed,Home)</onclick>
+        <onfocus>SetProperty(SetUserRating,mixed,Home)</onfocus>
+    </include>
+
+    <include name="ClearOnFocusOnClick">
+        <onunfocus>ClearProperty(SetUserRating,Home)</onunfocus>
     </include>
 </includes>

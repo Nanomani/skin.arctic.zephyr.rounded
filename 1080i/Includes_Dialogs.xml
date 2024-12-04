@@ -110,13 +110,16 @@
         <param name="visible" default="true" />
         <definition>
             <visible>$PARAM[visible]</visible>
+
             <include>Animation_ZoomIn</include>
             <include>Animation_Fade_Out</include>
+
             <centerleft>$PARAM[centerleft]</centerleft>
             <centertop>$PARAM[centertop]</centertop>
             <height>$PARAM[height]</height>
             <width>$PARAM[width]</width>
-            <include content="Def_Image_Background">
+
+           <include content="Def_Image_Background">
                 <param name="colordiffuse" value="$PARAM[colordiffuse]" />
                 <param name="pad_shadow" value="$PARAM[pad_shadow]" />
                 <param name="pad_image" value="$PARAM[pad_image]" />
@@ -1033,6 +1036,28 @@
                 <visible>!Skin.HasSetting(hide.button.music.wiki) + System.AddonIsEnabled(script.wikipedia)</visible>
             </control>
 
+            <!-- RATING -->
+
+            <control type="radiobutton" id="9007">
+                <visible>!String.IsEqual(ListItem.DBType,artist)</visible>
+                <include>OnFocusOnClick</include>
+                <include>ClearOnFocusOnClick</include>
+                <onfocus>ClearProperty(ShowDisc)</onfocus>
+                <onfocus>ClearProperty(musiccontent,Home)</onfocus>
+                <onclick>SendClick(7)</onclick>
+                <include>Def_Button_Dimensions_Square</include>
+                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
+                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/rating.png</textureradioonfocus>
+                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/rating.png</textureradioonnofocus>
+                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/rating_new.png</textureradioofffocus>
+                <textureradiooffnofocus colordiffuse="Dark2">buttonsdialogs/rating_new.png</textureradiooffnofocus>
+                <selected>String.IsEmpty(ListItem.UserRating)</selected>
+                <textcolor>Dark4</textcolor>
+                <font>Null</font>
+                <visible>!Skin.HasSetting(hide.button.music.rating)</visible>
+            </control>
+
             <!-- TRACKLIST -->
 
             <control type="radiobutton" id="9003">
@@ -1088,21 +1113,6 @@
                 <visible>!String.IsEmpty(Window(Home).Property(Encoded.ListItem.Artist))</visible>
             </control>
 
-            <!-- YOUTUBE -->
-
-            <control type="radiobutton" id="9005">
-                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),3)">ClearProperty(musiccontent,Home)</onfocus>
-                <onfocus>ClearProperty(ShowDisc)</onfocus>
-                <onfocus>SetProperty(musiccontent,3,Home)</onfocus>
-                <onfocus>SetProperty(musicyoutube,1,Home)</onfocus>
-                <onclick>SetFocus(9502)</onclick>
-                <include>Def_Button_Dimensions_Square</include>
-                <include content="Def_Button_Textures">
-                    <param name="icon" value="buttonsdialogs/youtube.png" />
-                </include>
-                <visible>!Skin.HasSetting(hide.button.music.youtube) + System.AddonIsEnabled(plugin.video.youtube)</visible>
-            </control>
-
             <!-- FANART -->
 
             <control type="radiobutton" id="9006">
@@ -1121,26 +1131,19 @@
                 <visible>!Skin.HasSetting(hide.button.music.fanart)</visible>
             </control>
 
-            <!-- RATING -->
+            <!-- YOUTUBE -->
 
-            <control type="radiobutton" id="9007">
-                <visible>!String.IsEqual(ListItem.DBType,artist)</visible>
-                <include>OnFocusOnClick</include>
-                <include>ClearOnFocusOnClick</include>
+            <control type="radiobutton" id="9005">
+                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),3)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
-                <onfocus>ClearProperty(musiccontent,Home)</onfocus>
-                <onclick>SendClick(7)</onclick>
+                <onfocus>SetProperty(musiccontent,3,Home)</onfocus>
+                <onfocus>SetProperty(musicyoutube,1,Home)</onfocus>
+                <onclick>SetFocus(9502)</onclick>
                 <include>Def_Button_Dimensions_Square</include>
-                <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
-                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                <textureradioonfocus colordiffuse="FFFFFFFF">buttonsdialogs/rating.png</textureradioonfocus>
-                <textureradioonnofocus colordiffuse="Dark2">buttonsdialogs/rating.png</textureradioonnofocus>
-                <textureradioofffocus colordiffuse="FFFFFFFF">buttonsdialogs/rating_new.png</textureradioofffocus>
-                <textureradiooffnofocus colordiffuse="Dark2">buttonsdialogs/rating_new.png</textureradiooffnofocus>
-                <selected>String.IsEmpty(ListItem.UserRating)</selected>
-                <textcolor>Dark4</textcolor>
-                <font>Null</font>
-                <visible>!Skin.HasSetting(hide.button.music.rating)</visible>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/youtube.png" />
+                </include>
+                <visible>!Skin.HasSetting(hide.button.music.youtube) + System.AddonIsEnabled(plugin.video.youtube)</visible>
             </control>
 
             <!-- SETTING -->
@@ -1237,6 +1240,8 @@
             <!-- <onup condition="String.IsEqual(ListItem.DBType,set) + [String.IsEmpty(Window(Home).Property(moviecontent)) | String.IsEqual(Window(Home).Property(moviecontent),10)]">50</onup> -->
 
             <onup condition="String.IsEqual(Window(Home).Property(moviecontent),11) | String.IsEqual(Window(Home).Property(moviecontent),12) | String.IsEqual(Window(Home).Property(moviecontent),18) | String.IsEqual(Window(Home).Property(moviecontent),19) | [String.IsEmpty(Window(Home).Property(moviecontent)) + String.IsEqual(ListItem.DBType,set)]">Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onup>
+
+            <onup condition="String.IsEqual(Window(Home).Property(moviecontent),4) | String.IsEqual(Window(Home).Property(moviecontent),5) | String.IsEqual(Window(Home).Property(moviecontent),11) | String.IsEqual(Window(Home).Property(moviecontent),12) | String.IsEqual(Window(Home).Property(moviecontent),18) | String.IsEqual(Window(Home).Property(moviecontent),19) | String.IsEmpty(Window(Home).Property(moviecontent))">SetProperty(view_extended,1,Home)</onup>
 
             <onback>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onback>
 
@@ -1435,6 +1440,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,13,Home)</onfocus>
                 <onclick>SetFocus(9554)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/thumb.png" />
@@ -1547,6 +1553,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,11,Home)</onfocus>
                 <onclick>SetFocus(9552)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9552,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1565,6 +1572,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,12,Home)</onfocus>
                 <onclick>SetFocus(9553)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9553,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1583,6 +1591,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,18,Home)</onfocus>
                 <onclick>SetFocus(9558)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9558,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1601,6 +1610,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,19,Home)</onfocus>
                 <onclick>SetFocus(9559)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9559,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1639,6 +1649,7 @@
                 <onfocus>SetProperty(moviecontent,4,Home)</onfocus>
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onclick>SetFocus(9504)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/youtube.png" />
@@ -1834,6 +1845,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,15,Home)</onfocus>
                 <onclick>SetFocus(9579)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9579,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1853,6 +1865,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,17,Home)</onfocus>
                 <onclick>SetFocus(9557)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9557,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1872,6 +1885,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,20,Home)</onfocus>
                 <onclick>SetFocus(9520)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9520,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1893,6 +1907,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,7,Home)</onfocus>
                 <onclick>SetFocus(9506)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9506,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1913,6 +1928,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,14,Home)</onfocus>
                 <onclick>SetFocus(9556)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9556,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1933,6 +1949,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,9,Home)</onfocus>
                 <onclick>SetFocus(9514)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9514,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1952,6 +1969,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,8,Home)</onfocus>
                 <onclick>SetFocus(9515)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9515,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1974,6 +1992,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,2,Home)</onfocus>
                 <onclick>SetFocus(9502)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9502,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -1993,6 +2012,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,16,Home)</onfocus>
                 <onclick>SetFocus(9517)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9517,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>
@@ -2012,6 +2032,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>SetProperty(moviecontent,3,Home)</onfocus>
                 <onclick>SetFocus(9503)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
                 <onclick>SetProperty(TMDbHelper.WidgetContainer,9503,Home)</onclick>
                 <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
                 <include>Def_Button_Dimensions</include>

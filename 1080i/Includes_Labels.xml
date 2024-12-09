@@ -805,16 +805,14 @@
         <value>$LOCALIZE[480]</value>
     </variable>
 
-    <variable name="Label_RtMc">
-        <value condition="Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + ![ $EXP[Home_Is_Vertical] + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]">$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating),  •  MC ,%]$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating),  •  RT ,%]</value>
-    </variable>
+    <!-- LABEL PVR -->
 
-    <variable name="Label_View_55_Slider_Sub_Title">
-        <value condition="String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year,,  •  ]$VAR[Label_Duration_Time_Check,,  •  ]$VAR[Label_Rating]</value>
-        <value condition="String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Episode,, $LOCALIZE[20360]  •  ]$INFO[ListItem.Property(UnWatchedEpisodes),, $LOCALIZE[16101]  •  ]$VAR[Label_Rating]</value>
-        <value condition="String.IsEqual(ListItem.DBType,set) | Container.Content(seasons) | Container.Content(sets)">$INFO[ListItem.Year,,  •  ]$INFO[Container(55).NumItems,, $LOCALIZE[342]]$VAR[Label_Rating,  •  ]</value>
-        <value condition="$EXP[IsGameMode]">$VAR[Label_Game_Year,,  •  ]$VAR[Label_Game_Rating]</value>
-        <value>$VAR[Label_Duration_Time_Check]</value>
+    <variable name="Label_PVR_Info_Status">
+        <value condition="ListItem.IsRecording">$LOCALIZE[19158]</value>
+        <value condition="ListItem.HasReminder">$LOCALIZE[31332]</value>
+        <value condition="ListItem.HasReminderRule">$LOCALIZE[31333]</value>
+        <value condition="ListItem.HasTimer">$LOCALIZE[19058]</value>
+        <value>$LOCALIZE[31084]</value>
     </variable>
 
     <variable name="Label_PVR_Info_Status">
@@ -825,50 +823,9 @@
         <value>$LOCALIZE[31084]</value>
     </variable>
 
-    <variable name="Label_Layout_Context_Menu_OSD_Player">
-        <value condition="Player.HasAudio">$VAR[Label_OSD_Player_Audio_Sublabel]</value>
-        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + !VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Genre,  •  ]</value>
-        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + VideoPlayer.Content(episodes)">$INFO[VideoPlayer.TvShowTitle]$INFO[VideoPlayer.Season ,  •  S]$INFO[VideoPlayer.Episode, E,]$INFO[VideoPlayer.Title,  •  ]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Genre,  •  ]</value>
-        <value condition="Player.HasVideo + VideoPlayer.Content(livetv)">$VAR[Label_OSD_Title_Big]</value>
-        <!-- <value condition="Player.HasAudio + !String.IsEmpty(Window(Home).Property(set.player.tagline))">$INFO[Window(Home).Property(set.player.tagline)]</value> -->
-    </variable>
-
-    <variable name="Label_Trailer_Status">
-        <value condition="Player.Caching">$LOCALIZE[31429] $INFO[Player.CacheLevel,,%]</value>
-        <value condition="Player.Paused">$LOCALIZE[31428]</value>
-        <value condition="Player.Playing">$LOCALIZE[31427]</value>
-    </variable>
-
-    <variable name="Label_Next_Recording_Header">
-        <value condition="Pvr.IsRecording">$LOCALIZE[19158]...</value>
-        <value condition="Pvr.HasTimer">$LOCALIZE[19157]...</value>
-    </variable>
-
-    <variable name="Label_Next_Recording">
-        <value condition="Pvr.IsRecording">[COLOR=$VAR[Color_Highlight]]$INFO[Pvr.NowRecordingTitle,,][/COLOR]$INFO[Pvr.NowRecordingChannel,  ,]</value>
-        <value condition="Pvr.HasTimer">[COLOR=$VAR[Color_Highlight]]$INFO[Pvr.NextRecordingTitle,,][/COLOR]$INFO[Pvr.NextRecordingDateTime,  ,]$INFO[Pvr.NextRecordingChannel,  ,]</value>
-    </variable>
-
-    <variable name="Label_HD_SD">
-        <value condition="[Container.Content(tvshows) | Container.Content(seasons) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(ListItem.Property(TotalEpisodes))">$INFO[ListItem.Property(TotalEpisodes)]</value>
-        <value condition="String.IsEqual(ListItem.VideoResolution,4K) | Integer.IsEqual(ListItem.VideoResolution,2160)">UHD</value>
-        <value condition="Integer.IsGreater(Container(9500).ListItem.VideoResolution,719)">HD</value>
-        <value condition="Integer.IsGreater(ListItem.VideoResolution,719)">HD</value>
-        <value condition="Integer.IsLess(ListItem.VideoResolution,720)">SD</value>
-        <value condition="$EXP[IsGameMode] + String.Contains(ListItem.Property(tags),4K)">UHD</value>
-        <value condition="$EXP[IsGameMode] + String.Contains(ListItem.Property(tags),HD)">HD</value>
-        <value condition="$EXP[IsGameMode] + String.Contains(ListItem.Property(tags),SD)">SD</value>
-    </variable>
-
-    <variable name="Label_Flag_Next_Aired_Details">
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">[COLOR=Dark1][B]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Name),,  ][/B][/COLOR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Air_Time),, • ]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired)]</value>
-        <value condition="String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">[COLOR=Dark1][B]$INFO[Window(Home).Property(TMDbHelper.ListItem.Status),, • ][/B][/COLOR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired)]</value>
-    </variable>
-
-    <variable name="Label_MusicPlayerCodec">
-        <value condition="String.Contains(MusicPlayer.Codec, mp3)">mp3</value>
-        <value>$INFO[MusicPlayer.Codec]</value>
-    </variable>
+	<variable name="Label_PVR_Instance_Name">
+		<value condition="Integer.IsGreater(PVR.ClientCount,1)">$INFO[ListItem.PVRClientName,[COLOR grey]$LOCALIZE[31137]:[/COLOR] ,]$INFO[ListItem.PVRInstanceName, (,)]</value>
+	</variable>
 
     <!-- =================================== -->
     <!--           LABEL - VIEWS LIST        -->
@@ -1033,6 +990,14 @@
         <value condition="Container.Content(seasons) + !ListItem.IsParentFolder">$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]]</value>
         <value condition="$EXP[IsGameMode]">$VAR[Label_Game_Year]</value>
         <value>$INFO[ListItem.Label2]</value>
+    </variable>
+
+    <variable name="Label_55_Slider_Sub_Title">
+        <value condition="String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year,,  •  ]$VAR[Label_Duration_Time_Check,,  •  ]$VAR[Label_Rating]</value>
+        <value condition="String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Episode,, $LOCALIZE[20360]  •  ]$INFO[ListItem.Property(UnWatchedEpisodes),, $LOCALIZE[16101]  •  ]$VAR[Label_Rating]</value>
+        <value condition="String.IsEqual(ListItem.DBType,set) | Container.Content(seasons) | Container.Content(sets)">$INFO[ListItem.Year,,  •  ]$INFO[Container(55).NumItems,, $LOCALIZE[342]]$VAR[Label_Rating,  •  ]</value>
+        <value condition="$EXP[IsGameMode]">$VAR[Label_Game_Year,,  •  ]$VAR[Label_Game_Rating]</value>
+        <value>$VAR[Label_Duration_Time_Check]</value>
     </variable>
 
     <!-- 31021           Informations détaillées -->
@@ -1703,7 +1668,7 @@
 	<variable name="Label_OSD_Video_Bitrate">
 		<value condition="!String.IsEqual(ListItem.Property(stream.bitrate),0)">$INFO[ListItem.Property(stream.bitrate)]</value>
 	</variable>
-    
+
     <!-- LABEL NOWPLAYING -->
 
     <variable name="Label_NowPlaying_Plot">
@@ -2061,6 +2026,55 @@
     <variable name="Label_Color_Save">
         <value condition="String.IsEmpty(Skin.String(color.preset.name.own))">$LOCALIZE[31464]?</value>
         <value>$LOCALIZE[31465]</value>
+    </variable>
+
+    <variable name="Label_RtMc">
+        <value condition="Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + ![ $EXP[Home_Is_Vertical] + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]">$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating),  •  MC ,%]$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating),  •  RT ,%]</value>
+    </variable>
+
+    <variable name="Label_Layout_Context_Menu_OSD_Player">
+        <value condition="Player.HasAudio">$VAR[Label_OSD_Player_Audio_Sublabel]</value>
+        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + !VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Genre,  •  ]</value>
+        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + VideoPlayer.Content(episodes)">$INFO[VideoPlayer.TvShowTitle]$INFO[VideoPlayer.Season ,  •  S]$INFO[VideoPlayer.Episode, E,]$INFO[VideoPlayer.Title,  •  ]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Genre,  •  ]</value>
+        <value condition="Player.HasVideo + VideoPlayer.Content(livetv)">$VAR[Label_OSD_Title_Big]</value>
+        <!-- <value condition="Player.HasAudio + !String.IsEmpty(Window(Home).Property(set.player.tagline))">$INFO[Window(Home).Property(set.player.tagline)]</value> -->
+    </variable>
+
+    <variable name="Label_Trailer_Status">
+        <value condition="Player.Caching">$LOCALIZE[31429] $INFO[Player.CacheLevel,,%]</value>
+        <value condition="Player.Paused">$LOCALIZE[31428]</value>
+        <value condition="Player.Playing">$LOCALIZE[31427]</value>
+    </variable>
+
+    <variable name="Label_Next_Recording_Header">
+        <value condition="Pvr.IsRecording">$LOCALIZE[19158]...</value>
+        <value condition="Pvr.HasTimer">$LOCALIZE[19157]...</value>
+    </variable>
+
+    <variable name="Label_Next_Recording">
+        <value condition="Pvr.IsRecording">[COLOR=$VAR[Color_Highlight]]$INFO[Pvr.NowRecordingTitle,,][/COLOR]$INFO[Pvr.NowRecordingChannel,  ,]</value>
+        <value condition="Pvr.HasTimer">[COLOR=$VAR[Color_Highlight]]$INFO[Pvr.NextRecordingTitle,,][/COLOR]$INFO[Pvr.NextRecordingDateTime,  ,]$INFO[Pvr.NextRecordingChannel,  ,]</value>
+    </variable>
+
+    <variable name="Label_HD_SD">
+        <value condition="[Container.Content(tvshows) | Container.Content(seasons) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(ListItem.Property(TotalEpisodes))">$INFO[ListItem.Property(TotalEpisodes)]</value>
+        <value condition="String.IsEqual(ListItem.VideoResolution,4K) | Integer.IsEqual(ListItem.VideoResolution,2160)">UHD</value>
+        <value condition="Integer.IsGreater(Container(9500).ListItem.VideoResolution,719)">HD</value>
+        <value condition="Integer.IsGreater(ListItem.VideoResolution,719)">HD</value>
+        <value condition="Integer.IsLess(ListItem.VideoResolution,720)">SD</value>
+        <value condition="$EXP[IsGameMode] + String.Contains(ListItem.Property(tags),4K)">UHD</value>
+        <value condition="$EXP[IsGameMode] + String.Contains(ListItem.Property(tags),HD)">HD</value>
+        <value condition="$EXP[IsGameMode] + String.Contains(ListItem.Property(tags),SD)">SD</value>
+    </variable>
+
+    <variable name="Label_Flag_Next_Aired_Details">
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">[COLOR=Dark1][B]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Name),,  ][/B][/COLOR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Air_Time),, • ]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired)]</value>
+        <value condition="String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">[COLOR=Dark1][B]$INFO[Window(Home).Property(TMDbHelper.ListItem.Status),, • ][/B][/COLOR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired)]</value>
+    </variable>
+
+    <variable name="Label_MusicPlayerCodec">
+        <value condition="String.Contains(MusicPlayer.Codec, mp3)">mp3</value>
+        <value>$INFO[MusicPlayer.Codec]</value>
     </variable>
 
     <!-- LABEL - DIALOG NUM ITEM -->

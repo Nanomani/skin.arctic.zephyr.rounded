@@ -10,10 +10,14 @@
     <onunload>ClearProperty(SetUserRating,Home)</onunload>
 
     <controls>
-        <control type="group">
-            <animation effect="fade" start="100" end="0" time="400" condition="Window.IsVisible(SliderDialog) | Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)">Conditional</animation>
-            <include>Background_Overlay</include>
-        </control>
+        <include content="Background_Overlay">
+            <param name="colordiffuse" value="$VAR[Color_OSD_Background_Overlay]" />
+            <param name="visible" value="[Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)] + !Window.IsVisible(SliderDialog)" />
+        </include>
+
+        <include content="Background_Overlay">
+            <param name="visible" value="![Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)]" />
+        </include>
 
         <include condition="String.IsEmpty(Window(Home).Property(SetUserRating)) + String.IsEmpty(Window(Home).Property(SkinViewtypes.DialogIsActive)) + String.IsEmpty(Window(Home).Property(SetIcon)) + String.IsEmpty(Window(Home).Property(ListVideoForCast)) + !Window.IsActive(gamesaves) + !Window.IsActive(gamestretchmode) + !Window.IsActive(gamevideofilter) + !Window.IsActive(gamevideorotation) + !Window.IsActive(ingamesaves) + !Window.IsActive(dialogselectvideo) + !Window.IsActive(dialogselectaudio) + !Window.IsActive(dialogselectsubtitle)">Def_Dialog_Select_Other</include>
 

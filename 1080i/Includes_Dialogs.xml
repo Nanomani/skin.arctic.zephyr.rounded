@@ -441,6 +441,31 @@
 
     <!-- DEF - BUTTON -->
 
+    <include name="Def_Dialog_Button_Action">
+        <param name="width" value="$PARAM[width]" default="300" />
+        <param name="height" value="$PARAM[height]" default="66" />
+        <param name="onclick1" value="$PARAM[onclick1]" default="" />
+        <param name="textcolor" value="$PARAM[textcolor]" default="Black70" />
+        <param name="colordiffuse_texturenofocus" value="$PARAM[colordiffuse_texturenofocus]" default="Black12" />
+        <definition>
+            <control type="button" id="$PARAM[id]">
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
+                <align>center</align>
+                <textoffsetx>22</textoffsetx>
+                <textoffsety>78</textoffsety>
+                <font>Button</font>
+                <label>$PARAM[label]</label>
+                <textcolor>$PARAM[textcolor]</textcolor>
+                <altlabel>$PARAM[altlabel]</altlabel>
+                <visible>$PARAM[visible]</visible>
+                <texturenofocus colordiffuse="$PARAM[colordiffuse_texturenofocus]" border="12">common/box.png</texturenofocus>
+                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+                <onclick>$PARAM[onclick1]</onclick>
+            </control>
+        </definition>
+    </include>
+
     <include name="Def_Button_Textures">
         <param name="color" value="$PARAM[color]" default="Dark4" />
         <definition>
@@ -503,28 +528,6 @@
         <radioposx>14</radioposx>
         <radioposy>18</radioposy>
         <radiowidth>48</radiowidth>
-    </include>
-
-    <include name="Def_Dialog_Button_Action">
-        <param name="width" value="$PARAM[width]" default="300" />
-        <param name="height" value="$PARAM[height]" default="66" />
-        <param name="onclick1" value="$PARAM[onclick1]" default="" />
-        <definition>
-            <control type="button" id="$PARAM[id]">
-                <width>$PARAM[width]</width>
-                <height>$PARAM[height]</height>
-                <align>center</align>
-                <textoffsetx>22</textoffsetx>
-                <textoffsety>78</textoffsety>
-                <font>Button</font>
-                <label>$PARAM[label]</label>
-                <altlabel>$PARAM[altlabel]</altlabel>
-                <visible>$PARAM[visible]</visible>
-                <texturenofocus colordiffuse="Black12" border="12">common/box.png</texturenofocus>
-                <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
-                <onclick>$PARAM[onclick1]</onclick>
-            </control>
-        </definition>
     </include>
 
     <include name="Def_Dialog_Radio_Button_Action">
@@ -1342,7 +1345,9 @@
                 <onfocus>SetProperty(moviecontent,1,Home)</onfocus>
 
                 <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)]">RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[ListItem.TVShowTitle,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D]"',call_auto=1190)</onclick>
-                <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=play&amp;tmdb_type=tv&amp;tmdb_id=$INFO[Window(Home).Property(Set_Movie_TvShow_TMDb_id)]</onclick>
+
+                <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=tv&amp;tmdb_id=$INFO[Window(Home).Property(Set_Movie_TvShow_TMDb_id)],call_auto=1190),00:00,silent)</onclick>
+
 
                 <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onclick>
                 <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Init_Value_TMDb,Home)</onclick>

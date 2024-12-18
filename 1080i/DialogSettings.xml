@@ -8,10 +8,14 @@
     <onunload condition="Player.HasMedia + Player.HasVideo + Player.PauseEnabled">setfocus(14)</onunload>
 
     <controls>
-        <control type="group">
-            <animation effect="fade" start="100" end="0" time="400" condition="Window.IsVisible(SliderDialog) | Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)">Conditional</animation>
-            <include>Background_Overlay</include>
-        </control>
+        <include content="Background_Overlay">
+            <param name="colordiffuse" value="$VAR[Color_OSD_Background_Overlay]" />
+            <param name="visible" value="[Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)] + !Window.IsVisible(SliderDialog)" />
+        </include>
+
+        <include content="Background_Overlay">
+            <param name="visible" value="![Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)]" />
+        </include>
 
         <include condition="![Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)]">Def_Dialog_Settings_standard</include>
         <include condition="Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)">Def_Dialog_Settings_video_OSD</include>

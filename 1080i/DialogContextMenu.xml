@@ -6,9 +6,6 @@
     <onload> ClearProperty(SlideHomeNowPlaying,Home)</onload>
     <onunload> ClearProperty(SlideHomeNowPlaying,Home)</onunload>
 
-    <coordinates>
-        <origin x="0" y="0" />
-    </coordinates>
     <menucontrol>5050</menucontrol>
 
     <controls>
@@ -42,7 +39,8 @@
                     <label>$VAR[Label_Context_Menu_Header]</label>
                 </control>
                 <include>Def_Dialog_Header_Logo</include>
-                <include>Def_Dialog_Header_Line</include>
+                <include content="Def_Dialog_Header_Line"><param name="top">95</param></include>
+                <include content="Def_Dialog_Header_Line"><param name="top">165</param><param name="visible">!Control.HasFocus(5050)</param></include>
             </control>
 
             <control type="button" id="5050">
@@ -58,19 +56,200 @@
                 <onup>SetFocus(5050)</onup>
             </control>
 
+            <!-- CONTEXT MENU ICON -->
+
+            <control type="grouplist" id="995">
+                <include>Animation_Scrolltime_Views_List</include>
+                <animation condition="Control.HasFocus(5050)" effect="fade" end="0" start="100" time="250">Conditional</animation>
+
+                <top>108</top>
+                <right>30</right>
+                <width>450</width>
+
+                <onleft>995</onleft>
+                <onright>995</onright>
+                <onup>2000</onup>
+                <ondown>2002</ondown>
+                <height max="560">auto</height>
+
+                <usecontrolcoords>true</usecontrolcoords>
+                <orientation>horizontal</orientation>
+                <itemgap>29</itemgap>
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/info2.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6150" />
+                    <param name="groupid" value="6099" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <onclick>Dialog.Close(contextmenu,true)</onclick>
+                    <onclick>SetProperty(isoninfo,1,Home)</onclick>
+                    <onclick>RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=movie&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)],call_auto=1190)</onclick>
+                </include>
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/filebox.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6151" />
+                    <param name="groupid" value="6199" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <onclick>Dialog.Close(contextmenu,true)</onclick>
+                    <onclick>ActivateWindow(filemanager,"$INFO[Window(Home).Property(TMDbHelper.ListItem.base_path)]",return)</onclick>
+                </include>
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/video.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6152" />
+                    <param name="groupid" value="6299" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <onclick condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Window(Home).Property(TMDbHelper.ListItem.Trailer)])</onclick>
+                    <onclick>Dialog.Close(contextmenu,true)</onclick>
+                    <onclick>AlarmClock(LaunchDelay,ActivateWindow(fullscreenvideo),00:01,silent)</onclick>
+                    <onclick condition="!String.IsEmpty(ListItem.Trailer)">PlayMedia($INFO[ListItem.Trailer],1)</onclick>
+                </include>
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/world.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6153" />
+                    <param name="groupid" value="6399" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <!-- <onclick>Dialog.Close(contextmenu,true)</onclick> -->
+                    <onclick>runscript(script.wikipedia,wikipedia=$INFO[Window(Home).Property(TMDbHelper.ListItem.Title)],tmdb_type=movie,language=$VAR[Def_Wiki_Language])</onclick>
+                </include>
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/youtube.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6154" />
+                    <param name="groupid" value="6499" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <!-- <onclick condition="System.AddonIsEnabled(plugin.video.youtube)">ActivateWindow(videos,"plugin://plugin.video.youtube/kodion/search/list/",return)</onclick> -->
+                    <onclick condition="System.AddonIsEnabled(plugin.video.youtube)">plugin://plugin.video.youtube/kodion/search/query/?q=heat</onclick>
+                </include>
+
+<!-- plugin://plugin.video.youtube/kodion/search/query/?q=heat+movie -->
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/user.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6155" />
+                    <param name="groupid" value="6599" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <onclick>runscript(script.globalsearch,directors=true)</onclick>
+                </include>
+
+                <include content="Def_OSD_Button">
+                    <param name="autoclose" value="true" />
+                    <param name="visible" value="true" />
+                    <param name="size" value="44" />
+                    <param name="left" value="-37" />
+                    <param name="icon" value="special://skin/extras/icons/tmdb.png" />
+                    <param name="icon_colordiffuse" value="Dark2" />
+                    <param name="id" value="6156" />
+                    <param name="groupid" value="6699" />
+                    <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                    <onclick>Dialog.Close(contextmenu,true)</onclick>
+                    <onclick>RunScript(plugin.video.themoviedb.helper,related_lists,query=$INFO[Window(Home).Property(TMDbHelper.ListItem.Title)],tmdb_type=movie)</onclick>
+                </include>
+            </control>
+
+            <!-- BUTTON TO FOCUS LASTEST ITEM ON LIST -->
+
+            <control type="button" id="2000">
+                <visible allowhiddenfocus="true">false</visible>
+                <height>1</height>
+                <onfocus condition="Control.IsVisible(1002)">SetFocus(1002)</onfocus>
+                <onfocus condition="Control.IsVisible(1003)">SetFocus(1003)</onfocus>
+                <onfocus condition="Control.IsVisible(1004)">SetFocus(1004)</onfocus>
+                <onfocus condition="Control.IsVisible(1005)">SetFocus(1005)</onfocus>
+                <onfocus condition="Control.IsVisible(1006)">SetFocus(1006)</onfocus>
+                <onfocus condition="Control.IsVisible(1007)">SetFocus(1007)</onfocus>
+                <onfocus condition="Control.IsVisible(1008)">SetFocus(1008)</onfocus>
+                <onfocus condition="Control.IsVisible(1009)">SetFocus(1009)</onfocus>
+                <onfocus condition="Control.IsVisible(1010)">SetFocus(1010)</onfocus>
+                <onfocus condition="Control.IsVisible(1011)">SetFocus(1011)</onfocus>
+                <onfocus condition="Control.IsVisible(1012)">SetFocus(1012)</onfocus>
+                <onfocus condition="Control.IsVisible(1013)">SetFocus(1013)</onfocus>
+                <onfocus condition="Control.IsVisible(1014)">SetFocus(1014)</onfocus>
+                <onfocus condition="Control.IsVisible(1015)">SetFocus(1015)</onfocus>
+                <onfocus condition="Control.IsVisible(1016)">SetFocus(1016)</onfocus>
+                <onfocus condition="Control.IsVisible(1017)">SetFocus(1017)</onfocus>
+                <onfocus condition="Control.IsVisible(1018)">SetFocus(1018)</onfocus>
+                <onfocus condition="Control.IsVisible(1019)">SetFocus(1019)</onfocus>
+                <onfocus condition="Control.IsVisible(1020)">SetFocus(1020)</onfocus>
+            </control>
+
+            <control type="button" id="2002">
+                <visible allowhiddenfocus="true">false</visible>
+                <height>1</height>
+                <onfocus condition="Control.IsVisible(1020)">SetFocus(1020)</onfocus>
+                <onfocus condition="Control.IsVisible(1019)">SetFocus(1019)</onfocus>
+                <onfocus condition="Control.IsVisible(1018)">SetFocus(1018)</onfocus>
+                <onfocus condition="Control.IsVisible(1017)">SetFocus(1017)</onfocus>
+                <onfocus condition="Control.IsVisible(1016)">SetFocus(1016)</onfocus>
+                <onfocus condition="Control.IsVisible(1015)">SetFocus(1015)</onfocus>
+                <onfocus condition="Control.IsVisible(1014)">SetFocus(1014)</onfocus>
+                <onfocus condition="Control.IsVisible(1013)">SetFocus(1013)</onfocus>
+                <onfocus condition="Control.IsVisible(1012)">SetFocus(1012)</onfocus>
+                <onfocus condition="Control.IsVisible(1011)">SetFocus(1011)</onfocus>
+                <onfocus condition="Control.IsVisible(1010)">SetFocus(1010)</onfocus>
+                <onfocus condition="Control.IsVisible(1009)">SetFocus(1009)</onfocus>
+                <onfocus condition="Control.IsVisible(1008)">SetFocus(1008)</onfocus>
+                <onfocus condition="Control.IsVisible(1007)">SetFocus(1007)</onfocus>
+                <onfocus condition="Control.IsVisible(1006)">SetFocus(1006)</onfocus>
+                <onfocus condition="Control.IsVisible(1005)">SetFocus(1005)</onfocus>
+                <onfocus condition="Control.IsVisible(1004)">SetFocus(1004)</onfocus>
+                <onfocus condition="Control.IsVisible(1003)">SetFocus(1003)</onfocus>
+                <onfocus condition="Control.IsVisible(1002)">SetFocus(1002)</onfocus>
+                <onfocus condition="Control.IsVisible(1002)">SetFocus(1001)</onfocus>
+            </control>
+
             <!-- CONTEXT MENU LIST -->
 
             <control type="grouplist" id="996">
                 <description>grouplist for context buttons</description>
+                <include>Animation_Scrolltime_Views_List</include>
                 <animation condition="Control.HasFocus(5050)" effect="fade" end="0" start="100" time="250">Conditional</animation>
+
+                <top>182</top>
                 <right>0</right>
                 <width>510</width>
-                <top>112</top>
+                <height max="490">auto</height>
+
+                <onup>995</onup>
+                <ondown>995</ondown>
+                <!-- <ondown>SetFocus(8000)</ondown> -->
                 <onleft>5050</onleft>
                 <onright>5050</onright>
-                <height max="560">auto</height>
+
                 <itemgap>0</itemgap>
-                <include>Animation_Scrolltime_Views_List</include>
+
                 <control type="button" id="1000">
                     <description>Buttons</description>
                     <width>510</width>
@@ -150,20 +329,66 @@
                 </control>
             </control>
 
-             <!-- PLOT -->
-
-            <control type="textbox" id="8600">
+            <control type="group">
                 <animation effect="fade" end="100" start="0" time="250" delay="300">Visible</animation>
                 <visible>Control.HasFocus(5050)</visible>
-                <top>112</top>
-                <right>30</right>
-                <width>448</width>
-                <height>520</height>
-                <font>SmallNavi</font>
-                <textcolor>Dark2</textcolor>
-                <align>left</align>
-                <pagecontrol>8601</pagecontrol>
-                <label fallback="19055">$VAR[Label_Context_Menu_Plot]</label>
+
+                <!-- PLOT -->
+
+                <control type="textbox" id="8600">
+                    <top>112</top>
+                    <right>30</right>
+                    <width>448</width>
+                    <height>450</height>
+                    <!-- <height>520</height> -->
+                    <font>SmallNavi</font>
+                    <textcolor>Dark2</textcolor>
+                    <align>left</align>
+                    <pagecontrol>8601</pagecontrol>
+                    <label fallback="19055">$VAR[Label_Context_Menu_Plot]</label>
+                </control>
+
+                <!-- FLAG STAR RATING -->
+
+                <control type="group">
+                    <top>512</top>
+                    <right>30</right>
+                    <align>left</align>
+                    <width>448</width>
+
+                    <include content="Def_Flag">
+                        <param name="Star" value="ContextMenu_Flagstar1" />
+                    </include>
+                    <include content="Def_Flag">
+                        <param name="Star" value="ContextMenu_Flagstar2" />
+                        <param name="left" value="40" />
+                    </include>
+                    <include content="Def_Flag">
+                        <param name="Star" value="ContextMenu_Flagstar3" />
+                        <param name="left" value="80" />
+                    </include>
+                    <include content="Def_Flag">
+                        <param name="Star" value="ContextMenu_Flagstar4" />
+                        <param name="left" value="120" />
+                    </include>
+                    <include content="Def_Flag">
+                        <param name="Star" value="ContextMenu_Flagstar5" />
+                        <param name="left" value="160" />
+                    </include>
+                </control>
+
+                <!-- RATING / VOTES -->
+
+                <control type="label">
+                    <top>622</top>
+                    <right>30</right>
+                    <align>left</align>
+                    <width>448</width>
+                    <font>Small333</font>
+                    <textcolor>Dark2</textcolor>
+                    <label>$VAR[Label_Rating_Imdb_Votes_Top250,IMDb ,]</label>
+                    <selectedcolor>Dark2</selectedcolor>
+                </control>
             </control>
 
             <!-- SCROLLBAR -->
@@ -181,7 +406,7 @@
                 <animation effect="fade" end="100" start="0" time="250" delay="300">Visible</animation>
                 <include>Animation_Fade_In</include>
                 <left>756</left>
-                <top>660</top>
+                <top>580</top>
                 <control type="image">
                     <top>0</top>
                     <include>Def_Arrow_Size</include>
@@ -193,7 +418,7 @@
                 <animation effect="fade" end="100" start="0" time="250" delay="300">Visible</animation>
                 <include>Animation_Fade_In</include>
                 <left>756</left>
-                <top>640</top>
+                <top>570</top>
                 <control type="image">
                     <top>0</top>
                     <include>Def_Arrow_Size</include>

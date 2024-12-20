@@ -41,20 +41,6 @@
 
             <include content="Def_OSD_Button">
                 <param name="autoclose" value="true" />
-                <param name="visible" value="!String.Contains(Window(Home).Property(TMDbHelper.ListItem.base_path),plugin://plugin) + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),tvshow) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album)]" />
-                <param name="size" value="44" />
-                <param name="left" value="-37" />
-                <param name="icon" value="special://skin/extras/icons/filebox.png" />
-                <param name="icon_colordiffuse" value="Dark2" />
-                <param name="id" value="6151" />
-                <param name="groupid" value="6199" />
-                <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
-                <onclick>Dialog.Close(contextmenu,true)</onclick>
-                <onclick>ActivateWindow(filemanager,"$INFO[Window(Home).Property(TMDbHelper.ListItem.base_path)]",return)</onclick>
-            </include>
-
-            <include content="Def_OSD_Button">
-                <param name="autoclose" value="true" />
                 <param name="visible" value="true" />
                 <param name="size" value="44" />
                 <param name="left" value="-37" />
@@ -87,7 +73,8 @@
                 <param name="groupid" value="6399" />
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <!-- <onclick>Dialog.Close(contextmenu,true)</onclick> -->
-                <onclick>runscript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],tmdb_type=movie,language=$VAR[Def_Wiki_Language])</onclick>
+                <onclick>RunScript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],tmdb_type=$VAR[Path_ContextParams_TMDbType],language=$VAR[Path_Wikipedia_Language])</onclick>
+                <!-- <onclick>runscript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],tmdb_type=movie,language=$VAR[Path_Wikipedia_Language])</onclick> -->
             </include>
 
             <include content="Def_OSD_Button">
@@ -131,6 +118,20 @@
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <onclick>Dialog.Close(contextmenu,true)</onclick>
                 <onclick>RunScript(plugin.video.themoviedb.helper,related_lists,query=$VAR[Path_ContextParams_Query],tmdb_type=$VAR[Path_ContextParams_TMDbType])</onclick>
+            </include>
+
+            <include content="Def_OSD_Button">
+                <param name="autoclose" value="true" />
+                <param name="visible" value="!String.Contains(Window(Home).Property(TMDbHelper.ListItem.base_path),plugin://plugin) + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),tvshow) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album)]" />
+                <param name="size" value="44" />
+                <param name="left" value="-37" />
+                <param name="icon" value="special://skin/extras/icons/filebox.png" />
+                <param name="icon_colordiffuse" value="Dark2" />
+                <param name="id" value="6151" />
+                <param name="groupid" value="6199" />
+                <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                <onclick>Dialog.Close(contextmenu,true)</onclick>
+                <onclick>ActivateWindow(filemanager,"$VAR[Path_ContextParams_Path_Item]",return)</onclick>
             </include>
         </control>
     </include>

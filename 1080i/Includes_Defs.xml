@@ -1554,11 +1554,6 @@
         <value condition="String.IsEqual(Skin.String(colorpresent),8">$INFO[Skin.String(color.preset.name.own)] - $LOCALIZE[31455]</value>
     </variable>
 
-    <variable name="Def_Wiki_Language">
-        <value condition="!String.IsEmpty(Skin.String(Value_Wiki_Language))">$INFO[Skin.String(Value_Wiki_Language)]</value>
-        <value>en</value>
-    </variable>
-
     <variable name="Def_Open_Sub_Menu">
         <value>SetFocus(302,0)</value>
     </variable>
@@ -1907,20 +1902,10 @@
     <!-- DEF ACTION ON INFO -->
 
     <include name="Def_On_Info">
-        <oninfo condition="[!String.IsEmpty(ListItem.Property(tmdb_id)) | [String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))]]">SetProperty(isoninfo,1,Home)</oninfo>
+        <oninfo condition="[Container.Content(actors) | $EXP[IsTMDbHelperItem]] + [!String.IsEmpty(ListItem.Property(tmdb_id)) | [String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))]]">SetProperty(isoninfo,1,Home)</oninfo>
 
         <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)],call_auto=1190)</oninfo>
 
-        <oninfo condition="!String.IsEmpty(ListItem.Property(tmdb_id))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=$VAR[Path_ContextParams_TMDbType]&amp;tmdb_id=$VAR[Path_ContextParams_TMDbID],call_auto=1190)</oninfo>
-
-        <!-- <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Label],type=person,call_auto=1190)</oninfo> -->
-
-        <!-- <oninfo condition="Container.Content(movies)">Action(Info)</oninfo> -->
-        <!-- <oninfo condition="Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(movies)">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1190)</oninfo> -->
-        <!-- <oninfo condition="String.IsEqual(ListItem.DBType,set)">SetFocus(44023)</oninfo> -->
-        <!-- <oninfo condition="String.IsEqual(ListItem.DBType,set)">Action(info)</oninfo> -->
-
-        <!-- <oninfo condition="Container.Content(movies)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Label],type=movie,call_auto=1190)</oninfo> -->
-        <!-- <oninfo condition="Container.Content(tvshows)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Label],type=tv,call_auto=1190)</oninfo> -->
+        <oninfo condition="!String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=$VAR[Path_ContextParams_TMDbType]&amp;tmdb_id=$VAR[Path_ContextParams_TMDbID],call_auto=1190)</oninfo>
     </include>
 </includes>

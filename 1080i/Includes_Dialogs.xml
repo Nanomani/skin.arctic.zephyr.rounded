@@ -1020,7 +1020,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>ClearProperty(RotateCover)</onfocus>
                 <include>Def_Button_Dimensions_Square</include>
-                <onclick>RunScript(script.wikipedia,wikipedia=$VAR[Label_Wiki_Title_Search],language=$VAR[Def_Wiki_Language])</onclick>
+                <onclick>RunScript(script.wikipedia,wikipedia=$VAR[Label_Wiki_Title_Search],language=$VAR[Path_Wikipedia_Language])</onclick>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/wiki.png" />
                 </include>
@@ -1414,8 +1414,7 @@
                 <onup>SetFocus(7012)</onup>
 
                 <onclick condition="Player.HasMedia">PlayerControl(Stop)</onclick>
-                <onclick condition="String.IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[Window(Home).Property(TMDbHelper.ListItem.Trailer)],False,1)</onclick>
-                <onclick condition="!String.IsEmpty(ListItem.Trailer)">PlayMedia($INFO[ListItem.Trailer],1)</onclick>
+                <onclick>$VAR[Path_Trailer]</onclick>
                 <onclick>SetProperty(TrailerWindowedIsPlaying,1,Home)</onclick>
                 <onclick>SetFocus(7012)</onclick>
 
@@ -1449,10 +1448,7 @@
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>ClearProperty(dontslide,Home)</onfocus>
                 <onclick>SetProperty(dontslide,1,Home)</onclick>
-                <onclick condition="String.IsEqual(ListItem.Property(item.type),person)">RunScript(script.wikipedia,wikipedia=$VAR[Label_Wiki_Title_Search],tmdb_type=movie,language=$VAR[Def_Wiki_Language])</onclick>
-                <onclick condition="String.IsEqual(ListItem.DBType,movie)">RunScript(script.wikipedia,wikipedia=$VAR[Label_Wiki_Title_Search],tmdb_type=movie,language=$VAR[Def_Wiki_Language])</onclick>
-                <onclick condition="String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)">RunScript(script.wikipedia,wikipedia=$VAR[Label_Wiki_Title_Search],tmdb_type=tv,language=$VAR[Def_Wiki_Language])</onclick>
-                <!-- <onclick condition="String.IsEqual(ListItem.DBType,actor)">RunScript(script.wikipedia,wikipedia=$INFO[ListItem.Label],tmdb_type=person,language=$VAR[Def_Wiki_Language])</onclick> -->
+                <onclick>RunScript(script.wikipedia,wikipedia=$VAR[Path_Wikipedia_Query],tmdb_type=$VAR[Path_Wikipedia_Type],language=$VAR[Path_Wikipedia_Language])</onclick>
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/wiki.png" />

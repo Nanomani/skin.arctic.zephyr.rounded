@@ -547,6 +547,36 @@
                 <!-- </control> -->
             <!-- </control> -->
 
+            <!-- ARROWS -->
+
+            <control type="group">
+                <visible>$PARAM[visible.layouts]</visible>
+                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+                <visible>!Container(9550).OnNext + !Container(9550).OnPrevious + !ListItem.IsCollection</visible>
+
+                <include>Animation_Delay_Fade_In_200</include>
+
+                <animation type="Conditional" condition="!String.IsEmpty(Window.Property(down)) + Control.HasFocus($PARAM[controlid])" reversible="false">
+                    <effect type="slide" end="0,-20" time="60" tween="sine" />
+                    <effect type="slide" end="0,20" time="180" tween="sine" delay="80" />
+                </animation>
+
+                <animation effect="fade" start="100" end="0" time="0" delay="0" condition="[[Window.IsVisible(script-wikipedia.xml) | Window.IsVisible(DialogBusy.xml)] + !Skin.HasSetting(hide.button.video.wiki)]">Conditional</animation>
+
+                <top>70</top>
+                <left>-291</left>
+
+                <control type="image">
+                    <include>Def_Arrow_Size</include>
+                    <texture colordiffuse="Dark1" flipy="true">common/arrow-small.png</texture>
+                </control>
+                <control type="image">
+                    <top>12</top>
+                    <include>Def_Arrow_Size</include>
+                    <texture colordiffuse="Dark1" flipy="true">common/arrow-small.png</texture>
+                </control>
+            </control>
+
             <!-- BACKGROUND LIST -->
 
             <control type="grouplist">
@@ -599,6 +629,11 @@
                 <width>2288</width>
                 <height>670</height>
 
+                <!-- Info On line with TMDb  -->
+
+                <onup condition="Control.HasFocus(9550) + !ListItem.IsCollection">SetProperty(down,1)</onup>
+                <onup>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Container(9550).ListItem.Label],type=person,call_auto=1190)</onup>
+
                 <!-- Cast Navigation -->
                 <onleft>$PARAM[controlid]</onleft>
                 <onright>$PARAM[controlid]</onright>
@@ -607,8 +642,8 @@
                 <onclick>$PARAM[onclick2]</onclick>
                 <onclick>$PARAM[onclick3]</onclick>
 
-                <ondown condition="Control.IsVisible(9557)">$PARAM[controlid]7</ondown>
-                <ondown condition="!Control.IsVisible(9557)">9000</ondown>
+                <ondown condition="Control.IsVisible(9557) | Control.IsVisible(9550)">$PARAM[controlid]7</ondown>
+                <ondown condition="![Control.IsVisible(9557) | Control.IsVisible(9550)]">9000</ondown>
 
                 <include>Def_Dialog_Info_On_Back_Video</include>
 
@@ -676,7 +711,7 @@
                 <param name="onright" value="$PARAM[controlid]7" />
                 <param name="onup" value="$PARAM[controlid]" />
                 <param name="ondown2" value="ClearProperty(view_extended,Home)" />
-                <param name="ondown1" value="SetFocus(9557,0,absolute)" />
+                <param name="ondown1" value="SetFocus($PARAM[controlid],0,absolute)" />
                 <param name="ondown" value="9012" />
                 <param name="onback" value="9012" />
                 <param name="onback1" value="ClearProperty(view_extended,Home)" />
@@ -905,7 +940,7 @@
             <!-- SCROLLBAR -->
 
             <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="visible" value="!Control.IsVisible(50) + !Control.IsVisible(9504) + !Control.IsVisible(9554) + !Control.IsVisible(9557)" />
+                <param name="visible" value="!Control.IsVisible(50) + !Control.IsVisible(9550) + !Control.IsVisible(9504) + !Control.IsVisible(9554) + !Control.IsVisible(9557)" />
                 <param name="scrollid" value="$PARAM[controlid]7" />
                 <param name="onleft" value="$PARAM[controlid]" />
                 <param name="onright" value="$PARAM[controlid]" />

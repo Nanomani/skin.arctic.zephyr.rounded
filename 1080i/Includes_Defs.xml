@@ -1902,10 +1902,12 @@
     <!-- DEF ACTION ON INFO -->
 
     <include name="Def_On_Info">
-        <oninfo condition="[Container.Content(actors) | $EXP[IsTMDbHelperItem]] + [!String.IsEmpty(ListItem.Property(tmdb_id)) | [String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))]]">SetProperty(isoninfo,1,Home)</oninfo>
+        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">SetProperty(isoninfo,1,Home)</oninfo>
 
-        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)],call_auto=1190)</oninfo>
+        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">$VAR[Path_Actor_On_Info]</oninfo>
 
-        <oninfo condition="!String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=$VAR[Path_ContextParams_TMDbType]&amp;tmdb_id=$VAR[Path_ContextParams_TMDbID],call_auto=1190)</oninfo>
+        <!-- <oninfo condition="[Container.Content(actors) | [$EXP[IsTMDbHelperItem] + String.IsEmpty(ListItem.DBID)]] + [!String.IsEmpty(ListItem.Property(tmdb_id)) | [String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))]]">SetProperty(isoninfo,1,Home)</oninfo> -->
+
+        <!-- <oninfo condition="!String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) + String.IsEmpty(ListItem.DBID)">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=$VAR[Path_ContextParams_TMDbType]&amp;tmdb_id=$VAR[Path_ContextParams_TMDbID],call_auto=1190)</oninfo> -->
     </include>
 </includes>

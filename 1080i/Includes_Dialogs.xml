@@ -1201,7 +1201,10 @@
             <!-- TvShows list by member crew -->
             <onup condition="String.IsEqual(ListItem.Property(item.type),person) + String.IsEqual(Window(Home).Property(moviecontent),19)">9559</onup>
             <onup condition="String.IsEqual(ListItem.Property(item.type),person) + String.IsEqual(Window(Home).Property(moviecontent),19)">SetProperty(TMDbHelper.WidgetContainer,9559,home)</onup>
-
+            <!-- Movies list by director -->
+            <onup condition="String.IsEqual(ListItem.Property(item.type),person) + String.IsEqual(Window(Home).Property(moviecontent),20)">9560</onup>
+            <onup condition="String.IsEqual(ListItem.Property(item.type),person) + String.IsEqual(Window(Home).Property(moviecontent),20)">SetProperty(TMDbHelper.WidgetContainer,9560,home)</onup>
+            
             <!-- Cast list - Local only -->
             <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !String.IsEqual(ListItem.DBType,season) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem] + !String.IsEmpty(ListItem.DBID)">50</onup>
 
@@ -1620,6 +1623,26 @@
                 <visible>String.IsEqual(ListItem.Property(item.type),person) + !Skin.HasSetting(filter.video.only.local)</visible>
                 <visible>!Integer.IsEqual(Container(9559).NumItems,0) + !Container(9559).IsUpdating</visible>
                 <visible>String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) + !String.IsEmpty(Window(Home).Property(Init_Value_TMDb))</visible>
+            </control>
+
+            <!-- MOVIES LIST BY DIRECTOR - LOCAL ONLY -->
+
+            <control type="radiobutton" id="9060">
+                <onfocus condition="!String.IsEqual(Window(Home).Property(moviecontent),20)">ClearProperty(moviecontent,Home)</onfocus>
+                <onfocus>ClearProperty(ShowDisc)</onfocus>
+                <onfocus>SetProperty(moviecontent,20,Home)</onfocus>
+                <onclick>SetFocus(9560)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,9560,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+                <include>Def_Button_Dimensions</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/director.png" />
+                </include>
+                <visible>String.IsEqual(ListItem.Property(item.type),person) + Skin.HasSetting(filter.video.only.local)</visible>
+                <visible>!Integer.IsEqual(Container(9560).NumItems,0) + !Container(9560).IsUpdating</visible>
+                <visible>String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) + !String.IsEmpty(Window(Home).Property(Init_Value_TMDb))</visible>
+                <!-- <visible>!String.IsEmpty(Window(Home).Property(SetDirectorSelected))</visible> -->
             </control>
 
         <!-- OTHERS -->

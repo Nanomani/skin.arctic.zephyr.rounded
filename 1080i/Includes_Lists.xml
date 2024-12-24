@@ -183,7 +183,7 @@
         <!-- DBType movie / tvshow ? -->
         <control type="image">
             <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)</visible>
-            <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))]</visible>
+            <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))]</visible>
             <align>right</align>
             <aligny>center</aligny>
             <width>40</width>
@@ -194,7 +194,7 @@
         </control>
         <control type="image">
             <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)</visible>
-            <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))]</visible>
+            <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))]</visible>
             <align>right</align>
             <aligny>center</aligny>
             <width>28</width>
@@ -548,9 +548,10 @@
             <!-- ARROWS -->
 
             <control type="group">
+                <visible>!Control.HasFocus(9554)</visible>
                 <visible>$PARAM[visible.layouts]</visible>
                 <visible>!Container($PARAM[controlid]).IsUpdating</visible>
-                <visible>!Container(9550).OnNext + !Container(9550).OnPrevious + !ListItem.IsCollection</visible>
+                <visible>!Container($PARAM[controlid]).OnNext + !Container($PARAM[controlid]).OnPrevious + !ListItem.IsCollection</visible>
 
                 <include>Animation_Delay_Fade_In_200</include>
 
@@ -631,7 +632,7 @@
 
                 <include>Def_Cleanup_On_Up</include>
                 <onup condition="Control.HasFocus(9550) + !ListItem.IsCollection">SetProperty(down,1)</onup>
-                <onup>$VAR[Path_Actor_Dialog_Info_TMDb]</onup>
+                <onup condition="!Control.HasFocus(9554)">$VAR[Path_Actor_Dialog_Info_TMDb]</onup>
 
                 <!-- Cast Navigation -->
                 <onleft>$PARAM[controlid]</onleft>

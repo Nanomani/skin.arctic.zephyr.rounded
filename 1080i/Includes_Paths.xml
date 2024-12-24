@@ -484,8 +484,12 @@
         <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22director%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[Window(Home).Property(SetDirectorSelected)]%22%5d%7d%5d%7d%2c%22type%22%3a%22movies%22%7d</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,episode) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22director%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[Window(Home).Property(SetDirectorSelected)]%22%5d%7d%5d%7d%2c%22type%22%3a%22tvshows%22%7d</value>
+    </variable>
 
-        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Label)">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22director%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[ListItem.Label]%22%5d%7d%5d%7d%2c%22type%22%3a%22movies%22%7d</value>
+    <variable name="Def_List_Director_Person">
+        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(Window(Home).Property(Director_Person_Query))">plugin://plugin.video.themoviedb.helper/?info=crew_in_both&amp;type=person&amp;filter_key=job&amp;filter_value=Director&amp;tmdb_id=$INFO[Window(Home).Property(Director_Person_Query)]&amp;limit=100</value>
+
+        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22director%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[Window(Home).Property(SetDirectorSelected)]%22%5d%7d%5d%7d%2c%22type%22%3a%22movies%22%7d</value>
     </variable>
 
     <variable name="Def_List_Year">
@@ -710,6 +714,10 @@
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director.9.TMDb_ID)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director.9.job)) + String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Director.9.job),Director)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Director.9.TMDb_ID),&amp;tmdb_id=,]</value>
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director.10.TMDb_ID)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director.10.job)) + String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Director.10.job),Director)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Director.10.TMDb_ID),&amp;tmdb_id=,]</value>
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director.1.TMDb_ID))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Director.1.TMDb_ID),&amp;tmdb_id=,]</value>
+    </variable>
+
+    <variable name="Path_Director_Person_TMDb_ID">
+        <value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id),&amp;tmdb_id=,]</value>
     </variable>
 
     <variable name="Path_Set_TMDb_ID">

@@ -522,18 +522,19 @@
         <value>FFFFFFFF</value>
     </variable>
 
-    <variable name="Color_Background_Item_Status_Label">
+    <variable name="Color_Indicator_Status_Background_Icon">
         <value>FF333333</value>
     </variable>
 
-    <variable name="Color_Watched_Backing">
+    <variable name="Label_Indicator_Status_Background_Icon">
         <value condition="Skin.HasSetting(hide.markers)"></value>
         <value condition="ListItem.IsPlaying + !Skin.HasSetting(hide.markers.isplaying)">[COLOR=FF333333]&#61833;[/COLOR]</value>
         <value condition="ListItem.IsResumable + Skin.HasSetting(hide.markers.inprogress)"></value>
         <value condition="ListItem.IsResumable">[COLOR=FF333333]&#61833;[/COLOR]</value>
-        <value condition="String.IsEqual(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(hide.markers.watched)"></value>
-        <value condition="String.IsEqual(ListItem.Overlay,OverlayWatched.png)">[COLOR=FF333333]&#61833;[/COLOR]</value>
-        <value condition="String.IsEqual(ListItem.Overlay,OverlayUnwatched.png) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]] + !Skin.HasSetting(hide.markers.newcontent)">[COLOR=FF333333]&#61833;[/COLOR]</value>
+        <value condition="Integer.IsGreater(ListItem.Playcount,0) + Skin.HasSetting(hide.markers.watched)"></value>
+        <value condition="Integer.IsGreater(ListItem.Playcount,0)">[COLOR=FF333333]&#61833;[/COLOR]</value>
+        <value condition="Integer.IsEqual(ListItem.Playcount,0) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]] + !Skin.HasSetting(hide.markers.newcontent)">[COLOR=FF333333]&#61833;[/COLOR]</value>
+        <value condition="Integer.IsEqual(ListItem.Playcount,0) + ![$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]] + !Skin.HasSetting(hide.markers.newcontent)">[COLOR=FF333333]&#61833;[/COLOR]</value>
     </variable>
 
     <variable name="Color_Label_Dialog_Notification_Title">
@@ -1020,38 +1021,43 @@
         <param name="indicatorbackground" value="$PARAM[indicatorbackground]" default="false" />
         <definition>
 
-            <!-- TYPE DEFAULT - ONLY TEXT -->
+            <!-- TYPE ICON - ONLY TEXT -->
 
             <control type="group">
                 <visible>!Skin.HasSetting(furniture.markers.alternative)</visible>
-                <visible>!Container.Content(years)</visible>
+                <visible>!Container.Content(years) + !String.IsEqual(ListItem.Property(LabelMore),more)</visible>
+                <visible>String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)</visible>
+
                 <right>$PARAM[right]</right>
                 <top>$PARAM[top]</top>
+
+                <!-- BACKGROUND -->
                 <control type="label">
+                   <top>8</top>
+                   <right>8</right>
+                   <width>50</width>
+                   <height>50</height>
                    <align>center</align>
                    <aligny>center</aligny>
-                   <width>50</width>
-                   <right>7</right>
-                   <top>6</top>
-                   <height>50</height>
-                   <textcolor>$VAR[Color_Background_Item_Status_Label]</textcolor>
+                   <textcolor>$VAR[Color_Indicator_Status_Background_Icon]</textcolor>
                    <font>SymbolPosterBackground</font>
-                   <label>$VAR[Color_Watched_Backing]</label>
-                   <visible>$PARAM[indicatorbackground]</visible>
+                   <label>$VAR[Label_Indicator_Status_Background_Icon]</label>
                 </control>
+
+                <!-- ICON -->
                 <control type="label">
+                   <top>8</top>
+                   <right>8</right>
+                   <width>50</width>
+                   <height>50</height>
                    <align>center</align>
                    <aligny>center</aligny>
-                   <width>50</width>
-                   <right>7</right>
-                   <top>6</top>
-                   <height>50</height>
                    <font>SymbolPoster</font>
                    <label>$VAR[Label_Watched_Poster]</label>
                 </control>
             </control>
 
-            <!-- TYPE ROUNDED - WITH BACKGROUND / TEXT -->
+            <!-- TYPE BANNER - WITH BACKGROUND / TEXT -->
 
             <control type="group">
                 <visible>Skin.HasSetting(furniture.markers.alternative)</visible>

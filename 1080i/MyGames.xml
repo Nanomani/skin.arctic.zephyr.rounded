@@ -69,6 +69,7 @@
         </control>
 
         <control type="group">
+            <animation effect="slide" start="0" end="-265" time="200" condition="Window.IsVisible(1110)">Conditional</animation>
             <include content="Def_View_ContextMenu_Background"><param name="height" value="689" /></include>
             <include content="Def_View_ContextMenu_Arrows"><param name="arrow_bottom" value="699" /></include>
 
@@ -85,8 +86,9 @@
 
             <control type="grouplist" id="9000">
                 <top>112</top>
+                <pagecontrol>9070</pagecontrol>
                 <usecontrolcoords>true</usecontrolcoords>
-                <include content="Def_View_ContextMenu_GroupList"><param name="height" value="560" /></include>
+                <include content="Def_View_ContextMenu_GroupList_scrollbar"><param name="height" value="560" /><param name="scrollid" value="9070" /></include>
                 <include>Animation_Scrolltime_Views_List</include>
 
                 <!-- NOW PLAYING -->
@@ -102,6 +104,38 @@
                 <!-- MINI PLAYER -->
 
                 <include>Def_View_ContextMenu_Player</include>
+
+                <!-- FILTER -->
+
+                <control type="button" id="55553">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>587</label>
+                </control>
+                <control type="radiobutton" id="11">
+                    <description>Unlock Shares</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                    <label>20336</label>
+                    <onclick>mastermode</onclick>
+                    <selected>system.ismaster</selected>
+                    <visible>system.haslocks</visible>
+                </control>
+                <control type="edit" id="19">
+                    <label>587</label>
+                    <description>Filter (hidden)</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <align>left</align>
+                </control>
+                <control type="radiobutton" id="98">
+                    <visible>Container.CanFilterAdvanced</visible>
+                    <description>Filter</description>
+                    <include>Def_Button_Gradient_Context</include>
+                    <label>587</label>
+                    <align>left</align>
+                    <onclick>SetFocus(50)</onclick>
+                    <onclick>Filter</onclick>
+                    <selected>Container.Filtered</selected>
+                </control>
 
                 <!-- OPEN CUSTOM_SETVIEWTYPE -->
 
@@ -426,82 +460,12 @@
                     <visible>Control.IsVisible(512)</visible>
                 </control>
 
-                <!-- GLOBAL -->
-
-                <control type="button" id="55552">
-                    <include>Def_Context_Menu_Label</include>
-                    <label>31381</label>
-                </control>
-
-                <control type="radiobutton" id="9082">
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <label>31421</label>
-                    <selected>Skin.HasSetting(items.focus.zoom)</selected>
-                    <onclick>Skin.ToggleSetting(items.focus.zoom)</onclick>
-                    <onclick>ReloadSkin()</onclick>
-                </control>
-                <control type="radiobutton" id="9083">
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <label>$LOCALIZE[31423]:</label>
-                    <selected>Skin.HasSetting(enable.items.focus.glow)</selected>
-                    <onclick>Skin.ToggleSetting(enable.items.focus.glow)</onclick>
-                </control>
-                <control type="radiobutton" id="9584">
-                    <include>Def_Button_Gradient_Context</include>
-                    <label>31006</label>
-                    <align>left</align>
-                    <selected>Skin.HasSetting(enable.furniture.flags.colored)</selected>
-                    <onclick>Skin.ToggleSetting(enable.furniture.flags.colored)</onclick>
-                    <visible>!Skin.HasSetting(hide.furniture.flags) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                </control>
-                <control type="radiobutton" id="9586">
-                    <include>Def_Button_Gradient_Context</include>
-                    <label>31011</label>
-                    <align>left</align>
-                    <selected>Skin.HasSetting(show.header.clearlogo)</selected>
-                    <onclick>Skin.ToggleSetting(show.header.clearlogo)</onclick>
-                    <onclick>ReloadSkin()</onclick>
-                </control>
-
-                <!-- FILTER -->
-
-                <control type="button" id="55553">
-                    <include>Def_Context_Menu_Label</include>
-                    <label>587</label>
-                </control>
-                <control type="radiobutton" id="11">
-                    <description>Unlock Shares</description>
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <label>20336</label>
-                    <onclick>mastermode</onclick>
-                    <selected>system.ismaster</selected>
-                    <visible>system.haslocks</visible>
-                </control>
-                <control type="edit" id="19">
-                    <label>587</label>
-                    <description>Filter (hidden)</description>
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                </control>
-                <control type="radiobutton" id="98">
-                    <visible>Container.CanFilterAdvanced</visible>
-                    <description>Filter</description>
-                    <include>Def_Button_Gradient_Context</include>
-                    <label>587</label>
-                    <align>left</align>
-                    <onclick>SetFocus(50)</onclick>
-                    <onclick>Filter</onclick>
-                    <selected>Container.Filtered</selected>
-                </control>
-
                 <!-- ACTION -->
 
                 <control type="button" id="666">
                     <include>Def_Context_Menu_Label</include>
                     <label>14230</label>
+                    <visible>Container.Content(addons) | !String.IsEmpty(Container.PluginName)</visible>
                 </control>
                 <control type="button" id="621">
                     <include>Def_Button_Gradient_Context</include>
@@ -518,6 +482,18 @@
                     <visible>!String.IsEmpty(Container.PluginName)</visible>
                 </control>
             </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="9070" />
+                <param name="top" value="112" />
+                <param name="onleft" value="9000" />
+                <param name="onright" value="ActivateWindow(1110)" />
+                <param name="onback" value="9000" />
+                <param name="height" value="560" />
+                <param name="centerright" value="4" />
+            </include>
         </control>
 
         <control type="group">

@@ -43,6 +43,91 @@
 
     <!-- GAME - DEF -->
 
+    <include name="Def_Game_Image_Background">
+        <param name="pad_shadow" value="$PARAM[pad_shadow]" default="7" />
+        <param name="Texture_Shadow" value="$PARAM[Texture_Shadow]" default="$VAR[shadow12]" />
+        <param name="Border_Shadow" value="$PARAM[Border_Shadow]" default="18" />
+        <param name="Texture_Border" value="$PARAM[Texture_Border]" default="$VAR[border12]" />
+
+        <param name="pad_image" value="$PARAM[pad_image]" default="16" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White70" />
+        <param name="condition_fade" value="$PARAM[condition_fade]" default="false" />
+
+        <param name="visible" value="$PARAM[visible]" default="true" />
+
+        <definition>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_shadow]</param></include>
+                <texture border="$PARAM[Border_Shadow]" infill="false">common/$PARAM[Texture_Shadow]</texture>
+                <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                <visible>$PARAM[visible]</visible>
+            </control>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_shadow]</param></include>
+                <texture border="$PARAM[Border_Shadow]" infill="false">common/$VAR[border12]</texture>
+                <visible>$PARAM[visible]</visible>
+            </control>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                <texture border="12" colordiffuse="black">common/box12.png</texture>
+                <animation effect="fade" start="100" end="90" condition="$PARAM[condition_fade]">Conditional</animation>
+                <visible>!String.IsEqual(ListItem.Icon,DefaultAddSource.png)</visible>
+                <visible>$PARAM[visible]</visible>
+            </control>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                <texture border="12" colordiffuse="$PARAM[colordiffuse]">common/box12.png</texture>
+                <animation effect="fade" start="100" end="90" condition="$PARAM[condition_fade]">Conditional</animation>
+                <visible>String.IsEqual(ListItem.Icon,DefaultAddSource.png)</visible>
+                <visible>$PARAM[visible]</visible>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Def_Game_Image_Glow">
+        <control type="group">
+            <top>6</top>
+            <left>6</left>
+            <right>6</right>
+            <height>276</height>
+            <include content="Layout_Widget_Focus">
+                <param name="id" value="10811" />
+                <param name="glow_height" value="272" />
+                <param name="glow_top" value="2" />
+                <param name="glow_zoom" value="108" />
+                <param name="glow_left" value="6" />
+                <param name="glow_right" value="8" />
+            </include>
+        </control>
+    </include>
+
+    <include name="Def_Game_Label">
+        <control type="label">
+            <top>296</top>
+            <left>16</left>
+            <right>10</right>
+            <height>20</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <scroll>true</scroll>
+            <font>InfoNetflix</font>
+            <textcolor>Dark1</textcolor>
+            <label>$INFO[ListItem.Label]</label>
+        </control>
+        <control type="label">
+            <top>333</top>
+            <left>16</left>
+            <right>10</right>
+            <height>20</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <scroll>true</scroll>
+            <font>Small24</font>
+            <textcolor>PanelWhite70</textcolor>
+            <label>$INFO[ListItem.Label2]</label>
+        </control>
+    </include>
+
     <include name="Def_Game_Number_Of_Players">
         <control type="group" description="NumberOfPlayers">
             <width>300</width>
@@ -754,5 +839,4 @@
             <include>Def_Dialog_Select_label_Num_Item</include>
 		</control>
 	</include>
-
 </includes>

@@ -938,10 +938,12 @@
 
         <!-- UP - 1 - Displaying info -->
         <onup condition="String.IsEmpty(Window(Home).Property(osdshowinfo))">SetProperty(osdshowinfo,1,Home)</onup>
+
         <onup condition="String.IsEmpty(Window(Home).Property(osdshowinfo))">ClearProperty(fullscreeninfo,Home)</onup>
 
         <!-- UP - 2 - Displaying info + plot -->
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo))">SetProperty(OSDVideoDetails,1,Home)</onup>
+
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + Control.IsVisible(9805)">SetFocus(9805)</onup>
         <!-- <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + !Control.IsVisible(9805)">SetFocus(556)</onup> -->
 
@@ -949,6 +951,7 @@
 
         <!-- Close info + plot -->
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + !String.IsEmpty(Window(Home).Property(OSDVideoDetails))">ClearProperty(osdshowinfo,Home)</onup>
+
         <onup condition="!String.IsEmpty(Window(Home).Property(osdshowinfo)) + !String.IsEmpty(Window(Home).Property(OSDVideoDetails))">ClearProperty(OSDVideoDetails,Home)</onup>
 
         <!-- Close plot -->
@@ -961,12 +964,14 @@
         <ondown condition="String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(dontautoclose))">SetProperty(dontautoclose,1,Home)</ondown>
 
         <ondown condition="String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(dontautoclose)) + !String.IsEmpty(VideoPlayer.DBID)">Close</ondown>
+
         <ondown condition="String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(dontautoclose)) + !String.IsEmpty(VideoPlayer.DBID)">SetProperty(dialogvideoinfo,1,Home)</ondown>
 
         <!-- MOVIES / TV SHOWS DETAILED INFO -->
         <ondown condition="String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(dontautoclose)) + !String.IsEmpty(VideoPlayer.DBID)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
 
-        <ondown condition="!String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(dontautoclose)) + !Player.Paused">PlayerControl(Play)</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(osdshowinfo)) + String.IsEmpty(Window(Home).Property(dontautoclose)) + !String.IsEmpty(VideoPlayer.DBID) + !Player.Paused">PlayerControl(Play)</ondown>
+
         <ondown condition="!String.IsEmpty(Window(Home).Property(dontautoclose))">ClearProperty(dontautoclose,Home)</ondown>
     </include>
 

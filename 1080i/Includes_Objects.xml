@@ -106,23 +106,24 @@
         <param name="centerbottom" value="$PARAM[centerbottom]" default="257" />
         <param name="centerleft" value="$PARAM[centerleft]" default="550" />
         <param name="visible" value="$PARAM[visible]" default="false" />
+
         <definition>
-        <control type="group">
-            <include>Animation_Delay_Fade_In_200</include>
-            <visible>$PARAM[visible]</visible>
-            <centerbottom>$PARAM[centerbottom]</centerbottom>
-            <height>16</height>
-            <control type="image">
-               <centerleft>$PARAM[centerleft]</centerleft>
-               <include>Def_Arrow_Size</include>
-               <texture colordiffuse="Dark1" flipx="true">common/arrow-small-right.png</texture>
+            <control type="group">
+                <include>Animation_Delay_Fade_In_200</include>
+                <visible>$PARAM[visible]</visible>
+                <centerbottom>$PARAM[centerbottom]</centerbottom>
+                <height>16</height>
+                <control type="image">
+                   <centerleft>$PARAM[centerleft]</centerleft>
+                   <include>Def_Arrow_Size</include>
+                   <texture colordiffuse="Dark1" flipx="true">common/arrow-small-right.png</texture>
+                </control>
+                <control type="image">
+                   <centerright>61</centerright>
+                   <include>Def_Arrow_Size</include>
+                   <texture colordiffuse="Dark1" flipx="false">common/arrow-small-right.png</texture>
+                </control>
             </control>
-            <control type="image">
-               <centerright>61</centerright>
-               <include>Def_Arrow_Size</include>
-               <texture colordiffuse="Dark1" flipx="false">common/arrow-small-right.png</texture>
-            </control>
-        </control>
         </definition>
     </include>
 
@@ -134,44 +135,56 @@
         <param name="centerleft" default="54" />
         <param name="centertop" default="54" />
         <param name="show_label_spinner" default="true" />
-        <param name="hasspinner" default="true" />
-        <param name="hasprogress" default="false" />
-        <param name="texture" default="dialog/loading-back.png" />
+
         <param name="size" default="100" />
+        <param name="texture_circle" default="dialog/loading-back.png" />
+        <param name="colordiffuse_circle" default="PanelWhite100" />
+
         <param name="icon" default="special://skin/extras/icons/kodi.png" />
-        <param name="colordiffuse" default="PanelWhite70" />
+        <param name="colordiffuse_icon" default="PanelWhite70" />
+
+        <param name="has_spinner" default="true" />
+        <param name="spin_spinner" default="true" />
+        <param name="has_progress" default="false" />
+        <param name="spin_progress" default="false" />
+
         <param name="progress" default="Control.GetLabel(32)" />
         <param name="progress_id" default="32" />
-        <param name="spinprogress" default="false" />
-        <param name="spinspinner" default="true" />
+
         <param name="visible" default="true" />
         <definition>
             <control type="group">
                 <visible>$PARAM[visible]</visible>
                 <nested />
-                <centerleft>$PARAM[centerleft]</centerleft>
+
                 <centertop>$PARAM[centertop]</centertop>
+                <centerleft>$PARAM[centerleft]</centerleft>
                 <width>$PARAM[size]</width>
                 <height>$PARAM[size]</height>
 
+                <!-- CIRCLE -->
+
                 <control type="image" description="Back">
                     <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <texture>$PARAM[texture]</texture>
-                    <colordiffuse>PanelWhite100</colordiffuse>
+                    <texture>$PARAM[texture_circle]</texture>
+                    <colordiffuse>$PARAM[colordiffuse_circle]</colordiffuse>
                 </control>
+
+                <!-- ICON -->
+
                 <control type="image" description="Icon">
                     <bordersize>30</bordersize>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                     <texture>$PARAM[icon]</texture>
-                    <colordiffuse>$PARAM[colordiffuse]</colordiffuse>
-                    <!-- <visible>![Container.Scrolling + $EXP[Exp_AlphabetTypes_Only]]</visible> -->
-                    <animation effect="fade" start="0" end="100" time="200" delay="1200" reversible="true">Visible</animation>
-                    <animation effect="fade" start="100" end="0" time="200" delay="400" reversible="true">Hidden</animation>
+                    <colordiffuse>$PARAM[colordiffuse_icon]</colordiffuse>
                 </control>
-                <include content="Object_Control" condition="$PARAM[hasspinner]">
+
+                <!-- SPINNER -->
+
+                <include content="Object_Control" condition="$PARAM[has_spinner]">
                     <param name="control" value="group" />
                     <description>Busy animation</description>
-                    <animation effect="rotate" condition="$PARAM[spinspinner]" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
+                    <animation effect="rotate" condition="$PARAM[spin_spinner]" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
                     <control type="image">
                         <texture colordiffuse="$VAR[Color_Focus]">dialog/loading-spinner.png</texture>
                         <aspectratio>keep</aspectratio>
@@ -179,14 +192,16 @@
                     <control type="image">
                         <texture colordiffuse="$VAR[Color_FocusGradient]">dialog/loading-spinner.png</texture>
                         <aspectratio>keep</aspectratio>
-                        <animation effect="fade" condition="$PARAM[spinspinner]" start="0" end="100" pulse="true" time="1000">Conditional</animation>
+                        <animation effect="fade" condition="$PARAM[spin_spinner]" start="0" end="100" pulse="true" time="1000">Conditional</animation>
                     </control>
                 </include>
 
-                <include content="Object_Control" condition="$PARAM[hasprogress]">
+                <!-- PROGRESS -->
+
+                <include content="Object_Control" condition="$PARAM[has_progress]">
                     <param name="control" value="group" />
                     <description>Busy animation</description>
-                    <animation effect="rotate" condition="$PARAM[spinprogress]" start="360" end="0" loop="true" time="2000" center="auto">Conditional</animation>
+                    <animation effect="rotate" condition="$PARAM[spin_progress]" start="360" end="0" loop="true" time="2000" center="auto">Conditional</animation>
                     <control type="image">
                         <texture colordiffuse="$VAR[Color_Focus]">$INFO[$PARAM[progress],progress/circle_info/p,.png]</texture>
                         <aspectratio align="center" aligny="center">keep</aspectratio>
@@ -200,6 +215,8 @@
                         </include>
                     </control>
                 </include>
+
+                <!-- LABEL -->
 
                 <include content="Object_Control" condition="$PARAM[show_label_spinner]">
                     <param name="control" value="label" />
@@ -373,6 +390,11 @@
 
     <include name="Furniture_Header_Busy">
         <param name="visible" default="true" />
+        <param name="colordiffuse_icon" default="PanelWhite70" />
+        <param name="colordiffuse_circle" default="PanelWhite100" />
+        <param name="color_label_main_header" default="Dark1" />
+        <param name="color_label_sub_header" default="Dark2" />
+
         <definition>
             <control type="group">
                 <visible>$PARAM[visible]</visible>
@@ -396,21 +418,24 @@
                 <control type="group">
                     <top>40</top>
                     <left>40</left>
+
                     <control type="image">
                         <width>160</width>
                         <height>160</height>
                         <texture colordiffuse="Panel">common/circlebutton.png</texture>
                         <animation effect="fade" start="100" end="40" condition="!Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
                     </control>
+
                     <include content="Object_Spinner_Busy">
                         <param name="show_label_spinner" value="false" />
                         <param name="centerleft" value="80" />
                         <param name="centertop" value="80" />
+                        <param name="colordiffuse_icon" value="$PARAM[colordiffuse_icon]" />
+                        <param name="colordiffuse_circle" value="$PARAM[colordiffuse_circle]" />
                     </include>
                 </control>
 
                 <control type="group">
-                    <visible>![Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)]</visible>
                     <top>View_SidePad</top>
                     <left>View_SidePad</left>
                     <control type="label">
@@ -419,7 +444,7 @@
                         <centertop>24</centertop>
                         <width>auto</width>
                         <font>HeaderLabel</font>
-                        <textcolor>Dark1</textcolor>
+                        <textcolor>$PARAM[color_label_main_header]</textcolor>
                         <label>$LOCALIZE[20186]</label>
                     </control>
                     <control type="label">
@@ -428,30 +453,7 @@
                         <centertop>58</centertop>
                         <font>Tiny</font>
                         <width>auto</width>
-                        <textcolor>Dark2</textcolor>
-                        <label>$LOCALIZE[31546]...</label>
-                    </control>
-                </control>
-                <control type="group">
-                    <visible>[Window.IsVisible(VideoOSD.xml) | Window.IsVisible(VideoFullScreen.xml)]</visible>
-                    <top>View_SidePad</top>
-                    <left>View_SidePad</left>
-                    <control type="label">
-                        <left>108</left>
-                        <align>left</align>
-                        <centertop>24</centertop>
-                        <width>auto</width>
-                        <font>HeaderLabel</font>
-                        <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
-                        <label>$LOCALIZE[20186]</label>
-                    </control>
-                    <control type="label">
-                        <left>108</left>
-                        <align>left</align>
-                        <centertop>58</centertop>
-                        <font>Tiny</font>
-                        <width>auto</width>
-                        <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                        <textcolor>$PARAM[color_label_sub_header]</textcolor>
                         <label>$LOCALIZE[31546]...</label>
                     </control>
                 </control>

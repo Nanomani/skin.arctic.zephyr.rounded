@@ -112,8 +112,47 @@
     <!--           DEF - WIDGET - IMAGE - BACKGROUND              -->
     <!-- ======================================================== -->
 
+    <include name="Def_Widget_Weather_Background">
+        <param name="bordertopbottom" value="$PARAM[bordertopbottom]" default="10" />
+        <param name="borderleftright" value="$PARAM[borderleftright]" default="10" />
+        <param name="FanartCode" value="$PARAM[FanartCode]" default="" />
+        <definition>
+            <control type="image">
+               <top>$PARAM[bordertopbottom]</top>
+               <left>$PARAM[borderleftright]</left>
+               <right>$PARAM[borderleftright]</right>
+               <bottom>$PARAM[bordertopbottom]</bottom>
+               <texture border="12" colordiffuse="White70">common/box12.png</texture>
+               <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+            </control>
+            <control type="multiimage" description="Fanart">
+               <visible>!Skin.HasSetting(hide.weather.fanart) + !Skin.HasSetting(hide.weather.fanart.widgets) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
+               <top>$PARAM[bordertopbottom]</top>
+               <left>$PARAM[borderleftright]</left>
+               <right>$PARAM[borderleftright]</right>
+               <bottom>$PARAM[bordertopbottom]</bottom>
+               <fadetime>600</fadetime>
+               <timeperimage>12000</timeperimage>
+               <randomize>true</randomize>
+               <aspectratio>scale</aspectratio>
+               <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
+               <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$PARAM[FanartCode]$INFO[ListItem.Property(FanartCode)]/</imagepath>
+            </control>
+            <control type="image" description="Fanart">
+               <visible>!Skin.HasSetting(hide.weather.fanart) + !Skin.HasSetting(hide.weather.fanart.widgets) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
+               <top>$PARAM[bordertopbottom]</top>
+               <left>$PARAM[borderleftright]</left>
+               <right>$PARAM[borderleftright]</right>
+               <bottom>$PARAM[bordertopbottom]</bottom>
+               <aspectratio>scale</aspectratio>
+               <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
+               <texture background="true">$INFO[Skin.String(weather.fanart.path)]$PARAM[FanartCode]$INFO[ListItem.Property(FanartCode)].jpg</texture>
+            </control>
+        </definition>
+    </include>
+
     <include name="Def_Widget_Background">
-        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White70" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="condition_fade" value="$PARAM[condition_fade]" default="false" />
         <param name="pad_shadow" value="$PARAM[pad_shadow]" default="1" />
         <param name="pad_image" value="$PARAM[pad_image]" default="10" />
@@ -134,7 +173,7 @@
         <param name="Texture_Border" value="$PARAM[Texture_Border]" default="$VAR[border12]" />
 
         <param name="pad_image" value="$PARAM[pad_image]" default="0" />
-        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White70" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="condition_fade" value="$PARAM[condition_fade]" default="false" />
 
         <param name="visible" value="$PARAM[visible]" default="true" />
@@ -364,12 +403,21 @@
 
     <include name="Def_Image_Shadow">
         <param name="pad_shadow" value="$PARAM[pad_shadow]" default="-9" />
+        <param name="Texture_Shadow" value="$PARAM[Texture_Shadow]" default="$VAR[shadow12]" />
+        <param name="Border_Shadow" value="$PARAM[Border_Shadow]" default="18" />
+        <param name="Texture_Border" value="$PARAM[Texture_Border]" default="$VAR[border12]" />
+
         <param name="visible" value="$PARAM[visible]" default="true" />
         <definition>
             <control type="image">
                 <include content="Def_Padding"><param name="pad">$PARAM[pad_shadow]</param></include>
-                <texture border="18" infill="false">common/$VAR[shadow12]</texture>
+                <texture border="$PARAM[Border_Shadow]" infill="false">common/$PARAM[Texture_Shadow]</texture>
                 <visible>!Skin.HasSetting(global.hide.shadows)</visible>
+                <visible>$PARAM[visible]</visible>
+            </control>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_shadow]</param></include>
+                <texture border="$PARAM[Border_Shadow]" infill="false">common/$VAR[border12]</texture>
                 <visible>$PARAM[visible]</visible>
             </control>
         </definition>

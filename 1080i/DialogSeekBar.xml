@@ -8,7 +8,7 @@
     <visible>!Player.HasGame</visible>
     <visible>!Window.IsActive(DialogPlayerProcessInfo.xml)</visible>
 
-    <visible>[VideoPlayer.IsFullscreen + [Window.IsVisible(videoosd) | Window.IsVisible(fullscreeninfo) | Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | !String.IsEmpty(Player.SeekNumeric) | !String.IsEmpty(PVR.ChannelNumberInput) | Player.Forwarding | Player.Rewinding | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) | [Player.ShowInfo] + VideoPlayer.Content(livetv)]] | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) | Window.IsActive(MusicVisualisation.xml)</visible>
+    <visible>Window.IsActive(MusicVisualisation.xml) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) | [VideoPlayer.IsFullscreen + [Window.IsVisible(videoosd) | Window.IsVisible(fullscreeninfo) | Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | !String.IsEmpty(Player.SeekNumeric) | !String.IsEmpty(PVR.ChannelNumberInput) | Player.Forwarding | Player.Rewinding | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) | [Player.ShowInfo] + VideoPlayer.Content(livetv)]]</visible>
 
     <visible>!Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(VideoOSDBookmarks.xml) + !Window.IsVisible(Custom_1121_OSD_Settings_Video.xml) + !Window.IsVisible(DialogSubtitles.xml)</visible>
 
@@ -23,6 +23,10 @@
     <onload condition="[!String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO)) | !String.IsEmpty(Window(Home).Property(wikipedia))] + Skin.HasSetting(osd.open.auto.pause) + Player.Paused + VideoPlayer.IsFullscreen + !Window.IsVisible(DialogFullScreenInfo.xml) + !String.IsEmpty(VideoPlayer.DBID)">PlayerControl(Play)</onload>
 
     <onload condition="[!String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO)) | !String.IsEmpty(Window(Home).Property(wikipedia))] + Skin.HasSetting(osd.open.auto.pause) + Player.Paused + VideoPlayer.IsFullscreen + !Window.IsVisible(DialogFullScreenInfo.xml) + !String.IsEmpty(VideoPlayer.DBID)">AlarmClock(cleanup,ClearProperty(OSDVideo_DIALOG_VIDEO_INFO,Home),00:01,silent)</onload>
+
+    <onload condition="Skin.HasSetting(show.osd.info.with.plot) + Skin.HasSetting(show.osd.info.with.plot) + !String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + Player.Paused + !Window.IsVisible(videoosd)">ClearProperty(OSDVideo_DIALOG_FULL_SCREEN_INFO,Home)</onload>
+
+    <onload condition="Skin.HasSetting(show.osd.info.with.plot) + Skin.HasSetting(show.osd.info.with.plot) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.Paused + !Window.IsVisible(videoosd)">SetProperty(OSDVideo_Show_PLOT,1,Home)</onload>
 
     <onunload>ClearProperty(OSDVideo_Show_INFO,Home)</onunload>
     <onunload>ClearProperty(OSDVideo_Show_PLOT,Home)</onunload>
@@ -55,10 +59,11 @@
 
         <include content="Object_OSD_Player_Plot">
             <param name="visible" value="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO))" />
+            <!-- <param name="animation_fade_hide" value="true" /> -->
             <param name="onleft" value="SetFocus(555)" />
             <param name="onright" value="SetFocus(555)" />
             <param name="onback" value="SetFocus(555)" />
-            <param name="scrollid" value="9804" />
+            <param name="scrollid" value="9803" />
         </include>
     </controls>
 </window>

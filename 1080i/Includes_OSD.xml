@@ -942,6 +942,15 @@
     <include name="Def_OSD_UpDown_Video_Info">
 
         <!-- ========== -->
+        <!--   FOCUS    -->
+        <!-- ========== -->
+
+        <!-- <onfocus>ClearProperty(OSDVideo_Show_PLOT,Home)</onfocus> -->
+        <!-- <onfocus>ClearProperty(OSDVideo_Show_INFO,Home)</onfocus> -->
+        <!-- <onfocus condition="Skin.HasSetting(show.osd.info.with.plot) + !String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !Control.HasFocus(14)">ClearProperty(OSDVideo_Show_INFO,Home)</onfocus> -->
+        <!-- <onfocus condition="Skin.HasSetting(show.osd.info.on.pause) + !String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !Control.HasFocus(14)">ClearProperty(OSDVideo_Show_INFO,Home)</onfocus> -->
+
+        <!-- ========== -->
         <!--     UP     -->
         <!-- ========== -->
 
@@ -1469,7 +1478,7 @@
         <control type="group">
             <animation effect="fade" start="100" end="0" time="150" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused] + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
 
-            <animation effect="fade" start="100" end="0" time="150" condition="Window.IsVisible(DialogPlayerProcessInfo.xml) | Window.IsVisible(DialogSlider.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogSettings.xml) | Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(Custom_1121_OSD_Settings_Video.xml) | Window.IsVisible(DialogSubtitles.xml) | Window.IsVisible(DialogPVRChannelsOSD.xml) | Window.IsVisible(DialogPVRChannelGuide.xml)">Conditional</animation>
+            <animation effect="fade" start="100" end="0" time="150" condition="Player.HasGame | Window.IsVisible(DialogPlayerProcessInfo.xml) | Window.IsVisible(DialogSlider.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogSettings.xml) | Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(Custom_1121_OSD_Settings_Video.xml) | Window.IsVisible(DialogSubtitles.xml) | Window.IsVisible(DialogPVRChannelsOSD.xml) | Window.IsVisible(DialogPVRChannelGuide.xml)">Conditional</animation>
 
             <animation type="WindowOpen">
                 <effect type="fade" start="0" end="100" time="150" delay="150" />
@@ -2183,9 +2192,7 @@
 
     <include name="OSD_Video_SeekBar">
         <control type="group">
-            <visible>!Window.IsVisible(GameOSD.xml)</visible>
-
-            <animation effect="fade" start="100" end="0" time="150" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))] + !Window.IsVisible(DialogFullScreenInfo.xml)] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
+            <animation effect="fade" start="100" end="0" time="150" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [!Player.Paused + !Window.IsVisible(videoosd)]] + !Window.IsVisible(DialogFullScreenInfo.xml)] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
 
             <animation effect="fade" start="100" end="0" time="150" condition="Window.IsVisible(DialogPlayerProcessInfo.xml)">Conditional</animation>
 
@@ -2223,10 +2230,7 @@
                 <control type="group">
                     <visible>[Window.IsVisible(fullscreeninfo) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) | Player.ShowInfo | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) | [Player.Paused + Skin.HasSetting(show.osd.info.on.pause)]]</visible>
 
-                    <animation effect="fade" start="0" end="100" time="250">Visible</animation>
-                    <animation effect="fade" start="0" end="100" time="250">WindowOpen</animation>
-                    <animation effect="fade" end="0" start="100" time="200">Hidden</animation>
-                    <animation effect="fade" end="0" start="100" time="200">WindowClose</animation>
+                    <include>Animation_OSD_Fade_Open_Close</include>
 
                     <top>180r</top>
                     <bottom>0</bottom>
@@ -2408,10 +2412,7 @@
 
                     <visible>!Player.Paused | !Skin.HasSetting(show.osd.info.on.pause)</visible>
 
-                    <animation effect="fade" start="0" end="100" delay="150" time="250">Visible</animation>
-                    <animation effect="fade" start="0" end="100" delay="150" time="250">WindowOpen</animation>
-                    <animation effect="fade" end="0" start="100" time="200">Hidden</animation>
-                    <animation effect="fade" end="0" start="100" time="200">WindowClose</animation>
+                    <include>Animation_OSD_Fade_Open_Close</include>
 
                     <animation effect="slide" start="0,0" end="0,-10" time="0" condition="true">Conditional</animation>
 
@@ -2442,7 +2443,7 @@
                         <control type="group">
                             <visible>!Skin.HasSetting(show.osd.video.clearlogo) | [Skin.HasSetting(show.osd.video.clearlogo) + !$EXP[Title_Clearlogo_Player_Available]] </visible>
 
-                            <include>Animation_OSD_Fade</include>
+                            <include>Animation_OSD_Fade_Label</include>
 
                             <align>left</align>
 
@@ -2531,7 +2532,7 @@
                         <!-- INFO RIGHT - STATUS - LIGN 1 -->
 
                         <control type="label" description="Title">
-                            <include>Animation_OSD_Fade</include>
+                            <include>Animation_OSD_Fade_Label</include>
                             <align>right</align>
                             <bottom>85</bottom>
                             <height>40</height>
@@ -2602,12 +2603,9 @@
                 <!-- SEEKBAR - PROGRESS BAR -->
 
                 <control type="group">
-                    <animation effect="fade" start="0" end="100" delay="150" time="250">Visible</animation>
-                    <animation effect="fade" start="0" end="100" delay="150" time="250">WindowOpen</animation>
-                    <animation effect="fade" end="0" start="100" time="200">Hidden</animation>
-                    <animation effect="fade" end="0" start="100" time="200">WindowClose</animation>
-
                     <animation effect="slide" start="0,0" end="0,-10" time="0" condition="true">Conditional</animation>
+
+                    <include>Animation_OSD_Fade_Open_Close</include>
 
                     <bottom>0</bottom>
                     <width>100%</width>
@@ -2627,7 +2625,7 @@
                 <control type="group">
                     <visible>VideoPlayer.Content(livetv) | VideoPlayer.Content(files)</visible>
                     <visible>Skin.HasSetting(pvr.showtechnicalinfo)</visible>
-                    <include>Animation_OSD_Fade</include>
+                    <include>Animation_OSD_Fade_Label</include>
 
                     <bottom>-19</bottom>
                     <left>130</left>
@@ -2708,18 +2706,7 @@
 
                 <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(musicosd)">Conditional</animation>
 
-                <animation type="Visible">
-                    <effect type="fade" start="0" end="100" time="250" />
-                </animation>
-                <animation type="WindowOpen" reversible="false">
-                    <effect type="fade" start="0" end="100" time="250" />
-                </animation>
-                <animation type="Hidden">
-                    <effect type="fade" start="100" end="0" time="200" />
-                </animation>
-                <animation type="WindowClose" reversible="false">
-                    <effect type="fade" start="100" end="0" time="200" />
-                </animation>
+                <include>Animation_OSD_Fade_Open_Close</include>
 
                 <!-- DURATION / -->
 

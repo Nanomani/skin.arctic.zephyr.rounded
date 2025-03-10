@@ -1290,34 +1290,62 @@
 
                     <include>Def_Widget_Background</include>
 
-                    <!-- Thumb - Actors -->
+                    <!-- Thumb - Actors - with picture -->
+
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/poster_w202_h305.png" background="true">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb]</texture>
+                        <visible>$PARAM[thumb] + !String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb)</visible>
+                    </control>
+
+                    <!-- Thumb - Actors - without picture - local -->
+
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/poster_w202_h305.png" colordiffuse="Dark1" background="true" fallback="$PARAM[fallbackpicture]">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb]</texture>
+                        <visible>$PARAM[thumb] + String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb)</visible>
+                        <visible>![Skin.HasSetting(filter.video.cast.on.line) | String.IsEmpty(ListItem.DBID)]</visible>
+                    </control>
+
+                    <!-- Thumb - Actors - without picture - on line -->
 
                     <control type="image">
                         <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
                         <aspectratio scalediffuse="false">scale</aspectratio>
                         <texture diffuse="diffuse/poster_w202_h305.png" background="true" fallback="$PARAM[fallbackpicture]">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb]</texture>
-                        <visible>$PARAM[thumb] + !String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb)</visible>
-                    </control>
-                    <control type="image">
-                        <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                        <aspectratio scalediffuse="false">keep</aspectratio>
-                        <texture diffuse="diffuse/poster_w202_h305.png" colordiffuse="Dark1" background="true" fallback="$PARAM[fallbackpicture]">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb]</texture>
                         <visible>$PARAM[thumb] + String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Thumb)</visible>
+                        <visible>[Skin.HasSetting(filter.video.cast.on.line) | String.IsEmpty(ListItem.DBID)]</visible>
                     </control>
 
-                    <!-- Poster - Movies / TvShows -->
+                    <!-- Poster - Movies / TvShows - with picture -->
 
                     <control type="image">
                         <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
                         <aspectratio scalediffuse="false">scale</aspectratio>
-                        <texture diffuse="diffuse/poster_w202_h305.png" background="true" fallback="$PARAM[fallbackpicture]">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster)]</texture>
-                        <visible>$PARAM[poster] + [!String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster)) | !Skin.HasSetting(filter.video.only.local)]</visible>
+                        <texture diffuse="diffuse/poster_w202_h305.png" background="true">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster)]</texture>
+                        <visible>$PARAM[poster] + !String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster))</visible>
                     </control>
+
+                    <!-- Poster - Movies / TvShows - without picture - local -->
+
                     <control type="image">
                         <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                        <aspectratio scalediffuse="false">keep</aspectratio>
-                        <texture diffuse="diffuse/poster_w202_h305.png" colordiffuse="Dark1" background="true" fallback="$PARAM[fallbackpicture]">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Icon]</texture>
-                        <visible>$PARAM[poster] + String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster)) + Skin.HasSetting(filter.video.only.local)</visible>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/poster_w202_h305.png" colordiffuse="Dark1" background="true">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Icon]</texture>
+                        <visible>$PARAM[poster] + String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster))</visible>
+                        <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    </control>
+
+                    <!-- Poster - Movies / TvShows - without picture - on line -->
+
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/poster_w202_h305.png" background="true" fallback="$PARAM[fallbackpicture]">$INFO[Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Icon]</texture>
+                        <visible>$PARAM[poster] + String.IsEmpty(Container($PARAM[controlid]).ListItemNoWrap($PARAM[id]).Art(poster))</visible>
+                        <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
                     </control>
                 </control>
             </control>

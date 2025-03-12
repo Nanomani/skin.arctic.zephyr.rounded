@@ -11,16 +11,7 @@
 
             <include>View_Slide_For_JumpBar</include>
 
-            <control type="label">
-                <visible>!Skin.HasSetting(show.view.509.title.clearlogo) | [!$EXP[Title_Clearlogo_Available] + Skin.HasSetting(show.view.509.title.clearlogo)]</visible>
-                <top>255</top>
-                <include condition="!Skin.HasSetting(509NoCenter)">CenterInfo</include>
-                <left>View_SidePad</left>
-                <description>Header Label</description>
-                <textcolor>Dark1</textcolor>
-                <font>LargeNew</font>
-                <label fallback="19055">$INFO[ListItem.Title]</label>
-            </control>
+            <!-- CLEARLOGO -->
 
             <control type="image" description="clearlogo">
                 <animation effect="slide" start="0,0" end="-735,0" time="200" condition="Skin.HasSetting(509NoCenter)">Conditional</animation>
@@ -34,22 +25,40 @@
                 <fadetime>ClearArtFadetime</fadetime>
             </control>
 
+            <!-- MAIN TILE  -->
+
+            <control type="label">
+                <visible>!Skin.HasSetting(show.view.509.title.clearlogo) | [!$EXP[Title_Clearlogo_Available] + Skin.HasSetting(show.view.509.title.clearlogo)]</visible>
+                <top>255</top>
+                <include condition="!Skin.HasSetting(509NoCenter)">Def_Views_509_514_Center_Info</include>
+                <left>View_SidePad</left>
+                <description>Header Label</description>
+                <textcolor>Dark1</textcolor>
+                <font>LargeNew</font>
+                <label fallback="19055">$INFO[ListItem.Title]</label>
+            </control>
+
             <control type="panel" id="509">
                 <visible>$EXP[Exp_View_509]</visible>
+                <include>Animation_Scrolltime_Views_List</include>
 
                 <top>350</top>
                 <left>71</left>
                 <width>1780</width>
                 <height>395</height>
+
                 <onup condition="!Skin.HasSetting(global.kioskmode)">9000</onup>
                 <onup condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onup>
                 <ondown>1677</ondown>
+
                 <orientation>horizontal</orientation>
                 <preloaditems>2</preloaditems>
                 <pagecontrol>1677</pagecontrol>
 
                 <viewtype label="31013">list</viewtype>
-                <include>Animation_Scrolltime_Views_List</include>
+
+                <!-- LAYOUT POSTER -->
+
                 <itemlayout height="395" width="222" condition="!Skin.HasSetting(509fanart)">
                     <control type="group">
                         <height>325</height>
@@ -68,6 +77,9 @@
                         </include>
                     </control>
                 </focusedlayout>
+
+                <!-- LAYOUT FANART -->
+
                 <itemlayout height="332" width="592.33" condition="Skin.HasSetting(509fanart) + !Skin.HasSetting(509fanartclearart)">
                     <control type="group">
                         <height>325</height>
@@ -114,16 +126,19 @@
                 <param name="visible" value="!ListItem.IsParentFolder + !Skin.HasSetting(509NoCenter)" />
                 <param name="top" value="702" />
                 <param name="height" value="36" />
-                <param name="width" value="1550" />
+
                 <param name="left" value="180" />
                 <param name="align" value="center" />
+                <param name="width" value="1550" />
             </include>
 
             <control type="textbox">
-                <top>758</top>
+                <top>767</top>
                 <bottom>7</bottom>
-                <include condition="!Skin.HasSetting(509NoCenter)">CenterInfo</include>
+
+                <include condition="!Skin.HasSetting(509NoCenter)">Def_Views_509_514_Center_Info</include>
                 <left>View_SidePad</left>
+
                 <right>View_SidePad</right>
                 <font>Tiny</font>
                 <height>110</height>

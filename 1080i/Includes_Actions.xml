@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+
+    <!-- BACKGROUND / BLUR -->
+
+    <variable name="Image_Background_Flix_Art_Quick">
+        <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(artist.fanart))">$INFO[ListItem.Art(artist.fanart)]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_fanart))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_fanart)]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.fanart))">$INFO[Window(Home).Property(TMDbHelper.ListItem.fanart)]</value>
+    </variable>
+
+    <variable name="Image_Background_Flix_Art">
+        <!-- <value condition="![$EXP[Exp_HasBackgroundFanart]]">common/null.png</value> -->
+        <!-- <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.blurimage))">$INFO[Window(Home).Property(TMDbHelper.ListItem.blurimage.original)]</value> -->
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.blurimage))">$INFO[Window(Home).Property(TMDbHelper.ListItem.blurimage)]</value>
+        <value>$VAR[Image_Background_Flix_Art_Quick]</value>
+    </variable>
+
+    <variable name="Image_SimpleBackground">
+        <!-- <value condition="!String.IsEmpty(Skin.String(Background.Image))">$INFO[Skin.String(Background.Image)]</value> -->
+        <!-- <value>$VAR[Global_Fanart_Background]</value> -->
+        <value>background/bg_fallback.jpg</value>
+    </variable>
+
+    <!-- <include name="_Action_Blur_Onload"> -->
+        <!-- <param name="sourceimage">Art(fanart)</param> -->
+        <!-- <definition> -->
+            <!-- <onload>SetProperty(TMDbHelper.Blur.SourceImage,$PARAM[sourceimage],Home)</onload> -->
+            <!-- <onload>SetProperty(TMDbHelper.Blur.Fallback,$VAR[Image_SimpleBackground],Home)</onload> -->
+        <!-- </definition> -->
+    <!-- </include> -->
+
+
+    <include name="_Action_Blur_Onload">
+        <param name="sourceimage">Art(fanart)</param>
+        <definition>
+            <onload>SetProperty(TMDbHelper.Blur.SourceImage,$PARAM[sourceimage],Home)</onload>
+            <onload>SetProperty(TMDbHelper.Blur.Fallback,$VAR[Image_SimpleBackground],Home)</onload>
+            <!-- <onload>RunScript(script.skinvariables,run_executebuiltin=special://skin/shortcuts/builtins/skinvariables-blurfallback.json,use_rules)</onload> -->
+
+            <!-- <include content="Defs_AutoScroll" condition="!String.IsEmpty(Skin.String(Background.MultiImage))"> -->
+                <!-- <param name="include">Defs_AutoSample_MultiImage</param> -->
+                <!-- <param name="condition">true</param> -->
+            <!-- </include> -->
+        </definition>
+    </include>
+
+    <include name="Action_Blur_Onload">
+        <include content="_Action_Blur_Onload" condition="!Skin.HasSetting(enable.extra.fanart)">
+            <param name="sourceimage">Art(fanart)|Property(fanart)||EPGEventIcon||PicturePath</param>
+        </include>
+        <include content="_Action_Blur_Onload" condition="Skin.HasSetting(enable.extra.fanart)">
+            <param name="sourceimage">Art(artist.fanart{x})|Art(tvshow.fanart{x})|Art(fanart{x})|Property(fanart)||EPGEventIcon||PicturePath</param>
+        </include>
+    </include>
+
+    <!-- <include name="_Action_Blur_Onload"> -->
+        <!-- <param name="sourceimage">Art(fanart)</param> -->
+        <!-- <definition> -->
+            <!-- <onload>SetProperty(TMDbHelper.Blur.SourceImage,$PARAM[sourceimage],Home)</onload> -->
+            <!-- <onload>SetProperty(TMDbHelper.Blur.Fallback,$VAR[Image_SimpleBackground],Home)</onload> -->
+        <!-- </definition> -->
+    <!-- </include> -->
+
+    <!-- <include name="Action_Blur_Onload"> -->
+        <!-- <include content="_Action_Blur_Onload"> -->
+            <!-- <param name="sourceimage">Art(fanart)|Property(fanart)|Property(Background)||EPGEventIcon</param> -->
+        <!-- </include> -->
+    <!-- </include> -->
+
+    <!-- BUILD TEXTURES -->
+
+    <include name="Action_BuildTextures_Onclick_Reload_1202">
+        <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus) | String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">runscript(script.texturemaker,bg=$VAR[Color_Focus],fg=$VAR[Color_FocusGradient],alpha=1.0,folder=ArcticZephirRounded,selectbox=special://skin/extras/textures/selectbox.png,selectbox_thin=special://skin/extras/textures/selectbox_thin.png,scrollv=special://skin/extras/textures/scrollv.png,scrollh=special://skin/extras/textures/scrollh.png,underline=special://skin/extras/textures/underline.png,box=special://skin/extras/textures/box.png,circle=special://skin/extras/textures/circle.png,menu=special://skin/extras/textures/menu.png,menumain+overlay+slicing{240|80}=special://skin/extras/textures/menumain.png,buttonmain+slicing{240|80}=special://skin/extras/textures/menumain.png,main=special://skin/extras/textures/main.png,circlebutton+overlay=special://skin/extras/textures/circlebutton.png,circlebuttondialog=special://skin/extras/textures/circlebutton.png,squarebutton+overlay=special://skin/extras/textures/squarebutton.png,glow=special://skin/extras/textures/glow.png,reload=1202)</onclick>
+    </include>
+
+    <include name="Action_BuildTextures_Onload">
+        <onload>RunScript(script.texturemaker,bg=$VAR[Color_Focus],fg=$VAR[Color_FocusGradient],alpha=1.0,folder=ArcticZephirRounded,selectbox=special://skin/extras/textures/selectbox.png,selectbox_thin=special://skin/extras/textures/selectbox_thin.png,scrollv=special://skin/extras/textures/scrollv.png,scrollh=special://skin/extras/textures/scrollh.png,underline=special://skin/extras/textures/underline.png,box=special://skin/extras/textures/box.png,circle=special://skin/extras/textures/circle.png,menu=special://skin/extras/textures/menu.png,menumain+overlay+slicing{240|80}=special://skin/extras/textures/menumain.png,buttonmain+slicing{240|80}=special://skin/extras/textures/menumain.png,main=special://skin/extras/textures/main.png,circlebutton+overlay=special://skin/extras/textures/circlebutton.png,circlebuttondialog=special://skin/extras/textures/circlebutton.png,squarebutton+overlay=special://skin/extras/textures/squarebutton.png,glow=special://skin/extras/textures/glow.png,no_reload)</onload>
+    </include>
+
+    <include name="Action_BuildTextures_Onclick">
+        <onclick>runscript(script.texturemaker,bg=$VAR[Color_Focus],fg=$VAR[Color_FocusGradient],alpha=1.0,folder=ArcticZephirRounded,selectbox=special://skin/extras/textures/selectbox.png,selectbox_thin=special://skin/extras/textures/selectbox_thin.png,scrollv=special://skin/extras/textures/scrollv.png,scrollh=special://skin/extras/textures/scrollh.png,underline=special://skin/extras/textures/underline.png,box=special://skin/extras/textures/box.png,circle=special://skin/extras/textures/circle.png,menu=special://skin/extras/textures/menu.png,menumain+overlay+slicing{240|80}=special://skin/extras/textures/menumain.png,buttonmain+slicing{240|80}=special://skin/extras/textures/menumain.png,main=special://skin/extras/textures/main.png,circlebutton+overlay=special://skin/extras/textures/circlebutton.png,circlebuttondialog=special://skin/extras/textures/circlebutton.png,squarebutton+overlay=special://skin/extras/textures/squarebutton.png,glow=special://skin/extras/textures/glow.png,reload)</onclick>
+    </include>
+
+    <!-- DEF DIALOG INFO -->
+
+    <include name="Def_Dialog_Info_On_Back_Video">
+        <onback>SetFocus(50,0,absolute)</onback>
+        <onback>SetFocus(9518,0,absolute)</onback>
+        <onback>SetFocus(9503,0,absolute)</onback>
+        <onback>SetFocus(9505,0,absolute)</onback>
+        <onback>SetFocus(9506,0,absolute)</onback>
+        <onback>SetFocus(9514,0,absolute)</onback>
+        <onback>SetFocus(9515,0,absolute)</onback>
+        <onback>SetFocus(9550,0,absolute)</onback>
+        <onback>SetFocus(9552,0,absolute)</onback>
+        <onback>SetFocus(9553,0,absolute)</onback>
+        <onback>SetFocus(9554,0,absolute)</onback>
+        <onback>SetFocus(9556,0,absolute)</onback>
+        <onback>SetFocus(9557,0,absolute)</onback>
+        <onback>SetFocus(9558,0,absolute)</onback>
+        <onback>SetFocus(9559,0,absolute)</onback>
+        <onback>SetFocus(9560,0,absolute)</onback>
+        <onback>SetFocus(9579,0,absolute)</onback>
+        <onback>SetFocus(9517,0,absolute)</onback>
+    </include>
+
+    <!-- DEF ACTION ON INFO -->
+
+    <include name="Def_On_Info">
+        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">SetProperty(isoninfo_actor,1,Home)</oninfo>
+
+        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">$VAR[Path_Actor_On_Info]</oninfo>
+
+        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">SetProperty(isoninfo_actor,1,Home)</oninfo>
+
+        <oninfo condition="Container.Content(actors) + String.IsEmpty(ListItem.Property(tmdb_id)) + String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">$VAR[Path_Director_On_Info]</oninfo>
+
+        <oninfo condition="Container.Content(directors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(ListItem.Label)">SetProperty(isoninfo_director,1,Home)</oninfo>
+
+        <oninfo condition="Container.Content(directors) + String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(ListItem.Label)">$VAR[Path_Director_On_Info]</oninfo>
+        <!-- <oninfo condition="[Container.Content(actors) | [$EXP[IsTMDbHelperItem] + String.IsEmpty(ListItem.DBID)]] + [!String.IsEmpty(ListItem.Property(tmdb_id)) | [String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))]]">SetProperty(isoninfo_actor,1,Home)</oninfo> -->
+
+        <!-- <oninfo condition="!String.IsEmpty(ListItem.Property(tmdb_id)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) + String.IsEmpty(ListItem.DBID)">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=$VAR[Path_ContextParams_TMDbType]&amp;tmdb_id=$VAR[Path_ContextParams_TMDbID],call_auto=1190)</oninfo> -->
+    </include>
+
+    <include name="Def_Cleanup_On_Click">
+        <onclick>ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onclick>
+        <onclick>ClearProperty(Init_Value_TMDb,Home)</onclick>
+
+        <onclick>ClearProperty(SetYoutubeSearch)</onclick>
+        <onclick>ClearProperty(SetDirectorSelected,Home)</onclick>
+        <onclick>ClearProperty(SetWriterSelected,Home)</onclick>
+        <onclick>ClearProperty(SetCreatorSelected,Home)</onclick>
+        <onclick>ClearProperty(SetStudioSelected,Home)</onclick>
+
+        <onclick>ClearProperty(Director_Query,Home)</onclick>
+        <onclick>ClearProperty(Director_Person_Query,Home)</onclick>
+        <onclick>ClearProperty(Writer_Query,Home)</onclick>
+        <onclick>ClearProperty(Creator_Query,Home)</onclick>
+        <onclick>ClearProperty(Studio_Query,Home)</onclick>
+        <onclick>ClearProperty(Network_Query,Home)</onclick>
+
+        <onclick>ClearProperty(Encoded.ListItem.Set,Home)</onclick>
+        <onclick>ClearProperty(Encoded.ListItem.Studio,Home)</onclick>
+    </include>
+
+    <include name="Def_Cleanup_On_Back">
+        <onback>ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onback>
+        <onback>ClearProperty(Init_Value_TMDb,Home)</onback>
+
+        <onback>ClearProperty(SetYoutubeSearch)</onback>
+        <onback>ClearProperty(SetDirectorSelected,Home)</onback>
+        <onback>ClearProperty(SetWriterSelected,Home)</onback>
+        <onback>ClearProperty(SetCreatorSelected,Home)</onback>
+        <onback>ClearProperty(SetStudioSelected,Home)</onback>
+
+        <onback>ClearProperty(Director_Query,Home)</onback>
+        <onback>ClearProperty(Director_Person_Query,Home)</onback>
+        <onback>ClearProperty(Writer_Query,Home)</onback>
+        <onback>ClearProperty(Set_Query,Home)</onback>
+        <onback>ClearProperty(Creator_Query,Home)</onback>
+        <onback>ClearProperty(Studio_Query,Home)</onback>
+        <onback>ClearProperty(Network_Query,Home)</onback>
+
+        <onback>ClearProperty(Encoded.ListItem.Set,Home)</onback>
+        <onback>ClearProperty(Encoded.ListItem.Studio,Home)</onback>
+    </include>
+
+    <include name="Def_Cleanup_On_Up">
+        <onup>ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onup>
+        <onup>ClearProperty(Init_Value_TMDb,Home)</onup>
+
+        <onup>ClearProperty(SetYoutubeSearch)</onup>
+        <onup>ClearProperty(SetDirectorSelected,Home)</onup>
+        <onup>ClearProperty(SetWriterSelected,Home)</onup>
+        <onup>ClearProperty(SetCreatorSelected,Home)</onup>
+        <onup>ClearProperty(SetStudioSelected,Home)</onup>
+
+        <onup>ClearProperty(Director_Query,Home)</onup>
+        <onup>ClearProperty(Director_Person_Query,Home)</onup>
+        <onup>ClearProperty(Writer_Query,Home)</onup>
+        <onup>ClearProperty(Set_Query,Home)</onup>
+        <onup>ClearProperty(Creator_Query,Home)</onup>
+        <onup>ClearProperty(Studio_Query,Home)</onup>
+        <onup>ClearProperty(Network_Query,Home)</onup>
+
+        <onup>ClearProperty(Encoded.ListItem.Set,Home)</onup>
+        <onup>ClearProperty(Encoded.ListItem.Studio,Home)</onup>
+    </include>
+
+    <include name="Def_Cleanup_On_Load">
+        <onload>ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onload>
+        <onload>ClearProperty(Init_Value_TMDb,Home)</onload>
+
+        <onload>ClearProperty(SetYoutubeSearch)</onload>
+
+        <onload>ClearProperty(SetDirectorSelected,Home)</onload>
+        <onload>ClearProperty(SetWriterSelected,Home)</onload>
+        <onload>ClearProperty(SetCreatorSelected,Home)</onload>
+        <onload>ClearProperty(SetStudioSelected,Home)</onload>
+
+        <onload>ClearProperty(Director_Query,Home)</onload>
+        <onload>ClearProperty(Director_Person_Query,Home)</onload>
+        <onload>ClearProperty(Writer_Query,Home)</onload>
+        <onload>ClearProperty(Set_Query,Home)</onload>
+        <onload>ClearProperty(Creator_Query,Home)</onload>
+        <onload>ClearProperty(Studio_Query,Home)</onload>
+        <onload>ClearProperty(Network_Query,Home)</onload>
+
+        <onload>ClearProperty(Encoded.ListItem.Set,Home)</onload>
+        <onload>ClearProperty(Encoded.ListItem.Studio,Home)</onload>
+    </include>
+
+    <include name="Def_Cleanup_On_UnLoad">
+        <onunload>ClearProperty(Init_Value_TMDb,Home)</onunload>
+        <onunload>ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onunload>
+
+        <onunload>ClearProperty(SetYoutubeSearch)</onunload>
+
+        <onunload>ClearProperty(SetDirectorSelected,Home)</onunload>
+        <onunload>ClearProperty(SetWriterSelected,Home)</onunload>
+        <onunload>ClearProperty(SetCreatorSelected,Home)</onunload>
+        <onunload>ClearProperty(SetStudioSelected,Home)</onunload>
+
+        <onunload>ClearProperty(Director_Query,Home)</onunload>
+        <onunload>ClearProperty(Director_Person_Query,Home)</onunload>
+        <onunload>ClearProperty(Writer_Query,Home)</onunload>
+        <onunload>ClearProperty(Set_Query,Home)</onunload>
+        <onunload>ClearProperty(Creator_Query,Home)</onunload>
+        <onunload>ClearProperty(Studio_Query,Home)</onunload>
+        <onunload>ClearProperty(Network_Query,Home)</onunload>
+
+        <onunload>ClearProperty(Encoded.ListItem.Set,Home)</onunload>
+        <onunload>ClearProperty(Encoded.ListItem.Studio,Home)</onunload>
+    </include>
+</includes>

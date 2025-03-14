@@ -173,9 +173,8 @@
 
                 <onup>9100</onup>
 
-                <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">3100</ondown>
                 <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">3210</ondown>
-
+                <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetFocus(3330)</ondown>
                 <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">3100</ondown>
 
                 <orientation>vertical</orientation>
@@ -192,7 +191,7 @@
                     <textoffsetx>30</textoffsetx>
                     <radioposx>458</radioposx>
                     <include>Def_Button_Settings_Gradient</include>
-                    <label>$LOCALIZE[31095]</label>
+                    <label>$LOCALIZE[31569]</label>
                     <selected>false</selected>
                     <onclick>SetProperty(colorstring,$INFO[Skin.String(ColorFocus.name)],Home)</onclick>
                     <onclick>SetProperty(colordesc,ColorFocus.name,Home)</onclick>
@@ -205,7 +204,7 @@
                     <textoffsetx>30</textoffsetx>
                     <radioposx>458</radioposx>
                     <include>Def_Button_Settings_Gradient</include>
-                    <label>$LOCALIZE[31095]</label>
+                    <label>$LOCALIZE[31569]</label>
                     <selected>true</selected>
                     <onclick>SetProperty(colorstring,$INFO[Skin.String(ColorFocus.name)],Home)</onclick>
                     <onclick>SetProperty(colordesc,ColorFocus.name,Home)</onclick>
@@ -242,7 +241,7 @@
                     <enable>!Skin.HasSetting(EnableColorSamefocusGradient)</enable>
                 </control>
 
-                <!-- Text -->
+                <!-- Title Settings -->
                 <control type="radiobutton" id="9011">
                     <visible>!String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
                     <visible>String.IsEqual(Window(Home).Property(colorfilter),1)</visible>
@@ -250,12 +249,12 @@
                     <textoffsetx>30</textoffsetx>
                     <radioposx>458</radioposx>
                     <include>Def_Button_Settings_Gradient</include>
-                    <label>$LOCALIZE[31096]</label>
+                    <label>$LOCALIZE[31570]</label>
                     <selected>false</selected>
                     <onclick>SetProperty(colorstring,$INFO[Skin.String(ColorHighlight.name)],Home)</onclick>
                     <onclick>SetProperty(colordesc,ColorHighlight.name,Home)</onclick>
                     <onclick>SetProperty(gradient,ColorHighlight,Home)</onclick>
-                    <enable>!Skin.HasSetting(EnableColorSamefocusHighlight)</enable>
+                    <!-- <enable>!Skin.HasSetting(DisableColourTitleMenuSetting)</enable> -->
                 </control>
                 <control type="radiobutton" id="9012">
                     <visible>String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
@@ -264,12 +263,12 @@
                     <textoffsetx>30</textoffsetx>
                     <radioposx>458</radioposx>
                     <include>Def_Button_Settings_Gradient</include>
-                    <label>$LOCALIZE[31096]</label>
+                    <label>$LOCALIZE[31570]</label>
                     <selected>true</selected>
                     <onclick>SetProperty(colorstring,$INFO[Skin.String(ColorHighlight.name)],Home)</onclick>
                     <onclick>SetProperty(colordesc,ColorHighlight.name,Home)</onclick>
                     <onclick>SetProperty(gradient,ColorHighlight,Home)</onclick>
-                    <enable>!Skin.HasSetting(EnableColorSamefocusHighlight)</enable>
+                    <!-- <enable>!Skin.HasSetting(DisableColourTitleMenuSetting)</enable> -->
                 </control>
 
                 <!-- MEDIA FLAG STATUS -->
@@ -609,7 +608,6 @@
                     <include content="Def_Button_Colorbox">
                         <param name="colorcode" value="$VAR[Color_Highlight]" />
                     </include>
-                    <enable>!Skin.HasSetting(EnableColorSamefocusHighlight)</enable>
                 </control>
 
                 <!-- MEDIA FLAG STATUS -->
@@ -803,77 +801,92 @@
 
             <!-- PREVIEW - COLOR TEXT -->
 
-            <control type="group">
+            <control type="grouplist" id="3300">
                 <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
 
                 <top>420</top>
                 <left>16</left>
 
-                <control type="grouplist">
-                    <left>0</left>
+                <onleft>9100</onleft>
+                <onright>3000</onright>
 
-                    <itemgap>14</itemgap>
+                <onup>2002</onup>
+                <ondown>3100</ondown>
+
+                <itemgap>14</itemgap>
+                <enable>false</enable>
+                <orientation>vertical</orientation>
+
+                <!-- LABEL ACTUAL -->
+
+                <control type="button" id="3310">
                     <enable>false</enable>
-                    <orientation>vertical</orientation>
-
-                    <!-- LABEL ACTUAL -->
-
-                    <control type="button">
-                        <enable>false</enable>
-                        <textoffsetx>30</textoffsetx>
-                        <align>left</align>
-                        <width>300</width>
-                        <disabledcolor>PanelWhite100</disabledcolor>
-                        <height>66</height>
-                        <label>$LOCALIZE[31176] :</label>
-                    </control>
-
-                    <!-- LABEL PREVIEW -->
-
-                    <control type="button">
-                        <enable>false</enable>
-                        <textoffsetx>30</textoffsetx>
-                        <align>left</align>
-                        <width>300</width>
-                        <disabledcolor>PanelWhite100</disabledcolor>
-                        <height>66</height>
-                        <label>$LOCALIZE[1000] :</label>
-                    </control>
+                    <textoffsetx>30</textoffsetx>
+                    <align>left</align>
+                    <width>300</width>
+                    <disabledcolor>PanelWhite100</disabledcolor>
+                    <height>66</height>
+                    <label>$LOCALIZE[31176] :</label>
                 </control>
 
-                <control type="grouplist">
-                    <right>30</right>
+                <!-- LABEL PREVIEW -->
 
-                    <itemgap>14</itemgap>
+                <control type="button" id="3320">
                     <enable>false</enable>
-                    <orientation>vertical</orientation>
+                    <textoffsetx>30</textoffsetx>
+                    <align>left</align>
+                    <width>300</width>
+                    <disabledcolor>PanelWhite100</disabledcolor>
+                    <height>66</height>
+                    <label>$LOCALIZE[1000] :</label>
+                </control>
 
-                    <!-- ACTUAL COLOR TEXT -->
+                <control type="radiobutton" id="3330">
+                    <width>568</width>
+                    <textoffsetx>30</textoffsetx>
+                    <radioposx>518</radioposx>
+                    <include>Def_Button_Settings_Gradient</include>
+                    <label>31568</label>
+                    <selected>Skin.HasSetting(DisableColourTitleMenuSetting)</selected>
+                    <onclick>Skin.ToggleSetting(DisableColourTitleMenuSetting)</onclick>
+                </control>
+            </control>
 
-                    <control type="button">
-                        <enable>false</enable>
-                        <textoffsetx>30</textoffsetx>
-                        <font>Button</font>
-                        <align>right</align>
-                        <width>568</width>
-                        <disabledcolor>$INFO[Window(Home).Property(colorstring)]</disabledcolor>
-                        <height>66</height>
-                        <label>$LOCALIZE[31176]</label>
-                    </control>
+            <control type="grouplist">
+                <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
 
-                    <!-- PREVIEW COLOR TEXT -->
+                <top>420</top>
+                <right>0</right>
 
-                    <control type="button">
-                        <visible>Control.HasFocus(3000)</visible>
-                        <enable>false</enable>
-                        <textoffsetx>30</textoffsetx>
-                        <font>Button</font>
-                        <align>right</align>
-                        <width>568</width>
-                        <disabledcolor>$INFO[Container(3000).ListItem.Label2]</disabledcolor>
-                        <height>66</height>
-                        <label>$LOCALIZE[1000]</label>
-                    </control>
+                <itemgap>14</itemgap>
+                <enable>false</enable>
+                <orientation>vertical</orientation>
+
+                <!-- ACTUAL COLOR TEXT -->
+
+                <control type="button">
+                    <enable>false</enable>
+                    <textoffsetx>0</textoffsetx>
+                    <font>Button</font>
+                    <align>right</align>
+                    <width>568</width>
+                    <disabledcolor>$VAR[Color_Highlight]</disabledcolor>
+                    <height>66</height>
+                    <label>$LOCALIZE[31176]</label>
+                </control>
+
+                <!-- PREVIEW COLOR TEXT -->
+
+                <control type="button">
+                    <visible>Control.HasFocus(3000)</visible>
+                    <enable>false</enable>
+                    <textoffsetx>0</textoffsetx>
+                    <font>Button</font>
+                    <align>right</align>
+                    <width>568</width>
+                    <disabledcolor>$INFO[Container(3000).ListItem.Label2]</disabledcolor>
+                    <height>66</height>
+                    <label>$LOCALIZE[1000]</label>
                 </control>
             </control>
 
@@ -1027,6 +1040,8 @@
 
             <!-- BUTTON TO FOCUS FIRST ITEM ON LIST -->
 
+            <!-- ON DOWN -->
+
             <control type="button" id="2001">
                 <visible allowhiddenfocus="true">false</visible>
                 <height>1</height>
@@ -1040,15 +1055,14 @@
                 <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9212)">SetFocus(9212)</onfocus>
             </control>
 
+            <!-- ON UP -->
+
             <control type="button" id="2002">
                 <visible allowhiddenfocus="true">false</visible>
                 <height>1</height>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9021)">SetFocus(9021)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9022)">SetFocus(9022)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9031) + Control.IsEnabled(9031)">SetFocus(9031)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9032) + Control.IsEnabled(9032)">SetFocus(9032)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9011) + Control.IsEnabled(9011)">SetFocus(9011)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9012) + Control.IsEnabled(9012)">SetFocus(9012)</onfocus>
+
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9011)">SetFocus(9011)</onfocus>
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9012)">SetFocus(9012)</onfocus>
 
                 <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),2) + Control.IsVisible(9171)">SetFocus(9171)</onfocus>
                 <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),2) + Control.IsVisible(9172)">SetFocus(9172)</onfocus>
@@ -1057,11 +1071,9 @@
                 <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9232)">SetFocus(9232)</onfocus>
             </control>
 
-            <!-- SETTING - DISABLE GRADIENT - ONLY FOCUS COLOR -->
+            <!-- SETTING - DISABLE GRADIENT - INVERT TEXT HIGHLIGHT -->
 
             <control type="grouplist" id="3200">
-                <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
-
                 <top>500</top>
                 <left>16</left>
                 <width>568</width>
@@ -1079,6 +1091,7 @@
                 <!-- LABEL ACTUAL -->
 
                 <control type="radiobutton" id="3210">
+                    <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
                     <width>568</width>
                     <textoffsetx>30</textoffsetx>
                     <radioposx>518</radioposx>
@@ -1090,15 +1103,16 @@
                     <onclick condition="String.IsEqual(Window(Home).Property(gradient),ColorFocus) | String.IsEqual(Window(Home).Property(gradient),ColorFocusGradient)">SetProperty(dialog_color_reload,1,Home)</onclick>
                     <include>Action_BuildTextures_Onclick_Reload_1202</include>
                 </control>
-
                 <control type="radiobutton" id="3220">
+                    <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)</visible>
                     <width>568</width>
                     <textoffsetx>30</textoffsetx>
                     <radioposx>518</radioposx>
                     <include>Def_Button_Settings_Gradient</include>
-                    <label>31568</label>
-                    <selected>Skin.HasSetting(EnableColorSamefocusHighlight)</selected>
-                    <onclick>Skin.ToggleSetting(EnableColorSamefocusHighlight)</onclick>
+                    <label>31571</label>
+                    <selected>Skin.HasSetting(InvertInfoHightlightColour)</selected>
+                    <onclick>Skin.ToggleSetting(InvertInfoHightlightColour)</onclick>
+                    <enable>!Skin.HasSetting(EnableColorSamefocusGradient)</enable>
                 </control>
             </control>
 
@@ -1118,9 +1132,9 @@
                 <onright>3600</onright>
                 <onleft>3600</onleft>
 
-                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !Control.IsVisible(3220)">9100</onup>
-                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(3220)">3220</onup>
-
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight) + !Control.IsVisible(3220)">9100</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight) + Control.IsVisible(3220)">3220</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetFocus(3330)</onup>
                 <onup condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">2002</onup>
 
                 <ondown>2001</ondown>
@@ -1167,8 +1181,10 @@
                 <bottom>20</bottom>
                 <width>254</width>
 
-                <onup condition="!Control.IsVisible(3220)">2002</onup>
-                <onup condition="Control.IsVisible(3220)">3220</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight) + !Control.IsVisible(3220)">9100</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight) + Control.IsVisible(3220)">3220</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetFocus(3330)</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">2002</onup>
 
                 <ondown>9100</ondown>
 

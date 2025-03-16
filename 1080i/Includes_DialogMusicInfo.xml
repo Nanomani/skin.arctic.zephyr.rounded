@@ -15,7 +15,7 @@
                 <include>Animation_Wiki_Fade_Out</include>
                 <control type="group">
                     <include>Animation_Delay_Fade_In_200</include>
-                    <visible>Control.HasFocus(12) + !String.IsEqual(Window.Property(ShowDisc),1) + !String.IsEmpty(ListItem.Art(discart)) + Skin.HasSetting(Show.Discart.Music.Info)</visible>
+                    <visible>Control.HasFocus(12) + !String.IsEqual(Window.Property(ShowDisc),1) + !String.IsEmpty(ListItem.Art(discart)) + Skin.HasSetting(show.dialog.info.music.discart)</visible>
                     <centerbottom>1000</centerbottom>
                     <height>16</height>
                     <control type="image">
@@ -35,7 +35,7 @@
                     <animation type="Conditional" condition="String.IsEqual(Window.Property(ShowDisc),1)">
                         <effect type="slide" start="0,0" end="0,-220" delay="0" time="200" tween="quadratic" easing="out" />
                     </animation>
-                    <visible>!String.IsEmpty(ListItem.Art(discart)) + Control.HasFocus(12) + Skin.HasSetting(Show.Discart.Music.Info)</visible>
+                    <visible>!String.IsEmpty(ListItem.Art(discart)) + Control.HasFocus(12) + Skin.HasSetting(show.dialog.info.music.discart)</visible>
                     <top>225</top>
                     <left>90</left>
                     <width>620</width>
@@ -49,40 +49,6 @@
 
             <control type="group">
                 <include>Animation_RightSide</include>
-
-                <!-- CONTROL BUTTONS -->
-
-                <control type="group">
-                    <include>Animation_Wiki_Fade_Out</include>
-                    <include>Def_Dialog_Info_Navigation_Music</include>
-                    <include>Animation_Music_Fade_Out</include>
-                </control>
-
-                <!-- FOOTER LABEL -->
-
-                <control type="label">
-                    <right>View_SidePad</right>
-                    <bottom>100</bottom>
-                    <height>50</height>
-                    <font>Mini</font>
-                    <textcolor>Dark3</textcolor>
-                    <label>$INFO[ListItem.FileNameAndPath]</label>
-                    <align>right</align>
-                    <include>Animation_File_Name_And_Path_Music</include>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
-                    <visible>Control.HasFocus(9008) + !String.IsEqual(ListItem.DBType,artist)</visible>
-                </control>
-                <control type="label">
-                    <right>View_SidePad</right>
-                    <bottom>100</bottom>
-                    <height>50</height>
-                    <font>Mini</font>
-                    <textcolor>Dark3</textcolor>
-                    <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
-                    <align>right</align>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
-                    <include>Animation_Button_Label_Music</include>
-                </control>
 
                 <!-- LABEL HEADER -->
 
@@ -145,18 +111,46 @@
                     </control>
                 </control>
 
+                <!-- FOOTER LABEL -->
+
+                <control type="label">
+                    <right>View_SidePad</right>
+                    <bottom>100</bottom>
+                    <height>50</height>
+                    <font>Mini</font>
+                    <textcolor>Dark3</textcolor>
+                    <label>$INFO[ListItem.FileNameAndPath]</label>
+                    <align>right</align>
+                    <include>Animation_File_Name_And_Path_Music</include>
+                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <visible>Control.HasFocus(9008) + !String.IsEqual(ListItem.DBType,artist)</visible>
+                </control>
+                <control type="label">
+                    <right>View_SidePad</right>
+                    <bottom>100</bottom>
+                    <height>50</height>
+                    <font>Mini</font>
+                    <textcolor>Dark3</textcolor>
+                    <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
+                    <align>right</align>
+                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <include>Animation_Button_Label_Music</include>
+                </control>
+
                 <!-- CLEARLOGO -->
 
                 <control type="image" description="clearlogo">
-                    <visible>Skin.HasSetting(show.dialog.info.clearlogo.music)</visible>
+                    <visible>Skin.HasSetting(show.dialog.info.music.clearlogo)</visible>
                     <visible>[[Control.HasFocus(9501) | Control.HasFocus(9502) | Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(95027) | Control.HasFocus(95017)] + [!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying)]] | ![Control.HasFocus(9501) | Control.HasFocus(9502) | Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(95027) | Control.HasFocus(95017)]</visible>
                     <include>Animation_Wiki_Fade_Out</include>
+
+                    <centertop>262</centertop>
                     <right>View_SidePad</right>
-                    <centertop>280</centertop>
                     <height>ClearLogoMaxHeight</height>
                     <width>ClearLogoMaxWidth</width>
+
                     <fadetime>ClearArtFadetime</fadetime>
-                    <aspectratio align="right">keep</aspectratio>
+                    <aspectratio align="right" aligny="top">keep</aspectratio>
                     <texture background="true">$VAR[Image_Crop_ClearLogo_Music_Ext]</texture>
 
                     <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
@@ -166,24 +160,22 @@
                     </animation>
                 </control>
 
-                <include content="Object_Arrows_DialogInfo_Navigation">
-                    <param name="visible" value="Control.HasFocus(95031) + Integer.IsGreater(Container(9503).NumItems,1)" />
-                    <param name="centerbottom" value="560" />
-                    <param name="centerleft" value="765" />
-                </include>
+                <!-- IMAGE LABEL RECORD -->
 
                 <control type="image">
-                    <height>109</height>
-                    <width>161</width>
-                    <right>View_SidePad</right>
-                    <top>220</top>
-                    <texture colordiffuse="Dark1">$VAR[Image_Thumb_Record_Label_Dialog_Info]</texture>
-                    <visible>!String.IsEmpty(Skin.String(recordlabel.logos.path))</visible>
+                    <visible>!String.IsEmpty(Skin.String(recordlabel.logos.path)) + Skin.HasSetting(show.dialog.info.music.logo.record.compagny)</visible>
                     <include>Animation_Music_Fade_Out</include>
                     <include>Animation_Wiki_Fade_Out</include>
+
+                    <top>420</top>
+                    <right>View_SidePad</right>
+                    <width>161</width>
+                    <height>109</height>
+                    <aspectratio align="right">keep</aspectratio>
+                    <texture colordiffuse="Dark1">$VAR[Image_Thumb_Record_Label_Dialog_Info]</texture>
                 </control>
 
-                <!-- CONTENT -->
+                <!-- INFORMATION -->
 
                 <control type="group">
                     <right>View_SidePad</right>
@@ -501,115 +493,13 @@
                     </control>
                 </control>
 
-                <include content="Furniture_Header_DialogInfo_Extended">
-                    <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" />
-                    <param name="controlid" value="9501" />
-                </include>
-                 <include content="Furniture_Header_DialogInfo_Extended">
-                    <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),8)" />
-                    <param name="controlid" value="9508" />
-                </include>
-                 <include content="Furniture_Header_DialogInfo_Extended">
-                    <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" />
-                    <param name="controlid" value="9502" />
-                </include>
-
-                <control type="group">
-                    <top>200</top>
-                    <left>785</left>
-
-                    <!-- Albums List -->
-
-                    <!-- <include content="Def_Layout_Dialog_Info_Video_Music_List_Square"> -->
-                        <!-- <param name="fallbackpicture" value="DefaultAddonPicture.png" /> -->
-                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" /> -->
-                        <!-- <param name="music_info_onclick" value="false" /> -->
-                        <!-- <param name="music_info_album" value="true" /> -->
-                        <!-- <param name="controlid" value="50" /> -->
-                        <!-- <param name="visible.layouts" value="Control.HasFocus(50) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml)" /> -->
-                    <!-- </include> -->
-                    <!-- <include content="Def_Dialog_Info_List_Updating"> -->
-                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" /> -->
-                        <!-- <param name="controlid" value="9501" /> -->
-                        <!-- <param name="centerleft" value="500" /> -->
-                    <!-- </include> -->
-
-                    <!-- Albums List -->
-
-                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square">
-                        <param name="fallbackpicture" value="DefaultAddonPicture.png" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" />
-                        <param name="music_info_onclick" value="false" />
-                        <param name="music_info_album" value="true" />
-                        <param name="controlid" value="9501" />
-                        <param name="visible.layouts" value="Control.HasFocus(9501) | Control.HasFocus(95017) | Control.HasFocus(160) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)" />
-                        <param name="ContentToLoad" value="$VAR[Def_List_Artist_Albums]" />
-                        <param name="sortby" value="year" />
-                        <param name="onclick1" value="Dialog.Close(musicinformation)" />
-                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
-                    </include>
-                    <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2) + Control.HasFocus(9004)" />
-                        <param name="controlid" value="9501" />
-                        <param name="centerleft" value="526" />
-                    </include>
-
-                    <!-- Songs list -->
-
-                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square">
-                        <param name="fallbackpicture" value="DefaultMusicSongs.png" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),8)" />
-                        <param name="controlid" value="9508" />
-                        <param name="visible.layouts" value="Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)" />
-                        <param name="ContentToLoad" value="$VAR[Def_List_Artist_Songs]" />
-                        <param name="onclick1" value="Dialog.Close(all,force)" />
-                        <param name="onclick2" value="PlayMedia($ESCINFO[Container($PARAM[controlid]).ListItem.FileNameAndPath()])" />
-                        <param name="onclick3" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
-                    </include>
-                    <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="!Integer.IsGreater(Container(9508).NumItems,1) + String.IsEqual(Window(Home).Property(musiccontent),8) + Control.HasFocus(9029)" />
-                        <param name="controlid" value="9508" />
-                        <param name="centerleft" value="526" />
-                    </include>
-
-                    <!-- Youtube -->
-
-                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square">
-                        <param name="fallbackpicture" value="DefaultVideo.png" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" />
-                        <param name="controlid" value="9502" />
-                        <param name="visible.layouts" value="Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)" />
-                        <param name="ContentToLoad" value="$VAR[Def_Content_Youtube_Music]" />
-                        <param name="onclick1" value="SetProperty(VideoYoutubeIsPlaying,$INFO[Container(9504).ListItem.FileNameAndPath],Home)" />
-                        <param name="onclick2" value="SetFocus(7011)" />
-                        <param name="onclick3" value="AlarmClock(LaunchYoutubeVideo,PlayMedia($ESCINFO[Window(Home).Property(VideoYoutubeIsPlaying)],False,1,playlist_type_hint=1),00:01,silent)" />
-                        <param name="target" value="videos" />
-                        <param name="sortby" value="file" />
-                        <param name="limit" value="25" />
-                        <param name="leftbackgroundlist" value="-9" />
-                        <param name="thumb" value="true" />
-                        <param name="aspect" value="scale" />
-                    </include>
-                    <include content="Def_Dialog_Info_List_Updating">
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3) + Control.HasFocus(9005)" />
-                        <param name="controlid" value="9502" />
-                        <param name="centerleft" value="526" />
-                    </include>
-                </control>
-
-                <!-- list albums -->
-                <include content="Furniture_Footer_DialogInfo_Extended"><param name="controlid" value="9501" /></include>
-                <include content="Hidden_Album_Track_Count_Dialog_Music_Info_Ext" condition="!Skin.HasSetting(hide.furniture.flags)"></include>
-                <include content="Furniture_Flags_DialogInfo_Extended_Audio" condition="!Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9501" /></include>
-
-                <!-- list songs -->
-                <include content="Furniture_Footer_DialogInfo_Extended"><param name="controlid" value="9508" /></include>
-                <include content="Furniture_Flags_DialogInfo_Extended_Audio" condition="!Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9508" /></include>
-
-                <!-- youtube -->
-                <include content="Furniture_Footer_DialogInfo_Extended"><param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" /><param name="controlid" value="9502" /></include>
-
                 <!-- FANART -->
+
+                <include content="Object_Arrows_DialogInfo_Navigation">
+                    <param name="visible" value="Control.HasFocus(95031) + Integer.IsGreater(Container(9503).NumItems,1)" />
+                    <param name="centerbottom" value="560" />
+                    <param name="centerleft" value="765" />
+                </include>
 
                 <control type="group">
                     <visible>String.IsEqual(Window(Home).Property(musiccontent),4)</visible>
@@ -646,6 +536,7 @@
                         <param name="controlid" value="9503" />
                         <param name="centerleft" value="680" />
                         <param name="centertop" value="235" />
+                        <param name="label_spinner" value="$LOCALIZE[31546]..." />
                     </include>
 
                     <control type="fixedlist" id="9503">
@@ -883,6 +774,8 @@
                     </control>
                 </control>
 
+                <!-- TRACKLIST -->
+
                 <control type="group">
                     <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
                     <include>Animation_Fade_Out_DialogInfo</include>
@@ -899,6 +792,7 @@
                         <aligny>center</aligny>
                         <include>Animation_Fade_In</include>
                     </control>
+
                     <control type="button" id="9009">
                         <left>-2000</left>
                         <width>1</width>
@@ -916,19 +810,23 @@
                         <onback>9000</onback>
                         <onclick>PlayMedia($ESCINFO[Container(50).ListItem.FileNameAndPath])</onclick>
                     </control>
+
                     <control type="list" id="50">
-                        <left>250</left>
                         <top>322</top>
+                        <left>250</left>
                         <right>View_SidePad</right>
                         <width>1000</width>
                         <height>268</height>
+
                         <onleft>9000</onleft>
                         <onright>62</onright>
                         <onup>50</onup>
                         <ondown>50</ondown>
-                        <viewtype label="">list</viewtype>
+
                         <pagecontrol>62</pagecontrol>
                         <orientation>vertical</orientation>
+
+                        <viewtype label="">list</viewtype>
                         <itemlayout height="36" width="1000">
                             <control type="group">
                                 <control type="image">
@@ -997,6 +895,132 @@
                         </focusedlayout>
                     </control>
                 </control>
+
+                <!-- CONTROL BUTTONS -->
+
+                <control type="group">
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <include>Def_Dialog_Info_Navigation_Music</include>
+                    <include>Animation_Music_Fade_Out</include>
+                </control>
+
+                <!-- EXTENDED VIEW - FURNITURE HEADER -->
+
+                <!-- list albums -->
+                <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" />
+                    <param name="controlid" value="9501" />
+                </include>
+
+                <!-- list songs -->
+                 <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),8)" />
+                    <param name="controlid" value="9508" />
+                </include>
+
+                <!-- youtube -->
+                 <include content="Furniture_Header_DialogInfo_Extended">
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" />
+                    <param name="controlid" value="9502" />
+                </include>
+
+                <control type="group">
+                    <top>200</top>
+                    <left>785</left>
+
+                    <!-- Albums List -->
+
+                    <!-- <include content="Def_Layout_Dialog_Info_Video_Music_List_Square"> -->
+                        <!-- <param name="fallbackpicture" value="DefaultAddonPicture.png" /> -->
+                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" /> -->
+                        <!-- <param name="music_info_onclick" value="false" /> -->
+                        <!-- <param name="music_info_album" value="true" /> -->
+                        <!-- <param name="controlid" value="50" /> -->
+                        <!-- <param name="visible.layouts" value="Control.HasFocus(50) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml)" /> -->
+                    <!-- </include> -->
+                    <!-- <include content="Def_Dialog_Info_List_Updating"> -->
+                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" /> -->
+                        <!-- <param name="controlid" value="9501" /> -->
+                        <!-- <param name="centerleft" value="500" /> -->
+                    <!-- </include> -->
+
+                    <!-- Albums List -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square">
+                        <param name="fallbackpicture" value="DefaultAddonPicture.png" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" />
+                        <param name="music_info_onclick" value="false" />
+                        <param name="music_info_album" value="true" />
+                        <param name="controlid" value="9501" />
+                        <param name="visible.layouts" value="Control.HasFocus(9501) | Control.HasFocus(95017) | Control.HasFocus(160) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)" />
+                        <param name="ContentToLoad" value="$VAR[Def_List_Artist_Albums]" />
+                        <param name="sortby" value="year" />
+                        <param name="onclick1" value="Dialog.Close(musicinformation)" />
+                        <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2) + Control.HasFocus(9004)" />
+                        <param name="controlid" value="9501" />
+                        <param name="centerleft" value="526" />
+                    </include>
+
+                    <!-- Songs list -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square">
+                        <param name="fallbackpicture" value="DefaultMusicSongs.png" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),8)" />
+                        <param name="controlid" value="9508" />
+                        <param name="visible.layouts" value="Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)" />
+                        <param name="ContentToLoad" value="$VAR[Def_List_Artist_Songs]" />
+                        <param name="onclick1" value="Dialog.Close(all,force)" />
+                        <param name="onclick2" value="PlayMedia($ESCINFO[Container($PARAM[controlid]).ListItem.FileNameAndPath()])" />
+                        <param name="onclick3" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visible" value="!Integer.IsGreater(Container(9508).NumItems,1) + String.IsEqual(Window(Home).Property(musiccontent),8) + Control.HasFocus(9029)" />
+                        <param name="controlid" value="9508" />
+                        <param name="centerleft" value="526" />
+                    </include>
+
+                    <!-- Youtube -->
+
+                    <include content="Def_Layout_Dialog_Info_Video_Music_List_Square">
+                        <param name="fallbackpicture" value="DefaultVideo.png" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" />
+                        <param name="controlid" value="9502" />
+                        <param name="visible.layouts" value="Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml)" />
+                        <param name="ContentToLoad" value="$VAR[Def_Content_Youtube_Music]" />
+                        <param name="onclick1" value="SetProperty(VideoYoutubeIsPlaying,$INFO[Container(9504).ListItem.FileNameAndPath],Home)" />
+                        <param name="onclick2" value="SetFocus(7011)" />
+                        <param name="onclick3" value="AlarmClock(LaunchYoutubeVideo,PlayMedia($ESCINFO[Window(Home).Property(VideoYoutubeIsPlaying)],False,1,playlist_type_hint=1),00:01,silent)" />
+                        <param name="target" value="videos" />
+                        <param name="sortby" value="file" />
+                        <param name="limit" value="25" />
+                        <param name="leftbackgroundlist" value="-9" />
+                        <param name="thumb" value="true" />
+                        <param name="aspect" value="scale" />
+                    </include>
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3) + Control.HasFocus(9005)" />
+                        <param name="controlid" value="9502" />
+                        <param name="centerleft" value="526" />
+                        <param name="label_spinner" value="$LOCALIZE[31546] Youtube ..." />
+                    </include>
+                </control>
+
+                <!-- EXTENDED VIEW - FURNITURE FOOTER / FLAG -->
+
+                <!-- list albums -->
+                <include content="Furniture_Footer_DialogInfo_Extended"><param name="controlid" value="9501" /></include>
+                <include content="Hidden_Album_Track_Count_Dialog_Music_Info_Ext" condition="!Skin.HasSetting(hide.furniture.flags)"></include>
+                <include content="Furniture_Flags_DialogInfo_Extended_Audio" condition="!Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9501" /></include>
+
+                <!-- list songs -->
+                <include content="Furniture_Footer_DialogInfo_Extended"><param name="controlid" value="9508" /></include>
+                <include content="Furniture_Flags_DialogInfo_Extended_Audio" condition="!Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9508" /></include>
+
+                <!-- youtube -->
+                <include content="Furniture_Footer_DialogInfo_Extended"><param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" /><param name="controlid" value="9502" /></include>
             </control>
         </control>
 

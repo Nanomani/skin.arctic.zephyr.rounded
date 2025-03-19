@@ -15,37 +15,6 @@
         <control type="group">
             <include>Animation_Common</include>
 
-            <control type="group">
-                <visible>Container(9100).HasFocus(3)</visible>
-                <include content="Def_Weather_List_Input">
-                    <param name="InputId" value="1" />
-                </include>
-            </control>
-            <control type="group">
-                <visible>Container(9100).HasFocus(4)</visible>
-                <include content="Def_Weather_List_Input">
-                    <param name="InputId" value="2" />
-                </include>
-            </control>
-            <control type="group">
-                <visible>Container(9100).HasFocus(5)</visible>
-                <include content="Def_Weather_List_Input">
-                    <param name="InputId" value="3" />
-                </include>
-            </control>
-            <control type="group">
-                <visible>Container(9100).HasFocus(6)</visible>
-                <include content="Def_Weather_List_Input">
-                    <param name="InputId" value="4" />
-                </include>
-            </control>
-            <control type="group">
-                <visible>Container(9100).HasFocus(7)</visible>
-                <include content="Def_Weather_List_Input">
-                    <param name="InputId" value="5" />
-                </include>
-            </control>
-
             <!-- SCROLLBAR -->
 
             <control type="scrollbar" id="1675">
@@ -74,7 +43,7 @@
                 <include>Animation_Delay_Fade_In_600</include>
             </control>
 
-            <!-- WRAPLIST -->
+            <!-- WRAP LIST - PAGES -->
 
             <control type="wraplist" id="9100">
                 <include>Animation_Scrolltime_Views_List</include>
@@ -92,97 +61,21 @@
                 <orientation>horizontal</orientation>
 
                 <itemlayout height="810" width="1840">
+
+                    <!-- PAGE 1 - CURRENTLY - TODAY - TOMORROW -->
+
                     <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Eins)</visible>
+                        <visible>String.IsEqual(ListItem.Label2,View_Today)</visible>
+
+                        <!-- ACTUALY -->
 
                         <control type="group">
-                            <width>275</width>
+                            <width>1040</width>
                             <height>PosterH</height>
                             <top>View_Top</top>
                             <left>10</left>
 
-                            <include>Def_Dialog_Background_Image</include>
-
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">19030</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>EpisodeNumber</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Current.Temperature),[B],[/B]°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>150</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Current.Condition),,[CR]]$INFO[Window(Weather).Property(Current.FeelsLike),$LOCALIZE[402] ,°[CR]]$INFO[Window(Weather).Property(Current.Humidity),, $LOCALIZE[406][CR]]$INFO[Window(Weather).Property(Current.Wind)]</label>
-                            </control>
-                        </control>
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>305</left>
+                            <!-- BACKGROUND -->
 
                             <include>Def_Dialog_Background_Image</include>
 
@@ -193,636 +86,384 @@
                                 <fadetime>600</fadetime>
                                 <timeperimage>12000</timeperimage>
                                 <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                                 <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day0.FanartCode)]/</imagepath>
+                                <imagepath diffuse="diffuse/weather_w1040_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</imagepath>
                             </control>
                             <control type="image" description="Fanart">
                                 <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
                                 <width>100%</width>
                                 <height>100%</height>
-                                <aspectratio>scale</aspectratio>
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                                 <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day0.FanartCode),,.jpg]</texture>
+                                <texture diffuse="diffuse/weather_w1040_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode),,.jpg]</texture>
                             </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day0.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day0.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day0.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$LOCALIZE[33006]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day0.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day0.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day0.Outlook)]</label>
-                            </control>
-                        </control>
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>600</left>
-                            <include>Def_Dialog_Background_Image</include>
 
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day1.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day1.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day1.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day1.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day1.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$LOCALIZE[33007]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day1.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day1.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day1.Outlook)]</label>
-                            </control>
-                        </control>
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>895</left>
-                            <include>Def_Dialog_Background_Image</include>
+                            <!-- LEFT INFO -->
 
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day2.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day2.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day2.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day2.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day2.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day2.Title)]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day2.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day2.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day2.Outlook)]</label>
-                            </control>
-                        </control>
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>1190</left>
-                            <include>Def_Dialog_Background_Image</include>
+                            <control type="group">
+                                <width>320</width>
+                                <left>0</left>
 
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day3.FanartCode)]/</imagepath>
+                                <control type="image">
+                                    <centertop>35%</centertop>
+                                    <centerleft>50%</centerleft>
+                                    <width>275</width>
+                                    <height>275</height>
+                                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                                    <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+                                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated</visible>
+                                </control>
+                                <control type="multiimage">
+                                    <centertop>35%</centertop>
+                                    <centerleft>50%</centerleft>
+                                    <width>275</width>
+                                    <height>275</height>
+                                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                                    <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
+                                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
+                                </control>
+                                <control type="image">
+                                    <centertop>35%</centertop>
+                                    <centerleft>50%</centerleft>
+                                    <width>240</width>
+                                    <height>240</height>
+                                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                                    <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture>
+                                    <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+                                </control>
+                                <control type="label">
+                                    <top>20</top>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>NotificationBold</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">19030</label>
+                                </control>
+                                <control type="label">
+                                    <centertop>65%</centertop>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>EpisodeNumber</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.Temperature),[B],[/B]°]</label>
+                                </control>
+                                <control type="textbox">
+                                    <top>76%</top>
+                                    <height>130</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.Condition)]</label>
+                                </control>
                             </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day3.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day3.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day3.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day3.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day3.Title)]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day3.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day3.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day3.Outlook)]</label>
-                            </control>
-                        </control>
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>1485</left>
-                            <include>Def_Dialog_Background_Image</include>
 
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day4.FanartCode)]/</imagepath>
+                            <!-- RIGHT INFO -->
+
+                            <control type="group">
+                                <width>320</width>
+                                <left>340</left>
+
+                                <control type="textbox">
+                                    <top>6%</top>
+                                    <height>200</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.FeelsLike),$LOCALIZE[402] ,°[CR][CR]]$INFO[Window(Weather).Property(Current.Humidity),, $LOCALIZE[406][CR]]$INFO[Window(Weather).Property(Current.DewPoint),$LOCALIZE[405] ,[CR][CR]]</label>
+                                </control>
+
+                                <control type="textbox">
+                                    <top>35%</top>
+                                    <height>150</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.Wind),,[CR]]$INFO[Window(Weather).Property(Current.WindDirection), Direction du vent: ,[CR][CR]]$INFO[Window(Weather).Property(Current.Precipitation),$LOCALIZE[1448] ,]</label>
+                                </control>
+
+                                <control type="textbox">
+                                    <top>62%</top>
+                                    <height>100</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Today.Sunrise),$LOCALIZE[31306] ,[CR]]$INFO[Window(Weather).Property(Today.Sunset),$LOCALIZE[31307] ,]</label>
+                                </control>
+
+                                <control type="textbox">
+                                    <top>84%</top>
+                                    <height>300</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.UVIndex),$LOCALIZE[403] ,[CR]]$INFO[Window(Weather).Property(Current.Cloudiness),$LOCALIZE[31068] ,]</label>
+                                </control>
+
+                                <!-- <control type="image"> -->
+                                    <!-- <centertop>35%</centertop> -->
+                                    <!-- <centerleft>50%</centerleft> -->
+                                    <!-- <width>275</width> -->
+                                    <!-- <height>275</height> -->
+                                    <!-- <aspectratio align="center" aligny="center">keep</aspectratio> -->
+                                    <!-- <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture> -->
+                                    <!-- <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated</visible> -->
+                                <!-- </control> -->
+                                <!-- <control type="multiimage"> -->
+                                    <!-- <centertop>35%</centertop> -->
+                                    <!-- <centerleft>50%</centerleft> -->
+                                    <!-- <width>275</width> -->
+                                    <!-- <height>275</height> -->
+                                    <!-- <aspectratio align="center" aligny="center">keep</aspectratio> -->
+                                    <!-- <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath> -->
+                                    <!-- <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible> -->
+                                <!-- </control> -->
+                                <!-- <control type="image"> -->
+                                    <!-- <centertop>35%</centertop> -->
+                                    <!-- <centerleft>50%</centerleft> -->
+                                    <!-- <width>240</width> -->
+                                    <!-- <height>240</height> -->
+                                    <!-- <aspectratio align="center" aligny="center">keep</aspectratio> -->
+                                    <!-- <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture> -->
+                                    <!-- <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible> -->
+                                <!-- </control> -->
+                                <!-- <control type="label"> -->
+                                    <!-- <top>20</top> -->
+                                    <!-- <left>20</left> -->
+                                    <!-- <right>20</right> -->
+                                    <!-- <align>center</align> -->
+                                    <!-- <font>Small</font> -->
+                                    <!-- <textcolor>PanelWhite100</textcolor> -->
+                                    <!-- <label fallback="10006">19030</label> -->
+                                <!-- </control> -->
+                                <!-- <control type="label"> -->
+                                    <!-- <centertop>65%</centertop> -->
+                                    <!-- <left>20</left> -->
+                                    <!-- <right>20</right> -->
+                                    <!-- <align>center</align> -->
+                                    <!-- <font>EpisodeNumber</font> -->
+                                    <!-- <textcolor>PanelWhite100</textcolor> -->
+                                    <!-- <label fallback="10006">$INFO[Window(Weather).Property(Current.Temperature),[B],[/B]°]</label> -->
+                                <!-- </control> -->
                             </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day4.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day4.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day4.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day4.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day4.Title)]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day4.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day4.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day4.Outlook)]</label>
-                            </control>
+
                         </control>
+
+                        <!-- TODAY -->
+
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="1" />
+                            <param name="Def_Weather_List_Daily_Left" value="1090" />
+                            <param name="Def_Weather_List_Daily_Label" value="$LOCALIZE[33006]" />
+                        </include>
+
+                        <!-- TOMMOROW -->
+
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="2" />
+                            <param name="Def_Weather_List_Daily_Left" value="1450" />
+                            <param name="Def_Weather_List_Daily_Label" value="$LOCALIZE[33007]" />
+                        </include>
                     </control>
-                    <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Vier)</visible>
 
-                        <include content="Def_Weather_List_Input_Page_Two">
+                    <!-- PAGE 2 - NEXT DAYS -->
+
+                    <control type="group">
+                        <visible>String.IsEqual(ListItem.Label2,View_Daily)</visible>
+
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="3" />
+                            <param name="Def_Weather_List_Daily_Left" value="10" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.3.LongDay)]" />
+                        </include>
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="4" />
+                            <param name="Def_Weather_List_Daily_Left" value="370" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.4.LongDay)]" />
+                        </include>
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="5" />
+                            <param name="Def_Weather_List_Daily_Left" value="730" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.5.LongDay)]" />
+                        </include>
+                        <include content="Def_Weather_List_Daily">
                             <param name="Daily" value="6" />
-                            <param name="weatherlistinputpagetwoleft" value="10" />
+                            <param name="Def_Weather_List_Daily_Left" value="1090" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.6.LongDay)]" />
                         </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
+                        <include content="Def_Weather_List_Daily">
                             <param name="Daily" value="7" />
-                            <param name="weatherlistinputpagetwoleft" value="305" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="8" />
-                            <param name="weatherlistinputpagetwoleft" value="600" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="9" />
-                            <param name="weatherlistinputpagetwoleft" value="895" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="10" />
-                            <param name="weatherlistinputpagetwoleft" value="1190" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="11" />
-                            <param name="weatherlistinputpagetwoleft" value="1485" />
+                            <param name="Def_Weather_List_Daily_Left" value="1450" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.7.LongDay)]" />
                         </include>
                     </control>
+
+                    <!-- PAGE 3 - HOUR -->
+
                     <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Zwei)</visible>
+                        <visible>String.IsEqual(ListItem.Label2,View_Hourly)</visible>
 
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="413" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
                                 <param name="weather_left" value="10" />
                                 <param name="weather_fanart_code" value="1" />
                             </include>
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart)</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Hourly.1.FanartCode)]/</imagepath>
-                            </control>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="1" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="1" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="2" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="2" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="3" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="3" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="4" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="4" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="5" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="5" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="6" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="6" />
                                 <param name="top" value="530" />
                             </include>
                         </control>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="422" />
-                                <param name="weather_left" value="453" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
+                                <param name="weather_left" value="460" />
                                 <param name="weather_fanart_code" value="7" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="7" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="7" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="8" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="8" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="9" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="9" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="10" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="10" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="11" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="11" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="12" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="12" />
                                 <param name="top" value="530" />
                             </include>
                         </control>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="422" />
-                                <param name="weather_left" value="894" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
+                                <param name="weather_left" value="910" />
                                 <param name="weather_fanart_code" value="13" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="13" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="13" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="14" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="14" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="15" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="15" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="16" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="16" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="17" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="17" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="18" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="18" />
                                 <param name="top" value="530" />
                             </include>
                         </control>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="422" />
-                                <param name="weather_left" value="1336" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
+                                <param name="weather_left" value="1360" />
                                 <param name="weather_fanart_code" value="19" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="19" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="19" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="20" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="20" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="21" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="21" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="22" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="22" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="23" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="23" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="24" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="24" />
                                 <param name="top" value="530" />
                             </include>
-                        </control>
-                    </control>
-                    <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Drei)</visible>
-
-                        <top>View_Top</top>
-
-                        <control type="image">
-                            <left>1</left>
-                            <top>1</top>
-                            <right>1</right>
-                            <bottom>1</bottom>
-                            <width>1758</width>
-                            <height>638</height>
-                            <texture border="24" colordiffuse="White100">common/box24.png</texture>
-                        </control>
-                        <control type="image">
-                            <left>1</left>
-                            <top>1</top>
-                            <right>1</right>
-                            <bottom>1</bottom>
-                            <width>1758</width>
-                            <height>638</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
-                            <aspectratio align="center" aligny="center">scale</aspectratio>
-                        </control>
-                        <control type="image">
-                            <left>1</left>
-                            <top>1</top>
-                            <right>1</right>
-                            <bottom>1</bottom>
-                            <width>1758</width>
-                            <height>638</height>
-                            <texture>$INFO[ListItem.Property(MapLayer)]</texture>
-                            <aspectratio align="center" aligny="center">scale</aspectratio>
-                            <animation type="Conditional" condition="true" reversible="false">
-                                <effect type="fade" end="40" start="100" time="0" />
-                            </animation>
-                        </control>
-                        <control type="label">
-                            <top>510</top>
-                            <width>1401</width>
-                            <height>70</height>
-                            <align>right</align>
-                            <right>92</right>
-                            <textcolor>B3000000</textcolor>
-                            <shadowcolor>white</shadowcolor>
-                            <font>Tiny</font>
-                            <label>[B]$INFO[ListItem.Label][/B]</label>
-                        </control>
-                        <control type="image">
-                            <top>569</top>
-                            <width>1401</width>
-                            <height>60</height>
-                            <right>91</right>
-                            <texture>$INFO[ListItem.Property(Legend)]</texture>
-                            <aspectratio align="right" aligny="bottom">keep</aspectratio>
                         </control>
                     </control>
                 </itemlayout>
                 <focusedlayout height="810" width="1840">
+
+                    <!-- PAGE 1 - CURRENTLY - TODAY - TOMORROW -->
+
                     <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Eins)</visible>
+                        <visible>String.IsEqual(ListItem.Label2,View_Today)</visible>
+
+                        <!-- ACTUALY -->
+
                         <control type="group">
                             <top>View_Top</top>
                             <left>10</left>
-                            <width>275</width>
+                            <width>1040</width>
                             <height>PosterH</height>
+
+                            <!-- BACKGROUND -->
 
                             <include>Def_Dialog_Background_Image</include>
 
@@ -833,769 +474,408 @@
                                 <fadetime>600</fadetime>
                                 <timeperimage>12000</timeperimage>
                                 <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                                 <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</imagepath>
+                                <imagepath diffuse="diffuse/weather_w1040_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode)]/</imagepath>
                             </control>
                             <control type="image" description="Fanart">
                                 <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
                                 <width>100%</width>
                                 <height>100%</height>
-                                <aspectratio>scale</aspectratio>
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                                 <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode),,.jpg]</texture>
+                                <texture diffuse="diffuse/weather_w1040_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Current.FanartCode),,.jpg]</texture>
                             </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>275</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated</visible>
+
+                            <!-- LEFT INFO -->
+
+                            <control type="group">
+                                <width>320</width>
+                                <left>0</left>
+
+                                <control type="image">
+                                    <centertop>35%</centertop>
+                                    <centerleft>50%</centerleft>
+                                    <width>275</width>
+                                    <height>275</height>
+                                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                                    <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+                                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated</visible>
+                                </control>
+                                <control type="multiimage">
+                                    <centertop>35%</centertop>
+                                    <centerleft>50%</centerleft>
+                                    <width>275</width>
+                                    <height>275</height>
+                                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                                    <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
+                                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
+                                </control>
+                                <control type="image">
+                                    <centertop>35%</centertop>
+                                    <centerleft>50%</centerleft>
+                                    <width>240</width>
+                                    <height>240</height>
+                                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                                    <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture>
+                                    <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+                                </control>
+                                <control type="label">
+                                    <top>20</top>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>NotificationBold</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">19030</label>
+                                </control>
+                                <control type="label">
+                                    <centertop>65%</centertop>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>EpisodeNumber</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.Temperature),[B],[/B]°]</label>
+                                </control>
+                                <control type="textbox">
+                                    <top>76%</top>
+                                    <height>130</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.Condition)]</label>
+                                </control>
                             </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>275</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">19030</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>EpisodeNumber</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Current.Temperature),[B],[/B]°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>150</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Current.Condition),,[CR]]$INFO[Window(Weather).Property(Current.FeelsLike),$LOCALIZE[402] ,°[CR]]$INFO[Window(Weather).Property(Current.Humidity),, $LOCALIZE[406][CR]]$INFO[Window(Weather).Property(Current.Wind)]</label>
+
+                            <!-- RIGHT INFO -->
+
+                            <control type="group">
+                                <width>320</width>
+                                <left>340</left>
+
+                                <control type="textbox">
+                                    <top>6%</top>
+                                    <height>200</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.FeelsLike),$LOCALIZE[402] ,°[CR][CR]]$INFO[Window(Weather).Property(Current.Humidity),, $LOCALIZE[406][CR]]$INFO[Window(Weather).Property(Current.DewPoint),$LOCALIZE[405] ,[CR][CR]]</label>
+                                </control>
+
+                                <control type="textbox">
+                                    <top>35%</top>
+                                    <height>150</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.Wind),,[CR]]$INFO[Window(Weather).Property(Current.WindDirection), Direction du vent: ,[CR][CR]]$INFO[Window(Weather).Property(Current.Precipitation),$LOCALIZE[1448] ,]</label>
+                                </control>
+
+                                <control type="textbox">
+                                    <top>62%</top>
+                                    <height>100</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Today.Sunrise),$LOCALIZE[31306] ,[CR]]$INFO[Window(Weather).Property(Today.Sunset),$LOCALIZE[31307] ,]</label>
+                                </control>
+
+                                <control type="textbox">
+                                    <top>84%</top>
+                                    <height>300</height>
+                                    <left>20</left>
+                                    <right>20</right>
+                                    <align>center</align>
+                                    <font>Tiny</font>
+                                    <textcolor>PanelWhite100</textcolor>
+                                    <label fallback="10006">$INFO[Window(Weather).Property(Current.UVIndex),$LOCALIZE[403] ,[CR]]$INFO[Window(Weather).Property(Current.Cloudiness),$LOCALIZE[31068] ,]</label>
+                                </control>
+
+                                <!-- <control type="image"> -->
+                                    <!-- <centertop>35%</centertop> -->
+                                    <!-- <centerleft>50%</centerleft> -->
+                                    <!-- <width>275</width> -->
+                                    <!-- <height>275</height> -->
+                                    <!-- <aspectratio align="center" aligny="center">keep</aspectratio> -->
+                                    <!-- <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture> -->
+                                    <!-- <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated</visible> -->
+                                <!-- </control> -->
+                                <!-- <control type="multiimage"> -->
+                                    <!-- <centertop>35%</centertop> -->
+                                    <!-- <centerleft>50%</centerleft> -->
+                                    <!-- <width>275</width> -->
+                                    <!-- <height>275</height> -->
+                                    <!-- <aspectratio align="center" aligny="center">keep</aspectratio> -->
+                                    <!-- <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath> -->
+                                    <!-- <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible> -->
+                                <!-- </control> -->
+                                <!-- <control type="image"> -->
+                                    <!-- <centertop>35%</centertop> -->
+                                    <!-- <centerleft>50%</centerleft> -->
+                                    <!-- <width>240</width> -->
+                                    <!-- <height>240</height> -->
+                                    <!-- <aspectratio align="center" aligny="center">keep</aspectratio> -->
+                                    <!-- <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture> -->
+                                    <!-- <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible> -->
+                                <!-- </control> -->
+                                <!-- <control type="label"> -->
+                                    <!-- <top>20</top> -->
+                                    <!-- <left>20</left> -->
+                                    <!-- <right>20</right> -->
+                                    <!-- <align>center</align> -->
+                                    <!-- <font>Small</font> -->
+                                    <!-- <textcolor>PanelWhite100</textcolor> -->
+                                    <!-- <label fallback="10006">19030</label> -->
+                                <!-- </control> -->
+                                <!-- <control type="label"> -->
+                                    <!-- <centertop>65%</centertop> -->
+                                    <!-- <left>20</left> -->
+                                    <!-- <right>20</right> -->
+                                    <!-- <align>center</align> -->
+                                    <!-- <font>EpisodeNumber</font> -->
+                                    <!-- <textcolor>PanelWhite100</textcolor> -->
+                                    <!-- <label fallback="10006">$INFO[Window(Weather).Property(Current.Temperature),[B],[/B]°]</label> -->
+                                <!-- </control> -->
                             </control>
                         </control>
 
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>305</left>
-                            <include>Def_Dialog_Background_Image</include>
+                        <!-- TODAY -->
 
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day0.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day0.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>275</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day0.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day0.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day0.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$LOCALIZE[33006]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day0.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day0.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day0.Outlook)]</label>
-                            </control>
-                        </control>
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="1" />
+                            <param name="Def_Weather_List_Daily_Left" value="1090" />
+                            <param name="Def_Weather_List_Daily_Label" value="$LOCALIZE[33006]" />
+                        </include>
 
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>600</left>
-                            <include>Def_Dialog_Background_Image</include>
+                        <!-- TOMMOROW -->
 
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day1.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day1.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day1.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day1.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day1.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$LOCALIZE[33007]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day1.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day1.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day1.Outlook)]</label>
-                            </control>
-                        </control>
-
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>895</left>
-                            <include>Def_Dialog_Background_Image</include>
-
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day2.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day2.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day2.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day2.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day2.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day2.Title)]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day2.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day2.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day2.Outlook)]</label>
-                            </control>
-                        </control>
-
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>1190</left>
-                            <include>Def_Dialog_Background_Image</include>
-
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day3.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day3.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day3.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day3.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day3.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day3.Title)]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day3.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day3.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day3.Outlook)]</label>
-                            </control>
-                        </control>
-
-                        <control type="group">
-                            <width>275</width>
-                            <height>PosterH</height>
-                            <top>View_Top</top>
-                            <left>1485</left>
-                            <include>Def_Dialog_Background_Image</include>
-
-                            <control type="multiimage" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <fadetime>600</fadetime>
-                                <timeperimage>12000</timeperimage>
-                                <randomize>true</randomize>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <imagepath background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window(Weather).Property(Day4.FanartCode)]/</imagepath>
-                            </control>
-                            <control type="image" description="Fanart">
-                                <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
-                                <width>100%</width>
-                                <height>100%</height>
-                                <aspectratio>scale</aspectratio>
-                                <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                                <texture background="true">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Day4.FanartCode),,.jpg]</texture>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day4.FanartCode),,.png]</texture>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="multiimage">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>275</width>
-                                <height>285</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Day4.FanartCode)]</imagepath>
-                                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                            </control>
-                            <control type="image">
-                                <centertop>35%</centertop>
-                                <centerleft>50%</centerleft>
-                                <width>240</width>
-                                <height>240</height>
-                                <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture>$INFO[Window(weather).Property(Day4.OutlookIcon)]</texture>
-                                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
-                            </control>
-                            <control type="label">
-                                <top>20</top>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Small</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day4.Title)]</label>
-                            </control>
-                            <control type="label">
-                                <centertop>65%</centertop>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>LargeBold</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day4.HighTemp),[B],[/B]°]$INFO[Window(Weather).Property(Day4.LowTemp),  ,°]</label>
-                            </control>
-                            <control type="textbox">
-                                <top>76%</top>
-                                <height>130</height>
-                                <left>20</left>
-                                <right>20</right>
-                                <align>center</align>
-                                <font>Tiny</font>
-                                <textcolor>PanelWhite100</textcolor>
-                                <label fallback="10006">$INFO[Window(Weather).Property(Day4.Outlook)]</label>
-                            </control>
-                        </control>
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="2" />
+                            <param name="Def_Weather_List_Daily_Left" value="1450" />
+                            <param name="Def_Weather_List_Daily_Label" value="$LOCALIZE[33007]" />
+                        </include>
                     </control>
 
+                    <!-- PAGE 2 - NEXT DAYS -->
+
                     <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Vier)</visible>
-                        <include content="Def_Weather_List_Input_Page_Two">
+                        <visible>String.IsEqual(ListItem.Label2,View_Daily)</visible>
+
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="3" />
+                            <param name="Def_Weather_List_Daily_Left" value="10" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.3.LongDay)]" />
+                        </include>
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="4" />
+                            <param name="Def_Weather_List_Daily_Left" value="370" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.4.LongDay)]" />
+                        </include>
+                        <include content="Def_Weather_List_Daily">
+                            <param name="Daily" value="5" />
+                            <param name="Def_Weather_List_Daily_Left" value="730" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.5.LongDay)]" />
+                        </include>
+                        <include content="Def_Weather_List_Daily">
                             <param name="Daily" value="6" />
-                            <param name="weatherlistinputpagetwoleft" value="10" />
+                            <param name="Def_Weather_List_Daily_Left" value="1090" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.6.LongDay)]" />
                         </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
+                        <include content="Def_Weather_List_Daily">
                             <param name="Daily" value="7" />
-                            <param name="weatherlistinputpagetwoleft" value="305" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="8" />
-                            <param name="weatherlistinputpagetwoleft" value="600" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="9" />
-                            <param name="weatherlistinputpagetwoleft" value="895" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="10" />
-                            <param name="weatherlistinputpagetwoleft" value="1190" />
-                        </include>
-                        <include content="Def_Weather_List_Input_Page_Two">
-                            <param name="Daily" value="11" />
-                            <param name="weatherlistinputpagetwoleft" value="1485" />
+                            <param name="Def_Weather_List_Daily_Left" value="1450" />
+                            <param name="Def_Weather_List_Daily_Label" value="$INFO[Window.Property(Daily.7.LongDay)]" />
                         </include>
                     </control>
 
+                    <!-- PAGE 3 - HOUR -->
+
                     <control type="group">
-                        <visible>String.IsEqual(ListItem.Label2,Zwei)</visible>
+                        <visible>String.IsEqual(ListItem.Label2,View_Hourly)</visible>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="423" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
                                 <param name="weather_left" value="10" />
                                 <param name="weather_fanart_code" value="1" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="1" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="1" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="2" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="2" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="3" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="3" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="4" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="4" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="5" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="5" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="6" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="6" />
                                 <param name="top" value="530" />
                             </include>
                         </control>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="422" />
-                                <param name="weather_left" value="453" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
+                                <param name="weather_left" value="460" />
                                 <param name="weather_fanart_code" value="7" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="7" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="7" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="8" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="8" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="9" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="9" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="10" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="10" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="11" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="11" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="12" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="12" />
                                 <param name="top" value="530" />
                             </include>
                         </control>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="422" />
-                                <param name="weather_left" value="894" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
+                                <param name="weather_left" value="910" />
                                 <param name="weather_fanart_code" value="13" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="13" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="13" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="14" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="14" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="15" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="15" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="16" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="16" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="17" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="17" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="18" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="18" />
                                 <param name="top" value="530" />
                             </include>
                         </control>
+
                         <control type="group">
-                            <include content="Def_Weather_List_Stop">
-                                <param name="weather_width" value="422" />
-                                <param name="weather_left" value="1336" />
+                            <include content="Def_Weather_List_Hourly_Background">
+                                <param name="weather_width" value="410" />
+                                <param name="weather_left" value="1360" />
                                 <param name="weather_fanart_code" value="19" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="19" />
+
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="19" />
                                 <param name="top" value="0" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="20" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="20" />
                                 <param name="top" value="106" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="21" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="21" />
                                 <param name="top" value="212" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="22" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="22" />
                                 <param name="top" value="318" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="23" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="23" />
                                 <param name="top" value="424" />
                             </include>
-                            <include content="Def_Weather_List">
-                                <param name="DayId" value="24" />
+                            <include content="Def_Weather_List_Hourly_Item">
+                                <param name="Day_Hour_ID" value="24" />
                                 <param name="top" value="530" />
                             </include>
-                        </control>
-                    </control>
-                    <control type="group">
-                        <top>View_Top</top>
-                        <visible>String.IsEqual(ListItem.Label2,Drei)</visible>
-                        <control type="image">
-                            <left>1</left>
-                            <top>1</top>
-                            <right>1</right>
-                            <bottom>1</bottom>
-                            <width>1758</width>
-                            <height>638</height>
-                            <texture border="24" colordiffuse="White100">common/box24.png</texture>
-                        </control>
-                        <control type="image">
-                            <left>1</left>
-                            <top>1</top>
-                            <right>1</right>
-                            <bottom>1</bottom>
-                            <width>1758</width>
-                            <height>638</height>
-                            <texture>$INFO[ListItem.Icon]</texture>
-                            <aspectratio align="center" aligny="center">scale</aspectratio>
-                        </control>
-                        <control type="image">
-                            <left>1</left>
-                            <top>1</top>
-                            <right>1</right>
-                            <bottom>1</bottom>
-                            <width>1758</width>
-                            <height>638</height>
-                            <texture>$INFO[ListItem.Property(MapLayer)]</texture>
-                            <aspectratio align="center" aligny="center">scale</aspectratio>
-                            <animation type="Conditional" condition="true" reversible="false">
-                                <effect type="fade" end="40" start="100" time="0" />
-                            </animation>
-                        </control>
-                        <control type="label">
-                            <top>510</top>
-                            <width>1401</width>
-                            <height>70</height>
-                            <align>right</align>
-                            <right>92</right>
-                            <textcolor>B3000000</textcolor>
-                            <shadowcolor>white</shadowcolor>
-                            <font>Tiny</font>
-                            <label>[B]$INFO[ListItem.Label][/B]</label>
-                        </control>
-                        <control type="image">
-                            <top>569</top>
-                            <width>1401</width>
-                            <height>60</height>
-                            <right>91</right>
-                            <texture>$INFO[ListItem.Property(Legend)]</texture>
-                            <aspectratio align="right" aligny="bottom">keep</aspectratio>
                         </control>
                     </control>
                 </focusedlayout>
 
                 <content>
+
+                    <!-- PAGE 1 - CURRENTLY - TODAY - TOMORROW -->
+
                     <item id="0">
                         <label/>
-                        <label2>Eins</label2>
+                        <label2>View_Today</label2>
                         <icon/>
                     </item>
+
+                    <!-- PAGE 2 - NEXT DAYS -->
+
                     <item id="1">
                         <label>31067</label>
                         <icon/>
-                        <label2>Vier</label2>
+                        <label2>View_Daily</label2>
                         <visible>!String.IsEmpty(Window.Property(Daily.IsFetched))</visible>
                     </item>
+
+                    <!-- PAGE 3 - HOUR -->
+
                     <item id="2">
                         <label>31066</label>
                         <icon/>
-                        <label2>Zwei</label2>
+                        <label2>View_Hourly</label2>
                     </item>
-                    <item id="3">
-                        <label>$INFO[Window.Property(Map.1.Heading)]</label>
-                        <icon>$INFO[Window.Property(Map.1.Area)]</icon>
-                        <property name="MapLayer">$INFO[Window.Property(Map.1.Layer)]</property>
-                        <property name="Legend">$INFO[Window.Property(Map.1.Legend)]</property>
-                        <label2>Drei</label2>
-                        <visible>!String.IsEmpty(Window.Property(Map.1.Area)) + !String.IsEmpty(Window.Property(Map.IsFetched))</visible>
-                    </item>
-                    <item id="4">
-                        <label>$INFO[Window.Property(Map.2.Heading)]</label>
-                        <icon>$INFO[Window.Property(Map.2.Area)]</icon>
-                        <property name="MapLayer">$INFO[Window.Property(Map.2.Layer)]</property>
-                        <property name="Legend">$INFO[Window.Property(Map.2.Legend)]</property>
-                        <label2>Drei</label2>
-                        <visible>!String.IsEmpty(Window.Property(Map.2.Area)) + !String.IsEmpty(Window.Property(Map.IsFetched))</visible>
-                    </item>
-                    <item id="5">
-                        <label>$INFO[Window.Property(Map.3.Heading)]</label>
-                        <icon>$INFO[Window.Property(Map.3.Area)]</icon>
-                        <property name="MapLayer">$INFO[Window.Property(Map.3.Layer)]</property>
-                        <property name="Legend">$INFO[Window.Property(Map.3.Legend)]</property>
-                        <label2>Drei</label2>
-                        <visible>!String.IsEmpty(Window.Property(Map.3.Area)) + !String.IsEmpty(Window.Property(Map.IsFetched))</visible>
-                    </item>
-                    <item id="6">
-                        <label>$INFO[Window.Property(Map.4.Heading)]</label>
-                        <icon>$INFO[Window.Property(Map.4.Area)]</icon>
-                        <property name="MapLayer">$INFO[Window.Property(Map.4.Layer)]</property>
-                        <property name="Legend">$INFO[Window.Property(Map.4.Legend)]</property>
-                        <label2>Drei</label2>
-                        <visible>!String.IsEmpty(Window.Property(Map.4.Area)) + !String.IsEmpty(Window.Property(Map.IsFetched))</visible>
-                    </item>
-                    <item id="7">
-                        <label>$INFO[Window.Property(Map.5.Heading)]</label>
-                        <icon>$INFO[Window.Property(Map.5.Area)]</icon>
-                        <property name="MapLayer">$INFO[Window.Property(Map.5.Layer)]</property>
-                        <property name="Legend">$INFO[Window.Property(Map.5.Legend)]</property>
-                        <label2>Drei</label2>
-                        <visible>!String.IsEmpty(Window.Property(Map.5.Area)) + !String.IsEmpty(Window.Property(Map.IsFetched))</visible>
-                    </item>
+
                 </content>
             </control>
         </control>
 
+        <!-- LOCATION SELECT -->
+
         <control type="spincontrolex" id="3">
-            <textoffsetx>30</textoffsetx>
             <description>Location Select</description>
+            <textoffsetx>30</textoffsetx>
             <visible allowhiddenfocus="true">false</visible>
         </control>
+
+        <!-- CONTEXT MENU - BACKGROUND OVERLAY -->
 
         <control type="group">
             <include>Animation_Fade_In</include>

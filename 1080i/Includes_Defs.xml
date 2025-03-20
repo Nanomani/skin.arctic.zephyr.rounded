@@ -304,7 +304,6 @@
 
     <include name="Def_Image_Art">
         <param name="pad_image" value="$PARAM[pad_image]" default="0" />
-        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="$VAR[Value_Color_Settings]" />
         <param name="condition_fade" value="$PARAM[condition_fade]" default="true" />
 
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Poster]" />
@@ -313,16 +312,19 @@
         <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
         <param name="fadetime" value="$PARAM[fadetime]" default="PosterFanartFadetime" />
         <param name="condition_fadetime" value="$PARAM[condition_fadetime]" default="true" />
-        <param name="visible" value="$PARAM[visible]" default="true" />
+
+        <param name="condition_fadetime_background" value="$PARAM[condition_fadetime_background]" default="true" />
+        <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" default="$VAR[Value_Color_Settings]" />
         <param name="visible_background" value="$PARAM[visible_background]" default="false" />
+
+        <param name="visible" value="$PARAM[visible]" default="true" />
         <definition>
-            <control type="image">
-                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
-                <texture border="12" colordiffuse="$PARAM[colordiffuse]">common/box12.png</texture>
-                <animation effect="fade" start="100" end="80" condition="$PARAM[condition_fade]">Conditional</animation>
-                <visible>$PARAM[visible_background]</visible>
-                <visible>$PARAM[visible]</visible>
-            </control>
+            <include content="Def_Image_Background" condition="$PARAM[visible_background]">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" />
+                <param name="condition_fadetime_background" value="$PARAM[condition_fadetime_background]" />
+            </include>
+
             <control type="image">
                 <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
                 <include content="Def_Fadetime" condition="$PARAM[condition_fadetime]"><param name="fadetime">$PARAM[fadetime]</param></include>
@@ -343,9 +345,20 @@
 
         <param name="fadetime" value="$PARAM[fadetime]" default="PosterFanartFadetime" />
         <param name="condition_fadetime" value="$PARAM[condition_fadetime]" default="false" />
+
+        <param name="condition_fadetime_background" value="$PARAM[condition_fadetime_background]" default="true" />
+        <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" default="$VAR[Value_Color_Settings]" />
+        <param name="visible_background" value="$PARAM[visible_background]" default="false" />
+
         <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
+            <include content="Def_Image_Background" condition="$PARAM[visible_background]">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" />
+                <param name="condition_fadetime_background" value="$PARAM[condition_fadetime_background]" />
+            </include>
+
             <control type="image">
                 <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
                 <include content="Def_Fadetime" condition="$PARAM[condition_fadetime]"><param name="fadetime">$PARAM[fadetime]</param></include>
@@ -384,6 +397,20 @@
                 <include content="Def_Padding"><param name="pad">$PARAM[pad_shadow]</param></include>
                 <texture border="$PARAM[Border_Shadow]" infill="false">common/$PARAM[Texture_Border]</texture>
                 <visible>$PARAM[visible]</visible>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Def_Image_Background">
+        <param name="pad_image" value="$PARAM[pad_image]" default="0" />
+        <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" default="$VAR[Value_Color_Settings]" />
+        <param name="condition_fadetime_background" value="$PARAM[condition_fadetime_background]" default="true" />
+
+        <definition>
+            <control type="image">
+                <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
+                <texture border="12" colordiffuse="$PARAM[colordiffuse_background]">common/box12.png</texture>
+                <animation effect="fade" start="100" end="50" condition="$PARAM[condition_fadetime_background]">Conditional</animation>
             </control>
         </definition>
     </include>

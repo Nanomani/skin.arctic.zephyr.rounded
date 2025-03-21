@@ -1463,15 +1463,15 @@
 
                 <!-- FAVOURITES -->
 
-                <include content="Def_Image_Art">
+                <include content="Def_Image_Art_Default">
                     <param name="pad_image" value="$PARAM[pad_image]" />
                     <param name="aspectratio" value="keep" />
                     <param name="texture" value="$VAR[Image_Poster]" />
                     <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
-                    <param name="fallback" value="DefaultMovies" />
+                    <param name="fallback" value="DefaultFavourites" />
                     <param name="condition_fadetime" value="false" />
                     <param name="visible_background" value="true" />
-                    <param name="visible" value="[String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)] + !String.StartsWith(ListItem.Icon,Default)" />
+                    <param name="visible" value="[String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)]" />
                 </include>
 
                 <!-- ADDONS -->
@@ -1952,16 +1952,31 @@
         <definition>
             <include content="Def_Widget_Background"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
 
-            <!-- all others -->
+            <!-- ALL OTHERS -->
+
             <include content="Def_Image_Art_Default">
                 <param name="pad_image" value="$PARAM[pad_image]" />
                 <param name="aspectratio" value="scale" />
                 <param name="texture" value="$VAR[Image_Fanart]" />
                 <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
-                <param name="visible" value="![String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)] + !String.IsEqual(ListItem.DBType,studio)" />
+                <param name="visible" value="![String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)] + !String.IsEqual(ListItem.DBType,studio) + ![String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)]" />
             </include>
 
-            <!-- genres -->
+            <!-- FAVOURITES -->
+
+            <include content="Def_Image_Art_Default">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="aspectratio" value="keep" />
+                <param name="texture" value="$VAR[Image_Poster]" />
+                <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                <param name="fallback" value="DefaultFavourites" />
+                <param name="condition_fadetime" value="false" />
+                <param name="visible_background" value="true" />
+                <param name="visible" value="[String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)]" />
+            </include>
+
+            <!-- GENRES -->
+
             <include content="Def_Image_Art">
                 <param name="pad_image" value="$PARAM[pad_image]" />
                 <param name="aspectratio" value="keep" />
@@ -1972,7 +1987,8 @@
                 <param name="visible" value="String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)" />
             </include>
 
-            <!-- studio -->
+            <!-- STUDIO -->
+
             <include content="Def_Image_Art">
                 <param name="pad_image" value="$PARAM[pad_image]" />
                 <param name="aspectratio" value="keep" />

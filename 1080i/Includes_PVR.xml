@@ -1858,15 +1858,15 @@
         <control type="group">
             <include>Animation_Fade_In</include>
             <include>Animation_Fade_Out</include>
-            <visible>ControlGroup(9000).HasFocus() | Control.HasFocus(9070)</visible>
+            <visible>ControlGroup(9000).HasFocus() | Control.HasFocus(9070) | ControlGroup(995).HasFocus()</visible>
             <include>Background_Overlay</include>
         </control>
 
         <control type="group">
             <include>Animation_RightSide</include>
 
-            <include content="Def_View_ContextMenu_Background"><param name="height" value="689" /></include>
-            <include content="Object_Arrows_View_ContextMenu"><param name="arrow_bottom" value="699" /></include>
+            <include content="Def_View_ContextMenu_Background"><param name="height" value="549" /></include>
+            <include content="Object_Arrows_View_ContextMenu"><param name="arrow_bottom" value="559" /></include>
 
             <control type="label">
                 <include>Def_Dialog_Header_Title</include>
@@ -1875,201 +1875,159 @@
 
             <include>Def_Dialog_Header_Logo</include>
             <include>Def_Dialog_Header_Line</include>
+            <include content="Def_Dialog_Header_Line"><param name="top">165</param></include>
 
-            <control type="grouplist" id="9000">
-                <top>112</top>
-                <pagecontrol>9070</pagecontrol>
-                <usecontrolcoords>true</usecontrolcoords>
-                <include content="Def_View_ContextMenu_GroupList_scrollbar"><param name="height" value="560" /><param name="scrollid" value="9070" /></include>
-                <include>Animation_Scrolltime_Views_List</include>
+            <control type="grouplist" id="9001">
+                <top>108</top>
+                <usecontrolcoords>false</usecontrolcoords>
+
+                <!-- CONTEXT MENU ICON -->
+
+                <control type="group" id="9011">
+                    <left>40</left>
+                    <height>64</height>
+                    <include>Def_Context_Menu_PVR_Icon</include>
+                </control>
+
+                <!-- CONTEXT MENU LIST -->
+
+                <control type="grouplist" id="9000">
+                    <onup>SetFocus(8151)</onup>
+                    <ondown>SetFocus(8151)</ondown>
+
+                    <pagecontrol>9070</pagecontrol>
+                    <usecontrolcoords>true</usecontrolcoords>
+                    <include content="Def_View_ContextMenu_GroupList_scrollbar"><param name="height" value="350" /><param name="scrollid" value="9070" /></include>
+                    <include>Animation_Scrolltime_Views_List</include>
 
                 <!-- NOW PLAYING -->
 
-                <control type="button" id="55555">
-                    <include>Def_Context_Menu_Label</include>
-                    <label>31448</label>
-                    <visible>Player.HasMedia | Player.Playing | Player.Paused</visible>
+                    <control type="button" id="55555">
+                        <include>Def_Context_Menu_Label</include>
+                        <label>31448</label>
+                        <visible>Player.HasMedia | Player.Playing | Player.Paused</visible>
+                    </control>
+
+                    <include>Def_View_ContextMenu_Button_Playlist</include>
+
+                    <!-- MINI PLAYER -->
+
+                    <include>Def_View_ContextMenu_Player</include>
+
+                <!-- OPTIONS -->
+
+                    <control type="button" id="55554">
+                        <include>Def_Context_Menu_Label</include>
+                        <label>33063</label>
+                        <visible>!Window.IsActive(TVSearch)</visible>
+                    </control>
+
+                    <control type="button" id="28">
+                        <description>Group</description>
+                        <include>Def_Button_Gradient_Context</include>
+                        <visible>Window.IsActive(TVChannels) | Window.IsActive(TvGuide)</visible>
+                    </control>
+                    <control type="radiobutton" id="6">
+                        <description>Show Hidden Channels</description>
+                        <label>19051</label>
+                        <include>Def_Button_Gradient_Context</include>
+                        <visible>Window.IsActive(TVChannels)</visible>
+                    </control>
+                    <control type="radiobutton" id="31">
+                        <description>Filter</description>
+                        <label>587</label>
+                        <include>Def_Button_Gradient_Context</include>
+                        <selected>Container.Filtered</selected>
+                        <visible>Window.IsActive(TVChannels)</visible>
+                    </control>
+                    <control type="radiobutton" id="7">
+                        <description>Show Hidden Channels</description>
+                        <label>19184</label>
+                        <include>Def_Button_Gradient_Context</include>
+                        <visible>Window.IsActive(TVRecordings)</visible>
+                    </control>
+                    <control type="radiobutton" id="8">
+                        <description>Hide disabled timers</description>
+                        <include>Def_Button_Gradient_Context</include>
+                        <label>$LOCALIZE[19077]</label>
+                        <visible>Window.IsActive(TVTimers) | Window.IsActive(TvTimerRules)</visible>
+                    </control>
+                    <control type="button" id="10">
+                        <description>Watched Toggle</description>
+                        <include>Def_Button_Gradient_Context</include>
+                        <label>$LOCALIZE[20367]</label>
+                        <label2>[B]$INFO[Container.NumNonFolderItems][/B]</label2>
+                        <visible>Window.IsActive(TVRecordings)</visible>
+                    </control>
+                    <control type="radiobutton" id="9007">
+                        <description>Search</description>
+                        <include>Def_Button_Gradient_Context</include>
+                        <label>31290</label>
+                        <selected>Skin.HasSetting(pvr.fullepg)</selected>
+                        <onclick>Skin.ToggleSetting(pvr.fullepg)</onclick>
+                        <onclick>ReloadSkin()</onclick>
+                        <visible>Window.IsActive(TvGuide)</visible>
+                    </control>
+                    <control type="radiobutton" id="5">
+                        <description>Group recording items by folder structure</description>
+                        <include>Def_Button_Gradient_Context</include>
+                        <label>$LOCALIZE[19270]</label>
+                        <visible>Window.IsActive(TVRecordings)</visible>
+                    </control>
+
+                <!-- OPTIONS VIEWS -->
+
+                    <control type="button" id="55550">
+                        <include>Def_Context_Menu_Label</include>
+                        <label>31226</label>
+                    </control>
+
+                    <!-- OPEN CUSTOM_SETVIEWTYPE -->
+
+                    <control type="button" id="9305">
+                        <include>Def_Button_Gradient_Context</include>
+                        <label>$LOCALIZE[582]:</label>
+                        <label2>$INFO[Container.Viewmode]</label2>
+                        <onclick>ActivateWindow(1154)</onclick>
+                        <visible>!Window.IsActive(TvGuide) + !Window.IsActive(TVRecordings) + !Window.IsActive(TVTimers) + !Window.IsActive(TvTimerRules) + !Window.IsActive(TVSearch)</visible>
+                    </control>
+                    <control type="button" id="3">
+                        <description>Sort</description>
+                        <include>Def_Button_Gradient_Context</include>
+                    </control>
+                    <control type="togglebutton" id="4">
+                        <description>Direction</description>
+                        <include>Def_Button_Gradient_Context</include>
+                        <label>584</label>
+                        <altlabel>585</altlabel>
+                    </control>
                 </control>
-
-                <include>Def_View_ContextMenu_Button_Playlist</include>
-
-                <!-- MINI PLAYER -->
-
-                <include>Def_View_ContextMenu_Player</include>
-
-            <!-- OPTIONS -->
-
-                <control type="button" id="55554">
-                    <include>Def_Context_Menu_Label</include>
-                    <label>33063</label>
-                    <visible>!Window.IsActive(TVSearch)</visible>
-                </control>
-
-                <control type="button" id="28">
-                    <description>Group</description>
-                    <include>Def_Button_Gradient_Context</include>
-                    <visible>Window.IsActive(TVChannels) | Window.IsActive(TvGuide)</visible>
-                </control>
-                <control type="radiobutton" id="6">
-                    <description>Show Hidden Channels</description>
-                    <label>19051</label>
-                    <include>Def_Button_Gradient_Context</include>
-                    <visible>Window.IsActive(TVChannels)</visible>
-                </control>
-                <control type="radiobutton" id="31">
-                    <description>Filter</description>
-                    <label>587</label>
-                    <include>Def_Button_Gradient_Context</include>
-                    <selected>Container.Filtered</selected>
-                    <visible>Window.IsActive(TVChannels)</visible>
-                </control>
-                <control type="radiobutton" id="7">
-                    <description>Show Hidden Channels</description>
-                    <label>19184</label>
-                    <include>Def_Button_Gradient_Context</include>
-                    <visible>Window.IsActive(TVRecordings)</visible>
-                </control>
-				<control type="radiobutton" id="8">
-					<description>Hide disabled timers</description>
-					<include>Def_Button_Gradient_Context</include>
-					<label>$LOCALIZE[19077]</label>
-					<visible>Window.IsActive(TVTimers) | Window.IsActive(TvTimerRules)</visible>
-				</control>
-				<control type="button" id="10">
-					<description>Watched Toggle</description>
-					<include>Def_Button_Gradient_Context</include>
-					<label>$LOCALIZE[20367]</label>
-					<label2>[B]$INFO[Container.NumNonFolderItems][/B]</label2>
-					<visible>Window.IsActive(TVRecordings)</visible>
-				</control>
-                <control type="radiobutton" id="9007">
-                    <description>Search</description>
-                    <include>Def_Button_Gradient_Context</include>
-                    <label>31290</label>
-                    <selected>Skin.HasSetting(pvr.fullepg)</selected>
-                    <onclick>Skin.ToggleSetting(pvr.fullepg)</onclick>
-                    <onclick>ReloadSkin()</onclick>
-                    <visible>Window.IsActive(TvGuide)</visible>
-                </control>
-				<control type="radiobutton" id="5">
-					<description>Group recording items by folder structure</description>
-					<include>Def_Button_Gradient_Context</include>
-					<label>$LOCALIZE[19270]</label>
-					<visible>Window.IsActive(TVRecordings)</visible>
-				</control>
-
-            <!-- OPTIONS VIEWS -->
-
-                <control type="button" id="55550">
-                    <include>Def_Context_Menu_Label</include>
-                    <label>31226</label>
-                </control>
-
-                <!-- OPEN CUSTOM_SETVIEWTYPE -->
-
-                <control type="button" id="9305">
-                    <include>Def_Button_Gradient_Context</include>
-                    <label>$LOCALIZE[582]:</label>
-                    <label2>$INFO[Container.Viewmode]</label2>
-                    <onclick>ActivateWindow(1154)</onclick>
-                    <visible>!Window.IsActive(TvGuide) + !Window.IsActive(TVRecordings) + !Window.IsActive(TVTimers) + !Window.IsActive(TvTimerRules) + !Window.IsActive(TVSearch)</visible>
-                </control>
-                <control type="button" id="3">
-                    <description>Sort</description>
-                    <include>Def_Button_Gradient_Context</include>
-                </control>
-                <control type="togglebutton" id="4">
-                    <description>Direction</description>
-                    <include>Def_Button_Gradient_Context</include>
-                    <label>584</label>
-                    <altlabel>585</altlabel>
-                </control>
-
-            <!-- CATEGORY -->
-
-                <control type="button" id="55558">
-                    <include>Def_Context_Menu_Label</include>
-                    <label>16106</label>
-                </control>
-
-                <!-- PVR CHANNEL -->
-
-                <control type="button" id="9001">
-                    <description>Channels</description>
-                    <label>19019</label>
-                    <onclick>ActivateWindow(TVChannels)</onclick>
-                    <include>Def_Button_Gradient_Context</include>
-                    <enable>!Window.IsActive(TVChannels)</enable>
-                </control>
-
-                <!-- PVR GUIDE -->
-
-                <control type="button" id="9002">
-                    <description>Guide</description>
-                    <label>22020</label>
-                    <onclick>ActivateWindow(TvGuide)</onclick>
-                    <include>Def_Button_Gradient_Context</include>
-                    <enable>!Window.IsActive(TvGuide)</enable>
-                </control>
-
-                <!-- PVR RECORDINGS -->
-
-                <control type="button" id="9003">
-                    <description>Recordings</description>
-                    <label>19017</label>
-                    <onclick>ActivateWindow(TVRecordings)</onclick>
-                    <include>Def_Button_Gradient_Context</include>
-                    <enable>!Window.IsActive(TVRecordings)</enable>
-                </control>
-
-                <!-- PVR TIMERS -->
-
-                <control type="button" id="9004">
-                    <description>Timers</description>
-                    <label>19040</label>
-                    <onclick>ActivateWindow(TVTimers)</onclick>
-                    <include>Def_Button_Gradient_Context</include>
-                    <enable>!Window.IsActive(TVTimers)</enable>
-                </control>
-
-                <!-- PVR TIMERS RULES -->
-
-                <control type="button" id="9005">
-                    <description>Search</description>
-                    <label>19138</label>
-                    <onclick>ActivateWindow(TvTimerRules)</onclick>
-                    <include>Def_Button_Gradient_Context</include>
-                    <enable>!Window.IsActive(TvTimerRules)</enable>
-                </control>
-
-                <!-- PVR TIMERS SEARCH -->
-
-                <control type="button" id="9006">
-                    <description>Search</description>
-                    <label>137</label>
-                    <onclick>ActivateWindow(TVSearch)</onclick>
-                    <include>Def_Button_Gradient_Context</include>
-                    <enable>!Window.IsActive(TVSearch)</enable>
-                </control>
-
-                <!-- <control type="button" id="2"> -->
-                    <!-- <description>View</description> -->
-                    <!-- <include>Def_Button_Gradient_Context</include> -->
-                    <!-- <align>left</align> -->
-                <!-- </control> -->
             </control>
 
             <!-- SCROLLBAR -->
 
             <include content="Object_Scrollbar_Dialog_Vertical">
                 <param name="scrollid" value="9070" />
-                <param name="top" value="112" />
+                <param name="top" value="182" />
                 <param name="onleft" value="9000" />
                 <param name="onright" value="9000" />
                 <param name="onback" value="9000" />
-                <param name="height" value="560" />
+                <param name="height" value="350" />
                 <param name="centerright" value="4" />
             </include>
+
+            <!-- BUTTON -->
+
+            <!-- <control type="button" id="2002"> -->
+                <!-- <visible allowhiddenfocus="true">false</visible> -->
+                <!-- <height>1</height> -->
+                <!-- <onfocus condition="Control.IsEnable(8151)">SetFocus(8151)</onfocus> -->
+                <!-- <onfocus condition="Control.IsEnable(8152)">SetFocus(8152)</onfocus> -->
+                <!-- <onfocus condition="Control.IsEnable(8153)">SetFocus(8153)</onfocus> -->
+                <!-- <onfocus condition="Control.IsEnable(8154)">SetFocus(8154)</onfocus> -->
+                <!-- <onfocus condition="Control.IsEnable(8155)">SetFocus(8155)</onfocus> -->
+                <!-- <onfocus condition="Control.IsEnable(8156)">SetFocus(8156)</onfocus> -->
+            <!-- </control> -->
         </control>
     </include>
 </includes>

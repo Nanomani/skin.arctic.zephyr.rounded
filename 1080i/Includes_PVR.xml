@@ -182,9 +182,9 @@
                     <focusedlayout height="128">
                         <control type="group">
 
-                        <!-- Is Playing -->
+                            <!-- Is Playing -->
 
-                        <include>Def_View_List_Focus_IsPlaying</include>
+                            <include>Def_View_List_Focus_IsPlaying</include>
 
                             <control type="image">
                                 <animation effect="slide" end="10,-12" time="0" condition="ListItem.IsRecording + Window.IsVisible(MyPVRChannels.xml)">Conditional</animation>
@@ -1799,7 +1799,7 @@
 
                     <!-- FANART  -->
 
-                <include content="Def_Image_Art">
+                <include content="Def_Image_Art_Default">
                     <param name="condition_fadetime" value="true" />
                     <param name="aspectratio" value="keep" />
                     <param name="texture" value="$INFO[ListItem.Icon]" />
@@ -1807,7 +1807,7 @@
                     <param name="visible" value="!Player.HasVideo + String.IsEmpty(Listitem.EpgEventIcon)" />
                 </include>
 
-                <include content="Def_Image_Art">
+                <include content="Def_Image_Art_Default">
                     <param name="condition_fadetime" value="true" />
                     <param name="aspectratio" value="scale" />
                     <param name="texture" value="$VAR[Image_Fanart_EPG]" />
@@ -1897,61 +1897,108 @@
 
                 <include>Def_View_ContextMenu_Player</include>
 
-                <!-- OTHER OPTIONS -->
+            <!-- OPTIONS -->
 
                 <control type="button" id="55554">
                     <include>Def_Context_Menu_Label</include>
-                    <label>16106</label>
+                    <label>33063</label>
                 </control>
+
+                <!-- CHOOSE GROUP -->
+
                 <control type="button" id="28">
                     <description>Group</description>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <visible>Window.IsActive(TVChannels) | Window.IsActive(TvGuide)</visible>
                 </control>
+                <control type="radiobutton" id="6">
+                    <description>Show Hidden Channels</description>
+                    <label>19051</label>
+                    <include>Def_Button_Gradient_Context</include>
+                    <visible>Window.IsActive(TVChannels)</visible>
+                </control>
+                <control type="radiobutton" id="31">
+                    <description>Filter</description>
+                    <label>587</label>
+                    <include>Def_Button_Gradient_Context</include>
+                    <selected>Container.Filtered</selected>
+                    <visible>Window.IsActive(TVChannels)</visible>
+                </control>
+                <control type="radiobutton" id="7">
+                    <description>Show Hidden Channels</description>
+                    <label>19184</label>
+                    <include>Def_Button_Gradient_Context</include>
+                    <visible>Window.IsActive(TVRecordings)</visible>
+                </control>
+
+            <!-- CATEGORY -->
+
+                <control type="button" id="55558">
+                    <include>Def_Context_Menu_Label</include>
+                    <label>16106</label>
+                </control>
+
+                <!-- PVR CHANNEL -->
+
                 <control type="button" id="9001">
                     <description>Channels</description>
                     <label>19019</label>
                     <onclick>ActivateWindow(TVChannels)</onclick>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <enable>!Window.IsActive(TVChannels)</enable>
                 </control>
+
+                <!-- PVR GUIDE -->
+
                 <control type="button" id="9002">
                     <description>Guide</description>
                     <label>22020</label>
                     <onclick>ActivateWindow(TvGuide)</onclick>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <enable>!Window.IsActive(TvGuide)</enable>
                 </control>
+
+                <!-- PVR RECORDINGS -->
+
                 <control type="button" id="9003">
                     <description>Recordings</description>
                     <label>19017</label>
                     <onclick>ActivateWindow(TVRecordings)</onclick>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <enable>!Window.IsActive(TVRecordings)</enable>
                 </control>
+
+                <!-- PVR TIMERS -->
+
                 <control type="button" id="9004">
                     <description>Timers</description>
                     <label>19040</label>
                     <onclick>ActivateWindow(TVTimers)</onclick>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <enable>!Window.IsActive(TVTimers)</enable>
                 </control>
+
+                <!-- PVR TIMERS RULES -->
+
                 <control type="button" id="9005">
                     <description>Search</description>
                     <label>19138</label>
                     <onclick>ActivateWindow(TvTimerRules)</onclick>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <enable>!Window.IsActive(TvTimerRules)</enable>
                 </control>
+
+                <!-- PVR TIMERS SEARCH -->
+
                 <control type="button" id="9006">
                     <description>Search</description>
                     <label>137</label>
                     <onclick>ActivateWindow(TVSearch)</onclick>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
+                    <enable>!Window.IsActive(TVSearch)</enable>
                 </control>
 
-                <!-- ALL VIEWS -->
+            <!-- OPTIONS VIEWS -->
 
                 <control type="button" id="55550">
                     <include>Def_Context_Menu_Label</include>
@@ -1970,7 +2017,6 @@
                     <include>Def_Button_Gradient_Context</include>
                     <label>$LOCALIZE[582]:</label>
                     <label2>$INFO[Container.Viewmode]</label2>
-                    <align>left</align>
                     <onclick>ActivateWindow(1154)</onclick>
                 </control>
 
@@ -1982,40 +2028,16 @@
                     <onclick>ReloadSkin()</onclick>
                     <include>Def_Button_Gradient_Context</include>
                     <visible>Window.IsVisible(MyPVRGuide.xml)</visible>
-                    <align>left</align>
                 </control>
                 <control type="button" id="3">
                     <description>Sort</description>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
                 </control>
                 <control type="togglebutton" id="4">
                     <description>Direction</description>
                     <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
                     <label>584</label>
                     <altlabel>585</altlabel>
-                </control>
-                <control type="radiobutton" id="6">
-                    <description>Show Hidden Channels</description>
-                    <label>19051</label>
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
-                </control>
-                <control type="radiobutton" id="7">
-                    <description>Show Hidden Channels</description>
-                    <label>19184</label>
-                    <visible>Window.IsVisible(MyPVRRecordings.xml)</visible>
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                </control>
-                <control type="button" id="31">
-                    <description>Filter</description>
-                    <label>587</label>
-                    <include>Def_Button_Gradient_Context</include>
-                    <align>left</align>
-                    <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
                 </control>
             </control>
 

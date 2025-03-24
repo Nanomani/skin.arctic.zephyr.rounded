@@ -993,6 +993,337 @@
         </control>
     </include>
 
+    <include name="Def_Dialog_Select_Ressource_Images">
+        <control type="group">
+            <include content="Def_Dialog_Background"><param name="height" value="882" /><param name="width" value="1320" /></include>
+
+            <!-- HEADER -->
+
+            <control type="label">
+                <include>Def_Dialog_Header_Title</include>
+                <label>$VAR[Label_Title_Select_Ressource_Image]</label>
+            </control>
+
+            <include>Def_Dialog_Header_Logo</include>
+            <include>Def_Dialog_Header_Line</include>
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1723" />
+                <param name="onleft" value="6" />
+                <param name="onright" value="9001" />
+                <param name="centerright" value="360" />
+            </include>
+
+            <!-- DIALOG SELECT - ID 3  -->
+            <include>Def_Dialog_Select</include>
+
+            <control type="list" id="6">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>112</top>
+                <left>16</left>
+                <width>926</width>
+                <height>700</height>
+
+                <onup>6</onup>
+                <ondown>6</ondown>
+                <onleft>5</onleft>
+                <onright>1723</onright>
+
+                <pagecontrol>1723</pagecontrol>
+
+                <itemlayout height="140">
+                    <control type="image">
+                        <top>12</top>
+                        <left>12</left>
+                        <width>111</width>
+                        <height>111</height>
+                        <aspectratio scalediffuse="false">keep</aspectratio>
+                        <texture diffuse="diffuse/square_w111_h111.png" background="true" fallback="DefaultAddon.png">$VAR[Image_Dialog_Select_List]</texture>
+                        <visible>!$EXP[View_Icon_Black_Dialog_Select]</visible>
+                   </control>
+                   <control type="image">
+                        <top>12</top>
+                        <left>12</left>
+                        <width>111</width>
+                        <height>111</height>
+                        <aspectratio scalediffuse="false">keep</aspectratio>
+                        <texture diffuse="diffuse/square_w111_h111.png" background="true" fallback="DefaultAddon.png" colordiffuse="PanelWhite100">$VAR[Image_Dialog_Select_List]</texture>
+                        <visible>$EXP[View_Icon_Black_Dialog_Select]</visible>
+                    </control>
+
+                    <control type="label">
+                        <top>-18</top>
+                        <left>150</left>
+                        <width>668</width>
+                        <height>135</height>
+                        <font>InfoNetflix</font>
+                        <textcolor>PanelWhite100</textcolor>
+                        <selectedcolor>PanelWhite100</selectedcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <animation effect="slide" end="0,18" condition="String.IsEmpty(ListItem.Label2)">Conditional</animation>
+                        <visible>!$EXP[Ressource_Images_Selected]</visible>
+                    </control>
+                    <control type="label">
+                        <left>150</left>
+                        <top>18</top>
+                        <width>668</width>
+                        <height>135</height>
+                        <font>Mini</font>
+                        <textcolor>PanelWhite100</textcolor>
+                        <selectedcolor>PanelWhite100</selectedcolor>
+                        <label>$INFO[ListItem.Label2]</label>
+                        <visible>!$EXP[Ressource_Images_Selected]</visible>
+                    </control>
+
+                    <control type="label">
+                        <top>-18</top>
+                        <left>150</left>
+                        <width>668</width>
+                        <height>135</height>
+                        <font>InfoNetflix</font>
+                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
+                        <label>$INFO[ListItem.Label]$INFO[ListItem.VideoVersionName,  •  ,]</label>
+                        <animation effect="slide" end="0,18" condition="String.IsEmpty(ListItem.Label2)">Conditional</animation>
+                        <visible>$EXP[Ressource_Images_Selected]</visible>
+                    </control>
+                    <control type="label">
+                        <left>150</left>
+                        <top>18</top>
+                        <width>668</width>
+                        <height>135</height>
+                        <font>Mini</font>
+                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
+                        <label>$INFO[ListItem.Label2]</label>
+                        <visible>$EXP[Ressource_Images_Selected]</visible>
+                    </control>
+
+                    <include content="Def_Button_Radio">
+                        <param name="color_diffuse_off">PanelWhite100</param>
+                        <param name="color_diffuse_on">$VAR[Color_List_Item_Selected]</param>
+                        <param name="visible">$EXP[Ressource_Images_Selected]</param>
+                    </include>
+                </itemlayout>
+                <focusedlayout height="140">
+                    <control type="group">
+                        <visible>!Control.HasFocus(6)</visible>
+                        <control type="image">
+                            <top>12</top>
+                            <left>12</left>
+                            <width>111</width>
+                            <height>111</height>
+                            <aspectratio scalediffuse="false">keep</aspectratio>
+                            <texture diffuse="diffuse/square_w111_h111.png" background="true" fallback="DefaultAddon.png">$VAR[Image_Dialog_Select_List]</texture>
+                            <visible>!String.StartsWith(ListItem.Icon,Default) + !String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,special://skin/extras/icons)</visible>
+                        </control>
+                        <control type="image">
+                            <top>12</top>
+                            <left>12</left>
+                            <width>111</width>
+                            <height>111</height>
+                            <aspectratio scalediffuse="false">keep</aspectratio>
+                            <texture diffuse="diffuse/square_w111_h111.png" background="true" fallback="DefaultAddon.png" colordiffuse="PanelWhite100">$VAR[Image_Dialog_Select_List]</texture>
+                            <visible>String.StartsWith(ListItem.Icon,Default) | String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,special://skin/extras/icons)</visible>
+                        </control>
+
+                        <control type="label">
+                            <top>-18</top>
+                            <left>150</left>
+                            <width>668</width>
+                            <height>135</height>
+                            <font>InfoNetflix</font>
+                            <textcolor>PanelWhite100</textcolor>
+                            <selectedcolor>PanelWhite100</selectedcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                            <label>$INFO[ListItem.Label]$INFO[ListItem.VideoVersionName,  •  ,]</label>
+                            <animation effect="slide" end="0,18" condition="String.IsEmpty(ListItem.Label2)">Conditional</animation>
+                        </control>
+                        <control type="label">
+                            <left>150</left>
+                            <top>18</top>
+                            <width>668</width>
+                            <height>135</height>
+                            <font>Mini</font>
+                            <textcolor>PanelWhite100</textcolor>
+                            <selectedcolor>PanelWhite100</selectedcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                        <include content="Def_Button_Radio">
+                            <param name="color_diffuse_off">PanelWhite100</param>
+                            <param name="color_diffuse_on">PanelWhite100</param>
+                            <param name="visible">$EXP[Ressource_Images_Selected]</param>
+                        </include>
+                    </control>
+                    <control type="group">
+                        <visible>Control.HasFocus(6)</visible>
+                        <control type="image">
+                            <width>100%</width>
+                            <height>135</height>
+                            <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+                        </control>
+
+                        <control type="image">
+                            <left>12</left>
+                            <top>12</top>
+                            <width>111</width>
+                            <height>111</height>
+                            <aspectratio scalediffuse="false">keep</aspectratio>
+                            <texture diffuse="diffuse/square_w111_h111.png" background="true" fallback="DefaultAddon.png">$VAR[Image_Dialog_Select_List]</texture>
+                            <visible>!$EXP[View_Icon_Black_Dialog_Select]</visible>
+                        </control>
+                        <control type="image">
+                            <left>12</left>
+                            <top>12</top>
+                            <width>111</width>
+                            <height>111</height>
+                            <aspectratio scalediffuse="false">keep</aspectratio>
+                            <texture diffuse="diffuse/square_w111_h111.png" background="true" fallback="DefaultAddon.png" colordiffuse="Selected">$VAR[Image_Dialog_Select_List]</texture>
+                            <visible>$EXP[View_Icon_Black_Dialog_Select]</visible>
+                        </control>
+
+                        <control type="label">
+                            <top>-18</top>
+                            <left>150</left>
+                            <width>668</width>
+                            <height>135</height>
+                            <font>InfoNetflix</font>
+                            <textcolor>Selected</textcolor>
+                            <selectedcolor>Selected</selectedcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                            <animation effect="slide" end="0,18" condition="String.IsEmpty(ListItem.Label2)">Conditional</animation>
+                        </control>
+                        <control type="label">
+                            <left>150</left>
+                            <top>18</top>
+                            <width>668</width>
+                            <height>135</height>
+                            <font>Mini</font>
+                            <textcolor>Selected</textcolor>
+                            <selectedcolor>Selected</selectedcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+
+                        <include content="Def_Button_Radio">
+                            <param name="color_diffuse_off">Selected</param>
+                            <param name="color_diffuse_on">Selected</param>
+                            <param name="visible">$EXP[Ressource_Images_Selected]</param>
+                        </include>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <!-- BUTTON ON RIGHT -->
+
+            <control type="grouplist" id="9001">
+                <top>112</top>
+                <right>30</right>
+                <width>300</width>
+                <height>490</height>
+
+                <onleft>1723</onleft>
+                <onright>6</onright>
+
+                <itemgap>14</itemgap>
+                <scrolltime tween="quadratic">200</scrolltime>
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="5" />
+                </include>
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="7" />
+                </include>
+            </control>
+
+            <!-- PICTURE -->
+
+            <control type="group">
+                <visible>!String.IsEqual(Control.GetLabel(1),$LOCALIZE[166])</visible>
+
+                <top>357</top>
+                <right>30</right>
+                <width>300</width>
+                <height>450</height>
+
+                <control type="image">
+                    <width>100%</width>
+                    <height>100%</height>
+                    <texture fallback="DefaultPicture.png">$VAR[Image_Dialog_Select_Big]</texture>
+                    <aspectratio align="center" aligny="bottom">keep</aspectratio>
+                    <visible>!$EXP[View_Icon_Black_Dialog_Select]</visible>
+                </control>
+                <control type="image">
+                    <width>100%</width>
+                    <height>100%</height>
+                    <texture fallback="DefaultPicture.png" colordiffuse="PanelWhite100">$VAR[Image_Dialog_Select_Big]</texture>
+                    <aspectratio align="center" aligny="bottom">keep</aspectratio>
+                    <visible>$EXP[View_Icon_Black_Dialog_Select] + ![String.IsEqual(Control.GetLabel(1),Wikipedia) | Window.IsVisible(script-wikipedia.xml)]</visible>
+                </control>
+            </control>
+
+            <!-- LOGO SKIN -->
+
+            <control type="group">
+                <visible>String.IsEqual(Control.GetLabel(1),$LOCALIZE[166])</visible>
+
+                <top>507</top>
+                <right>30</right>
+                <width>300</width>
+                <height>300</height>
+
+                <control type="group">
+                    <include>Def_Art_Poster_Background</include>
+
+                    <control type="image">
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/square_w300_h300_b24.png" background="true">$VAR[Image_Dialog_Select_Big]</texture>
+                    </control>
+                </control>
+            </control>
+
+            <!-- LOGO WIKIPEDIA -->
+
+            <control type="grouplist">
+                <visible>$EXP[View_Icon_Black_Dialog_Select] + [String.IsEqual(Control.GetLabel(1),Wikipedia) | Window.IsVisible(script-wikipedia.xml)]</visible>
+
+                <top>457</top>
+                <right>30</right>
+                <width>300</width>
+
+                <itemgap>-10</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <control type="image">
+                    <width>300</width>
+                    <height>236</height>
+                    <texture>logo/wikipedia/wikipedia_logo.png</texture>
+                    <aspectratio align="center" aligny="top">keep</aspectratio>
+                </control>
+                <control type="image">
+                    <width>300</width>
+                    <height>84</height>
+                    <texture colordiffuse="Dark2">logo/wikipedia/wikipedia_title.png</texture>
+                </control>
+            </control>
+
+            <!-- LINE VERTICAL -->
+
+            <control type="image">
+                <right>360</right>
+                <top>112</top>
+                <bottom>17</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+            </control>
+
+            <!-- NUM ITEMS -->
+
+            <include>Def_Dialog_Select_label_Num_Item</include>
+        </control>
+    </include>
+
     <!-- DIALOG - SELECT - GAMES -->
 
     <include name="Def_Dialog_Select_Game_Save">

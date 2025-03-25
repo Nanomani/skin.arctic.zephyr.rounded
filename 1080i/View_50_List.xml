@@ -8,100 +8,120 @@
     <!-- ART - POSTER -->
 
     <include name="View_50_SidePoster">
-        <control type="group" description="Poster">
-            <include>Animation_PosterSlide</include>
-            <animation effect="fade" end="5" start="100" time="250" condition="Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)">Conditional</animation>
+        <param name="top" value="$PARAM[top]" default="View_Top" />
+        <param name="left" value="$PARAM[left]" default="View_SidePad" />
+        <param name="width" value="$PARAM[width]" default="PosterW" />
+        <param name="height" value="$PARAM[height]" default="PosterH" />
 
-            <include content="Def_Art_Poster_Background">
-                <param name="top" value="View_Top" />
-                <param name="left" value="View_SidePad" />
-                <param name="width" value="PosterW" />
-                <param name="height" value="PosterH" />
-                <param name="colordiffuse" value="Fallback" />
-            </include>
+        <definition>
+            <control type="group" description="Poster">
+                <visible>$PARAM[visible]</visible>
 
-            <!-- ALL OTHERS -->
+                <include>Animation_PosterSlide</include>
+                <animation effect="fade" end="5" start="100" time="250" condition="Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)">Conditional</animation>
 
-            <include content="Def_Image_Art_Default">
-                <param name="condition_fadetime" value="true" />
-                <param name="aspectratio" value="scale" />
-                <param name="texture" value="$VAR[Image_Poster]" />
-                <param name="texture_diffuse" value="poster_w428_h640_b24" />
-            </include>
-        </control>
+                <top>$PARAM[top]</top>
+                <left>$PARAM[left]</left>
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
+
+                <include content="Def_Art_Full_Background_b24">
+                    <param name="colordiffuse" value="Fallback" />
+                </include>
+
+                <!-- ALL OTHERS -->
+
+                <include content="Def_Art_Icon_Image">
+                    <param name="condition_fadetime" value="true" />
+                    <param name="aspectratio" value="scale" />
+                    <param name="texture" value="$VAR[Image_Poster]" />
+                    <param name="texture_diffuse" value="poster_w428_h640_b24" />
+                </include>
+            </control>
+        </definition>
     </include>
 
     <!-- ART - SQUARE -->
 
     <include name="View_50_SidePoster_Square">
-        <control type="group" description="Poster">
-            <include>Animation_PosterSlideSquare</include>
-            <animation effect="rotatey" end="-180" start="0" center="400,0" time="350" condition="String.IsEqual(Window.Property(RotateCover),1)">Conditional</animation>
-            <animation effect="fade" end="10" start="100" time="250" condition="Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.music.wiki)">Conditional</animation>
+        <param name="top" value="$PARAM[top]" default="View_Top" />
+        <param name="left" value="$PARAM[left]" default="View_SidePad" />
+        <param name="width" value="$PARAM[width]" default="PosterH" />
+        <param name="height" value="$PARAM[height]" default="PosterH" />
 
-            <include content="Def_Art_Poster_Background">
-                <param name="top" value="View_Top" />
-                <param name="left" value="View_SidePad" />
-                <param name="width" value="PosterH" />
-                <param name="height" value="PosterH" />
-                <param name="colordiffuse" value="Fallback" />
-            </include>
+        <definition>
+            <control type="group" description="Poster">
+                <visible>$PARAM[visible]</visible>
 
-            <!-- ALL OTHERS -->
+                <include>Animation_PosterSlideSquare</include>
+                <animation effect="rotatey" end="-180" start="0" center="400,0" time="350" condition="String.IsEqual(Window.Property(RotateCover),1)">Conditional</animation>
+                <animation effect="fade" end="10" start="100" time="250" condition="Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.music.wiki)">Conditional</animation>
 
-            <include content="Def_Image_Art_Default">
-                <param name="condition_fadetime" value="true" />
-                <param name="aspectratio" value="scale" />
-                <param name="texture" value="$VAR[Image_Square_50_List]" />
-                <param name="texture_diffuse" value="square_w640_h640_b24" />
-                <param name="visible" value="![Container.Content(images) | Container.Content(favourites) | $EXP[IsYoutube]]" />
-            </include>
+                <top>$PARAM[top]</top>
+                <left>$PARAM[left]</left>
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
 
-            <!-- FAVOURITES -->
+                <include content="Def_Art_Full_Background_b24">
+                    <param name="colordiffuse" value="Fallback" />
+                </include>
 
-            <include content="Def_Image_Art_Default">
-                <param name="condition_fadetime" value="true" />
-                <param name="aspectratio" value="keep" />
-                <param name="texture" value="$VAR[Image_Square_50_List]" />
-                <param name="texture_diffuse" value="square_w640_h640_b24" />
-                <param name="visible" value="Container.Content(favourites)" />
-            </include>
+                <!-- ALL OTHERS -->
 
-            <!-- PICS -->
+                <include content="Def_Art_Icon_Image">
+                    <param name="condition_fadetime" value="true" />
+                    <param name="aspectratio" value="scale" />
+                    <param name="texture" value="$VAR[Image_Square_50_List]" />
+                    <param name="texture_diffuse" value="square_w640_h640_b24" />
+                    <param name="visible" value="![Container.Content(images) | Container.Content(favourites) | $EXP[IsYoutube]]" />
+                </include>
 
-            <include content="Def_Image_Art">
-                <param name="condition_fadetime" value="true" />
-                <param name="aspectratio" value="keep" />
-                <param name="texture" value="$VAR[Image_Square_50_List]" />
-                <param name="texture_diffuse" value="square_w640_h640_b24" />
-                <param name="visible" value="Container.Content(images)" />
-            </include>
+                <!-- FAVOURITES -->
 
-            <!-- YOUTUBE -->
+                <include content="Def_Art_Icon_Image">
+                    <param name="condition_fadetime" value="true" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Square_50_List]" />
+                    <param name="texture_diffuse" value="square_w640_h640_b24" />
+                    <param name="visible" value="Container.Content(favourites)" />
+                </include>
 
-            <include content="Def_Image_Art">
-                <param name="condition_fadetime" value="true" />
-                <param name="aspectratio" value="keep" />
-                <param name="texture" value="$VAR[Image_Square_50_List]" />
-                <param name="texture_diffuse" value="square_w640_h640_b24" />
-                <param name="visible" value="!ListItem.IsParentFolder + $EXP[IsYoutube] + !$EXP[IsYoutube_Comments]" />
-            </include>
+                <!-- PICS -->
 
-            <control type="image">
-                <include content="Def_Padding"><param name="pad">0</param></include>
-                <fadetime>PosterFanartFadetime</fadetime>
-                <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/square_w640_h640_b24.png" background="true">$INFO[ListItem.Art(back)]</texture>
-                <animation effect="rotatey" end="-180" start="0" center="320,0" time="0" condition="true">Conditional</animation>
-                <animation type="Visible">
-                    <effect type="fade" end="100" start="0" time="0" delay="200" />
-                </animation>
-                <animation type="Hidden">
-                    <effect type="fade" end="0" start="100" time="50" delay="100" />
-                </animation>
-                <visible>String.IsEqual(Window.Property(RotateCover),1) + !String.IsEmpty(ListItem.Art(back))</visible>
+                <include content="Def_Art_Image">
+                    <param name="condition_fadetime" value="true" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Square_50_List]" />
+                    <param name="texture_diffuse" value="square_w640_h640_b24" />
+                    <param name="visible" value="Container.Content(images)" />
+                </include>
+
+                <!-- YOUTUBE -->
+
+                <include content="Def_Art_Image">
+                    <param name="condition_fadetime" value="true" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="texture" value="$VAR[Image_Square_50_List]" />
+                    <param name="texture_diffuse" value="square_w640_h640_b24" />
+                    <param name="visible" value="!ListItem.IsParentFolder + $EXP[IsYoutube] + !$EXP[IsYoutube_Comments]" />
+                </include>
+
+                <control type="image">
+                    <include content="Def_Padding"><param name="pad">0</param></include>
+                    <fadetime>PosterFanartFadetime</fadetime>
+                    <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
+                    <texture diffuse="diffuse/square_w640_h640_b24.png" background="true">$INFO[ListItem.Art(back)]</texture>
+                    <animation effect="rotatey" end="-180" start="0" center="320,0" time="0" condition="true">Conditional</animation>
+                    <animation type="Visible">
+                        <effect type="fade" end="100" start="0" time="0" delay="200" />
+                    </animation>
+                    <animation type="Hidden">
+                        <effect type="fade" end="0" start="100" time="50" delay="100" />
+                    </animation>
+                    <visible>String.IsEqual(Window.Property(RotateCover),1) + !String.IsEmpty(ListItem.Art(back))</visible>
+                </control>
             </control>
-        </control>
+        </definition>
     </include>
 
     <!-- =========================================== -->
@@ -3114,12 +3134,12 @@
             <left>14</left>
             <right>25</right>
 
-            <include content="Def_Widget_Image_Background">
+            <include content="Def_Art_Full_Background_b12">
                 <param name="colordiffuse" value="Fallback" />
             </include>
             <control type="group">
                 <visible>!Skin.HasSetting(pics.layout.fanart)</visible>
-                <include content="Def_Image_Art_Default">
+                <include content="Def_Art_Icon_Image">
                     <param name="aspectratio" value="scale" />
                     <!-- <param name="colordiffuse" value="Dark2" /> -->
                     <param name="texture" value="$VAR[Image_Thumb]" />
@@ -3128,7 +3148,7 @@
             </control>
             <control type="group">
                 <visible>Skin.HasSetting(pics.layout.fanart)</visible>
-                <include content="Def_Image_Art_Default">
+                <include content="Def_Art_Icon_Image">
                     <param name="aspectratio" value="scale" />
                     <!-- <param name="colordiffuse" value="Dark2" /> -->
                     <param name="texture" value="$VAR[Image_Thumb]" />
@@ -3165,12 +3185,12 @@
                 <left>14</left>
                 <right>25</right>
 
-                <include content="Def_Widget_Image_Background">
+                <include content="Def_Art_Full_Background_b12">
                     <param name="colordiffuse" value="Fallback" />
                 </include>
                 <control type="group">
                     <visible>!Skin.HasSetting(pics.layout.fanart)</visible>
-                    <include content="Def_Image_Art_Default">
+                    <include content="Def_Art_Icon_Image">
                         <param name="aspectratio" value="scale" />
                         <!-- <param name="colordiffuse" value="Dark2" /> -->
                         <param name="texture" value="$VAR[Image_Thumb]" />
@@ -3179,7 +3199,7 @@
                 </control>
                 <control type="group">
                     <visible>Skin.HasSetting(pics.layout.fanart)</visible>
-                    <include content="Def_Image_Art_Default">
+                    <include content="Def_Art_Icon_Image">
                         <param name="aspectratio" value="scale" />
                         <!-- <param name="colordiffuse" value="Dark2" /> -->
                         <param name="texture" value="$VAR[Image_Thumb]" />

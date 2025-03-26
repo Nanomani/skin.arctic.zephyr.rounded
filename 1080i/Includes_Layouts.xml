@@ -1605,6 +1605,84 @@
         </definition>
     </include>
 
+    <include name="Layout_Video_Wall_Landscape_Big">
+        <param name="fallbackpicture" value="$PARAM[fallbackpicture]" default="DefaultPicture.png" />
+        <param name="focusposition" value="$PARAM[focusposition]" default="0" />
+        <param name="height" value="$PARAM[height]" default="340" />
+        <param name="width" value="$PARAM[width]" default="592.33" />
+        <param name="small" value="$PARAM[small]" />
+
+        <definition>
+
+            <!-- Focused List -->
+            <control type="panel" id="$PARAM[id]">
+                <visible>String.IsEqual(Window(Home).Property(WallMode),Container.FolderPath) | String.IsEmpty(Window(Home).Property(WallMode))</visible>
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <include>Def_On_Info</include>
+
+                <top>206</top>
+                <left>70</left>
+                <right>70</right>
+                <height>682</height>
+
+                <onup>$PARAM[id]</onup>
+                <ondown>$PARAM[id]</ondown>
+                <onleft>161$PARAM[id]</onleft>
+                <include>Def_Focus_Context_Menu_On_Right</include>
+
+                <onback>1$PARAM[id]</onback>
+                <onback>ClearProperty(WallMode)</onback>
+                <onback>Container.SetViewMode($PARAM[onbackid])</onback>
+
+                <preloaditems>2</preloaditems>
+                <orientation>vertical</orientation>
+                <pagecontrol>161$PARAM[id]</pagecontrol>
+                <focusposition>$PARAM[focusposition]</focusposition>
+
+                <viewtype label="536">list</viewtype>
+
+                <itemlayout height="$PARAM[height]" width="$PARAM[width]">
+                    <control type="group">
+                        <animation effect="fade" start="0" end="100" time="0" delay="200">Visible</animation>
+                    <control type="group">
+                        <height>325</height>
+                        <include content="Layout_Widget_Landscape">
+                            <param name="texture_diffuse" value="fanart_w570_h305" />
+                            <param name="id" value="$PARAM[id]" />
+                            <param name="height" value="325" />
+                            <param name="image_height" value="325" />
+                        </include>
+                    </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="$PARAM[height]" width="$PARAM[width]">
+                    <control type="group">
+                        <height>325</height>
+                        <include content="Layout_Widget_Landscape_Focus">
+                            <param name="texture_diffuse" value="fanart_w570_h305" />
+                            <param name="id" value="$PARAM[id]" />
+                            <param name="height" value="325" />
+                            <param name="image_height" value="325" />
+                            <param name="glow_left" value="11" />
+                            <param name="glow_right" value="11" />
+                        </include>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <!-- SCROLLBAR -->
+            <control type="scrollbar" id="161$PARAM[id]">
+                <include content="Object_Scrollbar_Views_Vertical">
+                    <param name="scrollid" value="161$PARAM[id]" />
+                    <param name="idlayout" value="$PARAM[id]" />
+                </include>
+            </control>
+
+            <include content="Def_Hidden_List_Artist_Album_Count"><param name="id" value="$PARAM[id]" /></include>
+        </definition>
+    </include>
+
     <include name="Layout_Music_Wall_Square">
         <param name="fallbackpicture" value="$PARAM[fallbackpicture]" default="DefaultPicture.png" />
         <param name="height" value="$PARAM[height]" default="340" />

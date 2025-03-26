@@ -331,6 +331,38 @@
     <!--               MISC                  -->
     <!-- =================================== -->
 
+    <variable name="Path_Home_Album_Track_Count">
+        <value condition="ListItem.IsFolder + String.IsEqual(ListItem.DBType,album)">$INFO[ListItem.FolderPath]</value>
+    </variable>
+
+    <variable name="Path_Album_Track_Count">
+        <value condition="ListItem.IsFolder + [Container.Content(albums) | String.IsEqual(ListItem.DBType,album)]">$INFO[ListItem.FolderPath]</value>
+    </variable>
+
+    <variable name="Path_Home_Artist_Album_Count">
+        <value condition="ListItem.IsFolder + String.IsEqual(ListItem.DBType,artist)">$INFO[ListItem.DBID,musicdb://artists/,/]</value>
+    </variable>
+
+    <variable name="Path_Artist_Album_Count">
+        <value condition="ListItem.IsFolder + [Container.Content(artists) | String.IsEqual(ListItem.DBType,artist)]">$INFO[ListItem.DBID,musicdb://artists/,/]</value>
+    </variable>
+
+    <variable name="Path_Home_Group_Channel">
+        <value condition="ListItem.IsFolder + String.IsEqual(ListItem.Path,pvr://channels/tv/)">$INFO[ListItem.FolderPath]</value>
+    </variable>
+
+    <variable name="Path_Album_Track_Count_Dialog_Music_Info_Ext">
+        <value condition="Control.HasFocus(9501) | Control.HasFocus(95017)">musicdb://albums/$INFO[Container(9501).ListItem.DBID]/</value>
+    </variable>
+
+    <variable name="Path_Set_Count">
+        <value condition="ListItem.IsCollection + !String.IsEmpty(ListItem.DBID)">videodb://movies/sets/$INFO[ListItem.DBID]/?setid=$INFO[ListItem.DBID]</value>
+    </variable>
+
+    <variable name="Path_List_Item_Name_In_Folder">
+        <value condition="ListItem.IsFolder + [!$EXP[IsAnPlugin] | $EXP[IsPluginShortlist]]">videodb://movies/sets/$INFO[ListItem.DBID]/?setid=$INFO[ListItem.DBID]</value>
+    </variable>
+
     <variable name="Path_Auto_Completion">
         <value condition="$EXP[Is_AutoCompletion_Enabled] + !String.IsEmpty(Control.GetLabel(312).index(1))">plugin://plugin.program.autocompletion?info=autocomplete&amp;&amp;id=$INFO[Control.GetLabel(312).index(1)]&amp;&amp;limit=9</value>
         <value>plugin://script.skinvariables/?info=get_split_string&amp;infolabel=Skin.String(SearchHistory)&amp;reload=$INFO[Skin.String(SearchHistory)]</value>

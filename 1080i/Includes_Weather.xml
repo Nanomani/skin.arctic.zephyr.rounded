@@ -68,32 +68,12 @@
 
                 <!-- INFOS - ICONS -->
 
-                <control type="image">
+                <control type="group">
                     <centertop>42%</centertop>
                     <centerleft>50%</centerleft>
                     <width>275</width>
                     <height>275</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated</visible>
-                </control>
-                <control type="multiimage">
-                    <centertop>42%</centertop>
-                    <centerleft>50%</centerleft>
-                    <width>275</width>
-                    <height>275</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
-                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                </control>
-                <control type="image">
-                    <centertop>42%</centertop>
-                    <centerleft>50%</centerleft>
-                    <width>240</width>
-                    <height>240</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture>
-                    <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+                    <include>Def_Weather_Icon_Today</include>
                 </control>
 
                 <!-- INFOS - TITLE -->
@@ -228,7 +208,7 @@
     </include>
 
     <include name="Def_Weather_List_Daily">
-        <param name="Daily" value="$PARAM[Daily]" />
+        <param name="Daily_ID" value="$PARAM[Daily_ID]" />
         <param name="Def_Weather_List_Daily_Left" value="$PARAM[Def_Weather_List_Daily_Left]" />
         <param name="Def_Weather_List_Daily_Label" value="$PARAM[Def_Weather_List_Daily_Label]" />
 
@@ -252,7 +232,7 @@
                     <randomize>true</randomize>
                     <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                     <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                    <imagepath diffuse="diffuse/weather_w260_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Daily.$PARAM[Daily].FanartCode)]/</imagepath>
+                    <imagepath diffuse="diffuse/weather_w260_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Daily.$PARAM[Daily_ID].FanartCode)]/</imagepath>
                 </control>
                 <control type="image" description="Fanart">
                     <visible>!Skin.HasSetting(hide.weather.fanart) + !String.Contains(Skin.String(weather.fanart.path),multi) + !String.IsEmpty(Skin.String(weather.fanart.path))</visible>
@@ -260,37 +240,17 @@
                     <height>100%</height>
                     <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                     <animation effect="fade" start="100" end="WeatherFanartTransparency" condition="true">Conditional</animation>
-                    <texture diffuse="diffuse/weather_w260_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Daily.$PARAM[Daily].FanartCode),,.jpg]</texture>
+                    <texture diffuse="diffuse/weather_w260_640.png">$INFO[Skin.String(weather.fanart.path)]$INFO[Window.Property(Daily.$PARAM[Daily_ID].FanartCode),,.jpg]</texture>
                 </control>
 
                 <!-- INFOS - ICONS -->
 
-                <control type="image">
+                <control type="group">
                     <centertop>42%</centertop>
                     <centerleft>50%</centerleft>
                     <width>220</width>
                     <height>220</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window.Property(Daily.$PARAM[Daily].FanartCode),,.png]</texture>
-                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-                </control>
-                <control type="multiimage">
-                    <centertop>42%</centertop>
-                    <centerleft>50%</centerleft>
-                    <width>220</width>
-                    <height>220</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Daily.$PARAM[Daily].FanartCode)]</imagepath>
-                    <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEmpty(Window(weather).Property(Daily.$PARAM[Daily].FanartCode))</visible>
-                </control>
-                <control type="image">
-                    <centertop>42%</centertop>
-                    <centerleft>50%</centerleft>
-                    <width>220</width>
-                    <height>220</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <texture>resource://resource.images.weathericons.default/$INFO[Window.Property(Daily.$PARAM[Daily].FanartCode),,.png]</texture>
-                    <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+                    <include content="Def_Weather_Icon_Daily"><param name="Daily_ID" value="$PARAM[Daily_ID]" /></include>
                 </control>
 
                 <!-- INFOS - LABEL -->
@@ -311,7 +271,7 @@
                     <align>center</align>
                     <font>Tiny</font>
                     <textcolor>PanelWhite100</textcolor>
-                    <label fallback="10006">$INFO[Window.Property(Daily.$PARAM[Daily].ShortDate)]</label>
+                    <label fallback="10006">$INFO[Window.Property(Daily.$PARAM[Daily_ID].ShortDate)]</label>
                 </control>
 
                 <control type="label">
@@ -321,7 +281,7 @@
                     <align>center</align>
                     <font>LargeBold</font>
                     <textcolor>PanelWhite100</textcolor>
-                    <label fallback="10006">$INFO[Window.Property(Daily.$PARAM[Daily].HighTemperature),[B],[/B]]$INFO[Window.Property(Daily.$PARAM[Daily].lowTemperature),  ,]</label>
+                    <label fallback="10006">$INFO[Window.Property(Daily.$PARAM[Daily_ID].HighTemperature),[B],[/B]]$INFO[Window.Property(Daily.$PARAM[Daily_ID].lowTemperature),  ,]</label>
                 </control>
                 <control type="textbox">
                     <top>81%</top>
@@ -331,7 +291,7 @@
                     <align>center</align>
                     <font>Tiny</font>
                     <textcolor>PanelWhite100</textcolor>
-                    <label fallback="10006">$INFO[Window(Weather).Property(Daily.$PARAM[Daily].Outlook)]</label>
+                    <label fallback="10006">$INFO[Window(Weather).Property(Daily.$PARAM[Daily_ID].Outlook)]</label>
                 </control>
             </control>
         </definition>
@@ -368,110 +328,94 @@
     </include>
 
     <include name="Def_Weather_List_Hourly_Item">
-        <control type="group">
-            <top>$PARAM[top]</top>
-            <height>216</height>
+        <param name="Hourly_ID" value="$PARAM[Hourly_ID]" />
 
-            <!-- INFOS - ICONS -->
+        <definition>
+            <control type="group">
+                <top>$PARAM[top]</top>
+                <height>216</height>
 
-            <control type="image">
-                <centertop>60%</centertop>
-                <centerleft>24%</centerleft>
-                <width>140</width>
-                <height>140</height>
-                <aspectratio align="center" aligny="center">keep</aspectratio>
-                <texture>resource://resource.images.weathericons.default/$INFO[Window(weather).Property(Hourly.$PARAM[Day_Hour_ID].FanartCode),,.png]</texture>
-                <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+                <!-- INFOS - ICONS -->
+
+                <control type="group">
+                    <centertop>60%</centertop>
+                    <centerleft>26%</centerleft>
+                    <width>140</width>
+                    <height>140</height>
+                    <include content="Def_Weather_Icon_Hourly"><param name="Hourly_ID" value="$PARAM[Hourly_ID]" /></include>
+                </control>
+
+                <!-- INFOS - LABEL -->
+
+                <!-- Hour -->
+
+                <control type="label">
+                    <top>10</top>
+                    <left>72</left>
+                    <right>20</right>
+                    <align>left</align>
+                    <width>150</width>
+                    <font>Small33</font>
+                    <textcolor>PanelWhite100</textcolor>
+                    <label>$INFO[Window.Property(Hourly.$PARAM[Hourly_ID].Time),[B],[/B]]</label>
+                </control>
+
+                <!-- Short date -->
+
+                <control type="label">
+                    <top>10</top>
+                    <left>180</left>
+                    <right>20</right>
+                    <align>center</align>
+                    <font>Tiny</font>
+                    <scroll>false</scroll>
+                    <textcolor>PanelWhite100</textcolor>
+                    <label>$INFO[Window.Property(Hourly.$PARAM[Hourly_ID].ShortDate)]</label>
+                </control>
+
+                <!-- Temperature -->
+
+                <control type="label">
+                    <top>78</top>
+                    <left>180</left>
+                    <right>20</right>
+                    <align>center</align>
+                    <font>Medium</font>
+                    <textcolor>PanelWhite100</textcolor>
+                    <label>$INFO[Window.Property(Hourly.$PARAM[Hourly_ID].Temperature),[B],[/B]]</label>
+                </control>
+                <control type="label">
+                    <top>78</top>
+                    <left>180</left>
+                    <right>20</right>
+                    <align>center</align>
+                    <font>Tiny</font>
+                    <textcolor>PanelWhite100</textcolor>
+                    <visible>String.IsEmpty(Window.Property(Hourly.$PARAM[Hourly_ID].Temperature))</visible>
+                    <label> - $LOCALIZE[10006] - </label>
+                </control>
+
+                <control type="label">
+                    <top>120</top>
+                    <left>180</left>
+                    <right>20</right>
+                    <align>center</align>
+                    <font>Tiny</font>
+                    <scroll>false</scroll>
+                    <textcolor>PanelWhite100</textcolor>
+                    <label>$INFO[Window.Property(Hourly.$PARAM[Hourly_ID].Outlook)]</label>
+                </control>
+
+                <control type="image">
+                   <bottom>$PARAM[bottom_lign]</bottom>
+                   <right>30</right>
+                   <left>30</left>
+                   <height>1</height>
+                   <texture colordiffuse="Black12">common/white.png</texture>
+                   <visible></visible>
+                </control>
             </control>
-            <control type="image">
-                <centertop>60%</centertop>
-                <centerleft>26%</centerleft>
-                <width>140</width>
-                <height>140</height>
-                <aspectratio align="center" aligny="center">keep</aspectratio>
-                <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Hourly.$PARAM[Day_Hour_ID].FanartCode),,.png]</texture>
-                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated)</visible>
-            </control>
-            <control type="multiimage">
-                <centertop>60%</centertop>
-                <centerleft>24%</centerleft>
-                <width>140</width>
-                <height>140</height>
-                <aspectratio align="center" aligny="center">keep</aspectratio>
-                <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Hourly.$PARAM[Day_Hour_ID].FanartCode)]</imagepath>
-                <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEmpty(Window(weather).Property(Hourly.$PARAM[Day_Hour_ID].FanartCode))</visible>
-            </control>
-
-            <!-- INFOS - LABEL -->
-
-            <!-- Hour -->
-
-            <control type="label">
-                <top>10</top>
-                <left>72</left>
-                <right>20</right>
-                <align>left</align>
-                <width>150</width>
-                <font>Small33</font>
-                <textcolor>PanelWhite100</textcolor>
-                <label>$INFO[Window.Property(Hourly.$PARAM[Day_Hour_ID].Time),[B],[/B]]</label>
-            </control>
-
-            <!-- Short date -->
-
-            <control type="label">
-                <top>10</top>
-                <left>180</left>
-                <right>20</right>
-                <align>center</align>
-                <font>Tiny</font>
-                <scroll>false</scroll>
-                <textcolor>PanelWhite100</textcolor>
-                <label>$INFO[Window.Property(Hourly.$PARAM[Day_Hour_ID].ShortDate)]</label>
-            </control>
-
-            <!-- Temperature -->
-
-            <control type="label">
-                <top>78</top>
-                <left>180</left>
-                <right>20</right>
-                <align>center</align>
-                <font>Medium</font>
-                <textcolor>PanelWhite100</textcolor>
-                <label>$INFO[Window.Property(Hourly.$PARAM[Day_Hour_ID].Temperature),[B],[/B]]</label>
-            </control>
-            <control type="label">
-                <top>78</top>
-                <left>180</left>
-                <right>20</right>
-                <align>center</align>
-                <font>Tiny</font>
-                <textcolor>PanelWhite100</textcolor>
-                <visible>String.IsEmpty(Window.Property(Hourly.$PARAM[Day_Hour_ID].Temperature))</visible>
-                <label> - $LOCALIZE[10006] - </label>
-            </control>
-
-            <control type="label">
-                <top>120</top>
-                <left>180</left>
-                <right>20</right>
-                <align>center</align>
-                <font>Tiny</font>
-                <scroll>false</scroll>
-                <textcolor>PanelWhite100</textcolor>
-                <label>$INFO[Window.Property(Hourly.$PARAM[Day_Hour_ID].Outlook)]</label>
-            </control>
-
-            <control type="image">
-               <bottom>$PARAM[bottom_lign]</bottom>
-               <right>30</right>
-               <left>30</left>
-               <height>1</height>
-               <texture colordiffuse="Black12">common/white.png</texture>
-               <visible></visible>
-            </control>
-        </control>
+        </definition>
     </include>
 
     <!-- LABEL - WIDGETS -->
@@ -505,4 +449,136 @@
         <value condition="!String.IsEmpty(Window(Weather).Property(Current.UVIndex))">$INFO[Window(Weather).Property(Current.UVIndex)]</value>
         <value condition="!String.IsEmpty(Window(Weather).Property(Current.Cloudiness))">$INFO[Window(Weather).Property(Current.Cloudiness),$LOCALIZE[31048] ,]</value>
     </variable>
+
+    <!-- ICON - WEATHER -->
+
+    <include name="Def_Weather_Icon_Today">
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture colordiffuse="Dark2">$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated + String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path)),animated + !String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="multiimage">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>$INFO[Window(weather).Property(Current.ConditionIcon)]</texture>
+            <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Weather_Icon_Daily">
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture colordiffuse="Dark2">$INFO[Skin.String(weather.icons.path)]$INFO[Window.Property(Daily.$PARAM[Daily_ID].FanartCode),,.png]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated) + String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window.Property(Daily.$PARAM[Daily_ID].FanartCode),,.png]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="multiimage">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Daily.$PARAM[Daily_ID].FanartCode)]</imagepath>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEmpty(Window(weather).Property(Daily.$PARAM[Daily_ID].FanartCode))</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>resource://resource.images.weathericons.default/$INFO[Window.Property(Daily.$PARAM[Daily_ID].FanartCode),,.png]</texture>
+            <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Weather_Icon_Hourly">
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture colordiffuse="Dark2">$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Hourly.$PARAM[Hourly_ID].FanartCode),,.png]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated) + String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Hourly.$PARAM[Hourly_ID].FanartCode),,.png]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="multiimage">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Hourly.$PARAM[Hourly_ID].FanartCode)]</imagepath>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEmpty(Window(weather).Property(Hourly.$PARAM[Hourly_ID].FanartCode))</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>resource://resource.images.weathericons.default/$INFO[Window(weather).Property(Hourly.$PARAM[Hourly_ID].FanartCode),,.png]</texture>
+            <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Widget_Weather_Icon">
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture colordiffuse="Dark2">$INFO[ListItem.Property(FanartTexture)]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated) + String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>$INFO[ListItem.Property(FanartTexture)]</texture>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),animated) + !String.IsEqual(Skin.String(weather.icons.name),Weather Icons - White)</visible>
+        </control>
+        <control type="multiimage">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <imagepath>$INFO[ListItem.Property(Imagepath.Fanart.Animated)]</imagepath>
+            <visible>!String.IsEmpty(Skin.String(weather.icons.path)) + String.Contains(Skin.String(weather.icons.path),animated)</visible>
+        </control>
+        <control type="image">
+            <aspectratio align="center" aligny="center">keep</aspectratio>
+            <texture>$INFO[ListItem.Property(OutlookTexture)]</texture>
+            <visible>String.IsEmpty(Skin.String(weather.icons.path))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Feature_Footer_Clock_Weather_Icon">
+        <control type="image">
+            <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override) + !String.Contains(Skin.String(weather.icons.path),White) + !String.Contains(Skin.String(weather.icons.path),Outline) + !String.Contains(Skin.String(weather.icons.path),Transparent) + !String.Contains(Skin.String(weather.icons.path),Monstr)</visible>
+
+            <aspectratio aligny="center" align="center">keep</aspectratio>
+            <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+            <include>Animation_Fade_Icon</include>
+        </control>
+
+        <control type="image">
+            <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override) + [String.Contains(Skin.String(weather.icons.path),White) | String.Contains(Skin.String(weather.icons.path),Outline) | String.Contains(Skin.String(weather.icons.path),Transparent) | String.Contains(Skin.String(weather.icons.path),Monstr)]</visible>
+
+            <aspectratio aligny="center" align="center">keep</aspectratio>
+            <texture colordiffuse="Dark2">$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+        </control>
+
+        <!-- ICON - RESOURCE.IMAGES.WEATHERICONS.WHITE -->
+
+        <control type="image">
+            <visible>[String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),Default)] | [String.Contains(Skin.String(weather.icons.path),Default) + !Skin.HasSetting(weather.icons.override)] | [![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !Skin.HasSetting(weather.icons.override)]</visible>
+
+            <aspectratio aligny="center" align="center">keep</aspectratio>
+            <texture colordiffuse="Dark2">$INFO[Weather.FanartCode,resource://resource.images.weathericons.white/,.png]</texture>
+        </control>
+
+        <!-- ICON - DEFAULT -->
+
+        <control type="image">
+            <visible>String.Contains(Skin.String(weather.icons.path),Default) + Skin.HasSetting(weather.icons.override)</visible>
+
+            <aspectratio aligny="center" align="center">keep</aspectratio>
+            <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
+            <include>Animation_Fade_Icon</include>
+        </control>
+    </include>
+
+
 </includes>

@@ -1758,22 +1758,21 @@
                 <effect type="fade" start="100" end="0" time="150" delay="0" />
             </animation>
 
-            <top>70</top>
-            <right>62</right>
+            <top>View_SidePad</top>
+            <right>View_SidePad</right>
+            <align>right</align>
+
+            <itemgap>18</itemgap>
             <orientation>horizontal</orientation>
             <usecontrolcoords>true</usecontrolcoords>
-            <itemgap>24</itemgap>
-            <align>right</align>
+
             <control type="group">
                 <width>700</width>
-                <top>10</top>
 
                 <!-- 1er lign -->
 
                 <control type="label">
-                    <visible>!String.Contains(Weather.Temperature,$LOCALIZE[503])</visible>
-                    <visible>!String.IsEmpty(Weather.plugin)</visible>
-                    <visible>Weather.IsFetched</visible>
+                    <visible>![String.Contains(Weather.Temperature,$LOCALIZE[503]) | String.IsEmpty(Window(Weather).Property(Updated)) | String.IsEmpty(Weather.plugin) | !Weather.IsFetched]</visible>
 
                     <centertop>26</centertop>
                     <right>144</right>
@@ -1804,39 +1803,7 @@
                 </control>
             </control>
 
-            <!-- Busy animation -->
-
-            <control type="group">
-                <visible>String.Contains(Weather.Temperature,$LOCALIZE[503]) | String.IsEmpty(Window(Weather).Property(Updated))</visible>
-                <visible>!String.IsEmpty(Weather.plugin)</visible>
-                <visible>Weather.IsFetched</visible>
-                <include>Animation_Fade_In_Weather</include>
-                <include>Animation_Fade_Out_Weather</include>
-                <orientation>horizontal</orientation>
-                <left>-10</left>
-                <height>80</height>
-                <control type="image">
-                    <description>Busy animation</description>
-                    <right>124</right>
-                    <centertop>36</centertop>
-                    <width>45</width>
-                    <height>45</height>
-                    <texture>dialog/loading-back.png</texture>
-                    <aspectratio>keep</aspectratio>
-                </control>
-                <control type="image">
-                    <description>Busy animation</description>
-                    <right>124</right>
-                    <centertop>36</centertop>
-                    <width>45</width>
-                    <height>45</height>
-                    <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
-                    <texture colordiffuse="$VAR[Color_Loading_Spinner]">dialog/loading-spinner.png</texture>
-                    <aspectratio>keep</aspectratio>
-                </control>
-            </control>
-
-            <!-- Weather icon -->
+            <!-- WEATHER ICON -->
 
             <control type="group">
                 <visible>!String.Contains(Weather.Temperature,$LOCALIZE[503])</visible>
@@ -1844,47 +1811,40 @@
                 <visible>Weather.IsFetched</visible>
                 <include>Animation_Fade_In_WeatherDelay</include>
 
-                <left>-10</left>
-                <top>8</top>
+                <width>80</width>
                 <height>80</height>
-                <width>90</width>
+                <align>center</align>
+                <aligny>center</aligny>
+
+                <include>Def_Feature_Header_Clock_Weather_Icon</include>
+            </control>
+
+            <!-- BUSY ANIMATION -->
+
+            <control type="group">
+                <visible>[String.Contains(Weather.Temperature,$LOCALIZE[503]) | String.IsEmpty(Window(Weather).Property(Updated)) | String.IsEmpty(Weather.plugin) | !Weather.IsFetched]</visible>
+                <include>Animation_Fade_In_Weather</include>
+                <include>Animation_Fade_Out_Weather</include>
+                <orientation>horizontal</orientation>
+
                 <control type="image">
-                    <width>70</width>
-                    <height>70</height>
-                    <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                    <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override) + !String.Contains(Skin.String(weather.icons.path),White) + !String.Contains(Skin.String(weather.icons.path),Outline) + !String.Contains(Skin.String(weather.icons.path),Transparent) + !String.Contains(Skin.String(weather.icons.path),Monstr)</visible>
-                    <include>Animation_Fade_Icon</include>
+                    <description>Busy animation</description>
+                    <right>100</right>
+                    <centertop>26</centertop>
+                    <width>45</width>
+                    <height>45</height>
+                    <texture>dialog/loading-back.png</texture>
+                    <aspectratio>keep</aspectratio>
                 </control>
                 <control type="image">
-                    <width>70</width>
-                    <height>70</height>
-                    <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture colordiffuse="Dark2">$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                    <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override) + [String.Contains(Skin.String(weather.icons.path),White) | String.Contains(Skin.String(weather.icons.path),Outline) | String.Contains(Skin.String(weather.icons.path),Transparent) | String.Contains(Skin.String(weather.icons.path),Monstr)]</visible>
-                </control>
-                <control type="multiimage">
-                    <width>70</width>
-                    <height>70</height>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
-                    <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override)</visible>
-                    <include>Animation_Fade_Icon</include>
-                </control>
-                <control type="image">
-                    <width>80</width>
-                    <height>80</height>
-                    <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture colordiffuse="Dark2">$INFO[Weather.FanartCode,resource://resource.images.weathericons.white/,.png]</texture>
-                    <visible>[String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),Default)] | [String.Contains(Skin.String(weather.icons.path),Default) + !Skin.HasSetting(weather.icons.override)] | [![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !Skin.HasSetting(weather.icons.override)]</visible>
-                </control>
-                <control type="image">
-                    <width>70</width>
-                    <height>70</height>
-                    <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                    <visible>String.Contains(Skin.String(weather.icons.path),Default) + Skin.HasSetting(weather.icons.override)</visible>
-                    <include>Animation_Fade_Icon</include>
+                    <description>Busy animation</description>
+                    <right>100</right>
+                    <centertop>26</centertop>
+                    <width>45</width>
+                    <height>45</height>
+                    <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
+                    <texture colordiffuse="$VAR[Color_Loading_Spinner]">dialog/loading-spinner.png</texture>
+                    <aspectratio>keep</aspectratio>
                 </control>
             </control>
         </control>

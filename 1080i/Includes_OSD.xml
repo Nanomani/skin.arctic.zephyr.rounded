@@ -253,7 +253,7 @@
             <include content="Def_Dialog_Background_Notification">
                 <param name="texture" value="notification_w580_h160" />
                 <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
-                <param name="condition_fade" value="false" />
+                <param name="condition_fade" value="true" />
             </include>
 
             <!-- HORLOGE -->
@@ -510,7 +510,7 @@
                 <param name="colordiffuse" value="$PARAM[colordiffuse]" />
                 <param name="pad_shadow" value="$PARAM[pad_shadow]" />
                 <param name="pad_image" value="$PARAM[pad_image]" />
-                <param name="condition_fade" value="false" />
+                <param name="condition_fade" value="true" />
             </include>
         </definition>
     </include>
@@ -528,7 +528,7 @@
                     <param name="colordiffuse" value="$PARAM[colordiffuse]" />
                     <param name="pad_shadow" value="$PARAM[pad_shadow]" />
                     <param name="pad_image" value="$PARAM[pad_image]" />
-                    <param name="condition_fade" value="false" />
+                    <param name="condition_fade" value="true" />
                 </include>
             </control>
         </definition>
@@ -977,12 +977,6 @@
         <ondown condition="!String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE))">ClearProperty(OSDVideo_DONT_AUTO_CLOSE,Home)</ondown>
     </include>
 
-    <include name="Def_OSD_UpDown_Video_Wiki">
-        <ondown condition="!String.IsEmpty(VideoPlayer.Title) + String.IsEmpty(Skin.String(Value_OSD_Timeout))">Dialog.Close(VideoOSD)</ondown>
-        <ondown condition="!String.IsEmpty(VideoPlayer.Title)">SetProperty(wikipedia,1,Home)</ondown>
-        <ondown condition="!String.IsEmpty(VideoPlayer.Title)">RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.Title],tmdb_type=movie,language=$VAR[Path_Wikipedia_Language])</ondown>
-    </include>
-
     <include name="Def_OSD_UpDown_Music_Info">
         <onup>8200</onup>
 
@@ -1244,7 +1238,7 @@
          <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="left" value="-47" />
-            <param name="icon" value="osd/bookmarks2.png" />
+            <param name="icon" value="osd/bookmarks.png" />
             <param name="id" value="6" />
             <param name="groupid" value="5999" />
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
@@ -1380,7 +1374,7 @@
          <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="left" value="-47" />
-            <param name="icon" value="osd/info.png" />
+            <param name="icon" value="osd/world.png" />
             <param name="id" value="4" />
             <param name="groupid" value="5899" />
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
@@ -1389,12 +1383,11 @@
             <onup>Dialog.Close(VideoOSD)</onup>
             <onup>SetProperty(wikipedia,1,Home)</onup>
             <onup>RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.TvShowTitle],tmdb_type=tv,language=$VAR[Path_Wikipedia_Language])</onup>
-            <enable>Player.PauseEnabled</enable>
-            <onclick>Close</onclick>
-            <onclick>SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</onclick>
-            <onclick>RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[VideoPlayer.TvShowTitle,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D]"',call_auto=1190)</onclick>
+            <enable>!String.IsEmpty(VideoPlayer.Title) + !String.IsEmpty(VideoPlayer.DBID)</enable>
+            <onclick condition="!String.IsEmpty(VideoPlayer.Title) + String.IsEmpty(Skin.String(Value_OSD_Timeout))">Dialog.Close(VideoOSD)</onclick>
+            <onclick condition="!String.IsEmpty(VideoPlayer.Title)">SetProperty(wikipedia,1,Home)</onclick>
+            <onclick condition="!String.IsEmpty(VideoPlayer.Title)">RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.Title],tmdb_type=movie,language=$VAR[Path_Wikipedia_Language])</onclick>
         </include>
-
     </include>
 
     <include name="OSD_Right_ExtraInfo_Movies">
@@ -1402,16 +1395,16 @@
          <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="left" value="-47" />
-            <param name="icon" value="osd/info.png" />
+            <param name="icon" value="osd/world.png" />
             <param name="id" value="4" />
             <param name="groupid" value="5899" />
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
             <align>right</align>
             <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
-            <enable>Player.PauseEnabled</enable>
-            <onclick>Close</onclick>
-            <onclick>SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</onclick>
-            <onclick>RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[VideoPlayer.Title,videodb://movies/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22movies%22%7D]"',call_auto=1190)</onclick>
+            <enable>!String.IsEmpty(VideoPlayer.Title) + !String.IsEmpty(VideoPlayer.DBID)</enable>
+            <onclick condition="!String.IsEmpty(VideoPlayer.Title) + String.IsEmpty(Skin.String(Value_OSD_Timeout))">Dialog.Close(VideoOSD)</onclick>
+            <onclick condition="!String.IsEmpty(VideoPlayer.Title)">SetProperty(wikipedia,1,Home)</onclick>
+            <onclick condition="!String.IsEmpty(VideoPlayer.Title)">RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.Title],tmdb_type=movie,language=$VAR[Path_Wikipedia_Language])</onclick>
         </include>
     </include>
 
@@ -1470,7 +1463,7 @@
 
                 <include content="Def_Dialog_Background_Image">
                     <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
-                    <param name="condition_fade" value="false" />
+                    <param name="condition_fade" value="true" />
                 </include>
 
                 <include content="Def_OSD_Context_Audio_Gradient">
@@ -1493,7 +1486,7 @@
 
                 <include content="Def_Dialog_Background_Image">
                     <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
-                    <param name="condition_fade" value="false" />
+                    <param name="condition_fade" value="true" />
                 </include>
 
                 <include content="Def_OSD_Context_Subtitles_Gradient">
@@ -1525,7 +1518,7 @@
                 <include content="Object_OSD_Button">
                     <param name="visible" value="true" />
                     <param name="left" value="-47" />
-                    <param name="icon" value="osd/video-settings.png" />
+                    <param name="icon" value="osd/video-addons.png" />
                     <param name="id" value="1" />
                     <param name="groupid" value="60991" />
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
@@ -1595,7 +1588,6 @@
                 <align>right</align>
                 <onleft>19</onleft>
                 <onright>1</onright>
-                <include>Def_OSD_UpDown_Video_Wiki</include>
                 <usecontrolcoords>true</usecontrolcoords>
                 <include condition="!VideoPlayer.Content(livetv) + [VideoPlayer.HasMenu | [!VideoPlayer.Content(movies) + !VideoPlayer.Content(episodes)]]">OSD_Right_DVD_Menu</include>
                 <include condition="!VideoPlayer.HasMenu + VideoPlayer.Content(episodes)">OSD_Right_ExtraInfo_TvShows</include>
@@ -1607,7 +1599,7 @@
             <!-- OSD FOOTER INFO TIPS -->
 
             <control type="grouplist">
-                <visible>ControlGroup(100).HasFocus() | [ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID)]] | ControlGroup(102).HasFocus()</visible>
+                <visible>ControlGroup(100).HasFocus() | [ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID)]]</visible>
 
                 <top>64</top>
                 <left>OSD_SidePad</left>
@@ -1624,7 +1616,7 @@
                     <height>50</height>
                     <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                     <texture flipy="true" colordiffuse="$VAR[Color_OSD_Button_Background]">special://skin/extras/icons/angle-up.png</texture>
-                    <visible>[ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID)]] | [ControlGroup(102).HasFocus() + !String.IsEmpty(VideoPlayer.Title)]</visible>
+                    <visible>[ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID)]]</visible>
                 </control>
                 <control type="image">
                     <width>50</width>

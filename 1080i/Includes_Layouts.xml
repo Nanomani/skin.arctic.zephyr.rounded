@@ -258,130 +258,6 @@
         </definition>
     </include>
 
-    <!-- VIEWS LAYOUT - CONTEXTE MENU -->
-
-    <include name="Def_Context_Menu_Label">
-        <height>70</height>
-        <align>left</align>
-        <width>438</width>
-        <textoffsetx>30</textoffsetx>
-        <font>Button</font>
-        <textcolor>$VAR[Color_Label_Settings_Title]</textcolor>
-        <disabledcolor>$VAR[Color_Label_Settings_Title]</disabledcolor>
-        <animation effect="fade" start="100" end="60" condition="true">Conditional</animation>
-        <enable>false</enable>
-    </include>
-
-    <include name="Def_Button_Gradient_Context">
-        <left>16</left>
-        <width>438</width>
-        <height>70</height>
-        <align>left</align>
-        <radioposx>384</radioposx>
-        <textwidth>340</textwidth>
-        <textoffsetx>30</textoffsetx>
-        <font>Tiny</font>
-        <textcolor>Black70</textcolor>
-        <textureradiofocus colordiffuse="Black70">buttons/radio-on.png</textureradiofocus>
-        <textureradionofocus colordiffuse="Black30">buttons/radio-off.png</textureradionofocus>
-        <focusedcolor>Selected</focusedcolor>
-        <alttexturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</alttexturefocus>
-        <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texturefocus>
-    </include>
-
-    <include name="Def_View_ContextMenu_GroupList">
-        <param name="height" default="350" />
-        <param name="idlayout" default="50" />
-        <definition>
-            <visible allowhiddenfocus="true">ControlGroup(9000).HasFocus()</visible>
-            <onleft>$PARAM[idlayout]</onleft>
-            <onright>$PARAM[idlayout]</onright>
-            <onback>$PARAM[idlayout]</onback>
-            <left>0</left>
-            <top>16</top>
-            <width>470</width>
-            <height>$PARAM[height]</height>
-            <itemgap>0</itemgap>
-        </definition>
-    </include>
-
-    <include name="Def_View_ContextMenu_GroupList_scrollbar">
-        <param name="height" default="350" />
-        <param name="idlayout" default="50" />
-        <param name="scrollid" default="9070" />
-        <definition>
-            <visible allowhiddenfocus="true">$EXP[View_Context_Menu_Visible]</visible>
-            <onleft>$PARAM[idlayout]</onleft>
-            <onright>$PARAM[scrollid]</onright>
-            <onback>$PARAM[idlayout]</onback>
-            <left>0</left>
-            <top>16</top>
-            <width>470</width>
-            <height>$PARAM[height]</height>
-            <itemgap>0</itemgap>
-        </definition>
-    </include>
-
-    <include name="Def_View_ContextMenu_Background">
-        <param name="height" default="366" />
-        <param name="width" default="470" />
-        <param name="visible" default="$EXP[View_Context_Menu_Visible]" />
-        <definition>
-            <visible allowhiddenfocus="true">$PARAM[visible]</visible>
-            <!-- <include>Animation_ZoomIn</include> -->
-            <!-- <include>Animation_Fade_Out</include> -->
-
-            <top>184</top>
-            <centerleft>50%</centerleft>
-            <height>$PARAM[height]</height>
-            <width>$PARAM[width]</width>
-
-            <include content="Def_Dialog_Background_Image">
-                <param name="colordiffuse" value="White100" />
-            </include>
-        </definition>
-    </include>
-
-    <!-- contexte menu layout - workaround for myvideonav.xml select "sort" for "label" -->
-    <include name="Def_View_ContextMenu_Button">
-        <control type="button" id="2">
-            <description>Viewtype Toggle</description>
-            <include>Def_Hidden_ListControl</include>
-        </control>
-
-        <control type="button" id="3">
-            <description>Viewtype Toggle</description>
-            <include>Def_Hidden_ListControl</include>
-        </control>
-    </include>
-
-    <include name="Def_View_ContextMenu_Button_Playlist">
-        <control type="button" id="6147">
-            <include>Def_Context_Menu_Label</include>
-            <label>13350</label>
-            <visible>[!String.IsEqual(Playlist.Length(music),0) + Window.IsVisible(MyMusicNav.xml)] | [!String.IsEqual(Playlist.Length(video),0) + Window.IsVisible(MyVideoNav.xml)]</visible>
-            <visible>!Player.HasMedia + !Player.Playing</visible>
-        </control>
-        <control type="button" id="6148">
-            <description>Music playlist</description>
-            <label>13350</label>
-            <label2>$INFO[Playlist.Length(music)]</label2>
-            <include>Def_Button_Gradient_Context</include>
-            <onclick>ActivateWindow(musicplaylist)</onclick>
-            <visible>!String.IsEqual(Playlist.Length(music),0) + Window.IsVisible(MyMusicNav.xml)</visible>
-            <visible>!Player.HasMedia + !Player.Playing</visible>
-        </control>
-        <control type="button" id="6149">
-            <description>Video playlist</description>
-            <label>13350</label>
-            <label2>$INFO[Playlist.Length(video)]</label2>
-            <include>Def_Button_Gradient_Context</include>
-            <onclick>ActivateWindow(videoplaylist)</onclick>
-            <visible>!String.IsEqual(Playlist.Length(video),0) + Window.IsVisible(MyVideoNav.xml)</visible>
-            <visible>!Player.HasMedia + !Player.Playing</visible>
-        </control>
-    </include>
-
     <!-- VIEWS LAYOUT - PVR - CONTEXTE MENU - ICONS -->
 
     <include name="Def_Context_Menu_PVR_Icon">
@@ -541,12 +417,154 @@
         <ondown condition="Window.IsVisible(MyPVRProviders.xml)">SetFocus(3)</ondown>
 
         <!-- mini player -->
-        <ondown condition="$EXP[Display_Views_Menu_Mini_Player] + Control.IsEnabled(6157)">SetFocus(6157)</ondown>
+        <ondown condition="$EXP[Display_Views_Menu_MiniPlayer] + Control.IsEnabled(6157)">SetFocus(6157)</ondown>
+    </include>
+
+    <!-- ===================================== -->
+    <!--            DIALOG - MENU              -->
+    <!-- ===================================== -->
+
+    <include name="Def_View_Focus_Dialog_Menu_On_Right">
+        <param name="id" value="$PARAM[id]" default="9000" />
+        <definition>
+            <onright condition="!Skin.HasSetting(global.kioskmode)">$PARAM[id]</onright>
+            <onright condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onright>
+        </definition>
+    </include>
+
+    <include name="Def_View_Focus_Dialog_Menu_On_Left">
+        <param name="id" value="$PARAM[id]" default="9000" />
+        <definition>
+            <onleft condition="!Skin.HasSetting(global.kioskmode)">$PARAM[id]</onleft>
+            <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
+        </definition>
+    </include>
+
+    <include name="Def_Dialog_Menu_Box">
+        <param name="height" default="366" />
+        <param name="width" default="470" />
+        <param name="visible" default="$EXP[View_Context_Menu_Visible]" />
+        <definition>
+            <visible allowhiddenfocus="true">$PARAM[visible]</visible>
+            <!-- <include>Animation_ZoomIn</include> -->
+            <!-- <include>Animation_Fade_Out</include> -->
+
+            <top>184</top>
+            <centerleft>50%</centerleft>
+            <height>$PARAM[height]</height>
+            <width>$PARAM[width]</width>
+
+            <include content="Def_Dialog_Background_Image">
+                <param name="colordiffuse" value="White100" />
+            </include>
+        </definition>
+    </include>
+
+    <include name="Def_Dialog_Menu_Button_Title">
+        <height>70</height>
+        <align>left</align>
+        <width>438</width>
+        <textoffsetx>30</textoffsetx>
+        <font>Button</font>
+        <textcolor>$VAR[Color_Label_Settings_Title]</textcolor>
+        <disabledcolor>$VAR[Color_Label_Settings_Title]</disabledcolor>
+        <animation effect="fade" start="100" end="60" condition="true">Conditional</animation>
+        <enable>false</enable>
+    </include>
+
+    <include name="Def_Dialog_Menu_Button_Gradient_Select">
+        <left>16</left>
+        <width>438</width>
+        <height>70</height>
+        <align>left</align>
+        <radioposx>384</radioposx>
+        <textwidth>340</textwidth>
+        <textoffsetx>30</textoffsetx>
+        <font>Tiny</font>
+        <textcolor>Black70</textcolor>
+        <textureradiofocus colordiffuse="Black70">buttons/radio-on.png</textureradiofocus>
+        <textureradionofocus colordiffuse="Black30">buttons/radio-off.png</textureradionofocus>
+        <focusedcolor>Selected</focusedcolor>
+        <alttexturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</alttexturefocus>
+        <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texturefocus>
+    </include>
+
+    <include name="Def_Dialog_Menu_GroupList">
+        <param name="height" default="350" />
+        <param name="idlayout" default="50" />
+        <definition>
+            <visible allowhiddenfocus="true">ControlGroup(9000).HasFocus()</visible>
+            <onleft>$PARAM[idlayout]</onleft>
+            <onright>$PARAM[idlayout]</onright>
+            <onback>$PARAM[idlayout]</onback>
+            <left>0</left>
+            <top>16</top>
+            <width>470</width>
+            <height>$PARAM[height]</height>
+            <itemgap>0</itemgap>
+        </definition>
+    </include>
+
+    <include name="Def_Dialog_Menu_GroupList_scrollbar">
+        <param name="height" default="350" />
+        <param name="idlayout" default="50" />
+        <param name="scrollid" default="9070" />
+        <definition>
+            <visible allowhiddenfocus="true">$EXP[View_Context_Menu_Visible]</visible>
+            <onleft>$PARAM[idlayout]</onleft>
+            <onright>$PARAM[scrollid]</onright>
+            <onback>$PARAM[idlayout]</onback>
+            <left>0</left>
+            <top>16</top>
+            <width>470</width>
+            <height>$PARAM[height]</height>
+            <itemgap>0</itemgap>
+        </definition>
+    </include>
+
+    <include name="Def_Dialog_Menu_Button_Playlist">
+        <control type="button" id="6147">
+            <include>Def_Dialog_Menu_Button_Title</include>
+            <label>13350</label>
+            <visible>[!String.IsEqual(Playlist.Length(music),0) + Window.IsVisible(MyMusicNav.xml)] | [!String.IsEqual(Playlist.Length(video),0) + Window.IsVisible(MyVideoNav.xml)]</visible>
+            <visible>!Player.HasMedia + !Player.Playing</visible>
+        </control>
+        <control type="button" id="6148">
+            <description>Music playlist</description>
+            <label>13350</label>
+            <label2>$INFO[Playlist.Length(music)]</label2>
+            <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+            <onclick>ActivateWindow(musicplaylist)</onclick>
+            <visible>!String.IsEqual(Playlist.Length(music),0) + Window.IsVisible(MyMusicNav.xml)</visible>
+            <visible>!Player.HasMedia + !Player.Playing</visible>
+        </control>
+        <control type="button" id="6149">
+            <description>Video playlist</description>
+            <label>13350</label>
+            <label2>$INFO[Playlist.Length(video)]</label2>
+            <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+            <onclick>ActivateWindow(videoplaylist)</onclick>
+            <visible>!String.IsEqual(Playlist.Length(video),0) + Window.IsVisible(MyVideoNav.xml)</visible>
+            <visible>!Player.HasMedia + !Player.Playing</visible>
+        </control>
+    </include>
+
+    <!-- contexte menu layout - workaround for myvideonav.xml select "sort" for "label" -->
+    <include name="Def_Dialog_Menu_Hidden_Button_id2_id3">
+        <control type="button" id="2">
+            <description>Viewtype Toggle</description>
+            <include>Def_Hidden_ListControl</include>
+        </control>
+
+        <control type="button" id="3">
+            <description>Viewtype Toggle</description>
+            <include>Def_Hidden_ListControl</include>
+        </control>
     </include>
 
     <!-- OSD - CONTEXTE MENU PLAYER -->
 
-    <include name="Def_View_Menu_Control_Buttons_UpDown">
+    <include name="Def_Dialog_Menu_MiniPlayer_Button_UpDown">
         <ondown condition="Window.IsVisible(Custom_1111_Hub_Movies.xml)">SetFocus(9296)</ondown>
         <ondown condition="Window.IsVisible(MyPlaylist.xml) + !MusicPartyMode.Enabled">SetFocus(20)</ondown>
         <ondown condition="Window.IsVisible(MyPlaylist.xml) + MusicPartyMode.Enabled">SetFocus(9001)</ondown>
@@ -566,7 +584,7 @@
         <ondown condition="Window.IsVisible(MyMusicPlaylistEditor.xml)">SetFocus(6)</ondown>
     </include>
 
-    <include name="Def_View_Menu_Control_Buttons_OnClick">
+    <include name="Def_Dialog_Menu_MiniPlayer_Button_OnClick">
         <onclick condition="Window.IsVisible(Custom_1111_Hub_Movies.xml)">SetFocus(9296)</onclick>
         <onclick condition="Window.IsVisible(MyPlaylist.xml) + !MusicPartyMode.Enabled">SetFocus(20)</onclick>
         <onclick condition="Window.IsVisible(MyPlaylist.xml) + MusicPartyMode.Enabled">SetFocus(9001)</onclick>
@@ -586,9 +604,9 @@
         <onclick condition="Window.IsVisible(MyMusicPlaylistEditor.xml)">SetFocus(6)</onclick>
     </include>
 
-    <include name="Def_View_Menu_Control_Buttons">
+    <include name="Def_Dialog_Menu_MiniPlayer_OSD">
         <control type="grouplist" id="6150">
-            <visible>$EXP[Display_Views_Menu_Mini_Player]</visible>
+            <visible>$EXP[Display_Views_Menu_MiniPlayer]</visible>
 
             <include>Animation_Scrolltime_Views_List</include>
 
@@ -623,7 +641,7 @@
                 <onclick>PlayerControl(Previous)</onclick>
                 <enable>Player.PauseEnabled</enable>
                 <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
 
             <include content="Object_OSD_Button">
@@ -639,7 +657,7 @@
                 <onclick>PlayerControl(Rewind)</onclick>
                 <enable>Player.SeekEnabled</enable>
                 <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
 
             <include content="Object_OSD_Button">
@@ -654,7 +672,7 @@
                 <onclick>PlayerControl(Play)</onclick>
                 <enable>Player.PauseEnabled</enable>
                 <animation effect="fade" start="100" end="33" time="100" condition="!Player.PauseEnabled">Conditional</animation>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
 
             <include content="Object_OSD_Button">
@@ -667,8 +685,8 @@
                 <param name="groupid" value="6499" />
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <onclick>PlayerControl(Stop)</onclick>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
-                <include>Def_View_Menu_Control_Buttons_OnClick</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_OnClick</include>
             </include>
 
             <include content="Object_OSD_Button">
@@ -683,7 +701,7 @@
                 <onclick>PlayerControl(Forward)</onclick>
                 <enable>Player.SeekEnabled</enable>
                 <animation effect="fade" start="100" end="33" time="100" condition="!Player.SeekEnabled">Conditional</animation>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
 
             <include content="Object_OSD_Button">
@@ -696,7 +714,7 @@
                 <param name="groupid" value="6699" />
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <onclick>PlayerControl(Next)</onclick>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
 
             <include content="Object_OSD_Button">
@@ -710,7 +728,7 @@
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <onclick condition="Player.HasVideo">ActivateWindow(fullscreenvideo)</onclick>
                 <onclick condition="Player.HasAudio">ActivateWindow(visualisation)</onclick>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
 
              <include content="Object_OSD_Button">
@@ -726,23 +744,12 @@
                 <onclick condition="Player.HasVideo">ActivateWindow(videoplaylist)</onclick>
                 <enable>!VideoPlayer.Content(livetv) + !Window.IsVisible(MyPlaylist.xml)</enable>
                 <animation effect="fade" start="100" end="33" time="100" condition="VideoPlayer.Content(livetv) | Window.IsVisible(MyPlaylist.xml)">Conditional</animation>
-                <include>Def_View_Menu_Control_Buttons_UpDown</include>
+                <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
         </control>
     </include>
 
-    <include name="Def_View_ContextMenu_Player_Background">
-        <control type="group">
-            <visible>$EXP[Display_Views_Menu_Mini_Player]</visible>
-            <top>178</top>
-            <left>5</left>
-            <width>460</width>
-            <height>150</height>
-            <include content="Def_Art_Full_Background_b24"><param name="colordiffuse" value="White70" /></include>
-        </control>
-    </include>
-
-    <include name="Def_View_ContextMenu_Player">
+    <include name="Def_Dialog_Menu_MiniPlayer">
         <control type="label" id="7979">
             <left>20</left>
             <right>20</right>
@@ -752,31 +759,28 @@
             <textcolor>Dark2</textcolor>
             <scroll>true</scroll>
             <label fallback="19055">$VAR[Label_Layout_Context_Menu_OSD_Player]</label>
-            <visible>$EXP[Display_Views_Menu_Mini_Player]</visible>
+            <visible>$EXP[Display_Views_Menu_MiniPlayer]</visible>
         </control>
         <control type="group" id="7878">
             <left>20</left>
             <right>20</right>
             <height>10</height>
             <include>Object_OSD_Progress_Bar_Info</include>
-            <visible>$EXP[Display_Views_Menu_Mini_Player]</visible>
+            <visible>$EXP[Display_Views_Menu_MiniPlayer]</visible>
         </control>
-        <include>Def_View_Menu_Control_Buttons</include>
+        <include>Def_Dialog_Menu_MiniPlayer_OSD</include>
     </include>
 
-    <include name="Widget_Bullet_Hightlight">
-        <param name="top" value="$PARAM[top]" default="15" />
-        <param name="left" value="$PARAM[left]" default="15" />
-        <param name="dimensions" value="$PARAM[dimensions]" default="70" />
-        <definition>
-            <control type="image">
-               <top>$PARAM[top]</top>
-               <left>$PARAM[left]</left>
-               <width>$PARAM[dimensions]</width>
-               <height>$PARAM[dimensions]</height>
-               <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/circlebuttondialog_h.png</texture>
-            </control>
-        </definition>
+    <!-- WIP - Not used yet -->
+    <include name="Def_Dialog_Menu_MiniPlayer_Background">
+        <control type="group">
+            <visible>$EXP[Display_Views_Menu_MiniPlayer]</visible>
+            <top>178</top>
+            <left>5</left>
+            <width>460</width>
+            <height>150</height>
+            <include content="Def_Art_Full_Background_b24"><param name="colordiffuse" value="White70" /></include>
+        </control>
     </include>
 
     <!-- NORMAL LAYOUT -->
@@ -1333,7 +1337,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>162$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode,Home)</onback>
@@ -1403,7 +1407,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>160$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode)</onback>
@@ -1536,7 +1540,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>161$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode)</onback>
@@ -1618,7 +1622,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>161$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode)</onback>
@@ -1697,7 +1701,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>163$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode)</onback>
@@ -1820,7 +1824,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>164$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode)</onback>
@@ -1897,7 +1901,7 @@
                 <onup>$PARAM[id]</onup>
                 <ondown>$PARAM[id]</ondown>
                 <onleft>164$PARAM[id]</onleft>
-                <include>Def_Focus_Context_Menu_On_Right</include>
+                <include>Def_View_Focus_Dialog_Menu_On_Right</include>
 
                 <onback>1$PARAM[id]</onback>
                 <onback>ClearProperty(WallMode)</onback>
@@ -1969,22 +1973,6 @@
         <param name="viewtype" value="$PARAM[viewtype]" default="list" />
         <definition>
             <viewtype label="$PARAM[label]">$PARAM[viewtype]</viewtype>
-        </definition>
-    </include>
-
-    <include name="Def_Focus_Context_Menu_On_Right">
-        <param name="id" value="$PARAM[id]" default="9000" />
-        <definition>
-            <onright condition="!Skin.HasSetting(global.kioskmode)">$PARAM[id]</onright>
-            <onright condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onright>
-        </definition>
-    </include>
-
-    <include name="Def_Focus_Context_Menu_On_Left">
-        <param name="id" value="$PARAM[id]" default="9000" />
-        <definition>
-            <onleft condition="!Skin.HasSetting(global.kioskmode)">$PARAM[id]</onleft>
-            <onleft condition="!Skin.HasSetting(global.kioskmode) + [Player.HasMedia | Player.Playing]">AlarmClock(GoToButtonFullScreen,SetFocus(6157),00:00,silent)</onleft>
         </definition>
     </include>
 </includes>

@@ -305,7 +305,7 @@
         </definition>
     </include>
 
-    <include name="Def_Layout_Dialog_Info_Video_List_Cast_50">
+    <include name="Def_Layout_Dialog_Info_Video_List_Cast">
         <param name="fallbackpicture" value="$PARAM[fallbackpicture]" default="DefaultPicture.png" />
         <param name="leftbackgroundlist" value="$PARAM[leftbackgroundlist]" default="-227" />
         <param name="Animation_new" value="$PARAM[Animation_new]" default="Animation_CastInfo" />
@@ -328,19 +328,13 @@
         <param name="condition.castfadeout" value="$PARAM[condition.castfadeout]" default="false" />
         <definition>
 
-            <!-- BUSY SPINNER -->
-
-            <!-- <include content="Def_Dialog_Info_List_Updating"> -->
-                <!-- <param name="visible" value="Control.HasFocus($PARAM[controlid])" /> -->
-                <!-- <param name="alignleft" value="640" /> -->
-            <!-- </include> -->
-
             <!-- ARROWS -->
 
             <control type="group">
+                <visible>!Control.HasFocus(9554) + !Control.HasFocus(95547)</visible>
                 <visible>$PARAM[visible.layouts]</visible>
                 <visible>!Container($PARAM[controlid]).IsUpdating</visible>
-                <visible>!Container(50).OnNext + !Container(50).OnPrevious + !ListItem.IsCollection</visible>
+                <visible>!Container($PARAM[controlid]).OnNext + !Container($PARAM[controlid]).OnPrevious + !ListItem.IsCollection</visible>
 
                 <include>Animation_Delay_Fade_In_200</include>
 
@@ -429,39 +423,55 @@
                 <width>2288</width>
                 <height>670</height>
 
-                <!-- INFO ON LINE WITH TMDB  -->
-
-                <onup condition="Control.HasFocus(50) + !ListItem.IsCollection">SetProperty(down,1)</onup>
-                <onup>$VAR[Path_Actor_Dialog_Info]</onup>
-
                 <!-- CAST NAVIGATION -->
 
                 <onleft>$PARAM[controlid]</onleft>
                 <onright>$PARAM[controlid]</onright>
 
-                <ondown condition="Control.IsVisible(50)">$PARAM[controlid]7</ondown>
-                <ondown condition="!Control.IsVisible(50)">9000</ondown>
-                <ondown condition="!Control.IsVisible(50)">ClearProperty(view_extended,Home)</ondown>
+                <!-- INFO ON LINE WITH TMDB  -->
 
-                <onback>9000</onback>
-                <onback>SetFocus(50,0,absolute)</onback>
-
+                <include>Def_Cleanup_On_Up</include>
                 <onup>ClearProperty(ListVideoForCast,Home)</onup>
                 <onup>ClearProperty(ListVideoForCastIcon,Home)</onup>
 
+                <onup condition="Control.HasFocus(50)">$VAR[Path_Actor_Dialog_Info]</onup>
+                <onup condition="Control.HasFocus(9550)">$VAR[Path_Actor_Dialog_Info_TMDb]</onup>
+                <onup condition="[Control.HasFocus(9550) | Control.HasFocus(50)] + !ListItem.IsCollection">SetProperty(down,1)</onup>
+
+                <!-- ON CLICK  -->
+
+                <onclick condition="!Control.HasFocus(50)">$PARAM[onclick1]</onclick>
+                <onclick condition="!Control.HasFocus(50)">$PARAM[onclick2]</onclick>
+                <onclick condition="!Control.HasFocus(50)">$PARAM[onclick3]</onclick>
+
+                <!-- ON DOWN  -->
+
                 <ondown>ClearProperty(ListVideoForCast,Home)</ondown>
                 <ondown>ClearProperty(ListVideoForCastIcon,Home)</ondown>
+                <ondown condition="Control.IsVisible(9557) | Control.IsVisible(9550) | Control.IsVisible(9554) | Control.IsVisible(50)">$PARAM[controlid]7</ondown>
+                <ondown condition="![Control.IsVisible(9557) | Control.IsVisible(9550) | Control.IsVisible(9554) | Control.IsVisible(50)]">9000</ondown>
+                <ondown>ClearProperty(view_extended,Home)</ondown>
+
+                <!-- ON BACK  -->
 
                 <onback>ClearProperty(ListVideoForCast,Home)</onback>
                 <onback>ClearProperty(ListVideoForCastIcon,Home)</onback>
 
-                <onback>ClearProperty(down)</onback>
+                <include>Def_Dialog_Info_On_Back_Video_Set_Absolute_0</include>
+
+                <onback condition="Control.IsVisible(9556) | Control.IsVisible(9514) | Control.IsVisible(9515) | Control.IsVisible(9502) | Control.IsVisible(9517) | Control.IsVisible(9503) | Control.IsVisible(9557) | Control.IsVisible(9506) | Control.IsVisible(9579) | Control.IsVisible(9520)">190</onback>
+
+                <onback condition="![Control.IsVisible(9556) | Control.IsVisible(9514) | Control.IsVisible(9515) | Control.IsVisible(9502) | Control.IsVisible(9517) | Control.IsVisible(9503) | Control.IsVisible(9557) | Control.IsVisible(9506) | Control.IsVisible(9579) | Control.IsVisible(9520)]">9000</onback>
+
+                <onback condition="!Control.IsVisible(50)">Skin.Reset(TMDbHelper.ForceWidgetContainer)</onback>
+
                 <onback>ClearProperty(view_extended,Home)</onback>
+                <onback>ClearProperty(down)</onback>
 
                 <focusposition>$PARAM[focusposition]</focusposition>
+                <pagecontrol>$PARAM[controlid]7</pagecontrol>
                 <orientation>horizontal</orientation>
                 <preloaditems>0</preloaditems>
-                <pagecontrol>$PARAM[controlid]7</pagecontrol>
 
                 <viewtype label="536">list</viewtype>
 
@@ -477,6 +487,7 @@
                         </include>
                     </control>
                 </itemlayout>
+
                 <focusedlayout height="$PARAM[height]" width="$PARAM[width]">
                     <control type="group">
                         <visible>$PARAM[visible.layouts]</visible>
@@ -497,216 +508,10 @@
                     </control>
                     <control type="button">
                         <visible>false</visible>
-                        <onclick>SetProperty(ListVideoForCast,$INFO[Container(50).ListItem.Label],Home)</onclick>
-                        <onclick>SetProperty(ListVideoForCastIcon,$INFO[Container(50).ListItem.Icon],Home)</onclick>
-                        <onfocus>SetProperty(ListVideoForCast,$INFO[Container(50).ListItem.Label],Home)</onfocus>
-                        <onfocus>SetProperty(ListVideoForCastIcon,$INFO[Container(50).ListItem.Icon],Home)</onfocus>
-                    </control>
-                </focusedlayout>
-                <include condition="$PARAM[condition.includecontent]" content="includecontent">
-                    <param name="target" value="$PARAM[target]" />
-                    <param name="sortby" value="$PARAM[sortby]" />
-                    <param name="sortorder" value="$PARAM[sortorder]" />
-                    <param name="limit" value="$PARAM[limit]" />
-                    <param name="ContentToLoad" value="$PARAM[ContentToLoad]" />
-                </include>
-            </control>
-
-            <!-- SCROLLBAR  -->
-
-            <include content="Object_Scrollbar_Dialog_Horizontal">
-                <param name="scrollid" value="$PARAM[controlid]7" />
-
-                <param name="onup" value="$PARAM[controlid]" />
-
-                <param name="onleft" value="$PARAM[controlid]7" />
-                <param name="onright" value="$PARAM[controlid]7" />
-
-                <param name="ondown1" value="SetFocus(50,0,absolute)" />
-                <param name="ondown2" value="ClearProperty(view_extended,Home)" />
-                <param name="ondown3" value="9000" />
-                <!-- <param name="ondown4" value="190" /> -->
-
-                <param name="onback1" value="SetFocus(50,0,absolute)" />
-                <param name="onback2" value="ClearProperty(view_extended,Home)" />
-                <param name="onback3" value="9000" />
-                <!-- <param name="onback4" value="190" /> -->
-
-                <param name="width" value="1730" />
-                <param name="bottom" value="340" />
-                <param name="right" value="100" />
-            </include>
-        </definition>
-    </include>
-
-    <include name="Def_Layout_Dialog_Info_Video_List_Cast_9050">
-        <param name="fallbackpicture" value="$PARAM[fallbackpicture]" default="DefaultPicture.png" />
-        <param name="leftbackgroundlist" value="$PARAM[leftbackgroundlist]" default="-227" />
-        <param name="Animation_new" value="$PARAM[Animation_new]" default="Animation_CastInfo" />
-        <param name="zoom" value="$PARAM[zoom]" default="140" />
-        <param name="height" value="$PARAM[height]" default="335" />
-        <param name="focusposition" value="$PARAM[focusposition]" default="2" />
-        <param name="storageicon.backgroundlist" value="$PARAM[storageicon.backgroundlist]" />
-        <param name="width" value="$PARAM[width]" default="222" />
-        <param name="headerbottom" value="$PARAM[headerbottom]" default="710" />
-        <param name="listbottom" value="$PARAM[listbottom]" default="30" />
-        <param name="listleft" value="$PARAM[listleft]" default="-260" />
-        <param name="headerleft" value="$PARAM[headerleft]" default="-15" />
-        <param name="labelbottom" value="$PARAM[labelbottom]" default="-112" />
-        <param name="labeltwobottom" value="$PARAM[labeltwobottom]" default="-152" />
-        <param name="labelleft" value="$PARAM[labelleft]" default="-20" />
-        <param name="labeltwoleft" value="$PARAM[labeltwoleft]" default="130" />
-        <param name="condition.includecontent" value="$PARAM[condition.includecontent]" default="false" />
-        <param name="condition.castfadeout" value="$PARAM[condition.castfadeout]" default="false" />
-        <definition>
-
-            <!-- ARROWS -->
-
-            <control type="group">
-                <visible>!Control.HasFocus(9554) + !Control.HasFocus(95547)</visible>
-                <visible>$PARAM[visible.layouts]</visible>
-                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
-                <visible>!Container($PARAM[controlid]).OnNext + !Container($PARAM[controlid]).OnPrevious + !ListItem.IsCollection</visible>
-
-                <include>Animation_Delay_Fade_In_200</include>
-
-                <animation type="Conditional" condition="!String.IsEmpty(Window.Property(down)) + Control.HasFocus($PARAM[controlid])" reversible="false">
-                    <effect type="slide" end="0,-20" time="60" tween="sine" />
-                    <effect type="slide" end="0,20" time="180" tween="sine" delay="80" />
-                </animation>
-
-                <animation effect="fade" start="100" end="0" time="0" delay="0" condition="[[Window.IsVisible(script-wikipedia.xml) | Window.IsVisible(DialogBusy.xml)] + !Skin.HasSetting(hide.button.video.wiki)]">Conditional</animation>
-
-                <top>70</top>
-                <left>-291</left>
-
-                <control type="image">
-                    <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="Dark1" flipy="true">common/arrow_small_down.png</texture>
-                </control>
-                <control type="image">
-                    <top>12</top>
-                    <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="Dark1" flipy="true">common/arrow_small_down.png</texture>
-                </control>
-            </control>
-
-            <!-- BACKGROUND LIST -->
-
-            <control type="grouplist">
-                <visible>$PARAM[visible]</visible>
-                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
-                <visible>!Control.HasFocus($PARAM[controlid]) + !Control.HasFocus($PARAM[controlid]7)</visible>
-
-                <include>Animation_Fade_Out_DialogInfo</include>
-                <include>Animation_Fade_In_Dialog_350</include>
-
-                <include content="$PARAM[Animation_new]">
-                    <param name="controlid" value="$PARAM[controlid]" />
-                </include>
-
-                <top>361</top>
-                <left>$PARAM[leftbackgroundlist]</left>
-                <height>400</height>
-                <width>1400</width>
-
-                <orientation>horizontal</orientation>
-                <itemgap>-9.3</itemgap>
-
-                <include content="Def_View_Unfocus_List_Poster">
-                    <param name="id" value="0" />
-                    <param name="fallbackpicture" value="$PARAM[fallbackpicture]" />
-                    <param name="controlid" value="$PARAM[controlid]" />
-                    <param name="visibleshadow" value="!Control.HasFocus($PARAM[controlid])" />
-                    <param name="storageicon.backgroundlist" value="$PARAM[storageicon.backgroundlist]" />
-                    <param name="aspectbox" value="$PARAM[aspectbox]" />
-                    <param name="aspectposter" value="$PARAM[aspectposter]" />
-                    <param name="poster" value="$PARAM[poster]" />
-                    <param name="thumb" value="$PARAM[thumb]" />
-                </include>
-            </control>
-
-            <!-- FOCUSED LIST -->
-
-            <control type="fixedlist" id="$PARAM[controlid]">
-                <visible allowhiddenfocus="true">!Container($PARAM[controlid]).IsUpdating</visible>
-                <visible>$PARAM[visible]</visible>
-
-                <animation effect="fade" start="100" end="0" time="0" delay="0" condition="[[Window.IsVisible(script-wikipedia.xml) | Window.IsVisible(DialogBusy.xml)] + !Skin.HasSetting(hide.button.video.wiki)]">Conditional</animation>
-
-                <include>Animation_Scrolltime_Details_List</include>
-                <include>Animation_Fade_Out_DialogInfo</include>
-                <include>Animation_Fade_In_Dialog_350</include>
-
-                <bottom>$PARAM[listbottom]</bottom>
-                <left>$PARAM[listleft]</left>
-                <width>2288</width>
-                <height>670</height>
-
-                <!-- INFO ON LINE WITH TMDB  -->
-
-                <include>Def_Cleanup_On_Up</include>
-                <onup condition="Control.HasFocus(9550) + !ListItem.IsCollection">SetProperty(down,1)</onup>
-                <onup condition="!Control.HasFocus(9554)">$VAR[Path_Actor_Dialog_Info_TMDb]</onup>
-
-                <!-- CAST NAVIGATION -->
-
-                <onleft>$PARAM[controlid]</onleft>
-                <onright>$PARAM[controlid]</onright>
-
-                <onclick>$PARAM[onclick1]</onclick>
-                <onclick>$PARAM[onclick2]</onclick>
-                <onclick>$PARAM[onclick3]</onclick>
-
-                <ondown condition="Control.IsVisible(9557) | Control.IsVisible(9550) | Control.IsVisible(9554)">$PARAM[controlid]7</ondown>
-                <ondown condition="![Control.IsVisible(9557) | Control.IsVisible(9550) | Control.IsVisible(9554)]">9000</ondown>
-
-                <include>Def_Dialog_Info_On_Back_Video</include>
-
-                <onback condition="Control.IsVisible(9556) | Control.IsVisible(9514) | Control.IsVisible(9515) | Control.IsVisible(9502) | Control.IsVisible(9517) | Control.IsVisible(9503) | Control.IsVisible(9557) | Control.IsVisible(9506) | Control.IsVisible(9579) | Control.IsVisible(9520)">190</onback>
-
-                <onback condition="![Control.IsVisible(9556) | Control.IsVisible(9514) | Control.IsVisible(9515) | Control.IsVisible(9502) | Control.IsVisible(9517) | Control.IsVisible(9503) | Control.IsVisible(9557) | Control.IsVisible(9506) | Control.IsVisible(9579) | Control.IsVisible(9520)]">9000</onback>
-
-                <onback>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onback>
-                <onback>ClearProperty(view_extended,Home)</onback>
-
-                <focusposition>$PARAM[focusposition]</focusposition>
-                <pagecontrol>$PARAM[controlid]7</pagecontrol>
-                <orientation>horizontal</orientation>
-                <preloaditems>0</preloaditems>
-
-                <viewtype label="536">list</viewtype>
-
-                <itemlayout height="$PARAM[height]" width="$PARAM[width]">
-                    <control type="group">
-                        <visible>$PARAM[visible.layouts]</visible>
-                        <animation effect="fade" tween="sine" easing="inout" start="0" end="100" time="450" delay="50">Visible</animation>
-                        <include content="Def_View_focus_List_Poster_Item">
-                            <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
-                            <param name="fallbackpicture" value="$PARAM[fallbackpicture]" />
-                            <param name="poster" value="$PARAM[poster]" />
-                            <param name="thumb" value="$PARAM[thumb]" />
-                        </include>
-                    </control>
-                </itemlayout>
-
-                <focusedlayout height="$PARAM[height]" width="$PARAM[width]">
-                    <control type="group">
-                        <visible>$PARAM[visible.layouts]</visible>
-                        <animation effect="fade" start="0" end="100" time="0" delay="150">Visible</animation>
-                        <include content="Def_View_focus_List_Poster_Item_Focus">
-                            <param name="fallbackpicture" value="$PARAM[fallbackpicture]" />
-                            <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
-                            <param name="controlid" value="$PARAM[controlid]" />
-                            <param name="zoom" value="$PARAM[zoom]" />
-                            <param name="labelbottom" value="$PARAM[labelbottom]" />
-                            <param name="labelleft" value="$PARAM[labelleft]" />
-                            <param name="labeltwovisible" value="$PARAM[labeltwovisible]" />
-                            <param name="labeltwobottom" value="$PARAM[labeltwobottom]" />
-                            <param name="labeltwoleft" value="$PARAM[labeltwoleft]" />
-                            <param name="poster" value="$PARAM[poster]" />
-                            <param name="thumb" value="$PARAM[thumb]" />
-                        </include>
+                        <onclick condition="Control.IsVisible(50)">SetProperty(ListVideoForCast,$INFO[Container(50).ListItem.Label],Home)</onclick>
+                        <onclick condition="Control.IsVisible(50)">SetProperty(ListVideoForCastIcon,$INFO[Container(50).ListItem.Icon],Home)</onclick>
+                        <onfocus condition="Control.IsVisible(50)">SetProperty(ListVideoForCast,$INFO[Container(50).ListItem.Label],Home)</onfocus>
+                        <onfocus condition="Control.IsVisible(50)">SetProperty(ListVideoForCastIcon,$INFO[Container(50).ListItem.Icon],Home)</onfocus>
                     </control>
                 </focusedlayout>
 
@@ -729,13 +534,13 @@
                 <param name="onleft" value="$PARAM[controlid]7" />
                 <param name="onright" value="$PARAM[controlid]7" />
 
-                <param name="ondown" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
+                <param name="ondown5" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
                 <param name="ondown1" value="SetFocus($PARAM[controlid],0,absolute)" />
                 <param name="ondown2" value="ClearProperty(view_extended,Home)" />
                 <param name="ondown3" value="9000" />
                 <param name="ondown4" value="190" />
 
-                <param name="onback" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
+                <param name="onback5" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" />
                 <param name="onback1" value="SetFocus($PARAM[controlid],0,absolute)" />
                 <param name="onback2" value="ClearProperty(view_extended,Home)" />
                 <param name="onback3" value="9000" />
@@ -886,7 +691,7 @@
 
                 <ondown>ClearProperty(down)</ondown>
 
-                <include>Def_Dialog_Info_On_Back_Video</include>
+                <include>Def_Dialog_Info_On_Back_Video_Set_Absolute_0</include>
 
                 <!-- MOVIES / TVSHOWS / SEASONS / EPISODES -->
 

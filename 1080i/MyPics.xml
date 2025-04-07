@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="2">
-    <views>50,51,500,506,522,523,5228,5238</views>
+    <include>View_MediaWindows_ID</include>
     <defaultcontrol always="true">50</defaultcontrol>
     <menucontrol>9000</menucontrol>
     <include condition="Skin.HasSetting(enabled.tmdb.helper.blur)">Action_Blur_Onload</include>
 
     <onload>RunScript(script.skinvariables,action=buildviews)</onload>
+    <onload>ClearProperty(WallMode,Home)</onload>
+
+    <onload condition="Control.HasFocus(5238)">Container.SetViewMode(523)</onload>
+    <onload condition="Control.HasFocus(5228)">Container.SetViewMode(522)</onload>
+
+    <onunload condition="Control.HasFocus(5238)">Container.SetViewMode(523)</onunload>
+    <onunload condition="Control.HasFocus(5228)">Container.SetViewMode(522)</onunload>
 
     <controls>
         <include condition="!Skin.HasSetting(show.global.visualisation.background.video)">Hidden_Video_Window</include>
@@ -60,11 +67,12 @@
 
                 <include>Def_Dialog_Menu_MiniPlayer</include>
 
-                <!-- <control type="button" id="2"> -->
-                    <!-- <description>View</description> -->
-                    <!-- <include>Def_Dialog_Menu_Button_Gradient_Select</include> -->
-                    <!-- <align>left</align> -->
-                <!-- </control> -->
+            <!-- OPEN CUSTOM_SETVIEWTYPE -->
+
+                <control type="button" id="55550">
+                    <include>Def_Dialog_Menu_Button_Title</include>
+                    <label>31226</label>
+                </control>
 
                 <control type="button" id="9001">
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
@@ -77,6 +85,7 @@
                     <description>Sort</description>
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
                 </control>
+
                 <control type="togglebutton" id="4">
                     <description>Ascending</description>
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
@@ -113,10 +122,32 @@
                 <control type="button" id="55551">
                     <include>Def_Dialog_Menu_Button_Title</include>
                     <label>31051</label>
-                    <visible>Control.IsVisible(50) | Control.IsVisible(523)</visible>
+                    <visible>Control.IsVisible(50) | Control.IsVisible(522) | Control.IsVisible(523)</visible>
                 </control>
-
+                <control type="radiobutton" id="90445">
+                    <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+                    <label>31503</label>
+                    <selected>Skin.HasSetting(enable.view.flix.scroll.wall.video)</selected>
+                    <onclick>Skin.ToggleSetting(enable.view.flix.scroll.wall.video)</onclick>
+                    <visible>Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(523) | Control.IsVisible(524)</visible>
+                </control>
                 <control type="button" id="90701" description="522 Landscape Size">
+                    <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31285]:</label>
+                    <label2>$VAR[Label_522_Landscape_Size]</label2>
+                    <onclick>SetProperty(ViewArtworkStyle,videolandscape,Home)</onclick>
+                    <onclick>ActivateWindow(1150)</onclick>
+                    <visible>Control.IsVisible(522) | Control.IsVisible(5228)</visible>
+                </control>
+                <control type="radiobutton" id="90341" description="SELECT LISTTYPE">
+                    <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+                    <label>31258</label>
+                    <selected>Skin.HasSetting(522.landscape.control.list)</selected>
+                    <onclick>Skin.ToggleSetting(522.landscape.control.list)</onclick>
+                    <onclick>ReloadSkin()</onclick>
+                    <visible>Control.IsVisible(522)</visible>
+                </control>
+                <control type="button" id="90702" description="522 Landscape Size">
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
                     <label>$LOCALIZE[31285]:</label>
                     <label2>$VAR[Label_523_Square_Size]</label2>
@@ -125,6 +156,15 @@
                     <visible>Control.IsVisible(523) | Control.IsVisible(5238)</visible>
                 </control>
                 <control type="radiobutton" id="9034" description="SELECT LISTTYPE">
+                    <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+                    <label>31258</label>
+                    <selected>Skin.HasSetting(523.square.control.list)</selected>
+                    <onclick>Skin.ToggleSetting(523.square.control.list)</onclick>
+                    <onclick>Skin.Reset(523poster.fixedlist)</onclick>
+                    <onclick>ReloadSkin()</onclick>
+                    <visible>Control.IsVisible(523)</visible>
+                </control>
+                <control type="radiobutton" id="9035" description="SELECT LISTTYPE">
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
                     <label>31258</label>
                     <selected>Skin.HasSetting(523.square.control.list)</selected>

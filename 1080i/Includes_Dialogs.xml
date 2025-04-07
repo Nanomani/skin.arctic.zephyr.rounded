@@ -1916,7 +1916,8 @@
                 </include>
                 <!-- <visible>!Skin.HasSetting(hide.button.video.fanart)</visible> -->
                 <visible>!String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.DBType)</visible>
-                <visible>!String.IsEmpty(ListItem.Art(fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                <visible>[!String.IsEmpty(ListItem.Art(fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)] | [!String.IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(hide.artwork.video.landscape)] | Skin.HasSetting(showartwork.video.tmdbhelper)</visible>
+                <visible>!Skin.HasSetting(hide.button.video.fanart)</visible>
                 <!-- <visible>!Integer.IsEqual(Container(9505).NumItems,0) + !Container(9505).IsUpdating</visible> -->
                 <!-- <visible>String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) + !String.IsEmpty(Window(Home).Property(Init_Value_TMDb))</visible> -->
             </control>
@@ -1952,7 +1953,8 @@
                     <param name="icon" value="buttonsdialogs/trakt.png" />
                 </include>
                 <onclick>$VAR[Path_Dialog_Info_Trakt]</onclick>
-                <visible>!Skin.HasSetting(hide.button.video.trakt) + [!String.IsEmpty(ListItem.Property(tmdb_id)) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.TraktIsAuth))</visible>
+                <visible>!Skin.HasSetting(hide.button.video.trakt)</visible>
+                <visible>[!String.IsEmpty(ListItem.Property(tmdb_id)) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.TraktIsAuth))</visible>
                 <enable>System.AddonIsEnabled(plugin.video.themoviedb.helper) + Skin.HasSetting(enabled.tmdb.helper.service)</enable>
             </control>
 
@@ -1965,8 +1967,8 @@
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/server.png" />
                 </include>
-                <visible>String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID)</visible>
                 <visible>!Skin.HasSetting(hide.button.video.manage)</visible>
+                <visible>String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID)</visible>
             </control>
 
             <!-- EXTRA -->

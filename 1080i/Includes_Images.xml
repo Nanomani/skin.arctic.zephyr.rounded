@@ -383,7 +383,6 @@
     <!-- IMAGE - POSTER -->
 
     <variable name="Image_Poster">
-        <!-- <value condition="!String.IsEmpty(ListItem.Thumb) + Container.Content(episodes)">$INFO[ListItem.Thumb]</value> -->
         <value condition="!String.IsEmpty(ListItem.Art(season.poster)) + !Window.IsVisible(Home) + !Container.Content(files)">$INFO[ListItem.Art(season.poster)]</value>
         <value condition="!String.IsEmpty(ListItem.Art(poster)) + !Container.Content(files)">$INFO[ListItem.Art(poster)]</value>
         <value condition="!String.IsEmpty(ListItem.Art(tvshow.poster)) + !Container.Content(files)">$INFO[ListItem.Art(tvshow.poster)]</value>
@@ -402,7 +401,7 @@
         <value>$INFO[ListItem.Icon]</value>
     </variable>
 
-    <variable name="Image_Poster_Player">
+    <variable name="Image_Player_Poster">
         <value condition="!String.IsEmpty(PVR.EpgEventIcon) + VideoPlayer.Content(livetv)">$INFO[PVR.EpgEventIcon]</value>
         <value condition="!String.IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
         <value condition="!String.IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
@@ -410,13 +409,13 @@
         <value condition="!String.IsEmpty(Window(Home).Property(set.player.icon)) + !VideoPlayer.Content(livetv)">$INFO[Window(Home).Property(set.player.icon)]</value>
     </variable>
 
-    <variable name="Image_Poster_Player_Audio">
+    <variable name="Image_Player_Music_Poster">
         <value condition="!String.IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
         <value condition="!String.IsEmpty(Window(Home).Property(set.player.icon))">$INFO[Window(Home).Property(set.player.icon)]</value>
         <value>DefaultAlbumCover.png</value>
     </variable>
 
-    <variable name="Image_Poster_Context_Menu">
+    <variable name="Image_Context_Menu_Poster">
         <value condition="!String.IsEmpty(ListItem.Icon) + Container.Content(addons)">$INFO[ListItem.Icon]</value>
         <value condition="String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.base_icon),DefaultArtist) + [String.IsEqual(ListItem.DBType,artist) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),artist)] + !String.IsEmpty(Skin.String(fanart.fallback.music))">$INFO[Skin.String(fanart.fallback.music)]</value>
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_poster))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_poster)]</value>
@@ -431,7 +430,7 @@
         <value condition="Window.IsVisible(GameOSD.xml)">DefaultAddonGame.png</value>
     </variable>
 
-    <variable name="Image_Icon_Context_Menu">
+    <variable name="Image_Context_Menu_Icon">
         <value condition="Window.IsActive(filemanager) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_icon))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_icon)]</value>
         <value condition="String.StartsWith(ListItem.Icon,Default) + !String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
         <value condition="Window.IsVisible(DialogPVRChannelsOSD.xml)">special://skin/extras/icons/livetv.png</value>
@@ -517,28 +516,18 @@
         <!-- Youtube -->
         <value condition="!String.IsEmpty(ListItem.Art(fanart)) + [Container.Content() | String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,movie)] + $EXP[IsYoutube]">$INFO[ListItem.Thumb]</value>
 
-        <value condition="!String.IsEmpty(ListItem.Thumb) + Container.Content(movies) + $EXP[IsYoutubeItem]">$INFO[ListItem.Thumb]</value>
+        <value condition="!String.IsEmpty(ListItem.Thumb) + String.IsEqual(ListItem.DBType,movie) + $EXP[IsYoutubeItem]">$INFO[ListItem.Thumb]</value>
 
-        <!-- set -->
+        <!-- all others -->
         <value condition="!String.IsEmpty(ListItem.Art(fanart)) + String.IsEqual(ListItem.DBType,set)">$INFO[ListItem.Art(fanart)]</value>
-
-        <!-- tvshows -->
         <value condition="!String.IsEmpty(ListItem.Art(fanart)) + String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Art(fanart)]</value>
-
-        <!-- season -->
-        <value condition="!String.IsEmpty(ListItem.Art(fanart)) + Container.Content(seasons)">$INFO[ListItem.Art(fanart)]</value>
-
-        <!-- movie -->
-        <value condition="!String.IsEmpty(ListItem.Art(fanart)) + Container.Content(movies) + String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(fanart)) + String.IsEqual(ListItem.DBType,season)">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(fanart)) + String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(fanart)) + String.IsEqual(ListItem.DBType,artist)">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(artist.fanart)) + [String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)]">$INFO[ListItem.Art(artist.fanart)]</value>
 
         <!-- game mode -->
         <value condition="!String.IsEmpty(ListItem.Art(title)) + $EXP[IsGameMode]">$INFO[ListItem.Art(title)]</value>
-
-        <!-- fanart - songs / albums -->
-        <value condition="!String.IsEmpty(ListItem.Art(artist.fanart)) + [Container.Content(songs) | Container.Content(albums)]">$INFO[ListItem.Art(artist.fanart)]</value>
-
-        <!-- fanart - artists -->
-        <value condition="!String.IsEmpty(ListItem.Art(fanart)) + Container.Content(artists)">$INFO[ListItem.Art(fanart)]</value>
 
         <!-- fanart - plugin -->
         <value condition="!String.IsEmpty(ListItem.Art(fanart)) + Container.Content() + !$EXP[IsYoutubeItem] ">$INFO[ListItem.Art(fanart)]</value>
@@ -560,6 +549,7 @@
         <value condition="String.IsEqual(ListItem.DBType,tag)">DefaultTags.png</value>
         <value condition="String.IsEqual(ListItem.DBType,set)">DefaultSets.png</value>
         <value condition="Container.Content(years)">DefaultYear.png</value>
+
         <value>$INFO[ListItem.Icon]</value>
     </variable>
 
@@ -587,19 +577,10 @@
 
     <variable name="Image_Widget_Thumb">
         <value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
-
-        <!-- set -->
         <value condition="!String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,set)">$INFO[ListItem.Art(landscape)]</value>
-
-        <!-- tvshows -->
-        <value condition="!String.IsEmpty(ListItem.Art(landscape)) + Container.Content(tvshows)">$INFO[ListItem.Art(landscape)]</value>
-
-        <!-- season -->
-        <value condition="!String.IsEmpty(ListItem.Art(tvshow.landscape)) + Container.Content(seasons)">$INFO[ListItem.Art(tvshow.landscape)]</value>
-
-        <!-- movie -->
-        <value condition="!String.IsEmpty(ListItem.Art(landscape)) + Container.Content(movies)">$INFO[ListItem.Art(landscape)]</value>
-
+        <value condition="!String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Art(landscape)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(tvshow.landscape)) + String.IsEqual(ListItem.DBType,season)">$INFO[ListItem.Art(tvshow.landscape)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(landscape)) + String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Art(landscape)]</value>
         <value>$VAR[Image_Widget_Fanart]</value>
     </variable>
 
@@ -640,11 +621,6 @@
 
     <!-- IMAGE - CLEARLOGO -->
 
-    <variable name="Image_Home_ClearLogo_Crop">
-        <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.cropimage))">$INFO[Window(Home).Property(TMDbHelper.ListItem.cropimage)]</value>
-        <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_clearlogo))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</value>
-    </variable>
-
     <variable name="Image_ClearLogo">
         <value condition="!String.IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
         <value condition="!String.IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
@@ -659,24 +635,35 @@
         <value condition="!String.IsEmpty(ListItem.Art(artist.clearlogo))">$INFO[ListItem.Art(artist.clearlogo)]</value>
     </variable>
 
-    <variable name="Image_Crop_ClearLogo_Video_Ext">
+    <variable name="Image_Home_ClearLogo_Crop">
         <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.cropimage))">$INFO[Window(Home).Property(TMDbHelper.ListItem.cropimage)]</value>
         <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_clearlogo))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</value>
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_clearlogo))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</value>
-        <value>$INFO[Container($PARAM[controlid]).ListItem.Art(clearlogo)]</value>
     </variable>
 
-    <variable name="Image_Crop_ClearLogo_Music">
+    <variable name="Image_Player_Video_Title_Crop_ClearLogo">
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDBHelper.Player.CropImage))">$INFO[Window(Home).Property(TMDBHelper.Player.CropImage)]</value>
+        <value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
+        <value condition="!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
+        <value condition="!String.IsEmpty(Player.Art(artist.clearlogo))">$INFO[Player.Art(artist.clearlogo)]</value>
+    </variable>
+
+    <variable name="Image_Player_Music_OSD_Title_Crop_ClearLogo">
+        <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDBHelper.Player.CropImage))">$INFO[Window(Home).Property(TMDBHelper.Player.CropImage)]</value>
+        <value condition="!String.IsEmpty(Player.Art(artist.clearlogo))">$INFO[Player.Art(artist.clearlogo)]</value>
+        <value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
+    </variable>
+
+    <variable name="Image_Dialog_Info_Music_Crop_ClearLogo">
         <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.cropimage))">$INFO[Window(Home).Property(TMDbHelper.ListItem.cropimage)]</value>
         <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_clearlogo))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</value>
         <value condition="!String.IsEmpty(ListItem.Art(artist.clearlogo))">$INFO[ListItem.Art(artist.clearlogo)]</value>
     </variable>
 
-    <variable name="Image_Crop_ClearLogo_Player">
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDBHelper.Player.CropImage))">$INFO[Window(Home).Property(TMDBHelper.Player.CropImage)]</value>
-        <value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
-        <value condition="!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
-        <value condition="!String.IsEmpty(Player.Art(artist.clearlogo))">$INFO[Player.Art(artist.clearlogo)]</value>
+    <variable name="Image_Dialog_Info_Video_Ext_Crop_ClearLogo">
+        <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.cropimage))">$INFO[Window(Home).Property(TMDbHelper.ListItem.cropimage)]</value>
+        <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_clearlogo))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_clearlogo))">$INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</value>
+        <value>$INFO[Container($PARAM[controlid]).ListItem.Art(clearlogo)]</value>
     </variable>
 
     <!-- IMAGE - NOWPLAYING -->
@@ -688,22 +675,10 @@
         <value condition="!String.IsEmpty(Player.Art(artist.clearart)) + Skin.HasSetting(show.home.nowplaying.extended.music.clearlogo)">$INFO[Player.Art(artist.clearart)]</value>
     </variable>
 
-    <variable name="Image_NowPlaying_Art_Video">
+    <variable name="Image_NowPlaying_ClearArt">
         <value condition="!String.IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
         <value condition="!String.IsEmpty(Player.Art(clearart))">$INFO[Player.Art(clearart)]</value>
         <value condition="!String.IsEmpty(Player.Art(artist.clearart))">$INFO[Player.Art(artist.clearart)]</value>
-    </variable>
-
-    <variable name="Image_OSD_Art_Music_Player">
-        <value condition="Skin.HasSetting(enabled.tmdb.helper.crop) + !String.IsEmpty(Window(Home).Property(TMDBHelper.Player.CropImage))">$INFO[Window(Home).Property(TMDBHelper.Player.CropImage)]</value>
-        <value condition="!String.IsEmpty(Player.Art(artist.clearlogo))">$INFO[Player.Art(artist.clearlogo)]</value>
-        <value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
-    </variable>
-
-    <variable name="Image_Music">
-        <value condition="!String.IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-        <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-        <value>$INFO[ListItem.Icon]</value>
     </variable>
 
     <!-- IMAGE - ROTTENTOMATOES -->
@@ -761,7 +736,7 @@
     <variable name="Image_DiscArt_Video">
         <value condition="!Skin.HasSetting(osd.video.disc.fallback.only) + !String.IsEmpty(Player.Art(discart))">$INFO[Player.Art(discart)]</value>
         <value condition="Skin.HasSetting(home.video.disc.fallback.bluray)">misc/bd.png</value>
-        <value condition="!String.IsEmpty(Player.Art(Thumb)) + Skin.HasSetting(home.video.disc.fake.bluray)">$VAR[Image_Poster_Player]</value>
+        <value condition="!String.IsEmpty(Player.Art(Thumb)) + Skin.HasSetting(home.video.disc.fake.bluray)">$VAR[Image_Player_Poster]</value>
         <value>misc/default_cd.png</value>
     </variable>
 

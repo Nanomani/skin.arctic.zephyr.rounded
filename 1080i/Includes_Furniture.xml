@@ -1709,7 +1709,7 @@
     <include name="Furniture_Footer_Clock_Right">
         <control type="group">
             <visible>Skin.HasSetting(show.furniture.clock.date.weather)</visible>
-            <include>Animation_FurnitureVisible_footer</include>
+
 
             <visible>$EXP[View_Clock_In_Footer_Always]
             | [Skin.HasSetting(show.furniture.clock.date.weather) + !$EXP[View_Flix] + !Skin.HasSetting(show.furniture.footer)]
@@ -1720,8 +1720,10 @@
                 <effect type="fade" start="100" end="0" time="150" delay="0" />
             </animation>
 
-            <centerbottom>NavBarPad</centerbottom>
+            <include>Animation_FurnitureVisible_footer</include>
+
             <height>84</height>
+            <centerbottom>NavBarPad</centerbottom>
 
             <control type="group">
                 <visible>!String.IsEmpty(Weather.plugin)</visible>
@@ -1838,37 +1840,27 @@
         <!-- INFORMATION - LEFT -->
 
         <control type="group">
+            <include>Animation_FurnitureVisible_footer</include>
+
             <visible>Skin.HasSetting(show.furniture.footer) | Control.IsVisible(5048) | Control.IsVisible(5218) | Control.IsVisible(5228) | Control.IsVisible(5238) | Window.IsVisible(FileManager.xml)</visible>
 
             <visible>[!Skin.HasSetting(55wall.showinfo) + Control.IsVisible(55)] | Control.IsVisible(506) | Control.IsVisible(52) | Control.IsVisible(515) | Control.IsVisible(512) | Control.IsVisible(517) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5048) | Control.IsVisible(5218) | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)] | [Control.IsVisible(5228) + String.IsEmpty(Skin.String(522.landscape.size))] | [Control.IsVisible(5228) + Container.Content(files)] | Control.IsVisible(508) | Control.IsVisible(547) | [Control.IsVisible(5238) + String.IsEqual(Skin.String(523.square.size),2)] | [Control.IsVisible(5238) + String.IsEmpty(Skin.String(523.square.size))] | Window.IsVisible(FileManager.xml) | Window.IsVisible(script-globalsearch.xml) | Control.IsVisible(59)</visible>
 
-            <include>Animation_FurnitureVisible_footer</include>
-
-            <centerbottom>100</centerbottom>
-            <left>View_SidePad</left>
             <align>left</align>
+            <left>View_SidePad</left>
+            <centerbottom>100</centerbottom>
 
-            <usecontrolcoords>true</usecontrolcoords>
-            <orientation>horizontal</orientation>
-            <itemgap>0</itemgap>
-
-            <include content="Def_Right" condition="!Skin.HasSetting(show.furniture.clock.date.weather)">
-                <param name="right" value="View_SidePad" />
-            </include>
-            <include content="Def_Right" condition="Skin.HasSetting(show.furniture.clock.date.weather)">
-                <param name="right" value="440" />
-            </include>
+            <!-- <include content="Def_Right" condition="!Skin.HasSetting(show.furniture.clock.date.weather)"> -->
+                <!-- <param name="right" value="View_SidePad" /> -->
+            <!-- </include> -->
+            <!-- <include content="Def_Right" condition="Skin.HasSetting(show.furniture.clock.date.weather)"> -->
+                <!-- <param name="right" value="440" /> -->
+            <!-- </include> -->
 
             <!-- MOVIES / TV SHOWS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Label]$VAR[Label_Year,  •  ,]</label>
                 <visible>[Container.Content(movies) | String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,video)]</visible>
                 <visible>!$EXP[IsYoutube_Comments] + !$EXP[IsYoutubeItem] + !ListItem.IsParentFolder</visible>
@@ -1879,13 +1871,7 @@
             <!-- MOVIES VIDEOVERSIONS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Title]$VAR[Label_Year,  •  ]$INFO[ListItem.VideoVersionName,  •  ,]</label>
                 <visible>Container.Content(movies) | String.IsEqual(ListItem.DBtype,movie)</visible>
                 <visible>ListItem.HasVideoVersions</visible>
@@ -1894,7 +1880,6 @@
             <!-- SEASONS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
                 <left>12</left>
                 <height>64</height>
                 <align>left</align>
@@ -1906,13 +1891,7 @@
             <!-- EPISODES -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.TVShowTitle,,  •  ]$LOCALIZE[36904] $INFO[ListItem.Season]$INFO[ListItem.Label,  •  ]$INFO[ListItem.Premiered,  •  ]</label>
                 <visible>!String.IsEmpty(ListItem.Year)</visible>
                 <visible>String.IsEqual(ListItem.DBtype,episode)</visible>
@@ -1922,13 +1901,7 @@
             <!-- SETS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Label]</label>
                 <visible>ListItem.IsCollection</visible>
             </control>
@@ -1936,13 +1909,7 @@
             <!-- ALL OTHERS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Label]</label>
                 <visible>![Container.Content(movies) | String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,video) | $EXP[IsYoutubeItem] | $EXP[IsYoutube_Comments] | Container.Content(addons) | Container.Content(songs) | Container.Content(albums) | ListItem.IsCollection | String.IsEqual(ListItem.DBtype,episode) | String.IsEqual(ListItem.DBtype,season) | Window.IsVisible(FileManager.xml) | Container.Content(files) | ListItem.IsParentFolder | Window.IsVisible(MyPics.xml) | Window.IsVisible(AddonBrowser.xml)]</visible>
             </control>
@@ -1950,13 +1917,8 @@
             <!-- YOUTUBE -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
                 <font>InfoNetflix</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Label]</label>
                 <visible>!$EXP[IsYoutube_Comments] + $EXP[IsYoutubeItem] + !ListItem.IsParentFolder</visible>
                 <visible>![Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(51) | Control.IsVisible(50)]</visible>
@@ -1965,13 +1927,7 @@
             <!-- ADDONS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Label]</label>
                 <visible>Container.Content(addons) + !ListItem.IsParentFolder</visible>
                 <visible>![Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(51) | Control.IsVisible(57) | Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(523)]</visible>
@@ -1980,13 +1936,7 @@
             <!-- PICS -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Label]</label>
                 <visible>Window.IsVisible(MyPics.xml) | [Container.Content(images) + !ListItem.IsParentFolder]</visible>
             </control>
@@ -1994,13 +1944,8 @@
             <!-- FILES -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
                 <font>InfoNetflix</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Path]</label>
                 <visible>Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !$EXP[IsAnPlugin]]</visible>
                 <visible>!$EXP[IsYoutube_Comments] + !$EXP[IsYoutubeItem] + !ListItem.IsParentFolder</visible>
@@ -2010,13 +1955,7 @@
             <!-- MUSIC -->
 
             <control type="label">
-                <width min="128" max="1400">auto</width>
-                <left>12</left>
-                <height>64</height>
-                <align>left</align>
-                <font>MediumBold3</font>
-                <textcolor>Dark1</textcolor>
-                <selectedcolor>Dark1</selectedcolor>
+                <include>Def_Info_Left_Line1</include>
                 <label>$INFO[ListItem.Artist]</label>
                 <visible>!String.IsEmpty(ListItem.Artist)</visible>
                 <visible>Container.Content(songs) | Container.Content(albums) | Container.Content(artists)</visible>
@@ -2033,23 +1972,14 @@
 
             <include>Animation_FurnitureVisible_footer</include>
 
-            <centerbottom>100</centerbottom>
             <align>right</align>
-
-            <usecontrolcoords>true</usecontrolcoords>
-            <orientation>horizontal</orientation>
-            <itemgap>0</itemgap>
+            <right>View_SidePad</right>
+            <centerbottom>100</centerbottom>
 
             <!-- MOVIES / VIDEOS -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <scroll>true</scroll>
                 <label>$VAR[Label_Genre]$INFO[ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[ListItem.Rating,  •  ]</label>
                 <visible>!String.IsEmpty(ListItem.Genre)</visible>
@@ -2061,13 +1991,7 @@
             <!-- ALL OTHERS - NUM ITEM IN FOLDER -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[19076] $INFO[Container(44025).NumItems,  •  , $LOCALIZE[31073]]</label>
                 <visible>[Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | Container.Content(genres) | Container.Content(years) | Container.Content(countries) | Container.Content(studios) | Container.Content(videoversions) | Container.Content(tags) | Container.Content(files)</visible>
                 <!-- <visible>ListItem.IsFolder + !ListItem.IsParentFolder</visible> -->
@@ -2076,13 +2000,7 @@
                 <visible>!Control.IsVisible(523) + !Control.IsVisible(521)</visible>
             </control>
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[21400] $INFO[Container(44025).NumItems] $LOCALIZE[31321]</label>
                 <visible>[Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | Container.Content(genres) | Container.Content(years) | Container.Content(countries) | Container.Content(studios) | Container.Content(videoversions) | Container.Content(tags) | Container.Content(files)</visible>
                 <visible>ListItem.IsFolder + !ListItem.IsParentFolder</visible>
@@ -2093,26 +2011,14 @@
             <!-- TVSHOWS / SEASONS -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>880</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_Genre]$INFO[ListItem.Property(UnWatchedEpisodes),  •  ]$VAR[Label_Episodes_Number, / ]$INFO[ListItem.Rating,  •  ]</label>
                 <visible>![Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(56) | Control.IsVisible(57) | Control.IsVisible(555)] | Window.IsVisible(script-globalsearch.xml)</visible>
                 <visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season)</visible>
                 <visible>!String.IsEmpty(ListItem.Property(UnWatchedEpisodes))</visible>
             </control>
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>880</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_Genre]$VAR[Label_Episodes_Number,  •  , $LOCALIZE[20453]]$INFO[ListItem.Rating,  •  ]</label>
                 <visible>![Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(56) | Control.IsVisible(57)] | Window.IsVisible(script-globalsearch.xml)</visible>
                 <visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season)</visible>
@@ -2122,13 +2028,7 @@
             <!-- EPISODES -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$INFO[ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[ListItem.Rating,  •  ]</label>
                 <visible>!String.IsEmpty(ListItem.Duration)</visible>
                 <visible>String.IsEqual(ListItem.DBtype,episode)</visible>
@@ -2138,13 +2038,7 @@
             <!-- SETS -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years),,  •  ]$INFO[Container(44023).NumItems]$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems),/,] $LOCALIZE[31014]$VAR[Label_Rating,  •  ,]</label>
                 <visible>ListItem.IsCollection</visible>
                 <visible>!Control.IsVisible(50) + !Control.IsVisible(56) + !Control.IsVisible(57)</visible>
@@ -2153,13 +2047,7 @@
             <!-- ADDONS -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[19114] $INFO[ListItem.AddonVersion]$INFO[ListItem.Label2,  •  ,]</label>
                 <visible>Container.Content(addons) + !ListItem.IsParentFolder</visible>
                 <visible>![Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(51) | Control.IsVisible(57) | Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(523)]</visible>
@@ -2168,13 +2056,7 @@
             <!-- PICS -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_Picture]</label>
                 <visible>Window.IsVisible(MyPics.xml) | [Container.Content(images) + !ListItem.IsParentFolder]</visible>
             </control>
@@ -2182,13 +2064,7 @@
             <!-- FAVOURITES -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_Favourites_Type]</label>
                 <visible>![Control.IsVisible(500) | Control.IsVisible(503) | Control.IsVisible(51) | Control.IsVisible(57) | Control.IsVisible(50) | Control.IsVisible(550) | Control.IsVisible(523)]</visible>
                 <visible>Window.IsVisible(MyFavourites.xml) + !ListItem.IsParentFolder</visible>
@@ -2197,13 +2073,7 @@
             <!-- YOUTUBE -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_Year]$VAR[Label_Duration_Time_Check, • ,]</label>
                 <visible>!Control.IsVisible(50) + !Control.IsVisible(550) + !Control.IsVisible(56) + !Control.IsVisible(57)</visible>
                 <visible>$EXP[IsYoutubeItem]</visible>
@@ -2212,49 +2082,25 @@
             <!-- FILES MANAGER -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[19076] $INFO[Container(20).NumItems,  •  , $LOCALIZE[31073]]</label>
                 <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(20) | Control.HasFocus(1824)]</visible>
                 <visible>Integer.IsGreater(Container(20).NumItems,1)</visible>
             </control>
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[21400] $INFO[Container(20).NumItems] $LOCALIZE[31321]</label>
                 <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(20) | Control.HasFocus(1824)]</visible>
                 <visible>Integer.IsEqual(Container(20).NumItems,1)</visible>
             </control>
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[19076] $INFO[Container(21).NumItems,  •  , $LOCALIZE[31073]]</label>
                 <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(21) | Control.HasFocus(1825)]</visible>
                 <visible>Integer.IsGreater(Container(21).NumItems,1)</visible>
             </control>
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$LOCALIZE[21400] $INFO[Container(21).NumItems] $LOCALIZE[31321]</label>
                 <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(21) | Control.HasFocus(1825)]</visible>
                 <visible>Integer.IsEqual(Container(21).NumItems,1)</visible>
@@ -2263,13 +2109,7 @@
             <!-- ACTORS / PERSONS / DIRECTORS -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_Actors]</label>
                 <visible>Container.Content(actors) | Container.Content(directors)</visible>
             </control>
@@ -2277,13 +2117,7 @@
             <!-- MUSIC -->
 
             <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line1</include>
                 <label>$VAR[Label_View_Flix_Sub_Title_Music]</label>
                 <visible>Container.Content(songs) | Container.Content(albums) | Container.Content(artists)</visible>
                 <visible>Control.IsVisible(52) | Control.IsVisible(503) | [Control.IsVisible(515) + Container.Content(artists)] | [Control.IsVisible(500) + Container.Content(artists)] | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5228) | Control.IsVisible(5238) | Window.IsVisible(script-globalsearch.xml)</visible>
@@ -2295,22 +2129,17 @@
 
         <control type="group">
             <include>Animation_FurnitureVisible_footer</include>
-            <visible>Skin.HasSetting(show.furniture.footer) | Control.IsVisible(5048) | Control.IsVisible(5218) | Window.IsVisible(script-globalsearch.xml)</visible>
+
             <visible>!$EXP[View_Flix] + !$EXP[View_Clock_In_Footer_Always]</visible>
-            <centerbottom>100</centerbottom>
-            <orientation>horizontal</orientation>
+
+            <visible>Skin.HasSetting(show.furniture.footer) | Control.IsVisible(5048) | Control.IsVisible(5218) | Window.IsVisible(script-globalsearch.xml)</visible>
+
             <align>right</align>
-            <itemgap>0</itemgap>
-            <usecontrolcoords>true</usecontrolcoords>
+            <right>View_SidePad</right>
+            <centerbottom>66</centerbottom>
 
             <control type="label">
-                <right>105</right>
-                <bottom>90</bottom>
-                <align>right</align>
-                <width>300</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
+                <include>Def_Info_Right_Line2</include>
                 <label>$VAR[Label_Dialog_Select_Num_Item_Footer]</label>
             </control>
         </control>
@@ -2333,8 +2162,10 @@
 
         <control type="grouplist">
             <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-            <visible>[Container.Content(videos) | Container.Content(movies) | Container.Content(files) | Container.Content(musicvideos) | Container.Content(episodes) | Container.Content(tvshows) | Container.Content(sets) | [Container.Content(Seasons) + !Control.HasFocus(5161) + !Control.HasFocus(5261)] | $EXP[IsAnVideoInPlaylist]] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
+
             <visible>[!Container.Content(files) | $EXP[IsAnVideoInPlaylist]] + !String.IsEmpty(ListItem.DBType) + !ListItem.IsParentFolder + !$EXP[IsYoutube]</visible>
+
+            <visible>[Container.Content(videos) | Container.Content(movies) | Container.Content(files) | Container.Content(musicvideos) | Container.Content(episodes) | Container.Content(tvshows) | Container.Content(sets) | [Container.Content(Seasons) + !Control.HasFocus(5161) + !Control.HasFocus(5261)] | $EXP[IsAnVideoInPlaylist]] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
 
             <height>120</height>
             <align>left</align>
@@ -2752,13 +2583,17 @@
 
         <control type="grouplist">
             <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
+
             <visible>[Container.Content(videos) | Container.Content(movies) | Container.Content(files) | Container.Content(musicvideos) | Container.Content(episodes) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(Seasons) + !Control.HasFocus(5161) + !Control.HasFocus(5261)] | $EXP[IsAnVideoInPlaylist]] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
+
             <visible>[!Container.Content(files) | $EXP[IsAnVideoInPlaylist]] + !String.IsEmpty(ListItem.DBType) + !ListItem.IsParentFolder + !$EXP[IsYoutube]</visible>
 
             <include content="Def_Left" condition="!$PARAM[position_low]">
                 <param name="left" value="-10" />
             </include>
+
             <left>View_SidePad</left>
+
             <include content="Def_Top" condition="!$PARAM[position_low]">
                 <param name="top" value="72" />
             </include>
@@ -2766,6 +2601,7 @@
             <include content="Def_Right" condition="!Skin.HasSetting(show.furniture.clock.date.weather) + $PARAM[position_low]">
                 <param name="right" value="View_SidePad" />
             </include>
+
             <include content="Def_Right" condition="Skin.HasSetting(show.furniture.clock.date.weather) + $PARAM[position_low]">
                 <param name="right" value="410" />
             </include>
@@ -3881,310 +3717,193 @@
     </include>
 
     <include name="Furniture_Footer_DialogInfo_Extended">
-        <param name="controlid" value="$PARAM[controlid]" />
 
-        <param name="label_left" value="$PARAM[label_left]" default="10" />
-        <param name="label_two_left" value="$PARAM[label_two_left]" default="70" />
+         <!-- INFORMATION - LEFT -->
 
-        <param name="label_right" value="$PARAM[label_right]" default="25" />
+         <control type="grouplist">
+            <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible>
+            <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+            <include>Animation_Delay_Fade_In_200</include>
 
-        <param name="label_bottom" value="$PARAM[label_bottom]" default="68" />
-        <param name="label_two_bottom" value="$PARAM[label_two_bottom]" default="10" />
+            <align>left</align>
+            <centerbottom>100</centerbottom>
 
-        <definition>
+            <itemgap>0</itemgap>
+            <orientation>horizontal</orientation>
+            <usecontrolcoords>true</usecontrolcoords>
 
-             <!-- INFORMATION - LEFT -->
+            <!-- MOVIES -->
 
-             <control type="grouplist">
-                <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible>
-                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
-                <include>Animation_Delay_Fade_In_200</include>
-
-                <orientation>horizontal</orientation>
-                <align>left</align>
-                <itemgap>0</itemgap>
-                <usecontrolcoords>true</usecontrolcoords>
-
-                <!-- MOVIES -->
-
-                <control type="label">
-                    <left>$PARAM[label_left]</left>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <width min="128">auto</width>
-                    <height>42</height>
-                    <font>MediumBold3</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Title]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Title)</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
-                </control>
-
-                <!-- TV SHOW -->
-
-                <control type="label">
-                    <left>$PARAM[label_left]</left>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <width min="128">auto</width>
-                    <height>42</height>
-                    <font>MediumBold3</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.TVShowTitle]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.TVShowTitle)</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow) | String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
-                </control>
-
-                <!-- MUSIC - Albums -->
-
-                <control type="label">
-                    <left>$PARAM[label_left]</left>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <width min="128">auto</width>
-                    <height>42</height>
-                    <font>MediumBold3</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ,]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,album)</visible>
-                </control>
-
-                <!-- MUSIC - Songs -->
-
-                <control type="label">
-                    <left>$PARAM[label_left]</left>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <width min="128">auto</width>
-                    <height>42</height>
-                    <font>MediumBold3</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.TrackNumber]. $INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ,]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,song)</visible>
-                </control>
-
-                <!-- YOUTUBE -->
-
-                <control type="label">
-                    <left>$PARAM[label_left]</left>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <width>1200</width>
-                    <height>42</height>
-                    <font>MediumBold3</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Label]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(9504) | Control.HasFocus(95047)</visible>
-                </control>
-
-                <!-- CONTAINER IS UPDATING -->
-
-                <control type="image">
-                    <include>Animation_Delay_Fade_In_200</include>
-                    <include>Animation_Fade_Out</include>
-                    <bottom>144</bottom>
-                    <aligny>center</aligny>
-                    <left>10</left>
-                    <description>Busy animation</description>
-                    <width>45</width>
-                    <height>45</height>
-                    <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
-                    <texture colordiffuse="$VAR[Color_Loading_Spinner]">dialog/loading-spinner.png</texture>
-                    <aspectratio align="left">keep</aspectratio>
-                    <include>Animation_Vertical_Widgets_Title_Loading</include>
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) | Container($PARAM[controlid]).IsUpdating</visible>
-                    <visible>!Control.IsVisible(50) + !Control.IsVisible(9557) + !Control.IsVisible(9554) + !Control.IsVisible(9550)</visible>
-                </control>
+            <control type="label">
+                <include>Def_Info_Left_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Title]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ]</label>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Title)</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
             </control>
 
-            <!-- INFORMATION - RIGHT -->
+            <!-- TV SHOW -->
 
-            <control type="group">
-                <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible>
-                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
-                <include>Animation_Delay_Fade_In_200</include>
-
-                <!-- <orientation>horizontal</orientation> -->
-                <!-- <right>80</right> -->
-                <!-- <align>right</align> -->
-                <!-- <itemgap>0</itemgap> -->
-                <!-- <usecontrolcoords>true</usecontrolcoords> -->
-
-                <!-- MOVIES not local only -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>1200</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$VAR[Label_Genre]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_H),  •  ,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_M),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration))</visible>
-                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
-                </control>
-
-                <!-- MOVIES local only -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>1200</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$VAR[Label_Genre]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
-                </control>
-
-                <!-- TV SHOWS  not local only -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>1200</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre)</visible>
-                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow)</visible>
-                </control>
-
-                <!-- TV SHOWS  local only -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>1200</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Genre]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre)</visible>
-                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow)</visible>
-                </control>
-
-                <!-- SEASON  not local only -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>800</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$LOCALIZE[20373] $INFO[Window(Home).Property(TMDbHelper.ListItem.Season)]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
-                </control>
-
-                <!-- SEASON  local only -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>800</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
-                </control>
-
-                <!-- MUSIC - Albums -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>800</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Artist]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,album)</visible>
-                </control>
-
-                <!-- MUSIC - Songs -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>800</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Album]$INFO[Container($PARAM[controlid]).ListItem.Artist,  •  ,]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,song)</visible>
-                </control>
-
-                <!-- YOUTUBE -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_bottom]</bottom>
-                    <align>right</align>
-                    <width>800</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Premiered]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061] ]$INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                    <visible>Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(9504) | Control.HasFocus(95047)</visible>
-                </control>
-
-                <!-- NUM ITEM -->
-
-                <control type="label">
-                    <right>$PARAM[label_right]</right>
-                    <bottom>$PARAM[label_two_bottom]</bottom>
-                    <align>right</align>
-                    <width>300</width>
-                    <height>42</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>Dark2</textcolor>
-                    <label>$INFO[Container($PARAM[controlid]).CurrentItem] / $INFO[Container($PARAM[controlid]).NumItems]</label>
-                    <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                    <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                </control>
+            <control type="label">
+                <include>Def_Info_Left_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.TVShowTitle]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ]</label>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.TVShowTitle)</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow) | String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
             </control>
-        </definition>
+
+            <!-- MUSIC - Albums -->
+
+            <control type="label">
+                <include>Def_Info_Left_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ,]</label>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,album)</visible>
+            </control>
+
+            <!-- MUSIC - Songs -->
+
+            <control type="label">
+                <include>Def_Info_Left_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.TrackNumber]. $INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Year,  •  ,]</label>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,song)</visible>
+            </control>
+
+            <!-- YOUTUBE -->
+
+            <control type="label">
+                <include>Def_Info_Left_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Label]</label>
+                <visible>Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(9504) | Control.HasFocus(95047)</visible>
+            </control>
+
+            <!-- CONTAINER IS UPDATING -->
+
+            <control type="image">
+                <include>Animation_Delay_Fade_In_200</include>
+                <include>Animation_Fade_Out</include>
+                <bottom>144</bottom>
+                <aligny>center</aligny>
+                <left>10</left>
+                <description>Busy animation</description>
+                <width>45</width>
+                <height>45</height>
+                <animation effect="rotate" condition="true" start="360" end="0" loop="true" time="1000" center="auto">Conditional</animation>
+                <texture colordiffuse="$VAR[Color_Loading_Spinner]">dialog/loading-spinner.png</texture>
+                <aspectratio align="left">keep</aspectratio>
+                <include>Animation_Vertical_Widgets_Title_Loading</include>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) | String.IsEmpty(Window(Home).Property(Init_Value_TMDb)) | Container($PARAM[controlid]).IsUpdating</visible>
+                <visible>!Control.IsVisible(50) + !Control.IsVisible(9557) + !Control.IsVisible(9554) + !Control.IsVisible(9550)</visible>
+            </control>
+        </control>
+
+        <!-- INFORMATION - RIGHT -->
+
+        <control type="group">
+            <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible>
+            <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+            <include>Animation_Delay_Fade_In_200</include>
+
+            <align>right</align>
+            <right>View_SidePad</right>
+            <centerbottom>100</centerbottom>
+
+            <!-- MOVIES not local only -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$VAR[Label_Genre]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_H),  •  ,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_M),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration))</visible>
+                <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
+            </control>
+
+            <!-- MOVIES local only -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$VAR[Label_Genre]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
+            </control>
+
+            <!-- TV SHOWS  not local only -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),  •  ]</label>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre)</visible>
+                <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow)</visible>
+            </control>
+
+            <!-- TV SHOWS  local only -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Genre]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre)</visible>
+                <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow)</visible>
+            </control>
+
+            <!-- SEASON  not local only -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$LOCALIZE[20373] $INFO[Window(Home).Property(TMDbHelper.ListItem.Season)]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),  •  ]</label>
+                <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
+            </control>
+
+            <!-- SEASON  local only -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
+            </control>
+
+            <!-- MUSIC - Albums -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Artist]</label>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,album)</visible>
+            </control>
+
+            <!-- MUSIC - Songs -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Album]$INFO[Container($PARAM[controlid]).ListItem.Artist,  •  ,]</label>
+                <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,song)</visible>
+            </control>
+
+            <!-- YOUTUBE -->
+
+            <control type="label">
+                <include>Def_Info_Right_Line1</include>
+                <label>$INFO[Container($PARAM[controlid]).ListItem.Premiered]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061] ]$INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
+                <visible>Control.HasFocus(9502) | Control.HasFocus(95027) | Control.HasFocus(9504) | Control.HasFocus(95047)</visible>
+            </control>
+        </control>
+
+        <!-- NUM ITEM -->
+
+        <control type="group">
+            <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible>
+            <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+            <include>Animation_Delay_Fade_In_200</include>
+
+            <align>right</align>
+            <right>View_SidePad</right>
+            <centerbottom>66</centerbottom>
+
+            <control type="label">
+                <include>Def_Info_Right_Line2</include>
+                <label>$INFO[Container($PARAM[controlid]).CurrentItem] / $INFO[Container($PARAM[controlid]).NumItems]</label>
+            </control>
+        </control>
     </include>
 
     <!-- VIDEO -->
@@ -4198,710 +3917,548 @@
     </include>
 
     <include name="Furniture_Flags_DialogInfo_Extended">
-        <param name="controlid" value="$PARAM[controlid]" />
-        <definition>
-            <control type="group">
-                <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7) | Control.IsVisible(9500)</visible>
-                <include>Animation_Delay_Fade_In_200</include>
+        <control type="group">
+            <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+            <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7) | Control.IsVisible(9500)</visible>
 
-                <top>910</top>
+            <include>Animation_Delay_Fade_In_200</include>
 
-                <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+            <top>910</top>
 
-                <!-- BLACK AND WHITE -->
+            <!-- BLACK AND WHITE -->
 
-                <control type="grouplist">
-                    <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    <!-- <visible>!String.IsEqual(Container($PARAM[controlid]).ListItem.Label,..)</visible> -->
-                    <width>1400</width>
-                    <height>120</height>
-                    <orientation>horizontal</orientation>
-                    <align>left</align>
-                    <itemgap>0</itemgap>
-                    <usecontrolcoords>true</usecontrolcoords>
-                    <control type="group">
-                        <visible>[[Container.Content(tvshows) | Container.Content(seasons)] + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(TotalEpisodes)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(UnWatchedEpisodes))]] | Container($PARAM[controlid]).ListItem.IsCollection</visible>
-                        <centertop>50%</centertop>
-                        <width>70</width>
-                        <height>40</height>
-                        <control type="image" description="button back">
-                            <width>45</width>
-                            <height>45</height>
-                            <left>10</left>
-                            <align>center</align>
-                            <texture border="0" colordiffuse="$VAR[Color_Background]">common/circle.png</texture>
-                            <visible>!Container($PARAM[controlid]).ListItem.IsCollection</visible>
-                        </control>
-                        <control type="image" description="Sets">
-                            <width>70</width>
-                            <height>50</height>
-                            <align>center</align>
-                            <texture border="0" colordiffuse="Dark1">flags/video/white/other/sets.png</texture>
-                            <visible>Container($PARAM[controlid]).ListItem.IsCollection</visible>
-                            <centertop>50%</centertop>
-                        </control>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="70">auto</width>
-                        <height>48</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/white/resolution/,.png]</texture>
-                        <aspectratio align="left">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution) + !String.Contains(Container($PARAM[controlid]).ListItem.Path,videodb://movies/sets)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="100">auto</width>
-                        <height>48</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/white/videocodec/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="80">auto</width>
-                        <height>55</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/white/aspectratio/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="128">auto</width>
-                        <height>64</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/white/audiocodec/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="80">auto</width>
+            <control type="grouplist">
+                <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                <!-- <visible>!String.IsEqual(Container($PARAM[controlid]).ListItem.Label,..)</visible> -->
+
+                <width>1400</width>
+                <height>120</height>
+                <align>left</align>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <control type="group">
+                    <visible>[[Container.Content(tvshows) | Container.Content(seasons)] + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(TotalEpisodes)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(UnWatchedEpisodes))]] | Container($PARAM[controlid]).ListItem.IsCollection</visible>
+                    <centertop>50%</centertop>
+                    <width>70</width>
+                    <height>40</height>
+                    <control type="image" description="button back">
+                        <width>45</width>
                         <height>45</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/white/audiochannels/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
-                    </control>
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>60</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr10plus.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEmpty(Container($PARAM[controlid]).ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr10plus.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>60</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr10.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEqual(Container($PARAM[controlid]).ListItem.HdrType,hdr10) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr10.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>60</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEmpty(ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(ListItem.FileNameAndPath,.hdr.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="80">auto</width> -->
-                        <!-- <height>60</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hlg.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEqual(Container($PARAM[controlid]).ListItem.HdrType, hlg) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hlg.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>60</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/dolbyvision.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEqual(Container($PARAM[controlid]).ListItem.HdrType, dolbyvision) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.dv.) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dolbyvision) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dolby-vision) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dolby vision)]</visible> -->
-                    <!-- </control> -->
-                    <control type="image">
-                        <width>48</width>
-                        <height>64</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
-                        <aspectratio align="left">scale</aspectratio>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                    </control>
-                    <control type="label">
-                        <width>auto</width>
-                        <centertop>50%</centertop>
-                        <height>64</height>
-                        <align>left</align>
-                        <left>15</left>
-                        <aligny>center</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]  </label>
-                        <font>Flag</font>
-                        <textcolor>Dark2</textcolor>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                    </control>
-                    <!-- <control type="image"> -->
-                        <!-- <width>64</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <texture colordiffuse="Dark1">flags/video/white/other/3d.png</texture> -->
-                        <!-- <visible>Container($PARAM[controlid]).ListItem.IsStereoscopic | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.3D)</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width>84</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <texture colordiffuse="Dark1">flags/$VAR[Image_Bluray].png</texture> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.3D) + [String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bluray) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bdrip) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bd25) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bd50) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,blu-ray)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image" description="WEB-DL"> -->
-                        <!-- <width>84</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/other/web-dl.png</texture> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + [String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.web.) | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.web-dl.) | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,webdl) | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.webrip.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width>94</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <texture colordiffuse="Dark1">flags/video/white/other/hddvd.png</texture> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible> -->
-                        <!-- <visible>String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,hddvd)</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width>84</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <texture colordiffuse="Dark1">flags/video/white/other/dvd.png</texture> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible> -->
-                        <!-- <visible>String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,dvd) + !String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,hddvd)</visible> -->
-                    <!-- </control> -->
-
-                    <include content="Furniture_Flags_DialogInfo_Extended_Audiostreams" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]" /></include>
-                    <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]" /></include>
-
-                    <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>38</width>
-                        <height>38</height>
-                        <left>35</left>
-                        <texture colordiffuse="Dark1" background="true">flags/rating/metacritic/mc_white.png</texture>
-                    </control>
-                    <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)]%</label>
-                    </control>
-                    <control type="image">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>37</width>
-                        <height>37</height>
-                        <left>15</left>
-                        <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
-                    </control>
-                    <control type="label">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
-                    </control>
-                    <control type="image">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <centertop>50%</centertop>
-                        <width>38</width>
-                        <height>38</height>
-                        <left>35</left>
-                        <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_White]</texture>
-                    </control>
-                    <control type="label">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)]%</label>
-                    </control>
-                    <control type="image">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <centertop>50%</centertop>
-                        <width>38</width>
-                        <height>38</height>
-                        <left>35</left>
-                        <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_Audience_White]</texture>
-                    </control>
-                    <control type="label">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)]%</label>
-                    </control>
-
-                    <!-- IMDb B/W -->
-                    <control type="image">
-                        <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <width>82</width>
-                        <centertop>50%</centertop>
-                        <height>32</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <left>20</left>
-                        <texture colordiffuse="Dark1" background="true">flags/rating/imdb/imdb_white.png</texture>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-
-                    <control type="label">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width min="48">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-                    <control type="label">
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width min="48">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-
-                    <!-- IMDb top 250 B/W -->
-                    <control type="image">
-                        <width>72</width>
-                        <centertop>50%</centertop>
-                        <height>50</height>
                         <left>10</left>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture colordiffuse="Dark1">flags/rating/imdb/imdb_250_white.png</texture>
-                        <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                        <align>center</align>
+                        <texture border="0" colordiffuse="$VAR[Color_Background]">common/circle.png</texture>
+                        <visible>!Container($PARAM[controlid]).ListItem.IsCollection</visible>
                     </control>
-                    <control type="label" description="IMDB Top 250">
-                        <centertop>50%</centertop>
-                        <width min="75">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>-3</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Top250,#,]</label>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-                    <control type="label" description="IMDB Top 250">
-                        <centertop>50%</centertop>
-                        <width min="75">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>-3</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-
-                    <!-- Star Kodi / user rating B/W -->
-                    <include content="Def_Flags_Furniture_Small_Ext" condition="!Skin.HasSetting(hide.flags.rating)">
-                        <param name="controlid" value="$PARAM[controlid]" />
-                    </include>
-                </control>
-
-                <!-- COLOR -->
-
-                <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    <width>1400</width>
-                    <height>120</height>
-                    <orientation>horizontal</orientation>
-                    <align>left</align>
-                    <itemgap>0</itemgap>
-                    <usecontrolcoords>true</usecontrolcoords>
-                    <!-- <control type="group"> -->
-                        <!-- <visible>[[Container.Content(tvshows) | Container.Content(seasons)] + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(TotalEpisodes)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(UnWatchedEpisodes))]] | Container($PARAM[controlid]).ListItem.IsCollection</visible> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <width>70</width> -->
-                        <!-- <height>40</height> -->
-                        <!-- <control type="image" description="button back"> -->
-                            <!-- <width>45</width> -->
-                            <!-- <height>45</height> -->
-                            <!-- <align>center</align> -->
-                            <!-- <left>10</left> -->
-                            <!-- <texture border="0" colordiffuse="$VAR[Color_Background]">common/circle.png</texture> -->
-                            <!-- <visible>!Container($PARAM[controlid]).ListItem.IsCollection</visible> -->
-                        <!-- </control> -->
-                        <!-- <control type="image" description="Sets"> -->
-                            <!-- <width>70</width> -->
-                            <!-- <height>50</height> -->
-                            <!-- <align>center</align> -->
-                            <!-- <texture border="0" colordiffuse="Dark1">flags/video/white/other/sets.png</texture> -->
-                            <!-- <visible>Container($PARAM[controlid]).ListItem.IsCollection</visible> -->
-                            <!-- <centertop>50%</centertop> -->
-                        <!-- </control> -->
-                    <!-- </control> -->
-                    <control type="image">
-                        <width min="20" max="90">auto</width>
-                        <height>70</height>
-                        <left>-10</left>
-                        <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/color/resolution/,.png]</texture>
-                        <aspectratio align="left">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution) + !String.Contains(Container($PARAM[controlid]).ListItem.Path,videodb://movies/sets)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="100">auto</width>
-                        <height>60</height>
-                        <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/color/videocodec/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="80">auto</width>
-                        <height>60</height>
-                        <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/color/aspectratio/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="108">auto</width>
-                        <height>60</height>
-                        <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/color/audiocodec/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec)</visible>
-                    </control>
-                    <control type="image">
-                        <width min="20" max="80">auto</width>
-                        <height>60</height>
-                        <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/color/audiochannels/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
-                    </control>
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture fallback="flags/fallback.png">flags/video/color/hdr/hdr10plus.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEmpty(Container($PARAM[controlid]).ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr10plus.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/color/hdr/hdr10.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEqual(Container($PARAM[controlid]).ListItem.HdrType,hdr10) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr10.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture fallback="flags/fallback.png">flags/video/color/hdr/hdrnew.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEmpty(Container($PARAM[controlid]).ListItem.HdrType) + String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="80">auto</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/color/hdr/hlg.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEqual(Container($PARAM[controlid]).ListItem.HdrType, hlg) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hlg.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width min="20" max="100">auto</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture fallback="flags/fallback.png">flags/video/color/hdr/dolbyvision.png</texture> -->
-                        <!-- <aspectratio align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + [String.IsEqual(Container($PARAM[controlid]).ListItem.HdrType, dolbyvision) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.dv.) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dolbyvision) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dolby-vision) | String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,dolby vision)]</visible> -->
-                    <!-- </control> -->
-                    <control type="image">
-                        <width>48</width>
-                        <height>64</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
-                        <aspectratio align="left">scale</aspectratio>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                    </control>
-                    <control type="label">
-                        <width>auto</width>
-                        <centertop>50%</centertop>
-                        <height>64</height>
-                        <align>left</align>
-                        <left>15</left>
-                        <aligny>center</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
-                        <font>Flag</font>
-                        <textcolor>Dark2</textcolor>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                    </control>
-                    <!-- <control type="image"> -->
-                        <!-- <width>64</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <texture>flags/video/color/other/3d.png</texture> -->
-                        <!-- <visible>Container($PARAM[controlid]).ListItem.IsStereoscopic | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.3D)</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width>84</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <left>10</left> -->
-                        <!-- <texture>flags/video/color/other/$VAR[Image_Bluray].png</texture> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.3D) + [String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bluray) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bdrip) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bd25) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,bd50) | String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,blu-ray)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image" description="WEB-DL"> -->
-                        <!-- <width>84</width> -->
-                        <!-- <height>64</height> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <texture fallback="flags/fallback.png">flags/video/color/other/web-dl.png</texture> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + [String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.web.) | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.web-dl.) | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,webdl) | String.Contains(Container($PARAM[controlid]).ListItem.Filenameandpath,.webrip.)]</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width>94</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <texture>flags/video/white/other/hddvd.png</texture> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible> -->
-                        <!-- <visible>String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,hddvd)</visible> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <width>84</width> -->
-                        <!-- <centertop>50%</centertop> -->
-                        <!-- <height>64</height> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <texture>flags/video/color/other/dvd.png</texture> -->
-                        <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible> -->
-                        <!-- <visible>String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,dvd) + !String.Contains(Container($PARAM[controlid]).ListItem.FilenameAndPath,hddvd)</visible> -->
-                    <!-- </control> -->
-
-                    <include content="Furniture_Flags_DialogInfo_Extended_Audiostreams" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]" /></include>
-                    <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]" /></include>
-
-                    <control type="image">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>37</width>
-                        <height>37</height>
-                        <left>15</left>
-                        <texture background="true" colordiffuse="$VAR[Color_Rating_User_Star]">flags/star/userrating/userrating_white.png</texture>
-                    </control>
-                    <control type="label">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
-                    </control>
-                    <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>40</width>
-                        <height>40</height>
-                        <left>30</left>
-                        <texture background="true">flags/rating/metacritic/mc.png</texture>
-                    </control>
-                    <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)]%</label>
-                    </control>
-                    <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <centertop>50%</centertop>
-                        <width>40</width>
-                        <height>40</height>
-                        <left>30</left>
-                        <texture background="true">$VAR[Image_RottenTomatoes_Colored]</texture>
-                    </control>
-                    <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)]%</label>
-                    </control>
-                    <control type="image" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <centertop>50%</centertop>
-                        <width>40</width>
-                        <height>40</height>
-                        <left>30</left>
-                        <texture background="true">$VAR[Image_RottenTomatoes_Audience_Colored]</texture>
-                    </control>
-                    <control type="label" description="Rotten Tomatoes">
-                        <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)]%</label>
-                    </control>
-
-                    <!-- IMDb -->
-                    <control type="image">
-                        <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <width>82</width>
-                        <centertop>50%</centertop>
-                        <height>32</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <left>20</left>
-                        <texture background="true">flags/rating/imdb/imdb.png</texture>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-
-                    <control type="label">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width min="48">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-                    <control type="label">
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width min="48">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-
-                    <!-- IMDb Top 250 -->
-                    <control type="image">
-                        <width>72</width>
-                        <centertop>50%</centertop>
+                    <control type="image" description="Sets">
+                        <width>70</width>
                         <height>50</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture colordiffuse="Dark1">flags/rating/imdb/imdb_250_white.png</texture>
-                        <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-                    <control type="label" description="IMDB Top 250">
+                        <align>center</align>
+                        <texture border="0" colordiffuse="Dark1">flags/video/white/other/sets.png</texture>
+                        <visible>Container($PARAM[controlid]).ListItem.IsCollection</visible>
                         <centertop>50%</centertop>
-                        <width min="75">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>-3</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Top250,#,]</label>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                     </control>
-                    <control type="label" description="IMDB Top 250">
-                        <centertop>50%</centertop>
-                        <width min="75">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>-3</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-                        <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                        <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                    </control>
-
-                    <!-- TMDB -->
-                    <control type="image">
-                        <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
-                        <fadetime>ExtendedFlagIconsFadetime</fadetime>
-                        <centertop>50%</centertop>
-                        <width>40</width>
-                        <height>46</height>
-                        <left>20</left>
-                        <texture background="true">flags/rating/tmdb/tmdb.png</texture>
-                    </control>
-                    <control type="label">
-                        <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
-                        <centertop>50%</centertop>
-                        <width min="48">auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>13</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Rating]</label>
-                    </control>
-
-                    <!-- Star Kodi / user rating Color -->
-                    <include content="Def_Flags_Furniture_Small_Ext" condition="!Skin.HasSetting(hide.flags.rating)">
-                        <param name="controlid" value="$PARAM[controlid]" />
-                    </include>
                 </control>
+                <control type="image">
+                    <width min="20" max="70">auto</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/white/resolution/,.png]</texture>
+                    <aspectratio align="left">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution) + !String.Contains(Container($PARAM[controlid]).ListItem.Path,videodb://movies/sets)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="100">auto</width>
+                    <height>48</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/white/videocodec/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>55</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/white/aspectratio/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="128">auto</width>
+                    <height>64</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/white/audiocodec/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>45</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/white/audiochannels/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
+                </control>
+
+                <control type="image">
+                    <width>48</width>
+                    <height>64</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
+                    <aspectratio align="left">scale</aspectratio>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
+                </control>
+                <control type="label">
+                    <width>auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
+                    <align>left</align>
+                    <left>15</left>
+                    <aligny>center</aligny>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]  </label>
+                    <font>Flag</font>
+                    <textcolor>Dark2</textcolor>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
+                </control>
+
+                <include content="Furniture_Flags_DialogInfo_Extended_Audiostreams" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]" /></include>
+                <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]" /></include>
+
+                <control type="image" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>38</width>
+                    <height>38</height>
+                    <left>35</left>
+                    <texture colordiffuse="Dark1" background="true">flags/rating/metacritic/mc_white.png</texture>
+                </control>
+                <control type="label" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)]%</label>
+                </control>
+                <control type="image">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>37</width>
+                    <height>37</height>
+                    <left>15</left>
+                    <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
+                </control>
+                <control type="image">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>50%</centertop>
+                    <width>38</width>
+                    <height>38</height>
+                    <left>35</left>
+                    <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_White]</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)]%</label>
+                </control>
+                <control type="image">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>50%</centertop>
+                    <width>38</width>
+                    <height>38</height>
+                    <left>35</left>
+                    <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_Audience_White]</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)]%</label>
+                </control>
+
+                <!-- IMDb B/W -->
+
+                <control type="image">
+                    <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <width>82</width>
+                    <centertop>50%</centertop>
+                    <height>32</height>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
+                    <left>20</left>
+                    <texture colordiffuse="Dark1" background="true">flags/rating/imdb/imdb_white.png</texture>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <control type="label">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+                <control type="label">
+                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <!-- IMDb top 250 B/W -->
+
+                <control type="image">
+                    <width>72</width>
+                    <centertop>50%</centertop>
+                    <height>50</height>
+                    <left>10</left>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
+                    <texture colordiffuse="Dark1">flags/rating/imdb/imdb_250_white.png</texture>
+                    <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+                <control type="label" description="IMDB Top 250">
+                    <centertop>50%</centertop>
+                    <width min="75">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>-3</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Top250,#,]</label>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+                <control type="label" description="IMDB Top 250">
+                    <centertop>50%</centertop>
+                    <width min="75">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>-3</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
+                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <!-- Star Kodi / user rating B/W -->
+
+                <include content="Def_Flags_Furniture_Small_Ext" condition="!Skin.HasSetting(hide.flags.rating)">
+                    <param name="controlid" value="$PARAM[controlid]" />
+                </include>
             </control>
-        </definition>
+
+            <!-- COLOR -->
+
+            <control type="grouplist">
+                <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
+
+                <width>1400</width>
+                <height>120</height>
+                <align>left</align>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <!-- <control type="group"> -->
+                    <!-- <visible>[[Container.Content(tvshows) | Container.Content(seasons)] + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(TotalEpisodes)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(UnWatchedEpisodes))]] | Container($PARAM[controlid]).ListItem.IsCollection</visible> -->
+                    <!-- <centertop>50%</centertop> -->
+                    <!-- <width>70</width> -->
+                    <!-- <height>40</height> -->
+                    <!-- <control type="image" description="button back"> -->
+                        <!-- <width>45</width> -->
+                        <!-- <height>45</height> -->
+                        <!-- <align>center</align> -->
+                        <!-- <left>10</left> -->
+                        <!-- <texture border="0" colordiffuse="$VAR[Color_Background]">common/circle.png</texture> -->
+                        <!-- <visible>!Container($PARAM[controlid]).ListItem.IsCollection</visible> -->
+                    <!-- </control> -->
+                    <!-- <control type="image" description="Sets"> -->
+                        <!-- <width>70</width> -->
+                        <!-- <height>50</height> -->
+                        <!-- <align>center</align> -->
+                        <!-- <texture border="0" colordiffuse="Dark1">flags/video/white/other/sets.png</texture> -->
+                        <!-- <visible>Container($PARAM[controlid]).ListItem.IsCollection</visible> -->
+                        <!-- <centertop>50%</centertop> -->
+                    <!-- </control> -->
+                <!-- </control> -->
+
+                <control type="image">
+                    <width min="20" max="90">auto</width>
+                    <height>70</height>
+                    <left>-10</left>
+                    <centertop>50%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/color/resolution/,.png]</texture>
+                    <aspectratio align="left">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution) + !String.Contains(Container($PARAM[controlid]).ListItem.Path,videodb://movies/sets)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="100">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/color/videocodec/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/color/aspectratio/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="108">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/color/audiocodec/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec)</visible>
+                </control>
+                <control type="image">
+                    <width min="20" max="80">auto</width>
+                    <height>60</height>
+                    <centertop>50%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/color/audiochannels/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
+                </control>
+
+                <control type="image">
+                    <width>48</width>
+                    <height>64</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
+                    <aspectratio align="left">scale</aspectratio>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
+                </control>
+                <control type="label">
+                    <width>auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
+                    <align>left</align>
+                    <left>15</left>
+                    <aligny>center</aligny>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
+                    <font>Flag</font>
+                    <textcolor>Dark2</textcolor>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
+                </control>
+
+                <include content="Furniture_Flags_DialogInfo_Extended_Audiostreams" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]" /></include>
+                <include content="Furniture_Flags_DialogInfo_Extended_Subtitle"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]" /></include>
+
+                <control type="image">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>37</width>
+                    <height>37</height>
+                    <left>15</left>
+                    <texture background="true" colordiffuse="$VAR[Color_Rating_User_Star]">flags/star/userrating/userrating_white.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
+                </control>
+                <control type="image" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>40</width>
+                    <height>40</height>
+                    <left>30</left>
+                    <texture background="true">flags/rating/metacritic/mc.png</texture>
+                </control>
+                <control type="label" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)]%</label>
+                </control>
+                <control type="image" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>50%</centertop>
+                    <width>40</width>
+                    <height>40</height>
+                    <left>30</left>
+                    <texture background="true">$VAR[Image_RottenTomatoes_Colored]</texture>
+                </control>
+                <control type="label" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)]%</label>
+                </control>
+                <control type="image" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>50%</centertop>
+                    <width>40</width>
+                    <height>40</height>
+                    <left>30</left>
+                    <texture background="true">$VAR[Image_RottenTomatoes_Audience_Colored]</texture>
+                </control>
+                <control type="label" description="Rotten Tomatoes">
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes.and.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)]%</label>
+                </control>
+
+                <!-- IMDb -->
+
+                <control type="image">
+                    <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <width>82</width>
+                    <centertop>50%</centertop>
+                    <height>32</height>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
+                    <left>20</left>
+                    <texture background="true">flags/rating/imdb/imdb.png</texture>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <control type="label">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+                <control type="label">
+                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <!-- IMDb Top 250 -->
+
+                <control type="image">
+                    <width>72</width>
+                    <centertop>50%</centertop>
+                    <height>50</height>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
+                    <texture colordiffuse="Dark1">flags/rating/imdb/imdb_250_white.png</texture>
+                    <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+                <control type="label" description="IMDB Top 250">
+                    <centertop>50%</centertop>
+                    <width min="75">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>-3</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Top250,#,]</label>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+                <control type="label" description="IMDB Top 250">
+                    <centertop>50%</centertop>
+                    <width min="75">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>-3</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
+                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <!-- TMDB -->
+
+                <control type="image">
+                    <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>50%</centertop>
+                    <width>40</width>
+                    <height>46</height>
+                    <left>20</left>
+                    <texture background="true">flags/rating/tmdb/tmdb.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
+                    <centertop>50%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Rating]</label>
+                </control>
+
+                <!-- Star Kodi / user rating Color -->
+
+                <include content="Def_Flags_Furniture_Small_Ext" condition="!Skin.HasSetting(hide.flags.rating)">
+                    <param name="controlid" value="$PARAM[controlid]" />
+                </include>
+            </control>
+        </control>
     </include>
 
     <include name="Furniture_Flags_DialogInfo_Extended_Audiostreams">
@@ -4962,61 +4519,57 @@
     </include>
 
     <include name="Furniture_Flags_DialogInfo_Extended_Subtitle">
-        <param name="controlid" value="$PARAM[controlid]" />
-
-        <definition>
+        <control type="image">
+            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
+            <centertop>50%</centertop>
+            <width>41</width>
+            <height>30</height>
+            <left>20</left>
+            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc_white.png</texture>
+        </control>
+        <control type="grouplist">
+            <centertop>64%</centertop>
+            <width>250</width>
+            <height>64</height>
+            <left>10</left>
+            <orientation>horizontal</orientation>
+            <visible>Skin.HasSetting(show.flags.subtitles.country)</visible>
             <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1),flags/lang/32x32/,.png]</texture>
                 <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
-                <centertop>50%</centertop>
-                <width>41</width>
-                <height>30</height>
-                <left>20</left>
-                <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc_white.png</texture>
             </control>
-            <control type="grouplist">
-                <centertop>64%</centertop>
-                <width>250</width>
-                <height>64</height>
-                <left>10</left>
-                <orientation>horizontal</orientation>
-                <visible>Skin.HasSetting(show.flags.subtitles.country)</visible>
-                <control type="image">
-                    <top>20</top>
-                    <width>32</width>
-                    <height>28</height>
-                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1),flags/lang/32x32/,.png]</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
-                </control>
-                <control type="image">
-                    <top>20</top>
-                    <width>32</width>
-                    <height>28</height>
-                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2),flags/lang/32x32/,.png]</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2))</visible>
-                </control>
-                <control type="image">
-                    <top>20</top>
-                    <width>32</width>
-                    <height>28</height>
-                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3),flags/lang/32x32/,.png]</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3))</visible>
-                </control>
-                <control type="image">
-                    <top>20</top>
-                    <width>32</width>
-                    <height>28</height>
-                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4),flags/lang/32x32/,.png]</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4))</visible>
-                </control>
-                <control type="image">
-                    <top>20</top>
-                    <width>32</width>
-                    <height>28</height>
-                    <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5),flags/lang/32x32/,.png]</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5))</visible>
-                </control>
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.2))</visible>
             </control>
-        </definition>
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.3))</visible>
+            </control>
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.4))</visible>
+            </control>
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.5))</visible>
+            </control>
+        </control>
     </include>
 
     <!-- MUSIC -->
@@ -5030,312 +4583,310 @@
     </include>
 
     <include name="Furniture_Flags_DialogInfo_Extended_Audio">
-        <param name="controlid" value="$PARAM[controlid]" />
+        <control type="group">
+            <!-- <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible> -->
+            <visible>Control.HasFocus($PARAM[controlid])</visible>
+            <include>Animation_Delay_Fade_In_200</include>
+            <top>910</top>
+            <visible>Control.HasFocus($PARAM[controlid])</visible>
+            <visible>!Container($PARAM[controlid]).IsUpdating</visible>
 
-        <definition>
-            <control type="group">
-                <!-- <visible>Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7)</visible> -->
-                <visible>Control.HasFocus($PARAM[controlid])</visible>
-                <include>Animation_Delay_Fade_In_200</include>
-                <top>910</top>
-                <animation effect="fade" start="0" end="100" time="350" tween="sine" delay="200" reversible="false">Focus</animation>
-                <animation effect="fade" start="100" end="0" time="0" delay="0">UnFocus</animation>
-                <visible>Control.HasFocus($PARAM[controlid])</visible>
-                <visible>!Container($PARAM[controlid]).IsUpdating</visible>
+            <!-- BLACK / WHITE -->
 
-                <!-- Black / White -->
+            <control type="grouplist">
+                <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
+
+                <width>1400</width>
+                <height>120</height>
+                <align>left</align>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Number_Album_Disc_Count_Ext"><param name="controlid" value="$PARAM[controlid]" /></include>
+
+                <control type="image">
+                    <width min="20" max="100">auto</width>
+                    <height>54</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/white/audiocodec/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
+                </control>
                 <control type="grouplist">
-                    <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    <width>1400</width>
-                    <height>120</height>
-                    <orientation>horizontal</orientation>
-                    <align>left</align>
-                    <itemgap>0</itemgap>
-                    <usecontrolcoords>true</usecontrolcoords>
-
-                    <include content="Number_Album_Disc_Count_Ext"><param name="controlid" value="$PARAM[controlid]" /></include>
-
-                    <control type="image">
-                        <width min="20" max="100">auto</width>
-                        <height>54</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/white/audiocodec/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
-                    </control>
-                    <control type="grouplist">
-                        <width min="20" max="100">auto</width>
-                        <height>64</height>
-                        <orientation>vertical</orientation>
-                        <centertop>57%</centertop>
-                        <itemgap>-17</itemgap>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
-                        <control type="label">
-                            <height>28</height>
-                            <align>center</align>
-                            <aligny>bottom</aligny>
-                            <label>$INFO[Container($PARAM[controlid]).ListItem.BitRate]</label>
-                            <font>Small20</font>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                        <control type="image">
-                            <height>44</height>
-                            <aspectratio>keep</aspectratio>
-                            <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
-                        </control>
-                    </control>
-                    <control type="grouplist">
-                        <width min="20" max="100">auto</width>
-                        <height>64</height>
-                        <orientation>vertical</orientation>
-                        <centertop>57%</centertop>
-                        <itemgap>-17</itemgap>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
-                        <control type="label">
-                            <height>28</height>
-                            <align>center</align>
-                            <aligny>bottom</aligny>
-                            <label>$INFO[Container($PARAM[controlid]).ListItem.Samplerate]</label>
-                            <font>Small20</font>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                        <control type="image">
-                            <height>44</height>
-                            <aspectratio>keep</aspectratio>
-                            <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
-                            <aspectratio>keep</aspectratio>
-                        </control>
-                    </control>
-                    <control type="grouplist">
-                        <width min="20" max="100">auto</width>
-                        <height>64</height>
-                        <orientation>vertical</orientation>
-                        <centertop>57%</centertop>
-                        <itemgap>-17</itemgap>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
-                        <control type="label">
-                            <height>28</height>
-                            <align>center</align>
-                            <aligny>bottom</aligny>
-                            <label>$INFO[Container($PARAM[controlid]).ListItem.BPM]</label>
-                            <font>Small20</font>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                        <control type="image">
-                            <height>44</height>
-                            <aspectratio>keep</aspectratio>
-                            <texture>flags/audio/white/bpm.png</texture>
-                            <aspectratio>keep</aspectratio>
-                        </control>
-                    </control>
-                    <control type="image">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>37</width>
-                        <height>37</height>
-                        <left>15</left>
-                        <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
-                    </control>
+                    <width min="20" max="100">auto</width>
+                    <height>64</height>
+                    <orientation>vertical</orientation>
+                    <centertop>57%</centertop>
+                    <itemgap>-17</itemgap>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
                     <control type="label">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>5</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
-                    </control>
-                    <control type="image">
-                        <width>48</width>
-                        <height>64</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
-                        <aspectratio align="left">scale</aspectratio>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    </control>
-                    <control type="label">
-                        <width>auto</width>
-                        <centertop>50%</centertop>
-                        <height>64</height>
-                        <align>left</align>
-                        <left>15</left>
-                        <aligny>center</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
-                        <font>Flag</font>
-                        <textcolor>Dark2</textcolor>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    </control>
-                    <include condition="!Skin.HasSetting(hide.flags.music.rating)">Def_Flags_Furniture_Small_Ext</include>
-                    <!-- <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.music.rating)"> -->
-                        <!-- <param name="Star" value="FlagstarSong" /> -->
-                        <!-- <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" /> -->
-                        <!-- <param name="color" value="Dark1" /> -->
-                    <!-- </include> -->
-                    <control type="label">
-                        <left>-6</left>
-                        <width min="48">auto</width>
-                        <centertop>50%</centertop>
-                        <height>64</height>
-                        <align>left</align>
-                        <aligny>center</aligny>
-                        <label>$VAR[Label_Rating]</label>
-                        <font>Flag</font>
+                        <height>28</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.BitRate]</label>
+                        <font>Small20</font>
                         <textcolor>Dark1</textcolor>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) | [!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
-                        <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
+                    </control>
+                    <control type="image">
+                        <height>44</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
                     </control>
                 </control>
-
-                <!-- Color -->
                 <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    <width>1400</width>
-                    <height>120</height>
-                    <orientation>horizontal</orientation>
+                    <width min="20" max="100">auto</width>
+                    <height>64</height>
+                    <orientation>vertical</orientation>
+                    <centertop>57%</centertop>
+                    <itemgap>-17</itemgap>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
+                    <control type="label">
+                        <height>28</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.Samplerate]</label>
+                        <font>Small20</font>
+                        <textcolor>Dark1</textcolor>
+                    </control>
+                    <control type="image">
+                        <height>44</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
+                </control>
+                <control type="grouplist">
+                    <width min="20" max="100">auto</width>
+                    <height>64</height>
+                    <orientation>vertical</orientation>
+                    <centertop>57%</centertop>
+                    <itemgap>-17</itemgap>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
+                    <control type="label">
+                        <height>28</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.BPM]</label>
+                        <font>Small20</font>
+                        <textcolor>Dark1</textcolor>
+                    </control>
+                    <control type="image">
+                        <height>44</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture>flags/audio/white/bpm.png</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
+                </control>
+                <control type="image">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>37</width>
+                    <height>37</height>
+                    <left>15</left>
+                    <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>5</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>64</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
+                    <aspectratio align="left">scale</aspectratio>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                </control>
+                <control type="label">
+                    <width>auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
                     <align>left</align>
-                    <itemgap>0</itemgap>
-                    <usecontrolcoords>true</usecontrolcoords>
-
-                    <include content="Number_Album_Disc_Count_Ext"><param name="controlid" value="$PARAM[controlid]" /></include>
-
-                    <control type="image">
-                        <width min="20" max="100">auto</width>
-                        <height>54</height>
-                        <centertop>50%</centertop>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/color/audiocodec/,.png]</texture>
-                        <aspectratio align="center">keep</aspectratio>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
-                    </control>
-                    <control type="grouplist">
-                        <width min="20" max="100">auto</width>
-                        <height>64</height>
-                        <orientation>vertical</orientation>
-                        <centertop>57%</centertop>
-                        <itemgap>-17</itemgap>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
-                        <control type="label">
-                            <height>28</height>
-                            <align>center</align>
-                            <aligny>bottom</aligny>
-                            <label>$INFO[Container($PARAM[controlid]).ListItem.BitRate]</label>
-                            <font>Small20</font>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                        <control type="image">
-                            <height>44</height>
-                            <aspectratio>keep</aspectratio>
-                            <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
-                            <aspectratio>keep</aspectratio>
-                        </control>
-                    </control>
-                    <control type="grouplist">
-                        <width min="20" max="100">auto</width>
-                        <height>64</height>
-                        <orientation>vertical</orientation>
-                        <centertop>57%</centertop>
-                        <itemgap>-17</itemgap>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
-                        <control type="label">
-                            <height>28</height>
-                            <align>center</align>
-                            <aligny>bottom</aligny>
-                            <label>$INFO[Container($PARAM[controlid]).ListItem.Samplerate]</label>
-                            <font>Small20</font>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                        <control type="image">
-                            <height>44</height>
-                            <aspectratio>keep</aspectratio>
-                            <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
-                            <aspectratio>keep</aspectratio>
-                        </control>
-                    </control>
-                    <control type="grouplist">
-                        <width min="20" max="100">auto</width>
-                        <height>64</height>
-                        <orientation>vertical</orientation>
-                        <centertop>57%</centertop>
-                        <itemgap>-17</itemgap>
-                        <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
-                        <control type="label">
-                            <height>28</height>
-                            <align>center</align>
-                            <aligny>bottom</aligny>
-                            <label>$INFO[Container($PARAM[controlid]).ListItem.BPM]</label>
-                            <font>Small20</font>
-                            <textcolor>Dark1</textcolor>
-                        </control>
-                        <control type="image">
-                            <height>44</height>
-                            <aspectratio>keep</aspectratio>
-                            <texture>flags/audio/white/bpm.png</texture>
-                            <aspectratio>keep</aspectratio>
-                        </control>
-                    </control>
-                    <control type="image">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>37</width>
-                        <height>37</height>
-                        <left>15</left>
-                        <texture colordiffuse="$VAR[Color_Rating_User_Star]" background="true">flags/star/userrating/userrating_white.png</texture>
-                    </control>
-                    <control type="label">
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                        <centertop>50%</centertop>
-                        <width>auto</width>
-                        <height>64</height>
-                        <font>Tiny</font>
-                        <left>5</left>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
-                    </control>
-                    <control type="image">
-                        <width>48</width>
-                        <height>64</height>
-                        <centertop>50%</centertop>
-                        <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
-                        <aspectratio align="left">scale</aspectratio>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    </control>
-                    <control type="label">
-                        <width>auto</width>
-                        <centertop>50%</centertop>
-                        <height>64</height>
-                        <align>left</align>
-                        <left>15</left>
-                        <aligny>center</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
-                        <font>Flag</font>
-                        <textcolor>Dark1</textcolor>
-                        <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    </control>
-
-                    <include condition="!Skin.HasSetting(hide.flags.music.rating)">Def_Flags_Furniture_Small_Ext</include>
-
-                    <!-- <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.music.rating)"> -->
-                        <!-- <param name="Star" value="FlagstarSong" /> -->
-                        <!-- <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" /> -->
-                        <!-- <param name="color" value="$VAR[Color_Stars_User_Rating_Override]" /> -->
-                    <!-- </include> -->
-
-                    <control type="label">
-                        <left>-6</left>
-                        <width min="48">auto</width>
-                        <centertop>50%</centertop>
-                        <height>64</height>
-                        <align>left</align>
-                        <aligny>center</aligny>
-                        <label>$VAR[Label_Rating]</label>
-                        <font>Flag</font>
-                        <textcolor>Dark1</textcolor>
-                        <visible>[!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)] | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating)</visible>
-                        <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
-                    </control>
+                    <left>15</left>
+                    <aligny>center</aligny>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
+                    <font>Flag</font>
+                    <textcolor>Dark2</textcolor>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                </control>
+                <include condition="!Skin.HasSetting(hide.flags.music.rating)">Def_Flags_Furniture_Small_Ext</include>
+                <!-- <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.music.rating)"> -->
+                    <!-- <param name="Star" value="FlagstarSong" /> -->
+                    <!-- <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" /> -->
+                    <!-- <param name="color" value="Dark1" /> -->
+                <!-- </include> -->
+                <control type="label">
+                    <left>-6</left>
+                    <width min="48">auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <label>$VAR[Label_Rating]</label>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) | [!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
+                    <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
                 </control>
             </control>
-        </definition>
+
+            <!-- COLOR -->
+
+            <control type="grouplist">
+                <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                <width>1400</width>
+                <height>120</height>
+                <orientation>horizontal</orientation>
+                <align>left</align>
+                <itemgap>0</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Number_Album_Disc_Count_Ext"><param name="controlid" value="$PARAM[controlid]" /></include>
+
+                <control type="image">
+                    <width min="20" max="100">auto</width>
+                    <height>54</height>
+                    <centertop>50%</centertop>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/color/audiocodec/,.png]</texture>
+                    <aspectratio align="center">keep</aspectratio>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
+                </control>
+                <control type="grouplist">
+                    <width min="20" max="100">auto</width>
+                    <height>64</height>
+                    <orientation>vertical</orientation>
+                    <centertop>57%</centertop>
+                    <itemgap>-17</itemgap>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
+                    <control type="label">
+                        <height>28</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.BitRate]</label>
+                        <font>Small20</font>
+                        <textcolor>Dark1</textcolor>
+                    </control>
+                    <control type="image">
+                        <height>44</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
+                </control>
+                <control type="grouplist">
+                    <width min="20" max="100">auto</width>
+                    <height>64</height>
+                    <orientation>vertical</orientation>
+                    <centertop>57%</centertop>
+                    <itemgap>-17</itemgap>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
+                    <control type="label">
+                        <height>28</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.Samplerate]</label>
+                        <font>Small20</font>
+                        <textcolor>Dark1</textcolor>
+                    </control>
+                    <control type="image">
+                        <height>44</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
+                </control>
+                <control type="grouplist">
+                    <width min="20" max="100">auto</width>
+                    <height>64</height>
+                    <orientation>vertical</orientation>
+                    <centertop>57%</centertop>
+                    <itemgap>-17</itemgap>
+                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
+                    <control type="label">
+                        <height>28</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$INFO[Container($PARAM[controlid]).ListItem.BPM]</label>
+                        <font>Small20</font>
+                        <textcolor>Dark1</textcolor>
+                    </control>
+                    <control type="image">
+                        <height>44</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture>flags/audio/white/bpm.png</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
+                </control>
+                <control type="image">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>37</width>
+                    <height>37</height>
+                    <left>15</left>
+                    <texture colordiffuse="$VAR[Color_Rating_User_Star]" background="true">flags/star/userrating/userrating_white.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <centertop>50%</centertop>
+                    <width>auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>5</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
+                </control>
+                <control type="image">
+                    <width>48</width>
+                    <height>64</height>
+                    <centertop>50%</centertop>
+                    <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
+                    <aspectratio align="left">scale</aspectratio>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                </control>
+                <control type="label">
+                    <width>auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
+                    <align>left</align>
+                    <left>15</left>
+                    <aligny>center</aligny>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                </control>
+
+                <include condition="!Skin.HasSetting(hide.flags.music.rating)">Def_Flags_Furniture_Small_Ext</include>
+
+                <!-- <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.music.rating)"> -->
+                    <!-- <param name="Star" value="FlagstarSong" /> -->
+                    <!-- <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" /> -->
+                    <!-- <param name="color" value="$VAR[Color_Stars_User_Rating_Override]" /> -->
+                <!-- </include> -->
+
+                <control type="label">
+                    <left>-6</left>
+                    <width min="48">auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <label>$VAR[Label_Rating]</label>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <visible>[!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)] | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating)</visible>
+                    <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
+                </control>
+            </control>
+        </control>
     </include>
 
     <!-- DEBUG -->

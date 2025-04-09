@@ -9,9 +9,13 @@
             <!-- SQUARE POSTER -->
 
             <control type="group">
-                <include>Animation_Music_Fade_Out</include>
                 <include>Animation_SidePoster</include>
                 <include>Animation_Wiki_Fade_Out</include>
+                <include>Animation_Music_Fade_Out</include>
+
+                <animation type="Conditional" condition="String.IsEqual(Window.Property(ShowDisc),1) + Skin.HasSetting(show.dialog.info.music.discart)">
+                    <effect type="slide" start="0,0" end="0,130" delay="0" time="200" tween="quadratic" easing="out" />
+                </animation>
                 <control type="group">
                     <include>Animation_Delay_Fade_In_200</include>
                     <visible>Control.HasFocus(12) + !String.IsEqual(Window.Property(ShowDisc),1) + !String.IsEmpty(ListItem.Art(discart)) + Skin.HasSetting(show.dialog.info.music.discart)</visible>
@@ -41,9 +45,16 @@
                     <height>620</height>
                     <texture diffuse="diffuse/cd_w496_h496.png">$INFO[ListItem.Art(discart)]</texture>
                 </control>
-                <include content="View_50_SidePoster_Square">
-                    <param name="texture" value="$VAR[Image_Dialog_Info_Square_Poster]" />
-                </include>
+                <control type="group">
+                    <animation effect="rotatey" end="-180" start="0" center="400,0" time="350" condition="String.IsEqual(Window.Property(RotateCover),1)">Conditional</animation>
+                    <animation effect="fade" end="10" start="100" time="250" condition="Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.music.wiki)">Conditional</animation>
+                    <animation condition="[Control.HasFocus(12) | String.IsEqual(Window.Property(ShowDisc),1)] + String.IsEmpty(ListItem.Art(discart)) + !String.IsEmpty(ListItem.Art(discart))" effect="slide" end="0,80" start="0,0" time="300">Conditional</animation>
+
+                    <include content="View_50_Side_Square">
+                        <param name="texture" value="$VAR[Image_Dialog_Info_Square_Poster]" />
+                        <param name="condition_fadetime" value="false" />
+                    </include>
+                </control>
             </control>
 
             <!-- MAIN -->

@@ -2484,18 +2484,18 @@
                 <width>82</width>
                 <centertop>50%</centertop>
                 <height>32</height>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
                 <left>10</left>
-                <texture background="true">flags/rating/tmdb.png</texture>
+                <aspectratio aligny="center" align="center">keep</aspectratio>
+                <texture colordiffuse="Dark2" background="true">flags/rating/tmdb.png</texture>
             </control>
             <control type="label">
                 <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <visible>$EXP[Condition_TMDb_Rating]</visible>
                 <centertop>50%</centertop>
-                <width>50</width>
+                <width min="48">auto</width>
                 <height>64</height>
                 <font>Tiny</font>
-                <left>-3</left>
+                <left>13</left>
                 <textcolor>Dark2</textcolor>
                 <label>$VAR[Value_Item_Rating_TMDb]</label>
             </control>
@@ -2910,18 +2910,18 @@
                 <width>82</width>
                 <centertop>50%</centertop>
                 <height>32</height>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
                 <left>10</left>
+                <aspectratio aligny="center" align="center">keep</aspectratio>
                 <texture background="true">flags/rating/tmdb/tmdb.png</texture>
             </control>
             <control type="label">
                 <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <visible>$EXP[Condition_TMDb_Rating]</visible>
                 <centertop>50%</centertop>
-                <width>50</width>
+                <width min="48">auto</width>
                 <height>64</height>
                 <font>Tiny</font>
-                <left>-3</left>
+                <left>13</left>
                 <textcolor>Dark2</textcolor>
                 <label>$VAR[Value_Item_Rating_TMDb]</label>
             </control>
@@ -3949,7 +3949,7 @@
                 <usecontrolcoords>true</usecontrolcoords>
 
                 <control type="group">
-                    <visible>[[Container.Content(tvshows) | Container.Content(seasons)] + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(TotalEpisodes)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(UnWatchedEpisodes))]] | Container($PARAM[controlid]).ListItem.IsCollection</visible>
+                    <visible>[[Container.Content(tvshows) | Container.Content(seasons) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + [!String.IsEmpty(ListItem.Property(TotalEpisodes)) | !String.IsEmpty(ListItem.Property(UnWatchedEpisodes))]] | ListItem.IsCollection</visible>
                     <centertop>50%</centertop>
                     <width>70</width>
                     <height>40</height>
@@ -4180,6 +4180,31 @@
                     <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
                     <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
                     <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                </control>
+
+                <!-- TMDB -->
+
+                <control type="image">
+                    <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <width>82</width>
+                    <centertop>50%</centertop>
+                    <height>32</height>
+                    <left>10</left>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
+                    <texture colordiffuse="Dark2" background="true">flags/rating/tmdb.png</texture>
+                </control>
+                <control type="label">
+                    <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
+                    <centertop>50%</centertop>
+                    <width min="48">auto</width>
+                    <height>64</height>
+                    <font>Tiny</font>
+                    <left>13</left>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Rating]</label>
                 </control>
 
                 <!-- Star Kodi / user rating B/W -->
@@ -4443,10 +4468,11 @@
                     <visible>!Skin.HasSetting(filter.video.only.local) + String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(IMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + !Container($PARAM[controlid]).ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
                     <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <width>82</width>
                     <centertop>50%</centertop>
-                    <width>40</width>
-                    <height>46</height>
-                    <left>20</left>
+                    <height>32</height>
+                    <left>10</left>
+                    <aspectratio aligny="center" align="center">keep</aspectratio>
                     <texture background="true">flags/rating/tmdb/tmdb.png</texture>
                 </control>
                 <control type="label">

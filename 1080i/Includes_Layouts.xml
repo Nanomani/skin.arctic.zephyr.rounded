@@ -273,6 +273,7 @@
         </control>
     </include>
 
+
     <!-- VIEWS LAYOUT - LIST -->
 
     <include name="Def_View_List_Icon">
@@ -2366,6 +2367,98 @@
             </control>
 
             <include content="Hidden_List_Artist_Album_Count" condition="!Skin.HasSetting(disable.all.hidden.list)"><param name="id" value="$PARAM[id]" /></include>
+        </definition>
+    </include>
+
+    <!-- FILEMANAGER - LAYOUT -->
+
+    <include name="layout_list_item_filemanager">
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="keep" />
+        <param name="textcolor" value="$PARAM[textcolor]" default="PanelWhite70" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="PanelWhite70" />
+        <param name="colordiffuse_selected" value="$PARAM[colordiffuse_selected]" default="$VAR[Color_List_Item_Selected]" />
+
+        <definition>
+            <control type="image">
+                <left>8</left>
+                <width>70</width>
+                <height>70</height>
+                <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
+                <texture fallback="DefaultAddonNone.png" colordiffuse="$PARAM[colordiffuse]">$INFO[Listitem.Icon]</texture>
+                <visible>!ListItem.IsSelected</visible>
+            </control>
+            <control type="image">
+                <left>8</left>
+                <width>70</width>
+                <height>70</height>
+                <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
+                <texture fallback="DefaultAddonNone.png" colordiffuse="$PARAM[colordiffuse_selected]">$INFO[Listitem.Icon]</texture>
+                <visible>ListItem.IsSelected</visible>
+            </control>
+            <control type="label">
+                <left>84</left>
+                <width>640</width>
+                <align>left</align>
+                <textcolor>$PARAM[textcolor]</textcolor>
+                <label>$INFO[ListItem.Label]</label>
+            </control>
+            <control type="label">
+                <right>80</right>
+                <width>200</width>
+                <align>right</align>
+                <font>Tiny</font>
+                <textcolor>$PARAM[textcolor]</textcolor>
+                <label>$INFO[ListItem.Label2]</label>
+            </control>
+            <include content="Def_Button_Radio">
+                <param name="colordiffuse_off">$PARAM[textcolor]</param>
+                <param name="colordiffuse_on">$PARAM[colordiffuse_selected]</param>
+                <param name="visible">ListItem.IsSelected</param>
+            </include>
+        </definition>
+    </include>
+
+    <include name="layout_list_focus_filemanager">
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="keep" />
+        <param name="color_focus" value="$PARAM[color_focus]" default="Selected" />
+        <param name="fade_condition" value="$PARAM[fade_condition]" />
+
+        <definition>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+                <animation effect="fade" start="100" end="33" condition="$PARAM[fade_condition]">Conditional</animation>
+            </control>
+            <control type="image">
+                <left>8</left>
+                <width>70</width>
+                <height>70</height>
+                <aspectratio scalediffuse="false">$PARAM[aspectratio]</aspectratio>
+                <texture fallback="DefaultAddonNone.png" colordiffuse="$PARAM[color_focus]">$INFO[Listitem.Icon]</texture>
+            </control>
+            <control type="label">
+                <left>84</left>
+                <width>640</width>
+                <align>left</align>
+                <textcolor>$PARAM[color_focus]</textcolor>
+                <selectedcolor>$PARAM[color_focus]</selectedcolor>
+                <label>$INFO[ListItem.Label]</label>
+            </control>
+            <control type="label">
+                <right>80</right>
+                <width>200</width>
+                <align>right</align>
+                <textcolor>$PARAM[color_focus]</textcolor>
+                <selectedcolor>$PARAM[color_focus]</selectedcolor>
+                <font>Tiny</font>
+                <label>$INFO[ListItem.Label2]</label>
+            </control>
+            <include content="Def_Button_Radio">
+                <param name="colordiffuse_off">$PARAM[color_focus]</param>
+                <param name="colordiffuse_on">$PARAM[color_focus]</param>
+                <param name="visible">ListItem.IsSelected</param>
+            </include>
         </definition>
     </include>
 

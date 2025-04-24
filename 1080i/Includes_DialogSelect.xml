@@ -123,16 +123,6 @@
             <itemlayout height="70" width="926">
                 <control type="label">
                     <left>30</left>
-                    <right>30</right>
-                    <width>800</width>
-                    <font>Small</font>
-                    <textcolor>Black70</textcolor>
-                    <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Label]</label>
-                </control>
-                <control type="label">
-                    <left>30</left>
                     <right>84</right>
                     <width>800</width>
                     <font>Small</font>
@@ -140,7 +130,6 @@
                     <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
                     <aligny>center</aligny>
                     <label>$INFO[ListItem.Label]</label>
-                    <visible>ListItem.IsSelected</visible>
                 </control>
                 <include content="Def_Button_Radio">
                     <param name="colordiffuse_off">Black70</param>
@@ -149,18 +138,13 @@
                 </include>
             </itemlayout>
             <focusedlayout height="70" width="926">
-
-                <!-- Item Focus Gradient -->
-
-                <include content="Def_Focus_Item_Gradient">
-                    <param name="visible" value="Control.HasFocus(3)" />
-                </include>
-
                 <control type="group">
                     <visible>Control.HasFocus(3)</visible>
+
+                    <include>Def_Focus_Item_Gradient</include>
                     <control type="label">
                         <left>30</left>
-                        <right>30</right>
+                        <right>84</right>
                         <width>800</width>
                         <font>Small</font>
                         <aligny>center</aligny>
@@ -176,17 +160,7 @@
                 </control>
                 <control type="group">
                     <visible>!Control.HasFocus(3)</visible>
-                    <control type="label">
-                        <left>30</left>
-                        <right>84</right>
-                        <width>800</width>
-                        <font>Small</font>
-                        <aligny>center</aligny>
-                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
-                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
-                        <label>$INFO[ListItem.Label]</label>
-                        <visible>ListItem.IsSelected</visible>
-                    </control>
+
                     <control type="label">
                         <left>30</left>
                         <right>84</right>
@@ -194,9 +168,8 @@
                         <font>Small</font>
                         <aligny>center</aligny>
                         <textcolor>Black70</textcolor>
-                        <selectedcolor>Black70</selectedcolor>
+                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!ListItem.IsSelected</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off">Black70</param>
@@ -221,13 +194,6 @@
                 <param name="label" value="" />
                 <param name="label_id" value="1" />
                 <param name="icon" value="skinsettings" />
-            </include>
-
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="1723" />
-                <param name="onleft" value="6" />
-                <param name="onright" value="6" />
-                <param name="centerright" value="1272" />
             </include>
 
             <!-- DIALOG SELECT - ID 3  -->
@@ -308,6 +274,15 @@
                 <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
             </control>
 
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1723" />
+                <param name="onleft" value="6" />
+                <param name="onright" value="6" />
+                <param name="centerright" value="1272" />
+            </include>
+
             <!-- VIEW TYPE ON RIGHT -->
 
             <include content="Def_Dialog_View_Type">
@@ -328,14 +303,6 @@
                 <param name="label" value="" />
                 <param name="label_id" value="1" />
                 <param name="icon" value="settings" />
-            </include>
-
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="1723" />
-                <param name="onleft" value="6" />
-                <param name="onright" value="9001" />
-                <param name="centerright" value="360" />
-                <param name="height" value="682" />
             </include>
 
             <!-- DIALOG SELECT - ID 3  -->
@@ -450,6 +417,16 @@
                 <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
             </control>
 
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1723" />
+                <param name="onleft" value="6" />
+                <param name="onright" value="9001" />
+                <param name="centerright" value="360" />
+                <param name="height" value="682" />
+            </include>
+
             <!-- BUTTON ON RIGHT -->
 
             <control type="grouplist" id="9001">
@@ -500,30 +477,25 @@
                 <param name="icon" value="search" />
             </include>
 
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="1723" />
-                <param name="onleft" value="3" />
-                <param name="onright" value="7" />
-                <param name="centerright" value="360" />
-                <param name="height" value="PosterH" />
-            </include>
-
             <!-- DIALOG SELECT - ID 3  -->
 
             <!-- <include>Def_Dialog_Select</include> -->
             <control type="list" id="3"></control>
 
             <control type="panel" id="6">
-                <left>22</left>
+                <include>Animation_Scrolltime_Views_List</include>
+
                 <top>106</top>
+                <left>22</left>
                 <width>888</width>
                 <height>670</height>
-                <onleft>7</onleft>
-                <onright>1723</onright>
-                <pagecontrol>1723</pagecontrol>
+
                 <onup>6</onup>
                 <ondown>6</ondown>
-                <include>Animation_Scrolltime_Views_List</include>
+                <onleft>7</onleft>
+                <onright>1723</onright>
+
+                <pagecontrol>1723</pagecontrol>
 
                 <itemlayout height="335" width="222">
                     <control type="group">
@@ -545,6 +517,28 @@
                         </include>
                     </control>
                 </focusedlayout>
+            </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1723" />
+                <param name="onleft" value="3" />
+                <param name="onright" value="7" />
+                <param name="centerright" value="360" />
+                <param name="height" value="PosterH" />
+            </include>
+
+            <!-- LINE VERTICAL -->
+
+            <control type="image">
+                <right>360</right>
+                <top>112</top>
+                <bottom>17</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+                <visible>!Control.IsVisible(21)</visible>
             </control>
 
             <!-- BUTTON ON RIGHT -->
@@ -604,18 +598,6 @@
                 <scroll>true</scroll>
                 <font>Tiny</font>
                 <label>$INFO[Window(Home).Property(ListVideoForCast)]</label>
-            </control>
-
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <right>360</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
-                <visible>!Control.IsVisible(21)</visible>
             </control>
 
             <!-- LABEL VIDEO SEARCH FOR CAST MEMBER -->
@@ -934,13 +916,6 @@
                 <param name="icon" value="skinsettings" />
             </include>
 
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="1723" />
-                <param name="onleft" value="6" />
-                <param name="onright" value="9001" />
-                <param name="centerright" value="360" />
-            </include>
-
             <!-- DIALOG SELECT - ID 3  -->
             <include>Def_Dialog_Select</include>
 
@@ -1063,6 +1038,15 @@
                 <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
             </control>
 
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1723" />
+                <param name="onleft" value="6" />
+                <param name="onright" value="9001" />
+                <param name="centerright" value="360" />
+            </include>
+
             <!-- BUTTON ON RIGHT -->
 
             <control type="grouplist" id="9001">
@@ -1130,13 +1114,6 @@
                 <param name="label" value="" />
                 <param name="label_id" value="1" />
                 <param name="icon" value="tmdb" />
-            </include>
-
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="1723" />
-                <param name="onleft" value="6" />
-                <param name="onright" value="9001" />
-                <param name="centerright" value="360" />
             </include>
 
             <!-- DIALOG SELECT - ID 3  -->
@@ -1258,6 +1235,26 @@
                 </focusedlayout>
             </control>
 
+            <!-- LINE VERTICAL -->
+
+            <control type="image">
+                <right>360</right>
+                <top>112</top>
+                <bottom>17</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+            </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1723" />
+                <param name="onleft" value="6" />
+                <param name="onright" value="9001" />
+                <param name="centerright" value="360" />
+            </include>
+
             <!-- BUTTON ON RIGHT -->
 
             <control type="grouplist" id="9001">
@@ -1301,17 +1298,6 @@
                 </control>
             </control>
 
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <right>360</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
-            </control>
-
             <!-- NUM ITEMS -->
 
             <include>Def_Dialog_Select_label_Num_Item</include>
@@ -1328,13 +1314,6 @@
                 <param name="label" value="$VAR[Label_Dialog_Game_Header]" />
                 <param name="label_id" value="10820" />
                 <param name="icon" value="files" />
-            </include>
-
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="61" />
-                <param name="onleft" value="3" />
-                <param name="onright" value="9001" />
-                <param name="centerright" value="360" />
             </include>
 
             <control type="panel" id="3">
@@ -1423,6 +1402,26 @@
                 </focusedlayout>
             </control>
 
+            <!-- LINE VERTICAL -->
+
+            <control type="image">
+                <right>360</right>
+                <top>112</top>
+                <bottom>17</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(61) + !Container.Scrolling">Conditional</animation>
+            </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="61" />
+                <param name="onleft" value="3" />
+                <param name="onright" value="9001" />
+                <param name="centerright" value="360" />
+            </include>
+
             <!-- BUTTON ON RIGHT -->
 
             <control type="grouplist" id="9001">
@@ -1444,17 +1443,6 @@
                     <param name="id" value="10826" />
                     <param name="label" value="$LOCALIZE[222]" />
                 </include>
-            </control>
-
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <right>360</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(61) + !Container.Scrolling">Conditional</animation>
             </control>
 
             <control type="label" id="10823">
@@ -1526,20 +1514,6 @@
                 <param name="icon" value="settings" />
             </include>
 
-            <!-- SCROLLBAR -->
-
-            <include content="Object_Scrollbar_Dialog_Horizontal">
-                <param name="scrollid" value="61" />
-                <param name="onleft" value="61" />
-                <param name="onright" value="61" />
-                <param name="onup" value="10811" />
-                <param name="ondown" value="10811" />
-                <param name="onback" value="10811" />
-                <param name="width" value="1800" />
-                <param name="bottom" value="40" />
-                <param name="right" value="28" />
-            </include>
-
             <control type="panel" id="10811">
                 <top>112</top>
                 <left>12</left>
@@ -1586,6 +1560,20 @@
                     <include>Def_Game_Label</include>
                 </focusedlayout>
             </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Horizontal">
+                <param name="scrollid" value="61" />
+                <param name="onleft" value="61" />
+                <param name="onright" value="61" />
+                <param name="onup" value="10811" />
+                <param name="ondown" value="10811" />
+                <param name="onback" value="10811" />
+                <param name="width" value="1800" />
+                <param name="bottom" value="40" />
+                <param name="right" value="28" />
+            </include>
 
             <!-- INFO -->
 
@@ -1611,20 +1599,6 @@
                 <param name="icon" value="settings" />
             </include>
 
-            <!-- SCROLLBAR -->
-
-            <include content="Object_Scrollbar_Dialog_Horizontal">
-                <param name="scrollid" value="61" />
-                <param name="onleft" value="61" />
-                <param name="onright" value="61" />
-                <param name="onup" value="10811" />
-                <param name="ondown" value="10811" />
-                <param name="onback" value="10811" />
-                <param name="width" value="1800" />
-                <param name="bottom" value="40" />
-                <param name="right" value="28" />
-            </include>
-
             <control type="panel" id="10811">
                 <top>112</top>
                 <left>12</left>
@@ -1672,6 +1646,20 @@
                     <include>Def_Game_Label</include>
                 </focusedlayout>
             </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Horizontal">
+                <param name="scrollid" value="61" />
+                <param name="onleft" value="61" />
+                <param name="onright" value="61" />
+                <param name="onup" value="10811" />
+                <param name="ondown" value="10811" />
+                <param name="onback" value="10811" />
+                <param name="width" value="1800" />
+                <param name="bottom" value="40" />
+                <param name="right" value="28" />
+            </include>
         </control>
     </include>
 
@@ -1685,20 +1673,6 @@
                 <param name="icon" value="files" />
             </include>
 
-            <!-- SCROLLBAR -->
-
-            <include content="Object_Scrollbar_Dialog_Horizontal">
-                <param name="scrollid" value="61" />
-                <param name="onleft" value="61" />
-                <param name="onright" value="61" />
-                <param name="onup" value="10811" />
-                <param name="ondown" value="10811" />
-                <param name="onback" value="10811" />
-                <param name="width" value="1800" />
-                <param name="bottom" value="40" />
-                <param name="right" value="28" />
-            </include>
-
             <control type="panel" id="10811">
                 <top>112</top>
                 <left>12</left>
@@ -1761,6 +1735,20 @@
                     <include>Def_Game_Label</include>
                 </focusedlayout>
             </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Horizontal">
+                <param name="scrollid" value="61" />
+                <param name="onleft" value="61" />
+                <param name="onright" value="61" />
+                <param name="onup" value="10811" />
+                <param name="ondown" value="10811" />
+                <param name="onback" value="10811" />
+                <param name="width" value="1800" />
+                <param name="bottom" value="40" />
+                <param name="right" value="28" />
+            </include>
 
             <!-- INFOS -->
 

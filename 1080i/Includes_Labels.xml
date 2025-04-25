@@ -741,6 +741,17 @@
         <value>$INFO[ListItem.Rating]</value>
     </variable>
 
+    <variable name="Label_Rating_Flix">
+        <value condition="!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)">$INFO[ListItem.UserRating,,.0]</value>
+
+        <value condition="Control.IsVisible(5161) + !String.IsEmpty(Container(5161).ListItem.Rating(imdb))">$INFO[Container(5161).ListItem.Rating(imdb)]</value>
+        <value condition="Control.IsVisible(5161) + !String.IsEmpty(Container(5161).ListItem.Rating)">$INFO[Container(5161).ListItem.Rating]</value>
+
+        <value condition="!String.IsEmpty(ListItem.Rating(imdb))">$INFO[ListItem.Rating(imdb),IMDb ,]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating))">$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating),IMDb ,]</value>
+        <value>$INFO[ListItem.Rating]</value>
+    </variable>
+
     <variable name="Label_Rating_And_Votes_Info">
         <value condition="!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)">$INFO[ListItem.UserRating,,.0] ($LOCALIZE[38018])</value>
 
@@ -797,7 +808,7 @@
 
         <!-- TVSHOWS -->
 
-        <value condition="Container.Content(tvshows)">$INFO[ListItem.Year]$VAR[Label_Episodes_Number,  •  , $LOCALIZE[20453]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$INFO[ListItem.Rating,  •  ]</value>
+        <value condition="Container.Content(tvshows)">$INFO[ListItem.Year]$VAR[Label_Episodes_Number,  •  , $LOCALIZE[20453]] $INFO[ListItem.Property(UnWatchedEpisodes),  •  , $LOCALIZE[16101]]$VAR[Label_Rating_Flix,  •  ]</value>
 
         <!-- SEASONS -->
 
@@ -807,7 +818,7 @@
 
         <!-- EPISODES -->
 
-        <value condition="[Container.Content(episodes) | String.IsEqual(ListItem.DBType,episode)] + !$EXP[IsYoutube]">$INFO[ListItem.Season,$LOCALIZE[20373] ,]$INFO[ListItem.Episode,  •  $LOCALIZE[20452] ,]$VAR[Label_Premiered_Year]$VAR[Label_Duration_Time_Check,  •  ,]$VAR[Label_Rating,  •  ,]</value>
+        <value condition="[Container.Content(episodes) | String.IsEqual(ListItem.DBType,episode)] + !$EXP[IsYoutube]">$INFO[ListItem.Season,$LOCALIZE[20373] ,]$INFO[ListItem.Episode,  •  $LOCALIZE[20452] ,]$VAR[Label_Premiered_Year]$VAR[Label_Duration_Time_Check,  •  ,]$VAR[Label_Rating_Flix,  •  ,]</value>
 
         <!-- ACTORS / PEOPLE -->
 
@@ -816,7 +827,7 @@
         <!-- MOVIES / SETS -->
 
         <value condition="Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !ListItem.IsFolder">$LOCALIZE[561] $LOCALIZE[13280]$VAR[Label_Duration_Time_Check,  •  ,]</value>
-        <value condition="Container.Content(movies) | Container.Content(sets) | String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year]$VAR[Label_Genre,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]$INFO[ListItem.Rating,  •  ]</value>
+        <value condition="Container.Content(movies) | Container.Content(sets) | String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year]$VAR[Label_Genre,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]$VAR[Label_Rating_Flix,  •  ]</value>
 
         <!-- YOUTUBE -->
 

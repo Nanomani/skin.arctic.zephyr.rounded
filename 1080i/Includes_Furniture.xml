@@ -1206,7 +1206,8 @@
             <left>40</left>
             <visible>Window.IsActive(Home)</visible>
 
-            <!-- Hide with NowPlaying -->
+            <!-- HIDE WITH NOWPLAYING -->
+            
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
                 <effect type="slide" start="0,0" end="-115,0" tween="sine" easing="out" time="300" delay="0" />
                 <effect type="fade" start="100" end="0" time="150" delay="0" />
@@ -1384,7 +1385,8 @@
 
             <include condition="!Window.IsVisible(MyFavourites.xml)">Animation_Furniture_Visible_Home_Label</include>
 
-            <!-- Hide with NowPlaying -->
+            <!-- HIDE WITH NOWPLAYING -->
+            
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
                 <effect type="slide" start="0,0" end="-115,0" tween="sine" easing="out" time="300" delay="0" />
                 <effect type="fade" start="100" end="0" time="150" delay="0" />
@@ -1461,100 +1463,6 @@
                     <param name="id" value="$PARAM[id]" />
                     <param name="setcontent" value="videodb://movies/sets/$INFO[Container($PARAM[id]).ListItem.DBID]/?setid=$INFO[Container($PARAM[id]).ListItem.DBID]" />
                 </include>
-            </control>
-
-            <!-- HOME - HEADER - CLOCK LEFT -->
-
-            <control type="group">
-                <visible>!Window.IsVisible(DialogBusy.xml)</visible>
-                <visible>Window.IsActive(Home) + Skin.HasSetting(show.home.header.clock.left) + Skin.HasSetting(show.furniture.clock.date.weather)</visible>
-                <visible>![Skin.HasSetting(home.style.horizontal.clean) + [Control.HasFocus(2011) | ControlGroup(301).HasFocus()]]</visible>
-
-                <top>40</top>
-                <left>144</left>
-
-                <control type="group">
-                    <!-- <top>10</top> -->
-                    <control type="label">
-                        <centertop>24</centertop>
-                        <align>left</align>
-                        <font>HeaderLabel</font>
-                        <textcolor>Dark1</textcolor>
-                        <label>$INFO[System.Time(hh:mm)]</label>
-                    </control>
-
-                    <control type="label">
-                        <centertop>58</centertop>
-                        <align>left</align>
-                        <font>Flag</font>
-                        <width>auto</width>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[System.Date]</label>
-                    </control>
-                </control>
-
-                <control type="group">
-                    <visible>!String.IsEmpty(Weather.plugin)</visible>
-                    <visible>Weather.IsFetched</visible>
-                    <top>-6</top>
-                    <left>90</left>
-                    <height>80</height>
-                    <!-- <width>90</width> -->
-                    <control type="image">
-                        <width>50</width>
-                        <height>50</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                        <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override) + !String.Contains(Skin.String(weather.icons.path),White) + !String.Contains(Skin.String(weather.icons.path),Outline) + !String.Contains(Skin.String(weather.icons.path),Transparent) + !String.Contains(Skin.String(weather.icons.path),Monstr)</visible>
-                        <include>Animation_Fade_Icon</include>
-                    </control>
-                    <control type="image">
-                        <width>50</width>
-                        <height>50</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture colordiffuse="Dark2">$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                        <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override) + [String.Contains(Skin.String(weather.icons.path),White) | String.Contains(Skin.String(weather.icons.path),Outline) | String.Contains(Skin.String(weather.icons.path),Transparent) | String.Contains(Skin.String(weather.icons.path),Monstr)]</visible>
-                    </control>
-                    <control type="multiimage">
-                        <width>50</width>
-                        <height>50</height>
-                        <aspectratio align="center" aligny="center">keep</aspectratio>
-                        <imagepath>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode)]</imagepath>
-                        <visible>![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + String.Contains(Skin.String(weather.icons.path),animated) + Skin.HasSetting(weather.icons.override)</visible>
-                        <include>Animation_Fade_Icon</include>
-                    </control>
-                    <control type="image">
-                        <width>50</width>
-                        <height>50</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture colordiffuse="Dark2">$INFO[Weather.FanartCode,resource://resource.images.weathericons.white/,.png]</texture>
-                        <visible>[String.IsEmpty(Skin.String(weather.icons.path)) + !String.Contains(Skin.String(weather.icons.path),Default)] | [String.Contains(Skin.String(weather.icons.path),Default) + !Skin.HasSetting(weather.icons.override)] | [![String.IsEmpty(Skin.String(weather.icons.path)) | String.Contains(Skin.String(weather.icons.path),Default)] + !Skin.HasSetting(weather.icons.override)]</visible>
-                    </control>
-                    <control type="image">
-                        <width>50</width>
-                        <height>50</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture>$INFO[Skin.String(weather.icons.path)]$INFO[Window(weather).Property(Current.FanartCode),,.png]</texture>
-                        <visible>String.Contains(Skin.String(weather.icons.path),Default) + Skin.HasSetting(weather.icons.override)</visible>
-                        <include>Animation_Fade_Icon</include>
-                    </control>
-                </control>
-
-                <control type="group">
-                    <visible>!String.IsEmpty(Weather.plugin)</visible>
-                    <visible>Weather.IsFetched</visible>
-                    <width>500</width>
-                    <left>30</left>
-                    <control type="label">
-                        <centertop>24</centertop>
-                        <left>116</left>
-                        <width>auto</width>
-                        <font>Flag</font>
-                        <align>left</align>
-                        <textcolor>Dark2</textcolor>
-                        <label>$INFO[Weather.Temperature]</label>
-                    </control>
-                </control>
             </control>
         </control>
     </include>
@@ -1683,7 +1591,8 @@
             <visible>!Window.IsActive(DialogNotification.xml)</visible>
             <visible>[Window.IsActive(Home) + $EXP[Extended_Now_Playing_Is_Enable]] | [!Skin.HasSetting(hide.furniture.nowplaying.views) + !Player.HasMedia] | Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
 
-            <!-- Hide with NowPlaying -->
+            <!-- HIDE WITH NOWPLAYING -->
+            
             <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !$EXP[Home_Menu_Is_Focus] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml) + !Control.HasFocus(9099)" reversible="true">
                 <effect type="slide" start="0,0" end="350,0" tween="sine" easing="out" time="300" delay="0" />
                 <effect type="fade" start="100" end="0" time="150" delay="0" />

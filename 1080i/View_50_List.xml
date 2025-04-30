@@ -650,6 +650,7 @@
         </include>
 
         <!-- Year -->
+
         <control type="label">
             <left>90</left>
             <width>200</width>
@@ -659,12 +660,13 @@
             <label>$VAR[Label_Year]</label>
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
-            <!-- <animation effect="slide" start="0" end="75" time="0" condition="$EXP[IsAnPlugin] + ">Conditional</animation> -->
             <visible>Container.Content(movies) + !ListItem.IsParentFolder</visible>
         </control>
 
         <!-- Label -->
+
         <control type="label">
+            <animation effect="slide" start="0" end="-100" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <left>180</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -673,12 +675,13 @@
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
             <label>$INFO[ListItem.Label]</label>
-            <animation effect="slide" start="0" end="-100" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <visible>!ListItem.HasVideoVersions + !ListItem.IsParentFolder</visible>
         </control>
 
         <!-- Label version -->
+
         <control type="label">
+            <animation effect="slide" start="0" end="-75" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
             <left>180</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -687,15 +690,15 @@
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
             <label>$INFO[ListItem.Title]$INFO[ListItem.VideoVersionName,  •  ,]</label>
-            <animation effect="slide" start="0" end="-75" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
-
-            <!-- <animation effect="slide" start="0" end="-75" time="0" condition="ListItem.IsParentFolder">Conditional</animation> -->
-            <!-- <animation effect="slide" start="0" end="-100" time="0" condition="!Container.Content(movies)">Conditional</animation> -->
             <visible>ListItem.HasVideoVersions + !ListItem.IsParentFolder</visible>
         </control>
 
         <!-- Duration -->
+
         <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
@@ -705,14 +708,16 @@
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
-            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <visible>!String.IsEmpty(ListItem.DBType) + !Container.Content()</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Watched status -->
+
         <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <align>right</align>
             <aligny>center</aligny>
             <width>64</width>
@@ -720,14 +725,13 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos)</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions)</visible>
             <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
-            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Rating -->
+
         <control type="label">
             <right>30</right>
             <width>500</width>
@@ -743,9 +747,11 @@
             <visible>!Container.Content(seasons) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561])</visible>
             <visible>!Skin.HasSetting(hide.ratings) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561])</visible>
             <visible>!String.IsEmpty(ListItem.DBType)</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Actor / Director Num item -->
+
         <control type="label">
             <right>30</right>
             <width>500</width>
@@ -790,6 +796,7 @@
         <!-- Label -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="-100" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <left>180</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -798,13 +805,13 @@
             <textcolor>Selected</textcolor>
             <selectedcolor>Selected</selectedcolor>
             <label>$INFO[ListItem.Label]</label>
-            <animation effect="slide" start="0" end="-100" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <visible>!ListItem.HasVideoVersions + !ListItem.IsParentFolder</visible>
         </control>
 
         <!-- Label version -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="-75" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
             <left>180</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -813,15 +820,15 @@
             <textcolor>Selected</textcolor>
             <selectedcolor>Selected</selectedcolor>
             <label>$INFO[ListItem.Title]$INFO[ListItem.VideoVersionName,  •  ,]</label>
-            <animation effect="slide" start="0" end="-75" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
-            <!-- <animation effect="slide" start="0" end="-75" time="0" condition="ListItem.IsParentFolder">Conditional</animation> -->
-            <!-- <animation effect="slide" start="0" end="-100" time="0" condition="!Container.Content(movies)">Conditional</animation> -->
             <visible>ListItem.HasVideoVersions + !ListItem.IsParentFolder</visible>
         </control>
 
         <!-- Duration -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
@@ -831,15 +838,16 @@
             <textcolor>Selected</textcolor>
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
-            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <visible>!String.IsEmpty(ListItem.DBType) + !Container.Content()</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Watched status -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <align>right</align>
             <aligny>center</aligny>
             <width>64</width>
@@ -847,11 +855,9 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched_Focus]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos)</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions)</visible>
             <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
-            <animation effect="slide" start="0" end="60" time="0" condition="Container.Content(Seasons) | Skin.HasSetting(hide.markers)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Rating -->
@@ -871,6 +877,7 @@
             <visible>!Container.Content(seasons) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561])</visible>
             <visible>!Skin.HasSetting(hide.ratings) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561])</visible>
             <visible>!String.IsEmpty(ListItem.DBType)</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Actor / Director Num item -->
@@ -921,6 +928,7 @@
         <!-- Label -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <top>-5</top>
             <left>210</left>
             <width max="700">auto</width>
@@ -930,7 +938,6 @@
             <label>$INFO[ListItem.Label]</label>
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
-            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <visible>!ListItem.HasVideoVersions + !Container.Content(episodes) + !Container.Content(tvshows)</visible>
         </control>
         <control type="label">
@@ -949,6 +956,7 @@
         <!-- Label version -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
             <top>-5</top>
             <left>210</left>
             <width max="700">auto</width>
@@ -958,7 +966,6 @@
             <label>$INFO[ListItem.Title]$INFO[ListItem.VideoVersionName,  •  ,]</label>
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
-            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
             <visible>ListItem.HasVideoVersions + !Container.Content(episodes) + !Container.Content(tvshows) + !ListItem.IsParentFolder</visible>
         </control>
 
@@ -979,6 +986,7 @@
             <selectedcolor>Dark1</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
             <visible>!String.IsEmpty(ListItem.DBType) + !Container.Content()</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Watched status -->
@@ -995,8 +1003,9 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos)</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions)</visible>
             <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Rating -->
@@ -1013,9 +1022,10 @@
             <selectedcolor>Dark1</selectedcolor>
             <label>$VAR[Label_View_List_Rating]</label>
             <visible>!$EXP[IsAnPlugin] | $EXP[IsTMDbHelper]</visible>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | [Container.Content(Seasons) + Control.IsVisible(5161)]</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions) | [Container.Content(Seasons) + Control.IsVisible(5161)]</visible>
             <visible>!Container.Content(seasons) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561]) | [Container.Content(Seasons) + Control.IsVisible(5161)]</visible>
             <visible>!Skin.HasSetting(hide.ratings) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561])</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Actor / Director Num item -->
@@ -1098,6 +1108,7 @@
         <!-- Label -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <top>-5</top>
             <left>210</left>
             <width max="700">auto</width>
@@ -1107,7 +1118,6 @@
             <textcolor>Selected</textcolor>
             <selectedcolor>Selected</selectedcolor>
             <label>$INFO[ListItem.Label]</label>
-            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + String.IsEmpty(ListItem.Year)]">Conditional</animation>
             <visible>!ListItem.HasVideoVersions + !Container.Content(episodes) + !Container.Content(tvshows)</visible>
         </control>
         <control type="label">
@@ -1126,6 +1136,7 @@
         <!-- Label version -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
             <top>-5</top>
             <left>210</left>
             <width max="700">auto</width>
@@ -1135,7 +1146,6 @@
             <label>$INFO[ListItem.Title]$INFO[ListItem.VideoVersionName,  •  ,]</label>
             <textcolor>Selected</textcolor>
             <selectedcolor>Selected</selectedcolor>
-            <animation effect="slide" start="0" end="-90" time="0" condition="!Container.Content(movies) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]">Conditional</animation>
             <visible>ListItem.HasVideoVersions + !Container.Content(episodes) + !Container.Content(tvshows) + !ListItem.IsParentFolder</visible>
         </control>
 
@@ -1156,11 +1166,15 @@
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
             <visible>!String.IsEmpty(ListItem.DBType) + !Container.Content()</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Watched status -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="[Container.Content(Seasons) + !Control.IsVisible(5161)] | Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
             <top>-5</top>
             <align>right</align>
             <aligny>center</aligny>
@@ -1169,11 +1183,9 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched_Focus]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos)</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions)</visible>
             <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
-            <animation effect="slide" start="0" end="60" time="0" condition="[Container.Content(Seasons) + !Control.IsVisible(5161)] | Skin.HasSetting(hide.markers)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="!Container.Content(Seasons) + Skin.HasSetting(hide.ratings)">Conditional</animation>
-            <animation effect="slide" start="0" end="66" time="0" condition="$EXP[IsAnPlugin] + !$EXP[IsTMDbHelper] + !Skin.HasSetting(hide.ratings)">Conditional</animation>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Rating -->
@@ -1190,9 +1202,10 @@
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[Label_View_List_Rating]</label>
             <visible>!$EXP[IsAnPlugin] | $EXP[IsTMDbHelper]</visible>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | [Container.Content(Seasons) + Control.IsVisible(5161)]</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions) | [Container.Content(Seasons) + Control.IsVisible(5161)]</visible>
             <visible>!Container.Content(seasons) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561]) | [Container.Content(Seasons) + Control.IsVisible(5161)]</visible>
             <visible>!Skin.HasSetting(hide.ratings) | String.IsEqual(Container.SortMethod,$LOCALIZE[553]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561])</visible>
+            <visible>!$EXP[IsVideoVersionsList]</visible>
         </control>
 
         <!-- Actor / Director Num item -->
@@ -2064,7 +2077,7 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | $EXP[IsAnVideoInPlaylist]</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions) | $EXP[IsAnVideoInPlaylist]</visible>
         </control>
 
         <!-- Rating -->
@@ -2192,7 +2205,7 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched_Focus]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | $EXP[IsAnVideoInPlaylist]</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions) | $EXP[IsAnVideoInPlaylist]</visible>
         </control>
 
         <!-- Rating -->
@@ -2324,7 +2337,7 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | $EXP[IsAnVideoInPlaylist]</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions) | $EXP[IsAnVideoInPlaylist]</visible>
         </control>
 
         <!-- Rating -->
@@ -2520,7 +2533,7 @@
             <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched_Focus]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | $EXP[IsAnVideoInPlaylist]</visible>
+            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums) | Container.Content(videos) | Container.Content(videoversions) | $EXP[IsAnVideoInPlaylist]</visible>
         </control>
 
         <!-- Rating -->

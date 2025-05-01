@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 
-    <!-- SHOW MUSIC VISUALISATION -->
-
-    <expression name="ShowMusicVisualisation">Skin.HasSetting(show.global.visualisation.background.music) + !String.IsEmpty(Visualisation.Name)</expression>
-
     <!-- IS VIDEOS LIST VERSIONS NAME - CONTENT -->
 
     <expression name="IsVideoVersionsList">String.IsEqual(Container.FolderPath,videodb://movies/videoversions/)</expression>
@@ -234,13 +230,17 @@
 
     <expression name="View_List_Dialog_Info_Settings">![Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(523) | Control.IsVisible(524)]</expression>
 
+    <!-- SHOW MUSIC VISUALISATION -->
+
+    <expression name="ShowMusicVisualisation">Skin.HasSetting(show.global.visualisation.background.music) + !String.IsEmpty(Visualisation.Name)</expression>
+
     <!-- CONDITION NOT SHOW VIDEO BACKGROUND -->
 
-    <expression name="Show_Video_Background_Not_Enable">[!Player.HasVideo | [!Skin.HasSetting(show.global.visualisation.background.video) + Player.HasVideo]]</expression>
+    <expression name="Show_Video_Background_Not_Enable">[!Player.HasVideo | [Player.HasVideo + !Skin.HasSetting(show.global.visualisation.background.video)]]</expression>
 
-    <!-- CONDITION NOT SHOW VIDEO BACKGROUND -->
+    <!-- CONDITION NOT SHOW MUSIC VISUALISATION BACKGROUND -->
 
-    <expression name="Show_Music_Visualisation_Background_Not_Enable">[!Player.HasAudio | [!Skin.HasSetting(show.global.visualisation.background.music) + Player.HasAudio]]</expression>
+    <expression name="Show_Music_Visualisation_Background_Not_Enable">[!Player.HasAudio | [Player.HasAudio + !$EXP[ShowMusicVisualisation]]]</expression>
 
     <!-- LAYOUT CONTENT -->
 

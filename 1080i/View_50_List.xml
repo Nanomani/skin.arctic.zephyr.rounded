@@ -1282,9 +1282,7 @@
             <textcolor>Dark1</textcolor>
             <selectedcolor>Dark1</selectedcolor>
             <label>$VAR[label_music_list]</label>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files) | Container.Content()]">Conditional</animation>
             <visible>!ListItem.IsPlaying</visible>
-            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
         </control>
 
         <!-- Is playing -->
@@ -1296,7 +1294,6 @@
             <height>32</height>
             <aspectratio aligny="top">keep</aspectratio>
             <texture colordiffuse="Selected">indicator/playlist_play.png</texture>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
             <visible>ListItem.IsPlaying</visible>
             <visible>!Player.Paused</visible>
         </control>
@@ -1307,7 +1304,6 @@
             <height>32</height>
             <aspectratio aligny="top">keep</aspectratio>
             <texture colordiffuse="Selected">indicator/playlist_pause.png</texture>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
             <visible>ListItem.IsPlaying</visible>
             <visible>Player.Paused</visible>
         </control>
@@ -1322,43 +1318,15 @@
             <selectedcolor>Selected</selectedcolor>
             <visible>ListItem.IsPlaying</visible>
             <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
-        </control>
-
-        <!-- "#38018" -->
-        <!-- "My rating" -->
-
-        <control type="label">
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>100</left>
-            <width>810</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>InfoNetflix</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Dark1</textcolor>
-            <selectedcolor>Dark1</selectedcolor>
-            <visible>!ListItem.IsPlaying</visible>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
-        </control>
-        <control type="label">
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>145</left>
-            <width>760</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>InfoNetflix</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Selected</textcolor>
-            <selectedcolor>Selected</selectedcolor>
-            <visible>ListItem.IsPlaying</visible>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
         </control>
 
         <!-- Duration -->
 
         <control type="label">
-            <right>85</right>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
@@ -1368,12 +1336,13 @@
             <selectedcolor>Dark1</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
             <visible>Container.Content(songs) | Container.Content(albums)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
-            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
             <visible>!ListItem.IsPlaying</visible>
         </control>
         <control type="label">
-            <right>85</right>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
@@ -1383,25 +1352,57 @@
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
             <visible>Container.Content(songs) | Container.Content(albums)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
-            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
-            <visible>ListItem.IsPlaying</visible>
         </control>
 
         <!-- Watched status -->
 
         <control type="label">
-            <right>35</right>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <align>right</align>
+            <aligny>center</aligny>
+            <width>64</width>
+            <centerright>130</centerright>
+            <height>68</height>
+            <font>SymbolList</font>
+            <label>$VAR[Label_List_Watched]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+            <visible>!Skin.HasSetting(hide.markers)</visible>>
+        </control>
+
+        <!-- Rating -->
+
+        <control type="label">
+            <right>30</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
             <align>right</align>
-            <font>SymbolList</font>
-            <label>$VAR[Label_List_Watched]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums)</visible>
-            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
-            <visible>!Skin.HasSetting(hide.markers)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <font>SmallNavi</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$VAR[Label_View_List_Rating]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!Skin.HasSetting(hide.ratings)</visible>
+            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
+            <visible>!ListItem.IsPlaying</visible>
+        </control>
+        <control type="label">
+            <right>30</right>
+            <width>500</width>
+            <aligny>center</aligny>
+            <height>64</height>
+            <align>right</align>
+            <font>SmallNavi</font>
+            <textcolor>Selected</textcolor>
+            <selectedcolor>Selected</selectedcolor>
+            <label>$VAR[Label_View_List_Rating]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
+            <visible>!Skin.HasSetting(hide.ratings)</visible>
+            <visible>ListItem.IsPlaying</visible>
         </control>
 
         <!-- "#38018" -->
@@ -1453,9 +1454,7 @@
             <textcolor>Selected</textcolor>
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[label_music_list]</label>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files) | Container.Content()]">Conditional</animation>
             <visible>!ListItem.IsPlaying</visible>
-            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
         </control>
 
         <!-- Is playing -->
@@ -1467,7 +1466,6 @@
             <height>32</height>
             <aspectratio aligny="top">keep</aspectratio>
             <texture colordiffuse="Selected">indicator/playlist_play.png</texture>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
             <visible>ListItem.IsPlaying</visible>
             <visible>!Player.Paused</visible>
         </control>
@@ -1478,10 +1476,10 @@
             <height>32</height>
             <aspectratio aligny="top">keep</aspectratio>
             <texture colordiffuse="Selected">indicator/playlist_pause.png</texture>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
             <visible>ListItem.IsPlaying</visible>
             <visible>Player.Paused</visible>
         </control>
+
         <control type="label">
             <left>145</left>
             <width max="700">auto</width>
@@ -1493,43 +1491,15 @@
             <selectedcolor>Selected</selectedcolor>
             <visible>ListItem.IsPlaying</visible>
             <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
-        </control>
-
-        <!-- "#38018" -->
-        <!-- "My rating" -->
-
-        <control type="label">
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>100</left>
-            <width>810</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>SmallNavi</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Selected</textcolor>
-            <selectedcolor>Selected</selectedcolor>
-            <visible>!ListItem.IsPlaying</visible>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
-        </control>
-        <control type="label">
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>145</left>
-            <width>760</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>SmallNavi</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Selected</textcolor>
-            <selectedcolor>Selected</selectedcolor>
-            <visible>ListItem.IsPlaying</visible>
-            <animation effect="slide" start="0" end="-75" time="0" condition="![$EXP[IsAnPlugin] | Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(addons) | $EXP[IsAnLibrary] | $EXP[IsAnSource] | String.StartsWith(Container.FolderPath,musicdb://sources) | String.StartsWith(Container.FolderPath,special://musicplaylists) | String.StartsWith(Container.FolderPath,musicdb://years) | String.StartsWith(Container.FolderPath,musicdb://genres) | Container.Content(files)]">Conditional</animation>
         </control>
 
         <!-- Duration -->
 
         <control type="label">
-            <right>85</right>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
@@ -1539,24 +1509,43 @@
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
             <visible>Container.Content(songs) | Container.Content(albums)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
-            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
         </control>
 
         <!-- Watched status -->
 
         <control type="label">
-            <right>35</right>
-            <width>50</width>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <align>right</align>
+            <aligny>center</aligny>
+            <width>64</width>
+            <centerright>130</centerright>
+            <height>68</height>
+            <font>SymbolList</font>
+            <label>$VAR[Label_List_Watched_Focus]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
+            <visible>!Skin.HasSetting(hide.markers)</visible>
+        </control>
+
+
+        <!-- Rating -->
+
+        <control type="label">
+            <right>30</right>
+            <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
             <align>right</align>
-            <font>SymbolList</font>
-            <label>$VAR[Label_List_Watched_Focus]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums)</visible>
-            <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
-            <visible>!Skin.HasSetting(hide.markers)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <font>SmallNavi</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$VAR[Label_View_List_Rating]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!Skin.HasSetting(hide.ratings)</visible>
+            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
+            <visible>!ListItem.IsPlaying</visible>
         </control>
 
         <!-- "#38018" -->
@@ -1602,7 +1591,6 @@
 
         <control type="label">
             <top>-5</top>
-            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
             <left>120</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -1638,7 +1626,6 @@
         </control>
         <control type="label">
             <top>-5</top>
-            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
             <left>165</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -1650,43 +1637,14 @@
             <visible>ListItem.IsPlaying</visible>
         </control>
 
-        <!-- "#38018" -->
-        <!-- "My rating" -->
-
-        <control type="label">
-            <top>-5</top>
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>165</left>
-            <width>760</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>InfoNetflix</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Selected</textcolor>
-            <selectedcolor>Selected</selectedcolor>
-            <visible>ListItem.IsPlaying</visible>
-        </control>
-        <control type="label">
-            <top>-5</top>
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>120</left>
-            <width>810</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>InfoNetflix</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Dark1</textcolor>
-            <selectedcolor>Dark1</selectedcolor>
-            <visible>!ListItem.IsPlaying</visible>
-        </control>
-
         <!-- Duration -->
 
         <control type="label">
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
             <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
             <top>-5</top>
-            <right>85</right>
+            <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
@@ -1699,10 +1657,11 @@
             <visible>!ListItem.IsPlaying</visible>
         </control>
         <control type="label">
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
             <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
             <top>-5</top>
-            <right>85</right>
+            <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
@@ -1718,33 +1677,56 @@
         <!-- Watched status -->
 
         <control type="label">
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
-            <right>35</right>
-            <width>500</width>
-            <aligny>center</aligny>
-            <height>64</height>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <top>-5</top>
             <align>right</align>
+            <aligny>center</aligny>
+            <width>64</width>
+            <centerright>130</centerright>
+            <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched]</label>
-            <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
             <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
             <visible>!Skin.HasSetting(hide.markers)</visible>
         </control>
 
-        <!-- <control type="label"> -->
-            <!-- <right>35</right> -->
-            <!-- <width>500</width> -->
-            <!-- <aligny>center</aligny> -->
-            <!-- <height>64</height> -->
-            <!-- <align>right</align> -->
-            <!-- <font>SymbolList</font> -->
-            <!-- <label>$VAR[Label_List_Watched]</label> -->
-            <!-- <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums)</visible> -->
-            <!-- <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible> -->
-            <!-- <visible>!Skin.HasSetting(hide.markers)</visible> -->
-            <!-- <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation> -->
-            <!-- <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation> -->
-        <!-- </control> -->
+        <!-- Rating -->
+
+        <control type="label">
+            <top>-5</top>
+            <right>30</right>
+            <width>500</width>
+            <aligny>center</aligny>
+            <height>64</height>
+            <align>right</align>
+            <font>SmallNavi</font>
+            <textcolor>Dark1</textcolor>
+            <selectedcolor>Dark1</selectedcolor>
+            <label>$VAR[Label_View_List_Rating]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!Skin.HasSetting(hide.ratings)</visible>
+            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
+            <visible>!ListItem.IsPlaying</visible>
+        </control>
+        <control type="label">
+            <top>-5</top>
+            <right>30</right>
+            <width>500</width>
+            <aligny>center</aligny>
+            <height>64</height>
+            <align>right</align>
+            <font>SmallNavi</font>
+            <textcolor>Selected</textcolor>
+            <selectedcolor>Selected</selectedcolor>
+            <label>$VAR[Label_View_List_Rating]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
+            <visible>!Skin.HasSetting(hide.ratings)</visible>
+            <visible>ListItem.IsPlaying</visible>
+        </control>
 
         <!-- "#38018" -->
         <!-- "My rating" -->
@@ -1832,7 +1814,6 @@
 
         <control type="label">
             <top>-5</top>
-            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
             <left>120</left>
             <width max="700">auto</width>
             <aligny>center</aligny>
@@ -1880,41 +1861,14 @@
             <visible>ListItem.IsPlaying</visible>
         </control>
 
-        <!-- "#38018" -->
-        <!-- "My rating" -->
-
-        <control type="label">
-            <top>-5</top>
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>165</left>
-            <width>760</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>InfoNetflix</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Selected</textcolor>
-            <selectedcolor>Selected</selectedcolor>
-            <visible>ListItem.IsPlaying</visible>
-        </control>
-        <control type="label">
-            <top>-5</top>
-            <visible>String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
-            <left>120</left>
-            <width>810</width>
-            <aligny>center</aligny>
-            <height>64</height>
-            <font>InfoNetflix</font>
-            <label>$VAR[label_music_list]</label>
-            <textcolor>Selected</textcolor>
-            <selectedcolor>Selected</selectedcolor>
-            <visible>!ListItem.IsPlaying</visible>
-        </control>
-
         <!-- Duration -->
 
         <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
             <top>-5</top>
-            <right>85</right>
+            <right>154</right>
             <width>500</width>
             <aligny>center</aligny>
             <height>64</height>
@@ -1924,24 +1878,46 @@
             <selectedcolor>Selected</selectedcolor>
             <label>$VAR[Label_View_List_Right]</label>
             <visible>Container.Content(songs) | Container.Content(albums)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
-            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
         </control>
 
         <!-- Watched status -->
 
         <control type="label">
-            <right>35</right>
-            <width>500</width>
-            <aligny>center</aligny>
-            <height>64</height>
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <top>-5</top>
             <align>right</align>
+            <aligny>center</aligny>
+            <width>64</width>
+            <centerright>130</centerright>
+            <height>68</height>
             <font>SymbolList</font>
             <label>$VAR[Label_List_Watched_Focus]</label>
             <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(songs) | Container.Content(albums)</visible>
             <visible>!ListItem.IsParentFolder + !String.IsEmpty(ListItem.DBType)</visible>
             <visible>!Skin.HasSetting(hide.markers)</visible>
-            <animation effect="slide" start="0" end="-130" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+        </control>
+
+        <!-- Rating -->
+
+        <control type="label">
+            <animation effect="slide" start="0" end="60" time="0" condition="Skin.HasSetting(hide.markers)">Conditional</animation>
+            <animation effect="slide" start="0" end="66" time="0" condition="Skin.HasSetting(hide.ratings) + !String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <animation effect="slide" start="0" end="-66" time="0" condition="String.IsEqual(Container.SortMethod,$LOCALIZE[38018])">Conditional</animation>
+            <top>-5</top>
+            <right>30</right>
+            <width>500</width>
+            <aligny>center</aligny>
+            <height>64</height>
+            <align>right</align>
+            <font>SmallNavi</font>
+            <textcolor>Selected</textcolor>
+            <selectedcolor>Selected</selectedcolor>
+            <label>$VAR[Label_View_List_Rating]</label>
+            <visible>Container.Content(songs) | Container.Content(albums)</visible>
+            <visible>!String.IsEqual(Container.SortMethod,$LOCALIZE[38018])</visible>
+            <visible>!Skin.HasSetting(hide.ratings)</visible>
         </control>
 
         <!-- "#38018" -->

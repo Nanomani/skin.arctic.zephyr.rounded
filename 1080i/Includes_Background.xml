@@ -106,25 +106,30 @@
         </control>
     </include>
 
-    <include name="Global_Visualisation">
+    <include name="Global_Music_Visualisation">
         <control type="group">
             <visible>Player.HasAudio</visible>
+
+            <!-- MUSIC VISUALISATION -->
+
             <control type="visualisation">
                 <visible>Skin.HasSetting(disable.artist.slideshow) | !System.AddonIsEnabled(script.artistslideshow) | Skin.HasSetting(OSDVisualisation.ShowFanart)</visible>
-                <description>visualisation</description>
                 <include>Def_Dimensions_Fullscreen</include>
             </control>
-            <control type="image">
 
-                <!-- AS 3 -->
+            <!-- ARTIST SLIDESHOW -->
+
+            <control type="image">
+                <visible>System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(disable.artist.slideshow)</visible>
+
+                <animation effect="fade" start="100" end="65" time="0" condition="Skin.HasSetting(OSDVisualisation.ShowFanart)">Conditional</animation>
+                <animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(enable.artist.slideshow.animate)">Conditional</animation>
+                <animation effect="slide" start="-30,-30" end="30,30" time="6000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(enable.artist.slideshow.animate)">Conditional</animation>
+
                 <aspectratio>scale</aspectratio>
                 <include>Def_Dimensions_Fullscreen</include>
                 <include>Background_Fanart_Fade_time</include>
                 <texture background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow.Image)]</texture>
-                <visible>System.AddonIsEnabled(script.artistslideshow) + !Skin.HasSetting(disable.artist.slideshow)</visible>
-                <animation effect="fade" start="100" end="65" time="0" condition="Skin.HasSetting(OSDVisualisation.ShowFanart)">Conditional</animation>
-                <animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(enable.artist.slideshow.animate)">Conditional</animation>
-                <animation effect="slide" start="-30,-30" end="30,30" time="6000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(enable.artist.slideshow.animate)">Conditional</animation>
             </control>
         </control>
     </include>
@@ -166,7 +171,7 @@
     <include name="Background_Global">
         <include condition="Skin.HasSetting(enable.blur.effect)">Image_Path_Blur_TMDb</include>
         <include>Global_Video_Window</include>
-        <include condition="Skin.HasSetting(show.global.visualisation.music.artist) + !String.IsEmpty(Visualisation.Name)">Global_Visualisation</include>
+        <include condition="$EXP[ShowMusicVisualisation]">Global_Music_Visualisation</include>
 
         <!-- EXTRA FANART -->
 
@@ -254,8 +259,9 @@
         <control type="image" description="Background">
             <include>Def_Dimensions_Fullscreen</include>
             <texture colordiffuse="Background">background/bg.jpg</texture>
-            <visible>[Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video)] | [Player.HasAudio + Skin.HasSetting(show.global.visualisation.music.artist) + !String.IsEmpty(Visualisation.Name)]</visible>
-            <animation effect="fade" start="100" end="75" time="0" condition="true">Conditional</animation>
+            <visible>[Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video)] | [Player.HasAudio + Skin.HasSetting(show.global.visualisation.background.music) + !String.IsEmpty(Visualisation.Name)]</visible>
+
+            <animation effect="fade" start="100" end="60" time="0" condition="true">Conditional</animation>
         </control>
 
         <!-- TRAILER WINDOW HOME -->
@@ -266,6 +272,7 @@
 
         <control type="multiimage" description="Fanart">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>$EXP[Show_Music_Visualisation_Background_Not_Enable]</visible>
 
             <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Horizontal_Clean] + !$EXP[View_Info_Dialog]]</visible>
             <visible>!Skin.HasSetting(enable.blur.effect) | [Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[View_Info_Dialog]]</visible>
@@ -289,6 +296,8 @@
 
         <control type="group">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>$EXP[Show_Music_Visualisation_Background_Not_Enable]</visible>
+            
             <visible>Skin.HasSetting(enable.blur.effect) + Skin.HasSetting(enable.blur.effect.fake)</visible>
 
             <visible>[Window.IsVisible(Home) + !Skin.HasSetting(home.style.horizontal.clean)] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]] | !Window.IsVisible(Home)</visible>
@@ -319,6 +328,8 @@
         <control type="group">
             <!-- <visible>!Skin.HasSetting(hide.global.fanart)</visible> -->
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>$EXP[Show_Music_Visualisation_Background_Not_Enable]</visible>
+            
             <visible>Skin.HasSetting(enable.blur.effect) + !Skin.HasSetting(enable.blur.effect.fake)</visible>
 
             <visible>[Window.IsVisible(Home) + !Skin.HasSetting(home.style.horizontal.clean)] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]] | !Window.IsVisible(Home)</visible>
@@ -348,6 +359,8 @@
 
         <control type="multiimage" description="Fanart">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>$EXP[Show_Music_Visualisation_Background_Not_Enable]</visible>
+            
             <visible>Skin.HasSetting(enable.blur.effect)</visible>
             <visible>!Skin.HasSetting(hide.view.flix.preview)</visible>
 
@@ -385,6 +398,8 @@
 
         <control type="multiimage" description="Fanart">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>$EXP[Show_Music_Visualisation_Background_Not_Enable]</visible>
+            
             <visible>Skin.HasSetting(enable.blur.effect)</visible>
             <visible>!Skin.HasSetting(hide.view.flix.preview)</visible>
 
@@ -462,6 +477,8 @@
     <include name="Background_Home_Clean">
         <control type="group">
             <visible>$EXP[Show_Video_Background_Not_Enable]</visible>
+            <visible>$EXP[Show_Music_Visualisation_Background_Not_Enable]</visible>
+            
             <visible>Skin.HasSetting(home.style.horizontal.clean) + Window.IsVisible(Home) + !$EXP[View_Info_Dialog]</visible>
 
             <animation effect="fade" start="0" end="100" time="400" reversible="false">Visible</animation>

@@ -8,27 +8,29 @@
 
     <controls>
 
-        <!-- BACKGROUND -->
+        <!-- MUSIC VISUALISATION -->
 
         <control type="visualisation" id="2">
             <visible>!String.IsEmpty(Skin.String(fanart.fallback.music)) | Skin.HasSetting(OSDVisualisation.ShowFanart) | [!Skin.HasSetting(enable.osd.music.visualisation.fanart) + [!System.AddonIsEnabled(script.artistslideshow) | Skin.HasSetting(disable.artist.slideshow)]]</visible>
-            <description>visualisation</description>
             <include>Def_Dimensions_Fullscreen</include>
         </control>
 
-        <!-- FANART -->
+        <!-- ARTIST SLIDESHOW / FANART -->
 
         <control type="group">
             <animation effect="fade" end="0" start="100" time="300" tween="sine" easing="out">WindowClose</animation>
             <animation effect="fade" start="0" end="100" time="450" delay="0" tween="sine" easing="in">WindowOpen</animation>
+
             <control type="multiimage">
-                <aspectratio>scale</aspectratio>
+                <animation effect="fade" start="100" end="75" time="0" condition="Skin.HasSetting(OSDVisualisation.ShowFanart)">Conditional</animation>
+                <include>Animation_Animate_Slideshow</include>
+
                 <include>Def_Dimensions_Fullscreen</include>
+
+                <aspectratio>scale</aspectratio>
                 <include>Background_Fanart_Fade_time</include>
                 <imagepath background="true">$VAR[Image_Background_Music_Visualisation]</imagepath>
-                <animation effect="fade" start="100" end="75" time="0" condition="Skin.HasSetting(OSDVisualisation.ShowFanart)">Conditional</animation>
-                <animation effect="fade" start="100" end="0" time="500" condition="String.Contains(Window(Visualisation).Property(ArtistSlideshow.Image),black-hd.png)">Conditional</animation>
-                <include>Animation_Animate_Slideshow</include>
+                <!-- <animation effect="fade" start="100" end="0" time="500" condition="String.Contains(Window(Visualisation).Property(ArtistSlideshow.Image),black-hd.png)">Conditional</animation> -->
             </control>
         </control>
 
@@ -103,6 +105,9 @@
                 <animation effect="fade" end="0" start="100" time="350">Hidden</animation>
             </control>
         </control>
+
+        <!-- CU LRC LYRICS -->
+
         <control type="image">
             <height>100%</height>
             <width>100%</width>

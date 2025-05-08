@@ -234,7 +234,6 @@
 
     <include name="Object_OSD_Clock">
         <control type="group">
-
             <visible>Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | Player.ShowInfo | Window.IsVisible(fullscreeninfo) | Window.IsVisible(videoosd) | !String.IsEmpty(Player.SeekNumeric) | Window.IsVisible(DialogPVRChannelGuide.xml)</visible>
 
             <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml)</visible>
@@ -998,6 +997,43 @@
             <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
             <label>$INFO[PVR.ChannelNumberInput]</label>
             <visible>!String.IsEmpty(PVR.ChannelNumberInput)</visible>
+        </control>
+    </include>
+
+    <include name="Def_OSD_Channel_Logo">
+        <control type="group">
+            <visible>Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | Player.ShowInfo | Window.IsVisible(fullscreeninfo) | Window.IsVisible(videoosd) | !String.IsEmpty(Player.SeekNumeric) | Window.IsVisible(DialogPVRChannelGuide.xml)</visible>
+
+            <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml)</visible>
+
+            <visible>VideoPlayer.IsFullscreen</visible>
+            <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
+
+            <visible>!String.IsEmpty(VideoPlayer.ChannelLogo) | !String.IsEmpty(Player.Art(thumb))</visible>
+
+            <include>Animation_Fade_In</include>
+            <include>Animation_Fade_Out</include>
+
+            <top>View_SidePad</top>
+            <left>OSD_SidePad</left>
+            <width>202</width>
+            <height>202</height>
+
+            <!-- CHANNEL LOGO -->
+
+            <include content="Def_Art_Full_Background_b24">
+                <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
+                <param name="condition_fade" value="false" />
+            </include>
+
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
+                <texture diffuse="diffuse/square_w202_h202_b24.png">$VAR[Image_OSD_Channel_Logo]</texture>
+                <!-- <visible>VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.ChannelLogo) + String.IsEmpty(PVR.EpgEventIcon)</visible> -->
+                <visible>VideoPlayer.Content(livetv)</visible>
+            </control>
         </control>
     </include>
 

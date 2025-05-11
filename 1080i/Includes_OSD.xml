@@ -238,8 +238,9 @@
 
             <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml)</visible>
 
-            <visible>VideoPlayer.IsFullscreen</visible>
             <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
+            <visible>[!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.TimeRemaining)] | [VideoPlayer.Content(livetv) + VideoPlayer.HasEpg]</visible>
+            <visible>VideoPlayer.IsFullscreen</visible>
 
             <include>Animation_Fade_In</include>
             <include>Animation_Fade_Out</include>
@@ -274,8 +275,9 @@
                     <texture>kaitoast/finishtime.png</texture>
                 </control>
 
+                <!-- TIME REMAINING -->
+
                 <control type="label">
-                    <visible>!VideoPlayer.Content(livetv)</visible>
                     <right>50%</right>
                     <left>80</left>
                     <height>80</height>
@@ -283,21 +285,14 @@
                     <aligny>center</aligny>
                     <font>Small</font>
                     <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[Player.TimeRemaining]   •   </label>
+                    <label>$VAR[Label_OSD_Time_Remaining,,   •   ]</label>
                 </control>
+
+                <!-- TIME ACTUAL -->
+
                 <control type="label">
-                    <visible>!VideoPlayer.Content(livetv)</visible>
                     <height>80</height>
-                    <left>30</left>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <font>Small</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[System.Time]</label>
-                </control>
-                <control type="label">
-                    <visible>VideoPlayer.Content(livetv)</visible>
-                    <height>80</height>
+                    <left>34</left>
                     <align>center</align>
                     <aligny>center</aligny>
                     <font>Small</font>
@@ -315,21 +310,14 @@
                     <texture>kaitoast/arrow.png</texture>
                 </control>
 
+                <!-- TIME FINISH -->
+
                 <control type="label">
-                    <visible>!VideoPlayer.Content(livetv)</visible>
                     <left>400</left>
                     <height>80</height>
                     <font>Small</font>
                     <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[Player.FinishTime]</label>
-                </control>
-                <control type="label">
-                    <visible>VideoPlayer.Content(livetv)</visible>
-                    <left>400</left>
-                    <height>80</height>
-                    <font>Small</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[PVR.EpgEventFinishTime]</label>
+                    <label>$VAR[Label_OSD_Time_Finish]</label>
                 </control>
             </control>
         </control>
@@ -1017,12 +1005,13 @@
 
             <top>View_SidePad</top>
             <left>OSD_SidePad</left>
-            <width>202</width>
-            <height>202</height>
+
+            <width>154</width>
+            <height>154</height>
 
             <!-- CHANNEL LOGO -->
 
-            <include content="Def_Art_Full_Background_b24">
+            <include content="Def_Art_Full_Background_b12">
                 <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
                 <param name="condition_fade" value="false" />
             </include>
@@ -1031,7 +1020,7 @@
                 <width>100%</width>
                 <height>100%</height>
                 <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
-                <texture diffuse="diffuse/square_w202_h202_b24.png">$VAR[Image_OSD_Channel_Logo]</texture>
+                <texture diffuse="diffuse/square_w154_h154.png">$VAR[Image_OSD_Channel_Logo]</texture>
                 <!-- <visible>VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.ChannelLogo) + String.IsEmpty(PVR.EpgEventIcon)</visible> -->
                 <visible>VideoPlayer.Content(livetv)</visible>
             </control>
@@ -1698,26 +1687,7 @@
                     <height>40</height>
                     <font>InfoNetflix</font>
                     <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</label>
-                    <visible>!VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Genre)</visible>
-                </control>
-                <control type="label">
-                    <width>1050</width>
-                    <bottom>30</bottom>
-                    <height>40</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[VideoPlayer.Premiered]</label>
-                    <visible>!VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Premiered) + String.IsEmpty(VideoPlayer.Genre)</visible>
-                </control>
-                <control type="label">
-                    <width>1050</width>
-                    <bottom>30</bottom>
-                    <height>40</height>
-                    <font>InfoNetflix</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Season ,  •  $LOCALIZE[20373] ]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</label>
-                    <visible>VideoPlayer.Content(episodes)</visible>
+                    <label>$VAR[Label_OSD_Sub_Title_Info_Video]</label>
                 </control>
             </control>
 
@@ -1725,29 +1695,15 @@
 
             <control type="group">
                 <visible>VideoPlayer.Content(livetv)</visible>
-                <control type="fadelabel">
-                    <visible>!String.IsEmpty(VideoPlayer.NextTitle)</visible>
-                    <width>1050</width>
-                    <bottom>30</bottom>
-                    <height>40</height>
-                    <font>InfoNetflix</font>
-                    <pauseatend>6000</pauseatend>
-                    <scroll>false</scroll>
-                    <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$INFO[VideoPlayer.ChannelName]$INFO[VideoPlayer.StartTime,  •  ,]$INFO[VideoPlayer.EndTime, - ]$INFO[PVR.EpgEventDuration(mins),  •  , $LOCALIZE[31074]]</label>
-                    <!-- <label>$INFO[VideoPlayer.ChannelNumberLabel,,. ]$INFO[VideoPlayer.ChannelName]</label> -->
-                    <!-- <label>$INFO[VideoPlayer.Season,$LOCALIZE[20373] ,]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,  •  ]$INFO[VideoPlayer.Premiered]</label> -->
-                    <!-- <label>$INFO[VideoPlayer.NextTitle,$LOCALIZE[19031]: ]$INFO[VideoPlayer.NextStartTime, (,]$INFO[VideoPlayer.NextEndTime, - ,)]</label> -->
-                </control>
+
                 <control type="label">
-                    <visible>String.IsEmpty(VideoPlayer.NextTitle)</visible>
                     <width>1050</width>
                     <bottom>30</bottom>
                     <height>40</height>
                     <font>InfoNetflix</font>
                     <scroll>false</scroll>
                     <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                    <label>$VAR[Label_OSD_Player_Video_Status]</label>
+                    <label>$VAR[Label_OSD_Sub_Title_LiveTV]</label>
                 </control>
             </control>
         </control>
@@ -2021,16 +1977,6 @@
 
                 <orientation>horizontal</orientation>
 
-                <!-- <control type="label" description="Chapter-OSD"> -->
-                    <!-- <left>380</left> -->
-                    <!-- <align>right</align> -->
-                    <!-- <width>auto</width> -->
-                    <!-- <height>40</height> -->
-                    <!-- <font>InfoNetflix</font> -->
-                    <!-- <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor> -->
-                    <!-- <label>$INFO[Player.Chapter]$INFO[Player.ChapterCount, / ,  •  ]</label> -->
-                    <!-- <visible>!VideoPlayer.Content(livetv) + Player.HasVideo + !String.IsEqual(Player.ChapterCount,0) + !String.IsEqual(Player.ChapterCount,00)</visible> -->
-                <!-- </control> -->
                 <control type="label" description="Status">
                     <width>auto</width>
                     <height>40</height>
@@ -2207,7 +2153,6 @@
                         <bottom>50</bottom>
 
                         <include>OSD_Video_Info</include>
-
                     </control>
                 </control>
 
@@ -2239,7 +2184,7 @@
 
                         <include>Def_OSD_Video_Main_Title_Clearlogo</include>
 
-                        <!-- SUB TITLE -->
+                        <!-- SUB TITLE - VIDEO -->
 
                         <control type="label" description="Finishes Time">
                             <width>940</width>
@@ -2247,47 +2192,21 @@
                             <height>40</height>
                             <font>InfoNetflix</font>
                             <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                            <label>$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</label>
-                            <visible>!VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.Genre)</visible>
+                            <label>$VAR[Label_OSD_Sub_Title_Video]</label>
+                            <visible>!VideoPlayer.Content(livetv)</visible>
                         </control>
-                        <control type="label" description="Finishes Time">
-                            <width>940</width>
+
+                        <!-- SUB TITLE - LIVE TV -->
+
+                        <control type="label">
+                            <width>1050</width>
                             <bottom>30</bottom>
                             <height>40</height>
                             <font>InfoNetflix</font>
+                            <scroll>false</scroll>
                             <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                            <label>$INFO[VideoPlayer.Premiered]</label>
-                            <visible>!VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.Premiered) + String.IsEmpty(VideoPlayer.Genre)</visible>
-                        </control>
-
-                        <!-- PVR  -->
-
-                        <control type="group">
+                            <label>$VAR[Label_OSD_Sub_Title_LiveTV]</label>
                             <visible>VideoPlayer.Content(livetv)</visible>
-                            <control type="fadelabel">
-                                <!-- <visible>!String.IsEmpty(VideoPlayer.NextTitle)</visible> -->
-                                <width>1050</width>
-                                <bottom>30</bottom>
-                                <height>40</height>
-                                <font>InfoNetflix</font>
-                                <pauseatend>6000</pauseatend>
-                                <scroll>false</scroll>
-                                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                                <label>$INFO[VideoPlayer.ChannelName]$INFO[VideoPlayer.StartTime,  •  ,]$INFO[VideoPlayer.EndTime, - ]$INFO[PVR.EpgEventDuration(mins),  •  , $LOCALIZE[31074]]</label>
-                                <!-- <label>$INFO[VideoPlayer.ChannelNumberLabel,,. ]$INFO[VideoPlayer.ChannelName]</label> -->
-                                <!-- <label>$INFO[VideoPlayer.Season,$LOCALIZE[20373] ,]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,  •  ]$INFO[VideoPlayer.Premiered]</label> -->
-                                <!-- <label>$INFO[VideoPlayer.NextTitle,$LOCALIZE[19031]: ]$INFO[VideoPlayer.NextStartTime, (,]$INFO[VideoPlayer.NextEndTime, - ,)]</label> -->
-                            </control>
-                            <control type="label">
-                                <visible>String.IsEmpty(VideoPlayer.NextTitle)</visible>
-                                <width>1050</width>
-                                <bottom>30</bottom>
-                                <height>40</height>
-                                <font>InfoNetflix</font>
-                                <scroll>false</scroll>
-                                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                                <label>$VAR[Label_OSD_Player_Video_Status]</label>
-                            </control>
                         </control>
                     </control>
 
@@ -2310,29 +2229,16 @@
                             <label>$VAR[Label_OSD_Player_Video_Status]</label>
                         </control>
 
-                        <!-- INFO RIGHT -->
+                        <!-- INFO RIGHT - STATUS - LIGN 2 -->
 
-                        <control type="grouplist">
-                            <orientation>horizontal</orientation>
+                        <control type="label" description="Duration Total Time">
+                            <width>auto</width>
+                            <bottom>30</bottom>
+                            <height>40</height>
                             <align>right</align>
-
-                            <control type="label" description="Duration Total Time">
-                                <width>auto</width>
-                                <bottom>30</bottom>
-                                <height>40</height>
-                                <align>right</align>
-                                <font>InfoNetflix</font>
-                                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
-                                <label>$VAR[Label_OSD_Time]</label>
-                            </control>
-                            <!-- <control type="label" description="Chapter-OSD"> -->
-                                <!-- <width>auto</width> -->
-                                <!-- <height>40</height> -->
-                                <!-- <font>Tiny</font> -->
-                                <!-- <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor> -->
-                                <!-- <label>$INFO[Player.Chapter]$INFO[Player.ChapterCount, / ,  •  ]</label> -->
-                                <!-- <visible>!VideoPlayer.Content(livetv) + Player.HasVideo + !String.IsEqual(Player.ChapterCount,0) + !String.IsEqual(Player.ChapterCount,00)</visible> -->
-                            <!-- </control> -->
+                            <font>InfoNetflix</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <label>$VAR[Label_OSD_Time]</label>
                         </control>
                     </control>
                 </control>
@@ -2554,9 +2460,11 @@
 
                         <control type="image">
                             <visible>Skin.HasSetting(show.osd.music.clearlogo)</visible>
+
                             <animation type="Visible" reversible="false">
-                                <effect type="fade" start="0" end="100" time="600" delay="200" />
+                                <effect type="fade" start="0" end="100" time="600" delay="400" />
                             </animation>
+
                             <bottom>150</bottom>
                             <height>150</height>
                             <width>400</width>

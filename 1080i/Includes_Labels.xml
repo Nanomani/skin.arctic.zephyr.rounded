@@ -1692,12 +1692,18 @@
     <variable name="Label_Dialog_Info_Video_EndAt_Or_Rating_Value">
         <value condition="[Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,video)] + !String.IsEmpty(ListItem.EndTime) + !String.IsEmpty(ListItem.Duration)">$INFO[ListItem.EndTime]</value>
 
-        <value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Rating))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating),TMDb : ,] $INFO[Window(Home).Property(TMDbHelper.ListItem.Votes),(, $LOCALIZE[205])]</value>
+        <value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Rating))">$VAR[Label_TMDbHelper_Rating_Value,TMDb ,] $INFO[Window(Home).Property(TMDbHelper.ListItem.Votes),(, $LOCALIZE[205])]</value>
 
-        <value condition="ListItem.IsCollection + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Set.Rating))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Rating),TMDb : ,] $INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Votes),(, $LOCALIZE[205])]</value>
+        <value condition="ListItem.IsCollection + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Set.Rating))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Rating),TMDb ,] $INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Votes),(, $LOCALIZE[205])]</value>
 
         <value>$VAR[Label_Rating_And_Votes_Info]</value>
     </variable>
+
+    <variable name="Label_TMDbHelper_Rating_Value">
+        <!-- <value>$INFO[ListItem.Rating)</value> -->
+        <value>$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating)]</value>
+    </variable>
+
 
     <!-- LABEL - DIALOG INFO - MUSIC / VIDEO - PLOT -->
 
@@ -1866,7 +1872,7 @@
         <value>$LOCALIZE[19055]</value>
     </variable>
 
-    <!-- LABEL OSD VIDEO -->
+    <!-- LABEL OSD VIDEO - MAIN TITLE -->
 
     <variable name="Label_OSD_Title_Big">
         <value condition="Player.HasAudio">$INFO[MusicPlayer.Artist]</value>
@@ -1879,6 +1885,26 @@
         <value>$LOCALIZE[19055]</value>
     </variable>
 
+    <!-- LABEL OSD VIDEO - SUB TITLE - INFO -->
+
+    <variable name="Label_OSD_Sub_Title_Info_Video">
+        <value condition="!String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</value>
+        <value condition="String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Premiered)">$INFO[VideoPlayer.Premiered]</value>
+        <value condition="VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Season ,  •  $LOCALIZE[20373] ]$INFO[VideoPlayer.Episode,  •  $LOCALIZE[20359] ,]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003]]</value>
+    </variable>
+
+    <!-- LABEL OSD VIDEO - SUB TITLE -->
+
+    <variable name="Label_OSD_Sub_Title_Video">
+        <value condition="!String.IsEmpty(VideoPlayer.Genre)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</value>
+        <value condition="String.IsEmpty(VideoPlayer.Genre) + !String.IsEmpty(VideoPlayer.Premiered)">$INFO[VideoPlayer.Premiered]</value>
+    </variable>
+
+    <variable name="Label_OSD_Sub_Title_LiveTV">
+        <value condition="!String.IsEmpty(VideoPlayer.NextTitle)">$INFO[VideoPlayer.ChannelName]$INFO[VideoPlayer.StartTime,  •  ,]$INFO[VideoPlayer.EndTime, - ]$INFO[PVR.EpgEventDuration(mins),  •  , $LOCALIZE[31074]]</value>
+        <value condition="String.IsEmpty(VideoPlayer.NextTitle)">$LOCALIZE[142] $INFO[System.Time]</value>
+    </variable>
+
     <variable name="Label_OSD_Time">
         <!-- <value condition="!String.IsEmpty(Player.SeekNumeric)">[B]$INFO[Player.SeekNumeric(hh:mm:ss)][/B]</value> -->
         <value condition="!String.IsEmpty(Player.SeekNumeric)">$INFO[Player.SeekNumeric(hh:mm:ss)]$INFO[Player.Duration,  /  ]</value>
@@ -1886,6 +1912,16 @@
         <value condition="Player.Seeking">$INFO[Player.SeekTime]$INFO[Player.Duration,  /  ,]</value>
         <value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration,  /  ,]</value>
         <value>$INFO[Player.Time]$INFO[Player.Duration,  /  ,]</value>
+    </variable>
+
+    <variable name="Label_OSD_Time_Remaining">
+        <value condition="!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.TimeRemaining)">$INFO[Player.TimeRemaining]</value>
+        <value condition="VideoPlayer.Content(livetv) + VideoPlayer.HasEpg">$INFO[PVR.EpgEventRemainingTime]</value>
+    </variable>
+
+    <variable name="Label_OSD_Time_Finish">
+        <value condition="!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.FinishTime)">$INFO[Player.FinishTime]</value>
+        <value condition="VideoPlayer.Content(livetv) + VideoPlayer.HasEpg">$INFO[PVR.EpgEventFinishTime]</value>
     </variable>
 
     <variable name="Label_OSD_Player_Video_Status">

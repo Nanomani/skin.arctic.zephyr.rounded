@@ -396,7 +396,7 @@
     </include>
 
     <variable name="Value_Item_Rating_IMDb">
-        <value condition="!String.IsEmpty(ListItem.Rating(imdb))">$INFO[ListItem.Rating(imdb)]</value>
+        <value condition="$EXP[Condition_Item_IMDb_Rating]">$INFO[ListItem.Rating]</value>
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating))">$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</value>
     </variable>
 
@@ -411,7 +411,9 @@
         <value>$INFO[ListItem.Rating]</value>
     </variable>
 
-    <!-- HOME -->
+    <!-- ================  -->
+    <!--        HOME       -->
+    <!-- ================= -->
 
     <include name="Def_Home_Menu_Row_width_Reduce">
         <right>508</right>
@@ -427,6 +429,311 @@
         <font>SmallNavi</font>
         <width>auto</width>
         <textcolor>Dark2</textcolor>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Rating">
+        <control type="group">
+            <!-- <visible>!$EXP[IsYoutubeItem] + !$EXP[IsPluginRadio] + ControlGroup(301).HasFocus()</visible> -->
+
+            <control type="label">
+                <include>Widgets_Sub_Title_Definition</include>
+                <label>$INFO[Container($PARAM[id]).ListItem.UserRating,  •  ,.0]</label>
+                <visible>Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) + Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
+            </control>
+            <control type="label">
+                <include>Widgets_Sub_Title_Definition</include>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating(imdb),  •  IMDb ]</label>
+                <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
+                <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Rating(imdb))</visible>
+            </control>
+            <control type="label">
+                <include>Widgets_Sub_Title_Definition</include>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating(themoviedb),  •  TMDb ]</label>
+                <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
+                <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Rating(themoviedb))</visible>
+            </control>
+            <control type="label">
+                <include>Widgets_Sub_Title_Definition</include>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating(trakt),  •  TrakT ]</label>
+                <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
+                <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Rating(trakt))</visible>
+            </control>
+            <control type="label">
+                <include>Widgets_Sub_Title_Definition</include>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating,  •  TMDb ]</label>
+                <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
+                <visible>String.IsEmpty(Container($PARAM[id]).ListItem.Rating(imdb)) + String.IsEmpty(Container($PARAM[id]).ListItem.Rating(themoviedb)) + String.IsEmpty(Container($PARAM[id]).ListItem.Rating(trakt)) + String.IsEmpty(TMDbHelper.Container($PARAM[id]).ListItem.IMDb_Rating)</visible>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Duration">
+        <control type="label" description="Duration">
+            <include>Widgets_Sub_Title_Definition</include>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Duration(mins)) + !Skin.HasSetting(show.time.format.hh.mm)</visible>
+            <label>$INFO[Container($PARAM[id]).ListItem.Duration(mins),  •  , $LOCALIZE[31074]]</label>
+        </control>
+        <control type="label" description="Duration">
+            <include>Widgets_Sub_Title_Definition</include>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Duration(mins)) + Skin.HasSetting(show.time.format.hh.mm) + Integer.IsGreater(Container($PARAM[id]).ListItem.Duration(h),0)</visible>
+            <label>$INFO[Container($PARAM[id]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[id]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
+        </control>
+        <control type="label" description="Duration">
+            <include>Widgets_Sub_Title_Definition</include>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Duration(mins)) + Skin.HasSetting(show.time.format.hh.mm) + !Integer.IsGreater(Container($PARAM[id]).ListItem.Duration(h),0)</visible>
+            <label>$INFO[Container($PARAM[id]).ListItem.Duration(m),  •  ,$LOCALIZE[31062]]</label>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Genre">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]</label>
+            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name))</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Genre]</label>
+            <visible>String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)) + !String.IsEmpty(Container($PARAM[id]).ListItem.Genre)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Year">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Year,,  •  ]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Year)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_DateAdded">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.DateAdded,,]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.DateAdded)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Num_Episode">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Episode,, $LOCALIZE[20360]]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Episode)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_TvShowTitle">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.TvShowTitle,,  •  ]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.TvShowTitle) + !Skin.HasSetting(home.style.flix) + !Skin.HasSetting(home.style.horizontal.clean)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Season_X">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Season,$LOCALIZE[20373] ,  •  ]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Season)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Episode_X">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Episode,$LOCALIZE[20359] ,  •  ]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Episode)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Premiered">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Premiered]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Premiered)</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Year]</label>
+            <visible>String.IsEmpty(Container($PARAM[id]).ListItem.Premiered) + !String.IsEmpty(Container($PARAM[id]).ListItem.Year)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Tagline">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Tagline]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Tagline)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_AddonVersion">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.AddonType]$INFO[Container($PARAM[id]).ListItem.AddonVersion,  •  v ]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.AddonVersion)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Games">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Label]</label>
+            <visible>String.Contains(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.program.ael) | String.Contains(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.program.advanced.launcher) | String.Contains(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.program.advanced.emulator.launcher) | String.Contains(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.program.akl) | String.Contains(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.program.advanced.MAME.launcher) | String.Contains(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.program.iagl) | String.Contains(Container($PARAM[id]).ListItem.FolderPath,addons://sources/game)</visible>
+            <visible>String.IsEmpty(Container($PARAM[id]).ListItem.AddonVersion)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Gender">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label fallback="19055">$INFO[Window(Home).Property(TMDbHelper.ListItem.Gender),,  •  ]</label>
+            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Gender))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Age">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label fallback="19055">$INFO[Window(Home).Property(TMDbHelper.ListItem.Age),, $LOCALIZE[31530]  •  ]</label>
+            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Age))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Department">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label fallback="19055">$INFO[Window(Home).Property(TMDbHelper.ListItem.Department)]</label>
+            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Department))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_TotalAlbum">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Control.GetLabel(9968)]</label>
+            <visible>Integer.IsGreater(Container(44024).NumItems,1)</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Control.GetLabel(9969)]</label>
+            <visible>Integer.IsEqual(Container(44024).NumItems,1)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_ArtistStyle">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>  •  </label>
+            <visible>Integer.IsGreater(Container(44024).NumItems,0) + [!String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Style)) | !String.IsEmpty(Container($PARAM[id]).ListItem.Genre)]</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Property(Artist_Style)]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Style))</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Genre]</label>
+            <visible>String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Style))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Favourite_Type">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$VAR[Label_Favourites_Type]</label>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.Path,favourites://)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Song">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Album]$INFO[Container($PARAM[id]).ListItem.Year,  •  ,]$INFO[Container($PARAM[id]).ListItem.TrackNumber,  •  ,.  ]$INFO[Container($PARAM[id]).ListItem.Title]</label>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Sets">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years),,  •  ]$INFO[Container(44023).NumItems]$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems),/,] $LOCALIZE[31014]$INFO[Container($PARAM[id]).ListItem.Rating,  •  ,]</label>
+            <visible>Integer.IsGreater(Container(44023).NumItems,0)</visible>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,set)</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years),,  •  ]$INFO[Container($PARAM[id]).ListItem.Rating]</label>
+            <visible>!Integer.IsGreater(Container(44023).NumItems,0)</visible>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,set)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Label">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Label]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_TotalDisc">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label> $INFO[Control.GetLabel(9967)]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
+            <visible>ControlGroup(301).HasFocus()</visible>
+            <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.Property(Album_Totaldiscs),1)</visible>
+            <visible>Integer.IsGreater(Container(44022).NumItems,0)</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label> $INFO[Control.GetLabel(9970)]</label>
+            <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
+            <visible>ControlGroup(301).HasFocus()</visible>
+            <visible>Integer.IsGreater(Container($PARAM[id]).ListItem.Property(Album_Totaldiscs),1)</visible>
+            <visible>Integer.IsGreater(Container(44022).NumItems,0)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_AlbumYear">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Year,  •  ]</label>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_EPG">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.Label]$INFO[Container($PARAM[id]).ListItem.Genre,  •  ,]$INFO[Container($PARAM[id]).ListItem.StartTime,  •  ,]$INFO[Container($PARAM[id]).ListItem.EndTime, - ]$INFO[Container($PARAM[id]).ListItem.Duration(mins),  •  , $LOCALIZE[31074]]</label>
+            <visible>![String.IsEmpty(ListItem.StartTime) | String.IsEmpty(ListItem.EndTime)]</visible>
+            <visible>!String.IsEqual(Container($PARAM[id]).ListItem.Path,pvr://channels/tv/)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_PVR">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Container($PARAM[id]).ListItem.PVRClientName]$INFO[Container($PARAM[id]).ListItem.PVRInstanceName,  •  ,]</label>
+            <visible>[String.IsEmpty(ListItem.StartTime) | String.IsEmpty(ListItem.EndTime)]</visible>
+            <visible>!String.IsEqual(Container($PARAM[id]).ListItem.Path,pvr://channels/tv/)</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Group_Channel">
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$LOCALIZE[19173]</label>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.Path,pvr://channels/tv/) + Integer.IsEqual(Container(44028).NumItems,) | $EXP[Home_Menu_Is_Focus]</visible>
+        </control>
+        <control type="label">
+            <include>Widgets_Sub_Title_Definition</include>
+            <label>$INFO[Control.GetLabel(9972)]</label>
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.Path,pvr://channels/tv/) + Integer.IsGreater(Container(44028).NumItems,1)</visible>
+            <visible>!$EXP[Home_Menu_Is_Focus]</visible>
+        </control>
     </include>
 
     <!-- OSD MUSIC RATING -->

@@ -339,116 +339,41 @@
                 <!-- RATING IMDb -->
 
                 <control type="image">
+                    <visible>!String.IsEmpty(ListItem.Rating)</visible>
+                    <visible>!String.IsEmpty(ListItem.DBID)</visible>
+                    <visible>!String.IsEmpty(ListItem.Rating(imdb)) | String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),IMDb)</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set)</visible>
-                    <visible>!String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.DBID)</visible>
+
                     <include>Def_Image_Poster_Rating_Info_Left</include>
                     <texture background="true" colordiffuse="FFF6C700">diffuse/circle_64.png</texture>
                 </control>
                 <control type="label">
+                    <visible>!String.IsEmpty(ListItem.Rating)</visible>
+                    <visible>!String.IsEmpty(ListItem.DBID)</visible>
+                    <visible>!String.IsEmpty(ListItem.Rating(imdb)) | String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),IMDb)</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set)</visible>
-                    <visible>!String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.DBID)</visible>
+
                     <include>Def_Label_Poster_Rating_Left</include>
-                    <label>$INFO[ListItem.Rating(imdb)]</label>
+                    <label>$INFO[ListItem.Rating]</label>
                 </control>
 
-                <!-- RATING TMDB -->
+                <!-- RATING TMDb -->
 
                 <control type="image">
-                    <visible>!Window.IsVisible(DialogVideoInfo.xml) </visible>
+                    <visible>!String.IsEmpty(ListItem.Rating)</visible>
+                    <visible>String.IsEmpty(ListItem.DBID) | [!String.IsEmpty(ListItem.DBID) + String.IsEmpty(ListItem.Rating(imdb)) + String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),TMDb)]</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
-                    <visible>[!String.IsEmpty(ListItem.Rating) + String.IsEmpty(ListItem.DBID)] | [!String.IsEmpty(ListItem.Rating) + String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.DBID)]</visible>
+
+
                     <include>Def_Image_Poster_Rating_Info_Left</include>
                     <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                     <texture diffuse="diffuse/circle_64.png" background="true">logo/tmdb/tmdb_circle_64.png</texture>
                 </control>
                 <control type="label">
-                    <visible>!Window.IsVisible(DialogVideoInfo.xml) </visible>
+                    <visible>!String.IsEmpty(ListItem.Rating)</visible>
+                    <visible>String.IsEmpty(ListItem.DBID) | [!String.IsEmpty(ListItem.DBID) + String.IsEmpty(ListItem.Rating(imdb)) + String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),TMDb)]</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
-                    <visible>[!String.IsEmpty(ListItem.Rating) + String.IsEmpty(ListItem.DBID)] | [!String.IsEmpty(ListItem.Rating) + String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.DBID)]</visible>
-                    <include>Def_Label_Poster_Rating_Left</include>
-                    <label>$VAR[Value_Item_Rating]</label>
-                </control>
 
-                <!-- DIALOG VIDEO INFO - TMDB ON LINE -->
-
-                <!-- DIALOG VIDEO INFO - LOCAL INFO ONLY -->
-
-                <control type="image">
-                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>Skin.HasSetting(filter.video.only.local)</visible>
-                    <include>Def_Image_Poster_Rating_Info_Left</include>
-                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-                    <texture diffuse="diffuse/circle_64.png" background="true">logo/tmdb/tmdb_circle_64.png</texture>
-                </control>
-                <control type="label">
-                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>Skin.HasSetting(filter.video.only.local)</visible>
-                    <include>Def_Label_Poster_Rating_Left</include>
-                    <label>$VAR[Value_Item_Rating]</label>
-                </control>
-
-                <!-- DIALOG VIDEO INFO - TMDB ON LINE - LOCAL INFO - DISPO -->
-
-                <control type="image">
-                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>!Skin.HasSetting(filter.video.only.local)</visible>
-                    <include>Def_Image_Poster_Rating_Info_Left</include>
-                    <texture background="true" colordiffuse="FFF6C700">diffuse/circle_64.png</texture>
-                </control>
-                <control type="label">
-                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>!Skin.HasSetting(filter.video.only.local)</visible>
-                    <include>Def_Label_Poster_Rating_Left</include>
-                    <label>$VAR[Value_Item_Rating]</label>
-                </control>
-
-                <!-- DIALOG VIDEO INFO - TMDB ON LINE - LOCAL INFO - NON DISPO -->
-
-                <control type="image">
-                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.Rating) + String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>!Skin.HasSetting(filter.video.only.local)</visible>
-                    <include>Def_Image_Poster_Rating_Info_Left</include>
-                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-                    <texture diffuse="diffuse/circle_64.png" background="true">logo/tmdb/tmdb_circle_64.png</texture>
-                </control>
-                <control type="label">
-                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(ListItem.Rating) + String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>!Skin.HasSetting(filter.video.only.local)</visible>
-                    <include>Def_Label_Poster_Rating_Left</include>
-                    <label>$VAR[Value_Item_Rating]</label>
-                </control>
-
-                <!-- RATING - GLOBAL SEARCH -->
-
-                <!-- MOVIES / TVSHOWS / EPISODES -->
-
-                <control type="image">
-                    <visible>Window.IsVisible(script-globalsearch.xml)</visible>
-                    <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes)</visible>
-                    <visible>![Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>!String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.DBID)</visible>
-                    <include>Def_Image_Poster_Rating_Info_Left</include>
-                    <texture background="true" colordiffuse="FFF6C700">diffuse/circle_64.png</texture>
-                </control>
-                <control type="label">
-                    <visible>Window.IsVisible(script-globalsearch.xml)</visible>
-                    <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes)</visible>
-                    <visible>![Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]]</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album)</visible>
-                    <visible>!String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.DBID)</visible>
                     <include>Def_Label_Poster_Rating_Left</include>
                     <label>$VAR[Value_Item_Rating]</label>
                 </control>
@@ -503,7 +428,7 @@
                     <!-- <label>[COLOR=$VAR[Color_Indicator_Version]]&#61735;[/COLOR]</label> -->
                 <!-- </control> -->
 
-                <!-- DBType movie / tvshow ? -->
+                <!-- DBTYPE MOVIE / TVSHOW ? -->
 
                 <control type="image">
                     <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)</visible>

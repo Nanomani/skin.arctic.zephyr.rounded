@@ -3846,9 +3846,9 @@
 
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
-                    <label>$VAR[Label_Genre]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_H),  •  ,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_M),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                    <label>$VAR[Label_Genre]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_H),  •  ,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration_M),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  TMDb ,]</label>
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration))</visible>
-                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    <visible>!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
                 </control>
 
@@ -3856,10 +3856,19 @@
 
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
-                    <label>$VAR[Label_Genre]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  ]</label>
+                    <label>$VAR[Label_Genre]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  IMDb ,]</label>
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
+                    <visible>String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),IMDb)</visible>
+                </control>
+                <control type="label">
+                    <include>Def_Info_Right_Line1</include>
+                    <label>$VAR[Label_Genre]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  TMDb ,]</label>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
+                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
+                    <visible>!String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),IMDb)</visible>
                 </control>
 
                 <!-- TV SHOWS not local only -->
@@ -3868,7 +3877,7 @@
                     <include>Def_Info_Right_Line1</include>
                     <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating),  •  IMDb ,]</label>
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre))</visible>
-                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow)</visible>
                 </control>
 
@@ -3876,9 +3885,9 @@
 
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Genre]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  IMDb]</label>
+                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  IMDb ]</label>
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Genre)</visible>
-                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,tvshow)</visible>
                 </control>
 
@@ -3887,7 +3896,7 @@
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
                     <label>$LOCALIZE[20373] $INFO[Window(Home).Property(TMDbHelper.ListItem.Season)]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  TMDb ]</label>
-                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    <visible>[!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
                 </control>
 
@@ -3896,7 +3905,7 @@
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
                     <label>$INFO[Container($PARAM[controlid]).ListItem.Label]$INFO[Container($PARAM[controlid]).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[20453]]$INFO[Container($PARAM[controlid]).ListItem.Rating,  •  TMDb ]</label>
-                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]</visible>
+                    <visible>![!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,season)</visible>
                 </control>
 

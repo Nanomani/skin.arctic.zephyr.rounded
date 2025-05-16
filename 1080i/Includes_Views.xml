@@ -336,6 +336,7 @@
         <param name="left" value="$PARAM[left]" default="516" />
         <param name="width" value="$PARAM[width]" default="155" />
         <param name="height" value="$PARAM[height]" default="155" />
+        <param name="texture_progress" value="$PARAM[texture_progress]" default="155" />
         <param name="visible" value="$PARAM[visible]" default="Skin.HasSetting(show.furniture.progress.circle)" />
 
         <definition>
@@ -348,24 +349,36 @@
                 <width>$PARAM[width]</width>
                 <height>$PARAM[height]</height>
 
+                <!-- CIRCLE BACKGROUND -->
+
+                <control type="image">
+                    <centertop>44%</centertop>
+                    <width>139</width>
+                    <height>139</height>
+                    <texture diffuse="diffuse/circle_progress_w139_h139.png" border="0">dialog/loading-back.png</texture>
+                </control>
+
+                <!-- MOVIES / EPISODE -->
+
                 <control type="group">
-                    <control type="image" description="Back">
-                        <centertop>44%</centertop>
-                        <width>139</width>
-                        <height>139</height>
-                        <texture diffuse="diffuse/circle_progress_w139_h139.png" border="0">dialog/loading-back.png</texture>
-                    </control>
                     <control type="group">
                         <visible>!ListItem.IsParentFolder</visible>
-                        <visible>Container.Content(movies) | Container.Content(episodes)</visible>
+                        <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | [Control.HasFocus(5161) + String.IsEqual(Container(5161).ListItem.DBType,episode)] | [Control.HasFocus(5261) + String.IsEqual(Container(5261).ListItem.DBType,episode)]</visible>
+
                         <include>Animation_SwitchText</include>
+
+                        <!-- % PERCENT WATCHED -->
+
                         <control type="image">
-                            <visible>ListItem.IsResumable</visible>
+                            <visible>[ListItem.IsResumable + ![Control.HasFocus(5161) | Control.HasFocus(5261)]] | [Control.HasFocus(5161) + Container(5161).ListItem.IsResumable] | [Control.HasFocus(5261) + Container(5261).ListItem.IsResumable]</visible>
                             <centertop>44%</centertop>
                             <width>139</width>
                             <height>139</height>
-                            <texture diffuse="diffuse/circle_progress_w139_h139.png" colordiffuse="$VAR[Color_Loading_Spinner]">$INFO[ListItem.PercentPlayed,progress/circle_views/p,.png]</texture>
+                            <texture diffuse="diffuse/circle_progress_w139_h139.png" colordiffuse="$VAR[Color_Loading_Spinner]">$VAR[Value_Item_PercentPlayed,progress/circle_views/p,.png]</texture>
                         </control>
+
+                        <!-- 100% WATCHED -->
+
                         <control type="image">
                             <visible>String.Contains(ListItem.Overlay,OverlayWatched.png) + !ListItem.IsResumable</visible>
                             <centertop>44%</centertop>
@@ -375,8 +388,11 @@
                         </control>
                     </control>
                 </control>
+
+                <!-- TVSHOW / SEASON -->
+
                 <control type="image">
-                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>![Control.HasFocus(5161) | Control.HasFocus(5261)]</visible>
                     <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)</visible>
                     <width>139</width>
                     <height>139</height>
@@ -384,6 +400,9 @@
                     <texture diffuse="diffuse/circle_progress_w139_h139.png" colordiffuse="$VAR[Color_Loading_Spinner]">$INFO[ListItem.Property(WatchedEpisodePercent),progress/circle_views/p,.png]</texture>
                     <include>Animation_SwitchText</include>
                 </control>
+
+                <!-- LABEL -->
+
                 <control type="label">
                     <include>Animation_SwitchText</include>
                     <width>140</width>

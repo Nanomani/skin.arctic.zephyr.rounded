@@ -403,7 +403,7 @@
     <variable name="Value_Item_Rating_TMDb">
         <value condition="Container.Content(seasons) + !String.IsEmpty(ListItem.Rating) + !String.IsEqual(ListItem.Rating),0)">$INFO[ListItem.Rating]</value>
         <value condition="[Container.Content(sets) |  String.IsEqual(ListItem.DBType,set)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Set.Rating)) + !String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Rating),0)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Rating)]</value>
-        <value condition="!Container.Content(seasons) + !String.IsEmpty(ListItem.Rating)">$INFO[ListItem.Rating]</value>
+        <value condition="!Container.Content(seasons) + !String.IsEmpty(ListItem.Rating)">$VAR[Value_Item_Rating]</value>
     </variable>
 
     <variable name="Value_Item_Rating">
@@ -496,12 +496,12 @@
     <include name="Def_Home_Label_Widget_Sub_Title_Genre">
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]</label>
+            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name),  •  ,]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]</label>
             <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name))</visible>
         </control>
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Container($PARAM[id]).ListItem.Genre]</label>
+            <label>$INFO[Container($PARAM[id]).ListItem.Genre,  •  ,]</label>
             <visible>String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)) + !String.IsEmpty(Container($PARAM[id]).ListItem.Genre)</visible>
         </control>
     </include>
@@ -509,7 +509,7 @@
     <include name="Def_Home_Label_Widget_Sub_Title_Year">
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Container($PARAM[id]).ListItem.Year,,  •  ]</label>
+            <label>$INFO[Container($PARAM[id]).ListItem.Year]</label>
             <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Year)</visible>
         </control>
     </include>
@@ -517,7 +517,7 @@
     <include name="Def_Home_Label_Widget_Sub_Title_DateAdded">
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Container($PARAM[id]).ListItem.DateAdded,,]</label>
+            <label>$INFO[Container($PARAM[id]).ListItem.DateAdded,  •  ,]</label>
             <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.DateAdded)</visible>
         </control>
     </include>
@@ -525,7 +525,7 @@
     <include name="Def_Home_Label_Widget_Sub_Title_Num_Episode">
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Container($PARAM[id]).ListItem.Episode,, $LOCALIZE[20360]]</label>
+            <label>$INFO[Container($PARAM[id]).ListItem.Episode,  •  , $LOCALIZE[20360]]</label>
             <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Episode)</visible>
         </control>
     </include>
@@ -666,13 +666,13 @@
     <include name="Def_Home_Label_Widget_Sub_Title_Sets">
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years),,  •  ]$INFO[Container(44023).NumItems]$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems),/,] $LOCALIZE[31014]$INFO[Container($PARAM[id]).ListItem.Rating,  •  ,]</label>
+            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years),,  •  ]$INFO[Container(44023).NumItems]$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems),/,] $LOCALIZE[31014]</label>
             <visible>Integer.IsGreater(Container(44023).NumItems,0)</visible>
             <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,set)</visible>
         </control>
         <control type="label">
             <include>Widgets_Sub_Title_Definition</include>
-            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years),,  •  ]$INFO[Container($PARAM[id]).ListItem.Rating]</label>
+            <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.Years)]</label>
             <visible>!Integer.IsGreater(Container(44023).NumItems,0)</visible>
             <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,set)</visible>
         </control>

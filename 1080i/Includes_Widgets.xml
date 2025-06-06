@@ -101,18 +101,20 @@
     <!-- DEF - WIDGET -->
 
     <variable name="Def_Widget_Content">
-        <value condition="[String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + !String.IsEmpty(Skin.String(weather.fanart))">noop</value>
+        <value condition="[String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + !String.IsEmpty(Skin.String(weather.fanart))">weather</value>
         <value condition="!String.IsEmpty(Container(300).ListItem.Property(Background))">noop</value>
-        <value condition="!String.IsEmpty(Skin.String(home.slideshowpath)) + String.IsEmpty(Container(300).ListItem.Property(widget))">noop</value>
-        <value condition="!String.IsEmpty(Skin.String(home.fallbackwidget))">$INFO[Skin.String(home.fallbackwidget)]</value>
-        <value condition="!String.IsEmpty(Skin.String(widgetSpotlightPath)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),background/bg_fallback.jpg)">$INFO[Skin.String(widgetSpotlightPath)]</value>
         <value condition="!Library.HasContent(Movies) + !Library.HasContent(TVShows)">$VAR[Def_Widget_Fallback]</value>
-        <!-- <value>$VAR[Def_Random_Movies]</value> -->
     </variable>
 
     <variable name="Def_Widget_Target">
-        <value condition="!String.IsEmpty(Skin.String(widgetTarget)) + String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),background/bg_fallback.jpg)">$INFO[Skin.String(widgetTarget)]</value>
+        <value condition="!String.IsEmpty(Skin.String(widgetTarget))">$INFO[Skin.String(widgetTarget)]</value>
         <value>videos</value>
+    </variable>
+
+    <!-- widget fallback - if no movie and no tvshows in library -->
+
+    <variable name="Def_Widget_Fallback">
+        <value>plugin://plugin.video.themoviedb.helper/?info=popular&amp;tmdb_type=movie&amp;widget=true&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</value>
     </variable>
 
     <!-- DEF - CONTENT - WIDGETS -->
@@ -1057,19 +1059,6 @@
     <!-- =================================== -->
     <!--           WIDGETS                   -->
     <!-- =================================== -->
-
-    <!-- widget fallback - if no movie and no tvshows in library -->
-
-    <variable name="Def_Widget_Fallback">
-        <value>plugin://plugin.video.themoviedb.helper/?info=popular&amp;tmdb_type=movie&amp;widget=true&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</value>
-    </variable>
-
-    <!-- widget random movies -->
-
-    <variable name="Def_Random_Movies">
-        <value condition="Skin.HasSetting(home.netflix.autoplay.trailer)">special://skin/extras/playlists/Spotlight.xsp</value>
-        <value>special://skin/extras/playlists/RandomMovies.xsp</value>
-    </variable>
 
     <!-- DEF - WIDGET - HUB -->
 

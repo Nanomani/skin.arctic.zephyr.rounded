@@ -1273,7 +1273,6 @@
             <param name="groupid" value="5999" />
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
             <align>right</align>
-            <!-- <include>Def_OSD_UpDown_Home_NowPlaying</include> -->
             <onclick>ActivateWindow(125)</onclick>
         </include>
     </include>
@@ -1527,19 +1526,22 @@
                 <top>16</top>
                 <left>130</left>
                 <height>48</height>
-                <orientation>horizontal</orientation>
                 <align>left</align>
-                <onleft>6</onleft>
-                <itemgap>35</itemgap>
 
+                <!-- icon pvr guide -->
+                <onleft condition="VideoPlayer.Content(livetv)">6</onleft>
+
+                <!-- icon bookmark -->
+                <onleft condition="!VideoPlayer.Content(livetv)">6</onleft>
+
+                <!-- icon previous -->
                 <onright condition="!PVR.CanRecordPlayingChannel | !VideoPlayer.Content(livetv)">12</onright>
+
+                <!-- icon record -->
                 <onright condition="PVR.CanRecordPlayingChannel + VideoPlayer.Content(livetv)">9003</onright>
-                <!-- <include>Def_OSD_UpDown_Video_Info</include> -->
 
-                <!-- <animation effect="slide" start="0,0" end="320,0" time="150" condition="[Window.IsVisible(fullscreeninfo) | Player.ShowInfo | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) | [Player.Paused + Skin.HasSetting(show.osd.info.on.pause) + !Window.IsVisible(videoosd)]] + [!String.IsEmpty(Player.Art(tvshow.poster)) | !String.IsEmpty(Player.Art(poster))] + !VideoPlayer.Content(livetv)">Conditional</animation> -->
-
-                <!-- <animation effect="slide" start="0,0" end="320,0" time="150" condition="[Window.IsVisible(fullscreeninfo) | Player.ShowInfo | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) | [Player.Paused + Skin.HasSetting(show.osd.info.on.pause) + !Window.IsVisible(videoosd)]] + !String.IsEmpty(Player.Art(thumb)) + VideoPlayer.Content(livetv)">Conditional</animation> -->
-
+                <itemgap>35</itemgap>
+                <orientation>horizontal</orientation>
                 <usecontrolcoords>true</usecontrolcoords>
 
                 <include content="Object_OSD_Button">
@@ -1590,17 +1592,31 @@
             <!-- OSD VIDEO - CENTER BUTTONS VIDEO -->
 
             <control type="grouplist" id="101">
-                <left>0</left>
                 <top>16</top>
+                <left>0</left>
                 <width>100%</width>
                 <height>48</height>
-                <itemgap>16</itemgap>
-                <orientation>horizontal</orientation>
                 <align>center</align>
-                <onleft>3</onleft>
-                <onright>102</onright>
+
                 <onup>87</onup>
                 <ondown>noop</ondown>
+                <onleft>3</onleft>
+
+                <!-- icon wikipedia -->
+                <onright condition="!VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.DBID)">4</onright>
+
+                <!-- icon audio profile -->
+                <onright condition="!VideoPlayer.Content(livetv) + String.IsEmpty(VideoPlayer.DBID) + System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)">7</onright>
+
+                <!-- icon bookmark -->
+                <onright condition="!VideoPlayer.Content(livetv) + String.IsEmpty(VideoPlayer.DBID) + ![System.HasAddon(script.audio.profiles) + System.AddonIsEnabled(script.audio.profiles)]">6</onright>
+
+                <!-- icon pvr channel osd -->
+                <onright condition="VideoPlayer.Content(livetv)">4</onright>
+
+                <itemgap>16</itemgap>
+                <orientation>horizontal</orientation>
+
                 <include>OSD_Video_Controls</include>
             </control>
 

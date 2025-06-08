@@ -1604,7 +1604,7 @@
                 <onfocus condition="!String.IsEqual(Window(Home).Property(moviecontent),1)">ClearProperty(moviecontent,Home)</onfocus>
                 <onfocus>SetProperty(moviecontent,1,Home)</onfocus>
 
-                <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)]">RunScript(plugin.video.themoviedb.helper,add_path='"$INFO[ListItem.TVShowTitle,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D]"',call_auto=1190)</onclick>
+                <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)]">RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.TvShowDBID],tmdb_type=tv,call_auto=1190)</onclick>
 
                 <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=tv&amp;tmdb_id=$INFO[Window(Home).Property(Set_Movie_TvShow_TMDb_id)],call_auto=1190),00:00,silent)</onclick>
 
@@ -1622,6 +1622,16 @@
 
                 <onclick condition="String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(Director_Query))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(Director_Query)],call_auto=1190)</onclick>
 
+                <!-- SEARCH CREATOR INFO -->
+
+                <onclick condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SelectPerson,1,home)</onclick>
+
+                <onclick condition="!String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(SetCreatorSelected)],type=person,call_auto=1190)</onclick>
+
+                <!-- SEARCH CREATOR INFO -->
+
+                <onclick condition="String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(Creator_Query))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(Creator_Query)],call_auto=1190)</onclick>
+
                 <!-- CLEANUP -->
 
                 <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Set_Movie_TvShow_TMDb_id,Home)</onclick>
@@ -1634,7 +1644,6 @@
 
                 <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] +
                 !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetWriterSelected,Home)</onclick>
-
 
                 <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(SetCreatorSelected,Home)</onclick>
 

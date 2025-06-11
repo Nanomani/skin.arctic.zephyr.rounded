@@ -130,10 +130,10 @@
     <!-- =================================== -->
 
     <variable name="Image_Content_Fanart_TMDb">
-        <value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)]$VAR[Path_Param_Widget_Detail]</value>
-        <value condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)]$VAR[Path_Param_Widget_Detail]</value>
-        <value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(Window(Home).Property(Item_Title))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;query=$INFO[Window(Home).Property(Item_Title)]&amp;year=$INFO[Window(Home).Property(Item_Year)]$VAR[Path_Param_Widget_Detail]</value>
-        <value condition="String.IsEqual(ListItem.DBType,episode) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tvshow.tmdb_id))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tvshow.tmdb_id)]$VAR[Path_Param_Widget_Detail]</value>
+        <value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)]$VAR[Path_Param_Widget_Cache_Only]</value>
+        <value condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tmdb_id))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)]$VAR[Path_Param_Widget_Cache_Only]</value>
+        <value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(Window(Home).Property(Item_Title))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;query=$INFO[Window(Home).Property(Item_Title)]&amp;year=$INFO[Window(Home).Property(Item_Year)]$VAR[Path_Param_Widget_Cache_Only]</value>
+        <value condition="String.IsEqual(ListItem.DBType,episode) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.tvshow.tmdb_id))">plugin://plugin.video.themoviedb.helper?info=fanart&amp;tmdb_type=$VAR[Path_Dialog_Info_TMDbType]&amp;tmdb_id=$INFO[Window(Home).Property(TMDbHelper.ListItem.tvshow.tmdb_id)]$VAR[Path_Param_Widget_Cache_Only]</value>
     </variable>
 
     <include name="Image_Content_Additional_Fanart">
@@ -475,7 +475,7 @@
     <!-- </variable> -->
 
     <variable name="Def_Person_List_Movies">
-        <value condition="!Skin.HasSetting(filter.video.only.local)">plugin://plugin.video.themoviedb.helper?info=stars_in_movies&amp;type=person&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]&amp;exclude_key=genre&amp;exclude_value=Documentaire$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Limit]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local)">plugin://plugin.video.themoviedb.helper?info=stars_in_movies&amp;type=person&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]&amp;exclude_key=genre&amp;exclude_value=Documentaire$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + !Skin.HasSetting(filter.video.animation)">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22actor%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[ListItem.Label]%22%5d%7d%5d%7d%2c%22type%22%3a%22movies%22%7d</value>
 
@@ -485,7 +485,7 @@
     </variable>
 
     <variable name="Def_Person_List_TvShows">
-        <value condition="!Skin.HasSetting(filter.video.only.local)">plugin://plugin.video.themoviedb.helper?info=stars_in_tvshows&amp;type=person&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Limit]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local)">plugin://plugin.video.themoviedb.helper?info=stars_in_tvshows&amp;type=person&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
         <value condition="Skin.HasSetting(filter.video.only.local) + !Skin.HasSetting(filter.video.animation)">videodb://tvshows/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22actor%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[ListItem.Label]%22%5d%7d%5d%7d%2c%22type%22%3a%22tvshows%22%7d</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + Skin.HasSetting(filter.video.animation) + String.Contains(ListItem.Genre,animation)">videodb://tvshows/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22actor%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[ListItem.Label]%22%5d%7d%2c%7b%22field%22%3a%22genre%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$LOCALIZE[31480]%22%5d%7d%5d%7d%2c%22type%22%3a%22tvshows%22%7d</value>
@@ -530,11 +530,11 @@
     <variable name="Def_List_Year">
 
         <!-- tvshow -->
-        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !Skin.HasSetting(filter.video.animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=tv&amp;first_air_date_year=$INFO[ListItem.Year]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !Skin.HasSetting(filter.video.animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=tv&amp;first_air_date_year=$INFO[ListItem.Year]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
-        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + Skin.HasSetting(filter.video.animation) + String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=tv&amp;first_air_date_year=$INFO[ListItem.Year]&amp;with_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + Skin.HasSetting(filter.video.animation) + String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=tv&amp;first_air_date_year=$INFO[ListItem.Year]&amp;with_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
-        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + Skin.HasSetting(filter.video.animation) + !String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=tv&amp;first_air_date_year=$INFO[ListItem.Year]&amp;without_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + Skin.HasSetting(filter.video.animation) + !String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=tv&amp;first_air_date_year=$INFO[ListItem.Year]&amp;without_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !Skin.HasSetting(filter.video.animation)">videodb://tvshows/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22year%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[ListItem.Year]%22%5d%7d%5d%7d%2c%22type%22%3a%22tvshows%22%7d</value>
 
@@ -545,13 +545,13 @@
 
 
         <!-- movie not local only  - without filter " animation" -->
-        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !Skin.HasSetting(filter.video.animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=movie&amp;primary_release_year=$INFO[ListItem.Year]&amp;exclude_key=title&amp;exclude_value=$INFO[ListItem.Title]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !Skin.HasSetting(filter.video.animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=movie&amp;primary_release_year=$INFO[ListItem.Year]&amp;exclude_key=title&amp;exclude_value=$INFO[ListItem.Title]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
         <!-- movie not local only  - with filter " animation" + type animation -->
-        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + Skin.HasSetting(filter.video.animation) + String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=movie&amp;primary_release_year=$INFO[ListItem.Year]&amp;exclude_key=title&amp;exclude_value=$INFO[ListItem.Title]&amp;with_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + Skin.HasSetting(filter.video.animation) + String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=movie&amp;primary_release_year=$INFO[ListItem.Year]&amp;exclude_key=title&amp;exclude_value=$INFO[ListItem.Title]&amp;with_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
         <!-- movie not local only  - with filter " animation" + type NO animation -->
-        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + Skin.HasSetting(filter.video.animation) + !String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=movie&amp;primary_release_year=$INFO[ListItem.Year]&amp;exclude_key=title&amp;exclude_value=$INFO[ListItem.Title]&amp;without_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + Skin.HasSetting(filter.video.animation) + !String.Contains(ListItem.Genre,animation)">plugin://plugin.video.themoviedb.helper?info=discover&amp;type=movie&amp;primary_release_year=$INFO[ListItem.Year]&amp;exclude_key=title&amp;exclude_value=$INFO[ListItem.Title]&amp;without_genres=$LOCALIZE[31480]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
         <!-- movie local only - without filter " animation" -->
         <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !Skin.HasSetting(filter.video.animation)">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22year%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[ListItem.Year]%22%5d%7d%5d%7d%2c%22type%22%3a%22movies%22%7d</value>
@@ -564,9 +564,9 @@
     </variable>
 
     <variable name="Def_List_Studio">
-        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(Studio_Query))">plugin://plugin.video.themoviedb.helper/?info=discover$INFO[Window(Home).Property(Studio_Query)]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(Studio_Query))">plugin://plugin.video.themoviedb.helper/?info=discover$INFO[Window(Home).Property(Studio_Query)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
-        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Network_Query))">plugin://plugin.video.themoviedb.helper/?info=discover$INFO[Window(Home).Property(Network_Query)]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Page]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Network_Query))">plugin://plugin.video.themoviedb.helper/?info=discover$INFO[Window(Home).Property(Network_Query)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Page]</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(Encoded.ListItem.Studio))">videodb://movies/titles/?xsp=%7b%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22studio%22%2c%22operator%22%3a%22is%22%2c%22value%22%3a%5b%22$INFO[Window(Home).Property(Encoded.ListItem.Studio)]%22%5d%7d%5d%7d%2c%22type%22%3a%22movies%22%7d</value>
 
@@ -592,7 +592,7 @@
     <!-- =================================== -->
 
     <variable name="Def_List_Creator">
-        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(Creator_Query))">plugin://plugin.video.themoviedb.helper/?info=crew_in_both&amp;type=person&amp;filter_key=job&amp;filter_value=Creator$INFO[Window(Home).Property(Creator_Query)]$VAR[Path_Param_Widget_Detail]$VAR[Path_Param_Limit]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(Creator_Query))">plugin://plugin.video.themoviedb.helper/?info=crew_in_both&amp;type=person&amp;filter_key=job&amp;filter_value=Creator$INFO[Window(Home).Property(Creator_Query)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Limit]</value>
     </variable>
 
     <variable name="Def_List_Seasons">
@@ -750,7 +750,7 @@
     </variable>
 
     <variable name="Path_Param_Page">
-        <value>&amp;page=1&amp;length=5</value>
+        <value>&amp;page=1&amp;length=3</value>
     </variable>
 
     <variable name="Path_Param_Limit">

@@ -3,41 +3,47 @@
     <defaultcontrol always="true">29</defaultcontrol>
     <controls>
         <include>Background_Overlay</include>
+
         <control type="group">
-            <include content="Def_Dialog_InfoPanel"><param name="height" value="866" /><param name="width" value="1722" /><param name="colordiffuse" value="Panel" /></include>
+            <include content="Def_Dialog_Background"><param name="height" value="866" /><param name="width" value="1722" /></include>
 
             <include content="Def_Dialog_Header">
                 <param name="label" value="$VAR[Label_Header_PVR_Group_Manager]$INFO[Container(13).NumItems, (,)]" />
                 <param name="icon" value="settings" />
             </include>
 
+            <!-- LIST LEFT -->
+
             <control type="group">
                 <description>Group list</description>
                 <left>0</left>
                 <top>90</top>
 
+                <!-- TITLE -->
+
                 <control type="label" id="20">
                     <description>Name label</description>
                     <top>20</top>
                     <left>30</left>
-                    <width>454</width>
+                    <width>392</width>
                     <height>34</height>
-                    <font>TinyBold</font>
+                    <font>Tiny</font>
                     <!-- <label>$LOCALIZE[31079]: $INFO[Container(13).NumItems]</label> -->
                 </control>
 
-                <!-- LIST LEFT -->
-
                 <control type="list" id="13">
+                    <include>Animation_Scrolltime_Views_List</include>
+
                     <top>70</top>
                     <left>16</left>
                     <width>422</width>
                     <height>630</height>
-                    <onleft>9000</onleft>
-                    <onright>60</onright>
+
                     <onup>13</onup>
                     <ondown>13</ondown>
-                    <include>Animation_Scrolltime_Views_List</include>
+                    <onright>60</onright>
+                    <onleft>9000</onleft>
+
                     <pagecontrol>60</pagecontrol>
 
                     <itemlayout height="70" width="422">
@@ -82,66 +88,76 @@
                         </control>
                     </focusedlayout>
                 </control>
+
+                <!-- SCROLLBAR -->
+
+                <include content="Object_Scrollbar_Dialog_Vertical">
+                    <param name="scrollid" value="60" />
+                    <param name="top" value="70" />
+                    <param name="onleft" value="13" />
+                    <param name="onright" value="11" />
+                    <param name="centerright" value="1268" />
+                    <param name="height" value="630" />
+                </include>
+
+                <!-- LINE VERTICAL -->
+
+                <control type="image">
+                    <top>17</top>
+                    <right>1268</right>
+                    <bottom>17</bottom>
+                    <width>1</width>
+                    <texture colordiffuse="Black12">common/white.png</texture>
+                    <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(60) + !Container.Scrolling">Conditional</animation>
+                </control>
+
+                <!-- NUM ITEMS -->
+
+                <control type="label">
+                    <right>1298</right>
+                    <height>44</height>
+                    <bottom>17</bottom>
+                    <align>right</align>
+                    <font>Tiny</font>
+                    <textcolor>Black70</textcolor>
+                    <label>$INFO[Container(13).CurrentItem]$INFO[Container(13).NumItems, / ,]</label>
+                </control>
             </control>
 
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="60" />
-                <param name="top" value="146" />
-                <param name="onleft" value="13" />
-                <param name="onright" value="11" />
-                <param name="centerright" value="1268" />
-                <param name="height" value="630" />
-            </include>
-
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <right>1268</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(60) + !Container.Scrolling">Conditional</animation>
-            </control>
-
-            <!-- NUM ITEMS -->
-
-            <control type="label">
-                <right>1298</right>
-                <font>Tiny</font>
-                <height>44</height>
-                <bottom>17</bottom>
-                <align>right</align>
-                <textcolor>Black70</textcolor>
-                <label>$INFO[Container(13).CurrentItem]$INFO[Container(13).NumItems, / ,]</label>
-            </control>
+            <!-- LIST CENTER -->
 
             <control type="group">
                 <description>Group list</description>
-                <left>454</left>
                 <top>90</top>
+                <left>454</left>
+
+                <!-- TITLE -->
 
                 <control type="label" id="21">
                     <description>Name label</description>
                     <left>30</left>
                     <top>20</top>
-                    <width>454</width>
+                    <width>392</width>
                     <height>34</height>
-                    <font>TinyBold</font>
+                    <font>Tiny</font>
                 </control>
 
                 <control type="list" id="11">
-                    <left>0</left>
+                    <include>Animation_Scrolltime_Views_List</include>
+
                     <top>70</top>
-                    <width>454</width>
+                    <left>16</left>
+                    <width>422</width>
                     <height>630</height>
-                    <onleft>13</onleft>
-                    <onright>61</onright>
+
                     <onup>11</onup>
                     <ondown>11</ondown>
-                    <include>Animation_Scrolltime_Views_List</include>
+                    <onleft>13</onleft>
+                    <onright>61</onright>
+
                     <pagecontrol>61</pagecontrol>
-                    <itemlayout height="70" width="454">
+
+                    <itemlayout height="70" width="422">
                         <control type="image">
                             <left>25</left>
                             <top>7</top>
@@ -156,94 +172,98 @@
                             <label>$INFO[ListItem.Label]</label>
                         </control>
                     </itemlayout>
-                    <focusedlayout height="70" width="454">
-                        <control type="group">
-                            <control type="image">
-                                <width>100%</width>
-                                <height>70</height>
-                                <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
-                                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(11)">Conditional</animation>
-                            </control>
-                            <control type="image">
-                                <left>7</left>
-                                <top>7</top>
-                                <width>56</width>
-                                <height>56</height>
-                                <aspectratio align="left">keep</aspectratio>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
-                            </control>
-                            <control type="label">
-                                <left>105</left>
-                                <right>30</right>
-                                <height>70</height>
-                                <aligny>center</aligny>
-                                <textcolor>Selected</textcolor>
-                                <label>$INFO[ListItem.Label]</label>
-                            </control>
+                    <focusedlayout height="70" width="422">
+                        <control type="image">
+                            <width>100%</width>
+                            <height>70</height>
+                            <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+                            <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(11)">Conditional</animation>
+                        </control>
+                        <control type="image">
+                            <left>25</left>
+                            <top>7</top>
+                            <width>56</width>
+                            <height>56</height>
+                            <aspectratio align="left">keep</aspectratio>
+                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                        </control>
+                        <control type="label">
+                            <left>105</left>
+                            <right>30</right>
+                            <height>70</height>
+                            <aligny>center</aligny>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
                         </control>
                     </focusedlayout>
                 </control>
-            </control>
 
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="61" />
-                <param name="top" value="146" />
-                <param name="onleft" value="13" />
-                <param name="onright" value="12" />
-                <param name="centerright" value="814" />
-                <param name="height" value="630" />
-            </include>
+                <!-- SCROLLBAR -->
 
-            <!-- LINE VERTICAL -->
+                <include content="Object_Scrollbar_Dialog_Vertical">
+                    <param name="scrollid" value="61" />
+                    <param name="top" value="70" />
+                    <param name="onleft" value="13" />
+                    <param name="onright" value="12" />
+                    <param name="centerright" value="814" />
+                    <param name="height" value="630" />
+                </include>
 
-            <control type="image">
-                <right>814</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(61) + !Container.Scrolling">Conditional</animation>
-            </control>
+                <!-- LINE VERTICAL -->
 
-            <!-- NUM ITEMS -->
+                <control type="image">
+                    <right>814</right>
+                    <top>17</top>
+                    <bottom>17</bottom>
+                    <width>1</width>
+                    <texture colordiffuse="Black12">common/white.png</texture>
+                    <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(61) + !Container.Scrolling">Conditional</animation>
+                </control>
 
-            <control type="label">
-                <right>844</right>
-                <font>Tiny</font>
-                <height>44</height>
-                <bottom>17</bottom>
-                <align>right</align>
-                <textcolor>Black70</textcolor>
-                <label>$INFO[Container(11).CurrentItem]$INFO[Container(11).NumItems, / ,]</label>
+                <!-- NUM ITEMS -->
+
+                <control type="label">
+                    <right>844</right>
+                    <font>Tiny</font>
+                    <height>44</height>
+                    <bottom>17</bottom>
+                    <align>right</align>
+                    <textcolor>Black70</textcolor>
+                    <label>$INFO[Container(11).CurrentItem]$INFO[Container(11).NumItems, / ,]</label>
+                </control>
             </control>
 
             <!-- LIST RIGHT -->
 
             <control type="group">
                 <description>Group list</description>
-                <left>908</left>
                 <top>90</top>
+                <left>908</left>
 
                 <control type="label" id="22">
                     <description>Name label</description>
                     <left>30</left>
                     <top>20</top>
-                    <width>454</width>
+                    <width>392</width>
                     <height>34</height>
-                    <font>TinyBold</font>
+                    <font>Tiny</font>
                 </control>
 
                 <control type="list" id="12">
+                    <include>Animation_Scrolltime_Views_List</include>
+
                     <top>70</top>
                     <left>16</left>
                     <width>422</width>
                     <height>630</height>
-                    <onleft>11</onleft>
-                    <onright>62</onright>
+
                     <onup>12</onup>
                     <ondown>12</ondown>
-                    <include>Animation_Scrolltime_Views_List</include>
+                    <onleft>11</onleft>
+                    <onright>62</onright>
+
                     <pagecontrol>62</pagecontrol>
+
                     <itemlayout height="70" width="422">
                         <control type="image">
                             <left>7</left>
@@ -286,38 +306,40 @@
                         </control>
                     </focusedlayout>
                 </control>
-            </control>
 
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="62" />
-                <param name="top" value="146" />
-                <param name="onleft" value="12" />
-                <param name="onright" value="9000" />
-                <param name="centerright" value="360" />
-                <param name="height" value="630" />
-            </include>
+                <!-- SCROLLBAR -->
 
-            <!-- LINE VERTICAL -->
+                <include content="Object_Scrollbar_Dialog_Vertical">
+                    <param name="scrollid" value="62" />
+                    <param name="top" value="70" />
+                    <param name="onleft" value="12" />
+                    <param name="onright" value="9000" />
+                    <param name="centerright" value="360" />
+                    <param name="height" value="630" />
+                </include>
 
-            <control type="image">
-                <right>360</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(62) + !Container.Scrolling">Conditional</animation>
-            </control>
+                <!-- LINE VERTICAL -->
 
-            <!-- NUM ITEMS -->
+                <control type="image">
+                    <top>17</top>
+                    <bottom>17</bottom>
+                    <right>360</right>
+                    <width>1</width>
+                    <texture colordiffuse="Black12">common/white.png</texture>
+                    <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(62) + !Container.Scrolling">Conditional</animation>
+                </control>
 
-            <control type="label">
-                <right>390</right>
-                <font>Tiny</font>
-                <height>44</height>
-                <bottom>17</bottom>
-                <align>right</align>
-                <textcolor>Black70</textcolor>
-                <label>$INFO[Container(12).CurrentItem]$INFO[Container(12).NumItems, / ,]</label>
+                <!-- NUM ITEMS -->
+
+                <control type="label">
+                    <right>390</right>
+                    <font>Tiny</font>
+                    <height>44</height>
+                    <bottom>17</bottom>
+                    <align>right</align>
+                    <textcolor>Black70</textcolor>
+                    <label>$INFO[Container(12).CurrentItem]$INFO[Container(12).NumItems, / ,]</label>
+                </control>
             </control>
 
             <!-- BUTTON -->

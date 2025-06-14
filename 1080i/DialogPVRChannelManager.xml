@@ -18,24 +18,29 @@
                 <top>112</top>
                 <width>1230</width>
 
+                <!-- LEFT LIST -->
+
                 <control type="list" id="20">
+                    <!-- <visible>!Window.IsActive(contextmenu)</visible> -->
+                    <include>Animation_Scrolltime_Views_List</include>
+
                     <left>16</left>
                     <width>598</width>
                     <height>720</height>
+
                     <onup>20</onup>
                     <ondown>20</ondown>
                     <onleft>8003</onleft>
                     <onright>60</onright>
-                    <pagecontrol>60</pagecontrol>
-                    <include>Animation_Scrolltime_Views_List</include>
-                    <visible>!Window.IsActive(contextmenu)</visible>
 
-                    <itemlayout height="70" width="598">
+                    <pagecontrol>60</pagecontrol>
+
+                    <itemlayout height="80" width="598">
                         <control type="image">
-                            <left>25</left>
                             <top>10</top>
-                            <width>56</width>
-                            <height>56</height>
+                            <left>14</left>
+                            <width>60</width>
+                            <height>60</height>
                             <aspectratio align="left">keep</aspectratio>
                             <texture background="true">$INFO[ListItem.Icon]</texture>
                         </control>
@@ -45,37 +50,34 @@
                             <label>$INFO[ListItem.Property(Number),(,) ]$INFO[ListItem.Property(Name)]</label>
                         </control>
                     </itemlayout>
-                    <focusedlayout height="100" width="598">
-                        <control type="group">
-                            <control type="image">
-                                <width>100%</width>
-                                <height>96</height>
-                                <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
-                                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(20)">Conditional</animation>
-                            </control>
-                            <control type="image">
-                                <left>25</left>
-                                <top>10</top>
-                                <width>56</width>
-                                <height>56</height>
-                                <aspectratio align="left">keep</aspectratio>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
-                            </control>
-                            <control type="label">
-                                <left>105</left>
-                                <right>30</right>
-                                <textcolor>Selected</textcolor>
-                                <label>$INFO[ListItem.Property(Number),(,) ]$INFO[ListItem.Property(Name)]</label>
-                            </control>
-                            <control type="label">
-                                <bottom>3</bottom>
-                                <left>105</left>
-                                <font>Mini</font>
-                                <right>30</right>
-                                <height>50</height>
-                                <textcolor>Selected</textcolor>
-                                <label>$INFO[ListItem.Property(ClientName),$LOCALIZE[19210]: ,]</label>
-                            </control>
+                    <focusedlayout height="80" width="598">
+                        <control type="image">
+                            <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+                            <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(20)">Conditional</animation>
+                        </control>
+                        <control type="image">
+                            <top>10</top>
+                            <left>14</left>
+                            <width>60</width>
+                            <height>60</height>
+                            <aspectratio align="left">keep</aspectratio>
+                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                        </control>
+                        <control type="label">
+                            <top>-10</top>
+                            <left>105</left>
+                            <right>45</right>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Property(Number),(,) ]$INFO[ListItem.Property(Name)]</label>
+                        </control>
+                        <control type="label">
+                            <left>105</left>
+                            <right>45</right>
+                            <height>50</height>
+                            <bottom>0</bottom>
+                            <font>Mini</font>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Property(ClientName),$LOCALIZE[19210]: ,]</label>
                         </control>
                     </focusedlayout>
                 </control>
@@ -83,16 +85,18 @@
                 <!-- RIGHT LIST -->
 
                 <control type="grouplist" id="8002">
+                    <include>Animation_Scrolltime_Views_List</include>
+
                     <left>630</left>
                     <width>614</width>
                     <height>720</height>
 
                     <onleft>20</onleft>
                     <onright>8003</onright>
-                    <orientation>vertical</orientation>
+
                     <itemgap>3</itemgap>
+                    <orientation>vertical</orientation>
                     <usecontrolcoords>true</usecontrolcoords>
-                    <include>Animation_Scrolltime_Views_List</include>
 
                     <control type="radiobutton" id="7">
                         <description>Channel activated</description>
@@ -171,6 +175,8 @@
                     </control>
                 </control>
 
+                <!-- CHANNEL LOGO -->
+
 				<control type="image">
 					<right>11</right>
                     <align>right</align>
@@ -191,6 +197,27 @@
                     <texture colordiffuse="Black12">common/white.png</texture>
                 </control>
             </control>
+
+            <!-- LINE VERTICAL -->
+
+            <control type="image">
+                <left>630</left>
+                <top>112</top>
+                <bottom>130</bottom>
+                <width>1</width>
+                <texture colordiffuse="Black12">common/white.png</texture>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(60) + !Container.Scrolling">Conditional</animation>
+            </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="60" />
+                <param name="onleft" value="20" />
+                <param name="onright" value="8002" />
+                <param name="centerright" value="630" />
+                <param name="height" value="720" />
+            </include>
 
             <!-- BUTTON ON BOTTOM -->
 
@@ -220,28 +247,6 @@
                     <param name="label" value="$LOCALIZE[222]" />
                 </include>
             </control>
-
-            <!-- SCROLLBAR -->
-
-            <include content="Object_Scrollbar_Dialog_Vertical">
-                <param name="scrollid" value="60" />
-                <param name="onleft" value="20" />
-                <param name="onright" value="8002" />
-                <param name="centerright" value="630" />
-                <param name="height" value="716" />
-            </include>
-
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <left>630</left>
-                <top>112</top>
-                <bottom>130</bottom>
-                <width>1</width>
-                <texture colordiffuse="Black12">common/white.png</texture>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(60) + !Container.Scrolling">Conditional</animation>
-            </control>
-
         </control>
     </controls>
 </window>

@@ -1137,6 +1137,7 @@
             <include>Def_OSD_UpDown_Video_Info</include>
             <onclick>EjectTray()</onclick>
         </include>
+
         <!-- <control type="button" id="9002"> -->
             <!-- <width>48</width> -->
             <!-- <height>48</height> -->
@@ -1202,8 +1203,11 @@
             <!-- <onclick>ActivateWindow(Teletext)</onclick> -->
             <!-- <visible>VideoPlayer.HasTeletext</visible> -->
         <!-- </control> -->
-        <include content="Object_OSD_Button">
-            <param name="visible" value="Integer.IsGreater(Playlist.Length(video),1) + !Pvr.IsPlayingTv" />
+
+        <!-- VIDEO PLAYLIST -->
+
+        <include content="Object_OSD_Button" condition="Integer.IsGreater(Playlist.Length(video),1) + !Pvr.IsPlayingTv">
+            <param name="visible" value="true" />
             <param name="icon" value="osd/playlist2.png" />
             <param name="id" value="33" />
             <param name="groupid" value="6799" />
@@ -1212,6 +1216,9 @@
             <onclick>Dialog.Close(all,true)</onclick>
             <onclick>ActivateWindow(videoplaylist)</onclick>
         </include>
+
+        <!-- SETTINGS -->
+
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="icon" value="osd/preset.png" />
@@ -1220,7 +1227,6 @@
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
             <include>Def_OSD_UpDown_Video_Info</include>
             <onclick>ActivateWindow(1121)</onclick>
-            <!-- <onclick>SetFocus(9000)</onclick> -->
         </include>
     </include>
 
@@ -1821,6 +1827,8 @@
 
                 <control type="image">
                     <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.osd.video.flags.imdb.rating) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <width>70</width>
+                    <left>30</left>
                     <include>Def_Flag_Image</include>
                     <texture colordiffuse="$VAR[Color_OSD_Panel_White70]">flags/rating/white/imdb/imdb_white.png</texture>
                 </control>

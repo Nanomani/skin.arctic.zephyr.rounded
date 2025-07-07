@@ -301,11 +301,11 @@
     <!-- =================================== -->
 
     <variable name="Path_Actor_Dialog_Info">
-        <value>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Container(50).ListItem.Label],type=person,call_auto=1190)</value>
+        <value>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Container(50).ListItem.Label],type=person,call_auto=1190,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_tmdb_id=$INFO[Window(Home).Property(origin_tmdb_id)],return)</value>
     </variable>
 
     <variable name="Path_Actor_Dialog_Info_TMDb">
-        <value>RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Container($PARAM[controlid]).ListItem.Property(tmdb_id)],call_auto=1190)</value>
+        <value>RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Container($PARAM[controlid]).ListItem.Property(tmdb_id)],call_auto=1190,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_tmdb_id=$INFO[Window(Home).Property(origin_tmdb_id)],return)</value>
     </variable>
 
     <!-- =================================== -->
@@ -447,7 +447,7 @@
 
         <!-- TMDB HELPER -->
 
-        <value condition="!Skin.HasSetting(filter.video.only.local)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1190),00:00,silent)</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1190,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_tmdb_id=$INFO[Window(Home).Property(origin_tmdb_id)],return),00:00,silent)</value>
 
         <!-- SEASON -->
 
@@ -463,7 +463,7 @@
     </variable>
 
     <variable name="Def_Browse_List_Episode">
-        <value>AlarmClock(call_list_episode,RunScript(plugin.video.themoviedb.helper,close_dialog=1190,call_path=$INFO[ListItem.FolderPath]),00:01,silent)</value>
+        <value>AlarmClock(call_list_episode,RunScript(plugin.video.themoviedb.helper,close_dialog=1190,"call_path=$INFO[ListItem.FolderPath]"),00:01,silent)</value>
     </variable>
 
     <!-- =================================== -->
@@ -742,6 +742,20 @@
 
     <variable name="Path_Set_TMDb_ID">
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Set.TMDb_ID))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.TMDb_ID),&amp;tmdb_id=,]</value>
+    </variable>
+
+    <variable name="Path_InfoParams_TMDbType">
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),movie)">movie</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),tvshow)">tv</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),season)">tv</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),episode)">tv</value>
+    </variable>
+
+    <variable name="Path_InfoParams_TMDbID">
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),movie)">$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),tvshow)">$INFO[Window(Home).Property(TMDbHelper.ListItem.tmdb_id)]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),season)">$INFO[Window(Home).Property(TMDbHelper.ListItem.tvshow.tmdb_id)]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),episode)">$INFO[Window(Home).Property(TMDbHelper.ListItem.tvshow.tmdb_id)]</value>
     </variable>
 
     <!-- =================================== -->

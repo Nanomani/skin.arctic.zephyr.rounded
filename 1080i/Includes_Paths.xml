@@ -301,11 +301,11 @@
     <!-- =================================== -->
 
     <variable name="Path_Actor_Dialog_Info">
-        <value>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Container(50).ListItem.Label],type=person,call_auto=1190$VAR[Path_Info_First_Item])</value>
+        <value>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Container(50).ListItem.Label],type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</value>
     </variable>
 
     <variable name="Path_Actor_Dialog_Info_TMDb">
-        <value>RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Container($PARAM[controlid]).ListItem.Property(tmdb_id)],call_auto=1190$VAR[Path_Info_First_Item])</value>
+        <value>RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Container($PARAM[controlid]).ListItem.Property(tmdb_id)],call_auto=1190$VAR[Path_Info_First_Item],return)</value>
     </variable>
 
     <!-- =================================== -->
@@ -447,7 +447,7 @@
 
         <!-- TMDB HELPER -->
 
-        <value condition="!Skin.HasSetting(filter.video.only.local)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1190$VAR[Path_Info_First_Item]),00:00,silent)</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</value>
 
         <!-- SEASON -->
 
@@ -455,11 +455,11 @@
 
         <!-- LOCAL ONLY -->
 
-        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.DBID],tmdb_type=movie,call_auto=1190$VAR[Path_Info_First_Item]),00:00,silent)</value>
+        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.DBID],tmdb_type=movie,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</value>
 
-        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,tvshow)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.DBID],tmdb_type=tv,call_auto=1190$VAR[Path_Info_First_Item]),00:00,silent)</value>
+        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,tvshow)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.DBID],tmdb_type=tv,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</value>
 
-        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,episode)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.DBID],tmdb_type=episode,call_auto=1190$VAR[Path_Info_First_Item]),00:00,silent)</value>
+        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,episode)">AlarmClock(callinfo,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[ListItem.DBID],tmdb_type=episode,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</value>
     </variable>
 
     <variable name="Def_Browse_List_Episode">
@@ -778,11 +778,10 @@
     </variable>
 
     <variable name="Path_Info_First_Item">
-        <value condition="!Window.IsVisible(1190) + !String.IsEmpty(Window(Home).Property(origin_dbid))">,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_dbid=$INFO[Window(Home).Property(origin_dbid)],return</value>
+        <value condition="!Window.IsVisible(1190) + !String.IsEmpty(Window(Home).Property(origin_dbid))">,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_dbid=$INFO[Window(Home).Property(origin_dbid)]</value>
 
-        <value condition="!Window.IsVisible(1190) + !String.IsEmpty(Window(Home).Property(origin_tmdb_id))">,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_tmdb_id=$INFO[Window(Home).Property(origin_tmdb_id)],return</value>
+        <value condition="!Window.IsVisible(1190) + !String.IsEmpty(Window(Home).Property(origin_tmdb_id))">,origin_tmdb_type=$INFO[Window(Home).Property(origin_tmdb_type)],origin_tmdb_id=$INFO[Window(Home).Property(origin_tmdb_id)]</value>
     </variable>
-
 
 
     <!-- =================================== -->
@@ -798,7 +797,7 @@
     </variable>
 
     <variable name="Path_Param_Page_6">
-        <value>&amp;page=1&amp;length=3</value>
+        <value>&amp;page=1&amp;length=6</value>
     </variable>
 
     <variable name="Path_Param_Page_3">
@@ -806,7 +805,7 @@
     </variable>
 
     <variable name="Path_Param_Limit">
-        <value>&amp;limit=60</value>
+        <value>&amp;limit=140</value>
     </variable>
 
     <variable name="Path_Param_AggregateCast">

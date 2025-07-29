@@ -7,15 +7,18 @@
     <!-- <onunload condition="String.IsEmpty(Window(Home).Property(LaunchSearch)) | [!String.IsEmpty(Window(Home).Property(LaunchSearch)) + String.IsEmpty(Control.GetLabel(312).index(1))]">SetFocus(9099)</onunload>     -->
     <!-- !Window.IsVisible(Custom_1107_SearchDialog.xml) -->
 
+    <onunload condition="!String.IsEmpty(Control.GetLabel(312).index(1))">AlarmClock(delay_add_search_history,RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)]),00:01,silent)</onunload>
+
     <controls>
         <include>Background_Overlay</include>
 
-
         <control type="group">
             <visible>!Window.IsVisible(numericinput)</visible>
+
+            <centertop>40%</centertop>
             <include content="Def_Dialog_InfoPanel"><param name="height" value="522" /><param name="width" value="1532" /><param name="colordiffuse" value="Panel" /></include>
 
-            <!-- TITLE -->
+            <!-- TITLE HEADER -->
 
             <control type="label" id="311">
                 <description>Heading</description>
@@ -58,8 +61,8 @@
             </control>
             <control type="edit" id="312">
                 <description>Edit Text</description>
-                <onup condition="System.AddonIsEnabled(plugin.program.autocompletion)">8000</onup>
-                <onup condition="!System.AddonIsEnabled(plugin.program.autocompletion)">8001</onup>
+                <onup condition="Integer.IsGreater(Container(8000).NumItems,0)">8000</onup>
+                <onup condition="!Integer.IsGreater(Container(8000).NumItems,0)">8001</onup>
                 <onleft>310</onleft>
                 <onright>310</onright>
                 <ondown>7000</ondown>
@@ -70,6 +73,8 @@
                 <align>center</align>
                 <textcolor>Black70</textcolor>
                 <texturefocus border="9">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
+
+                <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)])</onclick>
             </control>
 
             <control type="group">
@@ -443,12 +448,18 @@
                 </control>
                 <control type="grouplist" id="8001">
                     <top>340</top>
-                    <orientation>horizontal</orientation>
+
                     <itemgap>10</itemgap>
-                    <ondown condition="System.AddonIsEnabled(plugin.program.autocompletion)">8000</ondown>
-                    <ondown condition="!System.AddonIsEnabled(plugin.program.autocompletion)">312</ondown>
+                    <orientation>horizontal</orientation>
+
+                    <ondown condition="Integer.IsGreater(Container(8000).NumItems,0)">8000</ondown>
+                    <ondown condition="!Integer.IsGreater(Container(8000).NumItems,0)">312</ondown>
+
                     <control type="radiobutton" id="300">
                         <onup>307</onup>
+
+                        <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)])</onclick>
+
                         <include content="Def_Button_Textures_NumPad">
                             <param name="icon" value="buttonsdialogs/enabled.png" />
                         </include>
@@ -493,13 +504,31 @@
                 </control>
             </control>
 
-            <!-- AUTOCOMPLETION -->
+            <!-- TITLE FOOTER -->
+
+            <control type="label">
+                <description>Heading</description>
+                <left>26</left>
+                <right>26</right>
+                <bottom>-82</bottom>
+                <height>75</height>
+                <align>center</align>
+                <scroll>true</scroll>
+                <scrollspeed>40</scrollspeed>
+                <font>SmallBold</font>
+                <textcolor>Selected</textcolor>
+                <label>$VAR[Label_Keyboard_Title_Footer]</label>
+                <visible>Integer.IsGreater(Container(8000).NumItems,0)</visible>
+            </control>
+
+            <!-- AUTOCOMPLETION / HISTORY SEARCH -->
 
             <control type="group">
-                <visible>System.AddonIsEnabled(plugin.program.autocompletion)</visible>
+                <!-- <visible>System.AddonIsEnabled(plugin.program.autocompletion)</visible> -->
+
                 <width>1532</width>
-                <height>91</height>
-                <bottom>-102</bottom>
+                <height>222</height>
+                <bottom>-304</bottom>
 
                 <include content="Def_Dialog_Background_Image">
                     <param name="colordiffuse" value="White100" />
@@ -507,17 +536,18 @@
                 </include>
 
                 <control type="panel" id="8000">
-                    <top>11</top>
-                    <left>11</left>
-                    <right>11</right>
+                    <include content="Def_Padding"><param name="pad">5</param></include>
                     <onup>8001</onup>
                     <ondown>312</ondown>
-                    <orientation>horizontal</orientation>
 
-                    <itemlayout height="69" width="304">
+                    <!-- <onclick condition="String.IsEmpty(Control.GetLabel(312).index(1))">SetFocus(300)</onclick> -->
+                    <onclick condition="String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,set_editcontrol=312,text=$INFO[Container(8000).ListItem.Label],setfocus=300,setfocus_wait=00:00)</onclick>
+
+                    <!-- <orientation>horizontal</orientation> -->
+
+                    <itemlayout height="70" width="304">
                         <control type="group">
-                            <left>0</left>
-                            <right>10</right>
+                            <include content="Def_Padding"><param name="pad">5</param></include>
                             <control type="image">
                                 <width>100%</width>
                                 <height>100%</height>
@@ -534,10 +564,9 @@
                             </control>
                         </control>
                     </itemlayout>
-                    <focusedlayout height="69" width="304">
+                    <focusedlayout height="70" width="304">
                         <control type="group">
-                            <left>0</left>
-                            <right>10</right>
+                            <include content="Def_Padding"><param name="pad">5</param></include>
                             <control type="image">
                                 <width>100%</width>
                                 <height>100%</height>
@@ -554,8 +583,7 @@
                             </control>
                         </control>
                     </focusedlayout>
-
-                    <content>$VAR[Path_Auto_Completion]</content>
+                    <content limit="15">$VAR[Path_Auto_Completion]</content>
                 </control>
             </control>
         </control>

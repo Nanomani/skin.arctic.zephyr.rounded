@@ -12,7 +12,7 @@
     <onload>ClearProperty(SlideHomeNowPlaying,Home)</onload>
     <onload>ClearProperty(ShowArtistInfo,Home)</onload>
 
-    <onload condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_artist)) + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album)] + !Window.IsVisible(DialogMusicInfo.xml)">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Artist&amp;&amp;$INFO[Window(Home).Property(TMDbHelper.ListItem.base_artist)]")</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.base_artist)) + !Window.IsVisible(DialogMusicInfo.xml)">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Artist&amp;&amp;$INFO[Window(Home).Property(TMDbHelper.ListItem.base_artist)]")</onload>
 
     <onunload> ClearProperty(SlideHomeNowPlaying,Home)</onunload>
 
@@ -24,9 +24,9 @@
         <control type="group">
             <include>Animation_Dialog_Menu_RightSide</include>
 
-            <!-- <include content="Animation_ZoomIn"> -->
-                <!-- <param name="windowopen_delay" value="400" /> -->
-            <!-- </include> -->
+            <include content="Animation_ZoomIn">
+                <param name="windowopen_delay" value="400" />
+            </include>
 
             <include content="Def_Dialog_Background"><param name="height" value="728" /><param name="width" value="1020" /></include>
 
@@ -358,6 +358,28 @@
                     <param name="texture" value="$VAR[Image_Context_Menu_Icon]" />
                     <param name="aspectratio" value="keep" />
                     <param name="visible" value="!$EXP[Exp_ContextMenu_HasPoster] + [String.StartsWith(ListItem.Icon,Default) | Window.IsActive(filemanager)]" />
+                </include>
+            </control>
+
+            <!-- TITLE -->
+            <control type="grouplist">
+                <top>500</top>
+                <left>60</left>
+                <width>410</width>
+
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Def_Context_Menu_Information">
+                    <param name="label" value="&#61747;" />
+                    <param name="value" value="$INFO[Window(Home).Property(TMDbHelper.ListItem.base_artist)]" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),artist) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song)" />
+                </include>
+                <include content="Def_Context_Menu_Information">
+                    <param name="label" value="&#62292;" />
+                    <param name="value" value="$INFO[Window(Home).Property(TMDbHelper.ListItem.base_album)]" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song)" />
                 </include>
             </control>
         </control>

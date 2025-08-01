@@ -87,8 +87,8 @@
                 <param name="groupid" value="6399" />
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <!-- <onclick>Dialog.Close(contextmenu)</onclick> -->
-                <onclick>RunScript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],tmdb_type=$VAR[Path_ContextParams_TMDbType],language=$VAR[Path_Wikipedia_Language])</onclick>
-                <!-- <onclick>runscript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],tmdb_type=movie,language=$VAR[Path_Wikipedia_Language])</onclick> -->
+                <onclick condition="![String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),artist) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song)]">RunScript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],tmdb_type=$VAR[Path_ContextParams_TMDbType],language=$VAR[Path_Wikipedia_Language])</onclick>
+                <onclick condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),artist) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song)]">RunScript(script.wikipedia,wikipedia=$VAR[Path_ContextParams_Query],language=$VAR[Path_Wikipedia_Language])</onclick>
             </include>
 
             <!-- YOUTUBE -->
@@ -285,5 +285,31 @@
         <onload condition="Control.IsVisible(1003)">SetFocus(1003)</onload>
         <onload condition="Control.IsVisible(1002)">SetFocus(1002)</onload>
         <onload condition="Control.IsVisible(1002)">SetFocus(1001)</onload>
+    </include>
+
+    <!-- TITLE -->
+
+    <include name="Def_Context_Menu_Information">
+        <definition>
+            <control type="group">
+                <visible>$PARAM[visible]</visible>
+                <height>40</height>
+                <control type="label">
+                    <width>46</width>
+                    <height>40</height>
+                    <font>SymbolList</font>
+                    <textcolor>Dark2</textcolor>
+                    <label>$PARAM[label] :</label>
+                </control>
+                <control type="label">
+                    <left>50</left>
+                    <width>350</width>
+                    <height>40</height>
+                    <font>Tiny</font>
+                    <textcolor>Dark1</textcolor>
+                    <label fallback="19055">[B]$PARAM[value][/B]</label>
+                </control>
+            </control>
+        </definition>
     </include>
 </includes>

@@ -1587,7 +1587,7 @@
                 <!-- <visible>!Integer.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating)) + !String.IsEmpty(Window(Home).Property(Init_Value_TMDb))</visible> -->
             </control>
 
-            <!-- FOLDER SEASON / EPISODES -->
+            <!-- FOLDER SEASON / EPISODES / SET -->
 
             <control type="radiobutton" id="9078">
                 <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)</visible>
@@ -1598,8 +1598,8 @@
                 <!-- <onclick>Close</onclick> -->
                 <onclick>Dialog.Close(all)</onclick>
                 <onclick condition="Window.IsVisible(1190)">RunScript(plugin.video.themoviedb.helper,close_dialog=1190)</onclick>
-                <onclick condition="Window.IsVisible(1190)">$VAR[Def_Browse_List_Episode]</onclick>
-                <onclick condition="!Window.IsVisible(1190)">SendClick(8)</onclick>
+                <onclick condition="Window.IsVisible(1190) | [ListItem.IsCollection + String.IsEmpty(ListItem.DBID)]">$VAR[Def_Browse_List_Season_Episode_Set]</onclick>
+                <onclick condition="!Window.IsVisible(1190) + ![ListItem.IsCollection + String.IsEmpty(ListItem.DBID)]">SendClick(8)</onclick>
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/folder.png" />

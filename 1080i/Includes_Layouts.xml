@@ -263,12 +263,13 @@
     <include name="Def_View_List_Item_IsPlaying">
         <param name="visible" value="$PARAM[visible]" default="true" />
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
+        <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
 
         <definition>
             <control type="image">
                 <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
                 <texture border="12" colordiffuse="Dark3">common/box12.png</texture>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>ListItem.IsPlaying</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
@@ -277,7 +278,7 @@
                 <aspectratio aligny="top">center</aspectratio>
                 <texture border="12">common/selected_rounded.png</texture>
                 <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>ListItem.IsPlaying</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
@@ -287,12 +288,14 @@
     <include name="Def_View_List_Focus_IsPlaying">
         <param name="visible" value="$PARAM[visible]" default="true" />
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
+        <param name="list_id" value="$PARAM[list_id]" default="50" />
+        <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
 
         <definition>
             <control type="image">
                 <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
-                <!-- <animation effect="fade" start="100" end="50" condition="$EXP[View_List_Not_Focus]">Conditional</animation> -->
-                <include>Animation_View_List_Focus_Scroll</include>
+                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus($PARAM[list_id])">Conditional</animation>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>$PARAM[visible]</visible>
             </control>
             <control type="image">
@@ -300,7 +303,7 @@
                 <aspectratio aligny="top">center</aspectratio>
                 <texture border="12">common/selected_rounded.png</texture>
                 <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>ListItem.IsPlaying</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
@@ -310,12 +313,13 @@
     <include name="Def_View_List_Item_IsPlaying_square">
         <param name="visible" value="$PARAM[visible]" default="true" />
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
+        <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
 
         <definition>
             <control type="image">
                 <include content="Def_Padding"><param name="pad">$PARAM[pad_image]</param></include>
                 <texture colordiffuse="Dark3">common/white.png</texture>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>ListItem.IsPlaying</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
@@ -324,7 +328,7 @@
                 <aspectratio aligny="top">center</aspectratio>
                 <texture>common/selected.png</texture>
                 <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>ListItem.IsPlaying</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
@@ -334,11 +338,12 @@
     <include name="Def_View_List_Focus_IsPlaying_square">
         <param name="visible" value="$PARAM[visible]" default="true" />
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
+        <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
 
         <definition>
             <control type="image">
                 <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/main_h.png</texture>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>$PARAM[visible]</visible>
             </control>
             <control type="image">
@@ -346,7 +351,7 @@
                 <aspectratio aligny="top">center</aspectratio>
                 <texture border="12">common/selected.png</texture>
                 <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
-                <include>Animation_View_List_Focus_Scroll</include>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>ListItem.IsPlaying</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
@@ -2217,6 +2222,7 @@
         <param name="aspectratio" value="$PARAM[aspectratio]" default="keep" />
         <param name="color_focus" value="$PARAM[color_focus]" default="Selected" />
         <param name="fade_condition" value="$PARAM[fade_condition]" />
+        <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
 
         <definition>
             <control type="image">
@@ -2224,6 +2230,7 @@
                 <height>100%</height>
                 <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
                 <animation effect="fade" start="100" end="33" condition="$PARAM[fade_condition]">Conditional</animation>
+                <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
             </control>
             <control type="image">
                 <left>8</left>

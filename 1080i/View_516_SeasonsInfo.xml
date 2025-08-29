@@ -72,7 +72,7 @@
 
                 <!-- LIST EPISODES -->
 
-                <control type="list" id="5161">
+                <control type="fixedlist" id="5161">
                     <visible>Control.IsVisible(516)</visible>
                     <visible>!String.Contains(Control.GetLabel(516),..)</visible>
                     <include>Animation_Scrolltime_Views_List</include>
@@ -89,9 +89,16 @@
                     <ondown>5161</ondown>
                     <onback>516</onback>
 
-                    <focusposition>3</focusposition>
-                    <movement>3</movement>
                     <pagecontrol>1663</pagecontrol>
+
+                    <focusposition>1</focusposition>
+
+                    <include content="Def_Movement" condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)">
+                        <param name="movement" value="2" />
+                    </include>
+                    <include content="Def_Movement" condition="Skin.HasSetting(enable.view.5x.51x.extended.list)">
+                        <param name="movement" value="1" />
+                    </include>
 
                     <viewtype label="31246">list</viewtype>
 
@@ -101,11 +108,11 @@
 
                     <focusedlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" height="64">
                         <control type="group">
-                            <visible>Control.HasFocus(5161)</visible>
-                            <include>layout_list_focus_video</include>
+                            <visible>Control.HasFocus(5161) | Control.HasFocus(1663)</visible>
+                            <include content="layout_list_focus_video"><param name="list_id" value="5161" /></include>
                         </control>
                         <control type="group">
-                            <visible>!Control.HasFocus(5161)</visible>
+                            <visible>!Control.HasFocus(5161) + !Control.HasFocus(1663)</visible>
                             <include>layout_list_item_video</include>
                         </control>
                     </focusedlayout>
@@ -116,11 +123,11 @@
 
                     <focusedlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list)" height="91.4">
                         <control type="group">
-                            <visible>Control.HasFocus(5161)</visible>
-                            <include>layout_list_focus_video_info</include>
+                            <visible>Control.HasFocus(5161) | Control.HasFocus(1663)</visible>
+                            <include content="layout_list_focus_video_info"><param name="list_id" value="5161" /></include>
                         </control>
                         <control type="group">
-                            <visible>!Control.HasFocus(5161)</visible>
+                            <visible>!Control.HasFocus(5161) + !Control.HasFocus(1663)</visible>
                             <include>layout_list_item_video_info</include>
                         </control>
                     </focusedlayout>

@@ -825,132 +825,7 @@
 
                 <!-- TRACKLIST -->
 
-                <control type="group">
-                    <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
-                    <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
-
-                    <include>Animation_Fade_Out_DialogInfo</include>
-                    <include>Animation_Fade_In_DialogInfo</include>
-
-                    <top>230</top>
-                    <left>785</left>
-
-                    <control type="label">
-                        <width>150</width>
-                        <height>36</height>
-                        <font>Tiny</font>
-                        <top>329</top>
-                        <textcolor>Dark1</textcolor>
-                        <label>[B]$LOCALIZE[134][/B]</label>
-                        <aligny>center</aligny>
-                        <include>Animation_Fade_In</include>
-                    </control>
-
-                    <control type="button" id="9119">
-                        <visible allowhiddenfocus="true">false</visible>
-
-                        <left>-2000</left>
-                        <width>1</width>
-                        <include>Def_Buttons_Info</include>
-
-                        <label>$INFO[Container(50).ListItem.Label]</label>
-                        <onup>SetFocus(50)</onup>
-                        <onup>Up</onup>
-                        <onup>SetFocus(9119)</onup>
-                        <ondown>SetFocus(50)</ondown>
-                        <ondown>Down</ondown>
-                        <ondown>SetFocus(9119)</ondown>
-                        <onleft>SetFocus(9000)</onleft>
-                        <onright>SetFocus(9000)</onright>
-                        <onback>9000</onback>
-                        <onclick>PlayMedia($ESCINFO[Container(50).ListItem.FileNameAndPath])</onclick>
-                    </control>
-
-                    <control type="list" id="50">
-                        <top>322</top>
-                        <left>250</left>
-                        <right>View_SidePad</right>
-                        <width>1000</width>
-                        <height>268</height>
-
-                        <onleft>9000</onleft>
-                        <onright>62</onright>
-                        <onup>50</onup>
-                        <ondown>50</ondown>
-
-                        <pagecontrol>62</pagecontrol>
-                        <orientation>vertical</orientation>
-
-                        <viewtype label="list">list</viewtype>
-
-                        <itemlayout height="36" width="1000">
-                            <control type="group">
-                                <control type="image">
-                                    <left>-3</left>
-                                    <centertop>26</centertop>
-                                    <width>25</width>
-                                    <height>25</height>
-                                    <aspectratio aligny="top">keep</aspectratio>
-                                    <texture colordiffuse="Dark1">indicator/playlist.png</texture>
-                                    <visible>ListItem.IsPlaying</visible>
-                                </control>
-                                <control type="label">
-                                    <textcolor>Dark2</textcolor>
-                                    <selectedcolor>Dark2</selectedcolor>
-                                    <height>50</height>
-                                    <width>800</width>
-                                    <font>Tiny</font>
-                                    <label>$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Label]</label>
-                                    <animation effect="slide" start="0" end="45" time="0" condition="ListItem.IsPlaying">Conditional</animation>
-                                </control>
-                            </control>
-                        </itemlayout>
-                        <focusedlayout height="36" width="1000">
-                            <control type="group">
-                                <visible>Control.HasFocus(9119)</visible>
-                                <control type="image">
-                                    <left>-3</left>
-                                    <centertop>26</centertop>
-                                    <width>25</width>
-                                    <height>25</height>
-                                    <aspectratio aligny="top">keep</aspectratio>
-                                    <texture colordiffuse="$VAR[Color_List_Item_Selected]">indicator/playlist.png</texture>
-                                    <visible>ListItem.IsPlaying</visible>
-                                </control>
-                                <control type="label">
-                                    <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
-                                    <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
-                                    <height>50</height>
-                                    <width>800</width>
-                                    <font>Tiny</font>
-                                    <label>$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Label]</label>
-                                    <animation effect="slide" start="0" end="45" time="0" condition="ListItem.IsPlaying">Conditional</animation>
-                                </control>
-                            </control>
-                            <control type="group">
-                                <visible>!Control.HasFocus(9119)</visible>
-                                <control type="image">
-                                    <left>-3</left>
-                                    <centertop>26</centertop>
-                                    <width>25</width>
-                                    <height>25</height>
-                                    <aspectratio aligny="top">keep</aspectratio>
-                                    <texture colordiffuse="Dark1">indicator/playlist.png</texture>
-                                    <visible>ListItem.IsPlaying</visible>
-                                </control>
-                                <control type="label">
-                                    <textcolor>Dark2</textcolor>
-                                    <selectedcolor>Dark2</selectedcolor>
-                                    <height>50</height>
-                                    <width>800</width>
-                                    <font>Tiny</font>
-                                    <label>$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Label]</label>
-                                    <animation effect="slide" start="0" end="45" time="0" condition="ListItem.IsPlaying">Conditional</animation>
-                                </control>
-                            </control>
-                        </focusedlayout>
-                    </control>
-                </control>
+                <include condition="String.IsEqual(ListItem.DBType,album)">Dialog_Music_Tracklist</include>
 
                 <!-- CONTROL BUTTONS -->
 
@@ -1122,6 +997,147 @@
 
             <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
             <animation effect="fade" start="100" end="0" delay="0" time="200" reversible="true">Hidden</animation>
+        </control>
+    </include>
+
+    <!-- TRACKLIST -->
+
+    <include name="Dialog_Music_Tracklist">
+        <control type="group">
+            <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
+            <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
+
+            <include>Animation_Fade_Out_DialogInfo</include>
+            <include>Animation_Fade_In_DialogInfo</include>
+
+            <top>230</top>
+            <left>785</left>
+
+            <control type="label">
+                <width>150</width>
+                <height>36</height>
+                <font>Tiny</font>
+                <top>329</top>
+                <textcolor>Dark1</textcolor>
+                <label>[B]$LOCALIZE[134][/B]</label>
+                <aligny>center</aligny>
+                <include>Animation_Fade_In</include>
+            </control>
+
+            <control type="button" id="9119">
+                <visible allowhiddenfocus="true">false</visible>
+
+                <left>-2000</left>
+                <width>1</width>
+                <include>Def_Buttons_Info</include>
+
+                <label>$INFO[Container(50).ListItem.Label]</label>
+
+                <onup>SetFocus(50)</onup>
+                <onup>Up</onup>
+                <onup>SetFocus(9119)</onup>
+
+                <ondown>SetFocus(50)</ondown>
+                <ondown>Down</ondown>
+                <ondown>SetFocus(9119)</ondown>
+
+                <onleft>SetFocus(9000)</onleft>
+                <onright>SetFocus(9000)</onright>
+                <onback>9000</onback>
+
+                <onleft>ClearProperty(focus_tracklist,Home)</onleft>
+                <onright>ClearProperty(focus_tracklist,Home)</onright>
+                <onback>ClearProperty(focus_tracklist,Home)</onback>
+
+                <onclick>PlayMedia($ESCINFO[Container(50).ListItem.FileNameAndPath])</onclick>
+            </control>
+
+            <control type="list" id="50">
+                <top>322</top>
+                <left>250</left>
+                <right>View_SidePad</right>
+                <width>1000</width>
+                <height>268</height>
+
+                <onleft>9000</onleft>
+                <onright>62</onright>
+                <onup>50</onup>
+                <ondown>50</ondown>
+
+                <pagecontrol>62</pagecontrol>
+                <orientation>vertical</orientation>
+
+                <viewtype label="list">list</viewtype>
+
+                <itemlayout height="36" width="1000">
+                    <control type="group">
+                        <control type="image">
+                            <left>-3</left>
+                            <centertop>26</centertop>
+                            <width>25</width>
+                            <height>25</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture colordiffuse="Dark1">indicator/playlist.png</texture>
+                            <visible>ListItem.IsPlaying</visible>
+                        </control>
+                        <control type="label">
+                            <textcolor>Dark2</textcolor>
+                            <selectedcolor>Dark2</selectedcolor>
+                            <height>50</height>
+                            <width>800</width>
+                            <font>Tiny</font>
+                            <label>$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Label]</label>
+                            <animation effect="slide" start="0" end="45" time="0" condition="ListItem.IsPlaying">Conditional</animation>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="36" width="1000">
+                    <control type="group">
+                        <visible>!String.IsEmpty(Window(Home).Property(focus_tracklist))</visible>
+
+                        <control type="image">
+                            <left>-3</left>
+                            <centertop>26</centertop>
+                            <width>25</width>
+                            <height>25</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture colordiffuse="$VAR[Color_List_Item_Selected]">indicator/playlist.png</texture>
+                            <visible>ListItem.IsPlaying</visible>
+                        </control>
+                        <control type="label">
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
+                            <height>50</height>
+                            <width>800</width>
+                            <font>Tiny</font>
+                            <label>$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Label]</label>
+                            <animation effect="slide" start="0" end="45" time="0" condition="ListItem.IsPlaying">Conditional</animation>
+                        </control>
+                    </control>
+                    <control type="group">
+                        <visible>String.IsEmpty(Window(Home).Property(focus_tracklist))</visible>
+
+                        <control type="image">
+                            <left>-3</left>
+                            <centertop>26</centertop>
+                            <width>25</width>
+                            <height>25</height>
+                            <aspectratio aligny="top">keep</aspectratio>
+                            <texture colordiffuse="Dark1">indicator/playlist.png</texture>
+                            <visible>ListItem.IsPlaying</visible>
+                        </control>
+                        <control type="label">
+                            <textcolor>Dark2</textcolor>
+                            <selectedcolor>Dark2</selectedcolor>
+                            <height>50</height>
+                            <width>800</width>
+                            <font>Tiny</font>
+                            <label>$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Label]</label>
+                            <animation effect="slide" start="0" end="45" time="0" condition="ListItem.IsPlaying">Conditional</animation>
+                        </control>
+                    </control>
+                </focusedlayout>
+            </control>
         </control>
     </include>
 </includes>

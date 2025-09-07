@@ -1176,6 +1176,8 @@
 
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),2)">9501</onup>
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),2)">SetProperty(TMDbHelper.WidgetContainer,9501,home)</onup>
+            <onup condition="String.IsEqual(Window(Home).Property(musiccontent),12)">50</onup>
+            <onup condition="String.IsEqual(Window(Home).Property(musiccontent),12)">SetProperty(TMDbHelper.WidgetContainer,50,home)</onup>
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),8)">9508</onup>
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),8)">SetProperty(TMDbHelper.WidgetContainer,9508,home)</onup>
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),5)">9511</onup>
@@ -1184,7 +1186,8 @@
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),4) + Integer.IsGreater(Container(9503).NumItems,0)">95031</onup>
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),1)">9119</onup>
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),1)">SetProperty(focus_tracklist,1,Home)</onup>
-            <onup condition="String.IsEmpty(Window(Home).Property(musiccontent))">50</onup>
+
+            <!-- <onup condition="String.IsEmpty(Window(Home).Property(musiccontent))">50</onup> -->
 
             <!-- <onup condition="String.IsEqual(Window(Home).Property(musiccontent),8) + Integer.IsGreater(Container(9508).NumItems,1)">9508</onup> -->
 
@@ -1197,7 +1200,7 @@
 
             <onup condition="String.IsEqual(Window(Home).Property(musiccontent),2) | String.IsEqual(Window(Home).Property(musiccontent),8) | String.IsEqual(Window(Home).Property(musiccontent),5)">Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onup>
 
-            <onup condition="String.IsEqual(Window(Home).Property(musiccontent),2) | String.IsEqual(Window(Home).Property(musiccontent),3) | String.IsEqual(Window(Home).Property(musiccontent),5) | String.IsEqual(Window(Home).Property(musiccontent),8) | String.IsEmpty(Window(Home).Property(musiccontent))">SetProperty(view_extended,1,Home)</onup>
+            <onup condition="String.IsEqual(Window(Home).Property(musiccontent),2) | String.IsEqual(Window(Home).Property(musiccontent),3) | String.IsEqual(Window(Home).Property(musiccontent),5) | String.IsEqual(Window(Home).Property(musiccontent),8) | String.IsEqual(Window(Home).Property(musiccontent),12) | String.IsEmpty(Window(Home).Property(musiccontent))">SetProperty(view_extended,1,Home)</onup>
 
             <!-- <onback>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onback> -->
 
@@ -1317,7 +1320,6 @@
 
             <control type="radiobutton" id="9003">
                 <visible>String.IsEqual(ListItem.DBType,album)</visible>
-                <visible>Container.Content(albums)</visible>
                 <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),1)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>ClearProperty(ShowDisc)</onfocus>
                 <onfocus>ClearProperty(RotateCover)</onfocus>
@@ -1330,7 +1332,26 @@
                 </include>
             </control>
 
-            <!-- ALBUMS LIST  -->
+            <!-- ALBUMS LIST FULL -->
+
+            <control type="radiobutton" id="9024">
+                <visible>String.IsEqual(ListItem.DBType,artist)</visible>
+                <visible>![Window.Is(songinformation) + Window.IsActive(musicinformation)]</visible>
+                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),12)">ClearProperty(musiccontent,Home)</onfocus>
+                <onfocus>ClearProperty(ShowDisc)</onfocus>
+                <onfocus>SetProperty(musiccontent,12,Home)</onfocus>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetFocus(50)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,50,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+                <include>Def_Button_Dimensions_Square</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/collection.png" />
+                </include>
+                <visible>Skin.HasSetting(show.button.music.artist.discography)</visible>
+            </control>
+
+            <!-- ALBUMS LIST LOCAL -->
 
             <control type="radiobutton" id="9004">
                 <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),2)">ClearProperty(musiccontent,Home)</onfocus>

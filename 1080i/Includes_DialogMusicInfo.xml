@@ -597,8 +597,6 @@
                         <orientation>horizontal</orientation>
                         <autoscroll time="5000">ControlGroup(9000).HasFocus()</autoscroll>
 
-                        <viewtype label="31005">fixedlist</viewtype>
-
                         <itemlayout width="1054" height="607">
                             <control type="image">
                                 <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
@@ -826,6 +824,7 @@
                 <!-- TRACKLIST -->
 
                 <include condition="String.IsEqual(ListItem.DBType,album)">Dialog_Music_Tracklist</include>
+                <!-- <include>Dialog_Music_Tracklist</include> -->
 
                 <!-- CONTROL BUTTONS -->
 
@@ -846,11 +845,18 @@
                         <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),5)" />
                     </include>
 
-                    <!-- ALBUMS -->
+                    <!-- ALBUMS LOCAL -->
 
                     <include content="Recommendation_Album" condition="!Skin.HasSetting(hide.button.music.artist.albums)">
                         <param name="controlid" value="9501" />
                         <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" />
+                    </include>
+
+                    <!-- ALBUMS FULL LIST -->
+
+                    <include content="Recommendation_Album_full" condition="!Skin.HasSetting(hide.button.music.artist.albums) + String.IsEqual(ListItem.DBType,artist)">
+                        <param name="controlid" value="50" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),12)" />
                     </include>
 
                     <!-- SONGS -->
@@ -866,22 +872,6 @@
                         <param name="controlid" value="9502" />
                         <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),3)" />
                     </include>
-
-                    <!-- ALBUMS LIST - KODI LIST -->
-
-                    <!-- <include content="View_Dialog_Info_Square"> -->
-                        <!-- <param name="fallbackpicture" value="DefaultAddonPicture.png" /> -->
-                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" /> -->
-                        <!-- <param name="music_info_onclick" value="false" /> -->
-                        <!-- <param name="music_info_album" value="true" /> -->
-                        <!-- <param name="controlid" value="50" /> -->
-                        <!-- <param name="visible.layouts" value="Control.HasFocus(50) | Control.HasFocus(6) | Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml)" /> -->
-                    <!-- </include> -->
-                    <!-- <include content="Def_Dialog_Info_List_Updating"> -->
-                        <!-- <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" /> -->
-                        <!-- <param name="controlid" value="9501" /> -->
-                        <!-- <param name="centerleft" value="500" /> -->
-                    <!-- </include> -->
                 </control>
             </control>
         </control>
@@ -1005,7 +995,6 @@
     <include name="Dialog_Music_Tracklist">
         <control type="group">
             <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
-            <visible>String.IsEqual(Window(Home).Property(musiccontent),1)</visible>
 
             <include>Animation_Fade_Out_DialogInfo</include>
             <include>Animation_Fade_In_DialogInfo</include>
@@ -1059,15 +1048,13 @@
                 <width>1000</width>
                 <height>268</height>
 
-                <onleft>9000</onleft>
-                <onright>62</onright>
                 <onup>50</onup>
                 <ondown>50</ondown>
+                <onleft>9000</onleft>
+                <onright>62</onright>
 
                 <pagecontrol>62</pagecontrol>
                 <orientation>vertical</orientation>
-
-                <viewtype label="list">list</viewtype>
 
                 <itemlayout height="36" width="1000">
                     <control type="group">

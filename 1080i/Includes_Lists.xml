@@ -59,8 +59,6 @@
             <pagecontrol>62</pagecontrol>
             <orientation>vertical</orientation>
 
-            <viewtype label="">list</viewtype>
-
             <itemlayout height="36" width="1000">
                 <control type="group">
                     <control type="label">
@@ -309,8 +307,6 @@
                     <orientation>horizontal</orientation>
                     <preloaditems>2</preloaditems>
 
-                    <viewtype label="536">list</viewtype>
-
                     <itemlayout height="$PARAM[height]" width="$PARAM[width]">
                         <control type="group">
                             <visible>$PARAM[visible.layouts]</visible>
@@ -346,7 +342,7 @@
                         </control>
                     </focusedlayout>
 
-                    <include condition="$PARAM[condition.includecontent]" content="includecontent">
+                    <include condition="$PARAM[condition.includecontent]" content="include_content">
                         <param name="target" value="$PARAM[target]" />
                         <param name="sortby" value="$PARAM[sortby]" />
                         <param name="sortorder" value="$PARAM[sortorder]" />
@@ -480,8 +476,6 @@
                     <pagecontrol>$PARAM[controlid]7</pagecontrol>
                     <focusposition>1</focusposition>
 
-                    <viewtype label="536">panel</viewtype>
-
                     <itemlayout height="335" width="222">
                         <control type="group">
                             <visible>$PARAM[visible.layouts]</visible>
@@ -510,7 +504,7 @@
                         </control>
                     </focusedlayout>
 
-                    <include condition="$PARAM[condition.includecontent]" content="includecontent">
+                    <include condition="$PARAM[condition.includecontent]" content="include_content">
                         <param name="target" value="$PARAM[target]" />
                         <param name="sortby" value="$PARAM[sortby]" />
                         <param name="sortorder" value="$PARAM[sortorder]" />
@@ -626,21 +620,23 @@
                     <onback>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onback>
                     <onback>ClearProperty(view_extended,Home)</onback>
 
+                    <onback>SetFocus(50,0,absolute)</onback>
                     <onback>SetFocus(9501,0,absolute)</onback>
                     <onback>SetFocus(9502,0,absolute)</onback>
                     <onback>SetFocus(9508,0,absolute)</onback>
                     <onback>SetFocus(9504,0,absolute)</onback>
                     <onback>9000</onback>
 
-                    <ondown condition="Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504) | Control.IsVisible(9511)">$PARAM[controlid]7</ondown>
-                    <ondown condition="![Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504) | Control.IsVisible(9511)]">9000</ondown>
+                    <ondown condition="Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504) | Control.IsVisible(9511)">$PARAM[controlid]7</ondown>
+                    <ondown condition="![Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504) | Control.IsVisible(9511)]">9000</ondown>
 
                     <onclick condition="!Control.IsVisible(9501) + Player.HasMedia">PlayerControl(Stop)</onclick>
 
-                    <ondown condition="![Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9501,0,absolute)</ondown>
-                    <ondown condition="![Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9508,0,absolute)</ondown>
-                    <ondown condition="![Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9502,0,absolute)</ondown>
-                    <ondown condition="![Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9504,0,absolute)</ondown>
+                    <ondown condition="![Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(50,0,absolute)</ondown>
+                    <ondown condition="![Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9501,0,absolute)</ondown>
+                    <ondown condition="![Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9508,0,absolute)</ondown>
+                    <ondown condition="![Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9502,0,absolute)</ondown>
+                    <ondown condition="![Control.IsVisible(50) | Control.IsVisible(9508) | Control.IsVisible(9501) | Control.IsVisible(9502) | Control.IsVisible(9504)]">SetFocus(9504,0,absolute)</ondown>
 
                     <include content="OnClickInclude" condition="$PARAM[music_info_onclick]">
                         <param name="onclick1" value="$PARAM[onclick1]" />
@@ -656,8 +652,6 @@
                     <focusposition>1</focusposition>
                     <orientation>horizontal</orientation>
                     <pagecontrol>$PARAM[controlid]7</pagecontrol>
-
-                    <viewtype label="536">list</viewtype>
 
                     <itemlayout height="$PARAM[height]" width="$PARAM[width]">
                         <control type="group">
@@ -686,7 +680,15 @@
                             </include>
                         </control>
                     </focusedlayout>
-                    <content target="$PARAM[target]" sortby="$PARAM[sortby]" limit="$PARAM[limit]" browse="never">$PARAM[ContentToLoad]</content>
+                    <include condition="$PARAM[condition.includecontent]" content="include_content">
+                        <param name="target" value="$PARAM[target]" />
+                        <param name="sortby" value="$PARAM[sortby]" />
+                        <param name="sortorder" value="$PARAM[sortorder]" />
+                        <param name="limit" value="$PARAM[limit]" />
+                        <param name="browse" value="$PARAM[browse]" />
+                        <param name="ContentToLoad" value="$PARAM[ContentToLoad]" />
+                    </include>
+                    <!-- <content target="$PARAM[target]" sortby="$PARAM[sortby]" limit="$PARAM[limit]" browse="never">$PARAM[ContentToLoad]</content> -->
                 </control>
 
                 <!-- SCROLLBAR  -->
@@ -807,8 +809,6 @@
                     <preloaditems>2</preloaditems>
                     <focusposition>1</focusposition>
                     <orientation>horizontal</orientation>
-
-                    <viewtype label="536">fixedlist</viewtype>
 
                     <itemlayout height="$PARAM[height]" width="$PARAM[width]">
                         <control type="group">

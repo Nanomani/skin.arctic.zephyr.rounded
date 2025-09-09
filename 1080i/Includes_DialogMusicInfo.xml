@@ -141,32 +141,6 @@
                     </control>
                 </control>
 
-                <!-- FOOTER LABEL -->
-
-                <control type="label">
-                    <right>View_SidePad</right>
-                    <bottom>100</bottom>
-                    <height>50</height>
-                    <font>Mini</font>
-                    <textcolor>Dark3</textcolor>
-                    <label>$INFO[ListItem.FileNameAndPath]</label>
-                    <align>right</align>
-                    <include>Animation_File_Name_And_Path_Music</include>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
-                    <visible>Control.HasFocus(9008) + !String.IsEqual(ListItem.DBType,artist)</visible>
-                </control>
-                <control type="label">
-                    <right>View_SidePad</right>
-                    <bottom>100</bottom>
-                    <height>50</height>
-                    <font>Mini</font>
-                    <textcolor>Dark3</textcolor>
-                    <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
-                    <align>right</align>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
-                    <include>Animation_Button_Label_Music</include>
-                </control>
-
                 <!-- CLEARLOGO -->
 
                 <control type="image" description="clearlogo">
@@ -834,29 +808,53 @@
                     <include>Animation_Music_Fade_Out</include>
                 </control>
 
+                <!-- FOOTER LABEL - RIGHT -->
+
+                <!-- PATH -->
+
+                <control type="label">
+                    <right>View_SidePad</right>
+                    <bottom>100</bottom>
+                    <height>50</height>
+                    <font>Mini</font>
+                    <textcolor>Dark3</textcolor>
+                    <label>$INFO[ListItem.FileNameAndPath]</label>
+                    <align>right</align>
+                    <include>Animation_File_Name_And_Path_Music</include>
+                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <visible>Control.HasFocus(9008) + !String.IsEqual(ListItem.DBType,artist)</visible>
+                </control>
+
+                <!-- TIPS -->
+
+                <control type="label">
+                    <right>View_SidePad</right>
+                    <bottom>100</bottom>
+                    <height>50</height>
+                    <font>Mini</font>
+                    <textcolor>Dark3</textcolor>
+                    <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
+                    <align>right</align>
+                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <include>Animation_Button_Label_Music</include>
+                </control>
+
                 <!-- EXTENDED VIEW - LAYOUT -->
 
                 <control type="group">
 
-                    <!-- ALBUMS BY YEAR -->
+                    <!-- DISCOGRAPHY -->
 
-                    <include content="Recommendation_Album_By_Year" condition="!Skin.HasSetting(hide.button.music.album.year) + [String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)]">
-                        <param name="controlid" value="9511" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),5)" />
+                    <include content="Recommendation_Discography" condition="!Skin.HasSetting(hide.button.music.artist.albums) + String.IsEqual(ListItem.DBType,artist)">
+                        <param name="controlid" value="50" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),12)" />
                     </include>
 
-                    <!-- ALBUMS LOCAL -->
+                    <!-- ALBUMS -->
 
                     <include content="Recommendation_Album" condition="!Skin.HasSetting(hide.button.music.artist.albums)">
                         <param name="controlid" value="9501" />
                         <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),2)" />
-                    </include>
-
-                    <!-- ALBUMS FULL LIST -->
-
-                    <include content="Recommendation_Album_full" condition="!Skin.HasSetting(hide.button.music.artist.albums) + String.IsEqual(ListItem.DBType,artist)">
-                        <param name="controlid" value="50" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),12)" />
                     </include>
 
                     <!-- SONGS -->
@@ -864,6 +862,13 @@
                     <include content="Recommendation_Song" condition="!Skin.HasSetting(hide.button.music.artist.songs)">
                         <param name="controlid" value="9508" />
                         <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),8)" />
+                    </include>
+
+                    <!-- BY YEAR -->
+
+                    <include content="Recommendation_Music_Year" condition="!Skin.HasSetting(hide.button.music.album.year) + [String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)]">
+                        <param name="controlid" value="9511" />
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(musiccontent),5)" />
                     </include>
 
                     <!-- YOUTUBE -->

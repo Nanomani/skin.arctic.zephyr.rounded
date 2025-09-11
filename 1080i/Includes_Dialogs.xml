@@ -1359,12 +1359,12 @@
                 <onfocus>ClearProperty(musiccontent,Home)</onfocus>
 
                 <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
-
-                <include>OnFocusOnClick</include>
-                <include>ClearOnFocusOnClick</include>
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
 
-                <onclick>SendClick(7)</onclick>
+                <onclick>SetProperty(Set_User_Rating,mixed,Home)</onclick>
+                <onfocus>SetProperty(Set_User_Rating,mixed,Home)</onfocus>
+                <onunfocus>ClearProperty(Set_User_Rating,Home)</onunfocus>
+
                 <include>Def_Button_Dimensions_Square</include>
                 <texturenofocus colordiffuse="Dark4" border="12">common/boxsquare.png</texturenofocus>
                 <texturefocus border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_v.png</texturefocus>
@@ -1375,6 +1375,8 @@
                 <selected>String.IsEmpty(ListItem.UserRating)</selected>
                 <textcolor>Dark4</textcolor>
                 <font>Null</font>
+
+                <onclick>SendClick(7)</onclick>
             </control>
 
             <!-- TRACKLIST -->
@@ -1390,12 +1392,14 @@
 
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
                 <onfocus>ClearProperty(RotateCover)</onfocus>
-                <onclick>SetProperty(focus_tracklist,1,Home)</onclick>
-                <onclick>SetFocus(9119)</onclick>
+
                 <include>Def_Button_Dimensions_Square</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/playlist.png" />
                 </include>
+
+                <onclick>SetProperty(focus_tracklist,1,Home)</onclick>
+                <onclick>SetFocus(9119)</onclick>
             </control>
 
             <!-- DISCOGRAPHY -->
@@ -1403,22 +1407,24 @@
             <control type="radiobutton" id="9024">
                 <visible>String.IsEqual(ListItem.DBType,artist)</visible>
                 <visible>![Window.Is(songinformation) + Window.IsActive(musicinformation)]</visible>
+                <visible>Integer.IsGreater(Container(50).NumItems,0)</visible>
 
                 <onfocus>SetProperty(last_music_focus,9024,Home)</onfocus>
                 <onfocus>SetProperty(musiccontent,12,Home)</onfocus>
 
                 <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
-
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
-                <onclick>SetProperty(view_extended,1,Home)</onclick>
-                <onclick>SetFocus(50)</onclick>
-                <onclick>SetProperty(TMDbHelper.WidgetContainer,50,Home)</onclick>
-                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+
                 <include>Def_Button_Dimensions_Square</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/collection.png" />
                 </include>
                 <visible>Skin.HasSetting(show.button.music.artist.discography)</visible>
+
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetFocus(50)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,50,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
             </control>
 
             <!-- ALBUMS LIST -->
@@ -1426,22 +1432,24 @@
             <control type="radiobutton" id="9004">
                 <visible>!Skin.HasSetting(hide.button.music.artist.albums)</visible>
                 <visible>!String.IsEmpty(Window(Home).Property(Encoded.ListItem.Artist))</visible>
+                <visible>Integer.IsGreater(Container(9501).NumItems,0)</visible>
 
                 <onfocus>SetProperty(last_music_focus,9004,Home)</onfocus>
-                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),2)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>SetProperty(musiccontent,2,Home)</onfocus>
 
                 <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
 
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
-                <onclick>SetProperty(view_extended,1,Home)</onclick>
-                <onclick>SetFocus(9501)</onclick>
-                <onclick>SetProperty(TMDbHelper.WidgetContainer,9501,Home)</onclick>
-                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+
                 <include>Def_Button_Dimensions_Square</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/compact-disc.png" />
                 </include>
+
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetFocus(9501)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,9501,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
             </control>
 
             <!-- SONGS LIST -->
@@ -1449,18 +1457,14 @@
             <control type="radiobutton" id="9029">
                 <visible>!Skin.HasSetting(hide.button.music.artist.songs)</visible>
                 <visible>!String.IsEmpty(Window(Home).Property(Encoded.ListItem.Artist))</visible>
+                <visible>Integer.IsGreater(Container(9508).NumItems,0)</visible>
 
                 <onfocus>SetProperty(last_music_focus,9029,Home)</onfocus>
-                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),8)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>SetProperty(musiccontent,8,Home)</onfocus>
 
                 <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
-
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
-                <onclick>SetProperty(view_extended,1,Home)</onclick>
-                <onclick>SetFocus(9508)</onclick>
-                <onclick>SetProperty(TMDbHelper.WidgetContainer,9508,Home)</onclick>
-                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+
                 <font>Button</font>
                 <textcolor>Dark2</textcolor>
                 <include>Def_Button_Dimensions_Square</include>
@@ -1469,6 +1473,11 @@
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/songs.png" />
                 </include>
+
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetFocus(9508)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,9508,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
             </control>
 
             <!-- ALBUMS THIS YEAR  -->
@@ -1478,20 +1487,20 @@
                 <visible>String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)</visible>
 
                 <onfocus>SetProperty(last_music_focus,9011,Home)</onfocus>
-                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),5)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>SetProperty(musiccontent,5,Home)</onfocus>
 
                 <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
-
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
-                <onclick>SetProperty(view_extended,1,Home)</onclick>
-                <onclick>SetFocus(9511)</onclick>
-                <onclick>SetProperty(TMDbHelper.WidgetContainer,9511,Home)</onclick>
-                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+
                 <include>Def_Button_Dimensions_Square</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/calendar-day.png" />
                 </include>
+
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetFocus(9511)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,9511,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
             </control>
 
             <!-- FANART -->
@@ -1501,13 +1510,11 @@
                 <visible>[!String.IsEmpty(ListItem.Art(fanart)) + !Skin.HasSetting(hide.artwork.music.fanart)] | [!String.IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(hide.artwork.music.landscape)] | [!String.IsEmpty(ListItem.Art(thumb)) + !Skin.HasSetting(hide.artwork.music.thumb)]</visible>
 
                 <onfocus>SetProperty(last_music_focus,9006,Home)</onfocus>
-                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),4)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>SetProperty(musiccontent,4,Home)</onfocus>
 
                 <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
-
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
-                <onclick>SetFocus(95031)</onclick>
+
                 <font>Button</font>
                 <textcolor>Dark2</textcolor>
                 <include>Def_Button_Dimensions_Square</include>
@@ -1516,6 +1523,8 @@
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/image.png" />
                 </include>
+
+                <onclick>SetFocus(95031)</onclick>
             </control>
 
             <!-- YOUTUBE -->
@@ -1524,18 +1533,17 @@
                 <visible>!Skin.HasSetting(hide.button.music.youtube) + System.AddonIsEnabled(plugin.video.youtube)</visible>
 
                 <onfocus>SetProperty(last_music_focus,9005,Home)</onfocus>
-                <onfocus condition="!String.IsEqual(Window(Home).Property(musiccontent),3)">ClearProperty(musiccontent,Home)</onfocus>
                 <onfocus>SetProperty(musiccontent,3,Home)</onfocus>
 
-                <!-- <onfocus condition="Window.Is(songinformation) + !Window.IsActive(musicinformation)">ClearProperty(show_info_artist,Home)</onfocus> -->
-
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
-                <onclick>SetProperty(view_extended,1,Home)</onclick>
-                <onclick>SetFocus(9502)</onclick>
+
                 <include>Def_Button_Dimensions_Square</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/youtube.png" />
                 </include>
+
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetFocus(9502)</onclick>
                 <onfocus condition="String.IsEmpty(Window(Home).Property(SetYoutubeSearch))">SetProperty(SetYoutubeSearch,1,Home)</onfocus>
             </control>
 
@@ -1547,13 +1555,12 @@
                 <onfocus>SetProperty(last_music_focus,9008,Home)</onfocus>
                 <onfocus>ClearProperty(musiccontent,Home)</onfocus>
 
-                <!-- <onfocus condition="Window.Is(songinformation) + !Window.IsActive(musicinformation)">ClearProperty(show_info_artist,Home)</onfocus> -->
-
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/settings.png" />
                 </include>
+
                 <onclick>SetFocus(9400)</onclick>
             </control>
         </control>
@@ -2130,13 +2137,15 @@
 
                 <onfocus>clearProperty(ShowDisc,Home)</onfocus>
 
+                <onclick>SetProperty(Set_User_Rating,mixed,Home)</onclick>
+                <onfocus>SetProperty(Set_User_Rating,mixed,Home)</onfocus>
+                <onunfocus>ClearProperty(Set_User_Rating,Home)</onunfocus>
+
                 <include>Def_Button_Dimensions</include>
                 <include content="Def_Button_Textures">
                     <param name="icon" value="buttonsdialogs/playcinema.png" />
                 </include>
 
-                <include>OnFocusOnClick</include>
-                <include>ClearOnFocusOnClick</include>
                 <onclick>RunScript(script.preshowexperience,dbtype=$INFO[ListItem.DBType],dbid=$INFO[ListItem.DBID])</onclick>
             </control>
 
@@ -2161,8 +2170,9 @@
                 <textureradiooffnofocus colordiffuse="Dark2">buttonsdialogs/rating_new.png</textureradiooffnofocus>
                 <selected>String.IsEmpty(ListItem.UserRating)</selected>
 
-                <include>OnFocusOnClick</include>
-                <include>ClearOnFocusOnClick</include>
+                <onclick>SetProperty(Set_User_Rating,mixed,Home)</onclick>
+                <onfocus>SetProperty(Set_User_Rating,mixed,Home)</onfocus>
+                <onunfocus>ClearProperty(Set_User_Rating,Home)</onunfocus>
             </control>
 
             <!-- ADD-ON "SPECIAL FEATURES" -->
@@ -2183,8 +2193,9 @@
                     <param name="icon" value="buttonsdialogs/more.png" />
                 </include>
 
-                <include>OnFocusOnClick</include>
-                <include>ClearOnFocusOnClick</include>
+                <onclick>SetProperty(Set_User_Rating,mixed,Home)</onclick>
+                <onfocus>SetProperty(Set_User_Rating,mixed,Home)</onfocus>
+                <onunfocus>ClearProperty(Set_User_Rating,Home)</onunfocus>
 
                 <onclick>Action(close)</onclick>
                 <onclick>RunScript(plugin.video.specialfeatures,listitem)</onclick>
@@ -2939,16 +2950,5 @@
             <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Provider.$PARAM[icon].Icon))</visible>
             <aspectratio align="center">keep</aspectratio>
         </control>
-    </include>
-
-    <!-- MISC -->
-
-    <include name="OnFocusOnClick">
-        <onclick>SetProperty(SetUserRating,mixed,Home)</onclick>
-        <onfocus>SetProperty(SetUserRating,mixed,Home)</onfocus>
-    </include>
-
-    <include name="ClearOnFocusOnClick">
-        <onunfocus>ClearProperty(SetUserRating,Home)</onunfocus>
     </include>
 </includes>

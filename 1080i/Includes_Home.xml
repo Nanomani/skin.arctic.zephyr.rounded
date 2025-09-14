@@ -199,7 +199,6 @@
     <!-- HORIZONTAL - MAIN MENU -->
 
     <include name="Home_Horizontal_Content_No_Icon">
-        <top>946</top>
         <animation type="Conditional" condition="!Control.HasFocus(302) + Skin.HasSetting(home.show.sub.menu.horizontal)" reversible="false">
             <effect type="fade" start="0" end="100" time="150" tween="sine" easing="in" delay="150" />
             <effect type="slide" start="0,30" end="0,0" time="200" tween="sine" easing="out" delay="150" />
@@ -208,6 +207,9 @@
             <effect type="fade" start="100" end="0" time="100" tween="sine" easing="out" />
             <effect type="slide" start="0,0" end="0,30" time="150" tween="sine" easing="out" />
         </animation>
+
+        <top>946</top>
+
         <itemlayout width="222" height="60">
             <control type="label">
                 <align>center</align>
@@ -288,6 +290,7 @@
 
     <include name="Home_Horizontal_Content_Icon">
         <top>848</top>
+
         <itemlayout width="111" height="220">
 
             <!-- MAIN MENU - ONLY ICON - UNDERLINED / NOT UNDERLINED -->
@@ -361,17 +364,17 @@
 
     <include name="Home_Horizontal_Sub_Menu_Vertical">
         <control type="group">
+            <include>Animation_Fade_Out</include>
 
-            <include conditional="!String.IsEmpty(Window(Home).Property(SetBackMenu300AfterSubMenu302)) + Skin.HasSetting(home.horizontal)">Animation_WindowOpen_Delay</include>
+            <include conditional="!String.IsEmpty(Window(Home).Property(SetBackMenu300AfterSubMenu302))">Animation_WindowOpen_Delay</include>
 
             <animation type="Conditional" condition="Control.HasFocus(302)" reversible="false">
                 <effect type="fade" start="0" end="100" time="250" delay="0" tween="cubic" easing="inout" />
                 <effect type="slide" start="0,48" end="0" center="auto" tween="back" easing="out" time="400" delay="0" />
             </animation>
-            <animation effect="slide" end="0,20" start="0,0" time="0" reversible="false" condition="Skin.HasSetting(home.horizontal)">Conditional</animation>
-            <animation effect="fade" end="0" start="100" time="150" condition="!Control.HasFocus(302)" reversible="false">Conditional</animation>
 
-            <include>Animation_Fade_Out</include>
+            <animation effect="slide" end="0,20" start="0,0" time="0" reversible="false" condition="true">Conditional</animation>
+            <animation effect="fade" end="0" start="100" time="150" condition="!Control.HasFocus(302)" reversible="false">Conditional</animation>
 
             <animation effect="slide" start="0" end="15" condition="Container(300).Position(0) + !Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
             <animation effect="slide" start="0" end="222" condition="Container(300).Position(1) + !Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
@@ -583,7 +586,6 @@
             </animation>
 
             <control type="list" id="302">
-                <description>Home Wraplist</description>
                 <left>View_SidePad</left>
 
                 <include condition="!Skin.HasSetting(show.home.header.clock.left) + [[Skin.HasSetting(show.furniture.clock.date.weather) + Skin.HasSetting(home.style.flix)] | !Skin.HasSetting(show.furniture.clock.date.weather)] + Skin.HasSetting(show.furniture.clock.date.weather)">Def_Home_Menu_Row_width_Reduce</include>
@@ -696,12 +698,10 @@
         <include condition="Skin.HasSetting(home.style.horizontal.clean)">Home_Widgets_Item_Position</include>
 
         <control type="group">
-            <left>0</left>
             <include condition="Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(hide.home.menu)">Animation_Home_Clean</include>
-
             <animation effect="fade" start="100" end="30" time="100" condition="Control.HasFocus(302) + !$EXP[Home_Is_Sub_Menu_Horizontal]">Conditional</animation>
 
-            <!-- <animation effect="fade" start="100" end="50" time="50" condition="!ControlGroup(301).HasFocus() + $EXP[Home_Is_Horizontal] + Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.label.onfocus.icon) + !String.IsEmpty(Window(Home).Property(ShowMenuLabel))">Conditional</animation> -->
+            <left>0</left>
 
             <!-- WIDGET -->
 
@@ -941,7 +941,9 @@
                 <!-- MAIN MENU 300 -->
 
                 <control type="list" id="300">
-
+                    <include>Animation_Fade_In</include>
+                    <include>Animation_Fade_Out</include>
+                    
                     <animation effect="slide" start="0,0" end="-296,0" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
 
                     <animation effect="slide" start="0,0" end="0,-40" time="0" condition="true">Conditional</animation>
@@ -955,10 +957,6 @@
                     </include>
 
                     <visible allowhiddenfocus="true">!Control.HasFocus(302)</visible>
-
-                    <include>Animation_Fade_In</include>
-                    <include>Animation_Fade_Out</include>
-                    <description>Home Wraplist</description>
 
                     <left>View_SidePad</left>
 
@@ -2619,7 +2617,7 @@
                 </include>
                 <control type="label">
                     <top>6</top>
-                    <left>60</left>
+                    <left>54</left>
                     <right>30</right>
                     <font>Tiny</font>
                     <textcolor>Dark1</textcolor>
@@ -2683,7 +2681,7 @@
 
                 <control type="label">
                     <top>6</top>
-                    <left>60</left>
+                    <left>54</left>
                     <right>30</right>
                     <font>Tiny</font>
                     <textcolor>Dark1</textcolor>

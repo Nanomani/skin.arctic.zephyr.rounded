@@ -96,33 +96,25 @@
             <visible>String.IsEmpty(Window(Home).Property(Hide_On_Reload_Dialog_Info))</visible>
             <include>Animation_Dialog_Info_Visible_Fade_Conditional</include>
 
+            <include>Animation_Fade_In_Delay</include>
+            <include>Animation_Fade_Out</include>
+
+            <!-- HOME CLEAN ONLY - HIDE MENU -->
+
             <animation effect="slide" start="0" end="0,163" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(hide.home.menu)">Conditional</animation>
 
-            <animation effect="slide" start="0" end="0,30" time="0" condition="Skin.HasSetting(home.horizontal)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,250" time="150" condition="!Skin.HasSetting(home.horizontal) + Control.HasFocus(301)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,160" time="400" tween="back" reversible="false" easing="out" condition="Skin.HasSetting(home.horizontal) + Control.HasFocus(301)">Conditional</animation>
-            <animation effect="slide" end="0" start="0,160" time="150" reversible="false" condition="Skin.HasSetting(home.horizontal) + !Skin.HasSetting(home.horizontal) + !Control.HasFocus(301)">Conditional</animation>
-
-            <animation effect="slide" end="0" start="0,160" time="150" condition="$EXP[Home_Is_Horizontal]">WindowOpen</animation>
-            <animation effect="slide" start="0" end="0,160" time="150" condition="$EXP[Home_Is_Horizontal]">WindowClose</animation>
-
-            <animation effect="slide" end="0" start="0,250" time="150" condition="!$EXP[Home_Is_Horizontal]">WindowOpen</animation>
-            <animation effect="slide" start="0" end="0,250" time="150" condition="!$EXP[Home_Is_Horizontal]">WindowClose</animation>
+            <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation>
 
             <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
 
             <control type="group">
                 <animation effect="slide" start="0" end="0,163" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable]] + !ControlGroup(301).HasFocus()] + $EXP[Home_Is_Horizontal]">Conditional</animation>
 
-                <!-- <animation type="Conditional" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable]] + !ControlGroup(301).HasFocus()] + $EXP[Home_Is_Horizontal]" reversible="true"> -->
-                    <!-- <effect type="slide" start="0,0" end="0,163" time="150" delay="0" /> -->
-                    <!-- <effect type="fade" start="100" end="0" time="150" delay="100" /> -->
-                <!-- </animation> -->
-
                 <!-- ARROWS (LEFT / RIGHT) - ICON -->
 
                 <control type="group">
                     <visible>Skin.HasSetting(home.show.menu.icons)</visible>
+
                     <control type="image">
                         <visible>[Integer.IsGreater(Container(300).NumItems,12) + ![Skin.HasSetting(show.home.header.clock.left) | !Skin.HasSetting(show.furniture.clock.date.weather)]] | [Integer.IsGreater(Container(300).NumItems,16) + [Skin.HasSetting(show.home.header.clock.left) | !Skin.HasSetting(show.furniture.clock.date.weather)]]</visible>
                         <top>962</top>
@@ -152,6 +144,7 @@
 
                 <control type="group">
                     <visible>!Skin.HasSetting(home.show.menu.icons)</visible>
+
                     <control type="image">
                         <visible>[Integer.IsGreater(Container(300).NumItems,6) + ![Skin.HasSetting(show.home.header.clock.left) | !Skin.HasSetting(show.furniture.clock.date.weather)]] | [Integer.IsGreater(Container(300).NumItems,8) + [Skin.HasSetting(show.home.header.clock.left) | !Skin.HasSetting(show.furniture.clock.date.weather)]]</visible>
                         <top>962</top>
@@ -180,8 +173,6 @@
                 <!-- MAIN MENU 300 -->
 
                 <control type="list" id="300">
-                    <include>Animation_Fade_In_Delay</include>
-                    <include>Animation_Fade_Out</include>
                     <include>Animation_Scrolltime_Views_List</include>
 
                     <include condition="![Skin.HasSetting(show.home.header.clock.left) | !Skin.HasSetting(show.furniture.clock.date.weather)]">Def_Home_Menu_Row_width_Reduce</include>
@@ -190,17 +181,16 @@
                     <left>View_SidePad</left>
                     <orientation>horizontal</orientation>
 
-                    <include condition="Skin.HasSetting(home.show.menu.icons)">Home_Horizontal_Content_Icon</include>
-                    <include condition="!Skin.HasSetting(home.show.menu.icons)">Home_Horizontal_Content_No_Icon</include>
-
                     <onfocus condition="String.IsEmpty(Window.Property(MenuSelect))">SetFocus(399)</onfocus>
-
                     <onfocus>ClearProperty(ContainerPosition,Home)</onfocus>
                     <onfocus>ClearProperty(ListItem_Trailer_Path,Home)</onfocus>
                     <onfocus>ClearProperty(controlsvisible,Home)</onfocus>
                     <onfocus>ClearProperty(Set_User_Rating,Home)</onfocus>
                     <onfocus>ClearProperty(LaunchSearch,Home)</onfocus>
                     <onfocus>ClearProperty(SetBackMenu300AfterSubMenu302,Home)</onfocus>
+
+                    <include condition="Skin.HasSetting(home.show.menu.icons)">Home_Horizontal_Content_Icon</include>
+                    <include condition="!Skin.HasSetting(home.show.menu.icons)">Home_Horizontal_Content_No_Icon</include>
                 </control>
             </control>
         </control>

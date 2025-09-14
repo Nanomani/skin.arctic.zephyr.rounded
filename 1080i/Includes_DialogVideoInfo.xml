@@ -3,13 +3,13 @@
     <include name="Dialog_Video_Info">
         <control type="group">
 
-            <!--  POSTER   -->
+            <!-- LEFT POSTER -->
 
             <control type="group">
                 <include>Animation_Dialog_Info_LeftSide_Delay_400</include>
 
+                <include>Animation_Extended_Views_Fade_Out</include>
                 <include>Animation_Wiki_Fade_Out</include>
-                <include>Animation_Video_Fade_Out</include>
 
                 <animation type="Conditional" condition="String.IsEqual(Window(Home).Property(ShowDisc),1) + Skin.HasSetting(Show.Discart.Video.Info)">
                     <effect type="slide" start="0,0" end="0,130" delay="0" time="200" tween="quadratic" easing="out" />
@@ -66,16 +66,15 @@
                 </control>
             </control>
 
-            <!-- RIGHT SIDE -->
+            <!-- RIGHT INFORMATIONS -->
 
             <control type="group">
                 <include>Animation_Dialog_Info_RightSide_Delay_400</include>
-                <include>Hidden_Up_Next_Episode</include>
 
                 <!-- CONTROL BUTTONS -->
 
                 <control type="group">
-                    <include>Animation_Video_Fade_Out</include>
+                    <include>Animation_Extended_Views_Fade_Out</include>
                     <include>Animation_Wiki_Fade_Out</include>
 
                     <bottom>-80</bottom>
@@ -207,7 +206,7 @@
 
                 <control type="group">
                     <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
-                    <include>Animation_Video_Fade_Out</include>
+                    <include>Animation_Extended_Views_Fade_Out</include>
 
                     <top>70</top>
                     <left>570</left>
@@ -298,8 +297,8 @@
                 <control type="group">
                     <visible>String.IsEqual(Window(Home).Property(moviecontent),5)</visible>
 
-                    <include>Animation_Fade_In_DialogInfo</include>
-                    <include>Animation_Fade_Out_DialogInfo</include>
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                    <include>Animation_Dialog_Info_Fade_Out_150</include>
 
                     <top>View_Top</top>
                     <left>570</left>
@@ -490,8 +489,8 @@
                 <control type="group">
                     <visible>String.IsEqual(Window(Home).Property(moviecontent),6)</visible>
 
-                    <include>Animation_Fade_In_DialogInfo</include>
-                    <include>Animation_Fade_Out_DialogInfo</include>
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                    <include>Animation_Dialog_Info_Fade_Out_150</include>
 
                     <top>View_Top</top>
                     <left>570</left>
@@ -663,9 +662,9 @@
                 <control type="group">
                     <visible>!String.IsEqual(Window(Home).Property(moviecontent),5) + !String.IsEqual(Window(Home).Property(moviecontent),6) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
 
-                    <include>Animation_Video_Fade_Out</include>
-                    <include>Animation_Fade_In_DialogInfo</include>
-                    <include>Animation_Fade_Out_DialogInfo</include>
+                    <include>Animation_Extended_Views_Fade_Out</include>
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_100</include>
+                    <include>Animation_Dialog_Info_Fade_Out_150</include>
 
                     <!-- MEDIA FLAG -->
 
@@ -1038,8 +1037,8 @@
                 <control type="group">
                     <visible>String.IsEqual(Window(Home).Property(moviecontent),1)</visible>
 
-                    <include>Animation_Fade_In_DialogInfo</include>
-                    <include>Animation_Fade_Out_DialogInfo</include>
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                    <include>Animation_Dialog_Info_Fade_Out_150</include>
 
                     <top>545</top>
                     <left>570</left>
@@ -1333,6 +1332,7 @@
                         <visible>!Skin.HasSetting(show.studiologos) + !Skin.HasSetting(show.clearart)</visible>
                     </control>
                 </control>
+            </control>
 
 <!--            Sets                                                -->
 <!--            ===========================================         -->
@@ -1374,178 +1374,180 @@
 <!--            ===========================================         -->
 <!--            9504    YOUTUBE                                     -->
 
-                <!-- EXTENDED VIEW - FURNITURE HEADER -->
 
-                <control type="group">
+
+            <!-- EXTENDED VIEW -->
+
+            <control type="group">
+                <!-- <include>Animation_Dialog_Info_RightSide_Delay_400</include> -->
 
 <!-- ==================================================================== -->
 <!--                      GROUP BUTTON - 9000                             -->
 <!-- ==================================================================== -->
 
-                    <!-- =========================== -->
-                    <!--           SET               -->
-                    <!-- =========================== -->
+                <!-- =========================== -->
+                <!--           SET               -->
+                <!-- =========================== -->
 
-                    <include content="Recommendation_Set" condition="String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9550" />
-                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
-                    </include>
+                <include content="Recommendation_Set" condition="String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9550" />
+                    <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
+                </include>
 
-                    <!-- =========================== -->
-                    <!--           CAST              -->
-                    <!-- =========================== -->
+                <!-- =========================== -->
+                <!--           CAST              -->
+                <!-- =========================== -->
 
-                    <!-- CAST - LOCAL -->
+                <!-- CAST - LOCAL -->
 
-                    <include content="Recommendation_Cast_Local" condition="!String.IsEqual(ListItem.Property(tmdb_type),person) + !String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(ListItem.DBID) + !$EXP[IsYoutubeItem]">
-                        <param name="controlid" value="50" />
-                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
-                    </include>
+                <include content="Recommendation_Cast_Local" condition="!String.IsEqual(ListItem.Property(tmdb_type),person) + !String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(ListItem.DBID) + !$EXP[IsYoutubeItem]">
+                    <param name="controlid" value="50" />
+                    <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
+                </include>
 
-                    <!-- CAST - ONLINE / SEASON -->
+                <!-- CAST - ONLINE / SEASON -->
 
-                    <include content="Recommendation_Cast_Online" condition="!String.IsEqual(ListItem.Property(tmdb_type),person) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]">
-                        <param name="controlid" value="9550" />
-                        <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
-                    </include>
+                <include content="Recommendation_Cast_Online" condition="!String.IsEqual(ListItem.Property(tmdb_type),person) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]">
+                    <param name="controlid" value="9550" />
+                    <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
+                </include>
 
-                    <!-- =========================== -->
-                    <!--           PERSONS           -->
-                    <!-- =========================== -->
+                <!-- =========================== -->
+                <!--           PERSONS           -->
+                <!-- =========================== -->
 
-                    <!-- PERSON - PICTURES -->
+                <!-- PERSON - PICTURES -->
 
-                    <include content="Recommendation_Person_Picture" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
-                        <param name="controlid" value="9554" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),13)" />
-                    </include>
+                <include content="Recommendation_Person_Picture" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
+                    <param name="controlid" value="9554" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),13)" />
+                </include>
 
-                    <!-- PERSON - DIRECTOR - MOVIES / TVSHOWS -->
+                <!-- PERSON - DIRECTOR - MOVIES / TVSHOWS -->
 
-                    <include content="Recommendation_Person_Director" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
-                        <param name="controlid" value="9560" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),20)" />
-                    </include>
+                <include content="Recommendation_Person_Director" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
+                    <param name="controlid" value="9560" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),20)" />
+                </include>
 
-                    <!-- PERSON - ACTOR - MOVIES -->
+                <!-- PERSON - ACTOR - MOVIES -->
 
-                    <include content="Recommendation_Person_Actor_Movies" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
-                        <param name="controlid" value="9552" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),11)" />
-                    </include>
+                <include content="Recommendation_Person_Actor_Movies" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
+                    <param name="controlid" value="9552" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),11)" />
+                </include>
 
-                    <!-- PERSON - ACTOR - TVSHOWS -->
+                <!-- PERSON - ACTOR - TVSHOWS -->
 
-                    <include content="Recommendation_Person_Actor_Tvshows" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
-                        <param name="controlid" value="9553" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),12)" />
-                    </include>
+                <include content="Recommendation_Person_Actor_Tvshows" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
+                    <param name="controlid" value="9553" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),12)" />
+                </include>
 
-                    <!-- PERSON - MEMBER CREW - MOVIES -->
+                <!-- PERSON - MEMBER CREW - MOVIES -->
 
-                    <include content="Recommendation_Person_Member_Crew__Movies" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
-                        <param name="controlid" value="9558" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),18)" />
-                    </include>
+                <include content="Recommendation_Person_Member_Crew__Movies" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
+                    <param name="controlid" value="9558" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),18)" />
+                </include>
 
-                    <!-- PERSON - MEMBER CREW - TVSHOWS -->
+                <!-- PERSON - MEMBER CREW - TVSHOWS -->
 
-                    <include content="Recommendation_Person_Member_Crew_Tvshows" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
-                        <param name="controlid" value="9559" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),19)" />
-                    </include>
+                <include content="Recommendation_Person_Member_Crew_Tvshows" condition="String.IsEqual(ListItem.Property(tmdb_type),person)">
+                    <param name="controlid" value="9559" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),19)" />
+                </include>
 
-                    <!-- =========================== -->
-                    <!--          YOUTUBE            -->
-                    <!-- =========================== -->
+                <!-- =========================== -->
+                <!--          YOUTUBE            -->
+                <!-- =========================== -->
 
-                    <include content="Recommendation_Video_Youtube" condition="!Skin.HasSetting(hide.button.video.youtube) + [[[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.Property(tmdb_type),person)] + !String.IsEqual(ListItem.DBType,set)] | $EXP[IsTMDbHelperItem]]">
-                        <param name="controlid" value="9504" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),4)" />
-                    </include>
+                <include content="Recommendation_Video_Youtube" condition="!Skin.HasSetting(hide.button.video.youtube) + [[[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.Property(tmdb_type),person)] + !String.IsEqual(ListItem.DBType,set)] | $EXP[IsTMDbHelperItem]]">
+                    <param name="controlid" value="9504" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),4)" />
+                </include>
 
 <!-- ==================================================================== -->
 <!--                      GROUP BUTTON - 9090                             -->
 <!-- ==================================================================== -->
 
-                    <!-- =========================== -->
-                    <!--       MOVIE / TV SHOW       -->
-                    <!-- =========================== -->
+                <!-- =========================== -->
+                <!--       MOVIE / TV SHOW       -->
+                <!-- =========================== -->
 
-                    <!-- CREW -->
+                <!-- CREW -->
 
-                    <include content="Recommendation_Crew" condition="Skin.HasSetting(show.button.video.crew) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9557" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),17)" />
-                    </include>
+                <include content="Recommendation_Crew" condition="Skin.HasSetting(show.button.video.crew) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9557" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),17)" />
+                </include>
 
-                    <!-- BY DIRECTOR -->
+                <!-- BY DIRECTOR -->
 
-                    <include content="Recommendation_Director" condition="Skin.HasSetting(show.button.video.director) + [String.IsEqual(ListItem.DBType,movie) | [String.IsEqual(ListItem.DBType,episode) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]]] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9506" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),7)" />
-                    </include>
+                <include content="Recommendation_Director" condition="Skin.HasSetting(show.button.video.director) + [String.IsEqual(ListItem.DBType,movie) | [String.IsEqual(ListItem.DBType,episode) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]]] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9506" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),7)" />
+                </include>
 
-                    <!-- BY WRITER -->
+                <!-- BY WRITER -->
 
-                    <include content="Recommendation_Writer" condition="Skin.HasSetting(show.button.video.writer) + [String.IsEqual(ListItem.DBType,movie) | [String.IsEqual(ListItem.DBType,episode) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]]] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9556" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),14)" />
-                    </include>
+                <include content="Recommendation_Writer" condition="Skin.HasSetting(show.button.video.writer) + [String.IsEqual(ListItem.DBType,movie) | [String.IsEqual(ListItem.DBType,episode) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)]]] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9556" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),14)" />
+                </include>
 
-                    <!-- YEAR MOVIES / TV SHOWS -->
+                <!-- YEAR MOVIES / TV SHOWS -->
 
-                    <include content="Recommendation_Video_Year" condition="Skin.HasSetting(show.button.video.year) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9514" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),9)" />
-                    </include>
+                <include content="Recommendation_Video_Year" condition="Skin.HasSetting(show.button.video.year) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9514" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),9)" />
+                </include>
 
-                    <!-- COLLECTION - MOVIES -->
+                <!-- COLLECTION - MOVIES -->
 
-                    <include content="Recommendation_Collection" condition="Skin.HasSetting(show.button.video.set) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9515" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),8)" />
-                    </include>
+                <include content="Recommendation_Collection" condition="Skin.HasSetting(show.button.video.set) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9515" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),8)" />
+                </include>
 
-                    <!-- SIMILAR - MOVIES / TV SHOWS -->
+                <!-- SIMILAR - MOVIES / TV SHOWS -->
 
-                    <include content="Recommendation_Similar" condition="!Skin.HasSetting(hide.button.video.similar) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9518" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),2)" />
-                    </include>
+                <include content="Recommendation_Similar" condition="!Skin.HasSetting(hide.button.video.similar) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9518" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),2)" />
+                </include>
 
-                    <!-- RECOMMENDATION - MOVIES / TV SHOWS -->
+                <!-- RECOMMENDATION - MOVIES / TV SHOWS -->
 
-                    <include content="Recommendation_Recommendation" condition="Skin.HasSetting(show.button.video.recommended) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9517" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),16)" />
-                    </include>
+                <include content="Recommendation_Recommendation" condition="Skin.HasSetting(show.button.video.recommended) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9517" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),16)" />
+                </include>
 
-                    <!-- STUDIO - MOVIES / TV SHOWS -->
+                <!-- STUDIO - MOVIES / TV SHOWS -->
 
-                    <include content="Recommendation_Studio" condition="!Skin.HasSetting(hide.button.video.studio) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9503" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),3)" />
-                    </include>
+                <include content="Recommendation_Studio" condition="!Skin.HasSetting(hide.button.video.studio) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9503" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),3)" />
+                </include>
 
-                    <!-- =========================== -->
-                    <!--          TV SHOW            -->
-                    <!-- =========================== -->
+                <!-- =========================== -->
+                <!--          TV SHOW            -->
+                <!-- =========================== -->
 
-                    <!-- CREATOR -->
+                <!-- CREATOR -->
 
-                    <include content="Recommendation_Creator" condition="!Skin.HasSetting(hide.button.tvshow.creator) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9520" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),22)" />
-                    </include>
+                <include content="Recommendation_Creator" condition="!Skin.HasSetting(hide.button.tvshow.creator) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9520" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),22)" />
+                </include>
 
-                    <!-- SEASONS -->
+                <!-- SEASONS -->
 
-                     <include content="Recommendation_Seasons" condition="!Skin.HasSetting(hide.button.tvshow.season) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
-                        <param name="controlid" value="9579" />
-                        <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),15)" />
-                    </include>
-                </control>
+                 <include content="Recommendation_Seasons" condition="!Skin.HasSetting(hide.button.tvshow.season) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEqual(ListItem.DBType,set)">
+                    <param name="controlid" value="9579" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(moviecontent),15)" />
+                </include>
             </control>
         </control>
 
@@ -1630,6 +1632,7 @@
             <param name="visible" value="Control.HasFocus(160)" />
         </include>
 
+        <include>Hidden_List_Up_Next_Episode</include>
         <include>Def_Dialog_Custom_Settings</include>
         <include>Def_Dialog_Info_Video_Fullscreen</include>
     </include>
@@ -1643,10 +1646,14 @@
             <control type="image" description="clearlogo">
                 <visible>!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
                 <visible>!String.IsEqual(ListItem.Property(tmdb_type),person) + !Window.IsActive(DialogNotification.xml)</visible>
+
                 <visible>![Control.HasFocus(9501) | Control.HasFocus(9506) | Control.HasFocus(95067) | Control.HasFocus(9514) | Control.HasFocus(9515) | Control.HasFocus(9560) | Control.HasFocus(9518) | Control.HasFocus(9507) | Control.HasFocus(9503) | Control.HasFocus(9504) | Control.HasFocus(9552) | Control.HasFocus(9553)]</visible>
 
                 <include>Animation_Wiki_Fade_Out</include>
-                <include>Animation_Video_Fade_Out_Clearlogo</include>
+
+                <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                <include>Animation_Dialog_Video_Info_Clearlogo_Fade_Out</include>
+                <animation effect="fade" start="100" end="0" time="300" reversible="false">WindowClose</animation>
 
                 <centertop>120</centertop>
                 <right>View_SidePad</right>
@@ -1662,10 +1669,13 @@
             <control type="image" description="clearlogo">
                 <visible>!Container($PARAM[controlid]).IsUpdating</visible>
                 <visible>!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
+
                 <visible>Control.HasFocus(9501) | Control.HasFocus(9506) | Control.HasFocus(95067) | Control.HasFocus(9514) | Control.HasFocus(9515) | Control.HasFocus(9560) | Control.HasFocus(9518) | Control.HasFocus(9507) | Control.HasFocus(9503) | Control.HasFocus(9504) | Control.HasFocus(9517) | Control.HasFocus(9520) | Control.HasFocus(9552) | Control.HasFocus(9553) | Control.HasFocus(9556) | Control.HasFocus(9558) | Control.HasFocus(9559) | Control.HasFocus(9579) | Control.HasFocus(9550)</visible>
 
                 <include>Animation_Wiki_Fade_Out</include>
-                <include>Animation_Video_Fade_In_Clearlogo</include>
+
+                <include>Animation_Extended_Views_Clearlogo_Fade_In</include>
+                <include>Animation_Dialog_Info_Fade_Out_150</include>
 
                 <centertop>120</centertop>
                 <right>View_SidePad</right>
@@ -1674,8 +1684,6 @@
                 <fadetime>ClearArtFadetime</fadetime>
                 <aspectratio align="right">keep</aspectratio>
                 <texture background="true">$VAR[Image_Dialog_Info_Video_Ext_Crop_ClearLogo]</texture>
-                <!-- <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation> -->
-                <!-- <animation effect="fade" start="100" end="0" delay="400" time="200" reversible="true">Hidden</animation> -->
             </control>
         </control>
     </include>

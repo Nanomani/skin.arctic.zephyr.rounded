@@ -3,23 +3,25 @@
     <include name="Dialog_Addon_Info">
         <control type="group">
 
-            <!-- POSTER -->
+            <!-- LEFT POSTER SQUARE -->
 
             <control type="group">
                 <include>Animation_Dialog_Info_LeftSide_Delay_400</include>
                 <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
                 <include content="View_50_Side_Square">
                     <param name="texture" value="$VAR[Image_Dialog_Info_Square_Poster]" />
                     <param name="condition_fadetime" value="false" />
                 </include>
             </control>
 
-            <!-- MAIN -->
+            <!-- RIGHT INFORMATIONS -->
 
             <control type="group">
                 <include>Animation_Dialog_Info_RightSide_Delay_400</include>
 
-                <!-- Control Buttons -->
+                <!-- CONTROL BUTTONS -->
+
                 <control type="group">
                     <bottom>-80</bottom>
                     <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
@@ -30,6 +32,7 @@
 
                 <control type="group">
                     <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
                     <top>70</top>
                     <left>785</left>
 
@@ -102,15 +105,22 @@
                     </control>
                 </control>
 
+                <!-- INFORMATION -->
+
                 <control type="group">
+                    <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_100</include>
+                    <include>Animation_Dialog_Info_Fade_Out_150</include>
+
+                    <top>DialogInfoTop</top>
                     <left>ListSquareX</left>
                     <right>View_SidePad</right>
                     <bottom>224</bottom>
-                    <top>DialogInfoTop</top>
+
                     <control type="grouplist">
-                        <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
                         <left>30</left>
                         <itemgap>0</itemgap>
+
                         <include content="Def_Dialog_Square_Info_Line">
                             <param name="label" value="$LOCALIZE[467]" />
                             <param name="value" value="$INFO[ListItem.AddonType]" />
@@ -135,6 +145,7 @@
                             <param name="label" value="$LOCALIZE[31362]" />
                             <param name="value" value="$INFO[ListItem.AddonOrigin]" />
                         </include>
+
                         <control type="group">
                             <height>15</height>
                         </control>
@@ -157,21 +168,6 @@
                     </control>
                 </control>
 
-                <include content="Furniture_DialogInfo_Extended_Header">
-                    <param name="visible" value="String.IsEmpty(Window.Property(addoncontent))" />
-                    <param name="controlid" value="50" />
-                </include>
-                <include content="Furniture_DialogInfo_Extended_Footer">
-                    <param name="visible" value="String.IsEmpty(Window(Home).Property(moviecontent))" />
-                    <param name="controlid" value="50" />
-                </include>
-                <include content="View_Dialog_Info_Addon">
-                    <param name="visible" value="true" />
-                    <param name="controlid" value="50" />
-                    <param name="fallbackpicture" value="DefaultAddonImages.png" />
-                    <param name="visible.layouts" value="Control.HasFocus(50) | Window.IsVisible(DialogBusy.xml)" />
-                </include>
-
                 <!-- TIP FOOTER -->
 
                 <control type="label">
@@ -188,6 +184,27 @@
                     <include>Animation_Fade_In</include>
                     <include>Animation_Fade_Out</include>
                 </control>
+            </control>
+
+            <!-- EXTENDED VIEW -->
+
+            <control type="group">
+                <include>Animation_Extended_Views_WindowClose</include>
+
+                <include content="Furniture_DialogInfo_Extended_Header">
+                    <param name="visible" value="String.IsEmpty(Window.Property(addoncontent))" />
+                    <param name="controlid" value="50" />
+                </include>
+                <include content="Furniture_DialogInfo_Extended_Footer">
+                    <param name="visible" value="String.IsEmpty(Window(Home).Property(addoncontent))" />
+                    <param name="controlid" value="50" />
+                </include>
+                <include content="View_Dialog_Info_Addon">
+                    <param name="visible" value="String.IsEmpty(Window(Home).Property(addoncontent)) + !Control.HasFocus(9669)" />
+                    <param name="controlid" value="50" />
+                    <param name="fallbackpicture" value="DefaultAddonImages.png" />
+                    <param name="visible.layouts" value="Control.HasFocus(50) | Window.IsVisible(DialogBusy.xml)" />
+                </include>
             </control>
         </control>
     </include>

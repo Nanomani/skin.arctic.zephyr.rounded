@@ -7,7 +7,7 @@
 
     <include name="Animation_Common">
         <param name="animation_include">Animation_Common_Views</param>
-        <param name="visible_infodialogs">!$EXP[View_Info_Dialog]</param>
+        <param name="visible_infodialogs">!$EXP[View_Info_Dialog] + String.IsEmpty(Window(Home).Property(Hide_On_Reload_Dialog_Info))</param>
         <param name="visible_widgets">!Integer.IsEqual(Container.NumItems,0)</param>
         <definition>
             <visible>$PARAM[visible_infodialogs]</visible>
@@ -108,13 +108,21 @@
     <!-- ANIMATION - DIALOG - CONTEXT MENU  -->
 
     <include name="Animation_Dialog_Menu_RightSide">
+        <!-- <animation type="WindowOpen"> -->
+            <!-- <effect type="fade" end="100" start="0" time="200" tween="sine" easing="out" /> -->
+            <!-- <effect type="slide" start="1920" end="0" time="400" tween="quadratic" easing="out" /> -->
+        <!-- </animation> -->
+        <!-- <animation type="WindowClose"> -->
+            <!-- <effect type="fade" end="0" start="100" time="200" tween="sine" easing="out" /> -->
+            <!-- <effect type="slide" start="0" end="1920" time="300" tween="quadratic" easing="in" /> -->
+        <!-- </animation> -->
         <animation type="WindowOpen">
-            <effect type="slide" start="1920" end="0" time="400" tween="quadratic" easing="out" />
-            <effect type="fade" end="100" start="0" time="200" tween="sine" easing="out" />
+            <effect type="fade" start="0" end="100" time="400" tween="sine" easing="out"/>
+            <effect type="slide" start="640" end="0" time="600" tween="cubic" easing="out" />
         </animation>
         <animation type="WindowClose">
-            <effect type="slide" start="0" end="1920" time="300" tween="quadratic" easing="in" />
-            <effect type="fade" end="0" start="100" time="200" tween="sine" easing="out" />
+            <effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+            <effect type="slide" start="0" end="640" time="300" tween="cubic" easing="out" />
         </animation>
     </include>
 
@@ -231,8 +239,8 @@
     <!-- ANIMATION - DIALOG - INFO - DELAY - 400 -->
 
     <include name="Animation_Dialog_Info_Background_Delay_400">
-        <animation effect="fade" start="0" end="100" time="600" delay="400" reversible="false">WindowOpen</animation>
-        <animation effect="fade" start="100" end="0" time="300" reversible="false">WindowClose</animation>
+        <animation effect="fade" start="0" end="100" time="600" delay="400" reversible="false" condition="!Player.HasMedia">WindowOpen</animation>
+        <animation effect="fade" start="100" end="0" time="300" reversible="false" condition="!Player.HasMedia">WindowClose</animation>
     </include>
 
     <!-- ANIMATION - DIALOG - INFO -->
@@ -319,6 +327,42 @@
         <animation condition="[Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]" effect="fade" end="0" start="100" time="300">Conditional</animation>
     </include>
 
+    <!-- ANIMATION - HOME - VIEWS - DIALOG INFO VISIBLE -->
+
+    <include name="Animation_Dialog_Info_Visible_Fade_Conditional">
+        <animation effect="fade" start="100" end="0" tween="cubic" easing="out" delay="0" time="300" condition="$EXP[View_Info_Dialog]">Conditional</animation>
+    </include>
+
+    <!-- ============================== -->
+    <!--  ANIMATION - HOME - HORIZONTAL -->
+    <!-- ============================== -->
+
+    <include name="Animation_Home_Is_Horizontal">
+        <visible>!$EXP[View_Info_Dialog]</visible>
+
+        <animation type="WindowOpen" reversible="false">
+            <effect type="fade" start="0" end="100" time="450" delay="0" tween="sine" easing="in" />
+        </animation>
+        <animation type="WindowClose" reversible="false">
+            <effect type="fade" start="100" end="0" tween="cubic" easing="out" delay="0" time="350" />
+        </animation>
+        <animation type="Visible" reversible="false">
+            <effect type="fade" start="0" end="100" time="450" delay="0" tween="sine" easing="in" />
+        </animation>
+        <animation type="Hidden" reversible="false">
+            <effect type="fade" start="100" end="0" tween="cubic" easing="out" delay="0" time="350" />
+        </animation>
+    </include>
+
+    <include name="Animation_Fade_Home_Row">
+        <visible>!$EXP[View_Info_Dialog]</visible>
+
+        <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">WindowOpen</animation>
+        <animation effect="fade" start="100" end="0" tween="cubic" easing="out" time="350" reversible="false">WindowClose</animation>
+        <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">Visible</animation>
+        <animation effect="fade" start="100" end="0" tween="cubic" easing="out" time="350" reversible="false">Hidden</animation>
+    </include>
+
     <!-- ============================== -->
     <!--   ANIMATION - HOME - VERTICAL  -->
     <!-- ============================== -->
@@ -379,14 +423,6 @@
         <animation type="Conditional" condition="Window.IsVisible(Home) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml)" reversible="true">
             <effect type="slide" start="0,0" end="0,-40" tween="sine" easing="out" time="350" delay="0" />
         </animation>
-    </include>
-
-    <include name="Animation_Fade_Home_Row">
-        <visible>!$EXP[View_Info_Dialog]</visible>
-        <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">WindowOpen</animation>
-        <animation effect="fade" start="100" end="0" tween="cubic" easing="out" time="350" reversible="false">WindowClose</animation>
-        <animation effect="fade" start="0" end="100" time="350" tween="sine" easing="out" reversible="false">Visible</animation>
-        <animation effect="fade" start="100" end="0" tween="cubic" easing="out" time="350" reversible="false">Hidden</animation>
     </include>
 
     <!-- ANIMATION - SCROLLTIME -->
@@ -643,7 +679,7 @@
     </include>
 
     <include name="Animation_Square_Slide_Down">
-        <animation condition="[Control.HasFocus(9092) | String.IsEqual(Window(Home).Property(ShowDisc),1)] + String.IsEmpty(ListItem.Art(discart)) + !String.IsEmpty(ListItem.Art(discart))" effect="slide" end="0,80" start="0,0" time="300">Conditional</animation>
+        <animation condition="[Control.HasFocus(9092) | String.IsEqual(Window(Home).Property(Show_Disc),1)] + String.IsEmpty(ListItem.Art(discart)) + !String.IsEmpty(ListItem.Art(discart))" effect="slide" end="0,80" start="0,0" time="300">Conditional</animation>
     </include>
 
     <include name="Animation_ZoomIn">
@@ -717,7 +753,7 @@
         <animation effect="fade" end="0" start="100" time="250">Hidden</animation>
     </include>
 
-    <include name="Animation_FurnitureVisible">
+    <include name="Animation_FurnitureVisible_">
         <animation effect="fade" end="0" start="100" condition="$EXP[View_Info_Dialog]" time="450" delay="0" tween="sine" easing="in">Conditional</animation>
         <animation effect="fade" end="100" start="0" condition="!$EXP[View_Info_Dialog]" time="150">Conditional</animation>
 
@@ -755,62 +791,6 @@
         <animation effect="fade" end="0" start="100" time="150">WindowClose</animation>
         <animation effect="fade" end="100" start="0" time="450" delay="0" tween="sine" easing="in">Visible</animation>
         <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
-    </include>
-
-<!--            Sets                                                -->
-<!--            ===========================================         -->
-<!--            9550    SETS (SET TYPE)                             -->
-<!--                                                                -->
-<!--            Cast                                                -->
-<!--            ===========================================         -->
-<!--            50      Local                                       -->
-<!--            9550    On Line                                     -->
-<!--                                                                -->
-<!--            tvshow                                              -->
-<!--            ===========================================         -->
-<!--            9579    SEASONS                                     -->
-<!--            9520    CREATOR                                     -->
-<!--                                                                -->
-<!--            Movie / tv show                                     -->
-<!--            ===========================================         -->
-<!--                                                                -->
-<!--            9557    PICTURE     CREW                            -->
-<!--            9506    DIRECTOR                                    -->
-<!--            9556    WRITER                                      -->
-<!--            9514    YEAR                                        -->
-<!--            9515    SET (only movie)                            -->
-<!--            9518    SIMILAR                                     -->
-<!--            9517    RECOMENDATION                               -->
-<!--            9503    STUDIO                                      -->
-<!--                                                                -->
-<!--            Person                                              -->
-<!--            ===========================================         -->
-<!--                                                                -->
-<!--            9554    PICTURE     PERSON                          -->
-<!--            9560    DIRECTOR    MOVIES / TVSHOWS                -->
-<!--            9552    MOVIES      LIST BY CAST                    -->
-<!--            9553    TVSHOWS     LIST BY CAST                    -->
-<!--            9558    MOVIES      LIST BY MEMBER CREW             -->
-<!--            9559    TVSHOWS     LIST BY MEMBER CREW             -->
-<!--                                                                -->
-<!--            commun                                              -->
-<!--            ===========================================         -->
-<!--            9504    YOUTUBE                                     -->
-
-    <include name="Animation_Home_Is_Horizontal">
-        <visible>!$EXP[View_Info_Dialog]</visible>
-        <animation type="WindowOpen" reversible="false">
-            <effect type="fade" start="0" end="100" time="450" delay="0" tween="sine" easing="in" />
-        </animation>
-        <animation type="WindowClose" reversible="false">
-            <effect type="fade" start="100" end="0" tween="cubic" easing="out" delay="0" time="350" />
-        </animation>
-        <animation type="Visible" reversible="false">
-            <effect type="fade" start="0" end="100" time="450" delay="0" tween="sine" easing="in" />
-        </animation>
-        <animation type="Hidden" reversible="false">
-            <effect type="fade" start="100" end="0" tween="cubic" easing="out" delay="0" time="350" />
-        </animation>
     </include>
 
     <include name="Animation_NowPlaying_Widget_Fade">

@@ -3636,26 +3636,34 @@
 
                 <!-- MOVIES -->
 
-                <control type="label">
-                    <include>Def_Info_Right_Line1</include>
-                    <label>$VAR[Label_Genre_Ext]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),  •  ,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
-                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                </control>
+                <!-- ITEM LOCAL - HOUR - MM -->
 
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
-                    <label>$VAR[Label_Genre_Ext]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.H),  •  ,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.M),,$LOCALIZE[31062]]</label>
+                    <label>$VAR[Label_Genre_Ext,,  •  ]$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
-                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>Integer.IsGreater(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                    <visible>Integer.IsGreater(Container($PARAM[controlid]).ListItem.Duration(h),0) + Integer.IsGreater(Container($PARAM[controlid]).ListItem.Duration(mm),0)</visible>
                 </control>
+
+                <!-- ITEM LOCAL - MM -->
+
                 <control type="label">
                     <include>Def_Info_Right_Line1</include>
-                    <label>$VAR[Label_Genre_Ext]$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.M),  •  ,$LOCALIZE[31062]]</label>
+                    <label>$VAR[Label_Genre_Ext,,  •  ]$INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]</label>
+                    <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                    <visible>!Integer.IsGreater(Container($PARAM[controlid]).ListItem.Duration(h),0)</visible>
+                </control>
+
+                <!-- ITEM TMDB - HOUR \ MM -->
+
+                <control type="label">
+                    <include>Def_Info_Right_Line1</include>
+                    <label>$VAR[Label_Genre_Ext]$VAR[Label_Duration_Ext,  •  ,]</label>
                     <visible>String.IsEqual(Container($PARAM[controlid]).ListItem.DBtype,movie)</visible>
                     <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>!Integer.IsGreater(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0)</visible>
+                    <visible>Integer.IsGreater(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0) | Integer.IsGreater(Window(Home).Property(TMDbHelper.ListItem.Duration.M),0)</visible>
                 </control>
 
                 <!-- TV SHOWS -->

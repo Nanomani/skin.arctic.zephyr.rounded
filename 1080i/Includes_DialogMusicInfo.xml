@@ -76,8 +76,8 @@
                 <!-- LABEL HEADER -->
 
                 <control type="group">
+                    <include>Animation_Wiki_Fade_Out</include>
                     <include>Animation_Music_Info_Extended_Views_Fade_Out</include>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
 
                     <top>70</top>
                     <left>785</left>
@@ -151,10 +151,14 @@
                 <!-- CLEARLOGO -->
 
                 <control type="image" description="clearlogo">
-                    <include>Animation_Wiki_Fade_Out</include>
-                    <visible>Skin.HasSetting(show.dialog.info.music.clearlogo)</visible>
+                    <visible>Skin.HasSetting(show.dialog.info.clearlogo.music)</visible>
+                    <visible>ControlGroup(9000).HasFocus()</visible>
 
-                    <visible>[[Control.HasFocus(9501) | Control.HasFocus(9502) | Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(95027) | Control.HasFocus(95017) | Control.HasFocus(50)] + [!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views)]] | ![Control.HasFocus(9501) | Control.HasFocus(9502) | Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(95027) | Control.HasFocus(95017) | Control.HasFocus(9511) | Control.HasFocus(95117) | Control.HasFocus(9006) | Control.HasFocus(95031) | Control.HasFocus(50) | Control.HasFocus(9669)]</visible>
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <include>Animation_Music_Info_Extended_Views_Fade_Out</include>
+
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                    <include>Animation_Dialog_Video_Info_Clearlogo_Fade_Out</include>
 
                     <centertop>264</centertop>
                     <right>View_SidePad</right>
@@ -163,14 +167,7 @@
 
                     <fadetime>ClearArtFadetime</fadetime>
                     <aspectratio align="right" aligny="top">keep</aspectratio>
-                    <texture background="true">$VAR[Image_Dialog_Info_Music_Crop_ClearLogo]</texture>
-
-                    <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-                    <animation effect="fade" start="100" end="0" delay="0" time="200" reversible="true">Hidden</animation>
-
-                    <animation type="Conditional" reversible="true" condition="![Control.HasFocus(9501) | Control.HasFocus(160) | Control.HasFocus(9502) | Control.HasFocus(9508) | Control.HasFocus(95087) | Control.HasFocus(95027) | Control.HasFocus(95017) | Control.HasFocus(50)]">
-                        <effect type="slide" end="0,0" start="0,-120" time="300" tween="cubic" easing="out" />
-                    </animation>
+                    <texture background="true">$VAR[Image_Dialog_Info_Video_Ext_Crop_ClearLogo]</texture>
                 </control>
 
                 <!-- IMAGE LABEL RECORD -->
@@ -842,7 +839,7 @@
                     <label>$INFO[ListItem.FileNameAndPath]</label>
                     <align>right</align>
                     <include>Animation_File_Name_And_Path_Music</include>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <include>Animation_Wiki_Fade_Out</include>
                     <visible>Control.HasFocus(9008) + !String.IsEqual(ListItem.DBType,artist)</visible>
                 </control>
 
@@ -850,7 +847,7 @@
 
                 <control type="label">
                     <visible>ControlGroup(9000).HasFocus()</visible>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
+                    <include>Animation_Wiki_Fade_Out</include>
                     <include>Animation_Button_Label_Music</include>
                     <right>View_SidePad</right>
                     <height>50</height>
@@ -1036,29 +1033,6 @@
         <!-- VIDEO FULLSCREEN FAKE -->
 
         <include>Def_Dialog_Info_Video_Fullscreen</include>
-    </include>
-
-    <!-- CLEARLOGO EXTENDED -->
-
-    <include name="Dialog_Music_Clearlogo_Ext">
-        <control type="image" description="clearlogo">
-            <include>Animation_Wiki_Fade_Out</include>
-            <visible>Skin.HasSetting(show.dialog.info.music.clearlogo)</visible>
-
-            <visible>[Control.HasFocus(9511) | Control.HasFocus(95117)] + [!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views)]</visible>
-
-            <centertop>142</centertop>
-            <right>View_SidePad</right>
-            <height>ClearLogoMaxHeight</height>
-            <width>ClearLogoMaxWidth</width>
-
-            <fadetime>ClearArtFadetime</fadetime>
-            <aspectratio align="right" aligny="top">keep</aspectratio>
-            <texture background="true">$INFO[Container($PARAM[controlid]).ListItem.Art(artist.clearlogo)]</texture>
-
-            <animation effect="fade" start="0" end="100" time="200" delay="0" reversible="true">Visible</animation>
-            <animation effect="fade" start="100" end="0" delay="0" time="200" reversible="true">Hidden</animation>
-        </control>
     </include>
 
     <!-- TRACKLIST -->

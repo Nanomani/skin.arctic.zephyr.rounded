@@ -26,10 +26,10 @@
             <include content="View_Dialog_Info_Square">
                 <param name="fallbackpicture" value="DefaultAlbumCover" />
                 <param name="visible" value="$PARAM[visible]" />
-                <param name="music_info_album" value="true" />
                 <param name="controlid" value="$PARAM[controlid]" />
                 <param name="visible.layouts" value="Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7) | Control.HasFocus(160) | Control.HasFocus(6) | [!String.IsEmpty(Window(Home).Property(view_extended)) + [Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(FileBrowser.xml) | Container(9999).IsUpdating]]" />
                 <param name="condition.includecontent" value="false" />
+
                 <param name="music_info_onclick" value="false" />
             </include>
         </control>
@@ -60,15 +60,16 @@
             <include content="View_Dialog_Info_Square">
                 <param name="fallbackpicture" value="DefaultMusicAlbums" />
                 <param name="visible" value="$PARAM[visible]" />
-                <param name="music_info_album" value="true" />
                 <param name="controlid" value="$PARAM[controlid]" />
                 <param name="visible.layouts" value="Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7) | Control.HasFocus(160) | Control.HasFocus(6) | [!String.IsEmpty(Window(Home).Property(view_extended)) + [Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(FileBrowser.xml) | Container(9999).IsUpdating]]" />
                 <param name="condition.includecontent" value="true" />
                 <param name="ContentToLoad" value="$VAR[Def_List_Artist_Albums]" />
                 <param name="sortby" value="year" />
-                <param name="music_info_onclick" value="false" />
-                <param name="onclick1" value="Dialog.Close(musicinformation)" />
-                <!-- <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" /> -->
+
+                <param name="music_info_onclick" value="true" />
+
+                <param name="onclick1" value="Dialog.Close(all,true)" />
+                <param name="onclick2" value="AlarmClock(delay_activatewindow1,ActivateWindow(music,$INFO[ListItem.FolderPath],return),00:00,silent)" />
             </include>
             <include content="Def_Dialog_Info_List_Updating">
                 <param name="visible" value="$PARAM[visible] + Control.HasFocus(9004)" />
@@ -103,10 +104,14 @@
                 <param name="visible.layouts" value="Control.HasFocus($PARAM[controlid]) | Control.HasFocus($PARAM[controlid]7) | Control.HasFocus(160) | Control.HasFocus(6) | [!String.IsEmpty(Window(Home).Property(view_extended)) + [Window.IsVisible(DialogBusy.xml) | Window.IsVisible(DialogContextMenu.xml) | Window.IsVisible(DialogButtonMenu.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(FileBrowser.xml) | Container(9999).IsUpdating]]" />
                 <param name="condition.includecontent" value="true" />
                 <param name="ContentToLoad" value="$VAR[Def_List_Artist_Songs]" />
-                <param name="music_info_onclick" value="false" />
-                <param name="onclick1" value="Dialog.Close(all,force)" />
-                <param name="onclick2" value="PlayMedia($ESCINFO[Container($PARAM[controlid]).ListItem.FileNameAndPath()])" />
+
+                <param name="music_info_onclick" value="true" />
+
+                <param name="onclick1" value="Stop" />
+                <param name="onclick2" value="AlarmClock(delay_playsong,PlayMedia($ESCINFO[Container($PARAM[controlid]).ListItem.FileNameAndPath()]),00:00,silent)" />
                 <!-- <param name="onclick3" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" /> -->
+
+
             </include>
             <include content="Def_Dialog_Info_List_Updating">
                 <param name="visible" value="!Integer.IsGreater(Container($PARAM[controlid]).NumItems,1) + $PARAM[visible] + Control.HasFocus(9029)" />
@@ -146,8 +151,9 @@
                 <param name="condition.includecontent" value="true" />
                 <param name="ContentToLoad" value="$VAR[Def_List_Albums_Year]" />
                 <param name="sortby" value="year" />
+
                 <param name="music_info_onclick" value="false" />
-                <param name="music_info_album" value="true" />
+
                 <param name="onclick1" value="Dialog.Close(musicinformation)" />
                 <!-- <param name="onclick2" value="Skin.Reset(TMDbHelper.ForceWidgetContainer)" /> -->
             </include>

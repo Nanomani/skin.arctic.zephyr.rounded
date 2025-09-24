@@ -1288,6 +1288,31 @@
                 <selected>Player.Playing</selected>
             </control>
 
+            <!-- FOLDER ALBUM / SONGS -->
+
+            <control type="radiobutton" id="9013">
+                <visible>String.IsEqual(ListItem.DBType,album)</visible>
+
+                <onfocus>SetProperty(last_music_focus,9013,Home)</onfocus>
+                <onfocus>ClearProperty(musiccontent,Home)</onfocus>
+
+                <onfocus condition="![Window.IsActive(musicinformation) + !String.IsEmpty(Window(Home).Property(show_info_song))]">ClearProperty(show_info_artist,Home)</onfocus>
+
+                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
+                <onfocus>ClearProperty(Rotate_Cover,Home)</onfocus>
+
+                <param name="onclick1" value="Dialog.Close(all,true)" />
+                <param name="onclick2" value="AlarmClock(delay_activatewindow,ActivateWindow(music,$INFO[ListItem.FolderPath],return),00:00,silent)" />
+
+                <onclick>Dialog.Close(all,true)</onclick>
+                <onclick condition="String.IsEqual(ListItem.DBType,album)">AlarmClock(delay_activatewindow2,ActivateWindow(music,$INFO[ListItem.FolderPath],return),00:00,silent)</onclick>
+
+                <include>Def_Button_Dimensions</include>
+                <include content="Def_Button_Textures">
+                    <param name="icon" value="buttonsdialogs/folder.png" />
+                </include>
+            </control>
+
             <!-- INFO -->
 
             <control type="radiobutton" id="9092">

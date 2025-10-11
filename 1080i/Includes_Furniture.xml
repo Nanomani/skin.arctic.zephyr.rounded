@@ -504,7 +504,9 @@
 
                 <control type="group">
                     <visible>!String.IsEmpty(ListItem.Rating)</visible>
-                    <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | $EXP[IsLibraryGenie]</visible>
+                    <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | [$EXP[IsLibraryGenie] + !$EXP[View_Info_Dialog]] | [Window.IsVisible(Home) + !$EXP[IsTMDbHelperItem]]</visible>
+                    <!-- <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | $EXP[IsLibraryGenie]</visible> -->
+
                     <visible>!String.IsEmpty(ListItem.Rating(imdb)) | String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),IMDb)</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
 
@@ -522,7 +524,9 @@
 
                 <control type="group">
                     <visible>!String.IsEmpty(ListItem.Rating)</visible>
-                    <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | $EXP[IsLibraryGenie]</visible>
+                    <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | [$EXP[IsLibraryGenie] + !$EXP[View_Info_Dialog]] | [Window.IsVisible(Home) + !$EXP[IsTMDbHelperItem]]</visible>
+                    <!-- <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | $EXP[IsLibraryGenie]</visible> -->
+
                     <visible>String.IsEmpty(ListItem.Rating(imdb))</visible>
                     <visible>String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),TMDb) | String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),Kodi)</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
@@ -544,8 +548,9 @@
                 <control type="group">
                     <visible>!String.IsEmpty(ListItem.Rating)</visible>
                     <visible>String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) | $EXP[IsTMDbHelperItem]</visible>
+                    <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem] + ![$EXP[IsLibraryGenie] + !$EXP[View_Info_Dialog]] + !$EXP[IsPluginShortlist]</visible>
+
+                    <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) + !Window.IsVisible(Home)] | $EXP[IsTMDbHelperItem]</visible>
 
                     <control type="image">
                         <include>Def_Image_Poster_Rating_Info_Left</include>
@@ -4771,6 +4776,11 @@
             <include content="Overlay_InfoLabel">
                 <label> - Window(Home).Property(TMDbHelper.ListItem.base_clearlogo) : $INFO[Window(Home).Property(TMDbHelper.ListItem.base_clearlogo)]</label>
                 <textcolor>green</textcolor>
+            </include>
+
+            <include content="Overlay_InfoLabel">
+                <label> - ListItem DBID : $INFO[Container($PARAM[id]).ListItem.DBID]</label>
+                <textcolor>FFFFFFFF</textcolor>
             </include>
 
             <include content="Overlay_InfoLabel">

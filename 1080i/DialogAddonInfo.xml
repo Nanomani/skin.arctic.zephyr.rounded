@@ -3,6 +3,10 @@
     <defaultcontrol always="true">9000</defaultcontrol>
     <menucontrol>9000</menucontrol>
 
+    <onload condition="Window.IsVisible(Home) + !String.IsEmpty(Window(Home).Property(TMDBHelper.WidgetContainer))">SetProperty(TMDB_LastWidgetContainer,$INFO[Window(Home).Property(TMDBHelper.WidgetContainer)],Home)</onload>
+    <onload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onload>
+    <onload>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onload>
+    
     <onload>AlarmClock(Set_Focus_9000,SetFocus(9000),00:00,silent)</onload>
 
     <!-- AUTOPLAY TRAILER -->
@@ -10,6 +14,8 @@
     <onload condition="Skin.HasSetting(home.views.flix.autoplay.trailer) + Skin.HasSetting(trailer.stop.on.dialogvideoinfo) + $EXP[Trailer_Is_Playing] + Player.Playing">Stop</onload>
     <onload condition="Skin.HasSetting(home.views.flix.autoplay.trailer) + Skin.HasSetting(trailer.pause.on.dialogvideoinfo) + $EXP[Trailer_Is_Playing] + Player.Playing">Pause</onload>
 
+    <onunload condition="Window.IsVisible(Home) + !String.IsEmpty(Window(home).Property(TMDB_LastWidgetContainer))">SetProperty(TMDbHelper.WidgetContainer,$INFO[Window(home).Property(TMDB_LastWidgetContainer)],Home)</onunload>
+    
     <controls>
         <control type="group">
             <include>Animation_Dialog_Info_Background_Delay_400</include>

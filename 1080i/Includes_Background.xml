@@ -42,13 +42,14 @@
         <value>background/bg_startup.jpg</value>
     </variable>
 
-    <include name="Hidden_Video_Window">
+    <include name="Hidden_Video_Window_Prevent_Audio_Lag">
+
         <!--HIDDEN VIDEO WINDOW TO PREVENT AUDIO ERRORS-->
+
         <control type="videowindow">
             <include>Def_Dimensions_Fullscreen</include>
         </control>
     </include>
-
     <include name="Windows_Video_Flix">
         <control type="videowindow">
             <visible>[[$EXP[Trailer_Window_Is_Active] | $EXP[Video_Window_Home_Flix_Is_Active] | $EXP[Video_Window_Views_Flix_Is_Active]] + !$EXP[Extended_Now_Playing_Is_Visible]]</visible>
@@ -130,7 +131,7 @@
             <texture colordiffuse="Background">background/bg.jpg</texture>
         </control>
         <control type="group" description="Background">
-            <visible>Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video)</visible>
+            <visible>Player.HasVideo</visible>
             <control type="image" description="Background">
                 <include>Def_Dimensions_Fullscreen</include>
                 <texture colordiffuse="FF000000">common/white.png</texture>
@@ -395,7 +396,8 @@
 
     <include name="Background_Global">
         <include condition="$EXP[ShowMusicVisualisation]">Global_Music_Visualisation</include>
-        <include>Global_Background_Full_Screen_Video</include>
+        <include condition="!Skin.HasSetting(show.global.visualisation.background.video)">Hidden_Video_Window_Prevent_Audio_Lag</include>
+        <include condition="Skin.HasSetting(show.global.visualisation.background.video)">Global_Background_Full_Screen_Video</include>
 
         <!-- EXTRA FANART -->
 

@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <!-- <defaultcontrol always="false">300</defaultcontrol> -->
+    <!-- <defaultcontrol always="false">399</defaultcontrol> -->
     <defaultcontrol>399</defaultcontrol>
+
+    <!-- ================================== -->
+    <!--                ON LOAD             -->
+    <!-- ================================== -->
+
     <include condition="Skin.HasSetting(enabled.tmdb.helper.blur)">Action_Blur_Onload</include>
 
     <onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|x1111|x1112|x1113|x1114|x1115|x1116|x1117|x1118|x1119|powermenu&amp;levels=10)</onload>
-
     <onload>RunScript(script.skinvariables,action=buildviews)</onload>
 
-    <onload condition="!String.IsEqual(Window(Home).Property(ClearArtAnimation),Container(300).ListItem.Label)">SetProperty(ClearArtAnimation,$INFO[Container(300).ListItem.Label],Home)</onload>
+    <!-- SET COLOR LINK WIKIPEDIA -->
+
+    <onload>Skin.SetString(Wikipedia.Format.Link,[COLOR=$VAR[Color_Wikipedia_Format_Link]]{}[/COLOR])</onload>
 
     <!-- INITIALISATION -->
 
     <onload>ClearProperty(ShowMenuLabel,Home)</onload>
     <onload>ClearProperty(Hide_On_Reload_Dialog_Info,Home)</onload>
 
-    <!-- EXTENDED NOW PLAYING -->
+    <onload condition="!System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(filter.video.only.local)</onload>
+
+    <!-- FOCUS - EXTENDED NOW PLAYING -->
 
     <onload condition="Player.PauseEnabled + $EXP[Extended_Now_Playing_Is_Visible]">SetFocus(14)</onload>
     <onload condition="!Player.PauseEnabled + $EXP[Extended_Now_Playing_Is_Visible]">SetFocus(15)</onload>
 
+    <!-- FOCUS - MAIN MENU - 399 -->
+
     <onload condition="!String.IsEmpty(Window(Home).Property(Set_Back_Menu_300_After_SubMenu_302))">SetFocus(399)</onload>
     <onload condition="!String.IsEmpty(Window(Home).Property(Set_Back_Menu_300_After_SubMenu_302))">ClearProperty(Set_Back_Menu_300_After_SubMenu_302,Home)</onload>
-    <onload condition="!System.AddonIsEnabled(plugin.video.themoviedb.helper)">Skin.SetBool(filter.video.only.local)</onload>
+
+    <!-- FOCUS - LAST WIDGET FOCUS -->
+
+    <onload condition="!String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus))">SetFocus($INFO[Window(Home).Property(HomeLastWidgetFocus)])</onload>
+    <onload condition="String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus))">SetFocus(399)</onload>
 
     <!-- START TMDBH SERVICE -->
 
@@ -43,11 +57,15 @@
     <!-- <onload>Skin.Reset(TMDbHelper.DirectCallAuto)</onload> -->
     <!-- <onload>Skin.SetBool(TMDbHelper.DirectCallAuto)</onload> -->
 
-    <onload>Skin.SetString(Wikipedia.Format.Link,[COLOR=$VAR[Color_Wikipedia_Format_Link]]{}[/COLOR])</onload>
-
-    <!-- AUTO SLIDE NOWPLAYING -->
+    <!-- AUTO SLIDE OUT MAIN MENU -->
 
     <onload condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onload>
+
+    <!-- ================================== -->
+    <!--             ON UNLOAD             -->
+    <!-- ================================== -->
+
+    <!-- AUTO SLIDE OUT MAIN MENU -->
 
     <onunload condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onunload>
 
@@ -55,11 +73,14 @@
 
     <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
 
+    <!-- RESET AUTO TRAILER -->
+
     <onunload condition="Skin.HasSetting(home.views.flix.autoplay.trailer)">ClearProperty(ListItem_Trailer_Path,Home)</onunload>
+
+    <!-- MAIN MENU -->
 
     <onunload>ClearProperty(MenuSelect,Home)</onunload>
     <onunload>ClearProperty(AnimationDirection,Home)</onunload>
-    <onunload>ClearProperty(ClearArtAnimation,Home)</onunload>
 
     <controls>
         <include>Background_Global</include>

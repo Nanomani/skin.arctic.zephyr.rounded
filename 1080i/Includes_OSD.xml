@@ -1458,16 +1458,11 @@
 
     <include name="OSD_Video">
         <control type="group">
-            <animation effect="fade" start="100" end="0" time="150" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
+            <animation effect="fade" start="100" end="0" time="250" condition="[Window.IsVisible(DialogSlider.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
 
-            <animation effect="fade" start="100" end="0" time="150" condition="Player.HasGame | Window.IsVisible(DialogPlayerProcessInfo.xml) | Window.IsVisible(DialogSlider.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogSettings.xml) | Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(DialogSubtitles.xml) | Window.IsVisible(DialogPVRChannelsOSD.xml) | Window.IsVisible(DialogPVRChannelGuide.xml)">Conditional</animation>
+            <animation effect="fade" start="100" end="0" time="250" condition="Player.HasGame | Window.IsVisible(DialogPlayerProcessInfo.xml) | Window.IsVisible(DialogSlider.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogSettings.xml) | Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(DialogSubtitles.xml) | Window.IsVisible(DialogPVRChannelsOSD.xml) | Window.IsVisible(DialogPVRChannelGuide.xml)">Conditional</animation>
 
-            <animation type="WindowOpen">
-                <effect type="fade" start="0" end="100" time="150" delay="150" />
-            </animation>
-            <animation type="WindowClose">
-                <effect type="fade" end="0" start="100" time="150" />
-            </animation>
+            <include>Animation_OSD_Fade_Open_Close</include>
 
             <height>74</height>
             <bottom>110</bottom>
@@ -1690,7 +1685,48 @@
             <!-- OSD FOOTER INFO TIPS - LEFT -->
 
             <control type="grouplist">
-                <visible>ControlGroup(100).HasFocus() | [ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID) | VideoPlayer.Content(livetv)]] | Control.HasFocus(8207)</visible>
+                <visible>ControlGroup(100).HasFocus()</visible>
+                <include>Animation_OSD_Fade_Tips</include>
+
+                <top>64</top>
+                <left>OSD_SidePad</left>
+                <width>1400</width>
+                <height>50</height>
+                <align>left</align>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <control type="image">
+                    <width>50</width>
+                    <height>50</height>
+                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                    <texture flipy="true" colordiffuse="$VAR[Color_OSD_Button_Background]">special://skin/extras/icons/angle-up.png</texture>
+                    <visible>[ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID) | VideoPlayer.Content(livetv)]]</visible>
+                </control>
+                <control type="image">
+                    <width>50</width>
+                    <height>50</height>
+                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                    <texture flipy="false" colordiffuse="$VAR[Color_OSD_Button_Background]">special://skin/extras/icons/angle-up.png</texture>
+                    <visible>ControlGroup(100).HasFocus() | Control.HasFocus(8207)</visible>
+                </control>
+                <control type="label">
+                    <height>50</height>
+                    <font>Mini</font>
+                    <scroll>false</scroll>
+                    <textcolor>$VAR[Color_OSD_Button_Background]</textcolor>
+                    <label>$VAR[Label_OSD_Footer_Tip_Video_Left]</label>
+                    <aligny>center</aligny>
+                </control>
+            </control>
+
+            <!-- OSD FOOTER INFO TIPS - CENTER -->
+
+            <control type="grouplist">
+                <visible>[ControlGroup(101).HasFocus() + [!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID) | VideoPlayer.Content(livetv)]] | Control.HasFocus(8207)</visible>
+                <include>Animation_OSD_Fade_Tips</include>
 
                 <top>64</top>
                 <left>OSD_SidePad</left>
@@ -1730,6 +1766,7 @@
 
             <control type="group">
                 <visible>ControlGroup(102).HasFocus()</visible>
+                <include>Animation_OSD_Fade_Tips</include>
 
                 <top>64</top>
                 <right>OSD_SidePad</right>
@@ -2117,9 +2154,9 @@
         <control type="group">
             <!-- <animation effect="fade" start="100" end="0" time="150" condition="[Window.IsVisible(DialogSlider.xml) | [!Player.Paused + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO))]] + !Window.IsVisible(DialogFullScreenInfo.xml) + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation> -->
 
-            <animation effect="fade" start="100" end="0" time="150" condition="Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogFullScreenInfo.xml) + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
+            <animation effect="fade" start="100" end="0" time="250" condition="Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogFullScreenInfo.xml) + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd)">Conditional</animation>
 
-            <animation effect="fade" start="100" end="0" time="150" condition="[Window.IsVisible(DialogPlayerProcessInfo.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused] | [Skin.HasSetting(hide.osd.video.on.pause) + !String.IsEmpty(Window(Home).Property(OSDVideo_Hide_OSD_ON_PAUSE)) + !Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) + !Window.IsVisible(DialogFullScreenInfo.xml)">Conditional</animation>
+            <animation effect="fade" start="100" end="0" time="250" condition="[Window.IsVisible(DialogPlayerProcessInfo.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused] | [Skin.HasSetting(hide.osd.video.on.pause) + !String.IsEmpty(Window(Home).Property(OSDVideo_Hide_OSD_ON_PAUSE)) + !Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) + !Window.IsVisible(DialogFullScreenInfo.xml)">Conditional</animation>
 
             <!-- OSD - SEEKBAR - BACKGROUND -->
 

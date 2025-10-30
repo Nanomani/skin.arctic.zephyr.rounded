@@ -19,11 +19,11 @@
             <!-- WIDGET -->
 
             <control type="group" id="301">
-                <include content="Def_Bottom" condition="Skin.HasSetting(home.style.horizontal.clean) + !Skin.HasSetting(hide.widget.title)">
-                    <param name="bottom" value="238" />
-                </include>
                 <include content="Def_Height" condition="Skin.HasSetting(home.style.flix) | Skin.HasSetting(home.style.horizontal.clean)">
                     <param name="height" value="765" />
+                </include>
+                <include content="Def_Bottom" condition="Skin.HasSetting(home.style.horizontal.clean) + !Skin.HasSetting(hide.widget.title)">
+                    <param name="bottom" value="238" />
                 </include>
 
                 <height>770</height>
@@ -323,13 +323,16 @@
                 <!-- CONTAINER UPDATING -->
 
                 <control type="group">
+                    <visible>[![String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + Container(301).IsUpdating] | [!Weather.IsFetched + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)]]</visible>
+
+                    <include>Animation_Common_Fade_In</include>
+                    <include>Animation_Common_Fade_Out</include>
+
                     <centerleft>60%</centerleft>
                     <centertop>45%</centertop>
                     <width>450</width>
                     <height>117</height>
-                    <visible>[![String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)] + Container(301).IsUpdating] | [!Weather.IsFetched + [String.IsEqual(Container(300).ListItem.Property(widget),weatherdaily) | String.IsEqual(Container(300).ListItem.Property(widget),weatherhourly)]]</visible>
-                    <include>Animation_Common_Fade_In</include>
-                    <include>Animation_Common_Fade_Out</include>
+
                     <include content="Object_Spinner_Busy">
                         <param name="show_label_spinner" value="false" />
                         <param name="centerleft" value="50%" />
@@ -344,8 +347,8 @@
                         <include content="Def_Height" condition="Skin.HasSetting(home.style.flix)">
                             <param name="height" value="765" />
                         </include>
-                        <height>770</height>
 
+                        <height>770</height>
                         <bottom>188</bottom>
                         <left>364</left>
                         <width>1920</width>
@@ -891,10 +894,6 @@
 
         <definition>
             <control type="group">
-                <animation effect="slide" start="0" end="0,10" time="0" condition="!Skin.HasSetting(home.style.flix)">Conditional</animation>
-
-                <animation effect="slide" start="0" end="0,385" time="0" condition="[String.IsEqual(Window(Home).Property(BackToId),Window(Home).Property(LastId)) + !String.IsEqual(Container(300).ListItem.Property(widgetFullscreen),yes)] + !Skin.HasSetting(home.style.flix)">Conditional</animation>
-
                 <include>Animation_Visible_Label_Tip_Fade_Conditional_Widgets</include>
 
                 <include>Animation_Vertical_Widgets_Label_Focus_Search</include>
@@ -918,52 +917,32 @@
 
                     <!-- HOME FLIX -->
 
-                    <include content="Def_Top" condition="Skin.HasSetting(home.style.flix)">
-                        <param name="top" value="-750" />
-                    </include>
-
-                    <include content="Def_Width" condition="Skin.HasSetting(home.style.flix)">
-                        <param name="width" value="NetflixPlotWidth" />
-                    </include>
-
-                    <!-- HOME WALL -->
-
-                    <top>-373</top>
-                    <width>1270</width>
+                    <top>-750</top>
+                    <width>NetflixPlotWidth</width>
 
                     <include content="Widgets_Item_Main_Title" condition="$PARAM[labelisvisible]">
                         <param name="id" value="$PARAM[id]" />
                     </include>
 
-                    <include condition="Skin.HasSetting(home.style.flix) + !Skin.HasSetting(show.home.flix.title.clearlogo) | Skin.HasSetting(home.style.horizontal.clean)">Button_Intent</include>
-
                     <include content="Widgets_Item_Sub_Title" condition="!Skin.HasSetting(show.home.flix.title.clearlogo)">
                         <param name="id" value="$PARAM[id]" />
-                        <param name="setcontent" value="videodb://movies/sets/$INFO[Container($PARAM[id]).ListItem.DBID]/?setid=$INFO[Container($PARAM[id]).ListItem.DBID]" />
                         <param name="top" value="80" />
                     </include>
 
                     <include content="Widgets_Item_Sub_Title" condition="Skin.HasSetting(show.home.flix.title.clearlogo)">
                         <param name="id" value="$PARAM[id]" />
-                        <param name="setcontent" value="videodb://movies/sets/$INFO[Container($PARAM[id]).ListItem.DBID]/?setid=$INFO[Container($PARAM[id]).ListItem.DBID]" />
                         <param name="top" value="120" />
                     </include>
 
-                    <include content="Widgets_Item_Plot" condition="!Skin.HasSetting(show.home.flix.title.clearlogo) + Skin.HasSetting(home.style.flix) + !Skin.HasSetting(home.style.horizontal.clean)">
+                    <include content="Widgets_Item_Plot" condition="!Skin.HasSetting(show.home.flix.title.clearlogo) + !Skin.HasSetting(home.style.horizontal.clean)">
                         <param name="id" value="$PARAM[id]" />
                         <param name="height" value="176" />
                         <param name="top" value="145" />
                     </include>
 
-                    <include content="Widgets_Item_Plot" condition="Skin.HasSetting(show.home.flix.title.clearlogo) + Skin.HasSetting(home.style.flix) + !Skin.HasSetting(home.style.horizontal.clean)">
+                    <include content="Widgets_Item_Plot" condition="Skin.HasSetting(show.home.flix.title.clearlogo) + !Skin.HasSetting(home.style.horizontal.clean)">
                         <param name="id" value="$PARAM[id]" />
                         <param name="height" value="140" />
-                        <param name="top" value="185" />
-                    </include>
-
-                    <include content="Widgets_Item_Plot" condition="!Skin.HasSetting(home.style.flix) + !Skin.HasSetting(home.style.horizontal.clean)">
-                        <param name="id" value="$PARAM[id]" />
-                        <param name="height" value="212" />
                         <param name="top" value="185" />
                     </include>
 
@@ -987,153 +966,34 @@
 
     <include name="Widgets_Item_Main_Title">
 
-        <!-- EPISODES -->
-        <include content="Def_Widgets_Item_Main_Title_Clearlogo">
-            <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Title]" />
-            <param name="visible" value="!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) + !Skin.HasSetting(home.style.flix) + !Skin.HasSetting(home.style.horizontal.clean)" />
-            <param name="id" value="$PARAM[id]" />
-        </include>
-        <include content="Def_Widgets_Item_Main_Title_Clearlogo">
-            <param name="label" value="$INFO[Container($PARAM[id]).ListItem.TvShowTitle,, - ]$INFO[Container($PARAM[id]).ListItem.Title]" />
-            <param name="visible" value="!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) + [Skin.HasSetting(home.style.flix) | Skin.HasSetting(home.style.horizontal.clean)]" />
-            <param name="id" value="$PARAM[id]" />
-        </include>
-
         <!-- ALL OTHER -->
+
         <include content="Def_Widgets_Item_Main_Title_Clearlogo">
             <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Label]" />
             <param name="visible" value="!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) + !String.IsEmpty(Container($PARAM[id]).ListItem.Label)" />
             <param name="id" value="$PARAM[id]" />
         </include>
 
+        <!-- EPISODES -->
+
+        <include content="Def_Widgets_Item_Main_Title_Clearlogo">
+            <param name="label" value="$INFO[Container($PARAM[id]).ListItem.TvShowTitle,, - ]$INFO[Container($PARAM[id]).ListItem.Title]" />
+            <param name="visible" value="!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)" />
+            <param name="id" value="$PARAM[id]" />
+        </include>
+
         <!-- PVR -->
+
         <include content="Def_Widgets_Item_Main_Title_Clearlogo">
             <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Title]" />
             <param name="visible" value="String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.IsEmpty(Container($PARAM[id]).ListItem.Title)" />
             <param name="id" value="$PARAM[id]" />
         </include>
-
         <include content="Def_Widgets_Item_Main_Title_Clearlogo">
             <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Label]" />
             <param name="visible" value="String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + String.IsEmpty(Container($PARAM[id]).ListItem.Title)" />
             <param name="id" value="$PARAM[id]" />
         </include>
-    </include>
-
-    <include name="Def_Widgets_Item_Main_Title_Clearlogo">
-        <definition>
-            <control type="group">
-                <param name="left" value="$PARAM[left]" default="0" />
-                <param name="height" value="$PARAM[height]" default="46" />
-                <param name="width" value="$PARAM[width]" default="100%" />
-                <param name="visible" value="$PARAM[visible]" default="true" />
-
-                <!-- LABEL - HEADER - VIDEO -->
-
-                <control type="label">
-                    <include content="Def_Height" condition="Skin.HasSetting(show.home.flix.title.clearlogo)">
-                        <param name="height">ClearLogoTitleMaxHeight</param>
-                    </include>
-                    <height>40</height>
-
-                    <width>100%</width>
-                    <left>$PARAM[left]</left>
-                    <align>left</align>
-                    <!-- <aligny>bottom</aligny> -->
-                    <top>26</top>
-
-                    <font>LargeNetflix</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$PARAM[label]</label>
-                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
-
-                    <visible>$PARAM[visible] + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) + $PARAM[visible] + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
-                    <visible>[Skin.HasSetting(show.home.flix.title.clearlogo) + !$EXP[Title_Clearlogo_Home_Crop] + String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)) + String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))] | !Skin.HasSetting(show.home.flix.title.clearlogo)</visible>
-                </control>
-
-                <!-- LABEL - HEADER - ALBUM -->
-
-                <control type="label">
-                    <include content="Def_Height" condition="Skin.HasSetting(show.home.flix.title.clearlogo)">
-                        <param name="height">ClearLogoTitleMaxHeight</param>
-                    </include>
-
-                    <height>40</height>
-                    <width>100%</width>
-                    <left>$PARAM[left]</left>
-                    <align>left</align>
-                    <!-- <aligny>bottom</aligny> -->
-                    <top>26</top>
-
-                    <font>LargeNetflix</font>
-                    <textcolor>Dark1</textcolor>
-                    <label>$INFO[Container($PARAM[id]).ListItem.Artist]</label>
-                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
-
-                    <visible>$PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) | $PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
-                    <visible>[Skin.HasSetting(show.home.flix.title.clearlogo) + !$EXP[Title_Clearlogo_Home_Crop] + String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))] | !Skin.HasSetting(show.home.flix.title.clearlogo)</visible>
-                </control>
-
-                 <!-- CLEARLOGO CROP - HEADER - MOVIE / TVSHOW / MUSIC / ARTIST -->
-
-                <control type="image">
-                    <height>ClearLogoTitleMaxHeight</height>
-                    <width>ClearLogoTitleMaxWidth</width>
-                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-                    <texture background="true">$VAR[Image_Home_ClearLogo_Crop]</texture>
-                    <visible>$PARAM[visible] + $EXP[Title_Clearlogo_Home_Crop]</visible>
-                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo)</visible>
-                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
-                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
-                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
-                </control>
-
-                 <!-- CLEARLOGO - HEADER - MOVIE / VIDEO / TVSHOW / ARTIST -->
-
-                <control type="image">
-                    <height>ClearLogoTitleMaxHeight</height>
-                    <width>ClearLogoTitleMaxWidth</width>
-                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-                    <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(clearlogo)]</texture>
-                    <visible>$PARAM[visible] + !$EXP[Title_Clearlogo_Home_Crop]</visible>
-                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
-                    <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) | String.IsEmpty(Container($PARAM[id]).ListItem.DBType) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,set)</visible>
-                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
-                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
-                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
-                </control>
-
-                 <!-- CLEARLOGO - HEADER - SEASON / EPISODE -->
-
-                <control type="image">
-                    <height>ClearLogoTitleMaxHeight</height>
-                    <width>ClearLogoTitleMaxWidth</width>
-                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-                    <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)]</texture>
-                    <visible>$PARAM[visible] + !$EXP[Title_Clearlogo_Home_Crop]</visible>
-                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo))</visible>
-                    <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,season) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)</visible>
-                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
-                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
-                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
-                </control>
-
-                 <!-- CLEARLOGO - HEADER - ALBUM -->
-
-                <control type="image">
-                    <height>ClearLogoTitleMaxHeight</height>
-                    <width>ClearLogoTitleMaxWidth</width>
-                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
-                    <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(artist.clearlogo)]</texture>
-                    <visible>$PARAM[visible] + !$EXP[Title_Clearlogo_Home_Crop]</visible>
-                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))</visible>
-                    <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) | $PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
-                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
-                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
-                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
-                </control>
-            </control>
-        </definition>
     </include>
 
     <include name="Widgets_Item_Sub_Title">
@@ -1312,27 +1172,14 @@
             <top>$PARAM[top]</top>
             <height>$PARAM[height]</height>
 
-            <include content="Def_Width" condition="Skin.HasSetting(home.style.flix)">
-                <param name="width" value="100%" />
-            </include>
-            <include content="Def_Width" condition="$EXP[Home_Is_Vertical] + Skin.HasSetting(home.show.menu.icons)">
-                <param name="width" value="1242" />
-            </include>
-
-            <!-- SETS MOVIES EPISODES NO FLIX -->
-
-            <control type="textbox">
-                <include>Def_Widgets_Textbox</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
-                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + !Skin.HasSetting(home.style.flix)</visible>
-            </control>
+            <width>100%</width>
 
             <!-- SETS MOVIE EPISODE - HOME FLIX - NO CLEARLOGO OR EMPTY -->
 
             <control type="textbox">
                 <include>Def_Widgets_Textbox</include>
                 <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
-                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + Skin.HasSetting(home.style.flix) + [!Skin.HasSetting(show.home.flix.title.clearlogo) | [Skin.HasSetting(show.home.flix.title.clearlogo) + String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))]]</visible>
+                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + [!Skin.HasSetting(show.home.flix.title.clearlogo) | [Skin.HasSetting(show.home.flix.title.clearlogo) + String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))]]</visible>
             </control>
 
             <!-- SETS MOVIES EPISODES - HOME FLIX - CLEARLOGO -->
@@ -1340,7 +1187,7 @@
             <control type="textbox">
                 <include>Def_Widgets_Textbox</include>
                 <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
-                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + Skin.HasSetting(home.style.flix) + Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
+                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
             </control>
 
             <!-- ALBUMS -->
@@ -1415,6 +1262,122 @@
         </control>
     </include>
 
+    <include name="Def_Widgets_Item_Main_Title_Clearlogo">
+        <definition>
+            <control type="group">
+                <param name="left" value="$PARAM[left]" default="0" />
+                <param name="height" value="$PARAM[height]" default="46" />
+                <param name="width" value="$PARAM[width]" default="100%" />
+                <param name="visible" value="$PARAM[visible]" default="true" />
+
+                <!-- LABEL - HEADER - VIDEO -->
+
+                <control type="label">
+                    <include content="Def_Height" condition="Skin.HasSetting(show.home.flix.title.clearlogo)">
+                        <param name="height">ClearLogoTitleMaxHeight</param>
+                    </include>
+
+                    <height>40</height>
+                    <width>100%</width>
+                    <left>$PARAM[left]</left>
+                    <align>left</align>
+                    <!-- <aligny>bottom</aligny> -->
+                    <top>26</top>
+
+                    <font>LargeNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <label>$PARAM[label]</label>
+                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+
+                    <visible>$PARAM[visible] + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) + $PARAM[visible] + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
+                    <visible>[Skin.HasSetting(show.home.flix.title.clearlogo) + !$EXP[Title_Clearlogo_Home_Crop] + String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)) + String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))] | !Skin.HasSetting(show.home.flix.title.clearlogo)</visible>
+                </control>
+
+                <!-- LABEL - HEADER - ALBUM -->
+
+                <control type="label">
+                    <include content="Def_Height" condition="Skin.HasSetting(show.home.flix.title.clearlogo)">
+                        <param name="height">ClearLogoTitleMaxHeight</param>
+                    </include>
+
+                    <height>40</height>
+                    <width>100%</width>
+                    <left>$PARAM[left]</left>
+                    <align>left</align>
+                    <!-- <aligny>bottom</aligny> -->
+                    <top>26</top>
+
+                    <font>LargeNetflix</font>
+                    <textcolor>Dark1</textcolor>
+                    <label>$INFO[Container($PARAM[id]).ListItem.Artist]</label>
+                    <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
+
+                    <visible>$PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) | $PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
+                    <visible>[Skin.HasSetting(show.home.flix.title.clearlogo) + !$EXP[Title_Clearlogo_Home_Crop] + String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))] | !Skin.HasSetting(show.home.flix.title.clearlogo)</visible>
+                </control>
+
+                 <!-- CLEARLOGO CROP - HEADER - MOVIE / TVSHOW / MUSIC / ARTIST -->
+
+                <control type="image">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <width>ClearLogoTitleMaxWidth</width>
+                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                    <texture background="true">$VAR[Image_Home_ClearLogo_Crop]</texture>
+                    <visible>$PARAM[visible] + $EXP[Title_Clearlogo_Home_Crop]</visible>
+                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo)</visible>
+                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
+                </control>
+
+                 <!-- CLEARLOGO - HEADER - MOVIE / VIDEO / TVSHOW / ARTIST -->
+
+                <control type="image">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <width>ClearLogoTitleMaxWidth</width>
+                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                    <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(clearlogo)]</texture>
+                    <visible>$PARAM[visible] + !$EXP[Title_Clearlogo_Home_Crop]</visible>
+                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
+                    <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) | String.IsEmpty(Container($PARAM[id]).ListItem.DBType) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,set)</visible>
+                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
+                </control>
+
+                 <!-- CLEARLOGO - HEADER - SEASON / EPISODE -->
+
+                <control type="image">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <width>ClearLogoTitleMaxWidth</width>
+                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                    <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(tvshow.clearlogo)]</texture>
+                    <visible>$PARAM[visible] + !$EXP[Title_Clearlogo_Home_Crop]</visible>
+                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(tvshow.clearlogo))</visible>
+                    <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,season) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode)</visible>
+                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
+                </control>
+
+                 <!-- CLEARLOGO - HEADER - ALBUM -->
+
+                <control type="image">
+                    <height>ClearLogoTitleMaxHeight</height>
+                    <width>ClearLogoTitleMaxWidth</width>
+                    <aspectratio scalediffuse="true" align="left">keep</aspectratio>
+                    <texture background="true">$INFO[Container($PARAM[id]).ListItem.Art(artist.clearlogo)]</texture>
+                    <visible>$PARAM[visible] + !$EXP[Title_Clearlogo_Home_Crop]</visible>
+                    <visible>Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(artist.clearlogo))</visible>
+                    <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) | $PARAM[visible] + String.IsEqual(Container($PARAM[id]).ListItem.DBType,song)</visible>
+                    <!-- <animation effect="fade" start="0" end="100" time="200" delay="100" reversible="true">Visible</animation> -->
+                    <!-- <animation effect="fade" start="100" end="0" delay="100" time="200" reversible="true">Hidden</animation> -->
+                    <!-- <fadetime>ClearArtFadetime</fadetime> -->
+                </control>
+            </control>
+        </definition>
+    </include>
+
     <!-- WIDGET - WEATHER -->
 
     <include name="Home_Flix_Widgets_Weather_Info">
@@ -1484,9 +1447,8 @@
         <include content="Def_Top" condition="Skin.HasSetting(home.style.flix)">
             <param name="top" value="-380" />
         </include>
-        <include content="Def_Top" condition="!Skin.HasSetting(home.style.flix)">
-            <param name="top" value="-370" />
-        </include>
+
+        <top>-370</top>
 
         <itemgap>0</itemgap>
         <orientation>horizontal</orientation>
@@ -1724,10 +1686,8 @@
             <include content="Def_Top" condition="Skin.HasSetting(home.style.flix)">
                 <param name="top" value="-374" />
             </include>
-            <include content="Def_Top" condition="!Skin.HasSetting(home.style.flix)">
-                <param name="top" value="-364" />
-            </include>
 
+            <top>-364</top>
             <right>0</right>
             <width>40</width>
             <align>right</align>
@@ -1745,10 +1705,10 @@
             <!-- FIRST WIDGET -->
 
             <control type="group">
-                <top>-10</top>
                 <visible>String.IsEqual(System.CurrentControlID,Window(Home).Property(BackToId))</visible>
                 <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="300" /></include>
                 <include>Animation_Common_Fade_Out</include>
+                <top>-10</top>
                 <control type="image">
                     <top>13</top>
                     <right>92</right>
@@ -1760,10 +1720,10 @@
             <!-- MIDDLE WIDGET -->
 
             <control type="group">
-                <top>-10</top>
                 <visible>[!String.IsEqual(System.CurrentControlID,Window(Home).Property(BackToId)) + !String.IsEqual(System.CurrentControlID,Window(Home).Property(LastId))] | String.IsEqual(System.CurrentControlID,Window(Home).Property(LastId))</visible>
                 <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="300" /></include>
                 <include>Animation_Common_Fade_Out</include>
+                <top>-10</top>
                 <control type="image">
                     <top>13</top>
                     <right>92</right>
@@ -1772,10 +1732,10 @@
                 </control>
             </control>
             <control type="group">
-                <top>16</top>
                 <visible>[!String.IsEqual(System.CurrentControlID,Window(Home).Property(BackToId)) + !String.IsEqual(System.CurrentControlID,Window(Home).Property(LastId))] | String.IsEqual(System.CurrentControlID,Window(Home).Property(BackToId))</visible>
                 <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="300" /></include>
                 <include>Animation_Common_Fade_Out</include>
+                <top>16</top>
                 <control type="image">
                     <top>0</top>
                     <right>92</right>
@@ -1921,7 +1881,9 @@
 
             <control type="group">
                 <visible>!Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+
                 <control type="label">
+                    <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
                     <align>center</align>
                     <aligny>top</aligny>
                     <width>90%</width>
@@ -1930,7 +1892,6 @@
                     <textcolor>$VAR[Color_Focus]</textcolor>
                     <font>Home</font>
                     <label>$INFO[ListItem.Label]</label>
-                    <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
                 </control>
                 <control type="image">
                     <visible>Control.HasFocus(399)</visible>
@@ -1948,6 +1909,7 @@
             <control type="group">
                 <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
                 <control type="label">
+                    <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
                     <align>center</align>
                     <aligny>top</aligny>
                     <width>90%</width>
@@ -1956,7 +1918,6 @@
                     <textcolor>Dark1</textcolor>
                     <font>Home</font>
                     <label>$INFO[ListItem.Label]</label>
-                    <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
                 </control>
                 <control type="group">
                     <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
@@ -2021,16 +1982,18 @@
             <!-- MAIN MENU - ONLY ICON - UNDERLINED -->
 
             <control type="image">
+                <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+                <animation effect="slide" start="0,0" end="0,20" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
+                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
                 <height>80</height>
                 <width>80</width>
                 <centerleft>45.7%</centerleft>
                 <centertop>45%</centertop>
-                <animation effect="slide" start="0,0" end="0,20" time="0" condition="Skin.HasSetting(home.show.menu.icons)">Conditional</animation>
                 <texture colordiffuse="Dark1">$INFO[Container(300).ListItem.Icon]</texture>
-                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
-                <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
             </control>
             <control type="group">
+                <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
                 <centerleft>45.7%</centerleft>
                 <bottom>64</bottom>
                 <width>60</width>
@@ -2038,8 +2001,6 @@
                 <control type="image">
                     <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
                 </control>
-                <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus]">Conditional</animation>
-                <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
             </control>
 
             <!-- ARROWS - IF SUB MENU 302 CONTENT -->
@@ -2327,6 +2288,7 @@
                 <focusedlayout width="222" height="64">
                     <control type="group">
                         <visible>!Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+
                         <control type="label">
                             <align>center</align>
                             <aligny>top</aligny>
@@ -2347,6 +2309,7 @@
                     </control>
                     <control type="group">
                         <visible>Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
+
                         <control type="label">
                             <align>center</align>
                             <aligny>top</aligny>
@@ -2359,8 +2322,10 @@
                         </control>
                         <control type="group">
                             <visible>Control.HasFocus(302)</visible>
+
                             <include>Animation_Common_Fade_In</include>
                             <include>Animation_Common_Fade_Out</include>
+
                             <control type="image">
                                 <top>70</top>
                                 <centerleft>45.7%</centerleft>
@@ -2636,11 +2601,13 @@
             <control type="group">
                 <top>30</top>
                 <left>30</left>
+
                 <include content="Widget_Bullet_Hightlight">
                     <param name="dimensions">30</param>
                     <param name="top">15</param>
                     <param name="left">15</param>
                 </include>
+
                 <control type="label">
                     <top>6</top>
                     <left>54</left>
@@ -2762,12 +2729,12 @@
             <control type="group">
                 <top>30</top>
                 <left>30</left>
+
                 <include content="Widget_Bullet_Hightlight">
                     <param name="dimensions">30</param>
                     <param name="top">15</param>
                     <param name="left">15</param>
                 </include>
-
                 <control type="label">
                     <top>6</top>
                     <left>60</left>

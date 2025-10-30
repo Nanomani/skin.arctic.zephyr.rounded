@@ -11,7 +11,11 @@
         <!-- WIDGETS -->
 
         <control type="group">
-            <include condition="Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(hide.home.menu)">Animation_Home_Clean</include>
+
+            <!-- HOME CLEAN ONLY - WIDGET - ALWAYS SLIDE DOWN - IF MAIN MENU IS HIDDEN -->
+
+            <animation effect="slide" start="0" end="0,123" time="150" condition="![$EXP[Home_Menu_Is_Focus] | Control.HasFocus(9099)] + Skin.HasSetting(hide.home.menu) + ![$EXP[Extended_Now_Playing_Is_Visible] + Skin.HasSetting(hide.home.menu.with.nowplaying.extended)] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
+
             <include>Animation_Visible_Sub_Menu_Vertical_Fade_Conditional_Widgets</include>
 
             <left>0</left>
@@ -50,16 +54,19 @@
             <include>Animation_Fade_In_Delay_Zoom</include>
             <include>Animation_Common_Fade_Out</include>
 
-            <!-- HOME CLEAN ONLY - HIDE MENU -->
+            <!-- HOME CLEAN ONLY - MAIN MENU - CLOCK - SLIDE DOWN -->
 
-            <animation effect="slide" start="0" end="0,163" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + Skin.HasSetting(home.style.horizontal.clean) + Skin.HasSetting(hide.home.menu)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,163" time="150" condition="[[!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + Skin.HasSetting(hide.home.menu)] | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099)]] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
             <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation>
 
             <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
 
             <control type="group">
-                <animation effect="slide" start="0" end="0,163" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable]] + !ControlGroup(301).HasFocus()]">Conditional</animation>
+
+                <!-- HOME HORIZONTAL - MAIN MENU - SLIDE DOWN -->
+
+                <animation effect="slide" start="0" end="0,163" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + $EXP[Extended_Now_Playing_Is_Visible] + !ControlGroup(301).HasFocus()]] + !Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
                 <!-- ARROWS (LEFT / RIGHT) - ICON -->
 
@@ -2538,7 +2545,7 @@
             <!-- <include>Animation_Vertical_Widgets_Label_Focus_Search</include> -->
 
             <animation effect="slide" start="0" end="0,286" time="0" condition="!Skin.HasSetting(hide.home.menu)">Conditional</animation>
-            <animation effect="slide" start="0" end="0,448" time="0" condition="Skin.HasSetting(hide.home.menu)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,408" time="0" condition="Skin.HasSetting(hide.home.menu)">Conditional</animation>
             <animation effect="slide" start="0" end="30,0" time="0" condition="String.IsEqual(Window(Home).Property(BackToId),Window(Home).Property(LastId))">Conditional</animation>
 
             <control type="label">

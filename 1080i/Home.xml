@@ -41,13 +41,11 @@
     <onload condition="!String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus))">SetFocus($INFO[Window(Home).Property(HomeLastWidgetFocus)])</onload>
     <onload condition="String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus))">SetFocus(399)</onload>
 
+    <!-- ================================== -->
+    <!--            TMDB HELPER             -->
+    <!-- ================================== -->
 
-    <!-- DISABLE - TMDB HELPER - FOR DEBUG ONLY -->
-
-    <onload condition="!Skin.HasSetting(enabled.tmdb.helper.service)">Skin.Reset(TMDbHelper.Service)</onload>
-    <onload condition="Skin.HasSetting(disable.tmdb.helper.cacheOnly)">Skin.SetBool(TMDbHelper.DisableDefaultCacheOnly)</onload>
-
-    <!-- ENABLE - TMDB HELPER -->
+    <!-- START TMDBH SERVICE (DEFAULT) -->
 
     <onload condition="Skin.HasSetting(enabled.tmdb.helper.service)">Skin.SetBool(TMDbHelper.Service)</onload>
     <onload condition="Skin.HasSetting(enabled.tmdb.helper.service) + Skin.HasSetting(enabled.tmdb.helper.crop)">Skin.SetBool(TMDbHelper.EnableCrop)</onload>
@@ -55,12 +53,33 @@
     <onload condition="Skin.HasSetting(enabled.tmdb.helper.service) + [Skin.HasSetting(enabled.tmdb.helper.crop) | Skin.HasSetting(enabled.tmdb.helper.blur)]">Skin.Reset(TMDbHelper.DisableArtwork)</onload>
     <onload condition="Skin.HasSetting(enabled.tmdb.helper.service) + Skin.HasSetting(disable.tmdb.helper.cacheOnly)">Skin.SetBool(TMDbHelper.DisableDefaultCacheOnly)</onload>
 
-    <!-- DISABLE - TMDB HELPER - BLUR / CROP / ARTWORK -->
+    <!-- STOP TMDBH SERVICE -->
 
+    <onload condition="!Skin.HasSetting(enabled.tmdb.helper.service)">Skin.Reset(TMDbHelper.Service)</onload>
     <onload condition="!Skin.HasSetting(enabled.tmdb.helper.service) | !Skin.HasSetting(enabled.tmdb.helper.crop)">Skin.Reset(TMDbHelper.EnableCrop)</onload>
     <onload condition="!Skin.HasSetting(enabled.tmdb.helper.service) | !Skin.HasSetting(enabled.tmdb.helper.blur)">Skin.Reset(TMDbHelper.EnableBlur)</onload>
     <onload condition="!Skin.HasSetting(enabled.tmdb.helper.service) | [!Skin.HasSetting(enabled.tmdb.helper.crop) + !Skin.HasSetting(enabled.tmdb.helper.blur)]">Skin.SetBool(TMDbHelper.DisableArtwork)</onload>
     <onload condition="!Skin.HasSetting(enabled.tmdb.helper.service) | !Skin.HasSetting(disable.tmdb.helper.cacheOnly)">Skin.Reset(TMDbHelper.DisableDefaultCacheOnly)</onload>
+
+    <!-- OTHERS TMDBH SERVICE -->
+
+    <onload>Skin.SetBool(tmdbhelper.directcallauto)</onload>
+    <onload>Skin.Reset(TMDbHelper.MonitorContainer)</onload>
+    <onload>Skin.Reset(TMDbHelper.UseLocalWidgetContainer)</onload>
+    <onload>Skin.Reset(TMDbHelper.ForceWidgetContainer)</onload>
+
+    <onload>Skin.Reset(tmdbhelper.disablepvr)</onload>
+    <onload>Skin.Reset(TMDbHelper.disablepersonstats)</onload>
+    <onload>Skin.Reset(TMDbHelper.DisableExtendedProperties)</onload>
+
+    <!-- RESET TMDB WIDGET CONTAINER -->
+
+    <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
+
+    <!-- ================================== -->
+    <!-- ================================== -->
+    <!-- ================================== -->
+
 
     <!-- AUTO SLIDE OUT MAIN MENU -->
 
@@ -74,10 +93,6 @@
 
     <onunload condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onunload>
     <onunload>CancelAlarm(power_menu_setfocus_399,true)</onunload>
-
-    <!-- RESET TMDB WIDGET CONTAINER -->
-
-    <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
 
     <!-- RESET AUTO TRAILER -->
 

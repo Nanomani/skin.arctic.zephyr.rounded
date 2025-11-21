@@ -949,10 +949,10 @@
                 <param name="id" value="6158" />
                 <param name="groupid" value="6899" />
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
-                <onclick condition="Player.HasAudio">ActivateWindow(musicplaylist)</onclick>
-                <onclick condition="Player.HasVideo">ActivateWindow(videoplaylist)</onclick>
-                <enable>!VideoPlayer.Content(livetv) + !Window.IsVisible(MyPlaylist.xml)</enable>
-                <animation effect="fade" start="100" end="33" time="100" condition="VideoPlayer.Content(livetv) | Window.IsVisible(MyPlaylist.xml)">Conditional</animation>
+                <onclick condition="Integer.IsGreater(Playlist.Length(video),0) + [Player.HasVideo | Integer.IsEqual(Playlist.Length(music),0)]">ActivateWindow(videoplaylist)</onclick>
+                <onclick condition="Integer.IsGreater(Playlist.Length(music),0) + !Player.HasVideo">ActivateWindow(musicplaylist)</onclick>
+                <enable>!VideoPlayer.Content(livetv) + !Window.IsVisible(MyPlaylist.xml) + [Integer.IsGreater(Playlist.Length(video),0) | Integer.IsGreater(Playlist.Length(music),0)]</enable>
+                <animation effect="fade" start="100" end="33" time="100" condition="VideoPlayer.Content(livetv) | Window.IsVisible(MyPlaylist.xml) | [!Integer.IsGreater(Playlist.Length(video),0) + !Integer.IsGreater(Playlist.Length(music),0)]">Conditional</animation>
                 <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
         </control>

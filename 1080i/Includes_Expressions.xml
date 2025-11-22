@@ -232,7 +232,7 @@
 
     <expression name="Extended_Now_Playing_Is_Visible">[$EXP[Extended_Now_Playing_Is_Enable] + Player.HasMedia + Window.IsVisible(Home) + !$EXP[View_Info_Dialog]] + [[!ControlGroup(301).HasFocus() + !Control.HasFocus(9808) + !Control.HasFocus(9888) + !Control.HasFocus(9567) + !Control.HasFocus(8808) + !Control.HasFocus(8888) + !Control.HasFocus(4567) + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background))] | ControlGroup(777).HasFocus()]</expression>
 
-    <expression name="Extended_Now_Playing_Is_Enable">[Skin.HasSetting(show.furniture.nowplaying.extended.home) + [[!Skin.HasSetting(show.nowplaying.video.home.flix) + Player.HasVideo] | Player.HasAudio]]</expression>
+    <expression name="Extended_Now_Playing_Is_Enable">[Skin.HasSetting(show.furniture.nowplaying.extended.home) + [[!$EXP[Home_Show_NowPlaying_Video_In_Window_Flix] + Player.HasVideo] | Player.HasAudio]]</expression>
 
     <!-- TYPE VIDEO / AUDIO / PVR -->
 
@@ -247,9 +247,13 @@
     <!--     VIDEO - WINDOW FLIX            -->
     <!-- ================================== -->
 
+    <!-- ENABLE SHOW VIDEO IN HOME IN WINDOWS FLIX -->
+
+    <expression name="Home_Show_NowPlaying_Video_In_Window_Flix">[Skin.HasSetting(show.nowplaying.video.home.flix) + Skin.HasSetting(home.style.flix)]</expression>
+
     <!-- SHOW VIDEO IN HOME IN WINDOWS FLIX -->
 
-    <expression name="Video_Window_Home_Flix_Is_Active">!$EXP[Extended_Now_Playing_Is_Enable] + Skin.HasSetting(show.nowplaying.video.home.flix) + !Skin.HasSetting(hide.furniture.nowplaying.home)  + [[Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Flix]]] | Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(524)] + !$EXP[View_Info_Dialog] + !$EXP[Trailer_Window_Is_Active] + !$EXP[Context_Menu_Trailer_Is_Launched]</expression>
+    <expression name="Video_Window_Home_Flix_Is_Active">!$EXP[Extended_Now_Playing_Is_Enable] + $EXP[Home_Show_NowPlaying_Video_In_Window_Flix] + !Skin.HasSetting(hide.furniture.nowplaying.home)  + [[Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Horizontal_Clean] | $EXP[Home_Is_Vertical_Flix]]] | Control.IsVisible(521) | Control.IsVisible(522) | Control.IsVisible(524)] + !$EXP[View_Info_Dialog] + !$EXP[Trailer_Window_Is_Active] + !$EXP[Context_Menu_Trailer_Is_Launched]</expression>
 
     <!-- SHOW VIDEO IN WINDOWS VIEWS FLIX -->
 

@@ -973,7 +973,7 @@
 
             <!-- USER RATING -->
 
-            <include content="Object_OSD_Button" condition="[!String.IsEmpty(MusicPlayer.DBID) + [Skin.HasSetting(show.flags.music.rating.user) | Skin.HasSetting(userrating.override.kodi.rating.stars)]] | [Window.IsVisible(MyPlaylist.xml) + String.IsEqual(Container.FolderPath,playlistmusic://)]">
+            <include content="Object_OSD_Button" condition="!String.IsEmpty(MusicPlayer.DBID) | Window.IsVisible(MyMusicNav.xml) | String.IsEqual(Container.FolderPath,playlistmusic://)">
                 <param name="visible" value="true" />
                 <param name="size" value="36" />
                 <param name="left" value="-45" />
@@ -984,6 +984,8 @@
                 <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
                 <include>Def_On_User_Rating</include>
                 <onclick>SetRating</onclick>
+                <enable>!String.IsEmpty(MusicPlayer.DBID) | String.IsEqual(Container.FolderPath,playlistmusic://)</enable>
+                <animation effect="fade" start="100" end="33" time="100" condition="String.IsEmpty(MusicPlayer.DBID)">Conditional</animation>
                 <include>Def_Dialog_Menu_MiniPlayer_Button_UpDown</include>
             </include>
         </control>

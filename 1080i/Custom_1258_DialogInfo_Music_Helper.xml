@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="1258">
+    <visible>System.IdleTime(1)</visible>
+
+    <visible>Window.IsVisible(DialogMusicInfo.xml) + String.IsEmpty(Window(Home).Property(Init_Value_Album_Artist)) + !Window.IsVisible(DialogSelect.xml) + String.Contains(ListItem.AlbumArtist, / )</visible>
+    <visible>String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,artist)</visible>
+    <visible>!$EXP[IsAnPlugin]</visible>
+
+    <onload>AlarmClock(Dialog_Info_Init_Value_Album_Artist,SetProperty(Init_Value_Album_Artist,1,Home),00:01,silent)</onload>
+
+    <onload condition="!String.IsEmpty(ListItem.AlbumArtist) + String.Contains(ListItem.AlbumArtist, / ) + !String.IsEmpty(Window(Home).Property(List.Multi.Artist.Album.0))">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.AlbumArtist&amp;&amp;$INFO[Window(Home).Property(List.Multi.Artist.Album.0)]")</onload>
+</window>

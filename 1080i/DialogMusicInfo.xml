@@ -13,9 +13,19 @@
 
     <include>Def_Clear_TMDbHelper_WidgetContainer_On_Load</include>
 
-    <!-- ENCODE ARTIST NAME -->
 
-    <onload condition="!String.IsEmpty(ListItem.AlbumArtist)">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.AlbumArtist&amp;&amp;$INFO[ListItem.AlbumArtist]")</onload>
+    <!-- INIT - ENCODE ARTIST NAME -->
+
+    <onload>ClearProperty(Encoded.ListItem.AlbumArtist,Home)</onload>
+    <onload>ClearProperty(Init_Value_Album_Artist,Home)</onload>
+
+    <!-- ENCODE ARTIST NAME - 1 ARTIST -->
+
+    <onload condition="!String.IsEmpty(ListItem.AlbumArtist) + !String.Contains(ListItem.AlbumArtist, / )">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.AlbumArtist&amp;&amp;$INFO[ListItem.AlbumArtist]")</onload>
+
+    <!-- ENCODE ARTIST NAME - MORE THAN 1 ARTIST -->
+
+    <onload condition="!String.IsEmpty(ListItem.AlbumArtist) + String.Contains(ListItem.AlbumArtist, / )">RunPlugin("plugin://script.skinvariables/?info=get_split_string&amp;window_id=Home&amp;window_prop=List.Multi.Artist.Album&amp;infolabel=ListItem.AlbumArtist&amp;separator=' / '")</onload>
 
     <!-- FOCUS AT START -->
 

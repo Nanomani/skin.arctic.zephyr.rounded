@@ -2870,4 +2870,42 @@
             <include condition="!Skin.HasSetting(hide.furniture.flags.vertical.widgets)">Furniture_Footer_Audio_Flags</include>
         </control>
     </include>
+
+    <!-- BUTTON HIDE MAIN MENU -->
+
+    <include name="Button_id_2011_Slide_Out_Home_Menu">
+        <control type="button" id="2011">
+            <visible allowhiddenfocus="true">false</visible>
+            <include>Def_Hidden_Button</include>
+
+            <onfocus>ClearProperty(backtoslidehome_2011,Home)</onfocus>
+
+            <!-- HOME - FOCUS CONTROLS NOW PLAYING IF VISIBLE -->
+
+            <onfocus condition="$EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + Player.HasMedia">SetFocus(777)</onfocus>
+
+            <!-- HOME - CLEAN -->
+
+            <onclick condition="$EXP[Home_Is_Horizontal_Clean]">SetProperty(backtoslidehome_2011,1,Home)</onclick>
+            <onclick condition="$EXP[Home_Is_Horizontal_Clean] + !String.IsEmpty(Container(300).ListItem.Property(id))">SetFocus($INFO[Container(300).ListItem.Property(id)]601)</onclick>
+            <onclick condition="$EXP[Home_Is_Horizontal_Clean] + String.IsEmpty(Container(300).ListItem.Property(id))">301</onclick>
+            <onclick condition="$EXP[Home_Is_Horizontal_Clean]">Action(info)</onclick>
+
+            <onleft condition="$EXP[Home_Is_Horizontal_Clean]">Control.Move($INFO[Container(300).ListItem.Property(id)]601,-1)</onleft>
+            <onright condition="$EXP[Home_Is_Horizontal_Clean]">Control.Move($INFO[Container(300).ListItem.Property(id)]601,1)</onright>
+
+            <!-- HOME - HORIZONTAL - VERTICAL -->
+
+            <onclick condition="!$EXP[Home_Is_Horizontal_Clean]">SetFocus(399)</onclick>
+
+            <onleft condition="!$EXP[Home_Is_Horizontal_Clean]">399</onleft>
+            <onright condition="!$EXP[Home_Is_Horizontal_Clean]">399</onright>
+
+            <!-- HOME - ALL -->
+
+            <onup>399</onup>
+            <ondown>399</ondown>
+            <onback>399</onback>
+        </control>
+    </include>
 </includes>

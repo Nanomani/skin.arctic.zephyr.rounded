@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="Dialog_AKL_Rom_Info">
+        <control type="group">
+
+            <!-- LEFT POSTER -->
+
+            <control type="group">
+                <include>Animation_Dialog_Info_Left_Side_Delay_400</include>
+
+                <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+                <include>Animation_Wiki_Fade_Out</include>
+
+                <!-- POSTER -->
+
+                <include content="View_50_Side_Poster">
+                    <param name="texture" value="$VAR[Image_Dialog_Info_AKL_Rom_Poster]" />
+                    <param name="condition_fadetime" value="false" />
+                </include>
+            </control>
+
+            <!-- RIGHT INFORMATIONS -->
+
+            <control type="group">
+                <include>Animation_Dialog_Info_Right_Side_Delay_400</include>
+
+                <!-- CONTROL BUTTONS -->
+
+                <control type="group">
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
+                    <include>Def_Dialog_Info_Navigation_AKL_Rom</include>
+
+                    <include content="Object_Arrows_DialogInfo_Navigation">
+                        <param name="visible" value="[Integer.IsGreater(Container(9000).NumItems,8) + ControlGroup(9000).HasFocus()] | [Integer.IsGreater(Container(9090).NumItems,8) + ControlGroup(9090).HasFocus()]" />
+                        <param name="centerbottom" value="177" />
+                        <param name="centerleft" value="550" />
+                    </include>
+                </control>
+
+                <!-- FOOTER LABEL -->
+
+                <control type="group">
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <top>930</top>
+                    <right>View_List_Side</right>
+                    <width>1400</width>
+
+                    <!-- FILE PATH RIGHT -->
+
+                    <control type="label">
+                        <visible>Control.HasFocus(9010)</visible>
+                        <include>Animation_File_Name_And_Path_AKL</include>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                        <left>140</left>
+                        <height>50</height>
+                        <font>Mini</font>
+                        <scroll>true</scroll>
+                        <scrollspeed>40</scrollspeed>
+                        <scrollsuffix>  ••  </scrollsuffix>
+                        <textcolor>Dark3</textcolor>
+                        <aligny>center</aligny>
+                        <align>right</align>
+                        <label>$INFO[Container(19801).ListItem.FileNameAndPath]</label>
+                    </control>
+
+                    <!-- TIPS RIGHT -->
+
+                    <control type="label">
+                        <visible>ControlGroup(9000).HasFocus()</visible>
+                        <include>Animation_Button_Label_AKL</include>
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                        <left>0</left>
+                        <height>50</height>
+                        <font>Mini</font>
+                        <scroll>false</scroll>
+                        <textcolor>Dark3</textcolor>
+                        <aligny>center</aligny>
+                        <align>right</align>
+                        <label>$VAR[Label_Dialog_Info_Footer_Tip_Right]</label>
+                    </control>
+
+                    <!-- TIPS LEFT -->
+
+                    <control type="grouplist">
+                        <visible>ControlGroup(9000).HasFocus() + !String.IsEmpty(Container(19801).ListItem.Plot)</visible>
+                        <include>Animation_Button_Label_AKL</include>
+
+                        <animation effect="fade" start="0" end="100" time="400" delay="100" reversible="false" condition="ControlGroup(9000).HasFocus()">Conditional</animation>
+                        <left>130</left>
+                        <height>50</height>
+                        <itemgap>0</itemgap>
+                        <orientation>horizontal</orientation>
+                        <usecontrolcoords>true</usecontrolcoords>
+                        <control type="image">
+                            <width>50</width>
+                            <height>50</height>
+                            <aligny>center</aligny>
+                            <align>right</align>
+                            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                            <texture flipy="true" colordiffuse="Dark3">special://skin/extras/icons/angle-up.png</texture>
+                        </control>
+                        <control type="label">
+                            <align>left</align>
+                            <font>Mini</font>
+                            <height>50</height>
+                            <scroll>false</scroll>
+                            <textcolor>Dark3</textcolor>
+                            <aligny>center</aligny>
+                            <align>right</align>
+                            <label>$LOCALIZE[31516] $LOCALIZE[203]</label>
+                        </control>
+                    </control>
+                </control>
+
+                <!-- LABEL HEADER -->
+
+                <control type="group">
+                    <visible>!Window.IsVisible(DialogBusy.xml)</visible>
+
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
+                    <top>70</top>
+                    <left>DialogInfo_Poster_Left</left>
+
+                    <include content="Def_Width" condition="!Skin.HasSetting(show.dialog.info.clearlogo.game) | !$EXP[Title_Clearlogo_Available]">
+                        <param name="width" value="1250" />
+                    </include>
+                    <include content="Def_Width" condition="Skin.HasSetting(show.dialog.info.clearlogo.game) + $EXP[Title_Clearlogo_Available]">
+                        <param name="width" value="920" />
+                    </include>
+
+                    <!-- ICON -->
+
+                    <control type="image">
+                        <top>-29</top>
+                        <left>-40</left>
+                        <width>160</width>
+                        <height>160</height>
+                        <texture colordiffuse="White70">$VAR[Image_Header_Background]</texture>
+                        <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+                    </control>
+                    <control type="image">
+                        <top>7</top>
+                        <left>-4</left>
+                        <width>88</width>
+                        <height>88</height>
+                        <texture colordiffuse="PanelWhite100" border="12">$VAR[Image_Header_Dialog_Info_Icon]</texture>
+                    </control>
+
+                    <!-- MAIN HEADER TITLE -->
+
+                    <control type="label">
+                        <left>104</left>
+                        <font>LargeNew</font>
+                        <description>Header Label</description>
+                        <textcolor>Dark1</textcolor>
+                        <label>$INFO[Container(19801).ListItem.Label]</label>
+                        <visible>!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views) | !String.IsEmpty(Window(Home).Property(VideoYoutubeIsPlaying))</visible>
+                    </control>
+                    <control type="label">
+                        <left>104</left>
+                        <width>500</width>
+                        <font>LargeNew</font>
+                        <description>Header Label</description>
+                        <textcolor>Dark1</textcolor>
+                        <label>$INFO[Container(19801).ListItem.Label]</label>
+                        <visible>Player.HasMedia + !Skin.HasSetting(hide.furniture.nowplaying.views) + String.IsEmpty(Window(Home).Property(VideoYoutubeIsPlaying))</visible>
+                    </control>
+
+                    <!-- SUB HEADER TITLE -->
+
+                    <control type="label">
+                        <top>55</top>
+                        <left>104</left>
+                        <height>36</height>
+                        <font>Tiny</font>
+                        <textcolor>Dark1</textcolor>
+                        <!-- <label>$INFO[Container(19801).ListItem.Label2]</label> -->
+                        <label>$INFO[Container(19801).ListItem.Property(platform)]</label>
+                        <aligny>center</aligny>
+                        <visible>!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
+                    </control>
+                    <control type="label">
+                        <top>55</top>
+                        <left>104</left>
+                        <width>500</width>
+                        <height>36</height>
+                        <font>Tiny</font>
+                        <textcolor>Dark1</textcolor>
+                        <!-- <label>$INFO[Container(19801).ListItem.Label2]</label> -->
+                        <label>$INFO[Container(19801).ListItem.Property(platform)]</label>
+                        <aligny>center</aligny>
+                        <visible>Player.HasMedia + !Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
+                    </control>
+                </control>
+
+                <!-- CLEARLOGO -->
+
+                <control type="group" description="clearlogo">
+                    <visible>Skin.HasSetting(show.dialog.info.clearlogo.game)</visible>
+                    <visible>!Player.HasMedia | [Skin.HasSetting(hide.furniture.nowplaying.views) | !String.IsEmpty(Window(Home).Property(TrailerFullscreenIsPlaying)) | !String.IsEmpty(Window(Home).Property(VideoYoutubeIsPlaying))]</visible>
+                    <visible>!Window.IsActive(DialogNotification.xml)</visible>
+
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                    <include>Animation_Dialog_Video_Info_Clearlogo_Fade_Out</include>
+
+                    <control type="image" description="clearlogo">
+                        <centertop>110</centertop>
+                        <right>View_List_Side</right>
+                        <height>ClearLogoMaxHeight</height>
+                        <width>ClearLogoMaxWidth</width>
+                        <fadetime>ClearArtFadetime</fadetime>
+                        <aspectratio align="right">keep</aspectratio>
+                        <!-- <texture background="true">$INFO[Container(19801).ListItem.Art(clearlogo)]</texture> -->
+                        <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
+                    </control>
+                </control>
+
+                <!-- ARROWS -->
+
+                <include content="Object_Arrows_DialogInfo_Navigation">
+                    <param name="visible" value="Control.HasFocus(95051) + Integer.IsGreater(Container(9505).NumItems,1)" />
+                    <param name="centerbottom" value="560" />
+                </include>
+
+                <!-- FANART -->
+
+                <control type="group">
+                    <visible>String.IsEqual(Window(Home).Property(gamescontent),5)</visible>
+
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+
+                    <top>View_List_Top</top>
+                    <left>DialogInfo_Poster_Left</left>
+                    <height>607</height>
+                    <width>1268</width>
+
+                    <!-- BACKGROUND -->
+
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad" value="-9" /></include>
+                        <texture border="34" colordiffuse="$VAR[Color_Shadow]" infill="false">$VAR[shadow24]</texture>
+                        <animation effect="fade" end="80" start="100" time="0" condition="true">Conditional</animation>
+                        <visible>!Skin.HasSetting(hide.global.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad" value="-9" /></include>
+                        <texture border="32" colordiffuse="$VAR[Color_Border]" infill="false">$VAR[border24]</texture>
+                        <visible>Skin.HasSetting(hide.global.shadows)</visible>
+                    </control>
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad" value="0" /></include>
+                        <texture border="24" colordiffuse="White100">$VAR[texture_box24]</texture>
+                        <animation effect="fade" start="100" end="40" condition="true">Conditional</animation>
+                    </control>
+                    <control type="image">
+                        <include content="Def_Padding"><param name="pad" value="-6" /></include>
+                        <texture border="24" colordiffuse="$VAR[Color_Focus]">$VAR[texture_box24]</texture>
+                        <animation condition="Control.HasFocus(95051)" effect="fade" end="100" start="0" time="150">Conditional</animation>
+                        <animation condition="!Control.HasFocus(95051)" effect="fade" end="0" start="100" time="100">Conditional</animation>
+                    </control>
+
+                    <!-- SPINNER BUSY -->
+
+                    <include content="Def_Dialog_Info_List_Updating">
+                        <param name="visible" value="String.IsEqual(Window(Home).Property(gamescontent),5)" />
+                        <param name="controlid" value="9505" />
+                        <param name="centerleft" value="50%" />
+                        <param name="centertop" value="50%" />
+                        <param name="label_spinner" value="$LOCALIZE[13513] ..." />
+                    </include>
+
+                    <!-- FANART LIST -->
+
+                    <control type="fixedlist" id="9505">
+                        <visible allowhiddenfocus="true">!Skin.HasSetting(showartwork.video.tmdbhelper) | [!Container(9505).IsUpdating + Skin.HasSetting(showartwork.video.tmdbhelper)]</visible>
+                        <include>Animation_Scrolltime_Details_List</include>
+
+                        <top>0</top>
+                        <left>0</left>
+
+                        <ondown>9000</ondown>
+                        <onback>9000</onback>
+                        <onup>9000</onup>
+
+                        <preloaditems>2</preloaditems>
+                        <orientation>horizontal</orientation>
+                        <autoscroll time="5000">ControlGroup(9000).HasFocus()</autoscroll>
+
+                        <itemlayout width="1268" height="607">
+                            <control type="image">
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/fanart_w1268_h607_b24.png" fallback="DefaultAddonPicture.png">$VAR[Image_Thumb_Label]</texture>
+                            </control>
+                        </itemlayout>
+                        <focusedlayout width="1268" height="607">
+                            <control type="image">
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/fanart_w1268_h607_b24.png" fallback="DefaultAddonPicture.png">$VAR[Image_Thumb_Label]</texture>
+                            </control>
+                        </focusedlayout>
+
+                        <content>
+                            <item id="0">
+                                <label>$INFO[ListItem.Art(fanart)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="1">
+                                <label>$INFO[ListItem.Art(fanart1)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart1)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="2">
+                                <label>$INFO[ListItem.Art(fanart2)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart2)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="3">
+                                <label>$INFO[ListItem.Art(fanart3)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart3)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="4">
+                                <label>$INFO[ListItem.Art(fanart4)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart4)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="5">
+                                <label>$INFO[ListItem.Art(fanart5)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart5)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="6">
+                                <label>$INFO[ListItem.Art(fanart6)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart6)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="7">
+                                <label>$INFO[ListItem.Art(fanart7)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart7)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="8">
+                                <label>$INFO[ListItem.Art(fanart8)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart8)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="9">
+                                <label>$INFO[ListItem.Art(fanart9)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart9)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="10">
+                                <label>$INFO[ListItem.Art(fanart10)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart10)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="11">
+                                <label>$INFO[ListItem.Art(fanart11)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(fanart11)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="12">
+                                <label>$INFO[ListItem.Art(tvshow.fanart)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="13">
+                                <label>$INFO[ListItem.Art(tvshow.fanart1)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart1)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="14">
+                                <label>$INFO[ListItem.Art(tvshow.fanart2)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart2)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="15">
+                                <label>$INFO[ListItem.Art(tvshow.fanart3)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart3)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="16">
+                                <label>$INFO[ListItem.Art(tvshow.fanart4)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart4)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="17">
+                                <label>$INFO[ListItem.Art(tvshow.fanart5)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart5)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="18">
+                                <label>$INFO[ListItem.Art(tvshow.fanart6)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart6)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="19">
+                                <label>$INFO[ListItem.Art(tvshow.fanart7)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart7)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="20">
+                                <label>$INFO[ListItem.Art(tvshow.fanart8)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart8)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="21">
+                                <label>$INFO[ListItem.Art(tvshow.fanart9)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart9)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="22">
+                                <label>$INFO[ListItem.Art(tvshow.fanart10)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(tvshow.fanart10)) + !Skin.HasSetting(hide.artwork.video.fanart)</visible>
+                            </item>
+                            <item id="23">
+                                <label>$INFO[ListItem.Art(landscape)]</label>
+                                <visible>!String.IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(hide.artwork.video.landscape)</visible>
+                            </item>
+                        </content>
+                        <include condition="Skin.HasSetting(showartwork.video.tmdbhelper)">Image_Content_Additional_Fanart</include>
+                    </control>
+
+                    <!-- LUPE -->
+
+                    <control type="image">
+                        <right>40</right>
+                        <bottom>40</bottom>
+                        <width>50</width>
+                        <height>50</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="88ffffff">common/lupe.png</texture>
+                        <visible>Control.HasFocus(95051)</visible>
+                        <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
+                    </control>
+                </control>
+
+                <!-- BOX TRAILER -->
+
+                <control type="group">
+                    <visible>String.IsEqual(Window(Home).Property(gamescontent),6)</visible>
+
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+
+                    <top>View_List_Top</top>
+                    <left>DialogInfo_Poster_Left</left>
+                    <width>1268</width>
+                    <height>607</height>
+
+                    <include content="Def_Dialog_Image_Background">
+                        <param name="colordiffuse" value="Panel" />
+                    </include>
+
+                    <!-- FANART BACKGROUND -->
+
+                    <control type="image">
+                        <height>100%</height>
+                        <width>100%</width>
+                        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                        <texture diffuse="diffuse/fanart_w1268_h607_b24.png" fallback="DefaultAddonPicture.png">$INFO[Container(19801).ListItem.Art(fanart)]</texture>
+                        <animation effect="fade" end="10" start="100" time="100" condition="true">Conditional</animation>
+                    </control>
+
+                    <!-- LOGO PLAY -->
+
+                    <control type="group">
+                        <visible>!Window.IsVisible(DialogBusy.xml)</visible>
+
+                        <centertop>50%</centertop>
+                        <centerleft>50%</centerleft>
+                        <width>100</width>
+                        <height>100</height>
+
+                        <control type="image" description="Back">
+                            <height>100%</height>
+                            <width>100%</width>
+                            <aspectratio align="center" aligny="center">keep</aspectratio>
+                            <texture colordiffuse="Dark2">dialog/loading-back.png</texture>
+                            <animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
+                        </control>
+                        <control type="image" description="Back">
+                            <height>100%</height>
+                            <width>100%</width>
+                            <aspectratio align="center" aligny="center">keep</aspectratio>
+                            <texture colordiffuse="Dark2">nowplaying/play.png</texture>
+                        </control>
+                    </control>
+
+                    <!-- SPINNER LOADING -->
+
+                    <control type="group">
+                        <visible>Window.IsVisible(DialogBusy.xml)</visible>
+                        <centertop>50%</centertop>
+                        <centerleft>50%</centerleft>
+                        <width>450</width>
+                        <height>100</height>
+                        <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
+                        <include content="Object_Spinner_Busy">
+                            <param name="show_label_spinner" value="true" />
+                            <param name="label_spinner" value="$LOCALIZE[20410] $LOCALIZE[13413]..." />
+                            <param name="centerleft" value="50%" />
+                            <param name="centertop" value="50%" />
+                        </include>
+                    </control>
+                </control>
+
+                <!-- VIDEO TRAILER WINDOWED -->
+
+                <control type="group">
+                    <visible>Control.HasFocus(7012)</visible>
+                    <visible>Player.HasVideo</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TrailerFullscreenIsPlaying))</visible>
+
+                    <include>Animation_Common_Fade_In</include>
+                    <include>Animation_Common_Fade_Out</include>
+
+                    <top>View_List_Top</top>
+                    <left>DialogInfo_Poster_Left</left>
+                    <height>607</height>
+                    <width>1268</width>
+
+                    <include content="Def_Dialog_Image_Background">
+                        <param name="colordiffuse" value="black" />
+                    </include>
+
+                    <!-- VIDEO WINDOW -->
+
+                    <control type="group">
+                        <height>607</height>
+                        <width>1268</width>
+
+                        <animation type="Visible" reversible="false">
+                            <effect type="fade" start="0" end="100" time="150" />
+                        </animation>
+
+                        <animation type="Hidden" reversible="false">
+                            <effect type="fade" start="100" end="0" time="150" />
+                        </animation>
+
+                        <animation type="WindowClose" reversible="false">
+                            <effect type="zoom" center="auto" start="100" end="0" time="1" />
+                        </animation>
+                        <animation type="WindowOpen" reversible="false">
+                            <effect type="zoom" center="auto" start="0" end="100" time="1" />
+                        </animation>
+
+                        <aspectratio aligny="center" scalediffuse="false">scale</aspectratio>
+
+                        <control type="videowindow" />
+                    </control>
+
+                    <!-- SPINNER PAUSE -->
+
+                    <include content="Object_Spinner_Pause">
+                        <param name="centerleft" value="50%" />
+                        <param name="centertop" value="50%" />
+                    </include>
+
+                    <include>Object_OSD_Mini_Player</include>
+
+                    <!-- BUTTON TRAILER -->
+
+                    <control type="button" id="7012">
+                        <include>Def_Hidden_Button</include>
+
+                        <texturenofocus />
+                        <texturefocus />
+
+                        <oninfo>9000</oninfo>
+                        <oninfo>ClearProperty(show_mini_osd,Home))</oninfo>
+                        <oninfo>ClearProperty(TrailerFullscreenIsPlaying,Home)</oninfo>
+                        <oninfo condition="Player.HasVideo">Stop</oninfo>
+
+                        <onback>9000</onback>
+                        <onback>ClearProperty(show_mini_osd,Home)</onback>
+                        <onback>ClearProperty(TrailerFullscreenIsPlaying,Home)</onback>
+                        <onback condition="Player.HasVideo">Stop</onback>
+
+                        <onclick condition="!Player.HasVideo">SetFocus(9000)</onclick>
+                        <onclick condition="!Player.HasVideo">ClearProperty(TrailerFullscreenIsPlaying,Home)</onclick>
+                        <onclick condition="Player.HasVideo + String.IsEmpty(Window(Home).Property(show_mini_osd))">SetProperty(show_mini_osd,1,Home)</onclick>
+                        <onclick condition="Player.HasVideo + !String.IsEmpty(Window(Home).Property(show_mini_osd))">ClearProperty(show_mini_osd,Home)</onclick>
+
+                        <onunfocus>SetFocus(9000)</onunfocus>
+                        <onunfocus>ClearProperty(TrailerFullscreenIsPlaying,Home)</onunfocus>
+                        <onunfocus>ClearProperty(show_mini_osd,Home)</onunfocus>
+                        <onunfocus condition="Player.HasVideo">Stop</onunfocus>
+
+                        <onleft condition="!Player.HasVideo">SetFocus(9000)</onleft>
+                        <onleft condition="!Player.HasVideo">ClearProperty(TrailerFullscreenIsPlaying,Home)</onleft>
+                        <onleft condition="!Player.HasVideo">ClearProperty(show_mini_osd,Home)</onleft>
+                        <onleft condition="Player.HasVideo">StepBack</onleft>
+
+                        <onright condition="!Player.HasVideo">SetFocus(9000)</onright>
+                        <onright condition="!Player.HasVideo">ClearProperty(TrailerFullscreenIsPlaying,Home)</onright>
+                        <onright condition="!Player.HasVideo">ClearProperty(show_mini_osd,Home)</onright>
+                        <onright condition="Player.HasVideo">StepForward</onright>
+
+                        <onup>SetFocus(9000)</onup>
+                        <onup>ClearProperty(TrailerFullscreenIsPlaying,Home)</onup>
+                        <onup>ClearProperty(show_mini_osd,Home)</onup>
+                        <onup condition="Player.HasVideo">Stop</onup>
+
+                        <ondown>SetFocus(9000)</ondown>
+                        <ondown>ClearProperty(TrailerFullscreenIsPlaying,Home)</ondown>
+                        <ondown>ClearProperty(show_mini_osd,Home)</ondown>
+                        <ondown condition="Player.HasVideo">Stop</ondown>
+                    </control>
+                </control>
+
+                <!-- INFORMATION -->
+
+                <control type="group">
+                    <visible>!String.IsEqual(Window(Home).Property(gamescontent),6) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+
+                    <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
+                    <top>205</top>
+                    <left>DialogInfo_Poster_Left</left>
+                    <right>80</right>
+                    <bottom>224</bottom>
+
+                    <!-- MEDIA FLAG -->
+
+                    <!-- <include condition="!String.IsEqual(ListItem.Property(tmdb_type),person)">Furniture_DialogInfo_Video_Flags</include> -->
+
+                    <control type="group">
+                        <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                        <include>Animation_Dialog_Info_Fade_Out_150</include>
+
+                        <right>View_List_Side</right>
+
+                        <!-- PLOT BOX -->
+
+                        <control type="group" id="140">
+                            <description>Plot box</description>
+                            <control type="textbox">
+                                <top>6</top>
+                                <width>710</width>
+                                <height>377</height>
+                                <font>Tiny</font>
+                                <textcolor>Dark2</textcolor>
+                                <label fallback="19055">$INFO[Container(19801).ListItem.Plot]</label>
+                                <autoscroll delay="10000" time="5000" repeat="10000">true</autoscroll>
+                            </control>
+                        </control>
+
+                        <!-- METADATA LIST -->
+
+                        <control type="list" id="4000">
+                            <description>Metadata list</description>
+                            <visible>String.IsEmpty(Window.Property(DataListView)) | String.IsEqual(Window.Property(DataListView),metadata)</visible>
+
+                            <left>755</left>
+                            <right>0</right>
+                            <height>377</height>
+
+                            <!-- <ondown condition="!Integer.IsGreater(Container(9000).NumItems,3)">9000</ondown> -->
+                            <!-- <ondown condition="Integer.IsGreater(Container(9000).NumItems,3)">SetFocus(5000,4)</ondown> -->
+
+                            <onup>9000</onup>
+                            <ondown>19802</ondown>
+                            <onleft>9000</onleft>
+                            <onright>9000</onright>
+
+                            <onclick>SetProperty(call,$INFO[Container(4000).ListItem.Property(action)])</onclick>
+                            <onclick>SetProperty(callargs,$INFO[Container(4000).ListItem.Property(args)])</onclick>
+                            <onclick>SendClick(,19810)</onclick>
+
+                            <itemgap>-8</itemgap>
+                            <orientation>vertical</orientation>
+
+                            <itemlayout height="40" width="472">
+                                <control type="label">
+                                    <left>0</left>
+                                    <width>472</width>
+                                    <height>36</height>
+                                    <textoffsetx>16</textoffsetx>
+                                    <aligny>center</aligny>
+                                    <align>left</align>
+                                    <font>Tiny</font>
+                                    <label>[B][COLOR Dark1]$INFO[ListItem.Label]:   [/COLOR][/B][COLOR Dark2]$INFO[ListItem.Label2][/COLOR]</label>
+                                </control>
+                            </itemlayout>
+                            <focusedlayout height="40" width="472">
+                                <control type="label">
+                                    <visible>Control.HasFocus(4000)</visible>
+                                    <left>0</left>
+                                    <width>472</width>
+                                    <height>36</height>
+                                    <textoffsetx>16</textoffsetx>
+                                    <aligny>center</aligny>
+                                    <align>left</align>
+                                    <font>Tiny</font>
+                                    <label>[B][COLOR $VAR[Color_Focus]]$INFO[ListItem.Label]:   [/COLOR][/B][COLOR Dark2]$INFO[ListItem.Label2][/COLOR]</label>
+                                </control>
+                                <control type="label">
+                                    <visible>!Control.HasFocus(4000)</visible>
+                                    <left>0</left>
+                                    <width>472</width>
+                                    <height>36</height>
+                                    <textoffsetx>16</textoffsetx>
+                                    <aligny>center</aligny>
+                                    <align>left</align>
+                                    <font>Tiny</font>
+                                    <label>[B][COLOR Dark1]$INFO[ListItem.Label]:   [/COLOR][/B][COLOR Dark2]$INFO[ListItem.Label2][/COLOR]</label>
+                                </control>
+                            </focusedlayout>
+
+                            <!-- <content>$INFO[Container(19801).ListItem.Property(entityid),plugin://plugin.program.akl/rom/,/metadata]</content> -->
+
+                            <content>
+                                <item id="40812">
+                                    <label>$ADDON[plugin.program.akl 40812]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Label]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_title/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Label,value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Label)</visible>
+                                </item>
+                                <item id="40807">
+                                    <label>$ADDON[plugin.program.akl 40807]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(platform)]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_title/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Property(platform),value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(platform))</visible>
+                                </item>
+                                <item id="40813">
+                                    <label>$ADDON[plugin.program.akl 40813]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(identifier)]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_title/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Property(identifier),value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(identifier))</visible>
+                                </item>
+                                <item id="40801">
+                                    <label>$ADDON[plugin.program.akl 40801]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Genre]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_genre/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Genre,value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Genre)</visible>
+                                </item>
+                                <item id="40803">
+                                    <label>$ADDON[plugin.program.akl 40803]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Year]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_year/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Year,value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Year)</visible>
+                                </item>
+                                <item id="40802">
+                                    <label>$ADDON[plugin.program.akl 40802]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Studio]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_developer/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Studio,value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Studio)</visible>
+                                </item>
+                                <item id="40806">
+                                    <label>$ADDON[plugin.program.akl 40806]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Rating]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_rating/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Rating,value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Rating)</visible>
+                                </item>
+                                <item id="40804">
+                                    <label>$ADDON[plugin.program.akl 40804]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(esrb)]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_esrb/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Property(esrb),value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(esrb))</visible>
+                                </item>
+                                <item id="40805">
+                                    <label>$ADDON[plugin.program.akl 40805]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(pegi)]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_pegi/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Property(pegi),value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(pegi))</visible>
+                                </item>
+                                <item id="40808">
+                                    <label>$ADDON[plugin.program.akl 40808]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(nplayers)]</label2>
+                                    <property name="action">plugin://plugin.program.akl/collection/virtual/vcategory_nplayers/items/</property>
+                                    <property name="args">$INFO[Container(19801).ListItem.Property(nplayers),value=,]</property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(nplayers))</visible>
+                                </item>
+                                <item id="40809">
+                                    <label>$ADDON[plugin.program.akl 40809]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(nplayers_online)]</label2>
+                                    <property name="action"></property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(nplayers_online))</visible>
+                                </item>
+                                <item id="40810">
+                                    <label>$ADDON[plugin.program.akl 40810]</label>
+                                    <label2>$INFO[Container(19801).ListItem.Property(tags)]</label2>
+                                    <property name="action"></property>
+                                    <visible>!String.IsEmpty(Container(19801).ListItem.Property(tags))</visible>
+                                </item>
+                            </content>
+                        </control>
+
+                        <!-- SCANNED DATA LIST -->
+
+                        <control type="list" id="4010">
+                            <description>Scanned data list</description>
+                            <visible>String.IsEqual(Window.Property(DataListView),scanneddata)</visible>
+
+                            <left>755</left>
+                            <right>0</right>
+                            <height>377</height>
+
+                            <!-- <ondown condition="!Integer.IsGreater(Container(9000).NumItems,3)">9000</ondown> -->
+                            <!-- <ondown condition="Integer.IsGreater(Container(9000).NumItems,3)">SetFocus(9000,4)</ondown> -->
+
+                            <onup>9000</onup>
+                            <ondown>19802</ondown>
+                            <onleft>9000</onleft>
+                            <onright>9000</onright>
+
+                            <itemgap>-8</itemgap>
+                            <orientation>vertical</orientation>
+
+                            <itemlayout height="40" width="472">
+                                <control type="label">
+                                    <left>0</left>
+                                    <width>472</width>
+                                    <height>36</height>
+                                    <textoffsetx>16</textoffsetx>
+                                    <aligny>center</aligny>
+                                    <align>left</align>
+                                    <font>Tiny</font>
+                                    <label>[B][COLOR Dark1]$INFO[ListItem.Label]:   [/COLOR][/B][COLOR Dark2]$INFO[ListItem.Label2][/COLOR]</label>
+                                </control>
+                            </itemlayout>
+                            <focusedlayout height="40" width="472">
+                                <control type="label">
+                                    <visible>Control.HasFocus(4010)</visible>
+                                    <left>0</left>
+                                    <width>472</width>
+                                    <height>36</height>
+                                    <textoffsetx>16</textoffsetx>
+                                    <aligny>center</aligny>
+                                    <align>left</align>
+                                    <font>Tiny</font>
+                                    <label>[B][COLOR $VAR[Color_Focus]]$INFO[ListItem.Label]:   [/COLOR][/B][COLOR Dark2]$INFO[ListItem.Label2][/COLOR]</label>
+                                </control>
+                                <control type="label">
+                                    <visible>!Control.HasFocus(4010)</visible>
+                                    <left>0</left>
+                                    <width>472</width>
+                                    <height>36</height>
+                                    <textoffsetx>16</textoffsetx>
+                                    <aligny>center</aligny>
+                                    <align>left</align>
+                                    <font>Tiny</font>
+                                    <label>[B][COLOR Dark1]$INFO[ListItem.Label]:   [/COLOR][/B][COLOR Dark2]$INFO[ListItem.Label2][/COLOR]</label>
+                                </control>
+                            </focusedlayout>
+
+                            <content>$INFO[Container(19801).ListItem.Property(entityid),plugin://plugin.program.akl/rom/,/scanneddata]</content>
+                        </control>
+
+                        <!-- ASSETS LIST -->
+
+                        <control type="panel" id="19802">
+                            <description>Assets list</description>
+                            <visible>String.IsEmpty(Window(Home).Property(gamescontent)) + ![Window.IsVisible(script-wikipedia.xml) + !Skin.HasSetting(hide.button.video.wiki)]</visible>
+
+                            <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                            <include>Animation_Dialog_Info_Fade_Out_150</include>
+
+                            <include>Animation_Scrolltime_Details_List</include>
+
+                            <top>355</top>
+                            <left>-10</left>
+                            <width>1400</width>
+                            <height>370</height>
+
+                            <onleft>19802</onleft>
+                            <onright>19802</onright>
+                            <onup>SetFocus(4000,0)</onup>
+                            <ondown>9000</ondown>
+
+                            <scrolltime>200</scrolltime>
+                            <orientation>horizontal</orientation>
+
+                            <content>$INFO[Container(19801).ListItem.Property(entityid),plugin://plugin.program.akl/rom/,/assets]</content>
+
+                            <itemlayout height="273" width="273">
+                                <control type="group">
+                                    <right>0</right>
+
+                                    <include content="Def_Art_Full_Background_b12">
+                                        <param name="pad_shadow" value="1" />
+                                        <param name="pad_border" value="1" />
+                                        <param name="pad_image" value="10" />
+                                        <param name="colordiffuse" value="White100" />
+                                    </include>
+
+                                    <control type="image">
+                                        <visible>!String.StartsWith(ListItem.Thumb,Default)</visible>
+                                        <include content="Def_Padding"><param name="pad" value="10" /></include>
+                                        <aspectratio scalediffuse="false">keep</aspectratio>
+                                        <texture diffuse="diffuse/square_w252_h252.png" background="true">$INFO[ListItem.Thumb]</texture>
+                                    </control>
+                                    <control type="image">
+                                        <visible>String.StartsWith(ListItem.Thumb,Default)</visible>
+                                        <include content="Def_Padding"><param name="pad" value="10" /></include>
+                                        <aspectratio scalediffuse="false">scale</aspectratio>
+                                        <texture diffuse="diffuse/square_w252_h252.png" background="true"  colordiffuse="Dark2">DefaultPicture.png</texture>
+                                    </control>
+
+                                    <control type="label">
+                                        <left>25</left>
+                                        <width>214</width>
+                                        <height>67</height>
+                                        <top>200</top>
+                                        <align>center</align>
+                                        <aligny>center</aligny>
+                                        <font>Tiny</font>
+                                        <label>$INFO[ListItem.Label]</label>
+                                    </control>
+                                    <!-- <control type="label"> -->
+                                        <!-- <left>25</left> -->
+                                        <!-- <width>214</width> -->
+                                        <!-- <height>67</height> -->
+                                        <!-- <top>245</top> -->
+                                        <!-- <align>center</align> -->
+                                        <!-- <aligny>center</aligny> -->
+                                        <!-- <font>Tiny</font> -->
+                                        <!-- <textcolor>grey</textcolor> -->
+                                        <!-- <label>$INFO[ListItem.Label2]</label> -->
+                                    <!-- </control> -->
+                                </control>
+                            </itemlayout>
+                            <focusedlayout height="273" width="293">
+                                <control type="group">
+                                    <right>20</right>
+
+                                    <include content="Def_Art_Full_Background_b12">
+                                        <param name="pad_shadow" value="1" />
+                                        <param name="pad_border" value="1" />
+                                        <param name="pad_image" value="10" />
+                                        <param name="colordiffuse" value="White100" />
+                                    </include>
+
+                                    <control type="image">
+                                        <visible>!String.StartsWith(ListItem.Thumb,Default)</visible>
+                                        <include content="Def_Padding"><param name="pad" value="10" /></include>
+                                        <aspectratio scalediffuse="false">keep</aspectratio>
+                                        <texture diffuse="diffuse/square_w252_h252.png" background="true">$INFO[ListItem.Thumb]</texture>
+                                    </control>
+                                    <control type="image">
+                                        <visible>String.StartsWith(ListItem.Thumb,Default)</visible>
+                                        <include content="Def_Padding"><param name="pad" value="10" /></include>
+                                        <aspectratio scalediffuse="false">scale</aspectratio>
+                                        <texture diffuse="diffuse/square_w252_h252.png" background="true"  colordiffuse="Dark2">DefaultPicture.png</texture>
+                                    </control>
+
+                                    <control type="label">
+                                        <left>25</left>
+                                        <width>214</width>
+                                        <height>67</height>
+                                        <top>200</top>
+                                        <align>center</align>
+                                        <aligny>center</aligny>
+                                        <font>Tiny</font>
+                                        <scroll>true</scroll>
+                                        <label>$INFO[ListItem.Label]</label>
+                                    </control>
+                                    <!-- <control type="label"> -->
+                                        <!-- <left>25</left> -->
+                                        <!-- <width>214</width> -->
+                                        <!-- <height>67</height> -->
+                                        <!-- <top>245</top> -->
+                                        <!-- <align>center</align> -->
+                                        <!-- <aligny>center</aligny> -->
+                                        <!-- <font>Tiny</font> -->
+                                        <!-- <textcolor>grey</textcolor> -->
+                                        <!-- <scroll>true</scroll> -->
+                                        <!-- <label>$INFO[ListItem.Label2]</label> -->
+                                    <!-- </control> -->
+                                    <include content="Layout_Widget_Focus">
+                                        <param name="pad_focus" value="6" />
+                                        <param name="glow_height" value="266" />
+                                        <param name="pad_focus_zoom" value="7" />
+                                        <param name="glow_top" value="7" />
+                                        <param name="glow_left" value="9" />
+                                        <param name="glow_right" value="8" />
+                                        <param name="id" value="19802" />
+                                    </include>
+                                </control>
+                            </focusedlayout>
+                        </control>
+                    </control>
+                </control>
+            </control>
+
+<!--            commun                                              -->
+<!--            ===========================================         -->
+<!--            9504    YOUTUBE                                     -->
+
+            <!-- EXTENDED VIEW -->
+
+            <control type="group">
+
+                <!-- =========================== -->
+                <!--          YOUTUBE            -->
+                <!-- =========================== -->
+
+                <include content="Recommendation_Video_Youtube" condition="!Skin.HasSetting(hide.button.video.youtube)">
+                    <param name="controlid" value="9504" />
+                    <param name="visible" value="String.IsEqual(Window(Home).Property(gamescontent),4)" />
+                </include>
+            </control>
+        </control>
+
+        <!-- MOVIE / TVSHOW - FANART - WINDOW -->
+
+        <control type="button" id="95051">
+            <include>Def_Hidden_Button</include>
+            <onback>SetFocus(9505,0,absolute)</onback>
+            <ondown>SetFocus(9505,0,absolute)</ondown>
+            <onback>9000</onback>
+            <ondown>9000</ondown>
+            <onclick>SetFocus(166)</onclick>
+            <onup>SetFocus(166)</onup>
+            <onleft>SetFocus(9505)</onleft>
+            <onleft>LEFT</onleft>
+            <onleft>SetFocus(95051)</onleft>
+            <onright>SetFocus(9505)</onright>
+            <onright>RIGHT</onright>
+            <onright>SetFocus(95051)</onright>
+        </control>
+
+        <!-- MOVIE / TVSHOW - FANART - FULL SCREEN -->
+
+        <control type="button" id="166">
+            <include>Def_Hidden_Button</include>
+            <ondown>SetFocus(9505,0,absolute)</ondown>
+            <onback>SetFocus(9505,0,absolute)</onback>
+            <ondown>9000</ondown>
+            <onup>9000</onup>
+            <onback>9000</onback>
+            <onleft>SetFocus(9505)</onleft>
+            <onleft>LEFT</onleft>
+            <onleft>SetFocus(166)</onleft>
+            <onright>SetFocus(9505)</onright>
+            <onright>RIGHT</onright>
+            <onright>SetFocus(166)</onright>
+        </control>
+
+        <!-- ======================================================================= -->
+
+        <control type="group">
+            <visible>Control.HasFocus(160) | Control.HasFocus(166)</visible>
+            <animation effect="fade" end="100" start="20" time="200" tween="sine" easing="in" condition="Control.HasFocus(160) | Control.HasFocus(166)">Conditional</animation>
+            <animation effect="fade" end="0" start="100" time="200" tween="sine" easing="in" condition="!Control.HasFocus(160) + !Control.HasFocus(166)">Hidden</animation>
+            <control type="image">
+                <top>0</top>
+                <left>0</left>
+                <width>1920</width>
+                <height>1080</height>
+                <texture>common/black.png</texture>
+            </control>
+            <control type="image">
+                <height>1080</height>
+                <fadetime>ImageViewerFadetime</fadetime>
+                <aspectratio align="center">keep</aspectratio>
+                <texture fallback="DefaultPicture.png" background="true">$VAR[Image_9505_Thumb_Label]</texture>
+            </control>
+        </control>
+
+        <include content="Def_Container_NumItems">
+            <param name="id" value="9505" />
+            <param name="visible" value="Control.HasFocus(166)" />
+        </include>
+
+        <include>Def_Dialog_Custom_Settings</include>
+        <include>Def_Dialog_Info_Video_Fullscreen</include>
+
+        <!-- AKL CODE ORIGINAL  -->
+
+		<control type="list" id="19801">
+			<description>Storage container for the item details</description>
+			<top>-3000</top>
+			<left>-3000</left>
+			<width>1</width>
+			<height>1</height>
+			<itemlayout/>
+			<focusedlayout/>
+		</control>
+
+		<control type="button" id="19810">
+			<description>Hidden general action button</description>
+			<top>-3000</top>
+			<left>-3000</left>
+			<width>1</width>
+			<height>1</height>
+		</control>
+
+		<control type="group">
+            <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+			<description>Main window</description>
+
+			<centertop>50%</centertop>
+			<height>1080</height>
+
+            <centerleft>50%</centerleft>
+			<width>1920</width>
+
+
+            <control type="button" id="5000500">
+                <left>-15</left>
+                <top>924</top>
+                <width>28</width>
+                <height>28</height>
+                <texturefocus />
+                <texturenofocus />
+                <onclick>Control.Move(5000,-1)</onclick>
+                <visible allowhiddenfocus="true">Container(9000).HasPrevious + [Control.HasFocus(9000) | Control.HasFocus(5000500)]</visible>
+            </control>
+
+            <control type="image">
+                <left>-15</left>
+                <top>320</top>
+                <width>28</width>
+                <height>28</height>
+                <texture flipx="true" colordiffuse="FF12A0C7">overlays/arrowright.png</texture>
+                <animation effect="zoom" start="0,100" end="100,100" center="auto" time="200">VisibleChange</animation>
+                <animation effect="zoom" start="0,100" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
+                <animation effect="zoom" start="100,100" end="0,100" center="auto" time="200">WindowClose</animation>
+                <visible>Control.IsVisible(19802) + Container(19802).HasPrevious</visible>
+            </control>
+
+            <control type="image">
+                <left>1240</left>
+                <top>320</top>
+                <width>28</width>
+                <height>28</height>
+                <texture colordiffuse="FF12A0C7">overlays/arrowright.png</texture>
+                <animation effect="zoom" start="0,100" end="100,100" center="auto" time="200">VisibleChange</animation>
+                <animation effect="zoom" start="0,100" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
+                <animation effect="zoom" start="100,100" end="0,100" center="auto" time="200">WindowClose</animation>
+                <visible>Control.IsVisible(19802) + Container(19802).HasNext</visible>
+            </control>
+
+            <control type="button" id="19802500">
+                <left>-15</left>
+                <top>320</top>
+                <width>28</width>
+                <height>28</height>
+                <texturefocus />
+                <texturenofocus />
+                <onclick>Control.Move(19802,-1)</onclick>
+                <visible allowhiddenfocus="true">Container(19802).HasPrevious + [Control.HasFocus(19802) | Control.HasFocus(19802500)]</visible>
+            </control>
+
+            <control type="button" id="19802501">
+                <left>1240</left>
+                <top>320</top>
+                <width>28</width>
+                <height>28</height>
+                <texturefocus />
+                <texturenofocus />
+                <onclick>Control.Move(19802,1)</onclick>
+                <visible allowhiddenfocus="true">Container(19802).HasNext + [Control.HasFocus(19802) | Control.HasFocus(19802501)]</visible>
+            </control>
+        </control>
+    </include>
+</includes>

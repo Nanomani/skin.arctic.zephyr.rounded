@@ -600,6 +600,11 @@
     <!--           LABEL - BY TYPE           -->
     <!-- =================================== -->
 
+    <variable name="Label_Title">
+        <value condition="$EXP[IsJlomItem]">$INFO[Window(Home).Property(TMDbHelper.ListItem.Title)]</value>
+        <value>$INFO[ListItem.Title]</value>
+    </variable>
+
     <variable name="Label_Favourites_Type">
         <value condition="String.Contains(ListItem.FolderPath,ActivateWindow) + String.Contains(ListItem.FolderPath,10002)">$LOCALIZE[1]</value>
         <value condition="String.Contains(ListItem.FolderPath,ActivateWindow) + String.Contains(ListItem.FolderPath,10502)">$LOCALIZE[292]</value>
@@ -641,6 +646,7 @@
         <value condition="String.IsEqual(ListItem.DBType,video) + !String.IsEmpty(ListItem.DateAdded)">$INFO[ListItem.DateAdded]</value>
         <value condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Premiered)) + Window.IsVisible(DialogVideoInfo.xml)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Premiered)]</value>
         <value condition="$EXP[IsGameMode]">$VAR[Label_Game_Year]</value>
+        <value condition="$EXP[IsJlomItem]">$INFO[Window(Home).Property(TMDbHelper.ListItem.Year)]</value>
         <value condition="!String.IsEmpty(ListItem.Year)">$INFO[ListItem.Year]</value>
         <!-- <value condition="!String.IsEmpty(Container.PluginName)">$LOCALIZE[20094]</value> -->
     </variable>
@@ -809,11 +815,10 @@
         <value>$INFO[Window(Home).Property(TMDbHelper.ListItem.Rating)]</value>
     </variable>
 
-    <variable name="Label_JLOM">
-        <value condition="String.IsEqual(ListItem.DBType,set)">$LOCALIZE[20094] $INFO[System.AddonVersion(Container.PluginName),  •  v ]</value>
-        <value condition="!String.IsEmpty(ListItem.Year)">$INFO[ListItem.Year]</value>
+    <variable name="Label_Plot">
+        <value condition="$EXP[IsJlomItem] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Plot))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Plot)]</value>
+        <value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
     </variable>
-
     <!-- =================================== -->
     <!--         LABEL - VIEWS FLIX          -->
     <!-- =================================== -->
@@ -826,6 +831,7 @@
         <value condition="String.StartsWith(ListItem.Path,pvr://channels) + !String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
         <value condition="[Container.Content(seasons) | Container.Content(episodes) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TVShowTitle]</value>
         <value condition="[Container.Content(files) | Container.Content(addons)] + !String.IsEmpty(ListItem.Label)">$INFO[ListItem.Label]</value>
+        <value condition="Container.Content(movies)">$VAR[Label_Title]</value>
         <value>$INFO[ListItem.Label]</value>
     </variable>
 
@@ -878,6 +884,7 @@
 
         <value condition="Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !ListItem.IsFolder + !$EXP[IsPluginShortlist] + !$EXP[IsLibraryGenie]">$LOCALIZE[561] $LOCALIZE[13280]$VAR[Label_Duration_Time_Check,  •  ,]</value>
         <!-- <value condition="Container.Content(movies) | Container.Content(sets) | String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year]$VAR[Label_Genre,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]$VAR[Label_Rating_Flix,  •  ]</value> -->
+
         <value condition="Container.Content(movies) | Container.Content(sets) | String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year]$VAR[Label_Genre,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
 
         <!-- YOUTUBE -->
@@ -978,7 +985,9 @@
 
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration),0) + !Skin.HasSetting(show.time.format.hh.mm)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration),,$LOCALIZE[31062]]</value>
 
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.H)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.M)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.M),0) + Skin.HasSetting(show.time.format.hh.mm)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.H),,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.M),,$LOCALIZE[31062]]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.H)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.M)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.M),0) + Integer.IsGreater(Window(Home).Property(TMDbHelper.ListItem.Duration.M),9) + Skin.HasSetting(show.time.format.hh.mm)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.H),,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.M),,$LOCALIZE[31062]]</value>
+
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.H)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.M)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.M),0) + !Integer.IsGreater(Window(Home).Property(TMDbHelper.ListItem.Duration.M),9) + Skin.HasSetting(show.time.format.hh.mm)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.H),,$LOCALIZE[31061]] $INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.M),0,$LOCALIZE[31062]]</value>
 
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.H)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.H),0) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Duration.M)) + !Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Duration.M),0) + Skin.HasSetting(show.time.format.hh.mm)">$INFO[Window(Home).Property(TMDbHelper.ListItem.Duration.M),,$LOCALIZE[31062]]</value>
 
@@ -1625,7 +1634,7 @@
         <!--          VIDEO - DEFAULT             -->
         <!-- ==================================== -->
 
-        <value condition="String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Title]</value>
+        <value condition="String.IsEqual(ListItem.DBType,movie)">$VAR[Label_Title]</value>
         <value condition="String.IsEqual(ListItem.DBType,set)">$INFO[ListItem.Title]</value>
         <value condition="String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Title]</value>
         <value condition="String.IsEqual(ListItem.DBType,season)">$INFO[ListItem.Title]</value>
@@ -2156,6 +2165,8 @@
     </variable>
 
     <variable name="Label_Plot_Box_Video_Music">
+        <value condition="$EXP[IsJlomItem] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Plot))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Plot)]</value>
+
         <value condition="!String.IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
         <value condition="!String.IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
         <value condition="!String.IsEmpty(ListItem.AddonDescription)">$INFO[ListItem.AddonDescription]</value>

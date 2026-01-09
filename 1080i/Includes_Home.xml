@@ -996,7 +996,7 @@
         <include content="Def_Widgets_Item_Main_Title_Clearlogo">
             <param name="id" value="$PARAM[id]" />
             <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Label]" />
-            <param name="visible" value="!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) + !String.IsEmpty(Container($PARAM[id]).ListItem.Label)" />
+            <param name="visible" value="!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) + !String.IsEmpty(Container($PARAM[id]).ListItem.Label) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.jlom)" />
         </include>
 
         <!-- EPISODES -->
@@ -1019,6 +1019,14 @@
             <param name="label" value="$INFO[Container($PARAM[id]).ListItem.Label]" />
             <param name="visible" value="String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + String.IsEmpty(Container($PARAM[id]).ListItem.Title)" />
         </include>
+
+        <!-- JLOM -->
+
+        <include content="Def_Widgets_Item_Main_Title_Clearlogo">
+            <param name="id" value="$PARAM[id]" />
+            <param name="label" value="$INFO[Window(Home).Property(TMDbHelper.ListItem.Title)]" />
+            <param name="visible" value="String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.jlom)" />
+        </include>
     </include>
 
     <include name="Widgets_Item_Sub_Title">
@@ -1034,7 +1042,7 @@
             <!-- MOVIES -->
 
             <control type="grouplist">
-                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie)</visible>
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.jlom)</visible>
 
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -1043,6 +1051,24 @@
                 <include content="Def_Home_Label_Widget_Sub_Title_Year"><param name="id" value="$PARAM[id]" /></include>
                 <include content="Def_Home_Label_Widget_Sub_Title_Genre"><param name="id" value="$PARAM[id]" /></include>
                 <include content="Def_Home_Label_Widget_Sub_Title_Duration"><param name="id" value="$PARAM[id]" /></include>
+
+                <include content="Home_Clean_Movies_Indicator" condition="!Skin.HasSetting(hide.markers) + Skin.HasSetting(home.style.horizontal.clean)">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+            </control>
+
+            <!-- PLUGIN JLMO - MOVIES -->
+
+            <control type="grouplist">
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) + String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.jlom)</visible>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Def_Home_Label_Widget_Sub_Title_Year"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Genre"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Duration_JLMO"><param name="id" value="$PARAM[id]" /></include>
 
                 <include content="Home_Clean_Movies_Indicator" condition="!Skin.HasSetting(hide.markers) + Skin.HasSetting(home.style.horizontal.clean)">
                     <param name="id" value="$PARAM[id]" />
@@ -1216,20 +1242,21 @@
 
             <width>100%</width>
 
-            <!-- SETS MOVIE EPISODE - HOME FLIX - NO CLEARLOGO OR EMPTY -->
+            <!-- MOVIES - EPISODES - SETS - HOME FLIX - CLEARLOGO -->
 
             <control type="textbox">
                 <include>Def_Widgets_Textbox</include>
                 <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
-                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + [!Skin.HasSetting(show.home.flix.title.clearlogo) | [Skin.HasSetting(show.home.flix.title.clearlogo) + String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))]]</visible>
+                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)]</visible>
+                <visible>!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.jlom)</visible>
             </control>
 
-            <!-- SETS MOVIES EPISODES - HOME FLIX - CLEARLOGO -->
+            <!-- PLUGIN JLMO - MOVIES -->
 
             <control type="textbox">
                 <include>Def_Widgets_Textbox</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
-                <visible>[[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + Skin.HasSetting(show.home.flix.title.clearlogo) + !String.IsEmpty(Container($PARAM[id]).ListItem.Art(clearlogo))</visible>
+                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Plot)]</label>
+                <visible>String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.jlom)</visible>
             </control>
 
             <!-- ALBUMS -->

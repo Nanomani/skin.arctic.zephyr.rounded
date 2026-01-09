@@ -411,13 +411,14 @@
 
         <definition>
 
-            <!-- LABEL ON POSTER - BOTTOM 40 -->
+            <!-- VIEWS - LABEL ON POSTER - BOTTOM 40 -->
 
             <control type="group">
-                <visible>String.StartsWith(ListItem.Icon,Default) | [Window.IsVisible(Home) + String.IsEqual(ListItem.DBType,set) + $EXP[IsJlomItem]]</visible>
-                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | [String.IsEqual(ListItem.DBType,set) + $EXP[IsJlomItem]]]</visible>
+                <visible>String.StartsWith(ListItem.Icon,Default)</visible>
 
-                <visible>[Window.IsVisible(Home) | Control.IsVisible(55) | Control.IsVisible(521) | Control.IsVisible(5218) | [Control.IsVisible(522) + String.IsEmpty(Skin.String(522.landscape.size))] | [Control.IsVisible(5228) + String.IsEmpty(Skin.String(522.landscape.size))] | [String.IsEqual(ListItem.DBType,set) + $EXP[IsJlomItem]]]</visible>
+                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | $EXP[IsJlomFolder]]</visible>
+
+                <visible>$EXP[Views_Bottom_40] | [$EXP[IsJlomFolder] + !$EXP[Views_Bottom_28] + !$EXP[Views_Bottom_18]]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -443,13 +444,14 @@
                 </control>
             </control>
 
-            <!-- LABEL ON POSTER - BOTTOM 28 -->
+            <!-- VIEWS - LABEL ON POSTER - BOTTOM 28 -->
 
             <control type="group">
                 <visible>String.StartsWith(ListItem.Icon,Default)</visible>
-                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | [String.IsEqual(ListItem.DBType,set) + $EXP[IsJlomItem]]]</visible>
 
-                <visible>[Control.IsVisible(517) | Control.IsVisible(509) | Control.IsVisible(519) | Control.IsVisible(514) | Control.IsVisible(527) | Control.IsVisible(53) | [Control.IsVisible(5228) + String.IsEqual(Skin.String(522.landscape.size),2)]]</visible>
+                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | $EXP[IsJlomFolder]]</visible>
+
+                <visible>$EXP[Views_Bottom_28]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -475,13 +477,13 @@
                 </control>
             </control>
 
-            <!-- LABEL ON POSTER - BOTTOM 20 -->
+            <!-- VIEWS - LABEL ON POSTER - BOTTOM 18 -->
 
             <control type="group">
                 <visible>String.StartsWith(ListItem.Icon,Default)</visible>
-                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | [Container.Content(movies) + String.IsEqual(ListItem.DBType,set) + $EXP[IsPluginJLOM]]]</visible>
+                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | $EXP[IsJlomFolder]]</visible>
 
-                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)]] + [Control.IsVisible(547) | Control.IsVisible(557) | [Control.IsVisible(5238) + String.IsEqual(Skin.String(523.square.size),2)]]</visible>
+                <visible>$EXP[Views_Bottom_18]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -497,7 +499,40 @@
                     <aligny>center</aligny>
                     <left>20</left>
                     <right>20</right>
-                    <bottom>20</bottom>
+                    <bottom>18</bottom>
+                    <height>70</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>PanelWhite70</textcolor>
+                    <selectedcolor>PanelWhite70</selectedcolor>
+                    <autoscroll>true</autoscroll>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+            </control>
+
+            <!-- HOME - LABEL ON POSTER - BOTTOM 40 -->
+
+            <control type="group">
+                <visible>[String.StartsWith(ListItem.Icon,Default) | $EXP[IsJlomFolder]]</visible>
+
+                <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | $EXP[IsJlomFolder]]</visible>
+
+                <visible>Window.IsVisible(Home)</visible>
+
+                <include content="Def_Bottom" condition="$PARAM[small]">
+                   <param name="bottom" value="$PARAM[bottom_small]" />
+                </include>
+
+                <left>$PARAM[left]</left>
+                <bottom>$PARAM[bottom]</bottom>
+
+                <!-- ALL OTHERS LABEL -->
+
+                <control type="textbox">
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <left>20</left>
+                    <right>20</right>
+                    <bottom>40</bottom>
                     <height>70</height>
                     <font>InfoNetflix</font>
                     <textcolor>PanelWhite70</textcolor>
@@ -619,11 +654,6 @@
                     <include>Def_Image_Poster_Rating_Info_Right</include>
                     <texture background="false" colordiffuse="$VAR[Color_Indicator_Set]">buttonsdialogs/collection.png</texture>
                 </control>
-                <!-- <control type="label"> -->
-                    <!-- <visible>ListItem.IsCollection</visible> -->
-                    <!-- <include>Def_Label_Poster_Set_Version_Right</include> -->
-                    <!-- <label>[COLOR=$VAR[Color_Indicator_Set]]&#61898;[/COLOR]</label> -->
-                <!-- </control> -->
 
                 <!-- VERSIONS -->
 
@@ -640,12 +670,6 @@
                     <include>Def_Image_Poster_Rating_Info_Right</include>
                     <texture background="true" colordiffuse="$VAR[Color_Indicator_Version]">buttonsdialogs/server.png</texture>
                 </control>
-                <!-- <control type="label"> -->
-                    <!-- <visible>Container($PARAM[controlid]).ListItem.HasVideoVersions</visible> -->
-                    <!-- <visible>!Container.Content(videoversions) + !String.StartsWith(Container.FolderPath,videodb://movies/videoversions)</visible> -->
-                    <!-- <include>Def_Label_Poster_Set_Version_Right</include> -->
-                    <!-- <label>[COLOR=$VAR[Color_Indicator_Version]]&#61735;[/COLOR]</label> -->
-                <!-- </control> -->
 
                 <!-- PLUGIN JLOM - MOVIE NOT IN DB -->
 

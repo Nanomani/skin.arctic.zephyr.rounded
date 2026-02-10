@@ -553,12 +553,14 @@
 
                                 <onclick>SetProperty(filemanager_back_video_info_type,$VAR[Def_Open_Info_From_FileManager_Type],Home)</onclick>
                                 <onclick>SetProperty(filemanager_back_video_info_bdid,$INFO[ListItem.DBID],Home)</onclick>
-                                <onclick condition="!String.IsEmpty(ListItem.Path)">ActivateWindow(filemanager,"$INFO[ListItem.Path]",return)</onclick>
+
+                                <onclick condition="!String.IsEmpty(ListItem.Path) + !$EXP[IsPluginItem]">ActivateWindow(filemanager,"$INFO[ListItem.Path]",return)</onclick>
                                 <onclick condition="!String.IsEmpty(ListItem.Property(path))">ActivateWindow(filemanager,"$INFO[ListItem.Property(path)]",return)</onclick>
+                                <onclick condition="!String.IsEmpty(Container(44029).ListItem.Path)">ActivateWindow(filemanager,"$INFO[Container(44029).ListItem.Path]",return)</onclick>
 
                                 <visible>!String.IsEmpty(ListItem.DBID) | !String.IsEmpty(ListItem.TvShowDBID)</visible>
-                                <visible>!$EXP[IsPluginItem] + !String.IsEqual(ListItem.DBType,set)</visible>
-                                <visible>!String.IsEmpty(ListItem.Path) | !String.IsEmpty(ListItem.Property(path))</visible>
+                                <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                                <visible>[!String.IsEmpty(ListItem.Path) + !$EXP[IsPluginItem]] | !String.IsEmpty(ListItem.Property(path)) | !String.IsEmpty(Container(44029).ListItem.Path)</visible>
                             </item>
 
                             <!-- METADATA EDITOR -->

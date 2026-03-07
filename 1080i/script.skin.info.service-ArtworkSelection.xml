@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">100</defaultcontrol>
+	<!--
+	CONTROL IDs:
+	  100 - Artwork list control (displays available options, click to select)
+	  201 - Skip button
+	  202 - Cancel button
+	  203 - Multi-Art button (visibility controlled by show_multiart property)
+	  204 - Change Language button (visibility controlled by show_change_language property)
+	  205 - Sort button (toggles between popularity and resolution sort modes)
+	  206 - Source button (toggles between all/TMDB/Fanart.tv filtering)
+
+	WINDOW PROPERTIES use $INFO[Window.Property(name)]:
+	  - heading: Title (e.g., "The Matrix")
+	  - year: Release year
+	  - mediatype: Media type (movie, tvshow, etc.)
+	  - arttype: Art type being selected (e.g., "Poster", "Fanart")
+	  - state: State text ("Missing artwork" / "Replace existing artwork" / "" for single)
+	  - hascurrentart: "true" or "false" - whether item already has this art type
+	  - currentarturl: URL of current artwork (if any)
+	  - count: Smart display string ("58 available" or "24 of 58 available (English)")
+	  - count_filtered: Raw number of filtered items (string)
+	  - count_total: Raw number of total items (string)
+	  - language: Display name for current language filter (e.g., "English")
+	  - language_short: Current language filter code (e.g., "en")
+	  - show_change_language: "true" or "false" - whether to show Change Language button
+	  - show_multiart: "true" or "false" - multi-art button availability
+
+	LISTITEM PROPERTIES use $INFO[ListItem.Property(name)]:
+	  - is_current: "true" if this artwork is currently assigned
+	  - dimensions: Width x Height (e.g., "1920x1080")
+	  - width: Image width in pixels
+	  - height: Image height in pixels
+	  - source: Source name (e.g., "TMDB", "fanart.tv")
+	  - language: Display name for this artwork's language (e.g., "English")
+	  - language_short: Language code for this artwork (e.g., "en")
+	  - season: Season number (when available)
+	  - fullurl: Full resolution image URL
+	  - index: 0-based index for selection tracking
+	-->
+	<controls>
+
+        <!-- BACKGROUND -->
+
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1920</width>
+			<height>1080</height>
+			<texture colordiffuse="White100">common/white.png</texture>
+		</control>
+
+		<control type="group">
+			<include>Animation_Common_Settings</include>
+
+			<!-- HEADING -->
+
+            <control type="group">
+                <top>30</top>
+                <left>80</left>
+                <Width>1250</Width>
+
+                <!-- ICON -->
+
+                <control type="image">
+                    <top>-29</top>
+                    <left>-40</left>
+                    <width>160</width>
+                    <height>160</height>
+                    <texture colordiffuse="Fallback">$VAR[Image_Header_Background]</texture>
+                    <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+                </control>
+                <control type="image">
+                    <top>7</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <texture colordiffuse="PanelWhite100" border="12">special://skin/extras/icons/pictures.png</texture>
+                </control>
+
+                <!-- MAIN HEADER TITLE -->
+
+                <control type="label">
+                    <left>104</left>
+                    <font>LargeNew</font>
+                    <description>Header Label</description>
+                    <textcolor>Dark1</textcolor>
+                    <label>$INFO[Window.Property(heading)]$INFO[Window.Property(year), (,)]</label>
+                </control>
+
+                <!-- SUB HEADER TITLE -->
+
+                <control type="label">
+                    <top>55</top>
+                    <left>104</left>
+                    <height>36</height>
+                    <font>Tiny</font>
+                    <textcolor>Dark1</textcolor>
+                    <label>$INFO[Window.Property(arttype)]$INFO[Window.Property(count), - ]</label>
+                    <aligny>center</aligny>
+                </control>
+            </control>
+
+            <control type="group">
+				<centerleft>50%</centerleft>
+				<centertop>50%</centertop>
+				<width>1820</width>
+				<height>800</height>
+
+                <!-- ARTWORK PANEL -->
+
+                <control type="panel" id="100">
+                    <include>Animation_Scrolltime_Views_List</include>
+
+					<left>0</left>
+					<top>10</top>
+					<width>1820</width>
+					<height>800</height>
+
+                    <ondown>201</ondown>
+
+                    <orientation>vertical</orientation>
+					<preloaditems>2</preloaditems>
+
+                    <!-- POSTER/KEYART: 6X2 GRID (12 ITEMS) - 2:3 ASPECT RATIO -->
+
+                    <itemlayout height="400" width="222" condition="String.IsEqual(Window.Property(arttype),poster) | String.IsEqual(Window.Property(arttype),keyart)">
+
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Poster">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="poster_w202_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                            </include>
+                        </control>
+                        <control type="group">
+							<left>234</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>202</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]</label>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>362</top>
+							<width>202</width>
+							<height>30</height>
+							<font>Small24</font>
+							<textcolor>PanelWhite70</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+
+					<focusedlayout height="400" width="222" condition="String.IsEqual(Window.Property(arttype),poster) | String.IsEqual(Window.Property(arttype),keyart)">
+
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Poster_Focus">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="poster_w202_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                            </include>
+                        </control>
+                        <control type="group">
+                            <left>234</left>
+                            <top>18</top>
+                            <visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>80000000</colordiffuse>
+                                <texture>overlay.png</texture>
+                            </control>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>FF00CC00</colordiffuse>
+                                <texture>check_circle.png</texture>
+                            </control>
+                        </control>
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>202</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]</label>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>362</top>
+							<width>202</width>
+							<height>30</height>
+							<font>Small24</font>
+							<textcolor>PanelWhite70</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+
+					<!-- FANART: 3X2 GRID (6 ITEMS) - 16:9 ASPECT RATIO -->
+
+					<itemlayout height="400" width="592.33" condition="String.IsEqual(Window.Property(arttype),fanart)">
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Landscape">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="fanart_w570_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="325" />
+                                <param name="image_height" value="325" />
+                            </include>
+                        </control>
+						<control type="group">
+							<left>529</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>572</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="400" width="592.33" condition="String.IsEqual(Window.Property(arttype),fanart)">
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Landscape_Focus">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="fanart_w570_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="325" />
+                                <param name="image_height" value="325" />
+                                <param name="glow_left" value="11" />
+                                <param name="glow_right" value="11" />
+                            </include>
+                        </control>
+
+                        <control type="group">
+                            <left>529</left>
+                            <top>18</top>
+                            <visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>80000000</colordiffuse>
+                                <texture>overlay.png</texture>
+                            </control>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>FF00CC00</colordiffuse>
+                                <texture>check_circle.png</texture>
+                            </control>
+                        </control>
+
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>572</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</focusedlayout>
+
+                    <!-- LANDSCAPE/CLEARART: 4X3 GRID (12 ITEMS) - 16:9 ASPECT RATIO -->
+
+					<itemlayout height="400" width="592.33" condition="String.IsEqual(Window.Property(arttype),landscape) | String.IsEqual(Window.Property(arttype),clearart)">
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Landscape">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="fanart_w570_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="325" />
+                                <param name="image_height" value="325" />
+                            </include>
+                        </control>
+						<control type="group">
+							<left>529</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>572</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="400" width="592.33" condition="String.IsEqual(Window.Property(arttype),landscape) | String.IsEqual(Window.Property(arttype),clearart)">
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Landscape_Focus">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="fanart_w570_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="325" />
+                                <param name="image_height" value="325" />
+                                <param name="glow_left" value="11" />
+                                <param name="glow_right" value="11" />
+                            </include>
+                        </control>
+
+                        <control type="group">
+                            <left>529</left>
+                            <top>18</top>
+                            <visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>80000000</colordiffuse>
+                                <texture>overlay.png</texture>
+                            </control>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>FF00CC00</colordiffuse>
+                                <texture>check_circle.png</texture>
+                            </control>
+                        </control>
+
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>572</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</focusedlayout>
+
+					<!-- BANNER: 2X4 GRID (8 ITEMS) - 5.405:1 ASPECT RATIO -->
+
+					<itemlayout height="266" width="900" condition="String.IsEqual(Window.Property(arttype),banner)">
+                        <control type="group">
+                            <top>5</top>
+                            <height>168</height>
+                            <width>890</width>
+                            <include content="Layout_Widget_Banner">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="banner_w890_h168" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="168" />
+                            </include>
+                        </control>
+						<control type="group">
+							<left>812</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>190</top>
+							<width>870</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="266" width="900" condition="String.IsEqual(Window.Property(arttype),banner)">
+                        <control type="group">
+                            <top>5</top>
+                            <height>168</height>
+                            <width>890</width>
+                            <include content="Layout_Widget_Banner_Focus">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="banner_w890_h168" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="168" />
+                                <param name="glow_height" value="175" />
+                                <param name="glow_top" value="-4" />
+                                <param name="glow_left" value="22" />
+                                <param name="glow_right" value="24" />
+                            </include>
+                        </control>
+						<control type="group">
+							<left>812</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>190</top>
+							<width>870</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</focusedlayout>
+
+					<!-- DISCART: 6X2 GRID (12 ITEMS) - SQUARE 1:1 -->
+
+					<itemlayout height="400" width="364" condition="String.IsEqual(Window.Property(arttype),discart)">
+                        <control type="group">
+                            <height>325</height>
+                            <width>325</width>
+                            <control type="group">
+                                <include content="Layout_Widget_Square">
+                                    <param name="colordiffuse" value="Fallback" />
+                                    <param name="texture_diffuse" value="square_w305_h305" />
+                                    <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                    <param name="id" value="100" />
+                                    <param name="height" value="325" />
+                                    <param name="image_height" value="325" />
+                                    <param name="distance" value="10" />
+                                    <param name="aspectratio" value="scale" />
+                                </include>
+                            </control>
+                        </control>
+						<control type="group">
+							<left>246</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>305</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]</label>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>362</top>
+							<width>305</width>
+							<height>30</height>
+							<font>Small24</font>
+							<textcolor>PanelWhite70</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(source)]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="400" width="364" condition="String.IsEqual(Window.Property(arttype),discart)">
+                        <control type="group">
+                            <height>325</height>
+                            <width>325</width>
+                            <control type="group">
+                                <include content="Layout_Widget_Square_Focus">
+                                    <param name="colordiffuse" value="Fallback" />
+                                    <param name="texture_diffuse" value="square_w305_h305" />
+                                    <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                    <param name="id" value="100" />
+                                    <param name="height" value="325" />
+                                    <param name="image_height" value="325" />
+                                    <param name="distance" value="10" />
+                                    <param name="aspectratio" value="scale" />
+                                    <param name="glow_height" value="317" />
+                                    <param name="glow_top" value="4" />
+                                    <param name="glow_left" value="4" />
+                                    <param name="glow_right" value="4" />
+                                </include>
+                            </control>
+                        </control>
+						<control type="group">
+							<left>246</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>305</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]</label>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>362</top>
+							<width>305</width>
+							<height>30</height>
+							<font>Small24</font>
+							<textcolor>PanelWhite70</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(source)]</label>
+						</control>
+					</focusedlayout>
+
+					<!-- CHARACTERART: 6X2 GRID (12 ITEMS) - 0.715 ASPECT RATIO -->
+
+					<itemlayout height="440" width="300" condition="String.IsEqual(Window.Property(arttype),characterart)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>280</width>
+							<height>392</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+						</control>
+						<control type="group">
+							<left>246</left>
+							<top>74</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>400</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="440" width="300" condition="String.IsEqual(Window.Property(arttype),characterart)">
+						<control type="image">
+							<left>10</left>
+							<top>10</top>
+							<width>280</width>
+							<height>392</height>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<bordersize>8</bordersize>
+							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
+						</control>
+						<control type="group">
+							<left>246</left>
+							<top>74</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>36</width>
+								<height>36</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+						<control type="label">
+							<left>10</left>
+							<top>400</top>
+							<width>280</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</focusedlayout>
+
+					<!-- CLEARLOGO: 3X4 GRID (12 ITEMS) - 2.581 ASPECT RATIO -->
+
+					<itemlayout height="400" width="592.33" condition="String.IsEqual(Window.Property(arttype),clearlogo)">
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Landscape">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="fanart_w570_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="325" />
+                                <param name="image_height" value="325" />
+                                <param name="aspectratio" value="keep" />
+                            </include>
+                        </control>
+						<control type="group">
+							<left>529</left>
+							<top>18</top>
+							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>80000000</colordiffuse>
+								<texture>overlay.png</texture>
+							</control>
+							<control type="image">
+								<width>48</width>
+								<height>48</height>
+								<colordiffuse>FF00CC00</colordiffuse>
+								<texture>check_circle.png</texture>
+							</control>
+						</control>
+
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>572</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</itemlayout>
+					<focusedlayout height="400" width="592.33" condition="String.IsEqual(Window.Property(arttype),clearlogo)">
+                        <control type="group">
+                            <height>325</height>
+                            <include content="Layout_Widget_Landscape_Focus">
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="texture_diffuse" value="fanart_w570_h305" />
+                                <param name="texture" value="$INFO[ListItem.Art(thumb)]" />
+                                <param name="id" value="100" />
+                                <param name="height" value="325" />
+                                <param name="image_height" value="325" />
+                                <param name="aspectratio" value="keep" />
+                                <param name="glow_left" value="11" />
+                                <param name="glow_right" value="11" />
+                            </include>
+                        </control>
+
+                        <control type="group">
+                            <left>529</left>
+                            <top>18</top>
+                            <visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>80000000</colordiffuse>
+                                <texture>overlay.png</texture>
+                            </control>
+                            <control type="image">
+                                <width>48</width>
+                                <height>48</height>
+                                <colordiffuse>FF00CC00</colordiffuse>
+                                <texture>check_circle.png</texture>
+                            </control>
+                        </control>
+
+						<control type="label">
+							<left>10</left>
+							<top>333</top>
+							<width>572</width>
+							<height>30</height>
+							<font>InfoNetflix</font>
+							<textcolor>Dark1</textcolor>
+							<align>center</align>
+							<label>$INFO[ListItem.Property(dimensions)]$INFO[ListItem.Property(source), • ]</label>
+						</control>
+					</focusedlayout>
+				</control>
+			</control>
+
+			<!-- BUTTON GROUP -->
+
+            <control type="grouplist" id="9000">
+				<top>970</top>
+				<width>100%</width>
+				<height>120</height>
+				<align>center</align>
+
+				<onup>100</onup>
+				<ondown>SetFocus(100,0,absolute)</ondown>
+
+                <itemgap>14</itemgap>
+                <orientation>horizontal</orientation>
+
+                <!-- CHANGE LANGUAGE BUTTON (ONLY VISIBLE WHEN MULTIPLE LANGUAGES AVAILABLE) -->
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="204" />
+                    <param name="label" value="$ADDON[script.skin.info.service 32120]" />
+                    <param name="visible" value="String.IsEqual(Window.Property(show_change_language),true)" />
+                </include>
+
+                <!-- <control type="button" id="204"> -->
+					<!-- <width>auto</width> -->
+					<!-- <height>50</height> -->
+					<!-- <font>font13_title</font> -->
+					<!-- <align>center</align> -->
+					<!-- <textcolor>FFFFFFFF</textcolor> -->
+					<!-- <focusedcolor>FFFFFFFF</focusedcolor> -->
+					<!-- <label>$ADDON[script.skin.info.service 32120]</label> -->
+					<!-- <texturefocus colordiffuse="FFFF8800" border="4">white.png</texturefocus> -->
+					<!-- <texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus> -->
+					<!-- <visible>String.IsEqual(Window.Property(show_change_language),true)</visible> -->
+				<!-- </control> -->
+
+				<!-- SORT BUTTON -->
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="205" />
+                    <param name="label" value="$ADDON[script.skin.info.service 32131]" />
+                    <param name="visible" value="true" />
+                </include>
+
+                <!-- <control type="button" id="205"> -->
+					<!-- <width>280</width> -->
+					<!-- <height>50</height> -->
+					<!-- <font>font13_title</font> -->
+					<!-- <align>center</align> -->
+					<!-- <textcolor>FFFFFFFF</textcolor> -->
+					<!-- <focusedcolor>FFFFFFFF</focusedcolor> -->
+					<!-- <label>$ADDON[script.skin.info.service 32131]</label> -->
+					<!-- <texturefocus colordiffuse="FFAA00FF" border="4">white.png</texturefocus> -->
+					<!-- <texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus> -->
+				<!-- </control> -->
+
+                <!-- SOURCE PREFERENCE BUTTON -->
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="206" />
+                    <param name="label" value="$ADDON[script.skin.info.service 32132]" />
+                    <param name="visible" value="true" />
+                </include>
+
+                <!-- <control type="button" id="206"> -->
+					<!-- <width>280</width> -->
+					<!-- <height>50</height> -->
+					<!-- <font>font13_title</font> -->
+					<!-- <align>center</align> -->
+					<!-- <textcolor>FFFFFFFF</textcolor> -->
+					<!-- <focusedcolor>FFFFFFFF</focusedcolor> -->
+					<!-- <label>$ADDON[script.skin.info.service 32132]</label> -->
+					<!-- <texturefocus colordiffuse="FF00AAFF" border="4">white.png</texturefocus> -->
+					<!-- <texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus> -->
+				<!-- </control> -->
+
+                <!-- MULTI-ART BUTTON (VISIBLITY CONTROLLED BY SCRIPT) -->
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="203" />
+                    <param name="label" value="$ADDON[script.skin.info.service 32130]" />
+                    <param name="visible" value="true" />
+                </include>
+
+                <!-- <control type="button" id="203"> -->
+					<!-- <width>280</width> -->
+					<!-- <height>50</height> -->
+					<!-- <font>font13_title</font> -->
+					<!-- <align>center</align> -->
+					<!-- <textcolor>FFFFFFFF</textcolor> -->
+					<!-- <focusedcolor>FFFFFFFF</focusedcolor> -->
+					<!-- <label>$ADDON[script.skin.info.service 32130]</label> -->
+					<!-- <texturefocus colordiffuse="FF00AA00" border="4">white.png</texturefocus> -->
+					<!-- <texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus> -->
+				<!-- </control> -->
+
+                <!-- SKIP BUTTON -->
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="201" />
+                    <param name="label" value="$ADDON[script.skin.info.service 32128]" />
+                    <param name="visible" value="true" />
+                </include>
+
+                <!-- <control type="button" id="201"> -->
+					<!-- <width>280</width> -->
+					<!-- <height>50</height> -->
+					<!-- <font>font13_title</font> -->
+					<!-- <align>center</align> -->
+					<!-- <textcolor>FFFFFFFF</textcolor> -->
+					<!-- <focusedcolor>FFFFFFFF</focusedcolor> -->
+					<!-- <label>$ADDON[script.skin.info.service 32128]</label> -->
+					<!-- <texturefocus colordiffuse="FF0088FF" border="4">white.png</texturefocus> -->
+					<!-- <texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus> -->
+				<!-- </control> -->
+
+                <!-- CANCEL BUTTON -->
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="202" />
+                    <param name="label" value="$LOCALIZE[222]" />
+                    <param name="visible" value="true" />
+                </include>
+
+                <!-- <control type="button" id="202"> -->
+					<!-- <width>280</width> -->
+					<!-- <height>50</height> -->
+					<!-- <font>font13_title</font> -->
+					<!-- <align>center</align> -->
+					<!-- <textcolor>FFFFFFFF</textcolor> -->
+					<!-- <focusedcolor>FFFFFFFF</focusedcolor> -->
+					<!-- <label>$LOCALIZE[222]</label> -->
+					<!-- <texturefocus colordiffuse="FFFF4444" border="4">white.png</texturefocus> -->
+					<!-- <texturenofocus colordiffuse="FF333333" border="2">white.png</texturenofocus> -->
+				<!-- </control> -->
+			</control>
+		</control>
+	</controls>
+</window>

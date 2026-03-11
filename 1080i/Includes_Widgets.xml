@@ -1108,31 +1108,36 @@
     <!-- DEF - HOME - WIDGET - MORE -->
 
     <include name="Def_Widget_Label_More_Content">
-        <control type="group">
-            <animation effect="slide" start="0" end="0,-40" time="0" condition="$PARAM[small]">Conditional</animation>
-            <animation effect="slide" start="0" end="0,-24" time="0" condition="$PARAM[middle]">Conditional</animation>
+        <param name="small" value="$PARAM[small]" default="false" />
+        <param name="middle" value="$PARAM[middle]" default="false" />
+     
+        <definition>
+            <control type="group">
+                <animation effect="slide" start="0" end="0,-40" time="0" condition="$PARAM[small]">Conditional</animation>
+                <animation effect="slide" start="0" end="0,-24" time="0" condition="$PARAM[middle]">Conditional</animation>
 
-            <control type="image">
-                <centertop>50%</centertop>
-                <centerleft>50%</centerleft>
-                <width>120</width>
-                <height>120</height>
-               <colordiffuse>Dark2</colordiffuse>
-               <texture>special://skin/extras/icons/right-long.png</texture>
-               <visible>$EXP[Home_More_Item]</visible>
+                <control type="image">
+                    <centertop>50%</centertop>
+                    <centerleft>50%</centerleft>
+                    <width>120</width>
+                    <height>120</height>
+                   <colordiffuse>Dark2</colordiffuse>
+                   <texture>special://skin/extras/icons/right-long.png</texture>
+                   <visible>$EXP[Home_More_Item]</visible>
+                </control>
+                <control type="label">
+                    <centertop>75%</centertop>
+                    <align>center</align>
+                    <width>100%</width>
+                    <height>40</height>
+                    <textcolor>PanelWhite70</textcolor>
+                    <font>Small</font>
+                    <label>31320</label>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>$EXP[Home_More_Item] + !$PARAM[small] + !$PARAM[middle]</visible>
+                </control>
             </control>
-            <control type="label">
-                <centertop>75%</centertop>
-                <align>center</align>
-                <width>100%</width>
-                <height>40</height>
-                <textcolor>PanelWhite70</textcolor>
-                <font>Small</font>
-                <label>31320</label>
-                <visible>!ListItem.IsParentFolder</visible>
-                <visible>$EXP[Home_More_Item] + !$PARAM[small] + !$PARAM[middle]</visible>
-            </control>
-        </control>
+        </definition>
     </include>
 
     <include name="Def_Widget_Item_More_Content">
@@ -1345,6 +1350,7 @@
     <include name="Def_Widget_Poster">
         <param name="texture" value="$PARAM[texture]"  default="$VAR[Image_Poster]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="visible_title_overlay" value="$PARAM[visible_title_overlay]" default="false" />
         <param name="pad_image" value="$PARAM[pad_image]" default="10" />
         <param name="fallback" value="$PARAM[fallback]" default="DefaultMovies" />
@@ -1354,7 +1360,7 @@
                 <param name="pad_shadow" value="1" />
                 <param name="pad_border" value="1" />
                 <param name="pad_image" value="10" />
-                <param name="colordiffuse" value="White100" />
+                <param name="colordiffuse" value="$PARAM[colordiffuse]" />
             </include>
 
             <!-- ALL OTHERS -->
@@ -2038,20 +2044,22 @@
         <param name="pad_image" value="$PARAM[pad_image]" default="10" />
         <param name="clearlogo" value="$PARAM[clearlogo]" default="false" />
         <param name="small" value="$PARAM[small]" default="false" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
 
         <definition>
             <include content="Def_Art_Full_Background_b12">
                 <param name="pad_shadow" value="1" />
                 <param name="pad_border" value="1" />
                 <param name="pad_image" value="10" />
-                <param name="colordiffuse" value="White100" />
+                <param name="colordiffuse" value="$PARAM[colordiffuse]" />
             </include>
 
             <!-- ALL OTHERS -->
 
             <include content="Def_Art_Icon_Image">
                 <param name="pad_image" value="$PARAM[pad_image]" />
-                <param name="aspectratio" value="scale" />
+                <param name="aspectratio" value="$PARAM[aspectratio]" />
                 <param name="texture" value="$PARAM[texture]" />
                 <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
                 <param name="visible" value="![String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)] + !String.IsEqual(ListItem.DBType,studio) + ![String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)] + !Container.Content(images)" />
@@ -2151,6 +2159,7 @@
     <include name="Def_Widget_Banner">
         <param name="texture" value="$PARAM[texture]"  default="$VAR[Image_Banner]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="pad_image" value="$PARAM[pad_image]" default="10" />
 
         <definition>
@@ -2158,7 +2167,7 @@
                 <param name="pad_shadow" value="1" />
                 <param name="pad_border" value="1" />
                 <param name="pad_image" value="10" />
-                <param name="colordiffuse" value="White100" />
+                <param name="colordiffuse" value="$PARAM[colordiffuse]" />
             </include>
 
             <!-- ALL OTHERS -->
@@ -2662,7 +2671,7 @@
     <include name="Layout_Widget_Poster">
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Poster]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
-        <param name="colordiffuse" value="$PARAM[colordiffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="aspectratio_default_icon" value="$PARAM[aspectratio_default_icon]" default="keep" />
         <param name="fallback" value="$PARAM[fallback]" default="DefaultVideo" />
         <param name="height" value="$PARAM[height]" default="325" />
@@ -2686,7 +2695,7 @@
     <include name="Layout_Widget_Poster_Focus">
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Poster]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
-        <param name="colordiffuse" value="$PARAM[colordiffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="aspectratio_default_icon" value="$PARAM[aspectratio_default_icon]" default="keep" />
         <param name="fallback" value="$PARAM[fallback]" default="DefaultVideo" />
         <param name="height" value="$PARAM[height]" default="325" />
@@ -2727,7 +2736,7 @@
         <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="height" value="$PARAM[height]" default="325" />
         <param name="top" value="$PARAM[top]" default="305" />
-        <param name="aspectratio" value="$PARAM[aspectratio]" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
         <param name="fallback" value="$PARAM[fallback]" default="DefaultVideo" />
         <param name="middle" value="$PARAM[middle]" default="false" />
         <param name="small" value="$PARAM[small]" default="false" />
@@ -2862,9 +2871,11 @@
         <param name="visible_background_b12" value="$PARAM[visible_background_b12]" default="false" />
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Fanart]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="height" value="$PARAM[height]" default="325" />
         <param name="image_height" value="$PARAM[image_height]" default="325" />
         <param name="top" value="$PARAM[top]" default="305" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
         <param name="middle" value="$PARAM[middle]" default="false" />
         <param name="small" value="$PARAM[small]" default="false" />
         <definition>
@@ -2875,6 +2886,7 @@
                     <param name="colordiffuse" value="$PARAM[colordiffuse]" />
                     <param name="texture" value="$PARAM[texture]" />
                     <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="aspectratio" value="$PARAM[aspectratio]" />
                     <param name="clearlogo" value="$PARAM[clearlogo]" />
                     <param name="middle" value="$PARAM[middle]" />
                     <param name="small" value="$PARAM[small]" />
@@ -2887,9 +2899,11 @@
         <param name="visible_background_b12" value="$PARAM[visible_background_b12]" default="false" />
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Fanart]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="height" value="$PARAM[height]" default="325" />
         <param name="image_height" value="$PARAM[image_height]" default="325" />
         <param name="top" value="$PARAM[top]" default="305" />
+        <param name="aspectratio" value="$PARAM[aspectratio]" default="scale" />
         <param name="middle" value="$PARAM[middle]" default="false" />
         <param name="small" value="$PARAM[small]" default="false" />
         <definition>
@@ -2901,6 +2915,7 @@
                     <param name="colordiffuse" value="$PARAM[colordiffuse]" />
                     <param name="texture" value="$PARAM[texture]" />
                     <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+                    <param name="aspectratio" value="$PARAM[aspectratio]" />
                     <param name="clearlogo" value="$PARAM[clearlogo]" />
                     <param name="middle" value="$PARAM[middle]" />
                     <param name="small" value="$PARAM[small]" />
@@ -3000,6 +3015,8 @@
 
     <include name="Layout_Widget_Banner">
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Banner]" />
+        <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="height" value="$PARAM[height]" default="325" />
         <definition>
             <control type="group">
@@ -3015,6 +3032,7 @@
     <include name="Layout_Widget_Banner_Focus">
         <param name="texture" value="$PARAM[texture]" default="$VAR[Image_Banner]" />
         <param name="texture_diffuse" value="$PARAM[texture_diffuse]" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="White100" />
         <param name="height" value="$PARAM[height]" default="325" />
         <definition>
             <control type="group">

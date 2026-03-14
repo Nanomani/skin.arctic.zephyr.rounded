@@ -2,12 +2,15 @@
 <window>
     <defaultcontrol always="true">110</defaultcontrol>
 
+    <onload condition="!System.GetBool(gamesgeneral.showosdhelp)">SetFocus(110)</onload>
+    <onload condition="System.GetBool(gamesgeneral.showosdhelp)">SetFocus(10)</onload>
+
     <controls>
         <control type="group">
             <include>Animation_Common_Fade_In</include>
             <include>Animation_Common_Fade_Out</include>
 
-            <visible>ControlGroup(9000).HasFocus() | Control.HasFocus(1799)</visible>
+            <visible>ControlGroup(9000).HasFocus() | Control.HasFocus(1799) | Control.HasFocus(10)</visible>
 
             <include content="Background_Overlay">
                 <param name="visible" value="!Window.IsActive(GameVideoFilter) + !Window.IsActive(GameStretchMode) + !Window.IsActive(GameVideoRotation)" />
@@ -15,11 +18,9 @@
         </control>
 
         <control type="group">
-            <visible>!Window.IsActive(InGameSaves) + !Window.IsActive(GameAgents) + !Window.IsActive(GameVideoFilter) + !Window.IsActive(GameStretchMode) + !Window.IsActive(GameVideoRotation) + !Window.IsActive(GameVolume) + !Window.IsActive(GameControllers) + !Window.IsActive(GamePorts) + !Window.IsActive(GameAdvancedSettings) + !Window.IsActive(DialogSlider.xml)</visible>
+            <visible>!System.GetBool(gamesgeneral.showosdhelp)</visible>
 
-            <!-- <animation type="Conditional" condition="Window.IsActive(InGameSaves) | Window.IsActive(GameAgents) | Window.IsActive(GameVideoFilter) | Window.IsActive(GameStretchMode) | Window.IsActive(GameVideoRotation) | Window.IsActive(GameVolume) | Window.IsActive(GameControllers) | Window.IsActive(GamePorts) | Window.IsActive(GameAdvancedSettings) | Window.IsActive(DialogSlider.xml)" reversible="false"> -->
-                <!-- <effect type="fade" end="0" start="100" time="300" delay="0" /> -->
-            <!-- </animation> -->
+            <visible>!Window.IsActive(InGameSaves) + !Window.IsActive(GameAgents) + !Window.IsActive(GameVideoFilter) + !Window.IsActive(GameStretchMode) + !Window.IsActive(GameVideoRotation) + !Window.IsActive(GameVolume) + !Window.IsActive(GameControllers) + !Window.IsActive(GamePorts) + !Window.IsActive(GameAdvancedSettings) + !Window.IsActive(DialogSlider.xml)</visible>
 
             <include content="Animation_Common_Context_Menu_Slide_Left"><param name="left" value="-490" /></include>
 
@@ -49,26 +50,10 @@
                 <orientation>vertical</orientation>
                 <usecontrolcoords>true</usecontrolcoords>
 
-                <!-- <item> -->
-                    <!-- <description>Pause / Resume button</description> -->
-                    <!-- <label>$LOCALIZE[35224]</label> -->
-                    <!-- <label2>$FEATURE[select,game.controller.snes] + $FEATURE[x,game.controller.default]</label2> -->
-                    <!-- <icon>osd/fullscreen/buttons/play.png</icon> -->
-                    <!-- <onclick>Play</onclick> -->
-                <!-- </item> -->
-
                 <control type="button" id="55553">
                     <include>Def_Dialog_Menu_Button_Title</include>
                     <label>10821</label>
                 </control>
-
-                <!-- <control type="button" id="101"> -->
-                    <!-- <description>Pause / Resume button</description> -->
-                    <!-- <align>left</align> -->
-                    <!-- <label>$LOCALIZE[35224]</label> -->
-                    <!-- <include>Def_Dialog_Menu_Button_Gradient_Select</include> -->
-                    <!-- <onclick>Play</onclick> -->
-                <!-- </control> -->
 
                 <control type="button" id="110">
                     <description>Pause / Resume button</description>
@@ -98,6 +83,7 @@
                 <control type="button" id="103">
                     <description>Stop button</description>
                     <label>$LOCALIZE[35222]</label>
+                    <label2>$FEATURE[select,game.controller.snes] + $FEATURE[start,game.controller.default]</label2>
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
                     <onclick>Stop</onclick>
                 </control>
@@ -106,7 +92,7 @@
 
                 <control type="button" id="55552">
                     <include>Def_Dialog_Menu_Button_Title</include>
-                    <label>31381</label>
+                    <label>$LOCALIZE[5]</label>
                 </control>
 
                 <control type="button" id="104">
@@ -155,6 +141,75 @@
                 <param name="height" value="910" />
                 <param name="centerright" value="4" />
             </include>
+        </control>
+
+        <control type="group">
+            <visible>System.GetBool(gamesgeneral.showosdhelp)</visible>
+
+            <visible>!Window.IsActive(InGameSaves) + !Window.IsActive(GameAgents) + !Window.IsActive(GameVideoFilter) + !Window.IsActive(GameStretchMode) + !Window.IsActive(GameVideoRotation) + !Window.IsActive(GameVolume) + !Window.IsActive(GameControllers) + !Window.IsActive(GamePorts) + !Window.IsActive(GameAdvancedSettings) + !Window.IsActive(DialogSlider.xml)</visible>
+
+            <include>Animation_Dialog_Menu_Right_Side</include>
+
+            <include content="Def_Dialog_Background">
+                <param name="height" value="920" />
+                <param name="width" value="600" />
+            </include>
+
+            <include content="Def_Dialog_Header">
+                <param name="label" value="$LOCALIZE[35221]" />
+                <param name="icon" value="settings" />
+            </include>
+
+            <control type="group" id="1000">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>112</top>
+                <!-- <height>710</height> -->
+
+                <control type="textbox" id="1101">
+                    <description>Help text</description>
+                    <top>30</top>
+                    <left>30</left>
+                    <right>30</right>
+                    <height>130</height>
+                    <font>Tiny</font>
+                </control>
+                <control type="gamecontroller">
+                    <top>140</top>
+                    <left>30</left>
+                    <width>540</width>
+                    <height>540</height>
+                    <controllerid>game.controller.snes</controllerid>
+                </control>
+                <control type="textbox">
+                    <description>Additional help text. This will be removed in future versions.</description>
+                    <bottom>96</bottom>
+                    <left>30</left>
+                    <right>30</right>
+                    <height>130</height>
+                    <font>Tiny</font>
+                    <label>$LOCALIZE[35236]</label>
+                </control>
+
+                <!-- BUTTON -->
+
+                <control type="grouplist" id="9900">
+                    <bottom>30</bottom>
+                    <height>66</height>
+                    <width>100%</width>
+                    <align>center</align>
+                    <centerleft>50%</centerleft>
+
+                    <itemgap>14</itemgap>
+                    <orientation>horizontal</orientation>
+
+                    <include content="Def_Dialog_Button_Action">
+                        <param name="id" value="10" />
+                        <param name="onclick1" value="Action(close)" />
+                        <param name="label" value="$LOCALIZE[15067]" />
+                    </include>
+                </control>
+            </control>
         </control>
     </controls>
 </window>

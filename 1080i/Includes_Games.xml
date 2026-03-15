@@ -216,12 +216,15 @@
     <include name="Def_Agents_Controller_List">
         <control type="gamecontrollerlist">
             <description>Controller list which indicates the port a player's controller is connected to. Length should fit 13 listitems (12 controller items and one "input disabled" item).</description>
+
             <!-- <right>50</right> -->
+
             <width>900</width>
             <orientation>horizontal</orientation>
             <align>left</align>
             <left>970</left>
             <enable>false</enable>
+
             <itemlayout width="96" height="100">
                 <control type="gamecontroller">
                     <texture>$INFO[ListItem.Icon]</texture>
@@ -283,6 +286,77 @@
                 </item>
             </content>
             -->
+        </control>
+    </include>
+
+    <include name="Def_Game_DiscManager_Item">
+        <control type="group">
+            <visible>!String.IsEqual(ListItem.Property(EnableOnEject),true)</visible>
+            <control type="image">
+                <top>8</top>
+                <left>16</left>
+                <width>56</width>
+                <height>56</height>
+                <texture colordiffuse="$VAR[Color_OSD_Panel_White100]">$INFO[ListItem.Icon]</texture>
+            </control>
+            <control type="label">
+                <left>84</left>
+                <align>left</align>
+                <aligny>center</aligny>
+                <width>74%</width>
+                <height>100%</height>
+                <centertop>50%</centertop>
+                <font>Tiny</font>
+                <label>$INFO[ListItem.Label]</label>
+            </control>
+            <control type="label">
+                <height>100%</height>
+                <centertop>50%</centertop>
+                <right>32</right>
+                <align>right</align>
+                <font>Tiny</font>
+                <label>$INFO[ListItem.Label2]</label>
+            </control>
+        </control>
+        <control type="group">
+            <visible>String.IsEqual(ListItem.Property(EnableOnEject),true)</visible>
+            <control type="image">
+                <top>8</top>
+                <left>16</left>
+                <width>56</width>
+                <height>56</height>
+                <texture colordiffuse="$VAR[GameDiscEjectedTransparencyVar]">$INFO[ListItem.Icon]</texture>
+            </control>
+            <control type="label">
+                <left>84</left>
+                <align>left</align>
+                <aligny>center</aligny>
+                <width>74%</width>
+                <height>100%</height>
+                <centertop>50%</centertop>
+                <font>Tiny</font>
+                <label>$INFO[ListItem.Label]</label>
+                <textcolor>$VAR[GameDiscEjectedTransparencyVar]</textcolor>
+            </control>
+            <control type="label">
+                <height>100%</height>
+                <centertop>50%</centertop>
+                <right>32</right>
+                <align>right</align>
+                <font>Tiny</font>
+                <label>$INFO[ListItem.Label2]</label>
+                <textcolor>$VAR[GameDiscEjectedTransparencyVar]</textcolor>
+            </control>
+        </control>
+    </include>
+
+    <include name="Def_Game_DiscManager_Disc_Item">
+        <control type="label">
+            <top>20</top>
+            <left>20</left>
+            <label>$INFO[ListItem.Label]</label>
+            <font>Tiny</font>
+            <align>left</align>
         </control>
     </include>
 
@@ -866,4 +940,136 @@
             <include>Def_Dialog_Select_label_Num_Item</include>
 		</control>
 	</include>
+
+    <include name="Def_Dialog_Game_DiscManager">
+        <control type="group">
+            <visible>!Window.IsActive(GameDiscChanger)</visible>
+
+            <include content="Def_Dialog_Background"><param name="height" value="549" /><param name="width" value="566" /></include>
+
+            <include content="Def_Dialog_Header">
+                <param name="label" value="$LOCALIZE[35272]" />
+                <param name="label_id" value="" />
+                <param name="icon" value="cd" />
+            </include>
+
+            <control type="group">
+                <description>Content area</description>
+                <top>112</top>
+                <left>16</left>
+                <width>534</width>
+                <bottom>17</bottom>
+
+                <control type="group">
+                    <description>List area</description>
+                    <width>1430</width>
+                    <height>600</height>
+
+                    <control type="image">
+                        <description>Background for list area</description>
+                        <top>-20</top>
+                        <bottom>-20</bottom>
+                        <left>-20</left>
+                        <right>-20</right>
+                        <texture border="40">buttons/dialogbutton-nofo.png</texture>
+                    </control>
+
+                    <control type="group">
+                        <description>Visibility group for main menu</description>
+                        <visible>String.IsEqual(Window.Property(GameDiscManager.ShowMenu),true)</visible>
+
+                        <control type="list" id="3">
+                            <description>Disc manager menu. The content is a template from which the menu items are generated.</description>
+
+                            <onup>3</onup>
+                            <ondown>3</ondown>
+                            <scrolltime tween="sine">200</scrolltime>
+
+                            <orientation>vertical</orientation>
+
+                            <itemlayout width="534" height="70">
+                                <include content="Def_Game_DiscManager_Item"/>
+                            </itemlayout>
+                            <focusedlayout width="534" height="70">
+                                <include content="Def_Focus_Item_Gradient">
+                                    <param name="visible" value="Control.HasFocus(3)" />
+                                </include>
+                                <include content="Def_Game_DiscManager_Item"/>
+                            </focusedlayout>
+
+                            <content>
+                                <item>
+                                    <description>"Selected disc" item. Label2 is the inserted disc's label (or "No disc" if no disc is inserted).</description>
+                                    <label>$LOCALIZE[35273]</label>
+                                    <label2>$LOCALIZE[35274]</label2>
+                                    <icon>special://skin/extras/icons/compact-disc.png</icon>
+                                    <property name="EnableOnEject">true</property>
+                                </item>
+                                <item>
+                                    <description>"Eject"/"Insert" item. Label2 is the tray status (only "Tray open" is shown).</description>
+                                    <label>$LOCALIZE[35275]</label>
+                                    <icon>special://skin/extras/icons/vcd_eject.png</icon>
+                                </item>
+                                <item>
+                                    <description>"Add" item for adding another disc to the game</description>
+                                    <label>$LOCALIZE[15019]</label>
+                                    <icon>special://skin/extras/icons/addtile.png</icon>
+                                    <property name="EnableOnEject">true</property>
+                                </item>
+                                <item>
+                                    <description>"Remove" item for removing a disc from the game</description>
+                                    <label>$LOCALIZE[1210]</label>
+                                    <icon>special://skin/extras/icons/undo.png</icon>
+                                    <property name="EnableOnEject">true</property>
+                                </item>
+                                <item>
+                                    <description>"Apply disc change" item. Plays the game for a few seconds for the disc change to take effect.</description>
+                                    <label>$LOCALIZE[35281]</label>
+                                    <icon>special://skin/extras/icons/update.png</icon>
+                                </item>
+                                <item>
+                                    <description>"Resume game" item for resuming the game</description>
+                                    <label>$LOCALIZE[35277]</label>
+                                    <icon>special://skin/extras/icons/play2.png</icon>
+                                </item>
+                            </content>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <description>Visibility group for disc list</description>
+                        <visible>String.IsEqual(Window.Property(GameDiscManager.ShowDiscList),true)</visible>
+
+                        <control type="list" id="108321">
+                            <description>Disc list</description>
+
+                            <onup>108321</onup>
+                            <ondown>108321</ondown>
+
+                            <pagecontrol>108322</pagecontrol>
+                            <scrolltime tween="sine">200</scrolltime>
+                            <orientation>vertical</orientation>
+
+                            <itemlayout width="534" height="70">
+                                <include content="Def_Game_DiscManager_Disc_Item"/>
+                            </itemlayout>
+                            <focusedlayout width="534" height="70">
+                                <include content="Def_Focus_Item_Gradient">
+                                    <param name="visible" value="Control.HasFocus(108321)" />
+                                </include>
+                                <include content="Def_Game_DiscManager_Disc_Item"/>
+                            </focusedlayout>
+                        </control>
+
+                        <control type="scrollbar" id="108322">
+                            <description>Disc list scroll bar</description>
+                            <right>-12</right>
+                            <width>12</width>
+                            <orientation>vertical</orientation>
+                        </control>
+                    </control>
+                </control>
+            </control>
+        </control>
+    </include>
 </includes>

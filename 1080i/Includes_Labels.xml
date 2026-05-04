@@ -888,6 +888,11 @@
 
         <value condition="$EXP[IsYoutube] + !ListItem.IsFolder">$INFO[ListItem.Year]$INFO[ListItem.DateAdded,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
 
+        <!-- APPLE PODCAST -->
+
+        <value condition="$EXP[IsPluginApplePodcasts] + !ListItem.IsFolder">$INFO[ListItem.Property(podcast_name)]$INFO[ListItem.DateAdded,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
+        <value condition="$EXP[IsPluginApplePodcasts] + ListItem.IsFolder">$INFO[ListItem.Genre]</value>
+
         <!-- ARTIST -->
 
         <value condition="container.content(artists)">$INFO[ListItem.Genre]</value>
@@ -2126,7 +2131,7 @@
     <variable name="Label_Dialog_Info_Video_Year">
         <value condition="String.IsEqual(ListItem.Label,..)">$INFO[ListItem.Label]</value>
 
-        <value condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Premiered) + Window.IsVisible(DialogVideoInfo.xml)">$INFO[ListItem.Premiered]</value>
+        <value condition="[Container.Content(videos) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Premiered) + Window.IsVisible(DialogVideoInfo.xml)">$INFO[ListItem.Premiered]</value>
 
         <value condition="Container.Content(tvshows) + String.IsEqual(Container.SortMethod,$LOCALIZE[20360])">$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20360]]</value>
 
@@ -2485,7 +2490,9 @@
     <variable name="Label_OSD_Player_Audio_Sublabel">
         <value condition="Player.HasAudio + !String.IsEmpty(MusicPlayer.Artist) + !String.IsEmpty(MusicPlayer.Album)">$INFO[MusicPlayer.Artist]$INFO[MusicPlayer.Year,  •  ,]$INFO[MusicPlayer.Album,  •  ,]</value>
         <value condition="Player.HasAudio + !String.IsEmpty(Window(Home).Property(set.player.tagline))">$INFO[Window(Home).Property(set.player.tagline)]</value>
-        <value condition="Player.HasAudio + !String.IsEmpty(VideoPlayer.Tagline)">$INFO[VideoPlayer.Tagline]</value>
+        <value condition="Player.HasAudio + !String.IsEmpty(VideoPlayer.TVShowTitle) + !String.IsEmpty(VideoPlayer.Premiered)">$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.TVShowTitle,  •  ,]</value>
+        <!-- <value condition="Player.HasAudio + !String.IsEmpty(VideoPlayer.Tagline) + !String.IsEmpty(VideoPlayer.Premiered)">$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Tagline,  •  ,]</value> -->
+        <value condition="Player.HasAudio + !String.IsEmpty(VideoPlayer.Tagline)">$INFO[VideoPlayer.Tagline]$INFO[VideoPlayer.Year,  •  ,]</value>
         <!-- <value condition="!String.IsEmpty(MusicPlayer.genre)">$INFO[MusicPlayer.genre]</value> -->
         <!-- <value condition="!String.IsEmpty(MusicPlayer.Property(Artist_Genre))">$INFO[MusicPlayer.Property(Artist_Genre)]</value> -->
     </variable>

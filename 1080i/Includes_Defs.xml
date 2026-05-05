@@ -880,7 +880,7 @@
             <!-- ALL -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)</visible>
+                <visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsPluginApplePodcasts] | Container.Content(favourites)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + !Container.Filtered + !String.Contains(Control.GetLabel(10),$LOCALIZE[16101]) + !String.Contains(Control.GetLabel(10),$LOCALIZE[16102]) + !Window.IsActive(videoplaylist)</visible>
 
                 <itemgap>0</itemgap>
@@ -894,14 +894,17 @@
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>$VAR[Label_Icon_Container_Type]</label>
+                    <visible>!Container.Content(favourites)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Container.TotalUnWatched,  •  ,]</label>
+                    <visible>!Container.Content(favourites)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#62593;</label>
+                    <visible>!Container.Content(favourites)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
@@ -912,9 +915,10 @@
             <!-- FALLBACK -->
 
             <control type="grouplist">
-                <visible>![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsPvrDialog] | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(LoginScreen.xml) | Window.IsActive(videoplaylist)]</visible>
-                <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(videoversions) | Container.Content(sets)]</visible>
-                <visible>!Window.IsVisible(MyWeather.xml)</visible>
+                <visible>![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videoversions) | Container.Content(sets)]</visible>
+                <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs)]</visible>
+                <visible>![$EXP[IsPvrDialog] | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(LoginScreen.xml) | Window.IsActive(videoplaylist) | Window.IsVisible(MyWeather.xml) | Container.Content(favourites)]</visible>
+                <visible>!$EXP[IsPluginApplePodcasts]</visible>
 
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>

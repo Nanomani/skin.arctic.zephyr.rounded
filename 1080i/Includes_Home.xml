@@ -1206,11 +1206,29 @@
                 </include>
             </control>
 
+            <!-- APPLE PODCASTS -->
+
+            <control type="grouplist">
+                <visible>String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.apple.podcasts)</visible>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Def_Home_Label_Widget_Sub_Title_Plugin_ApplePodcats"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_DateAdded"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Duration"><param name="id" value="$PARAM[id]" /></include>
+
+                <include content="Home_Clean_Movies_Indicator" condition="!Skin.HasSetting(hide.markers) + Skin.HasSetting(home.style.horizontal.clean)">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+            </control>
+
             <!-- OTHERS / PLUGING -->
 
             <control type="grouplist">
                 <visible>String.IsEmpty(Container($PARAM[id]).ListItem.DBType) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video)</visible>
-                <visible>!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.youtube)</visible>
+                <visible>!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.youtube) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.apple.podcasts)</visible>
                 <visible>!$EXP[Home_More_Item]</visible>
 
                 <itemgap>0</itemgap>

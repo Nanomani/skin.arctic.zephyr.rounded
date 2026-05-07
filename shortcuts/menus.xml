@@ -1,6 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menus>
 
+    <!-- POWER MENU -->
+
+    <menu name="powermenu">
+        <defaults>
+            <action when="before">Close</action>
+        </defaults>
+        <item name="power-skinsettings">
+            <label>$LOCALIZE[31114]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>ActivateWindowAndFocus(skinsettings,9108,2)</action>
+            <icon>special://skin/extras/icons/skinsettings.png</icon>
+            <visible>System.Loggedon</visible>
+        </item>
+        <item name="power-settings">
+            <label>$LOCALIZE[5]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>ActivateWindow(settings)</action>
+            <icon>special://skin/extras/icons/settings.png</icon>
+            <visible>System.Loggedon</visible>
+        </item>
+        <item name="power-search">
+            <label>$LOCALIZE[137]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>ActivateWindow(1146)</action>
+            <icon>special://skin/extras/icons/search.png</icon>
+            <visible>System.ShowExitButton</visible>
+        </item>
+        <item name="power-reloadskin">
+            <label>$LOCALIZE[31146]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>ReloadSkin()</action>
+            <icon>special://skin/extras/icons/update.png</icon>
+        </item>
+        <item name="power-systeminfo">
+            <label>$LOCALIZE[130]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>ActivateWindow(systeminfo)</action>
+            <icon>special://skin/extras/icons/info.png</icon>
+            <visible>System.Loggedon</visible>
+        </item>
+        <item name="power-filemanager">
+            <label>$LOCALIZE[10003]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>ActivateWindow(filemanager)</action>
+            <icon>special://skin/extras/icons/filebox.png</icon>
+            <visible>System.Loggedon</visible>
+        </item>
+        <item name="power-sleeptimer">
+            <label>$LOCALIZE[20150]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>AlarmClock(shutdowntimer,Shutdown())</action>
+            <icon>special://skin/extras/icons/timer.png</icon>
+            <visible>!System.HasAlarm(shutdowntimer)</visible>
+            <visible>System.CanPowerDown | System.CanSuspend | System.CanHibernate</visible>
+        </item>
+        <item name="power-canceltimer">
+            <label>$LOCALIZE[20151]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>CancelAlarm(shutdowntimer)</action>
+            <icon>special://skin/extras/icons/forbidden.png</icon>
+            <visible>System.HasAlarm(shutdowntimer)</visible>
+        </item>
+        <item name="power-timerinfo">
+            <label>$LOCALIZE[31274]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>noop</action>
+            <icon>special://skin/extras/icons/info2.png</icon>
+            <visible>System.HasAlarm(shutdowntimer)</visible>
+        </item>
+        <item name="power-rebootandroid">
+            <label>$LOCALIZE[31172]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>System.ExecWait("/usr/sbin/rebootfromnand")</action>
+            <action>Reset()</action>
+            <icon>special://skin/extras/icons/networkinfo.png</icon>
+            <visible>System.PathExist("/dev/env")</visible>
+        </item>
+        <item name="power-logoff">
+            <label>$LOCALIZE[31271]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>Dialog.Close(all,true)</action>
+            <action>System.LogOff</action>
+            <icon>special://skin/extras/icons/artist.png</icon>
+            <visible>[System.HasLoginScreen | Integer.IsGreater(System.ProfileCount,1)] + System.Loggedon</visible>
+        </item>
+        <item name="power-reboot">
+            <label>$LOCALIZE[13013]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>Reset()</action>
+            <icon>special://skin/extras/icons/networkinfo.png</icon>
+            <visible>System.CanReboot</visible>
+        </item>
+        <item name="power-shutdown">
+            <label>$LOCALIZE[13005]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>Powerdown()</action>
+            <icon>special://skin/extras/icons/power.png</icon>
+            <visible>System.CanPowerDown</visible>
+        </item>
+        <item name="power-suspend">
+            <label>$LOCALIZE[13011]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>Suspend()</action>
+            <icon>special://skin/extras/icons/power.png</icon>
+            <visible>System.CanSuspend</visible>
+        </item>
+        <item name="power-mastermode">
+            <label>$LOCALIZE[20046]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>mastermode</action>
+            <icon>special://skin/extras/icons/logout.png</icon>
+            <visible>System.HasLocks</visible>
+        </item>
+        <item name="power-quit">
+            <label>$LOCALIZE[13012]</label>
+            <label2>Power Menu Shortcut</label2>
+            <action>Quit()</action>
+            <icon>special://skin/extras/icons/logout.png</icon>
+            <visible>System.ShowExitButton</visible>
+        </item>
+    </menu>
+
     <!-- MAIN MENU -->
 
     <menu name="mainmenu" container="300">
@@ -77,8 +199,7 @@
             <action>ActivateWindow(Settings)</action>
             <icon>special://skin/extras/icons/settings.png</icon>
         </item>
-
-        <item name="power" submenu="powermenu">
+        <item name="shutdown" submenu="shutdown">
             <label>$LOCALIZE[33060]</label>
             <label2>Common Shortcut</label2>
             <action>ActivateWindow(shutdownmenu)</action>
@@ -601,9 +722,9 @@
         </item>
     </submenu>
 
-    <!-- POWER MENU -->
+    <!-- SHUTDOWN - SUBMENU -->
 
-    <submenu name="powermenu">
+    <submenu name="shutdown">
         <defaults>
             <action when="before">Close</action>
         </defaults>
@@ -725,7 +846,7 @@
 
     <!-- POWER - WIDGET -->
 
-    <submenu name="power.1" type="widgets">
+    <submenu name="shutdown.1" type="widgets">
         <item name="System">
             <label>$LOCALIZE[10007]</label>
             <property name="widgetPath">$INCLUDE[skinshortcuts-template-SystemInfoContent]</property>

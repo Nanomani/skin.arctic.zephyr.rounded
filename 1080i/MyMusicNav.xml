@@ -368,7 +368,7 @@
                     <visible>Control.IsVisible(57) | Control.IsVisible(522) | Control.IsVisible(557) | Control.IsVisible(5228) | [Control.IsVisible(524) + Skin.HasSetting(show.view.524.fanart.artist)] | Control.IsVisible(515)</visible>
                 </control>
 
-                <!-- OTHER OPTIONS -->
+                <!-- ACTION -->
 
                 <control type="button" id="55554">
                     <include>Def_Dialog_Menu_Button_Title</include>
@@ -376,17 +376,33 @@
                     <!-- <visible>!Container.Content(files)</visible> -->
                 </control>
 
+                <control type="button" id="624">
+                    <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+                    <label>10140</label>
+                    <onclick>Addon.OpenSettings($INFO[Container.PluginName])</onclick>
+                    <visible>!String.IsEmpty(Container.PluginName)</visible>
+                </control>
+                <control type="button" id="622">
+                    <include>Def_Dialog_Menu_Button_Gradient_Select</include>
+                    <label>$LOCALIZE[31609]</label>
+                    <onclick condition="System.AddonIsEnabled(plugin.library.node.editor)">ActivateWindow(programs,plugin://plugin.library.node.editor/?ltype=music,return)</onclick>
+                    <onclick condition="System.HasAddon(plugin.library.node.editor) + !System.AddonIsEnabled(plugin.library.node.editor)">EnableAddon(plugin.library.node.editor)</onclick>
+                    <onclick condition="!System.HasAddon(plugin.library.node.editor)">InstallAddon(plugin.library.node.editor)</onclick>
+                    <visible>String.IsEmpty(Container.FolderPath) + String.IsEmpty(Container.PluginName)</visible>
+                </control>
                 <control type="togglebutton" id="20">
                     <description>Update</description>
                     <label>653</label>
                     <altlabel>13353</altlabel>
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
                     <usealttexture>Library.IsScanningMusic</usealttexture>
+                    <visible>Container.Content(albums) | Container.Content(songs) | Container.Content(artists)</visible>
                 </control>
                 <control type="button" id="9099">
                     <include>Def_Dialog_Menu_Button_Gradient_Select</include>
                     <label>14247</label>
                     <onclick>CleanLibrary(music)</onclick>
+                    <visible>Container.Content(albums) | Container.Content(songs) | Container.Content(artists)</visible>
                 </control>
             </control>
 

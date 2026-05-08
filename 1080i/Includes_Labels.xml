@@ -2431,12 +2431,15 @@
         <value condition="String.IsEmpty(VideoPlayer.NextTitle) + Player.IsLive">$INFO[VideoPlayer.ChannelNumberLabel,$LOCALIZE[19029] ,  •  ]$LOCALIZE[142] $INFO[System.Time,,  •  ]$LOCALIZE[19664]</value>
     </variable>
 
-    <variable name="Label_OSD_Time">
+    <variable name="Label_OSD_Player_Video_Duration">
         <!-- <value condition="!String.IsEmpty(Player.SeekNumeric)">[B]$INFO[Player.SeekNumeric(hh:mm:ss)][/B]</value> -->
         <value condition="!String.IsEmpty(Player.SeekNumeric)">$INFO[Player.SeekNumeric(hh:mm:ss)]$INFO[Player.Duration,  /  ]</value>
         <value condition="Player.Seeking + VideoPlayer.HasEPG">$INFO[PVR.EpgEventSeekTime]$INFO[PVR.EpgEventDuration,  /  ,]</value>
         <value condition="Player.Seeking">$INFO[Player.SeekTime]$INFO[Player.Duration,  /  ,]</value>
         <value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration,  /  ,]</value>
+        <value condition="VideoPlayer.Content(episodes) + Integer.IsGreater(Playlist.Length(video),1)">$INFO[Player.Time]$INFO[Player.Duration,  /  ,]$INFO[Playlist.Position,  •  $LOCALIZE[20359] ,] / $INFO[Playlist.Length(video)]</value>
+        <value condition="VideoPlayer.Content(movies) + Integer.IsGreater(Playlist.Length(video),1)">$INFO[Player.Time]$INFO[Player.Duration,  /  ,]$INFO[Playlist.Position,  •  $LOCALIZE[20338] ,] / $INFO[Playlist.Length(video)]</value>
+        <value condition="VideoPlayer.Content(files) + Integer.IsGreater(Playlist.Length(video),1)">$INFO[Player.Time]$INFO[Player.Duration,  /  ,]$INFO[Playlist.Position,  •  $LOCALIZE[561] ,] / $INFO[Playlist.Length(video)]</value>
         <value>$INFO[Player.Time]$INFO[Player.Duration,  /  ,]</value>
     </variable>
 
@@ -2477,6 +2480,12 @@
         <value condition="!Player.HasVideo + !String.IsEmpty(Player.Title)">$INFO[Player.Title]</value>
         <!-- <value>$LOCALIZE[31448]</value> -->
         <!-- <value>$INFO[Player.FinishTime,$LOCALIZE[31078] ,]</value> -->
+    </variable>
+
+    <!-- LABEL OSD PLAYER AUDIO -->
+
+    <variable name="Label_OSD_Player_Audio_Duration">
+        <value>$INFO[Player.Time]$INFO[Player.Duration,  /  ,]$INFO[Playlist.Position,  •  $LOCALIZE[554] ,] / $INFO[Playlist.Length]</value>
     </variable>
 
     <variable name="Label_OSD_Player_Audio_Status">
@@ -2527,6 +2536,8 @@
         <value condition="Player.HasAudio + !String.IsEmpty(VideoPlayer.Tagline)">$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Tagline,  •  ,]</value>
         <value condition="Player.HasAudio + !String.IsEmpty(VideoPlayer.Tagline)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Tagline,  •  ,]</value>
     </variable>
+
+    <!-- LABEL OSD TIP -->
 
     <variable name="Label_OSD_Footer_Tip_Video_Left">
         <value condition="ControlGroup(100).HasFocus() + Control.HasFocus(1)">$LOCALIZE[31557] $LOCALIZE[13395]</value>

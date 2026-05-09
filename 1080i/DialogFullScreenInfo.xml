@@ -3,7 +3,7 @@
     <defaultcontrol always="true">555</defaultcontrol>
 
     <onload>SetProperty(OSDVideo_Show_INFO,1,Home)</onload>
-    <onload>SetProperty(OSDVideo_Show_PLOT,1,Home)</onload>
+    <onload condition="!VideoPlayer.Content(livetv)">SetProperty(OSDVideo_Show_PLOT,1,Home)</onload>
     <onload>SetProperty(OSDVideo_DIALOG_FULL_SCREEN_INFO,1,Home)</onload>
 
     <onload condition="String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO)) + Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + !Player.Paused + !String.IsEmpty(VideoPlayer.DBID)">PlayerControl(Play)</onload>
@@ -17,6 +17,9 @@
     <onunload condition="Skin.HasSetting(osd.open.auto.pause) + Player.HasMedia + Player.HasVideo + Player.Paused + !Integer.IsEqual(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO),1) + !Integer.IsEqual(Window(Home).Property(wikipedia),1)">PlayerControl(Play)</onunload>
 
     <controls>
+
+        <!-- FROM PRESS I -->
+
         <control type="button" id="555">
             <include>Def_Hidden_Button</include>
 
@@ -28,8 +31,11 @@
             <!-- CLOSE -->
 
             <onleft>Close</onleft>
+            <onleft condition="Player.ShowInfo">Action(Info)</onleft>
             <onright>Close</onright>
+            <onright condition="Player.ShowInfo">Action(Info)</onright>
             <ondown>Close</ondown>
+            <ondown condition="Player.ShowInfo">Action(Info)</ondown>
 
             <onfocus condition="!String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO))">Close</onfocus>
             <onfocus condition="!String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO)) + Player.Paused + Skin.HasSetting(osd.open.auto.pause)">ClearProperty(OSDVideo_DIALOG_VIDEO_INFO,Home)</onfocus>

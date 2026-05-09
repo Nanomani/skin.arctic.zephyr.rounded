@@ -2595,7 +2595,7 @@
                     <width>100%</width>
                     <height>200</height>
 
-                    <!-- ARTWORK -->
+                    <!-- ARTWORK - TOP - WITH SHOW PLOT -->
 
                     <control type="group">
                         <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
@@ -2636,7 +2636,7 @@
                             </control>
                         </control>
 
-                        <!-- FANART -->
+                        <!-- FANART / EPG / THUMB -->
 
                         <control type="group">
                             <visible>[!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.Art(thumb)) + String.IsEmpty(Player.Art(tvshow.poster)) + String.IsEmpty(Player.Art(poster))] | [VideoPlayer.Content(livetv) + !String.IsEmpty(PVR.EpgEventIcon)]</visible>
@@ -2696,6 +2696,52 @@
                                 <aspectratio align="center" aligny="center" scalediffuse="false">keep</aspectratio>
                                 <texture diffuse="diffuse/square_w270_h270.png">$INFO[VideoPlayer.ChannelLogo]</texture>
                                 <visible>VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.ChannelLogo) + String.IsEmpty(PVR.EpgEventIcon)</visible>
+                            </control>
+                        </control>
+                    </control>
+
+                    <!-- ARTWORK - EPG - PLOT - LIVE TV -->
+
+                    <control type="group">
+                        <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.ShowInfo + !String.IsEmpty(PVR.EpgEventIcon) + !Window.IsVisible(videoosd) + VideoPlayer.Content(livetv)</visible>
+
+                        <top>-10</top>
+                        <bottom>50</bottom>
+
+                        <!-- EPG / THUMB -->
+
+                        <control type="group">
+                            <top>-220</top>
+                            <left>OSD_SidePad</left>
+                            <width>405</width>
+                            <height>222</height>
+
+                            <include content="Def_Art_Full_Background_b12">
+                                <param name="colordiffuse_border" value="$VAR[Color_OSD_Dialog_Border]" />
+                                <param name="colordiffuse_shadow" value="$VAR[Color_OSD_Dialog_Shadow]" />
+                                <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
+                                <param name="condition_fade" value="false" />
+                            </include>
+
+                            <control type="image">
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/fanart_w380_h214.png">$VAR[Image_Player_Poster]</texture>
+                            </control>
+                        </control>
+
+                        <!-- PLOT -->
+
+                        <control type="group">
+                            <top>-220</top>
+                            <left>600</left>
+                            <right>OSD_SidePad</right>
+                            <height>222</height>
+
+                            <control type="textbox">
+                                <font>Medium</font>
+                                <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                                <label>$VAR[Label_OSD_Player_Plot]</label>
+                                <bottom>-20</bottom>
                             </control>
                         </control>
                     </control>

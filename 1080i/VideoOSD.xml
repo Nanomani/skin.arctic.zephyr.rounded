@@ -9,6 +9,7 @@
     <onunload>ClearProperty(OSDVideo_DONT_AUTO_CLOSE,Home)</onunload>
     <onunload>ClearProperty(OSDVideo_Show_INFO,Home)</onunload>
     <onunload>ClearProperty(OSDVideo_Show_PLOT,Home)</onunload>
+    <onunload>ClearProperty(OSDVideo_Show_LiveTV_PLOT,Home)</onunload>
 
     <onunload>ClearProperty(OSDVideo_Show_SCROLLBAR_FOCUS_PLOT,Home)</onunload>
 
@@ -42,7 +43,7 @@
             <ondown condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">SetFocus(14)</ondown>
         </control>
 
-        <!-- FROM SLIDER VIDEO -->
+        <!-- FROM SLIDER VIDEO - IF NOT LIVE TV -->
 
         <control type="button" id="557">
             <include>Def_Hidden_Button</include>
@@ -67,12 +68,38 @@
             <ondown>8207</ondown>
         </control>
 
+        <!-- FROM SLIDER VIDEO - LIVE TV -->
+
+        <control type="button" id="559">
+            <include>Def_Hidden_Button</include>
+            <onfocus>SetProperty(OSDVideo_Show_INFO,1,Home)</onfocus>
+            <onfocus>SetProperty(OSDVideo_Show_LiveTV_PLOT,1,Home)</onfocus>
+            <onfocus condition="!Player.ShowInfo">Action(Info)</onfocus>
+
+            <onleft>ClearProperty(OSDVideo_Show_INFO,Home)</onleft>
+            <onleft>ClearProperty(OSDVideo_Show_LiveTV_PLOT,Home)</onleft>
+            <onleft condition="Player.ShowInfo">Action(Info)</onleft>
+            <onleft>SetFocus(14)</onleft>
+
+            <onright>ClearProperty(OSDVideo_Show_INFO,Home)</onright>
+            <onright>ClearProperty(OSDVideo_Show_LiveTV_PLOT,Home)</onright>
+            <onright condition="Player.ShowInfo">Action(Info)</onright>
+            <onright>SetFocus(14)</onright>
+
+            <ondown>ClearProperty(OSDVideo_Show_INFO,Home)</ondown>
+            <ondown>ClearProperty(OSDVideo_Show_LiveTV_PLOT,Home)</ondown>
+            <ondown condition="Player.ShowInfo">Action(Info)</ondown>
+            <ondown>8207</ondown>
+
+            <onback condition="Player.ShowInfo">Action(Info)</onback>
+        </control>
+
         <!-- SLIDER VIDEO  -->
 
         <control type="button" id="8207">
             <include>Def_Hidden_Button</include>
             <onup condition="!VideoPlayer.Content(livetv)">SetFocus(557)</onup>
-            <onup condition="VideoPlayer.Content(livetv) + !Player.ShowInfo">Action(Info)</onup>
+            <onup condition="VideoPlayer.Content(livetv)">SetFocus(559)</onup>
             <ondown>SetFocus(14)</ondown>
             <ondown condition="VideoPlayer.Content(livetv) + Player.ShowInfo">Action(Info)</ondown>
             <onleft>StepBack</onleft>

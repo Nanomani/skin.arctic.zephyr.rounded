@@ -18,9 +18,9 @@
 
     <onload condition="[!String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO)) | !String.IsEmpty(Window(Home).Property(wikipedia))] + Skin.HasSetting(osd.open.auto.pause) + Player.Paused + VideoPlayer.IsFullscreen + !Window.IsVisible(DialogFullScreenInfo.xml) + !String.IsEmpty(VideoPlayer.DBID)">AlarmClock(cleanup,ClearProperty(OSDVideo_DIALOG_VIDEO_INFO,Home),00:01,silent)</onload>
 
-    <onload condition="Skin.HasSetting(show.osd.plot.on.pause) + Skin.HasSetting(show.osd.info.on.pause) + !String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + Player.Paused + !Window.IsVisible(videoosd) + !Window.IsVisible(DialogFullScreenInfo.xml)">ClearProperty(OSDVideo_DIALOG_FULL_SCREEN_INFO,Home)</onload>
+    <onload condition="Skin.HasSetting(show.osd.video.plot.on.pause) + Skin.HasSetting(show.osd.info.on.pause) + !String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + Player.Paused + !Window.IsVisible(videoosd) + !Window.IsVisible(DialogFullScreenInfo.xml)">ClearProperty(OSDVideo_DIALOG_FULL_SCREEN_INFO,Home)</onload>
 
-    <onload condition="Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.plot.on.pause) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.Paused + !Window.IsVisible(videoosd) + !VideoPlayer.Content(livetv)">SetProperty(OSDVideo_Show_PLOT,1,Home)</onload>
+    <onload condition="Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.video.plot.on.pause) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.Paused + !Window.IsVisible(videoosd) + !VideoPlayer.Content(livetv)">SetProperty(OSDVideo_Show_PLOT,1,Home)</onload>
 
     <onunload>ClearProperty(OSDVideo_Show_INFO,Home)</onunload>
     <onunload>ClearProperty(OSDVideo_Show_PLOT,Home)</onunload>
@@ -56,10 +56,20 @@
         <!-- PLOT -->
 
         <include content="Object_OSD_Player_Plot">
-            <param name="visible" value="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + [Skin.HasSetting(show.osd.plot.on.pause) + Player.Paused] + !VideoPlayer.Content(livetv)" />
+            <param name="visible" value="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + [Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused] + !VideoPlayer.Content(livetv)" />
             <param name="onleft" value="SetFocus(557)" />
             <param name="onright" value="SetFocus(557)" />
             <param name="onback" value="SetFocus(557)" />
+            <param name="scrollid" value="9803" />
+        </include>
+
+        <!-- ARTIST BIOGRAPHY -->
+
+        <include content="Object_OSD_Player_Plot">
+            <param name="visible" value="$EXP[OSD_Music_Show_Artiste_Bio] + !Window.IsVisible(script-cu-lrclyrics-main.xml) + !Window.IsVisible(musicosd)" />
+            <param name="onleft" value="SetFocus(14)" />
+            <param name="onright" value="SetFocus(14)" />
+            <param name="onback" value="SetFocus(14)" />
             <param name="scrollid" value="9803" />
         </include>
     </controls>

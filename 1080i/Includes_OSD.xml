@@ -2703,10 +2703,10 @@
                     <!-- ARTWORK - EPG - PLOT - LIVE TV -->
 
                     <control type="group">
-                        <visible>Player.ShowInfo | Window.IsVisible(DialogFullScreenInfo.xml) | [Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.plot.on.pause) + Player.Paused]</visible>
+                        <visible>Player.ShowInfo | Window.IsVisible(DialogFullScreenInfo.xml) | [Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]</visible>
                         <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !String.IsEmpty(PVR.EpgEventIcon) + VideoPlayer.Content(livetv)</visible>
 
-<!-- Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.plot.on.pause) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.Paused + !Window.IsVisible(videoosd) + !VideoPlayer.Content(livetv) -->
+<!-- Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.video.plot.on.pause) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.Paused + !Window.IsVisible(videoosd) + !VideoPlayer.Content(livetv) -->
 
                         <top>-10</top>
                         <bottom>50</bottom>
@@ -3003,7 +3003,7 @@
                     <width>100%</width>
 
                     <control type="group">
-                        <animation effect="slide" start="0,0" end="-426,0" time="150" condition="!String.IsEmpty(Window(Home).Property(OSDArtistDetails))">Conditional</animation>
+                        <animation effect="slide" start="0,0" end="-426,0" time="150" condition="$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
 
                         <left>560</left>
                         <right>OSD_SidePad</right>
@@ -3080,7 +3080,7 @@
             <visible>!Window.IsVisible(script-cu-lrclyrics-main.xml) | [Window.IsVisible(script-cu-lrclyrics-main.xml) + !Skin.HasSetting(hideseekbaronlyrics)]</visible>
             <visible>Window.IsVisible(script-cu-lrclyrics-main.xml) | Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | Player.ShowInfo | Window.IsVisible(MusicOSD.xml)</visible>
 
-            <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(musicosd)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(musicosd) | [$EXP[OSD_Music_Show_Artiste_Bio] + !Window.IsVisible(musicosd)]">Conditional</animation>
 
             <animation type="Hidden">
                 <effect type="slide" start="0,0" end="-520,0" tween="sine" easing="out" time="300" delay="0" />
@@ -3094,9 +3094,9 @@
             <!-- DISC -->
 
             <control type="group">
-                <animation effect="fade" start="100" end="0" time="100" condition="!String.IsEmpty(Window(Home).Property(OSDArtistDetails))">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="100" condition="$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
 
-                <animation effect="fade" start="0" end="100" time="400" delay="200" condition="String.IsEmpty(Window(Home).Property(OSDArtistDetails)) + !Skin.HasSetting(show.osd.artist.infos)">Conditional</animation>
+                <animation effect="fade" start="0" end="100" time="400" delay="200" condition="!$EXP[OSD_Music_Show_Artiste_Bio] + !Skin.HasSetting(show.osd.artist.infos)">Conditional</animation>
 
                 <animation type="WindowClose" reversible="false">
                     <effect type="slide" start="115,0" end="0,0" tween="sine" easing="out" time="400" delay="0" />
@@ -3117,9 +3117,9 @@
             <!-- ALBUM COVER -->
 
             <control type="group">
-                <animation effect="zoom" start="100" end="150" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="[Window.IsVisible(script-cu-lrclyrics-main.xml) | !String.IsEmpty(Window(Home).Property(OSDArtistDetails))]">Conditional</animation>
+                <animation effect="zoom" start="100" end="150" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="[Window.IsVisible(script-cu-lrclyrics-main.xml) | $EXP[OSD_Music_Show_Artiste_Bio]]">Conditional</animation>
 
-                <animation effect="zoom" start="150" end="100" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="![Window.IsVisible(script-cu-lrclyrics-main.xml) | !String.IsEmpty(Window(Home).Property(OSDArtistDetails))]">Conditional</animation>
+                <animation effect="zoom" start="150" end="100" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="![Window.IsVisible(script-cu-lrclyrics-main.xml) | $EXP[OSD_Music_Show_Artiste_Bio]]">Conditional</animation>
 
                 <animation type="WindowClose" reversible="false">
                     <effect type="slide" start="0,0" end="-495,0" tween="sine" easing="out" time="300" delay="0" />

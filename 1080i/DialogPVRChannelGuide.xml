@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="true">11</defaultcontrol>
+
+    <onload>ClearProperty(ListItem_FolderPath,Home)</onload>
+    <onload>SetProperty(TMDbHelper.WidgetContainer,11,Home)</onload>
+    <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
+
     <controls>
         <include content="Background_Overlay">
             <param name="colordiffuse" value="$VAR[Color_OSD_Background_Overlay]" />
@@ -213,6 +218,13 @@
                         <textcolor>Selected</textcolor>
                         <selectedcolor>Selected</selectedcolor>
                         <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label>
+                    </control>
+
+                    <!-- SET PROPERTY LISTITEM_FOLDERPATH -->
+
+                    <control type="button">
+                        <visible>false</visible>
+                        <onfocus condition="Window.IsVisible(VideoFullScreen.xml)">SetProperty(ListItem_FolderPath,$INFO[ListItem.FolderPath],Home)</onfocus>
                     </control>
                 </focusedlayout>
             </control>

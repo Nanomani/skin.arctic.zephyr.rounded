@@ -38,6 +38,24 @@
                 <animation effect="fade" start="100" end="66" time="100" condition="Container.Content(files)">Conditional</animation>
             </include>
 
+            <!-- PLAY -->
+
+            <include content="Object_OSD_Button" condition="$EXP[Exp_ContextMenu_Show_Info]">
+                <param name="visible" value="true" />
+                <param name="size" value="44" />
+                <param name="left" value="-56" />
+                <param name="icon" value="special://skin/extras/icons/play2.png" />
+                <param name="icon_colordiffuse" value="Dark2" />
+                <param name="id" value="6157" />
+                <param name="groupid" value="6799" />
+                <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+                <param name="icon_colordiffuse_disabled" value="$VAR[Color_Icon_Disabled]" />
+                <param name="show_not_enabled" value="true" />
+                <onclick>Dialog.Close(contextmenu)</onclick>
+                <onclick>AlarmClock(Play_Media,playmedia($INFO[ListItem.FolderPath]),00:01,silent)</onclick>
+                <animation effect="fade" start="100" end="66" time="100" condition="Container.Content(files)">Conditional</animation>
+            </include>
+
             <!-- BACK FULLSCREEN NOW PLAYING -->
 
             <include content="Object_OSD_Button" condition="$EXP[Exp_ContextMenu_Player_Fullscreen]">
@@ -188,7 +206,7 @@
 
             <!-- FILES MANAGERS -->
 
-            <include content="Object_OSD_Button" condition="!String.Contains(Window(Home).Property(TMDbHelper.ListItem.base_path),plugin://plugin) + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),tvshow) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song) | Container.Content(files)]">
+            <include content="Object_OSD_Button" condition="[!$EXP[Is_ContextMenu_PluginItem] | [$EXP[Is_ContextMenu_Plugin_TMDbHelper_Item] + !String.IsEmpty(ListItem.DBID) + !Window.IsVisible(home) + !EXP[View_Info_Dialog]]] + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),tvshow) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song) | Container.Content(files)]">
                 <param name="visible" value="true" />
                 <param name="size" value="44" />
                 <param name="left" value="-56" />

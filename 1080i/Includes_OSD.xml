@@ -2555,6 +2555,18 @@
 
             <animation effect="fade" start="100" end="0" time="250" condition="[Window.IsVisible(DialogPlayerProcessInfo.xml) | [Skin.HasSetting(hide.osd.video.on.pause) + Player.Paused] | [Skin.HasSetting(hide.osd.video.on.pause) + !String.IsEmpty(Window(Home).Property(OSDVideo_Hide_OSD_ON_PAUSE)) + !Player.Paused]] + !Player.Seeking + !Player.Forwarding + !Player.Rewinding + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO)) + !Window.IsVisible(DialogFullScreenInfo.xml)">Conditional</animation>
 
+            <!-- VIDEO - PLOT - WITHOUT VIDEO OSD -->
+
+            <control type="group">
+                <include content="Object_OSD_Player_Plot">
+                    <param name="visible" value="Window.IsVisible(VideoFullScreen.xml) + [!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]] + !Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + !VideoPlayer.Content(livetv)" />
+                    <param name="onleft" value="SetFocus(557)" />
+                    <param name="onright" value="SetFocus(557)" />
+                    <param name="onback" value="SetFocus(557)" />
+                    <param name="scrollid" value="9803" />
+                </include>
+            </control>
+
             <!-- OSD - SEEKBAR - BACKGROUND -->
 
             <control type="group">
@@ -2706,8 +2718,6 @@
                     <control type="group">
                         <visible>Player.ShowInfo | Window.IsVisible(DialogFullScreenInfo.xml) | [Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]</visible>
                         <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !String.IsEmpty(PVR.EpgEventIcon) + VideoPlayer.Content(livetv)</visible>
-
-<!-- Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.video.plot.on.pause) + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + Player.Paused + !Window.IsVisible(videoosd) + !VideoPlayer.Content(livetv) -->
 
                         <top>-10</top>
                         <bottom>50</bottom>
@@ -2905,7 +2915,6 @@
 
     <include name="OSD_Music_SeekBar">
         <control type="group">
-
             <animation effect="slide" start="0,0" end="0,-40" time="0" condition="true">Conditional</animation>
 
             <animation type="Conditional" condition="Window.Next(musicplaylist)">
@@ -3154,6 +3163,18 @@
                     <texture diffuse="diffuse/square_w270_h270.png" fallback="DefaultAlbumCover.png">$VAR[Image_Player_Music_Poster]</texture>
                 </control>
             </control>
+        </control>
+
+        <!-- ARTIST BIOGRAPHY - WITHOUT MUSIC OSD -->
+
+        <control type="group">
+            <include content="Object_OSD_Player_Plot">
+                <param name="visible" value="!Window.IsVisible(VideoFullScreen.xml) + $EXP[OSD_Music_Show_Artiste_Bio] + !Window.IsVisible(script-cu-lrclyrics-main.xml) + !Window.IsVisible(musicosd)" />
+                <param name="onleft" value="SetFocus(14)" />
+                <param name="onright" value="SetFocus(14)" />
+                <param name="onback" value="SetFocus(14)" />
+                <param name="scrollid" value="9803" />
+            </include>
         </control>
     </include>
 </includes>

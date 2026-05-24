@@ -256,12 +256,13 @@
 
             <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml)</visible>
 
-            <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
             <visible>[!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.TimeRemaining)] | [VideoPlayer.Content(livetv) + VideoPlayer.HasEpg]</visible>
             <visible>VideoPlayer.IsFullscreen</visible>
 
             <include>Animation_Common_Fade_In</include>
             <include>Animation_Common_Fade_Out</include>
+
+            <include>Animation_OSD_Slide_Up_With_Plot</include>
 
             <top>40</top>
             <right>90</right>
@@ -2598,7 +2599,7 @@
                     <!-- ARTWORK - TOP - WITH SHOW PLOT -->
 
                     <control type="group">
-                        <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
+                        <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused + !Window.IsVisible(videoosd)]</visible>
 
                         <top>-10</top>
                         <bottom>50</bottom>
@@ -2612,9 +2613,9 @@
 
                             <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(videoosd)">Conditional</animation>
 
-                            <animation effect="zoom" start="100" end="140" center="0,780" time="400" tween="cubic" easing="out" reversible="false" condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">Conditional</animation>
+                            <animation effect="zoom" start="100" end="140" center="0,780" time="400" tween="cubic" easing="out" reversible="false" condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]">Conditional</animation>
 
-                            <animation effect="zoom" start="140" end="100" center="0,780" time="400" tween="cubic" easing="out" reversible="false" condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">Conditional</animation>
+                            <animation effect="zoom" start="140" end="100" center="0,780" time="400" tween="cubic" easing="out" reversible="false" condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + ![Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]">Conditional</animation>
 
                             <top>-270</top>
                             <left>0</left>
@@ -2643,9 +2644,9 @@
 
                             <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(videoosd)">Conditional</animation>
 
-                            <animation effect="zoom" start="100" end="150" center="0,1270" time="400" tween="cubic" easing="out" reversible="false" condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">Conditional</animation>
+                            <animation effect="zoom" start="100" end="150" center="0,1270" time="400" tween="cubic" easing="out" reversible="false" condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]">Conditional</animation>
 
-                            <animation effect="zoom" start="150" end="100" center="0,1270" time="400" tween="cubic" easing="out" reversible="false" condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">Conditional</animation>
+                            <animation effect="zoom" start="150" end="100" center="0,1270" time="400" tween="cubic" easing="out" reversible="false" condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + ![Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]">Conditional</animation>
 
                             <top>-36</top>
                             <left>0</left>
@@ -3074,7 +3075,7 @@
             </control>
         </control>
 
-        <!-- ILLUSTRATION -->
+        <!-- ARTWORK -->
 
         <control type="group">
             <visible>!Window.IsVisible(script-cu-lrclyrics-main.xml) | [Window.IsVisible(script-cu-lrclyrics-main.xml) + !Skin.HasSetting(hideseekbaronlyrics)]</visible>

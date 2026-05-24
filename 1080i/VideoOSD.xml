@@ -104,6 +104,8 @@
             <ondown condition="VideoPlayer.Content(livetv) + Player.ShowInfo">Action(Info)</ondown>
             <onleft>StepBack</onleft>
             <onright>StepForward</onright>
+            <!-- <onright condition="!Player.Paused">StepForward</onright> -->
+            <!-- <onright condition="Player.Paused">PlayerControl(FrameAdvance(1))</onright> -->
         </control>
 
         <control type="group" id="600">
@@ -113,7 +115,7 @@
             <bottom>184</bottom>
 
             <control type="slider">
-                <visible>Player.HasMedia</visible>
+                <visible>!VideoPlayer.Content(LiveTV)</visible>
                 <animation effect="fade" start="100" end="0" condition="Player.Seeking" reversible="false" delay="300" time="0">Conditional</animation>
                 <animation effect="fade" start="0" end="100" condition="!Player.Seeking" reversible="false" time="0">Conditional</animation>
                 <width>100%</width>
@@ -121,6 +123,19 @@
                 <height>64</height>
                 <info>Player.Progress</info>
                 <action>seek</action>
+                <texturesliderbar colordiffuse="$VAR[Color_OSD_Progress_Bar_Background]">progress/slider_bg.png</texturesliderbar>
+                <textureslidernib colordiffuse="FFEDEDED">progress/slider_nib.png</textureslidernib>
+                <textureslidernibfocus />
+            </control>
+            <control type="slider">
+                <visible>VideoPlayer.Content(LiveTV)</visible>
+                <animation effect="fade" start="100" end="0" condition="Player.Seeking" reversible="false" delay="300" time="0">Conditional</animation>
+                <animation effect="fade" start="0" end="100" condition="!Player.Seeking" reversible="false" time="0">Conditional</animation>
+                <width>100%</width>
+                <bottom>-18</bottom>
+                <height>64</height>
+                <info>PVR.TimeshiftProgressPlayPos</info>
+                <action>pvr.seek</action>
                 <texturesliderbar colordiffuse="$VAR[Color_OSD_Progress_Bar_Background]">progress/slider_bg.png</texturesliderbar>
                 <textureslidernib colordiffuse="FFEDEDED">progress/slider_nib.png</textureslidernib>
                 <textureslidernibfocus />

@@ -56,19 +56,21 @@
                 <aspectratio align="right">keep</aspectratio>
                 <texture>$INFO[Player.Art(thumb)]</texture>
             </control>
-            <control type="label">
+
+            <control type="label" id="2">
                 <left>33</left>
                 <top>10</top>
-                <width>400</width>
+                <width>480</width>
                 <align>left</align>
                 <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
                 <font>Medium</font>
-                <label>$INFO[VideoPlayer.ChannelName]</label>
+                <label>$VAR[Label_PVR_Dialog_Channel_Guide]</label>
             </control>
+
             <control type="label">
                 <left>33</left>
-                <top>44</top>
-                <width>400</width>
+                <top>54</top>
+                <width>480</width>
                 <align>left</align>
                 <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
                 <font>Tiny</font>
@@ -94,7 +96,7 @@
 
                 <top>136</top>
                 <left>16</left>
-                <width>635</width>
+                <width>1650</width>
                 <height>892</height>
 
                 <onleft>Close</onleft>
@@ -105,7 +107,7 @@
                 <focusposition>1</focusposition>
                 <orientation>vertical</orientation>
 
-                <itemlayout height="111.5" width="635">
+                <itemlayout height="111.5" width="1650">
                     <control type="image">
                         <include content="Def_Padding"><param name="pad" value="5" /></include>
                         <texture border="12">common/selected_rounded.png</texture>
@@ -137,6 +139,7 @@
                     <control type="label">
                         <top>5</top>
                         <left>190</left>
+                        <width>429</width>
                         <right>22</right>
                         <align>left</align>
                         <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
@@ -147,13 +150,13 @@
                     <control type="label">
                         <top>40</top>
                         <left>190</left>
+                        <width>429</width>
                         <right>22</right>
                         <align>left</align>
                         <font>SmallPVR</font>
                         <textcolor>$VAR[Color_OSD_Panel_White30]</textcolor>
                         <selectedcolor>$VAR[Color_OSD_Panel_White30]</selectedcolor>
-                        <!-- <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label> -->
-                        <label>$INFO[ListItem.Plot]</label>
+                        <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label>
                     </control>
                     <control type="image">
                         <width>128</width>
@@ -166,10 +169,12 @@
                         <aspectratio aligny="center" align="center">keep</aspectratio>
                     </control>
                 </itemlayout>
-                <focusedlayout height="111.5" width="635">
+                <focusedlayout height="111.5" width="1650">
                     <control type="group">
+                        <width>635</width>
                         <include>Def_Focus_Item_Gradient</include>
-
+                    </control>
+                    <control type="group">
                         <control type="image">
                             <include content="Def_Padding"><param name="pad" value="5" /></include>
                             <texture border="12">common/selected_rounded.png</texture>
@@ -210,6 +215,7 @@
                         <control type="label">
                             <top>5</top>
                             <left>190</left>
+                            <width>429</width>
                             <right>22</right>
                             <align>left</align>
                             <textcolor>Selected</textcolor>
@@ -220,13 +226,42 @@
                         <control type="label">
                             <top>40</top>
                             <left>190</left>
+                            <width>429</width>
                             <right>22</right>
                             <align>left</align>
                             <font>SmallPVR</font>
                             <textcolor>Selected</textcolor>
                             <selectedcolor>Selected</selectedcolor>
-                            <!-- <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label> -->
+                            <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label>
+                        </control>
+                    </control>
+
+                    <!-- SHOW PLOT -->
+
+                    <control type="group">
+                        <visible>!String.IsEmpty(ListItem.Plot) + Control.HasFocus(11)</visible>
+                        <animation effect="fade" start="0" end="100" time="200">Focus</animation>
+
+                        <control type="image">
+                            <left>667</left>
+                            <top>-32</top>
+                            <width>986</width>
+                            <height>172</height>
+                            <colordiffuse>$VAR[Color_OSD_Background_Dialog]</colordiffuse>
+                            <texture border="24">$VAR[texture_box24]</texture>
+                            <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+                        </control>
+                        <control type="textbox">
+                            <left>699</left>
+                            <right>16</right>
+                            <top>-16</top>
+                            <width>922</width>
+                            <height>130</height>
                             <label>$INFO[ListItem.Plot]</label>
+                            <font>Small</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
                         </control>
                     </control>
 

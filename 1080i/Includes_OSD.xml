@@ -250,7 +250,7 @@
         </control>
     </include>
 
-    <include name="Object_OSD_Clock">
+    <include name="Object_OSD_Video_Clock">
         <control type="group">
             <visible>Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | Player.ShowInfo | Window.IsVisible(fullscreeninfo) | Window.IsVisible(videoosd) | !String.IsEmpty(Player.SeekNumeric) | Window.IsVisible(DialogPVRChannelGuide.xml)</visible>
 
@@ -405,15 +405,28 @@
         </definition>
     </include>
 
-    <include name="Object_OSD_Plot_Background">
+    <include name="Object_OSD_Video_Plot_Background">
         <control type="group">
-            <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
+            <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | $EXP[OSD_Video_Show_Plot_On_Pause]</visible>
             <include>Animation_Common_Fade_In</include>
             <include>Animation_Common_Fade_Out</include>
             <control type="image" description="Background">
                 <include>Def_Dimensions_Fullscreen</include>
                 <texture colordiffuse="black">background/bg.jpg</texture>
                 <animation effect="fade" start="100" end="60" condition="true">Conditional</animation>
+            </control>
+        </control>
+    </include>
+
+    <include name="Object_OSD_Music_Plot_Background">
+        <control type="group">
+            <visible>$EXP[OSD_Music_Show_Artiste_Bio]</visible>
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+            <control type="image" description="Background">
+                <include>Def_Dimensions_Fullscreen</include>
+                <texture colordiffuse="black">background/bg.jpg</texture>
+                <animation effect="fade" start="100" end="70" condition="true">Conditional</animation>
             </control>
         </control>
     </include>
@@ -2599,10 +2612,7 @@
                     <!-- ARTWORK - TOP - WITH SHOW PLOT -->
 
                     <control type="group">
-                        <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused + !Window.IsVisible(videoosd)]</visible>
-
-                        <!-- <include>Animation_Dialog_Info_Left_Side_Delay_400</include> -->
-                        <!-- <include>Animation_OSD_Fade_Open_Close</include> -->
+                        <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [$EXP[OSD_Video_Show_Plot_On_Pause] + !Window.IsVisible(videoosd)]</visible>
 
                         <top>-10</top>
                         <bottom>50</bottom>
@@ -2683,7 +2693,7 @@
                     <!-- ARTWORK - EPG - PLOT - LIVE TV -->
 
                     <control type="group">
-                        <visible>Player.ShowInfo | Window.IsVisible(DialogFullScreenInfo.xml) | [Skin.HasSetting(show.osd.info.on.pause) + Skin.HasSetting(show.osd.video.plot.on.pause) + Player.Paused]</visible>
+                        <visible>Player.ShowInfo | Window.IsVisible(DialogFullScreenInfo.xml) | $EXP[OSD_Video_Show_Plot_On_Pause]</visible>
                         <visible>String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !String.IsEmpty(PVR.EpgEventIcon) + VideoPlayer.Content(livetv)</visible>
 
                         <top>-10</top>

@@ -152,7 +152,8 @@
                         <font>SmallPVR</font>
                         <textcolor>$VAR[Color_OSD_Panel_White30]</textcolor>
                         <selectedcolor>$VAR[Color_OSD_Panel_White30]</selectedcolor>
-                        <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label>
+                        <!-- <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label> -->
+                        <label>$INFO[ListItem.Plot]</label>
                     </control>
                     <control type="image">
                         <width>128</width>
@@ -166,75 +167,73 @@
                     </control>
                 </itemlayout>
                 <focusedlayout height="111.5" width="635">
-
-                    <include>Def_Focus_Item_Gradient</include>
-
-                    <control type="image">
-                        <include content="Def_Padding"><param name="pad" value="5" /></include>
-                        <texture border="12">common/selected_rounded.png</texture>
-                        <aspectratio aligny="top">center</aspectratio>
-                        <animation effect="fade" start="100" end="30" condition="true">Conditional</animation>
-                        <visible>String.IsEqual(VideoPlayer.Title,ListItem.Title) + String.IsEqual(VideoPlayer.EndTime,ListItem.EndTime)</visible>
-                    </control>
-                    <control type="image">
-                        <centertop>58</centertop>
-                        <centerright>64</centerright>
-                        <width>128</width>
-                        <height>128</height>
-                        <texture>special://skin/extras/icons/timer.png</texture>
-                        <colordiffuse>Selected</colordiffuse>
-                        <visible>ListItem.HasTimer | ListItem.IsRecording</visible>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                    </control>
-
                     <control type="group">
-                        <top>10</top>
-                        <left>10</left>
-                        <width>158</width>
-                        <height>92</height>
-
-                        <include content="Def_Art_Full_Background_b12">
-                            <param name="pad_image" value="0" />
-                            <param name="colordiffuse" value="Fallback" />
-                            <param name="condition_fade" value="false" />
-                            <param name="visible_shadow" value="false" />
-                        </include>
+                        <include>Def_Focus_Item_Gradient</include>
 
                         <control type="image">
-                            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-                            <texture diffuse="diffuse/epg_w158_h92.png" background="false">$VAR[Image_Fanart_EPG]</texture>
+                            <include content="Def_Padding"><param name="pad" value="5" /></include>
+                            <texture border="12">common/selected_rounded.png</texture>
+                            <aspectratio aligny="top">center</aspectratio>
+                            <animation effect="fade" start="100" end="30" condition="true">Conditional</animation>
+                            <visible>String.IsEqual(VideoPlayer.Title,ListItem.Title) + String.IsEqual(VideoPlayer.EndTime,ListItem.EndTime)</visible>
                         </control>
-                    </control>
+                        <control type="image">
+                            <centertop>58</centertop>
+                            <centerright>64</centerright>
+                            <width>128</width>
+                            <height>128</height>
+                            <texture>special://skin/extras/icons/timer.png</texture>
+                            <colordiffuse>Selected</colordiffuse>
+                            <visible>ListItem.HasTimer | ListItem.IsRecording</visible>
+                            <aspectratio aligny="center" align="center">keep</aspectratio>
+                        </control>
 
-                    <control type="label">
-                        <top>5</top>
-                        <left>190</left>
-                        <right>22</right>
-                        <align>left</align>
-                        <textcolor>Selected</textcolor>
-                        <selectedcolor>Selected</selectedcolor>
-                        <font>Small</font>
-                        <label>$INFO[ListItem.Title]</label>
-                    </control>
-                    <control type="label">
-                        <top>40</top>
-                        <left>190</left>
-                        <right>22</right>
-                        <align>left</align>
-                        <font>SmallPVR</font>
-                        <textcolor>Selected</textcolor>
-                        <selectedcolor>Selected</selectedcolor>
-                        <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label>
+                        <control type="group">
+                            <top>10</top>
+                            <left>10</left>
+                            <width>158</width>
+                            <height>92</height>
+
+                            <include content="Def_Art_Full_Background_b12">
+                                <param name="pad_image" value="0" />
+                                <param name="colordiffuse" value="Fallback" />
+                                <param name="condition_fade" value="false" />
+                                <param name="visible_shadow" value="false" />
+                            </include>
+
+                            <control type="image">
+                                <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/epg_w158_h92.png" background="false">$VAR[Image_Fanart_EPG]</texture>
+                            </control>
+                        </control>
+
+                        <control type="label">
+                            <top>5</top>
+                            <left>190</left>
+                            <right>22</right>
+                            <align>left</align>
+                            <textcolor>Selected</textcolor>
+                            <selectedcolor>Selected</selectedcolor>
+                            <font>Small</font>
+                            <label>$INFO[ListItem.Title]</label>
+                        </control>
+                        <control type="label">
+                            <top>40</top>
+                            <left>190</left>
+                            <right>22</right>
+                            <align>left</align>
+                            <font>SmallPVR</font>
+                            <textcolor>Selected</textcolor>
+                            <selectedcolor>Selected</selectedcolor>
+                            <!-- <label>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,]</label> -->
+                            <label>$INFO[ListItem.Plot]</label>
+                        </control>
                     </control>
 
                     <!-- SET PROPERTY LISTITEM_FOLDERPATH -->
 
-                    <control type="button">
-                        <visible>false</visible>
-                        <onfocus>SetProperty(ListItem_FolderPath,$INFO[ListItem.FolderPath],Home)</onfocus>
-                        <onfocus>SetProperty(ListItem_Plot,$INFO[Container(11).ListItem.Plot],Home)</onfocus>
-                        <onfocus>SetProperty(ListItem_EPG,$VAR[Image_Fanart_EPG],Home)</onfocus>
-                    </control>
+                    <include>Button_Dialog_PVR_ContextMenu</include>
+
                 </focusedlayout>
             </control>
 

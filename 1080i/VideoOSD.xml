@@ -5,6 +5,7 @@
 
     <onload>ClearProperty(OSDVideo_DONT_AUTO_CLOSE,Home)</onload>
     <onload>ClearProperty(OSDVideo_DIALOG_VIDEO_INFO,Home)</onload>
+    <onload>ClearProperty(OSDVideo_Show_AT_START_INFO,Home)</onload>
 
     <onunload>ClearProperty(OSDVideo_DONT_AUTO_CLOSE,Home)</onunload>
     <onunload>ClearProperty(OSDVideo_Show_INFO,Home)</onunload>
@@ -31,18 +32,14 @@
             <param name="onback" value="SetFocus(556)" />
             <param name="left" value="580" />
             <param name="scroll_centerright" value="1240" />
-            <param name="scrollid" value="9805" />            
+            <param name="scrollid" value="9805" />
         </include>
 
         <control type="button" id="556">
             <include>Def_Hidden_Button</include>
-            <onfocus condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">ClearProperty(OSDVideo_Show_PLOT,Home)</onfocus>
-            <onfocus condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO))">ClearProperty(OSDVideo_Show_INFO,Home)</onfocus>
-            <onfocus condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">SetFocus(14)</onfocus>
-
-            <ondown condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">ClearProperty(OSDVideo_Show_PLOT,Home)</ondown>
-            <ondown condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO))">ClearProperty(OSDVideo_Show_INFO,Home)</ondown>
-            <ondown condition="!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))">SetFocus(14)</ondown>
+            <onfocus>ClearProperty(OSDVideo_Show_PLOT,Home)</onfocus>
+            <onfocus>ClearProperty(OSDVideo_Show_INFO,Home)</onfocus>
+            <onfocus>SetFocus(14)</onfocus>
         </control>
 
         <!-- FROM SLIDER VIDEO - IF NOT LIVE TV -->
@@ -52,7 +49,8 @@
             <onfocus>SetProperty(OSDVideo_Show_INFO,1,Home)</onfocus>
             <onfocus>SetProperty(OSDVideo_Show_PLOT,1,Home)</onfocus>
 
-            <onup>SetFocus(9805)</onup>
+            <onfocus condition="Control.IsVisible(9805)">AlarmClock(delay_focus_scrollbar,SetFocus(9805),00:01,silent,false)</onfocus>
+            <!-- <onup>SetFocus(9805)</onup> -->
 
             <onleft>ClearProperty(OSDVideo_Show_INFO,Home)</onleft>
             <onleft>ClearProperty(OSDVideo_Show_PLOT,Home)</onleft>

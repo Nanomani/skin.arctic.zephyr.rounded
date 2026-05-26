@@ -363,6 +363,9 @@
         <param name="height" default="560" />
         <param name="left" default="620" />
         <param name="right" default="OSD_SidePad" />
+        <param name="scroll_top" default="0" />
+        <param name="scroll_height" default="584" />
+        <param name="scroll_centerright" default="1200" />
         <param name="visible" default="true" />
 
         <definition>
@@ -397,9 +400,9 @@
                     <param name="onleft" value="$PARAM[onleft]" />
                     <param name="onright" value="$PARAM[onright])" />
                     <param name="onback" value="$PARAM[onback]" />
-                    <param name="height" value="584" />
-                    <param name="top" value="0" />
-                    <param name="centerright" value="1200" />
+                    <param name="top" value="$PARAM[scroll_top]" />
+                    <param name="height" value="$PARAM[scroll_height]" />
+                    <param name="centerright" value="$PARAM[scroll_centerright]" />
                 </include>
             </control>
         </definition>
@@ -2609,7 +2612,7 @@
                     <width>100%</width>
                     <height>200</height>
 
-                    <!-- ARTWORK - TOP - WITH SHOW PLOT -->
+                    <!-- ARTWORKS - TOP - WITH SHOW PLOT -->
 
                     <control type="group">
                         <visible>!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) | [$EXP[OSD_Video_Show_Plot_On_Pause] + !Window.IsVisible(videoosd)]</visible>
@@ -2676,8 +2679,10 @@
                         <control type="group">
                             <visible>!Window.IsVisible(videoosd) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_FULL_SCREEN_INFO)) + !VideoPlayer.Content(livetv)</visible>
 
-                            <top>-686</top>
-                            <left>490</left>
+                            <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(videoosd)">Conditional</animation>
+
+                            <top>-690</top>
+                            <left>450</left>
                             <right>0</right>
                             <height>560</height>
 
@@ -2690,7 +2695,7 @@
                         </control>
                     </control>
 
-                    <!-- ARTWORK - EPG - PLOT - LIVE TV -->
+                    <!-- ARTWORKS - EPG - PLOT - LIVE TV -->
 
                     <control type="group">
                         <visible>Player.ShowInfo | Window.IsVisible(DialogFullScreenInfo.xml) | $EXP[OSD_Video_Show_Plot_On_Pause]</visible>
@@ -2990,7 +2995,7 @@
                     <width>100%</width>
 
                     <control type="group">
-                        <animation effect="slide" start="0,0" end="-426,0" time="150" condition="$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
+                        <animation effect="slide" start="0,0" end="-426,0" time="250" condition="$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
 
                         <left>560</left>
                         <right>OSD_SidePad</right>
@@ -3075,6 +3080,7 @@
             <animation type="Visible">
                 <effect type="slide" start="-520,0" end="0,0" tween="sine" easing="out" time="300" delay="0" />
             </animation>
+
             <top>30</top>
             <left>50</left>
 
@@ -3082,8 +3088,7 @@
 
             <control type="group">
                 <animation effect="fade" start="100" end="0" time="100" condition="$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
-
-                <animation effect="fade" start="0" end="100" time="400" delay="200" condition="!$EXP[OSD_Music_Show_Artiste_Bio] + !Skin.HasSetting(show.osd.artist.infos)">Conditional</animation>
+                <animation effect="fade" start="0" end="100" time="400" delay="200" condition="!$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
 
                 <animation type="WindowClose" reversible="false">
                     <effect type="slide" start="115,0" end="0,0" tween="sine" easing="out" time="400" delay="0" />
@@ -3106,7 +3111,7 @@
             <control type="group">
                 <animation effect="zoom" start="100" end="150" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="[Window.IsVisible(script-cu-lrclyrics-main.xml) | $EXP[OSD_Music_Show_Artiste_Bio]]">Conditional</animation>
 
-                <animation effect="zoom" start="150" end="100" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="![Window.IsVisible(script-cu-lrclyrics-main.xml) | $EXP[OSD_Music_Show_Artiste_Bio]]">Conditional</animation>
+                <animation effect="zoom" start="150" end="100" center="76,1570" time="400" tween="cubic" easing="out" reversible="false" condition="!Window.IsVisible(script-cu-lrclyrics-main.xml) + !$EXP[OSD_Music_Show_Artiste_Bio]">Conditional</animation>
 
                 <animation type="WindowClose" reversible="false">
                     <effect type="slide" start="0,0" end="-495,0" tween="sine" easing="out" time="300" delay="0" />

@@ -143,11 +143,11 @@
 			<control type="ranges">
                 <visible>Skin.HasSetting(chapter.markers)</visible>
                 <left>0</left>
-                <bottom>8</bottom>
+                <bottom>10</bottom>
                 <width>100%</width>
-                <height>12</height>
-				<texturebg border="3" colordiffuse="00FFFFFF">progress/ch.png</texturebg>
-				<righttexture colordiffuse="red">progress/ch.png</righttexture>
+                <height>8</height>
+				<texturebg border="3" colordiffuse="00FFFFFF">progress/chw.png</texturebg>
+				<righttexture colordiffuse="red">progress/chw.png</righttexture>
 				<info>Player.Bookmarks</info>
 			</control>
         </control>
@@ -287,7 +287,7 @@
         <control type="group">
             <visible>Player.Seeking | Player.HasPerformedSeek(3) | Player.Paused | Player.Forwarding | Player.Rewinding | Player.ShowInfo | Window.IsVisible(fullscreeninfo) | Window.IsVisible(videoosd) | !String.IsEmpty(Player.SeekNumeric) | Window.IsVisible(DialogPVRChannelGuide.xml)</visible>
 
-            <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml)</visible>
+            <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml) + !Window.IsVisible(VideoOSDBookmarks.xml)</visible>
 
             <visible>[!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.TimeRemaining)] | [VideoPlayer.Content(livetv) + VideoPlayer.HasEpg]</visible>
             <visible>VideoPlayer.IsFullscreen</visible>
@@ -1737,6 +1737,8 @@
 
             <animation effect="fade" start="100" end="0" time="250" condition="Player.HasGame | Window.IsVisible(DialogPlayerProcessInfo.xml) | Window.IsVisible(DialogSlider.xml) | Window.IsVisible(DialogSelect.xml) | Window.IsVisible(DialogSettings.xml) | Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(DialogSubtitles.xml) | Window.IsVisible(DialogPVRChannelsOSD.xml) | Window.IsVisible(DialogPVRChannelGuide.xml)">Conditional</animation>
 
+            <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(VideoOSDBookmarks.xml)">Conditional</animation>
+
             <include>Animation_OSD_Fade_Open_Close</include>
 
             <height>74</height>
@@ -2628,7 +2630,7 @@
             <!-- OSD - SEEKBAR - VIDEO -->
 
             <control type="group">
-                <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(videoosd)">Conditional</animation>
+                <animation effect="slide" start="0" end="0,-74" time="150" condition="Window.IsVisible(videoosd) + !Window.IsVisible(VideoOSDBookmarks.xml)">Conditional</animation>
                 <animation effect="slide" start="0" end="0,-39" time="150" condition="[VideoPlayer.Content(livetv) | VideoPlayer.Content(files)] + Skin.HasSetting(pvr.showtechnicalinfo)">Conditional</animation>
 
                 <bottom>80</bottom>

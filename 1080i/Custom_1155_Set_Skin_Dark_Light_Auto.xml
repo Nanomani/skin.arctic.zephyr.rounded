@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="1155">
+    <defaultcontrol>11</defaultcontrol>
+
+    <onload>SetProperty(SetSkinColorSelected,$VAR[View_SkinColor_Selected],Home)</onload>
+    <onunload>ClearProperty(SetSkinColorSelected,Home)</onunload>
+
+    <controls>
+        <include>Background_Overlay</include>
+
+        <control type="group">
+            <include content="Def_Dialog_Background">
+                <param name="height" value="882" />
+                <param name="width" value="1722" />
+            </include>
+
+            <include content="Def_Dialog_Header">
+                <param name="label" value="$LOCALIZE[14206]  •  $LOCALIZE[14078]" />
+                <param name="icon" value="skinsettings" />
+            </include>
+
+            <control type="list" id="11">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>112</top>
+                <left>16</left>
+                <width>418</width>
+                <height>700</height>
+
+                <onup>11</onup>
+                <ondown>11</ondown>
+                <onleft>close</onleft>
+                <onright>1773</onright>
+
+                <usecontrolcoords>true</usecontrolcoords>
+                <itemgap>0</itemgap>
+
+                <itemlayout width="418" height="70">
+                    <control type="label">
+                        <left>30</left>
+                        <width>310</width>
+                        <height>70</height>
+                        <font>Small</font>
+                        <textcolor>PanelWhite100</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <visible>!String.IsEqual(Window(Home).property(SetSkinColorSelected),ListItem.Label)</visible>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <width>310</width>
+                        <height>70</height>
+                        <font>Small</font>
+                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <visible>String.IsEqual(Window(Home).property(SetSkinColorSelected),ListItem.Label)</visible>
+                    </control>
+                    <include content="Def_Button_Radio">
+                        <param name="colordiffuse_off" value="Black70" />
+                        <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
+                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinColorSelected),ListItem.Label)" />
+                    </include>
+                </itemlayout>
+                <focusedlayout width="418" height="70">
+
+                    <!-- ITEM FOCUS GRADIENT -->
+
+                    <include>Def_Focus_Item_Gradient</include>
+
+                    <control type="label">
+                        <left>30</left>
+                        <width>310</width>
+                        <height>70</height>
+                        <font>Small</font>
+                        <textcolor>Selected</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <include content="Def_Button_Radio">
+                        <param name="colordiffuse_off" value="Selected" />
+                        <param name="colordiffuse_on" value="Selected" />
+                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinColorSelected),ListItem.Label)" />
+                    </include>
+                </focusedlayout>
+
+                <!-- LIGHT -->
+
+                <content>
+
+                    <!-- NIGHT -->
+
+                    <item id="1">
+                        <label>$LOCALIZE[31613] ($LOCALIZE[571])</label>
+
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
+                        <onclick>Skin.Reset(daynight.autocolor)</onclick>
+                        <onclick>Skin.SetString(settingskincolor,$LOCALIZE[31613] ($LOCALIZE[571]))</onclick>
+                        <onclick>AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default),00:02,silent)</onclick>
+                    </item>
+
+                    <!-- DAY -->
+
+                    <item id="2">
+                        <label>$LOCALIZE[31614]</label>
+
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
+                        <onclick>Skin.Reset(daynight.autocolor)</onclick>
+                        <onclick>Skin.SetString(settingskincolor,$LOCALIZE[31614])</onclick>
+                        <onclick>AlarmClock(DelaySkinColor2,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light),00:02,silent)</onclick>
+                    </item>
+
+                    <!-- DAY NIGHT AUTOCOLOR -->
+
+                    <item id="3">
+                        <label>$LOCALIZE[31615]</label>
+
+                        <onclick condition="!System.HasAddon(script.arctic.zephyr.rounded.autocolors)">InstallAddon(script.arctic.zephyr.rounded.autocolors)</onclick>
+                        <onclick>Skin.SetBool(daynight.autocolor)</onclick>
+                        <onclick>Skin.SetString(settingskincolor,$LOCALIZE[31615])</onclick>
+                        <onclick>close</onclick>
+                    </item>
+                </content>
+            </control>
+
+            <!-- LINE VERTICAL -->
+
+            <include content="Def_Dialog_Line_Vertical"><param name="right" value="1272" /></include>
+
+            <!-- VIEW TYPE ON RIGHT -->
+
+            <include content="Def_Dialog_View_Type">
+                <param name="texture" value="special://skin/extras/skincolor/$VAR[Def_Image_Skin_Color].jpg" />
+            </include>
+
+            <!-- <include content="Def_Dialog_View_Type"> -->
+                <!-- <param name="top" value="112" /> -->
+                <!-- <param name="right" value="30" /> -->
+                <!-- <param name="width" value="590" /> -->
+                <!-- <param name="height" value="331" /> -->
+                <!-- <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type].jpg" /> -->
+            <!-- </include> -->
+
+            <!-- <include content="Def_Dialog_View_Type"> -->
+                <!-- <param name="top" value="112" /> -->
+                <!-- <param name="right" value="650" /> -->
+                <!-- <param name="width" value="590" /> -->
+                <!-- <param name="height" value="331" /> -->
+                <!-- <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type].jpg" /> -->
+            <!-- </include> -->
+
+            <!-- <include content="Def_Dialog_View_Type"> -->
+                <!-- <param name="top" value="461" /> -->
+                <!-- <param name="right" value="30" /> -->
+                <!-- <param name="width" value="590" /> -->
+                <!-- <param name="height" value="331" /> -->
+                <!-- <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type].jpg" /> -->
+            <!-- </include> -->
+
+            <!-- <include content="Def_Dialog_View_Type"> -->
+                <!-- <param name="top" value="461" /> -->
+                <!-- <param name="right" value="650" /> -->
+                <!-- <param name="width" value="590" /> -->
+                <!-- <param name="height" value="331" /> -->
+                <!-- <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type].jpg" /> -->
+            <!-- </include> -->
+
+            <!-- NUM ITEMS -->
+
+            <include>Def_Dialog_Select_label_Num_Item</include>
+        </control>
+    </controls>
+</window>

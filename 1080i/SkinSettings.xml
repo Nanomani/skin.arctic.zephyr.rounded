@@ -4,6 +4,7 @@
 
     <onload>CancelAlarm(power_menu_setfocus_399,true)</onload>
     <onload>AlarmClock(InitFocusSkinSetting,Control.SetFocus(3000,1,absolute),00:00,silent)</onload>
+    <onload condition="String.IsEmpty(Skin.String(Skin.SettingsLevel))">Skin.SetString(Skin.SettingsLevel,$NUMBER[1])</onload>
 
     <!-- TMDBHELPER.WIDGETCONTAINER -->
 
@@ -68,6 +69,8 @@
                 <orientation>vertical</orientation>
 
                 <itemlayout width="338" height="70">
+                    <visible>!Integer.IsLess(Skin.String(Skin.SettingsLevel),2)</visible>
+
                     <control type="label">
                         <left>30</left>
                         <right>25</right>
@@ -80,6 +83,7 @@
                     </control>
                 </itemlayout>
                 <focusedlayout width="338" height="70">
+                    <visible>!Integer.IsLess(Skin.String(Skin.SettingsLevel),2)</visible>
 
                     <!-- ITEM FOCUS GRADIENT -->
 
@@ -98,36 +102,9 @@
                     </control>
                 </focusedlayout>
                 <content>
-                    <item id="1">
-                        <label>$LOCALIZE[31007]</label>
-                    </item>
-                    <item id="2">
-                        <label>$LOCALIZE[10000]</label>
-                    </item>
-                    <item id="3">
-                        <label>$LOCALIZE[480]</label>
-                    </item>
-                    <item id="4">
-                        <label>$LOCALIZE[31081]</label>
-                    </item>
-                    <item id="5">
-                        <label>$LOCALIZE[31110]</label>
-                    </item>
-                    <item id="6">
-                        <label>$LOCALIZE[31447]</label>
-                    </item>
-                    <item id="7">
-                        <label>$LOCALIZE[31197]</label>
-                    </item>
-                    <item id="8">
-                        <label>$LOCALIZE[31220]</label>
-                    </item>
-                    <item id="9">
-                        <label>$LOCALIZE[39024]</label>
-                    </item>
-                    <item id="10">
-                        <label>$LOCALIZE[13007]</label>
-                    </item>
+                    <include condition="Integer.IsEqual(Skin.String(Skin.SettingsLevel),1)">Def_Skin_Setting_Item_Left_base</include>
+                    <include condition="Integer.IsEqual(Skin.String(Skin.SettingsLevel),2)">Def_Skin_Setting_Item_Left_standard</include>
+                    <include condition="Integer.IsEqual(Skin.String(Skin.SettingsLevel),3)">Def_Skin_Setting_Item_Left_advanced</include>
                 </content>
             </control>
 
@@ -162,7 +139,10 @@
                 <pagecontrol>1773</pagecontrol>
                 <orientation>vertical</orientation>
 
-            <!-- MENU - AZR ROUNDED -->
+
+            <!-- ============================= -->
+            <!--       MENU - AZR ROUNDED      -->
+            <!-- ============================= -->
 
                 <control type="grouplist" id="9900">
                     <description>Control Area</description>
@@ -265,6 +245,7 @@
                 <control type="button" id="9805">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <!-- <visible>!Integer.IsLess(Skin.String(Skin.SettingsLevel),3)</visible> -->
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31181]</label>
                     <label2>$VAR[Label_Setting_Home_Widget_Style]</label2>
@@ -605,6 +586,7 @@
 
                 <control type="label" id="12009" description="Backup">
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Label_Title_Right_Side</include>
                    <label>$LOCALIZE[31298] $LOCALIZE[31302]</label>
                 </control>
@@ -614,6 +596,7 @@
                 <control type="radiobutton" id="12035">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31483]</label>
                     <selected>Skin.HasSetting(enable_widgets_to_position_0_onback_menu)</selected>
@@ -626,6 +609,7 @@
                 <control type="radiobutton" id="12010">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31376]</label>
                     <selected>Skin.HasSetting(disable.widgets.onback.go.back.to.position.0)</selected>
@@ -638,6 +622,7 @@
                 <control type="radiobutton" id="12012">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31378]</label>
                     <selected>Skin.HasSetting(disable.widgets.ondown.go.back.to.position.0)</selected>
@@ -651,6 +636,7 @@
                 <control type="radiobutton" id="12011">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31377]</label>
                     <selected>Skin.HasSetting(disable.widgets.onup.go.back.to.last.item)</selected>
@@ -663,6 +649,7 @@
                 <control type="radiobutton" id="12084">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31542]</label>
                     <selected>Skin.HasSetting(disable.widgets.onup.go.back.to.main.menu)</selected>
@@ -676,6 +663,7 @@
                 <control type="radiobutton" id="12085">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31493]</label>
                     <selected>Skin.HasSetting(enable.widgets.ondown.go.back.to.first.item)</selected>
@@ -688,6 +676,7 @@
                 <control type="radiobutton" id="12030">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31379]</label>
                     <selected>Skin.HasSetting(enable.widgets.onup.go.back.to.last.widget)</selected>
@@ -701,6 +690,7 @@
                 <control type="radiobutton" id="12036">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31498]</label>
                     <selected>Skin.HasSetting(enable.onleft.go.to.last.item.widget)</selected>
@@ -714,6 +704,7 @@
                 <control type="radiobutton" id="12031">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31435]</label>
                     <selected>Skin.HasSetting(widget.items.onback.go.back.to.position.0)</selected>
@@ -725,6 +716,7 @@
                 <control type="radiobutton" id="12032">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31436]</label>
                     <selected>Skin.HasSetting(widget.items.onback.go.back.to.position.0.setfocus.home)</selected>
@@ -737,6 +729,7 @@
                 <control type="radiobutton" id="12033">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
+                    <visible>Integer.IsGreater(Skin.String(Skin.SettingsLevel),2)</visible>
                     <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
                     <label>$LOCALIZE[31437]</label>
                     <selected>Skin.HasSetting(home.onback.go.to.first.widget)</selected>

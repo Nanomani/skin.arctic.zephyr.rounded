@@ -221,6 +221,23 @@
                 <onclick condition="Window.IsVisible(Home) + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),tvshow) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),episode) | [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),set) + !$EXP[IsJlomItem]]]">AlarmClock(delay_activatewindow2,$VAR[Def_Home_Browse_List_Season_Episode_Set],00:00,silent)</onclick>
             </include>
 
+            <!-- PLAYLIST -->
+
+            <include content="Object_OSD_Button" condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),artist) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song)] + Integer.IsGreater(Playlist.Length(music),0)">
+                <param name="visible" value="true" />
+                <param name="size" value="44" />
+                <param name="left" value="-56" />
+                <param name="icon" value="special://skin/extras/icons/playlist.png" />
+                <param name="icon_colordiffuse" value="Dark2" />
+                <param name="id" value="6161" />
+                <param name="groupid" value="7199" />
+                <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+
+                <!-- <onclick condition="Integer.IsGreater(Playlist.Length(video),0) + [Player.HasVideo | Integer.IsEqual(Playlist.Length(music),0)]">ActivateWindow(videoplaylist)</onclick> -->
+                <onclick condition="Integer.IsGreater(Playlist.Length(music),0) + !Player.HasVideo">ActivateWindow(musicplaylist)</onclick>
+                <onclick>Dialog.Close(contextmenu)</onclick>
+            </include>
+
             <!-- FILES MANAGERS -->
 
             <include content="Object_OSD_Button" condition="[!$EXP[Is_ContextMenu_PluginItem] | [$EXP[Is_ContextMenu_Plugin_TMDbHelper_Item] + !$EXP[View_Info_Dialog] + [[!String.IsEmpty(ListItem.DBID) + !Window.IsVisible(Home)] | [Window.IsVisible(Home) + !String.IsEmpty(Window(Home).Property(ListItem_DBID))]]]] + [String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),tvshow) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song) | Container.Content(files)]">

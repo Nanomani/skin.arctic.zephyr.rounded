@@ -548,13 +548,16 @@
                                 <icon>special://skin/extras/icons/filebox.png</icon>
 
                                 <onclick>Dialog.Close(all)</onclick>
+                                <onclick condition="Window.IsVisible(1190)">RunScript(plugin.video.themoviedb.helper,close_dialog=1190)</onclick>
 
                                 <onclick>SetProperty(filemanager_back_video_info_type,$VAR[Def_Open_Info_From_FileManager_Type],Home)</onclick>
                                 <onclick>SetProperty(filemanager_back_video_info_bdid,$INFO[ListItem.DBID],Home)</onclick>
 
-                                <onclick condition="!String.IsEmpty(Container(44029).ListItem.Property(path))">ActivateWindow(filemanager,"$INFO[Container(44029).ListItem.Property(path)]",return)</onclick>
-                                <onclick condition="!String.IsEmpty(ListItem.Path) + !$EXP[IsPluginItem]">ActivateWindow(filemanager,"$INFO[ListItem.Path]",return)</onclick>
-                                <onclick condition="!String.IsEmpty(ListItem.Property(path))">ActivateWindow(filemanager,"$INFO[ListItem.Property(path)]",return)</onclick>
+                                <onclick condition="!String.IsEmpty(Container(44029).ListItem.Property(path))">AlarmClock(delay_open_filemanager,ActivateWindow(filemanager,"$INFO[Container(44029).ListItem.Property(path)]",return),00:01,silent)</onclick>
+
+                                <onclick condition="!String.IsEmpty(ListItem.Path) + !$EXP[IsPluginItem]">AlarmClock(delay_open_filemanager,ActivateWindow(filemanager,"$INFO[ListItem.Path]",return),00:01,silent)</onclick>
+
+                                <onclick condition="!String.IsEmpty(ListItem.Property(path))">AlarmClock(delay_open_filemanager,ActivateWindow(filemanager,"$INFO[ListItem.Property(path)]",return),00:01,silent)</onclick>
 
                                 <visible>!String.IsEmpty(ListItem.DBID) | !String.IsEmpty(ListItem.TvShowDBID)</visible>
                                 <visible>!String.IsEqual(ListItem.DBType,set)</visible>

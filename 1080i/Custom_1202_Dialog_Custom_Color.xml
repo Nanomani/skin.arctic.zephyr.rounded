@@ -17,7 +17,7 @@
     <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colorstring,$INFO[Skin.String(KodiRatingStarColor.name)],Home)</onload>
     <onload condition="String.IsEqual(Window(Home).Property(colorfilter),3) + String.IsEmpty(Window(Home).Property(gradient))">SetProperty(colordesc,KodiRatingStarColor.name,Home)</onload>
 
-    <onload>AlarmClock(SkinColor,Control.SetFocus(9300),00:01,silent)</onload>
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadskin))">SetFocus(3033)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -170,7 +170,7 @@
 
                 <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">3100</ondown>
                 <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetFocus(3330)</ondown>
-                <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">3100</ondown>
+                <!-- <ondown condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">3100</ondown> -->
 
                 <orientation>vertical</orientation>
 
@@ -939,21 +939,6 @@
 
             <!-- BUTTON TO FOCUS FIRST ITEM ON LIST -->
 
-            <!-- ON DOWN -->
-
-            <control type="button" id="2001">
-                <visible allowhiddenfocus="true">false</visible>
-                <height>1</height>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9021)">SetFocus(9021)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9022)">SetFocus(9022)</onfocus>
-
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),2) + Control.IsVisible(9141)">SetFocus(9141)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),2) + Control.IsVisible(9142)">SetFocus(9142)</onfocus>
-
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9211)">SetFocus(9211)</onfocus>
-                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9212)">SetFocus(9212)</onfocus>
-            </control>
-
             <!-- ON UP -->
 
             <control type="button" id="2002">
@@ -968,6 +953,21 @@
 
                 <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9231)">SetFocus(9231)</onfocus>
                 <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9232)">SetFocus(9232)</onfocus>
+            </control>
+
+            <!-- ON DOWN -->
+
+            <control type="button" id="2001">
+                <visible allowhiddenfocus="true">false</visible>
+                <height>1</height>
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9021)">SetFocus(9021)</onfocus>
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),1) + Control.IsVisible(9022)">SetFocus(9022)</onfocus>
+
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),2) + Control.IsVisible(9141)">SetFocus(9141)</onfocus>
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),2) + Control.IsVisible(9142)">SetFocus(9142)</onfocus>
+
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9211)">SetFocus(9211)</onfocus>
+                <onfocus condition="String.IsEqual(Window(Home).Property(colorfilter),3) + Control.IsVisible(9212)">SetFocus(9212)</onfocus>
             </control>
 
             <!-- PREVIEW - MEDIA FLAG -->
@@ -986,7 +986,8 @@
                 <onright>3600</onright>
                 <onleft>3600</onleft>
 
-                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1)">2001</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">2002</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetFocus(3330)</onup>
                 <onup condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">2002</onup>
 
                 <ondown>2001</ondown>
@@ -1034,8 +1035,7 @@
                 <bottom>20</bottom>
                 <width>254</width>
 
-                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight) + !Control.IsVisible(3220)">9100</onup>
-                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight) + Control.IsVisible(3220)">3220</onup>
+                <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">2002</onup>
                 <onup condition="String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(gradient),ColorHighlight)">SetFocus(3330)</onup>
                 <onup condition="String.IsEqual(Window(Home).Property(colorfilter),2) | String.IsEqual(Window(Home).Property(colorfilter),3)">2002</onup>
 

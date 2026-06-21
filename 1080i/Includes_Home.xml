@@ -206,6 +206,12 @@
             <onleft>ClearProperty(399IsFocus,Home)</onleft>
             <onright>ClearProperty(399IsFocus,Home)</onright>
 
+            <!-- MAIN MENU - INIT STARTUP -->
+
+            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection)) + String.IsEmpty(Window(Home).Property(first_menu)) + String.IsEmpty(Window(Home).Property(end_menu))">SetProperty(first_menu,1,Home)</onfocus>
+
+            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection)) + String.IsEmpty(Window(Home).Property(first_menu)) + String.IsEmpty(Window(Home).Property(end_menu))">SetProperty(AnimationDirection,Right,Home)</onfocus>
+
             <!-- TRAILER FULL SCREEN -->
 
             <onfocus>ClearProperty(TrailerFullscreenIsLaunched,Home)</onfocus>
@@ -271,13 +277,17 @@
 
             <!-- RESET VALUE BLUR IMAGE -->
 
-            <onfocus condition="String.IsEmpty(Window(Home).Property(back_from_search_bar))">ClearProperty(TMDbHelper.ListItem.BlurImage)</onfocus>
-            <onfocus condition="String.IsEmpty(Window(Home).Property(back_from_search_bar))">ClearProperty(TMDbHelper.ListItem.BlurImage.Original)</onfocus>
-            <onfocus condition="String.IsEmpty(Window(Home).Property(back_from_search_bar))">ClearProperty(TMDbHelper.WidgetContainer)</onfocus>
+            <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(TMDbHelper.ListItem.BlurImage)</onleft>
+            <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(TMDbHelper.ListItem.BlurImage.Original)</onleft>
+            <onleft condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(TMDbHelper.WidgetContainer)</onleft>
+
+            <onright>ClearProperty(TMDbHelper.ListItem.BlurImage)</onright>
+            <onright>ClearProperty(TMDbHelper.ListItem.BlurImage.Original)</onright>
+            <onright>ClearProperty(TMDbHelper.WidgetContainer)</onright>
 
             <!-- SET TMDBHELPER WIDGET CONTAINER -->
 
-            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection)) + String.IsEmpty(Window(Home).Property(first_menu)) + String.IsEmpty(Window(Home).Property(end_menu))">$VAR[Set_TMDB_Helper_Widget_Container_left_up]</onfocus>
+            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection))">$VAR[Set_TMDB_Helper_Widget_Container_left_up]</onfocus>
 
             <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEqual(Window(Home).Property(AnimationDirection),Left) + String.IsEmpty(Window(Home).Property(end_menu))">$VAR[Set_TMDB_Helper_Widget_Container_left_up]</onfocus>
 
@@ -317,7 +327,6 @@
 
             <onfocus>ClearProperty(Launch_Search,Home)</onfocus>
             <onfocus>ClearProperty(ListItem_Trailer_Path,Home)</onfocus>
-            <onfocus>ClearProperty(back_from_search_bar,Home)</onfocus>
         </control>
 
         <control type="button" id="222">
@@ -558,7 +567,7 @@
                             <width>50</width>
                             <height>8</height>
                             <control type="image">
-                                <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
+                                <include>Texture_Home_Menu_Underline</include>
                             </control>
                             <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Window.IsVisible(DialogButtonMenu.xml)">Conditional</animation>
                             <visible>Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
@@ -593,7 +602,7 @@
                                 <font>Home</font>
                                 <textoffsetx>0</textoffsetx>
                                 <width max="250">auto</width>
-                                <texturenofocus border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/underline_h.png</texturenofocus>
+                                <include>Texture_Home_Menu_Button_Underline</include>
                                 <label>$VAR[Label_Home_Main_Menu]</label>
                             </control>
                             <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Window.IsVisible(DialogButtonMenu.xml)">Conditional</animation>
@@ -700,7 +709,7 @@
                             <top>1</top>
                             <width>80</width>
                             <height>80</height>
-                            <texture colordiffuse="$VAR[Color_FocusGradient]">$INFO[Container(302).ListItem.Icon]</texture>
+                            <texture colordiffuse="$VAR[Color_Focus]">$INFO[Container(302).ListItem.Icon]</texture>
                             <visible>Skin.HasSetting(home.show.menu.icons) + !Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
                         </control>
 
@@ -712,7 +721,7 @@
                             <width>50</width>
                             <height>8</height>
                             <control type="image">
-                                <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
+                                <include>Texture_Home_Menu_Underline</include>
                             </control>
                             <visible>Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
                         </control>
@@ -733,7 +742,7 @@
                             <align>left</align>
                             <aligny>center</aligny>
                             <height>100%</height>
-                            <textcolor>$VAR[Color_FocusGradient]</textcolor>
+                            <textcolor>$VAR[Color_Focus]</textcolor>
                             <scroll>true</scroll>
                             <scrollspeed>60</scrollspeed>
                             <font>Home</font>
@@ -756,7 +765,7 @@
                                 <font>Home</font>
                                 <textoffsetx>0</textoffsetx>
                                 <width max="250">auto</width>
-                                <texturenofocus border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/underline_h.png</texturenofocus>
+                                <include>Texture_Home_Menu_Button_Underline</include>
                                 <label>$VAR[Label_Home_Sub_Menu]</label>
                             </control>
                             <visible>!Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.onfocus.underlined)</visible>
@@ -807,6 +816,12 @@
         <control type="button" id="399">
             <include>Def_Hidden_Button</include>
             <visible allowhiddenfocus="true">False</visible>
+
+            <!-- MAIN MENU - INIT STARTUP -->
+
+            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection)) + String.IsEmpty(Window(Home).Property(first_menu)) + String.IsEmpty(Window(Home).Property(end_menu))">SetProperty(AnimationDirection,Down,Home)</onfocus>
+
+            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection)) + String.IsEmpty(Window(Home).Property(first_menu)) + String.IsEmpty(Window(Home).Property(end_menu))">SetProperty(first_menu,1,Home)</onfocus>
 
             <!-- TRAILER FULL SCREEN -->
 
@@ -873,13 +888,17 @@
 
             <!-- RESET VALUE BLUR IMAGE -->
 
-            <onfocus condition="String.IsEmpty(Window(Home).Property(back_from_search_bar))">ClearProperty(TMDbHelper.ListItem.BlurImage)</onfocus>
-            <onfocus condition="String.IsEmpty(Window(Home).Property(back_from_search_bar))">ClearProperty(TMDbHelper.ListItem.BlurImage.Original)</onfocus>
-            <onfocus condition="String.IsEmpty(Window(Home).Property(back_from_search_bar))">ClearProperty(TMDbHelper.WidgetContainer)</onfocus>
+            <onup condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(TMDbHelper.ListItem.BlurImage)</onup>
+            <onup condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(TMDbHelper.ListItem.BlurImage.Original)</onup>
+            <onup condition="!String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">ClearProperty(TMDbHelper.WidgetContainer)</onup>
+
+            <ondown>ClearProperty(TMDbHelper.ListItem.BlurImage)</ondown>
+            <ondown>ClearProperty(TMDbHelper.ListItem.BlurImage.Original)</ondown>
+            <ondown>ClearProperty(TMDbHelper.WidgetContainer)</ondown>
 
             <!-- SET TMDBHELPER WIDGET CONTAINER -->
 
-            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection)) + String.IsEmpty(Window(Home).Property(first_menu)) + String.IsEmpty(Window(Home).Property(end_menu))">$VAR[Set_TMDB_Helper_Widget_Container_left_up]</onfocus>
+            <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEmpty(Window(Home).Property(AnimationDirection))">$VAR[Set_TMDB_Helper_Widget_Container_left_up]</onfocus>
 
             <onfocus condition="$EXP[TMDbHelper_Is_Needed_In_Home] + String.IsEqual(Window(Home).Property(AnimationDirection),Up) + String.IsEmpty(Window(Home).Property(end_menu))">$VAR[Set_TMDB_Helper_Widget_Container_left_up]</onfocus>
 
@@ -918,7 +937,6 @@
 
             <onfocus>ClearProperty(Launch_Search,Home)</onfocus>
             <onfocus>ClearProperty(ListItem_Trailer_Path,Home)</onfocus>
-            <onfocus>ClearProperty(back_from_search_bar,Home)</onfocus>
         </control>
 
         <control type="button" id="222">
@@ -2084,7 +2102,7 @@
                         <centerleft>45.7%</centerleft>
                         <height>8</height>
                         <width>90%</width>
-                        <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
+                        <include>Texture_Home_Menu_Underline</include>
                     </control>
                 </control>
 
@@ -2159,7 +2177,7 @@
                 <width>60</width>
                 <height>8</height>
                 <control type="image">
-                    <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
+                    <include>Texture_Home_Menu_Underline</include>
                 </control>
             </control>
 
@@ -2363,7 +2381,7 @@
                     <control type="image">
                         <right>19</right>
                         <height>100%</height>
-                        <texture border="12">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/box_h.png</texture>
+                        <include>Texture_Layout_Item_Focus</include>
                         <include condition="true">Animation_View_List_Focus_Scroll</include>
                     </control>
                     <control type="image">
@@ -2467,7 +2485,7 @@
                             <width>90%</width>
                             <top>30</top>
                             <centerleft>45.7%</centerleft>
-                            <textcolor>$VAR[Color_FocusGradient]</textcolor>
+                            <textcolor>$VAR[Color_Focus]</textcolor>
                             <font>HomeIcon</font>
                             <label>$VAR[Label_Home_Sub_Menu]</label>
                         </control>
@@ -2475,7 +2493,7 @@
                             <top>10</top>
                             <centerleft>45.7%</centerleft>
                             <include>Def_Arrow_Size</include>
-                            <texture colordiffuse="$VAR[Color_FocusGradient]" flipy="true">common/arrow_small_down.png</texture>
+                            <texture colordiffuse="$VAR[Color_Focus]" flipy="true">common/arrow_small_down.png</texture>
                             <animation effect="fade" end="100" start="0" delay="300" time="400" reversible="false">Focus</animation>
                         </control>
                     </control>
@@ -2503,7 +2521,7 @@
                                 <centerleft>45.7%</centerleft>
                                 <width>90%</width>
                                 <height>8</height>
-                                <texture border="4">special://profile/addon_data/script.texturemaker/ArcticZephirRounded/scrollh_h.png</texture>
+                                <include>Texture_Home_Menu_Underline</include>
                             </control>
                         </control>
                         <control type="image">

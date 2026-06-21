@@ -89,10 +89,6 @@
 
             <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onfocus>
 
-            <!-- SEARCH WAS FOCUSED -->
-
-            <onfocus>SetProperty(back_from_search_bar,1,Home)</onfocus>
-
             <!-- MAIN MENU : FOCUS IF INACTIVITY -->
 
             <onfocus condition="String.IsEmpty(Window(Home).Property(Launch_Search))">SetProperty(focus_main_menu_timer_from_search_bar,1,Home)</onfocus>
@@ -110,7 +106,6 @@
             <onup condition="$EXP[Home_Is_Vertical]">SetProperty(AnimationDirection,Up,Home)</onup>
             <onup condition="$EXP[Home_Is_Vertical]">SetFocus(300,$INFO[Container(300).NumItems])</onup>
             <onup condition="$EXP[Home_Is_Vertical]">SetProperty(end_menu,1,Home)</onup>
-            <onup condition="$EXP[Home_Is_Vertical]">ClearProperty(back_from_search_bar,Home)</onup>
 
             <ondown condition="$EXP[Home_Is_Vertical]">SetProperty(AnimationDirection,Down,Home)</ondown>
             <ondown condition="$EXP[Home_Is_Vertical]">SetFocus(300,0,absolute)</ondown>
@@ -129,7 +124,6 @@
             <onleft condition="$EXP[Home_Is_Horizontal]">SetProperty(AnimationDirection,Left,Home)</onleft>
             <onleft condition="$EXP[Home_Is_Horizontal]">SetFocus(300,$INFO[Container(300).NumItems])</onleft>
             <onleft condition="$EXP[Home_Is_Horizontal]">SetProperty(end_menu,1,Home)</onleft>
-            <onleft condition="$EXP[Home_Is_Horizontal]">ClearProperty(back_from_search_bar,Home)</onleft>
 
             <onright condition="$EXP[Home_Is_Horizontal]">SetProperty(AnimationDirection,Right,Home)</onright>
             <onright condition="$EXP[Home_Is_Horizontal]">SetFocus(300,0,absolute)</onright>
@@ -2078,21 +2072,6 @@
         <value>SetFocus(302,0)</value>
     </variable>
 
-    <include name="Object_TextureFocus">
-        <texturefocus border="$PARAM[border]">$PARAM[texture]</texturefocus>
-    </include>
-
-    <include name="Texture_Shadow_20">
-        <param name="colordiffuse" default="80000000" />
-        <param name="texture_shadow" value="$PARAM[texture_shadow]" default="$VAR[shadow20]" />
-
-        <definition>
-            <include content="Def_Padding"><param name="pad" value="-20" /></include>
-            <bordersize>20</bordersize>
-            <bordertexture border="32" colordiffuse="$PARAM[colordiffuse]">$PARAM[texture_shadow]</bordertexture>
-        </definition>
-    </include>
-
     <include name="Def_Watched_Indicators_Clean">
         <aligny>center</aligny>
         <width>38</width>
@@ -2392,7 +2371,7 @@
 
         <!-- On Back -->
         <onclick>Skin.SetBool(widget.items.onback.go.back.to.position.0)</onclick>
-        <onclick>Skin.SetBool(widget.items.onback.go.back.to.position.0.setfocus.home)</onclick>
+        <onclick>Skin.Reset(widget.items.onback.go.back.to.position.0.setfocus.home)</onclick>
         <onclick>Skin.SetBool(home.onback.go.to.first.widget)</onclick>
 
         <!-- HOME FLIX PREVIEW -->
@@ -2603,33 +2582,11 @@
 
         <!-- DAY / NIGHT AUTOCOLOR -->
 
-        <!-- <onclick>Skin.SetBool(daynight.autocolor)</onclick> -->
+        <onclick>Skin.Reset(daynight.autocolor)</onclick>
 
         <!-- VIEWS PLAYLIST -->
 
         <onclick>Skin.SetBool(hide.playlist.ratings)</onclick>
-
-        <!-- COLOR -->
-
-        <!-- <onclick>Skin.SetString(settingpresetcolor,3)</onclick> -->
-        <!-- <onclick>Skin.SetString(ColorHighlight.name,FF03A9F4)</onclick> -->
-        <!-- <onclick>Skin.SetString(ColorFocus.name,FF03A9F4)</onclick> -->
-        <!-- <onclick>Skin.SetString(ColorFocusGradient.name,FF03A9F4)</onclick> -->
-
-        <!-- <onclick>Skin.SetString(KodiRatingStarColor.name,ffca7b02)</onclick> -->
-        <!-- <onclick>Skin.SetString(UserRatingStarColor.name,FFD402AA)</onclick> -->
-        <!-- <onclick>Skin.Reset(MpaaCertifColor.name)</onclick> -->
-        <!-- <onclick>Skin.SetString(IndicatorColorBackgroundNew.name,e6e6002e)</onclick> -->
-        <!-- <onclick>Skin.SetString(IndicatorColorBackgroundInProgress.name,E6A8287B)</onclick> -->
-        <!-- <onclick>Skin.SetString(IndicatorColorBackgroundUnWatched.name,UnWatchedIcons)</onclick> -->
-        <!-- <onclick>Skin.SetString(IndicatorColorBackgroundWatched.name,E6689F38)</onclick> -->
-        <!-- <onclick>Skin.SetString(IndicatorColorBackgroundIsPlaying.name,e60097a7)</onclick> -->
-        <!-- <onclick>Skin.Reset(IndicatorColorBackgroundLabel.name)</onclick> -->
-        <!-- <onclick>Skin.Reset(IndicatorColorBackgroundIsPlayingicon.name)</onclick> -->
-
-        <!-- DISABLE GRADIENT     -->
-
-        <onclick>Skin.SetBool(EnableColorSamefocusGradient)</onclick>
     </include>
 
     <include name="Def_Settings_Perso_Value">
@@ -2671,14 +2628,344 @@
         <onclick condition="System.AddonIsEnabled(resource.images.moviegenreicons.filmstrip)">Skin.SetString(genre.icons.ext,.jpg)</onclick>
 
         <!-- <onclick>Skin.SetBool(daynight.autocolor)</onclick> -->
-
-        <!-- DISABLE GRADIENT     -->
-
-        <onclick>Skin.SetBool(EnableColorSamefocusGradient)</onclick>
     </include>
 
     <include name="Def_Settings_Quality_Value">
         <onclick>Skin.SetBool(show.furniture.video.rating.num.set.version)</onclick>
+    </include>
+
+    <include name="Def_Settings_Startup_Init">
+
+        <!-- STARTUP FANART -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(startupfanart.fallback,special://skin/extras/backgrounds/00_startup/bgstartup.jpg)</onload>
+
+        <!-- SETTINGS SET DEFAULT -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(Skin.SettingsLevel,$NUMBER[3])</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingperflevel,2)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingthemecolor,1)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingpresetcolor,3)</onload>
+
+        <!-- COLOR -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(ColorHighlight.name,FF03A9F4)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(ColorFocus.name,FF03A9F4)</onload>
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(KodiRatingStarColor.name,FFCA7B02)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(UserRatingStarColor.name,FFD402AA)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(MpaaCertifColor.name)</onload> -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(IndicatorColorBackgroundNew.name,E6E6002E)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(IndicatorColorBackgroundInProgress.name,E6A8287B)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(IndicatorColorBackgroundWatched.name,E6689F38)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(IndicatorColorBackgroundIsPlaying.name,E60097A7)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(IndicatorColorBackgroundLabel.name)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(IndicatorColorBackgroundIsPlayingicon.name)</onload> -->
+
+        <!-- ENABLE TMDb Helper -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enabled.tmdb.helper.service)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enabled.tmdb.helper.crop)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enabled.tmdb.helper.blur)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(disable.tmdb.helper.cacheOnly)</onload> -->
+
+        <!-- BLUR EFFECT -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enabled.tmdb.helper.blur)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.blur.on.home)</onload>
+
+        <!-- HOME - HORIZONTAL WIDGETS FLIX -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.horizontal)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.vertical.widgets)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.style.flix)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.morewidget)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.show.menu.label.onfocus.icon)</onload> -->
+
+        <!-- HOME - HORIZONTAL CLEANUP -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.horizontal)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.vertical.widgets)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.style.flix)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.style.horizontal.clean)</onload>
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.home.menu)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.morewidget)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.show.menu.label.onfocus.icon)</onload>
+
+        <!-- BACKGROUND -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.global.fanart)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(global.show.fallback.only)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.extra.fanart)</onload> -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.movie,special://skin/extras/backgrounds/movies/movies_3.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.tvshow,special://skin/extras/backgrounds/tvshows/tvshows_3.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.music,special://skin/extras/backgrounds/music/music_20.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.favourite,special://skin/extras/backgrounds/favourites/favourites_2.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.pvr,special://skin/extras/backgrounds/pvr/pvr1.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.radio,special://skin/extras/backgrounds/radio/radio2.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.settings,special://skin/extras/backgrounds/settings/settings_3.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.programs,special://skin/extras/backgrounds/programs/programs_3.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.exit,special://skin/extras/backgrounds/exit/exit_7.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.weather,special://skin/extras/backgrounds/weather/weather_12.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.person,special://skin/extras/backgrounds/misc/misc_6.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.image,special://skin/extras/backgrounds/pictures/pictures_5.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.game,special://skin/extras/backgrounds/games/games_3.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.search,special://skin/extras/backgrounds/search/search_2.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.youtube,special://skin/extras/backgrounds/addons/addons_6.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.podcasts,special://skin/extras/backgrounds/addons/addons_4.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.more,special://skin/extras/backgrounds/more/more_1.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.dvd,special://skin/extras/backgrounds/dvd/dvd_1.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback,special://skin/extras/backgrounds/fallback/bg_fallback.jpg)</onload>
+
+        <!-- HOME -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.header.clock.left)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.home.menu)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.only.if.widgetcontainer.gets.focus)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(WidgetLimit,10)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(HubLimit,10)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.flix.title.clearlogo)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.header.clearlogo)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.furniture.flags.vertical.widgets)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.show.menu.icons)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.enable.menu.background)</onload> -->
+
+        <!-- MULTI WIDGETS BEHAVIOURS -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable_widgets_to_position_0_onback_menu)</onload>
+
+        <!-- Menu Horizontal -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(disable.widgets.onup.go.back.to.last.item)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.widgets.ondown.go.back.to.first.item)</onload>
+
+        <!-- Menu Vertical -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.widgets.onup.go.back.to.last.widget)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(enable.onleft.go.to.last.item.widget)</onload> -->
+
+        <!-- On Back -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(widget.items.onback.go.back.to.position.0)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(widget.items.onback.go.back.to.position.0.setfocus.home)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.onback.go.to.first.widget)</onload>
+
+        <!-- HOME FLIX PREVIEW -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.style.flix)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(Value_Brightness_Flix,80)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(home.style.flix.fanart.effect)</onload> -->
+
+        <!-- VIEW NOT FLIX -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(Value_Brightness_NoFlix,30)</onload>
+
+        <!-- DISPLAY -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.furniture.header)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.furniture.clock.bottom.right)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.furniture.clock.date.weather)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(userrating.override.kodi.rating.num)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(userrating.override.kodi.rating.stars)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.global.shadows)</onload>
+
+        <!-- MEDIA FLAG - VIDEO -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.furniture.flags.icons)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.furniture.flags.colored)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.flags.hdr)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.flags.mpaa)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.rating.tmdb)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.rating.imdb)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.top250.classement)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.flags.rating)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.subtitles)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.subtitles.country)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.audio.country)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.flags.videoduration)</onload>
+
+        <!-- MEDIA FLAG - AUDIO -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.music.samplerate)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.flags.music.bpm)</onload>
+
+        <!-- MARKER FLAG -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(furniture.markers.alternative)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(markers.inprogress.percentage)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.markers.watched.music)</onload>
+
+        <!-- RESSOURCE IMAGES -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(studio.logos.path,resource://resource.images.studios.coloured/)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(studio.logos.name,Studio Icons - Coloured)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(studio.logos.ext,.png)</onload> -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(country.logos.path,resource://resource.images.moviecountryicons.flags/)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(country.logos.name,Movie Country Icons - Flags)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(country.logos.ext,.png)</onload>
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(recordlabel.logos.path,resource://resource.images.recordlabels.white/)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(recordlabel.logos.name,Recordlabel Icons - White)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(recordlabel.logos.ext,.png)</onload>
+
+        <!-- WEATHER -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(weather.icons.path,resource://resource.images.weathericons.default/)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(weather.icons.name,Weather Icons - Default)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(weather.icons.ext,.png)</onload>
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(weather.fanart.path,resource://resource.images.weatherfanart.single/)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(weather.fanart.name,Weather Fanart - Single)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(weather.fanart.ext,.jpg)</onload>
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.weather.fanart)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.weather.fanart.widgets)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(weather.fanart.multi)</onload>
+
+        <!-- FOCUS GLOW -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.items.focus.glow)</onload>
+
+        <!-- DIALOG INFO - VIDEO -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.button.video.rating)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.button.video.similar)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.button.video.trakt)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.video.set)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.video.year)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.video.director)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.video.writer)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.video.creator)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.video.recommended)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.button.video.studio)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.dialog.info.clearlogo.video)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(PlayTrailerWindowed)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(filter.video.only.local)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(filter.video.animation)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.studiologos)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(filter.video.cast.on.line)</onload>
+
+        <!-- DIALOG INFO - MUSIC -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.button.music.artist.discography)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.dialog.info.music.discart)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.dialog.info.clearlogo.music)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.dialog.info.music.logo.record.compagny)</onload>
+
+        <!-- MENU -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(home.show.menu.onfocus.underlined)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(homemenu.auto.back.to.main)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(homemenu.auto.back.to.main.only.from.submenu)</onload> -->
+
+        <!-- AUTO TRAILER -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.trailer.playing.on.unfocus)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(trailer.pause.on.dialogvideoinfo)</onload>
+
+        <!-- HOME NOWPLAYING -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.nowplaying.video.home.flix)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.nowplaying.video.home.flix)</onload>
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.furniture.nowplaying.extended.home)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.home.auto.show.nowplaying.extended)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(hide.home.menu.with.nowplaying.extended)</onload> -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.home.nowplaying.extended.video.cd)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.nowplaying.extended.video.title.clearlogo)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.nowplaying.extended.video.clearart)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.nowplaying.extended.video.windows)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.nowplaying.extended.music.clearlogo)</onload>
+
+        <!-- OSD GLOBAL SETTINGS -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(Value_OSD_Auto_Hide_Timeout,3)</onload>
+
+        <!-- OSD VIDEO SETTINGS -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.osd.video.on.pause)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.video.flags.icons)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.video.colored.icons)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.video.flags.imdb.rating)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.video.clock)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.nowplaying.extended.video.clearart)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(osd.open.auto.pause)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(show.osd.video.info.at.start)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(Value_Show_OSD_At_Start_Timeout)</onload>
+
+        <!-- OSD MUSIC SETTINGS -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.osd.music.visualisation.fanart)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.artist.slideshow.animate)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.home.nowplaying.extended.music.clearlogo)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.music.album.info.on.down)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.music.rating)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.osd.music.clearlogo)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(osd.music.disc.fallback.vinyl)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(auto.hide.OSD.music.info)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(Value_OSD_Music_Info_Auto_Hide_Timeout,5)</onload>
+
+        <!-- CLEARLOGO -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(show.header.clearlogo)</onload> -->
+
+        <!-- USER OVERRIDE RATING -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(userrating.override.kodi.rating.num)</onload>
+
+        <!-- DISPLAY TIME HH:mm -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.time.format.hh.mm)</onload>
+
+        <!-- VIEWS ALL -->
+
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.furniture.video.rating.num.set.version)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.furniture.footer)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.view.5x.51x.extended.list)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(5x.list.control.list)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.view.50.extended.info.playlist)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.music.ratings)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.playlist.ratings)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(label.view.list.rating.fallback,1)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(disable.view.50.extended.list.music)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(disable.view.550.extended.list.video)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(disable.view.50.extended.list.addons)</onload> -->
+
+        <!-- VIEWS VIDEO -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.view.flix.scroll.wall.video)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.view.netflix.title.clearlogo.video)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(521.poster.control.list)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(522.landscape.size,1)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(dont.use.landscape.tvshows)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(use.clearlogo.on.fanart.tvshows)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(dont.use.landscape.seasons)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(use.clearlogo.on.fanart.seasons)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(use.thumbnail.episodes)</onload> -->
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(disable.wrap.view.53)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.furniture.progress.circle)</onload>
+
+        <!-- VIEWS AUDIO -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(enable.view.flix.scroll.wall.music)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(523.square.size,1)</onload>
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(show.view.netflix.title.clearlogo.music)</onload> -->
+        <!-- <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(523.square.control.list)</onload> -->
+
+        <!-- DAY / NIGHT AUTOCOLOR -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.Reset(daynight.autocolor)</onload>
+
+        <!-- VIEWS PLAYLIST -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(hide.playlist.ratings)</onload>
+
+        <!-- STARTUP INIT -->
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetBool(startup.init)</onload>
     </include>
 
     <!-- TMDB SERVICES -->
@@ -2776,7 +3063,7 @@
                <left>$PARAM[left]</left>
                <width>$PARAM[dimensions]</width>
                <height>$PARAM[dimensions]</height>
-               <texture>special://profile/addon_data/script.texturemaker/ArcticZephirRounded/circlebuttondialog_h.png</texture>
+               <include>Texture_Widget_Bullet_Hightlight</include>
                <visible>$PARAM[visible]</visible>
             </control>
         </definition>

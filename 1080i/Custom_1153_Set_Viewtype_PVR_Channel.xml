@@ -2,9 +2,6 @@
 <window type="dialog" id="1153">
     <defaultcontrol>11</defaultcontrol>
 
-    <onload>SetProperty(view_types_pvr_channel_selected,$VAR[View_Types_PVR_Channel_Selected],Home)</onload>
-    <onunload>ClearProperty(view_types_pvr_channel_selected,Home)</onunload>
-
     <controls>
         <include>Background_Overlay</include>
 
@@ -41,7 +38,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(view_types_pvr_channel_selected),ListItem.Label)</visible>
+                        <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -50,12 +47,12 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(view_types_pvr_channel_selected),ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(view_types_pvr_channel_selected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </itemlayout>
                 <focusedlayout width="418" height="70">
@@ -75,7 +72,7 @@
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Selected" />
                         <param name="colordiffuse_on" value="Selected" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(view_types_pvr_channel_selected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </focusedlayout>
 
@@ -83,38 +80,52 @@
 
                 <content>
                     <item id="1">
-                        <label>535</label>
+                        <label>$LOCALIZE[535]</label>
+                        <onclick>Skin.SetString(settingpvrviewmode,1)</onclick>
                         <onclick>Container.SetViewMode(50)</onclick>
                         <onclick>Close</onclick>
-                    </item>
-                    <item id="5">
-                        <label>31316</label>
-                        <onclick>Container.SetViewMode(55)</onclick>
-                        <onclick>Close</onclick>
-                    </item>
-                    <item id="4">
-                        <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
-                        <label>31217</label>
-                        <onclick>Container.SetViewMode(54)</onclick>
-                        <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingpvrviewmode),1)">Def_Item_Selected</include>
+
                     </item>
                     <item id="2">
-                        <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
-                        <label>31147</label>
-                        <onclick>Container.SetViewMode(51)</onclick>
+                        <label>$LOCALIZE[31316]</label>
+                        <onclick>Skin.SetString(settingpvrviewmode,2)</onclick>
+                        <onclick>Container.SetViewMode(55)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingpvrviewmode),2)">Def_Item_Selected</include>
                     </item>
                     <item id="3">
                         <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
-                        <label>536</label>
+                        <label>$LOCALIZE[31217]</label>
+                        <onclick>Skin.SetString(settingpvrviewmode,3)</onclick>
+                        <onclick>Container.SetViewMode(54)</onclick>
+                        <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingpvrviewmode),3)">Def_Item_Selected</include>
+                    </item>
+                    <item id="4">
+                        <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
+                        <label>$LOCALIZE[31147]</label>
+                        <onclick>Skin.SetString(settingpvrviewmode,4)</onclick>
+                        <onclick>Container.SetViewMode(51)</onclick>
+                        <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingpvrviewmode),4)">Def_Item_Selected</include>
+                    </item>
+                    <item id="5">
+                        <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
+                        <label>$LOCALIZE[536]</label>
+                        <onclick>Skin.SetString(settingpvrviewmode,5)</onclick>
                         <onclick>Container.SetViewMode(52)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingpvrviewmode),5)">Def_Item_Selected</include>
                     </item>
                     <item id="6">
                         <visible>Window.IsVisible(MyPVRChannels.xml)</visible>
-                        <label>List Flix</label>
+                        <label>$LOCALIZE[31556]</label>
+                        <onclick>Skin.SetString(settingpvrviewmode,6)</onclick>
+                        <onclick>Skin.SetString(settingthemecolor,3)</onclick>
                         <onclick>Container.SetViewMode(526)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingpvrviewmode),6)">Def_Item_Selected</include>
                     </item>
                 </content>
             </control>

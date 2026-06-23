@@ -2,9 +2,6 @@
 <window type="dialog" id="1152">
     <defaultcontrol>11</defaultcontrol>
 
-    <onload>SetProperty(SetViewHomeSelected,$VAR[View_Home_Selected],Home)</onload>
-    <onunload>ClearProperty(SetViewHomeSelected,Home)</onunload>
-
     <controls>
         <include>Background_Overlay</include>
 
@@ -44,7 +41,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -53,12 +50,12 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </itemlayout>
                 <focusedlayout width="418" height="70">
@@ -80,7 +77,7 @@
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Selected" />
                         <param name="colordiffuse_on" value="Selected" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetViewHomeSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </focusedlayout>
 
@@ -90,6 +87,7 @@
                     <item id="1">
                         <label>$LOCALIZE[31182] $LOCALIZE[31004]</label>
                         <include>Def_Reset_View_types</include>
+                        <onclick>Skin.SetString(settinghomestyle,1)</onclick>
                         <onclick>Skin.SetBool(home.vertical)</onclick>
                         <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
                         <onclick>Skin.SetBool(home.style.flix)</onclick>
@@ -99,6 +97,7 @@
                         <onclick condition="Skin.HasSetting(home.show.menu.icons)">Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
                         <onclick>Skin.SetBool(enable.blur.on.home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settinghomestyle),1)">Def_Item_Selected</include>
                     </item>
 
                     <!-- VERTICAL MULTI WIDGETS -->
@@ -106,6 +105,7 @@
                     <item id="2">
                         <label>$LOCALIZE[31182]</label>
                         <include>Def_Reset_View_types</include>
+                        <onclick>Skin.SetString(settinghomestyle,2)</onclick>
                         <onclick>Skin.SetBool(home.vertical)</onclick>
                         <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
                         <onclick condition="!Skin.HasSetting(home.show.menu.icons)">Skin.SetBool(hide.home.menu)</onclick>
@@ -114,6 +114,7 @@
                         <onclick condition="Skin.HasSetting(home.show.menu.icons)">Skin.SetBool(hide.only.if.widgetcontainer.gets.focus)</onclick>
                         <onclick>Skin.Reset(enable.blur.on.home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settinghomestyle),2)">Def_Item_Selected</include>
                     </item>
 
                     <!-- HORIZONTAL MULTI WIDGETS FLIX -->
@@ -121,12 +122,14 @@
                     <item id="3">
                         <label>$LOCALIZE[31212] $LOCALIZE[31004]</label>
                         <include>Def_Reset_View_types</include>
+                        <onclick>Skin.SetString(settinghomestyle,3)</onclick>
                         <onclick>Skin.SetBool(home.horizontal)</onclick>
                         <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
                         <onclick>Skin.SetBool(home.style.flix)</onclick>
                         <onclick>Skin.Reset(hide.home.menu)</onclick>
                         <onclick>Skin.SetBool(enable.blur.on.home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settinghomestyle),3)">Def_Item_Selected</include>
                     </item>
 
                     <!-- HORIZONTAL MULTI WIDGETS -->
@@ -134,11 +137,13 @@
                     <item id="4">
                         <label>$LOCALIZE[31212]</label>
                         <include>Def_Reset_View_types</include>
+                        <onclick>Skin.SetString(settinghomestyle,4)</onclick>
                         <onclick>Skin.SetBool(home.horizontal)</onclick>
                         <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
                         <onclick>Skin.Reset(hide.home.menu)</onclick>
                         <onclick>Skin.Reset(enable.blur.on.home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settinghomestyle),4)">Def_Item_Selected</include>
                     </item>
 
                     <!-- HORIZONTAL MINIMAL AND CLEAN -->
@@ -146,6 +151,7 @@
                     <item id="5">
                         <label>$LOCALIZE[31398]</label>
                         <include>Def_Reset_View_types</include>
+                        <onclick>Skin.SetString(settinghomestyle,5)</onclick>
                         <onclick>Skin.SetBool(home.horizontal)</onclick>
                         <onclick>Skin.SetBool(home.vertical.widgets)</onclick>
                         <onclick>Skin.SetBool(home.style.flix)</onclick>
@@ -153,6 +159,7 @@
                         <onclick>Skin.Reset(hide.home.menu)</onclick>
                         <onclick>Skin.Reset(enable.blur.on.home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settinghomestyle),5)">Def_Item_Selected</include>
                     </item>
                 </content>
             </control>

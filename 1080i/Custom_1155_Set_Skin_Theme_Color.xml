@@ -2,9 +2,6 @@
 <window type="dialog" id="1155">
     <defaultcontrol>11</defaultcontrol>
 
-    <onload>SetProperty(SetSkinThemeColorSelected,$VAR[Label_Skin_Settings_Theme_Color_Selected],Home)</onload>
-    <onunload>ClearProperty(SetSkinThemeColorSelected,Home)</onunload>
-
     <controls>
         <include>Background_Overlay</include>
 
@@ -43,7 +40,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)</visible>
+                        <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -52,12 +49,12 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </itemlayout>
                 <focusedlayout width="418" height="70">
@@ -77,7 +74,7 @@
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Selected" />
                         <param name="colordiffuse_on" value="Selected" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </focusedlayout>
 
@@ -93,6 +90,7 @@
                         <onclick>Skin.SetString(settingthemecolor,1)</onclick>
                         <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:03,silent)</onclick>
                         <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:00,silent)</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),1)">Def_Item_Selected</include>
                     </item>
 
                     <!-- DAY -->
@@ -103,6 +101,7 @@
                         <onclick>Skin.SetString(settingthemecolor,2)</onclick>
                         <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:3,silent)</onclick>
                         <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:00,silent)</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),2)">Def_Item_Selected</include>
                     </item>
 
                     <!-- DAY NIGHT AUTOCOLOR -->
@@ -112,6 +111,7 @@
                         <onclick>Skin.SetBool(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,3)</onclick>
                         <onclick>close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),3)">Def_Item_Selected</include>
                     </item>
                 </content>
             </control>

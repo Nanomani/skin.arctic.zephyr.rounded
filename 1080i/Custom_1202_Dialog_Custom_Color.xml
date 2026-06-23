@@ -775,10 +775,10 @@
                 </include>
             </control>
 
-            <!-- PREVIEW - COLOR TEXT -->
+            <!-- LABEL - ACTUAL / PREVIEW -->
 
             <control type="grouplist" id="3300">
-                <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(ColorSettingSelected),ColorHighlight)</visible>
+                <visible>String.IsEqual(Window(Home).Property(colorfilter),1)</visible>
 
                 <top>420</top>
                 <left>16</left>
@@ -825,8 +825,11 @@
                     <label>31568</label>
                     <selected>Skin.HasSetting(DisableColourTitleMenuSetting)</selected>
                     <onclick>Skin.ToggleSetting(DisableColourTitleMenuSetting)</onclick>
+                    <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),ColorHighlight)</visible>
                 </control>
             </control>
+
+            <!-- ACTUAL / PREVIEW - TITLE -->
 
             <control type="grouplist">
                 <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + String.IsEqual(Window(Home).Property(ColorSettingSelected),ColorHighlight)</visible>
@@ -868,72 +871,30 @@
                 </control>
             </control>
 
-            <!-- PREVIEW - COLOR FOCUS -->
+            <!-- ACTUAL / PREVIEW - COLOR FOCUS -->
 
             <control type="group">
                 <visible>String.IsEqual(Window(Home).Property(colorfilter),1) + !String.IsEqual(Window(Home).Property(ColorSettingSelected),ColorHighlight)</visible>
 
                 <top>420</top>
-                <width>498</width>
-                <height>66</height>
-
-                <!-- PREVIEW COLOR TEXT -->
-
-                <control type="grouplist" id="97101">
-                    <left>16</left>
-                    <height>66</height>
-
-                    <enable>false</enable>
-                    <orientation>horizontal</orientation>
-
-                    <!-- LABEL ACTUAL -->
-
-                    <control type="button">
-                        <visible>!Control.HasFocus(3000)</visible>
-                        <enable>false</enable>
-                        <textoffsetx>30</textoffsetx>
-                        <align>left</align>
-                        <width>300</width>
-                        <disabledcolor>PanelWhite100</disabledcolor>
-                        <height>66</height>
-                        <label>$LOCALIZE[31176] :</label>
-                    </control>
-
-                    <!-- LABEL PREVIEW -->
-
-                    <control type="button">
-                        <visible>Control.HasFocus(3000)</visible>
-                        <enable>false</enable>
-                        <textoffsetx>30</textoffsetx>
-                        <align>left</align>
-                        <width>300</width>
-                        <disabledcolor>PanelWhite100</disabledcolor>
-                        <height>66</height>
-                        <label>$LOCALIZE[1000] :</label>
-                    </control>
-                </control>
+                <right>0</right>
+                <left>302</left>
 
                 <!-- PREVIEW COLOR FOCUS -->
 
-                <control type="group">
-                    <visible>String.IsEqual(Window(Home).Property(colorfilter),1)</visible>
+                <control type="image">
+                    <top>0</top>
+                    <width>280</width>
+                    <height>66</height>
+                    <texture colordiffuse="$VAR[Color_Focus]" border="12">$VAR[texture_box12]</texture>
+                </control>
 
-                    <left>302</left>
-
-                    <!-- FOCUS -->
-
-                    <control type="image">
-                        <width>280</width>
-                        <height>66</height>
-                        <texture colordiffuse="$VAR[Color_Focus]" border="12">$VAR[texture_box12]</texture>
-                        <visible>!String.IsEqual(Window(Home).Property(ColorSettingSelected),ColorFocus) | !Control.HasFocus(3000)</visible>
-                    </control>
-                    <control type="image">
-                        <width>280</width>
-                        <height>66</height>
-                        <texture colordiffuse="$INFO[Container(3000).ListItem.Label]" border="12">$VAR[texture_box12]</texture>
-                        <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),ColorFocus) + Control.HasFocus(3000)</visible>
-                    </control>
+                <control type="image">
+                    <top>80</top>
+                    <width>280</width>
+                    <height>66</height>
+                    <texture colordiffuse="$INFO[Container(3000).ListItem.Label]" border="12">$VAR[texture_box12]</texture>
+                    <visible>Control.HasFocus(3000)</visible>
                 </control>
             </control>
 

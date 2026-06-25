@@ -57,6 +57,9 @@
                     <font>Tiny</font>
                     <label>$INFO[System.Time]$INFO[Container(11).NumItems, - ,  $LOCALIZE[19019]]</label>
                 </control>
+
+                <!-- LINE HORIZONTAL -->
+
                 <control type="image">
                     <left>30</left>
                     <top>120</top>
@@ -75,7 +78,7 @@
 
                 <top>136</top>
                 <left>16</left>
-                <width>635</width>
+                <width>1650</width>
                 <height>892</height>
 
                 <onright>NextChannelGroup</onright>
@@ -89,11 +92,13 @@
                 <focusposition>1</focusposition>
                 <movement>6</movement>
 
-                <itemlayout height="111.5" width="635">
+                <itemlayout height="111.5" width="1650">
 
                     <!-- IS PLAYING -->
 
-                    <include>Def_View_List_Item_IsPlaying</include>
+                    <include content="Def_View_List_Item_IsPlaying">
+                        <param name="width" value="635" />
+                    </include>
 
                     <control type="image">
                         <left>22</left>
@@ -144,9 +149,9 @@
                         </control>
 
                         <control type="label">
-                            <left>150</left>
                             <top>40</top>
-                            <right>120</right>
+                            <left>150</left>
+                            <width>350</width>
                             <aligny>center</aligny>
                             <height>64</height>
                             <font>SmallPVR</font>
@@ -159,6 +164,7 @@
                         <width>200</width>
                         <top>4</top>
                         <right>30</right>
+                        <left>410</left>
                         <align>right</align>
                         <font>Small</font>
                         <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
@@ -166,11 +172,14 @@
                         <label>$VAR[Label_PVR_Channel_Start_End]</label>
                     </control>
                 </itemlayout>
-                <focusedlayout height="111.5" width="635">
+                <focusedlayout height="111.5" width="1650">
 
                     <!-- IS PLAYING -->
 
-                    <include content="Def_View_List_Focus_IsPlaying"><param name="list_id" value="11" /></include>
+                    <include content="Def_View_List_Focus_IsPlaying">
+                        <param name="width" value="635" />
+                        <param name="list_id" value="11" />
+                    </include>
 
                     <control type="image">
                         <left>22</left>
@@ -222,9 +231,9 @@
                         </control>
 
                         <control type="label">
-                            <left>150</left>
                             <top>40</top>
-                            <right>120</right>
+                            <left>150</left>
+                            <width>350</width>
                             <aligny>center</aligny>
                             <height>64</height>
                             <font>SmallPVR</font>
@@ -237,11 +246,41 @@
                         <width>200</width>
                         <top>4</top>
                         <right>30</right>
+                        <left>410</left>
                         <align>right</align>
                         <font>Small</font>
                         <textcolor>Selected</textcolor>
                         <selectedcolor>Selected</selectedcolor>
                         <label>$VAR[Label_PVR_Channel_Start_End]</label>
+                    </control>
+
+                    <!-- SHOW PLOT -->
+
+                    <control type="group">
+                        <visible>!String.IsEmpty(ListItem.Plot) + Control.HasFocus(11)</visible>
+                        <animation effect="fade" start="0" end="100" time="200">Focus</animation>
+
+                        <control type="image">
+                            <left>667</left>
+                            <top>-32</top>
+                            <width>986</width>
+                            <height>172</height>
+                            <colordiffuse>$VAR[Color_OSD_Background_Dialog]</colordiffuse>
+                            <texture border="24">$VAR[texture_box24]</texture>
+                            <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+                        </control>
+                        <control type="textbox">
+                            <left>699</left>
+                            <right>16</right>
+                            <top>-16</top>
+                            <width>922</width>
+                            <height>130</height>
+                            <label>$INFO[ListItem.Plot]</label>
+                            <font>Small</font>
+                            <textcolor>$VAR[Color_OSD_Panel_White70]</textcolor>
+                            <selectedcolor>$VAR[Color_OSD_Panel_White70]</selectedcolor>
+                            <autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
+                        </control>
                     </control>
 
                     <!-- SET PROPERTY LISTITEM_FOLDERPATH -->

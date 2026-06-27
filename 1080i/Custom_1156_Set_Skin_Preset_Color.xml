@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1156">
-    <defaultcontrol>11</defaultcontrol>
+    <defaultcontrol always="true">11</defaultcontrol>
 
     <onunload condition="!String.IsEmpty(Window(Home).Property(reloadskin))">SetFocus(3033)</onunload>
 
@@ -26,10 +26,11 @@
                 <width>418</width>
                 <height>560</height>
 
-                <onup>11</onup>
-                <ondown>11</ondown>
+                <onleft condition="!$EXP[Condition_Show_Button_Setup_Wizard]">close</onleft>
+                <onleft condition="$EXP[Condition_Show_Button_Setup_Wizard]">9010</onleft>
 
-                <onleft>close</onleft>
+                <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
+                <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9010</onright>
 
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
@@ -64,7 +65,7 @@
                     <!-- ITEM FOCUS -->
 
                     <include content="Def_Layout_Item_Focus">
-                        <param name="fade_condition" value="Control.HasFocus(5)" />
+                        <param name="fade_condition" value="!Control.HasFocus(11)" />
                     </include>
 
                     <control type="label">
@@ -80,6 +81,7 @@
                         <param name="colordiffuse_on" value="Selected" />
                         <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
+
                     <control type="button">
                         <label />
                         <include>Def_Hidden_Button</include>
@@ -143,6 +145,10 @@
                 <param name="textcolor" value="Black70" />
                 <param name="visible" value="Container(11).HasFocus(8)" />
             </include>
+
+            <!-- BUTTON OK / PREV / NEXT -->
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Def_Button_Setup_Wizard</include>
 
             <!-- NUM ITEMS -->
 

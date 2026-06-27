@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1155">
-    <defaultcontrol>11</defaultcontrol>
+    <defaultcontrol always="true">11</defaultcontrol>
 
     <controls>
         <include>Background_Overlay</include>
@@ -26,8 +26,12 @@
 
                 <onup>11</onup>
                 <ondown>11</ondown>
-                <onleft>close</onleft>
-                <onright>1773</onright>
+
+                <onleft condition="!$EXP[Condition_Show_Button_Setup_Wizard]">close</onleft>
+                <onleft condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</onleft>
+                
+                <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
+                <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</onright>
 
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
@@ -61,7 +65,9 @@
 
                     <!-- ITEM FOCUS -->
 
-                    <include>Def_Layout_Item_Focus</include>
+                    <include content="Def_Layout_Item_Focus">
+                        <param name="fade_condition" value="!Control.HasFocus(11)" />
+                    </include>
 
                     <control type="label">
                         <left>30</left>
@@ -110,7 +116,7 @@
                         <label>$LOCALIZE[31615]</label>
                         <onclick>Skin.SetBool(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,3)</onclick>
-                        <onclick>close</onclick>
+                        <onclick condition="!$EXP[Condition_Show_Button_Setup_Wizard]">Close</onclick>
                         <include condition="String.IsEqual(Skin.String(settingthemecolor),3)">Def_Item_Selected</include>
                     </item>
                 </content>
@@ -125,6 +131,10 @@
             <include content="Def_Dialog_View_Type">
                 <param name="texture" value="special://skin/extras/skincolor/$VAR[Def_Image_Skin_Theme_Color].jpg" />
             </include>
+
+            <!-- BUTTON OK / PREV / NEXT -->
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Def_Button_Setup_Wizard</include>
 
             <!-- NUM ITEMS -->
 

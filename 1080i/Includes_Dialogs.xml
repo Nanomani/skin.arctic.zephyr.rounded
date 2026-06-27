@@ -247,8 +247,10 @@
         <definition>
             <visible>$PARAM[visible]</visible>
 
-            <include>$PARAM[animation_fade_in]</include>
-            <include>$PARAM[animation_fade_out]</include>
+            <include condition="!$EXP[Condition_Show_Button_Setup_Wizard]">$PARAM[animation_fade_in]</include>
+            <include condition="!$EXP[Condition_Show_Button_Setup_Wizard]">$PARAM[animation_fade_out]</include>
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Animation_Dialog_Menu_Prec_Next_Side</include>
 
             <centerleft>$PARAM[centerleft]</centerleft>
             <centertop>$PARAM[centertop]</centertop>
@@ -788,6 +790,14 @@
         <height>66</height>
         <radioposx>14</radioposx>
         <radioposy>18</radioposy>
+        <radiowidth>48</radiowidth>
+    </include>
+
+    <include name="Def_Button_Dimensions_Circle">
+        <width>50</width>
+        <height>50</height>
+        <radioposx>1</radioposx>
+        <radioposy>10</radioposy>
         <radiowidth>48</radiowidth>
     </include>
 
@@ -2881,6 +2891,70 @@
 
                 <onclick>SetProperty(open_dialog_info_settings,1,Home)</onclick>
                 <onclick>SetFocus(9400)</onclick>
+            </control>
+        </control>
+    </include>
+
+    <!-- DEF - DIALOG SETUP WIZARD NAVIGATION -->
+
+    <include name="Def_Button_Setup_Wizard">
+        <control type="group">
+            <control type="group" id="9010">
+                <left>30</left>
+                <bottom>20</bottom>
+                <height>50</height>
+
+                <control type="radiobutton" id="3100">
+                    <include>Def_Button_Dimensions_Circle</include>
+                    <include content="Texture_RadioButton_Dialog_Circle">
+                        <param name="icon" value="buttonsdialogs/angle-left.png" />
+                        <param name="color" value="Black12" />
+                    </include>
+                    <label/>
+                    <enable>!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)</enable>
+
+                    <onup condition="!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(11)</onup>
+                    <onup condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(5)</onup>
+
+                    <ondown>SetFocus(11)</ondown>
+                    <onleft>SetFocus(9020)</onleft>
+                    <onright>SetFocus(9020)</onright>
+
+                    <onclick>SetProperty(SetupWizardStep,Prec,Home)</onclick>
+                    <onclick>close</onclick>
+
+                    <onclick condition="Window.IsVisible(Custom_1154_Set_Settings_Perfomance.xml)">ActivateWindow(1153)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">ActivateWindow(1154)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">ActivateWindow(1155)</onclick>
+                </control>
+            </control>
+
+            <control type="group" id="9020">
+                <left>366</left>
+                <bottom>20</bottom>
+                <height>50</height>
+
+                <control type="radiobutton" id="3102">
+                    <include>Def_Button_Dimensions_Circle</include>
+                    <include content="Texture_RadioButton_Dialog_Circle">
+                        <param name="icon" value="buttonsdialogs/angle-right.png" />
+                        <param name="color" value="Black12" />
+                    </include>
+                    <label/>
+                    <enable>!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)</enable>
+
+                    <onup>SetFocus(11)</onup>
+                    <ondown>SetFocus(11)</ondown>
+                    <onright>SetFocus(9010)</onright>
+                    <onleft>SetFocus(9010)</onleft>
+
+                    <onclick>SetProperty(SetupWizardStep,Next,Home)</onclick>
+                    <onclick>close</onclick>
+
+                    <onclick condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">ActivateWindow(1154)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1154_Set_Settings_Perfomance.xml)">ActivateWindow(1155)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">ActivateWindow(1156)</onclick>
+                </control>
             </control>
         </control>
     </include>

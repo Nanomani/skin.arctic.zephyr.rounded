@@ -2899,12 +2899,15 @@
 
     <include name="Def_Button_Setup_Wizard">
         <control type="group">
-            <control type="group" id="9010">
+
+            <!-- PREC -->
+
+            <control type="group">
                 <left>30</left>
                 <bottom>20</bottom>
                 <height>50</height>
 
-                <control type="radiobutton" id="3100">
+                <control type="radiobutton" id="9010">
                     <include>Def_Button_Dimensions_Circle</include>
                     <include content="Texture_RadioButton_Dialog_Circle">
                         <param name="icon" value="buttonsdialogs/angle-left.png" />
@@ -2917,8 +2920,12 @@
                     <onup condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(5)</onup>
 
                     <ondown>SetFocus(11)</ondown>
-                    <onleft>SetFocus(9020)</onleft>
-                    <onright>SetFocus(9020)</onright>
+
+                    <onleft condition="!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9020)</onleft>
+                    <onright condition="!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9020)</onright>
+
+                    <onleft condition="Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9030)</onleft>
+                    <onright condition="Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9030)</onright>
 
                     <onclick>SetProperty(SetupWizardStep,Prec,Home)</onclick>
                     <onclick>close</onclick>
@@ -2929,19 +2936,21 @@
                 </control>
             </control>
 
-            <control type="group" id="9020">
+            <!-- NEXT -->
+
+            <control type="group">
                 <left>366</left>
                 <bottom>20</bottom>
                 <height>50</height>
 
-                <control type="radiobutton" id="3102">
+                <control type="radiobutton" id="9020">
                     <include>Def_Button_Dimensions_Circle</include>
                     <include content="Texture_RadioButton_Dialog_Circle">
                         <param name="icon" value="buttonsdialogs/angle-right.png" />
                         <param name="color" value="Black12" />
                     </include>
                     <label/>
-                    <enable>!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)</enable>
+                    <visible>!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)</visible>
 
                     <onup>SetFocus(11)</onup>
                     <ondown>SetFocus(11)</ondown>
@@ -2954,6 +2963,54 @@
                     <onclick condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">ActivateWindow(1154)</onclick>
                     <onclick condition="Window.IsVisible(Custom_1154_Set_Settings_Perfomance.xml)">ActivateWindow(1155)</onclick>
                     <onclick condition="Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">ActivateWindow(1156)</onclick>
+                </control>
+            </control>
+
+            <!-- START -->
+
+            <control type="group">
+                <left>366</left>
+                <bottom>20</bottom>
+                <height>50</height>
+
+                <control type="radiobutton" id="9030">
+                    <include>Def_Button_Dimensions_Circle</include>
+                    <include content="Texture_RadioButton_Dialog_Circle">
+                        <param name="icon" value="buttonsdialogs/launch.png" />
+                        <param name="color" value="Black12" />
+                    </include>
+                    <label/>
+                    <visible>Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)</visible>
+
+                    <onup>SetFocus(11)</onup>
+                    <ondown>SetFocus(11)</ondown>
+                    <onright>SetFocus(9010)</onright>
+                    <onleft>SetFocus(9010)</onleft>
+
+                    <onclick>SetProperty(SetupWizardStep,Next,Home)</onclick>
+                    <onclick>close</onclick>
+                </control>
+            </control>
+
+            <!-- TIPS - FOOTER -->
+
+            <control type="group">
+                <visible>Control.HasFocus(9010) | Control.HasFocus(9020) | Control.HasFocus(9030)</visible>
+
+                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="150" /></include>
+                <include>Animation_Dialog_Info_Fade_Out_150</include>
+
+                <bottom>30</bottom>
+                <left>30</left>
+                <width>370</width>
+                <height>50</height>
+
+                <control type="label">
+                    <font>Small</font>
+                    <scroll>false</scroll>
+                    <align>center</align>
+                    <textcolor>Dark2</textcolor>
+                    <label>$VAR[Label_Setup_Wizard_Footer_Tip]</label>
                 </control>
             </control>
         </control>

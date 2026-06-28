@@ -2,6 +2,9 @@
 <window type="dialog" id="1155">
     <defaultcontrol always="true">11</defaultcontrol>
 
+    <onload>ClearProperty(reloadsetupwizard,Home)</onload>
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard))">SetFocus(3099)</onunload>
+
     <controls>
         <include>Background_Overlay</include>
 
@@ -92,31 +95,47 @@
 
                     <item id="1">
                         <label>$LOCALIZE[31613] ($LOCALIZE[571])</label>
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
                         <onclick>Skin.Reset(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,1)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1155,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardStep,Next,Home)</onclick>
+                        <onclick condition="Skin.HasSetting(daynight.autocolor)">SetProperty(autocolors_enable,1,Home)</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),1)">Def_Item_Selected</include>
+
                         <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:03,silent)</onclick>
                         <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:00,silent)</onclick>
-                        <include condition="String.IsEqual(Skin.String(settingthemecolor),1)">Def_Item_Selected</include>
+                        <onclick>Close</onclick>
                     </item>
 
                     <!-- DAY -->
 
                     <item id="2">
                         <label>$LOCALIZE[31614]</label>
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
                         <onclick>Skin.Reset(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,2)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1155,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardStep,Next,Home)</onclick>
+                        <onclick condition="Skin.HasSetting(daynight.autocolor)">SetProperty(autocolors_enable,1,Home)</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),2)">Def_Item_Selected</include>
+
                         <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:3,silent)</onclick>
                         <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:00,silent)</onclick>
-                        <include condition="String.IsEqual(Skin.String(settingthemecolor),2)">Def_Item_Selected</include>
+                        <onclick>Close</onclick>
                     </item>
 
                     <!-- DAY NIGHT AUTOCOLOR -->
 
                     <item id="3">
                         <label>$LOCALIZE[31615]</label>
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
+                        <onclick condition="!System.HasAddon(script.arctic.zephyr.rounded.autocolors)">InstallAddon(script.arctic.zephyr.rounded.autocolors)</onclick>
                         <onclick>Skin.SetBool(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,3)</onclick>
-                        <onclick condition="!$EXP[Condition_Show_Button_Setup_Wizard]">Close</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1155,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardStep,Next,Home)</onclick>
+                        <onclick>Close</onclick>
                         <include condition="String.IsEqual(Skin.String(settingthemecolor),3)">Def_Item_Selected</include>
                     </item>
                 </content>

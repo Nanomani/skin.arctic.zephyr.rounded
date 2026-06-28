@@ -6,12 +6,17 @@
     <!-- RELOAD -->
 
     <onload>SetProperty(ReloadDone,1)</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard)">SetFocus(3099)</onload>
+
     <onunload>CancelAlarm(GoHome,true)</onunload>
 
     <controls>
+        <include>Hidden_Button_ReloadSetupWizard</include>
+
         <control type="button" id="3615">
             <visible allowhiddenfocus="true">false</visible>
-            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:03,silent)</onfocus>
+            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist)) + String.IsEmpty(Skin.String(FullInitEnded)) + String.IsEmpty(Skin.String(FullInitStarted))">AlarmClock(GoFullInit,ReplaceWindow(1153),00:03,silent)</onfocus>
+            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist)) + !String.IsEmpty(Skin.String(FullInitStarted))">AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:03,silent)</onfocus>
             <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(FocusButton,SetFocus(3616),00:01,silent)</onfocus>
             <onfocus condition="!String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(GoToCheck,SetFocus(9000),00:00,silent)</onfocus>
         </control>

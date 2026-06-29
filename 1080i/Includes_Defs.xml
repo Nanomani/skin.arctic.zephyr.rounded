@@ -153,6 +153,30 @@
         </control>
     </include>
 
+    <include name="Hidden_Button_ReloadSetupWizard">
+        <control type="button" id="3099">
+            <visible allowhiddenfocus="true">false</visible>
+            <include>Def_Hidden_Button</include>
+            <onfocus>Control.SetFocus(3000,1,absolute)</onfocus>
+            <onfocus>ClearProperty(reloadsetupwizard,Home)</onfocus>
+            <!-- <onfocus>ClearProperty(launchsetupwizard,Home)</onfocus> -->
+
+            <onfocus>ClearProperty(autocolors_enable,Home)</onfocus>
+
+            <!-- <onfocus>AlarmClock(DelayReloadSkin,ReloadSkin(),00:00,silent)</onfocus> -->
+            <!-- <onfocus condition="!String.IsEmpty(Window(Home).Property(launchsetupwizard)">AlarmClock(LaunchSetupWizard,ActivateWindow(1153),00:00,silent)</onfocus> -->
+
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1153)">AlarmClock(DelayReload1153,ActivateWindow(1154),00:01,silent)</onfocus>
+
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1154)">AlarmClock(DelayReload1154,ActivateWindow(1155),00:01,silent)</onfocus>
+
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1155) + String.IsEmpty(Window(Home).Property(autocolors_enable)">AlarmClock(DelayReload1155,ActivateWindow(1156),00:01,silent)</onfocus>
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1155) + !String.IsEmpty(Window(Home).Property(autocolors_enable)">AlarmClock(DelayReload1155,ActivateWindow(1156),00:07,silent)</onfocus>
+
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1156)">AlarmClock(DelayReload1156,ActivateWindow(1156),00:01,silent)</onfocus>
+        </control>
+    </include>
+
     <!-- DEF - SHADOW -->
 
     <variable name="texture_box12">
@@ -296,11 +320,18 @@
         <param name="condition_fade_background" value="$PARAM[condition_fade_background]" default="false" />
         <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" default="Fallback" />
         <param name="visible_background_b12" value="$PARAM[visible_background_b12]" default="false" />
+        <param name="visible_background_b24" value="$PARAM[visible_background_b24]" default="false" />
 
         <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
             <include content="Def_Image_Background_Only_b12" condition="$PARAM[visible_background_b12]">
+                <param name="pad_image" value="$PARAM[pad_image]" />
+                <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" />
+                <param name="condition_fade_background" value="$PARAM[condition_fade_background]" />
+                <param name="visible" value="$PARAM[visible]" />
+            </include>
+            <include content="Def_Image_Background_Only_b24" condition="$PARAM[visible_background_b24]">
                 <param name="pad_image" value="$PARAM[pad_image]" />
                 <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" />
                 <param name="condition_fade_background" value="$PARAM[condition_fade_background]" />
@@ -473,10 +504,6 @@
     </include>
 
     <!-- DEF - RATING -->
-
-    <include name="Def_Item_Selected">
-        <property name="ItemSelected">Item_Selected_True</property>
-    </include>
 
     <variable name="Value_Item_Rating_IMDb">
         <value condition="$EXP[Condition_Item_IMDb_Rating]">$INFO[ListItem.Rating]</value>
@@ -1687,7 +1714,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture colordiffuse="Dark2">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundWatched) | String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)</visible>
+                        <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundWatched) | String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundLabel)</visible>
                     </control>
                 </control>
 
@@ -1721,7 +1748,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture colordiffuse="Dark2">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundNew) | String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)</visible>
+                        <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundNew) | String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundLabel)</visible>
                     </control>
                 </control>
 
@@ -1755,7 +1782,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture colordiffuse="Dark2">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundInProgress) | String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)</visible>
+                        <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundInProgress) | String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundLabel)</visible>
                     </control>
                 </control>
 
@@ -1788,7 +1815,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture colordiffuse="Dark2">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlaying) | String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundIsPlayingicon)</visible>
+                        <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundIsPlaying) | String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundIsPlayingicon)</visible>
                     </control>
                 </control>
 
@@ -1822,7 +1849,7 @@
                         <width>24</width>
                         <height>24</height>
                         <texture colordiffuse="Dark2">buttons/radio-on.png</texture>
-                        <visible>String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundUnWatched) | String.IsEqual(Window(Home).Property(gradient),IndicatorColorBackgroundLabel)</visible>
+                        <visible>String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundUnWatched) | String.IsEqual(Window(Home).Property(ColorSettingSelected),IndicatorColorBackgroundLabel)</visible>
                     </control>
                 </control>
             </control>
@@ -2136,8 +2163,12 @@
     </include>
 
     <!-- ===========================  -->
-    <!--   SKIN / SERVICE -SETTINGS   -->
+    <!--   SKIN / SERVICE - SETTINGS   -->
     <!-- ============================ -->
+
+    <include name="Def_Item_Selected">
+        <property name="ItemSelected">Item_Selected_True</property>
+    </include>
 
     <!-- SETTINGS - CEARLOGO -->
 
@@ -2247,7 +2278,7 @@
 
         <!-- DISABLE - HOME WIDGET ANIMATION -->
 
-        <onclick>Skin.SetBool(home.disable.widget.animation)</onclick>
+        <!-- <onclick>Skin.SetBool(home.disable.widget.animation)</onclick> -->
 
         <!-- BACKGROUND -->
 
@@ -2329,7 +2360,7 @@
         <onclick>Skin.SetString(fanart.fallback.podcasts,special://skin/extras/backgrounds/addons/addons_4.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.more,special://skin/extras/backgrounds/more/more_1.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.dvd,special://skin/extras/backgrounds/dvd/dvd_1.jpg)</onclick>
-        <onclick>Skin.SetString(fanart.fallback,special://skin/extras/backgrounds/fallback/bg_fallback.jpg)</onclick>
+        <onclick>Skin.SetString(fanart.fallback,special://skin/extras/backgrounds/fallback/bg_fallback_1.jpg)</onclick>
 
         <!-- HOME - CLEAN -->
 
@@ -2511,7 +2542,7 @@
 
         <!-- OSD GLOBAL SETTINGS -->
 
-        <onclick>Skin.Reset(Value_OSD_Auto_Hide_Timeout,3)</onclick>
+        <onclick>Skin.SetString(Value_OSD_Auto_Hide_Timeout,3)</onclick>
 
         <!-- OSD VIDEO SETTINGS -->
 
@@ -2521,7 +2552,7 @@
         <onclick>Skin.SetBool(show.osd.video.flags.imdb.rating)</onclick>
         <onclick>Skin.SetBool(show.osd.video.clock)</onclick>
         <onclick>Skin.SetBool(show.home.nowplaying.extended.video.clearart)</onclick>
-        <onclick>Skin.SetBool(osd.open.auto.pause)</onclick>
+        <onclick>Skin.Reset(osd.open.auto.pause)</onclick>
         <onclick>Skin.Reset(show.osd.video.info.at.start)</onclick>
         <onclick>Skin.Reset(Value_Show_OSD_At_Start_Timeout)</onclick>
 
@@ -2643,8 +2674,10 @@
         <!-- SETTINGS SET DEFAULT -->
 
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(Skin.SettingsLevel,$NUMBER[3])</onload>
-        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingperflevel,2)</onload>
+
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settinghomestyle,5)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingthemecolor,1)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingperflevel,2)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(settingpresetcolor,3)</onload>
 
         <!-- COLOR -->
@@ -2719,7 +2752,7 @@
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.podcasts,special://skin/extras/backgrounds/addons/addons_4.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.more,special://skin/extras/backgrounds/more/more_1.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.dvd,special://skin/extras/backgrounds/dvd/dvd_1.jpg)</onload>
-        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback,special://skin/extras/backgrounds/fallback/bg_fallback.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback,special://skin/extras/backgrounds/fallback/bg_fallback_1.jpg)</onload>
 
         <!-- HOME -->
 
@@ -3054,7 +3087,7 @@
                <left>$PARAM[left]</left>
                <width>$PARAM[dimensions]</width>
                <height>$PARAM[dimensions]</height>
-               <texture colordiffuse="Dark2">special://skin/extras/textures/circlebutton.png</texture>
+               <include>Texture_Widget_Bullet</include>
                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus($PARAM[focusid])">Conditional</animation>
                <visible>!$PARAM[visible]</visible>
             </control>
@@ -3063,7 +3096,7 @@
                <left>$PARAM[left]</left>
                <width>$PARAM[dimensions]</width>
                <height>$PARAM[dimensions]</height>
-               <include>Texture_Widget_Bullet_Hightlight</include>
+               <include>Texture_Widget_Bullet_Focus</include>
                <visible>$PARAM[visible]</visible>
             </control>
         </definition>

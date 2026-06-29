@@ -20,7 +20,7 @@
                 <include content="Def_Art_Image">
                     <param name="visible_background_b24" value="true" />
                     <param name="colordiffuse_background" value="black" />
-                    <param name="texture" value="$VAR[Image_PVR_Thumb]" />
+                    <param name="texture" value="$VAR[Image_Dialog_Info_EPG]" />
                     <param name="texture_diffuse" value="square_w640_h640_b24" />
                     <param name="aspectratio" value="keep" />
                     <param name="fallback" value="defaultpvrchannels" />
@@ -45,11 +45,11 @@
                 <control type="group">
                     <visible>!Window.IsVisible(DialogBusy.xml)</visible>
 
+                    <include>Animation_Wiki_Fade_Out</include>
                     <include>Animation_Music_Info_Extended_Views_Fade_Out</include>
-                    <visible>!Window.IsVisible(script-wikipedia.xml)</visible>
 
                     <top>70</top>
-                    <left>785</left>
+                    <left>DialogInfo_Square_Left</left>
                     <width>1040</width>
 
                     <!-- ICON -->
@@ -74,11 +74,20 @@
 
                     <control type="label">
                         <left>104</left>
-                        <width>890</width>
                         <font>LargeNew</font>
                         <description>Header Label</description>
                         <textcolor>Dark1</textcolor>
-                        <label>$INFO[ListItem.Title]</label>
+                        <label>$VAR[Label_PVR_Dialog_Info_Header_Main_Title]</label>
+                        <visible>!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views) | !String.IsEmpty(Window(Home).Property(VideoYoutubeIsPlaying))</visible>
+                    </control>
+                    <control type="label">
+                        <left>104</left>
+                        <width>280</width>
+                        <font>LargeNew</font>
+                        <description>Header Label</description>
+                        <textcolor>Dark1</textcolor>
+                        <label>$VAR[Label_PVR_Dialog_Info_Header_Main_Title]</label>
+                        <visible>Player.HasMedia + !Skin.HasSetting(hide.furniture.nowplaying.views) + String.IsEmpty(Window(Home).Property(VideoYoutubeIsPlaying))</visible>
                     </control>
 
                     <!-- SUB HEADER TITLE -->
@@ -90,8 +99,44 @@
                         <font>Tiny</font>
                         <textcolor>Dark1</textcolor>
                         <width>78%</width>
-                        <label fallback="19055">$INFO[ListItem.ChannelName]$INFO[ListItem.ChannelNumberLabel, (,)]$VAR[Label_PVR_Info_Status,  ,]</label>
+                        <label fallback="19055">$VAR[Label_PVR_Dialog_Info_Header_Sub_Title]</label>
                         <aligny>center</aligny>
+                        <visible>!Player.HasMedia | Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
+                    </control>
+                    <control type="label">
+                        <top>55</top>
+                        <left>104</left>
+                        <width>280</width>
+                        <height>36</height>
+                        <font>Tiny</font>
+                        <textcolor>Dark1</textcolor>
+                        <width>78%</width>
+                        <label fallback="19055">$VAR[Label_PVR_Dialog_Info_Header_Sub_Title]</label>
+                        <aligny>center</aligny>
+                        <visible>Player.HasMedia + !Skin.HasSetting(hide.furniture.nowplaying.views)</visible>
+                    </control>
+                </control>
+
+                <!-- CLEARLOGO -->
+
+                <control type="group" description="clearlogo">
+                    <visible>Skin.HasSetting(show.dialog.info.clearlogo.video)</visible>
+                    <visible>ControlGroup(9000).HasFocus() | !String.IsEmpty(Window(Home).Property(title_tempo)) | !String.IsEmpty(Window(Home).Property(VideoYoutubeIsPlaying))</visible>
+
+                    <include>Animation_Wiki_Fade_Out</include>
+                    <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
+
+                    <include>Animation_Dialog_Info_Fade_In_250_Delay_200</include>
+                    <include>Animation_Dialog_Video_Info_Clearlogo_Fade_Out</include>
+
+                    <control type="image" description="clearlogo">
+                        <centertop>264</centertop>
+                        <right>View_List_Side</right>
+                        <height>ClearLogoMaxHeight</height>
+                        <width>ClearLogoMaxWidth</width>
+                        <fadetime>ClearArtFadetime</fadetime>
+                        <aspectratio align="right">keep</aspectratio>
+                        <texture background="true">$VAR[Image_Crop_ClearLogo]</texture>
                     </control>
                 </control>
 

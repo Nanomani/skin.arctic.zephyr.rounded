@@ -47,9 +47,7 @@
         <param name="arrow_top" default="-24" />
         <param name="arrow_bottom" default="699" />
         <param name="arrow_centerleft" default="50%" />
-
         <param name="colordiffuse" default="White100" />
-        <param name="texture" default="common/arrow_small_down.png" />
 
         <definition>
             <control type="group">
@@ -57,13 +55,13 @@
                     <top>$PARAM[arrow_top]</top>
                     <centerleft>$PARAM[arrow_centerleft]</centerleft>
                     <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="$PARAM[colordiffuse]" flipy="true">$PARAM[texture]</texture>
+                    <include content="Texture_Arrow_Up"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
                 </control>
                 <control type="image">
                     <top>$PARAM[arrow_bottom]</top>
                     <centerleft>$PARAM[arrow_centerleft]</centerleft>
                     <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="$PARAM[colordiffuse]" flipy="false">$PARAM[texture]</texture>
+                    <include content="Texture_Arrow_Down"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
                 </control>
             </control>
         </definition>
@@ -75,7 +73,6 @@
         <param name="arrow_centerleft" default="50%" />
 
         <param name="colordiffuse" default="White100" />
-        <param name="texture" default="common/arrow_small_down.png" />
         <param name="container_id" default="$PARAM[container_id]" />
 
         <param name="visible" default="true" />
@@ -88,13 +85,13 @@
                     <top>$PARAM[arrow_top]</top>
                     <centerleft>$PARAM[arrow_centerleft]</centerleft>
                     <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="$PARAM[colordiffuse]" flipy="true">$PARAM[texture]</texture>
+                    <include content="Texture_Arrow_Up"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
                 </control>
                 <control type="image">
                     <top>$PARAM[arrow_bottom]</top>
                     <centerleft>$PARAM[arrow_centerleft]</centerleft>
                     <include>Def_Arrow_Size</include>
-                    <texture colordiffuse="$PARAM[colordiffuse]" flipy="false">$PARAM[texture]</texture>
+                    <include content="Texture_Arrow_Down"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
                 </control>
             </control>
         </definition>
@@ -175,17 +172,17 @@
                 <left>-12</left>
                 <width>40</width>
                 <height>40</height>
-                <texture border="0" colordiffuse="$PARAM[colordiffuse_background]">common/circle.png</texture>
+                <texture border="0" colordiffuse="$PARAM[colordiffuse_background]">common/circle80.png</texture>
             </control>
             <control type="image">
                 <top>0</top>
                 <include>Def_Arrow_Size</include>
-                <texture colordiffuse="$PARAM[colordiffuse]" flipy="true">common/arrow_small_down.png</texture>
+                <include content="Texture_Arrow_Up"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
             </control>
             <control type="image">
                 <top>12</top>
                 <include>Def_Arrow_Size</include>
-                <texture colordiffuse="$PARAM[colordiffuse]" flipy="true">common/arrow_small_down.png</texture>
+                <include content="Texture_Arrow_Up"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
             </control>
         </definition>
     </include>
@@ -200,17 +197,17 @@
                 <left>-12</left>
                 <width>40</width>
                 <height>40</height>
-                <texture border="0" colordiffuse="$PARAM[colordiffuse_background]">common/circle.png</texture>
+                <texture border="0" colordiffuse="$PARAM[colordiffuse_background]">common/circle80.png</texture>
             </control>
             <control type="image">
                 <top>0</top>
                 <include>Def_Arrow_Size</include>
-                <texture colordiffuse="$PARAM[colordiffuse]" flipy="false">common/arrow_small_down.png</texture>
+                <include content="Texture_Arrow_Down"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
             </control>
             <control type="image">
                 <top>12</top>
                 <include>Def_Arrow_Size</include>
-                <texture colordiffuse="$PARAM[colordiffuse]" flipy="false">common/arrow_small_down.png</texture>
+                <include content="Texture_Arrow_Down"><param name="colordiffuse" value="$PARAM[colordiffuse]" /></include>
             </control>
         </definition>
     </include>
@@ -473,8 +470,8 @@
         <param name="top" value="$PARAM[top]" default="112" />
         <param name="centerright" value="$PARAM[centerright]" default="360" />
         <param name="colordiffuse_texturesliderbackground" value="$PARAM[colordiffuse_texturesliderbackground]" default="Dark4" />
-        <param name="texturesliderbarfocus" value="$PARAM[texturesliderbarfocus]" default="texturemaker/scrollv.png" />
-        <param name="texturesliderbarfocus_colordiffuse" value="$PARAM[texturesliderbarfocus_colordiffuse]" default="" />
+        <param name="colordiffuse_texturesliderbar" default="Dark3" />
+        <param name="texturesliderbarfocus_colordiffuse" value="$PARAM[texturesliderbarfocus_colordiffuse]" default="$VAR[Color_Focus]" />
         <param name="animation_fade_hide" value="$PARAM[animation_fade_hide]" default="true" />
         <param name="condition_on_left" value="$PARAM[condition_on_left]" default="true" />
         <param name="visible" value="$PARAM[visible]" default="true" />
@@ -483,20 +480,23 @@
             <control type="scrollbar" id="$PARAM[scrollid]">
                 <visible>$PARAM[visible]</visible>
 
-                <width>8</width>
                 <top>$PARAM[top]</top>
                 <height>$PARAM[height]</height>
                 <centerright>$PARAM[centerright]</centerright>
+                <width>8</width>
+
                 <onleft condition="$PARAM[condition_on_left]">$PARAM[onleft]</onleft>
                 <onleft condition="!$PARAM[condition_on_left]">$PARAM[onleft2]</onleft>
                 <onright>$PARAM[onright]</onright>
                 <onback>$PARAM[onback]</onback>
 
-                <texturesliderbackground border="4" colordiffuse="$PARAM[colordiffuse_texturesliderbackground]">scrollbar/scrollv.png</texturesliderbackground>
-                <texturesliderbar border="4" colordiffuse="Dark3">scrollbar/scrollv.png</texturesliderbar>
-                <texturesliderbarfocus border="4" colordiffuse="$PARAM[texturesliderbarfocus_colordiffuse]">$PARAM[texturesliderbarfocus]</texturesliderbarfocus>
                 <orientation>vertical</orientation>
                 <showonepage>false</showonepage>
+
+                <texturesliderbackground border="4" colordiffuse="$PARAM[colordiffuse_texturesliderbackground]">scrollbar/scrollv.png</texturesliderbackground>
+                <texturesliderbar border="4" colordiffuse="$PARAM[colordiffuse_texturesliderbar]">scrollbar/scrollv.png</texturesliderbar>
+                <texturesliderbarfocus border="4" colordiffuse="$PARAM[texturesliderbarfocus_colordiffuse]">scrollbar/scrollv.png</texturesliderbarfocus>
+
                 <animation effect="fade" start="100" end="0" time="400" condition="!Control.HasFocus($PARAM[scrollid]) + !Container.Scrolling + $PARAM[animation_fade_hide]">Conditional</animation>
             </control>
         </definition>
@@ -507,7 +507,7 @@
         <param name="width" default="View_List_Width" />
         <param name="bottom" default="200" />
         <param name="right" default="View_List_Side" />
-        <param name="colordiffuse_texturesliderbackground" default="Dark4" />
+        <param name="colordiffuse_texturesliderbackground" value="$PARAM[colordiffuse_texturesliderbackground]" default="Dark4" />
         <param name="colordiffuse_texturesliderbar" default="Dark3" />
         <param name="animation_fade_hide" value="$PARAM[animation_fade_hide]" default="true" />
 
@@ -528,7 +528,7 @@
 
                 <texturesliderbackground border="4" colordiffuse="$PARAM[colordiffuse_texturesliderbackground]">scrollbar/scrollh.png</texturesliderbackground>
                 <texturesliderbar border="4" colordiffuse="$PARAM[colordiffuse_texturesliderbar]">scrollbar/scrollh.png</texturesliderbar>
-                <texturesliderbarfocus border="4" colordiffuse="$VAR[Color_Focus]">texturemaker/scrollh.png</texturesliderbarfocus>
+                <texturesliderbarfocus border="4" colordiffuse="$VAR[Color_Focus]">scrollbar/scrollh.png</texturesliderbarfocus>
                 <animation effect="fade" start="100" end="0" time="100" condition="!Control.HasFocus($PARAM[scrollid]) + $PARAM[animation_fade_hide]">Conditional</animation>
             </control>
         </definition>
@@ -538,8 +538,7 @@
         <param name="left" value="$PARAM[left]" default="870" />
         <param name="height" value="$PARAM[height]" default="490" />
         <param name="colordiffuse_texturesliderbackground" value="$PARAM[colordiffuse_texturesliderbackground]" default="Dark4" />
-        <param name="texturesliderbarfocus" value="$PARAM[texturesliderbarfocus]" default="texturemaker/scrollv.png" />
-        <param name="texturesliderbarfocus_colordiffuse" value="$PARAM[texturesliderbarfocus_colordiffuse]" default="" />
+        <param name="texturesliderbarfocus_colordiffuse" value="$PARAM[texturesliderbarfocus_colordiffuse]" default="$VAR[Color_Focus]" />
         <param name="animation_fade_hide" value="$PARAM[animation_fade_hide]" default="true" />
 
         <definition>
@@ -552,7 +551,7 @@
                 <onright>$PARAM[onright]</onright>
                 <texturesliderbackground border="4" colordiffuse="$PARAM[colordiffuse_texturesliderbackground]">scrollbar/scrollv.png</texturesliderbackground>
                 <texturesliderbar border="4" colordiffuse="Dark3">scrollbar/scrollv.png</texturesliderbar>
-                <texturesliderbarfocus border="4" colordiffuse="$PARAM[texturesliderbarfocus_colordiffuse]">$PARAM[texturesliderbarfocus]</texturesliderbarfocus>
+                <texturesliderbarfocus border="4" colordiffuse="$PARAM[texturesliderbarfocus_colordiffuse]">scrollbar/scrollv.png</texturesliderbarfocus>
                 <orientation>vertical</orientation>
                 <showonepage>false</showonepage>
                 <animation effect="fade" start="100" end="0" time="400" condition="!Control.HasFocus($PARAM[scrollid]) + !Container.Scrolling + $PARAM[animation_fade_hide]">Conditional</animation>

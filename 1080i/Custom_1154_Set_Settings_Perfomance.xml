@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1154">
-    <defaultcontrol>11</defaultcontrol>
+    <defaultcontrol always="true">11</defaultcontrol>
 
-    <onload>SetProperty(Set_Setting_Type_Perf_Selected,$VAR[Label_Skin_Settings_Perf_Selected],Home)</onload>
-    <onunload>ClearProperty(Set_Setting_Type_Perf_Selected,Home)</onunload>
+    <onload>ClearProperty(reloadsetupwizard,Home)</onload>
+    <onload>ClearProperty(SetupWizardDirection,Home)</onload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadskin))">SetFocus(3033)</onunload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard))">SetFocus(3099)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard))">Skin.SetString(FullInitEnded,1)</onunload>
+
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard)) + Window.IsVisible(Custom_1100_Startup.xml)">SetFocus(3615)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -29,8 +36,12 @@
 
                 <onup>11</onup>
                 <ondown>11</ondown>
-                <onleft>close</onleft>
-                <onright>1773</onright>
+
+                <onleft condition="!$EXP[Condition_Show_Button_Setup_Wizard]">close</onleft>
+                <onleft condition="$EXP[Condition_Show_Button_Setup_Wizard]">9010</onleft>
+
+                <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
+                <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</onright>
 
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
@@ -43,7 +54,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(Set_Setting_Type_Perf_Selected),ListItem.Label)</visible>
+                        <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -52,19 +63,21 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(Set_Setting_Type_Perf_Selected),ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(Set_Setting_Type_Perf_Selected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </itemlayout>
                 <focusedlayout width="418" height="70">
 
                     <!-- ITEM FOCUS -->
 
-                    <include>Def_Layout_Item_Focus</include>
+                    <include content="Def_Layout_Item_Focus">
+                        <param name="fade_condition" value="!Control.HasFocus(11)" />
+                    </include>
 
                     <control type="label">
                         <left>30</left>
@@ -77,7 +90,7 @@
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Selected" />
                         <param name="colordiffuse_on" value="Selected" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(Set_Setting_Type_Perf_Selected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </focusedlayout>
 
@@ -92,8 +105,13 @@
                         <include>Def_Settings_Clearlogo_Disable_All</include>
 
                         <onclick>Skin.SetString(settingperflevel,1)</onclick>
-                        <onclick>SetProperty(reloadskin,1,Home)</onclick>
-                        <onclick>close</onclick>
+                        <onclick condition="!$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadskin,1,Home)</onclick>
+
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1154,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardDirection,Next,Home)</onclick>
+                        <onclick>Close</onclick>
+
+                        <include condition="String.IsEqual(Skin.String(settingperflevel),1)">Def_Item_Selected</include>
                     </item>
 
                     <!-- BALANCED - DEFAULT -->
@@ -106,8 +124,12 @@
                         <include>Def_Settings_All_Default_Value</include>
 
                         <onclick>Skin.SetString(settingperflevel,2)</onclick>
-                        <onclick>SetProperty(reloadskin,1,Home)</onclick>
+                        <onclick condition="!$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadskin,1,Home)</onclick>
+
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1154,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardDirection,Next,Home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingperflevel),2)">Def_Item_Selected</include>
                     </item>
 
                     <!-- QUALITY -->
@@ -121,8 +143,12 @@
                         <include>Def_Settings_Quality_Value</include>
 
                         <onclick>Skin.SetString(settingperflevel,3)</onclick>
-                        <onclick>SetProperty(reloadskin,1,Home)</onclick>
+                        <onclick condition="!$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadskin,1,Home)</onclick>
+
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1154,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardDirection,Next,Home)</onclick>
                         <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingperflevel),3)">Def_Item_Selected</include>
                     </item>
                 </content>
             </control>
@@ -146,6 +172,10 @@
                 <param name="textcolor" value="Black70" />
                 <param name="visible" value="Container(11).HasFocus(1)" />
             </include>
+
+            <!-- BUTTON OK / PREV / NEXT -->
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Def_Button_Setup_Wizard</include>
 
             <!-- NUM ITEMS -->
 

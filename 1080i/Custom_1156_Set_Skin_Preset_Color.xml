@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1156">
-    <defaultcontrol>11</defaultcontrol>
+    <defaultcontrol always="true">11</defaultcontrol>
 
-    <onload>SetProperty(SetSkinPresetColorSelected,$VAR[Label_Skin_Settings_Preset_Color_Selected],Home)</onload>
-    <onunload>ClearProperty(SetSkinPresetColorSelected,Home)</onunload>
+    <onload>ClearProperty(reloadsetupwizard,Home)</onload>
+    <onload>ClearProperty(SetupWizardDirection,Home)</onload>
+
+    <onload>ClearProperty(autocolors_enable,Home)</onload>
+
     <onunload condition="!String.IsEmpty(Window(Home).Property(reloadskin))">SetFocus(3033)</onunload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard))">SetFocus(3099)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard))">Skin.SetString(FullInitEnded,1)</onunload>
+
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard)) + Window.IsVisible(Custom_1100_Startup.xml)">SetFocus(3615)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -28,10 +36,11 @@
                 <width>418</width>
                 <height>560</height>
 
-                <onup>11</onup>
-                <ondown>11</ondown>
+                <onleft condition="!$EXP[Condition_Show_Button_Setup_Wizard]">close</onleft>
+                <onleft condition="$EXP[Condition_Show_Button_Setup_Wizard]">9010</onleft>
 
-                <onleft>close</onleft>
+                <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
+                <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9030</onright>
 
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
@@ -44,7 +53,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(SetSkinPresetColorSelected),ListItem.Label)</visible>
+                        <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -53,12 +62,12 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(SetSkinPresetColorSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinPresetColorSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </itemlayout>
                 <focusedlayout width="418" height="70">
@@ -66,7 +75,7 @@
                     <!-- ITEM FOCUS -->
 
                     <include content="Def_Layout_Item_Focus">
-                        <param name="fade_condition" value="Control.HasFocus(5)" />
+                        <param name="fade_condition" value="!Control.HasFocus(11)" />
                     </include>
 
                     <control type="label">
@@ -80,8 +89,9 @@
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Selected" />
                         <param name="colordiffuse_on" value="Selected" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinPresetColorSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
+
                     <control type="button">
                         <label />
                         <include>Def_Hidden_Button</include>
@@ -132,6 +142,7 @@
             <!-- VIEW TYPE ON RIGHT -->
 
             <include content="Def_Dialog_View_Type">
+                <param name="fadetime" value="0" />
                 <param name="texture" value="special://skin/extras/presetcolor/$VAR[Def_Image_Skin_Preset_Color].jpg" />
             </include>
 
@@ -144,6 +155,10 @@
                 <param name="textcolor" value="Black70" />
                 <param name="visible" value="Container(11).HasFocus(8)" />
             </include>
+
+            <!-- BUTTON OK / PREV / NEXT -->
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Def_Button_Setup_Wizard</include>
 
             <!-- NUM ITEMS -->
 

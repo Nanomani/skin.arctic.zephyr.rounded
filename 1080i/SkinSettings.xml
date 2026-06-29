@@ -4,6 +4,7 @@
 
     <onload>CancelAlarm(power_menu_setfocus_399,true)</onload>
     <onload>AlarmClock(InitFocusSkinSetting,Control.SetFocus(3000,1,absolute),00:00,silent)</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard)">SetFocus(3099)</onload>
     <onload condition="String.IsEmpty(Skin.String(Skin.SettingsLevel))">Skin.SetString(Skin.SettingsLevel,$NUMBER[3])</onload>
 
     <!-- TMDBHELPER.WIDGETCONTAINER -->
@@ -17,6 +18,7 @@
         <include condition="$EXP[Show_Weather_All_Views]">Furniture_Footer_Clock_Right</include>
 
         <include>Hidden_Button_ReloadSkin</include>
+        <include>Hidden_Button_ReloadSetupWizard</include>
 
         <control type="group">
             <include>Animation_Common_Settings</include>
@@ -73,7 +75,7 @@
 
                     <control type="label">
                         <left>30</left>
-                        <right>25</right>
+                        <right>5</right>
                         <height>70</height>
                         <aligny>center</aligny>
                         <align>left</align>
@@ -93,6 +95,7 @@
 
                     <control type="label">
                         <left>30</left>
+                        <right>5</right>
                         <height>70</height>
                         <aligny>center</aligny>
                         <align>left</align>
@@ -221,7 +224,7 @@
                         <textureradiooffdisabled colordiffuse="Black12">buttons/radio-off.png</textureradiooffdisabled>
                         <textureradioofffocus colordiffuse="Selected">buttons/radio-off.png</textureradioofffocus>
                         <textureradiooffnofocus colordiffuse="Dark3">buttons/radio-off.png</textureradiooffnofocus>
-                        <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                        <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                         <label>$LOCALIZE[31334]</label>
                         <onclick>ActivateWindow(1288)</onclick>
                         <selected>Skin.HasSetting(DebugInfo) | Skin.HasSetting(DebugInfo.widget) | Skin.HasSetting(DebugInfoGrid)</selected>
@@ -247,10 +250,11 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31181]</label>
-                    <label2>$VAR[Label_Setting_Home_Widget_Style]</label2>
-                    <onclick>ActivateWindow(1152)</onclick>
+                    <label2>$VAR[Label_Skin_Settings_Home_Widget_Style_Selected]</label2>
+                    <onfocus>ClearProperty(launchsetupwizard,Home)</onfocus>
+                    <onclick>ActivateWindow(1153)</onclick>
                 </control>
 
                 <!-- HOME - CUSTOM HOME MENU -->
@@ -259,7 +263,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31080]</label>
                     <onclick>RunScript(script.skinshortcuts,type=manage&amp;menu=mainmenu)</onclick>
                     <onfocus>ClearProperty(Symbols,Home)</onfocus>
@@ -274,7 +278,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31270]</label>
                     <onclick>RunScript(script.skinshortcuts,type=manage&amp;menu=powermenu)</onclick>
                 </control>
@@ -285,7 +289,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[248] $LOCALIZE[31477]</label>
                     <label2>$VAR[Label_Setting_Wiki_Language_Dialog_Info]</label2>
                     <onclick>SetProperty(includesetting,Value_Wiki_Language,Home)</onclick>
@@ -299,7 +303,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[15225] $LOCALIZE[563] Kodi</label>
                     <label2>$VAR[Label_Setting_Kodi_Rating_Provider]</label2>
                     <onclick>SetProperty(includesetting,Value_Kodi_Rating_Provider,Home)</onclick>
@@ -321,7 +325,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31565]</label>
                     <selected>Skin.HasSetting(Show.Home.Profile.Image)</selected>
                     <onclick>Skin.ToggleSetting(Show.Home.Profile.Image)</onclick>
@@ -333,7 +337,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31104]</label>
                     <selected>Skin.HasSetting(show.furniture.clock.date.weather)</selected>
                     <onclick>Skin.ToggleSetting(show.furniture.clock.date.weather)</onclick>
@@ -345,7 +349,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31111]</label>
                     <selected>Skin.HasSetting(show.home.header.clock.left)</selected>
                     <onclick>Skin.ToggleSetting(show.home.header.clock.left)</onclick>
@@ -359,7 +363,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31494]</label>
                     <selected>Skin.HasSetting(show.clock.date.weather.home.only)</selected>
                     <onclick>Skin.ToggleSetting(show.clock.date.weather.home.only)</onclick>
@@ -372,7 +376,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31011]</label>
                     <selected>Skin.HasSetting(show.home.header.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.home.header.clearlogo)</onclick>
@@ -386,7 +390,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31112]</label>
                     <selected>!Skin.HasSetting(hide.furniture.flags.vertical.widgets)</selected>
                     <onclick>Skin.ToggleSetting(hide.furniture.flags.vertical.widgets)</onclick>
@@ -399,7 +403,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31466]</label>
                     <selected>Skin.HasSetting(hide.recording.info)</selected>
                     <onclick>Skin.ToggleSetting(hide.recording.info)</onclick>
@@ -420,7 +424,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31562]</label>
                     <label2>$VAR[Label_Setting_Home_Menu_Style]</label2>
                     <selected>Skin.HasSetting(home.show.menu.icons)</selected>
@@ -433,7 +437,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31517]</label>
                     <selected>Skin.HasSetting(home.show.menu.label.onfocus.icon)</selected>
                     <onclick>Skin.ToggleSetting(home.show.menu.label.onfocus.icon)</onclick>
@@ -446,7 +450,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31619]</label>
                     <selected>Skin.HasSetting(home.show.menu.text.lowercase)</selected>
                     <onclick>Skin.ToggleSetting(home.show.menu.text.lowercase)</onclick>
@@ -459,7 +463,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31563]</label>
                     <label2>$VAR[Label_Setting_Home_Sub_Menu_Style]</label2>
                     <selected>Skin.HasSetting(home.show.sub.menu.horizontal)</selected>
@@ -473,7 +477,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31365]</label>
                     <selected>Skin.HasSetting(home.show.menu.onfocus.underlined)</selected>
                     <onclick>Skin.ToggleSetting(home.show.menu.onfocus.underlined)</onclick>
@@ -485,7 +489,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31541]</label>
                     <selected>Skin.HasSetting(show.submenu.on.click.main.menu)</selected>
                     <onclick>Skin.ToggleSetting(show.submenu.on.click.main.menu)</onclick>
@@ -497,7 +501,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31404]</label>
                     <selected>Skin.HasSetting(hide.home.menu)</selected>
                     <onclick>Skin.ToggleSetting(hide.home.menu)</onclick>
@@ -510,7 +514,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31438]</label>
                     <selected>Skin.HasSetting(hide.only.if.widgetcontainer.gets.focus)</selected>
                     <onclick>Skin.ToggleSetting(hide.only.if.widgetcontainer.gets.focus)</onclick>
@@ -524,7 +528,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31501]</label>
                     <selected>Skin.HasSetting(homemenu.auto.back.to.main)</selected>
                     <onclick>Skin.ToggleSetting(homemenu.auto.back.to.main)</onclick>
@@ -536,7 +540,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31502]</label>
                     <selected>Skin.HasSetting(homemenu.auto.back.to.main.only.from.submenu)</selected>
                     <onclick>Skin.ToggleSetting(homemenu.auto.back.to.main.only.from.submenu)</onclick>
@@ -547,7 +551,7 @@
 
                 <control type="label" id="9818" description="Backup">
                     <visible>Container(3000).HasFocus(2)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
+                    <include>Def_Skin_Settings_Level_base</include>
                     <include>Def_Settings_Label_Title_Right_Side</include>
                    <label>$LOCALIZE[31225]</label>
                 </control>
@@ -557,8 +561,8 @@
                 <control type="radiobutton" id="9878" description="ClearLogo">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Skin_Settings_Level_base</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31414]</label>
                     <selected>Skin.HasSetting(show.home.flix.title.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.home.flix.title.clearlogo)</onclick>
@@ -572,7 +576,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31419]</label>
                     <selected>Skin.HasSetting(hide.widget.title)</selected>
                     <onclick>Skin.ToggleSetting(hide.widget.title)</onclick>
@@ -584,7 +588,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31000]</label>
                     <label2>$VAR[Value_Widget_Limit]</label2>
                     <onclick>SetProperty(includesetting,Value_Widget_Limit,Home)</onclick>
@@ -597,7 +601,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31297]</label>
                     <label2>$VAR[Def_Hub_Limit]</label2>
                     <onclick>SetProperty(includesetting,Value_Hub_Limit,Home)</onclick>
@@ -609,8 +613,8 @@
                 <control type="radiobutton" id="9844" description="more item">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Skin_Settings_Level_base</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31548] "$LOCALIZE[31320]"</label>
                     <selected>Skin.HasSetting(enable.morewidget)</selected>
                     <onclick>Skin.ToggleSetting(enable.morewidget)</onclick>
@@ -622,7 +626,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[20079]</label>
                     <selected>!Skin.HasSetting(home.disable.widget.animation)</selected>
                     <onclick>Skin.ToggleSetting(home.disable.widget.animation)</onclick>
@@ -645,7 +649,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31483]</label>
                     <selected>Skin.HasSetting(enable_widgets_to_position_0_onback_menu)</selected>
                     <onclick>Skin.ToggleSetting(enable_widgets_to_position_0_onback_menu)</onclick>
@@ -658,7 +662,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31376]</label>
                     <selected>Skin.HasSetting(disable.widgets.onback.go.back.to.position.0)</selected>
                     <onclick>Skin.ToggleSetting(disable.widgets.onback.go.back.to.position.0)</onclick>
@@ -671,7 +675,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31378]</label>
                     <selected>Skin.HasSetting(disable.widgets.ondown.go.back.to.position.0)</selected>
                     <onclick>Skin.ToggleSetting(disable.widgets.ondown.go.back.to.position.0)</onclick>
@@ -685,7 +689,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31377]</label>
                     <selected>Skin.HasSetting(disable.widgets.onup.go.back.to.last.item)</selected>
                     <onclick>Skin.ToggleSetting(disable.widgets.onup.go.back.to.last.item)</onclick>
@@ -698,7 +702,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31542]</label>
                     <selected>Skin.HasSetting(disable.widgets.onup.go.back.to.main.menu)</selected>
                     <onclick>Skin.ToggleSetting(disable.widgets.onup.go.back.to.main.menu)</onclick>
@@ -712,7 +716,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31493]</label>
                     <selected>Skin.HasSetting(enable.widgets.ondown.go.back.to.first.item)</selected>
                     <onclick>Skin.ToggleSetting(enable.widgets.ondown.go.back.to.first.item)</onclick>
@@ -725,7 +729,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31379]</label>
                     <selected>Skin.HasSetting(enable.widgets.onup.go.back.to.last.widget)</selected>
                     <onclick>Skin.ToggleSetting(enable.widgets.onup.go.back.to.last.widget)</onclick>
@@ -739,7 +743,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31498]</label>
                     <selected>Skin.HasSetting(enable.onleft.go.to.last.item.widget)</selected>
                     <onclick>Skin.ToggleSetting(enable.onleft.go.to.last.item.widget)</onclick>
@@ -753,7 +757,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31435]</label>
                     <selected>Skin.HasSetting(widget.items.onback.go.back.to.position.0)</selected>
                     <onclick>Skin.ToggleSetting(widget.items.onback.go.back.to.position.0)</onclick>
@@ -765,7 +769,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31436]</label>
                     <selected>Skin.HasSetting(widget.items.onback.go.back.to.position.0.setfocus.home)</selected>
                     <onclick>Skin.ToggleSetting(widget.items.onback.go.back.to.position.0.setfocus.home)</onclick>
@@ -778,7 +782,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31437]</label>
                     <selected>Skin.HasSetting(home.onback.go.to.first.widget)</selected>
                     <onclick>Skin.ToggleSetting(home.onback.go.to.first.widget)</onclick>
@@ -797,7 +801,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31068]</label>
                     <selected>Skin.HasSetting(rss.home)</selected>
                     <onclick>Skin.ToggleSetting(rss.home)</onclick>
@@ -807,7 +811,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(2)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31069]</label>
                     <selected>Skin.HasSetting(rss.top)</selected>
                     <onclick>Skin.ToggleSetting(rss.top)</onclick>
@@ -833,9 +837,10 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[166] - $LOCALIZE[14078]</label>
                     <label2>$VAR[Label_Skin_Settings_Theme_Color_Selected]</label2>
+                    <onfocus>ClearProperty(launchsetupwizard,Home)</onfocus>
                     <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
                     <onclick condition="!System.HasAddon(script.arctic.zephyr.rounded.autocolors)">InstallAddon(script.arctic.zephyr.rounded.autocolors)</onclick>
                     <onclick>ActivateWindow(1155)</onclick>
@@ -847,9 +852,10 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[166] - $LOCALIZE[5] / $LOCALIZE[31364]</label>
                     <label2>$VAR[Label_Skin_Settings_Perf_Selected]</label2>
+                    <onfocus>ClearProperty(launchsetupwizard,Home)</onfocus>
                     <onclick>ActivateWindow(1154)</onclick>
                 </control>
 
@@ -859,7 +865,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31317]</label>
                     <onclick>runscript(script.skinvariables,action=buildviews,configure)</onclick>
                 </control>
@@ -870,7 +876,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31148]</label>
                     <selected>Skin.HasSetting(global.kioskmode)</selected>
                     <onclick>Skin.ToggleSetting(global.kioskmode)</onclick>
@@ -882,7 +888,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[13306]</label>
                     <selected>System.GetBool(filelists.showparentdiritems)</selected>
                     <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
@@ -895,7 +901,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[21369]</label>
                     <selected>System.GetBool(input.enablemouse)</selected>
                     <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
@@ -908,7 +914,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31439]</label>
                     <selected>Skin.HasSetting(hide.mouse.warning)</selected>
                     <onclick>Skin.ToggleSetting(hide.mouse.warning)</onclick>
@@ -928,11 +934,10 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31457]</label>
-                    <label2>$VAR[Label_Setting_Color]</label2>
-                    <!-- <onclick>SetProperty(includesetting,Value_Color_Settings,Home)</onclick> -->
-                    <!-- <onclick>ActivateWindow(1248)</onclick> -->
+                    <label2>$VAR[Label_Skin_Settings_Preset_Color_Selected]</label2>
+                    <onfocus>ClearProperty(launchsetupwizard,Home)</onfocus>
                     <onclick>ActivateWindow(1156)</onclick>
                 </control>
 
@@ -940,7 +945,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31464]</label>
                     <label2>$INFO[Skin.String(color.preset.name.own)]</label2>
                     <onclick condition="!System.HasAddon(script.texturemaker)">InstallAddon(script.texturemaker)</onclick>
@@ -962,10 +967,13 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31092]</label>
+                    <onclick condition="!System.HasAddon(script.texturemaker)">InstallAddon(script.texturemaker)</onclick>
+                    <onclick condition="!System.HasAddon(script.texturemaker)">AlarmClock(DelayOpenDialog,ActivateWindow(1202),00:03,silent)</onclick>
+                    <onclick condition="System.HasAddon(script.texturemaker)">AlarmClock(DelayOpenDialog,ActivateWindow(1202),00:00,silent)</onclick>
+
                     <onclick>SetProperty(colorfilter,1,Home)</onclick>
-                    <onclick>ActivateWindow(1202)</onclick>
                 </control>
 
                 <!-- SET STATUS FLAG COLOR -->
@@ -974,10 +982,12 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31370]</label>
                     <onclick>SetProperty(colorfilter,2,Home)</onclick>
-                    <onclick>ActivateWindow(1202)</onclick>
+                    <onclick condition="!System.HasAddon(script.texturemaker)">InstallAddon(script.texturemaker)</onclick>
+                    <onclick condition="!System.HasAddon(script.texturemaker)">AlarmClock(DelayOpenDialog,ActivateWindow(1202),00:03,silent)</onclick>
+                    <onclick condition="System.HasAddon(script.texturemaker)">AlarmClock(DelayOpenDialog,ActivateWindow(1202),00:00,silent)</onclick>
                 </control>
 
                 <!-- SET RATING STAR COLOR -->
@@ -986,10 +996,12 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31478]</label>
                     <onclick>SetProperty(colorfilter,3,Home)</onclick>
-                    <onclick>ActivateWindow(1202)</onclick>
+                    <onclick condition="!System.HasAddon(script.texturemaker)">InstallAddon(script.texturemaker)</onclick>
+                    <onclick condition="!System.HasAddon(script.texturemaker)">AlarmClock(DelayOpenDialog,ActivateWindow(1202),00:03,silent)</onclick>
+                    <onclick condition="System.HasAddon(script.texturemaker)">AlarmClock(DelayOpenDialog,ActivateWindow(1202),00:00,silent)</onclick>
                 </control>
 
             <!-- MENU - RESSOURCES -->
@@ -1005,7 +1017,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31262]</label>
                     <label2>$VAR[Label_Setting_Genre_Icons]</label2>
                     <onclick>SetProperty(SelectType,genre_icons,Home)</onclick>
@@ -1015,7 +1027,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31500]</label>
                     <label2>$VAR[Label_Setting_Country_Icons]</label2>
                     <onclick>SetProperty(SelectType,country_logos,Home)</onclick>
@@ -1025,7 +1037,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31264]</label>
                     <label2>$VAR[Label_Setting_Record_Icons]</label2>
                     <onclick>SetProperty(SelectType,recordlabel_logos,Home)</onclick>
@@ -1035,7 +1047,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31471]</label>
                     <label2>$VAR[Label_Setting_Game_Icons]</label2>
                     <onclick>SetProperty(SelectType,game_logos,Home)</onclick>
@@ -1045,7 +1057,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31188]</label>
                     <label2>$VAR[Label_Setting_Weather_Icons]</label2>
                     <onclick>SetProperty(SelectType,weather_icons,Home)</onclick>
@@ -1065,7 +1077,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[512]</label>
                     <selected>!Skin.HasSetting(disable.startup.window)</selected>
                     <onclick>Skin.ToggleSetting(disable.startup.window)</onclick>
@@ -1074,7 +1086,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31180]</label>
                     <label2>$INFO[Skin.String(startupfanart.fallback)]</label2>
                     <onclick>Skin.SetImage(startupfanart.fallback)</onclick>
@@ -1084,7 +1096,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31125]</label>
                     <label2>$INFO[Skin.String(StartupPlaylist)]</label2>
                     <onclick condition="String.IsEmpty(Skin.String(StartupPlaylist))">Skin.SetFile(StartupPlaylist,.mp4|.avi|.mkv|.xvid|.wmv|.mov|.xsp|.mp3|.wma|.flac|.m3u)</onclick>
@@ -1104,7 +1116,7 @@
                 <control type="radiobutton" id="9591">
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <align>left</align>
                     <width>1278</width>
                     <label>$LOCALIZE[31421]</label>
@@ -1114,7 +1126,7 @@
                 <control type="radiobutton" id="9592">
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <align>left</align>
                     <label>$LOCALIZE[31423]</label>
                     <width>1278</width>
@@ -1125,7 +1137,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(3)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31496]</label>
                     <selected>Skin.HasSetting(hide.global.shadows)</selected>
                     <onclick>Skin.ToggleSetting(hide.global.shadows)</onclick>
@@ -1142,17 +1154,17 @@
                     <label>$LOCALIZE[31053]</label>
                 </control>
 
-                <!-- BRIGHTNESS FLIX WINDOWS -->
+                <!-- BRIGHTNESS VIEWS -->
 
                 <control type="button" id="99877" description="Fade Netflix preview window">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[464]</label>
-                    <label2>$VAR[Label_Setting_Background_Brightness_Flix_Dialog_Info]</label2>
+                    <label2>$VAR[Label_Skin_Settings_Background_Brightness_Views_Selected]</label2>
                     <onclick>SetProperty(includesetting,Value_Brightness_NoFlix,Home)</onclick>
-                    <onclick>ActivateWindow(1248)</onclick>
+                    <onclick>ActivateWindow(1157)</onclick>
                 </control>
 
                 <!-- BRIGHTNESS FLIX WINDOWS -->
@@ -1161,11 +1173,11 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[464] $LOCALIZE[31226] $LOCALIZE[31004]</label>
-                    <label2>$VAR[Label_Setting_Background_Brightness_Flix]</label2>
+                    <label2>$VAR[Label_Skin_Settings_Background_Brightness_Flix_Selected]</label2>
                     <onclick>SetProperty(includesetting,Value_Brightness_Flix,Home)</onclick>
-                    <onclick>ActivateWindow(1248)</onclick>
+                    <onclick>ActivateWindow(1158)</onclick>
                 </control>
 
                 <!-- DISABLE BLUR EFFECT -->
@@ -1174,7 +1186,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31050]</label>
                     <selected>Skin.HasSetting(enabled.tmdb.helper.blur)</selected>
                     <onclick>Skin.ToggleSetting(enabled.tmdb.helper.blur)</onclick>
@@ -1190,7 +1202,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31090]</label>
                     <selected>!Skin.HasSetting(hide.global.fanart)</selected>
                     <onclick>Skin.ToggleSetting(hide.global.fanart)</onclick>
@@ -1204,7 +1216,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31187]</label>
                     <selected>Skin.HasSetting(enable.extra.fanart)</selected>
                     <onclick>Skin.ToggleSetting(enable.extra.fanart)</onclick>
@@ -1220,7 +1232,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31560]</label>
                     <selected>Skin.HasSetting(global.show.fallback.only)</selected>
                     <onclick>Skin.ToggleSetting(global.show.fallback.only)</onclick>
@@ -1232,7 +1244,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31519] ($LOCALIZE[10000])</label>
                     <selected>Skin.HasSetting(home.enable.menu.background)</selected>
                     <onclick>Skin.ToggleSetting(home.enable.menu.background)</onclick>
@@ -1251,7 +1263,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31105]</label>
                     <selected>Skin.HasSetting(Fanart.Animate)</selected>
                     <onclick>Skin.ToggleSetting(Fanart.Animate)</onclick>
@@ -1263,7 +1275,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31082]</label>
                     <selected>Skin.HasSetting(show.global.visualisation.background.video)</selected>
                     <onclick>Skin.ToggleSetting(show.global.visualisation.background.video)</onclick>
@@ -1277,7 +1289,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31579]</label>
                     <selected>Skin.HasSetting(show.global.visualisation.background.music)</selected>
                     <onclick>Skin.ToggleSetting(show.global.visualisation.background.music)</onclick>
@@ -1288,7 +1300,7 @@
 
                 <control type="label" id="97131" description="Backup">
                     <visible>Container(3000).HasFocus(4)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
+                    <include>Def_Skin_Settings_Level_base</include>
                     <include>Def_Settings_Label_Title_Right_Side</include>
                     <label>$LOCALIZE[31108]</label>
                 </control>
@@ -1298,8 +1310,8 @@
                 <control type="button" id="98052">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Skin_Settings_Level_base</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31108]</label>
                     <onclick>ActivateWindow(1151)</onclick>
                 </control>
@@ -1310,7 +1322,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(4)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31102]</label>
                     <label2>$INFO[Skin.String(weather.fanart.name)]</label2>
                     <onclick>SetProperty(SelectType,weather_fanart,Home)</onclick>
@@ -1332,7 +1344,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31085]</label>
                     <selected>!Skin.HasSetting(hide.furniture.header)</selected>
                     <onclick>Skin.ToggleSetting(hide.furniture.header)</onclick>
@@ -1343,7 +1355,7 @@
                     <label>$LOCALIZE[31063]</label>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <selected>Skin.HasSetting(show.time.format.hh.mm)</selected>
                     <onclick>Skin.ToggleSetting(show.time.format.hh.mm)</onclick>
                 </control>
@@ -1354,7 +1366,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31104]</label>
                     <selected>!Skin.HasSetting(show.clock.date.weather.home.only)</selected>
                     <onclick>Skin.ToggleSetting(show.clock.date.weather.home.only)</onclick>
@@ -1367,7 +1379,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31163] ($LOCALIZE[31151])</label>
                     <selected>Skin.HasSetting(show.furniture.video.rating.num.set.version)</selected>
                     <onclick>Skin.ToggleSetting(show.furniture.video.rating.num.set.version)</onclick>
@@ -1380,7 +1392,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31422]</label>
                     <selected>Skin.HasSetting(labels.autoscroll)</selected>
                     <onclick>Skin.ToggleSetting(labels.autoscroll)</onclick>
@@ -1392,7 +1404,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[20189]</label>
                     <selected>Skin.HasSetting(widgets.autoscrollingplot)</selected>
                     <onclick>Skin.ToggleSetting(widgets.autoscrollingplot)</onclick>
@@ -1411,7 +1423,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31425]</label>
                     <selected>Skin.HasSetting(home.views.flix.autoplay.trailer)</selected>
                     <onclick>Skin.ToggleSetting(home.views.flix.autoplay.trailer)</onclick>
@@ -1420,7 +1432,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31430]</label>
                     <label2>$VAR[Label_Setting_Items_Flix_Trailer_Delay] $LOCALIZE[31318]</label2>
                     <onclick>SetProperty(includesetting,Value_Items_Flix_Trailer_Delay,Home)</onclick>
@@ -1431,7 +1443,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31426]</label>
                     <label2>$VAR[Label_Setting_Flix_Trailer_Black_Bars]</label2>
                     <onclick condition="!Skin.HasSetting(home.views.flix.autoplay.trailer.custom.window) + !Skin.HasSetting(home.views.flix.autoplay.trailer.custom.window.force)">Skin.SetBool(home.views.flix.autoplay.trailer.custom.window)</onclick>
@@ -1444,7 +1456,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31443]</label>
                     <selected>!Skin.HasSetting(enable.trailer.playing.on.unfocus)</selected>
                     <onclick>Skin.ToggleSetting(enable.trailer.playing.on.unfocus)</onclick>
@@ -1454,7 +1466,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31442]</label>
                     <label2>$VAR[Label_Setting_Playback_Action]</label2>
                     <onclick condition="!Skin.HasSetting(trailer.stop.on.dialogvideoinfo) + !Skin.HasSetting(trailer.pause.on.dialogvideoinfo)">Skin.SetBool(trailer.pause.on.dialogvideoinfo)</onclick>
@@ -1479,7 +1491,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31112]</label>
                     <selected>!Skin.HasSetting(hide.furniture.flags)</selected>
                     <onclick>Skin.ToggleSetting(hide.furniture.flags)</onclick>
@@ -1491,7 +1503,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[467]</label>
                     <label2>$VAR[Label_Setting_View_Flag_Color]</label2>
                     <selected>Skin.HasSetting(enable.furniture.flags.colored)</selected>
@@ -1504,8 +1516,8 @@
                 <control type="button" id="9263" description="Select media flags">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Skin_Settings_Level_base</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31329]</label>
                     <onclick>ActivateWindow(1149)</onclick>
                     <enable>!Skin.HasSetting(hide.furniture.flags)</enable>
@@ -1517,7 +1529,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31284]</label>
                     <label2>$VAR[Label_View_List_Rating]</label2>
                     <onclick condition="String.IsEmpty(Skin.String(label.view.list.rating.fallback))">Skin.SetString(label.view.list.rating.fallback,1)</onclick>
@@ -1533,7 +1545,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31449]</label>
                     <selected>Skin.HasSetting(userrating.override.kodi.rating.stars)</selected>
                     <selected>Skin.HasSetting(userrating.override.kodi.rating.num)</selected>
@@ -1556,7 +1568,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31113]</label>
                     <selected>!Skin.HasSetting(hide.furniture.nowplaying.views)</selected>
                     <onclick>Skin.ToggleSetting(hide.furniture.nowplaying.views)</onclick>
@@ -1568,7 +1580,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31011]</label>
                     <selected>Skin.HasSetting(show.header.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.header.clearlogo)</onclick>
@@ -1580,7 +1592,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31504]</label>
                     <selected>Skin.HasSetting(show.furniture.footer)</selected>
                     <onclick>Skin.ToggleSetting(show.furniture.footer)</onclick>
@@ -1601,7 +1613,7 @@
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
                     <width>1278</width>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <align>left</align>
                     <label>$LOCALIZE[31356]</label>
                     <label2>$VAR[Label_Setting_Type_Marker]</label2>
@@ -1616,7 +1628,7 @@
                 <control type="radiobutton" id="9599">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31445]</label>
                     <align>left</align>
                     <enable>!Skin.HasSetting(hide.markers)</enable>
@@ -1629,7 +1641,7 @@
                 <control type="radiobutton" id="9586">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[575]</label>
                     <align>left</align>
                     <enable>!Skin.HasSetting(hide.markers)</enable>
@@ -1639,7 +1651,7 @@
                 <control type="radiobutton" id="95861">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31219]$LOCALIZE[31374]</label>
                     <align>left</align>
                     <selected>Skin.HasSetting(markers.inprogress.percentage)</selected>
@@ -1649,7 +1661,7 @@
                 <control type="radiobutton" id="95862">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31219]$LOCALIZE[21457]</label>
                     <align>left</align>
                     <selected>!Skin.HasSetting(hide.markers.inprogress.tvshow.label)</selected>
@@ -1662,7 +1674,7 @@
                 <control type="radiobutton" id="9587">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[16101]</label>
                     <align>left</align>
                     <selected>!Skin.HasSetting(hide.markers.unwatched)</selected>
@@ -1676,7 +1688,7 @@
                 <control type="radiobutton" id="95882">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[16101]</label>
                     <align>left</align>
                     <selected>Skin.HasSetting(show.markers.unwatched.banner)</selected>
@@ -1689,7 +1701,7 @@
                 <control type="radiobutton" id="9588">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[16102]</label>
                     <align>left</align>
                     <enable>!Skin.HasSetting(hide.markers)</enable>
@@ -1701,7 +1713,7 @@
                 <control type="radiobutton" id="95881">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31219]$LOCALIZE[31518] ($LOCALIZE[36918]/$LOCALIZE[36920])</label>
                     <align>left</align>
                     <selected>Skin.HasSetting(show.markers.watched.music)</selected>
@@ -1714,7 +1726,7 @@
                 <control type="radiobutton" id="9589">
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[842]</label>
                     <align>left</align>
                     <enable>!Skin.HasSetting(hide.markers)</enable>
@@ -1735,7 +1747,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31015]</label>
                     <selected>Skin.HasSetting(dont.use.landscape.tvshows)</selected>
                     <onclick>Skin.ToggleSetting(dont.use.landscape.tvshows)</onclick>
@@ -1744,7 +1756,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31289]</label>
                     <selected>Skin.HasSetting(use.clearlogo.on.fanart.tvshows)</selected>
                     <onclick>Skin.ToggleSetting(use.clearlogo.on.fanart.tvshows)</onclick>
@@ -1754,7 +1766,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31017]</label>
                     <selected>Skin.HasSetting(dont.use.landscape.seasons)</selected>
                     <onclick>Skin.ToggleSetting(dont.use.landscape.seasons)</onclick>
@@ -1763,7 +1775,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31289]</label>
                     <selected>Skin.HasSetting(use.clearlogo.on.fanart.seasons)</selected>
                     <onclick>Skin.ToggleSetting(use.clearlogo.on.fanart.seasons)</onclick>
@@ -1773,7 +1785,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31473]</label>
                     <selected>Skin.HasSetting(use.thumbnail.episodes)</selected>
                     <onclick>Skin.ToggleSetting(use.thumbnail.episodes)</onclick>
@@ -1785,7 +1797,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31016]</label>
                     <selected>Skin.HasSetting(dont.use.landscape.movies)</selected>
                     <onclick>Skin.ToggleSetting(dont.use.landscape.movies)</onclick>
@@ -1797,7 +1809,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31289]</label>
                     <selected>Skin.HasSetting(use.clearlogo.on.fanart.movies)</selected>
                     <onclick>Skin.ToggleSetting(use.clearlogo.on.fanart.movies)</onclick>
@@ -1819,7 +1831,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(5)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31221]</label>
                     <selected>Skin.HasSetting(hub.showplot)</selected>
                     <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
@@ -1842,7 +1854,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31113]</label>
                     <label2>$VAR[Label_Setting_NowPlaying]</label2>
                     <onclick condition="!Skin.HasSetting(show.furniture.nowplaying.extended.home) + !Skin.HasSetting(hide.furniture.nowplaying.home)">Skin.ToggleSetting(show.furniture.nowplaying.extended.home)</onclick>
@@ -1857,7 +1869,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31451]</label>
                     <selected>!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)</selected>
                     <onclick>Skin.ToggleSetting(hide.home.nowplaying.extended.osd.control.button)</onclick>
@@ -1868,7 +1880,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31495]</label>
                     <selected>Skin.HasSetting(hide.home.menu.with.nowplaying.extended)</selected>
                     <onclick>Skin.ToggleSetting(hide.home.menu.with.nowplaying.extended)</onclick>
@@ -1880,7 +1892,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31479]</label>
                     <selected>Skin.HasSetting(enable.home.auto.show.nowplaying.extended)</selected>
                     <onclick>Skin.ToggleSetting(enable.home.auto.show.nowplaying.extended)</onclick>
@@ -1903,7 +1915,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31545]</label>
                     <selected>Skin.HasSetting(show.nowplaying.video.home.flix)</selected>
                     <onclick>Skin.ToggleSetting(show.nowplaying.video.home.flix)</onclick>
@@ -1914,7 +1926,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31426]</label>
                     <label2>$VAR[Label_Setting_Flix_Trailer_Black_Bars]</label2>
                     <onclick condition="!Skin.HasSetting(home.views.flix.autoplay.trailer.custom.window) + !Skin.HasSetting(home.views.flix.autoplay.trailer.custom.window.force)">Skin.SetBool(home.views.flix.autoplay.trailer.custom.window)</onclick>
@@ -1928,7 +1940,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31345]</label>
                     <selected>!Skin.HasSetting(hide.home.nowplaying.extended.video.cd)</selected>
                     <onclick>Skin.ToggleSetting(hide.home.nowplaying.extended.video.cd)</onclick>
@@ -1938,7 +1950,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31293]</label>
                     <label2>$VAR[Label_Setting_DiscArt_Video]</label2>
                     <onclick condition="!Skin.HasSetting(home.video.disc.fallback.bluray) + !Skin.HasSetting(home.video.disc.fake.bluray)">Skin.ToggleSetting(home.video.disc.fallback.bluray)</onclick>
@@ -1952,7 +1964,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31497]</label>
                     <selected>Skin.HasSetting(osd.video.disc.fallback.only)</selected>
                     <onclick>Skin.ToggleSetting(osd.video.disc.fallback.only)</onclick>
@@ -1963,7 +1975,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31228]</label>
                     <selected>Skin.HasSetting(show.home.nowplaying.extended.video.clearart)</selected>
                     <onclick>Skin.ToggleSetting(show.home.nowplaying.extended.video.clearart)</onclick>
@@ -1974,7 +1986,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31414]</label>
                     <selected>Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.home.nowplaying.extended.video.title.clearlogo)</onclick>
@@ -1986,7 +1998,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31344]</label>
                     <selected>Skin.HasSetting(show.home.nowplaying.extended.video.windows)</selected>
                     <onclick>Skin.ToggleSetting(show.home.nowplaying.extended.video.windows)</onclick>
@@ -2008,7 +2020,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31345]</label>
                     <selected>!Skin.HasSetting(hide.home.nowplaying.extended.music.cd)</selected>
                     <onclick>Skin.ToggleSetting(hide.home.nowplaying.extended.music.cd)</onclick>
@@ -2018,7 +2030,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31293]</label>
                     <label2>$VAR[Label_Setting_OSD_Music_Disc]</label2>
                     <onclick condition="!Skin.HasSetting(osd.music.disc.fallback.vinyl) + !Skin.HasSetting(osd.music.disc.fake.cd)">Skin.ToggleSetting(osd.music.disc.fallback.vinyl)</onclick>
@@ -2032,7 +2044,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31497]</label>
                     <selected>Skin.HasSetting(osd.music.disc.fallback.only)</selected>
                     <onclick>Skin.ToggleSetting(osd.music.disc.fallback.only)</onclick>
@@ -2043,7 +2055,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31247]</label>
                     <selected>Skin.HasSetting(show.home.nowplaying.extended.music.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.home.nowplaying.extended.music.clearlogo)</onclick>
@@ -2053,7 +2065,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31106]</label>
                     <label2>$VAR[Label_Setting_NowPlaying_Plot]</label2>
                     <onclick condition="!Skin.HasSetting(home.extended.nowplaying.tracklist) + !Skin.HasSetting(home.extended.nowplaying.scrolling.text)">Skin.ToggleSetting(home.extended.nowplaying.tracklist)</onclick>
@@ -2075,7 +2087,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31113]</label>
                     <selected>!Skin.HasSetting(hide.furniture.nowplaying.views)</selected>
                     <onclick>Skin.ToggleSetting(hide.furniture.nowplaying.views)</onclick>
@@ -2085,7 +2097,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31564]</label>
                     <selected>Skin.HasSetting(show.nowplaying.video.view.flix)</selected>
                     <onclick>Skin.ToggleSetting(show.nowplaying.video.view.flix)</onclick>
@@ -2094,7 +2106,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(6)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31426]</label>
                     <label2>$VAR[Label_Setting_Flix_Trailer_Black_Bars]</label2>
                     <onclick condition="!Skin.HasSetting(home.views.flix.autoplay.trailer.custom.window) + !Skin.HasSetting(home.views.flix.autoplay.trailer.custom.window.force)">Skin.SetBool(home.views.flix.autoplay.trailer.custom.window)</onclick>
@@ -2123,7 +2135,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31232]</label>
                     <label2>$VAR[Label_Setting_OSD_Timeout]</label2>
                     <onclick>SetProperty(includesetting,Value_OSD_Auto_Hide_Timeout,Home)</onclick>
@@ -2145,7 +2157,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31454]</label>
                     <label2>$VAR[Label_Setting_OSD_Info]</label2>
                     <onclick>SetProperty(includesetting,Value_Show_OSD_At_Start_Timeout,Home)</onclick>
@@ -2154,11 +2166,11 @@
 
                 <!-- PLAY / PAUSE AUTO WITH OPEN OSD -->
 
-                <control type="button" id="9241" description="Show detailed info on start">
+                <control type="radiobutton" id="9241" description="Show detailed info on start">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31617]</label>
                     <selected>Skin.HasSetting(osd.open.auto.pause)</selected>
                     <onclick>Skin.ToggleSetting(osd.open.auto.pause)</onclick>
@@ -2170,7 +2182,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31488]</label>
                     <selected>Skin.HasSetting(hide.osd.video.on.pause)</selected>
                     <onclick>Skin.ToggleSetting(hide.osd.video.on.pause)</onclick>
@@ -2184,7 +2196,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31150]</label>
                     <selected>Skin.HasSetting(show.osd.info.on.pause)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.info.on.pause)</onclick>
@@ -2197,7 +2209,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31588]</label>
                     <selected>Skin.HasSetting(show.osd.video.plot.on.pause)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.plot.on.pause)</onclick>
@@ -2211,7 +2223,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31603]</label>
                     <selected>Skin.HasSetting(hide.osd.video.tips)</selected>
                     <onclick>Skin.ToggleSetting(hide.osd.video.tips)</onclick>
@@ -2222,8 +2234,8 @@
                 <control type="radiobutton" id="9212" description="Show clearart">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Skin_Settings_Level_base</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31414]</label>
                     <selected>Skin.HasSetting(show.osd.video.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.clearlogo)</onclick>
@@ -2235,7 +2247,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31415]</label>
                     <selected>Skin.HasSetting(show.osd.video.flags.icons)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.flags.icons)</onclick>
@@ -2247,7 +2259,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <selected>Skin.HasSetting(show.osd.video.colored.icons)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.colored.icons)</onclick>
                     <label>$LOCALIZE[31219]$LOCALIZE[467]</label>
@@ -2261,7 +2273,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31489]</label>
                     <selected>Skin.HasSetting(show.osd.video.flags.imdb.rating)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.flags.imdb.rating)</onclick>
@@ -2274,7 +2286,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[563]</label>
                     <selected>Skin.HasSetting(show.osd.video.rating)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.rating)</onclick>
@@ -2286,7 +2298,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31219]$LOCALIZE[31408]</label>
                     <selected>Skin.HasSetting(show.osd.video.numeric.rating)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.video.numeric.rating)</onclick>
@@ -2299,7 +2311,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31019]</label>
                     <selected>Skin.HasSetting(pvr.showtechnicalinfo)</selected>
                     <onclick>Skin.ToggleSetting(pvr.showtechnicalinfo)</onclick>
@@ -2320,7 +2332,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31592] ($LOCALIZE[19033])</label>
                     <selected>Skin.HasSetting(auto.hide.OSD.music.info)</selected>
                     <onclick>Skin.ToggleSetting(auto.hide.OSD.music.info)</onclick>
@@ -2334,7 +2346,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31232]</label>
                     <label2>$VAR[Label_Setting_OSD_Music_Info_Timeout]</label2>
                     <onclick>SetProperty(includesetting,Value_OSD_Music_Info_Auto_Hide_Timeout,Home)</onclick>
@@ -2348,7 +2360,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[20445]</label>
                     <selected>Skin.HasSetting(enable.osd.music.visualisation.fanart)</selected>
                     <onclick>Skin.ToggleSetting(enable.osd.music.visualisation.fanart)</onclick>
@@ -2362,7 +2374,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31087]</label>
                     <enable>System.AddonIsEnabled(script.artistslideshow)</enable>
                     <selected>!Skin.HasSetting(disable.artist.slideshow)</selected>
@@ -2376,7 +2388,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31089]</label>
                     <selected>Skin.HasSetting(enable.artist.slideshow.animate)</selected>
                     <onclick>Skin.ToggleSetting(enable.artist.slideshow.animate)</onclick>
@@ -2389,7 +2401,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31088]</label>
                     <selected>Skin.HasSetting(OSDVisualisation.ShowFanart)</selected>
                     <onclick>Skin.ToggleSetting(OSDVisualisation.ShowFanart)</onclick>
@@ -2402,7 +2414,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31185]</label>
                     <selected>Skin.HasSetting(show.osd.music.always.at.startup)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.music.always.at.startup)</onclick>
@@ -2413,8 +2425,8 @@
                 <control type="radiobutton" id="9229" description="Show clearart">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
-                    <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Skin_Settings_Level_base</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31248]</label>
                     <selected>Skin.HasSetting(show.osd.music.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.osd.music.clearlogo)</onclick>
@@ -2426,7 +2438,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31163]</label>
                     <selected>Skin.HasSetting(musicosd.numericrating)</selected>
                     <onclick>Skin.ToggleSetting(musicosd.numericrating)</onclick>
@@ -2438,7 +2450,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31012]</label>
                     <selected>Skin.HasSetting(musicosd.showvideolyrics)</selected>
                     <onclick>Skin.ToggleSetting(musicosd.showvideolyrics)</onclick>
@@ -2451,7 +2463,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(7)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31018]</label>
                     <selected>Skin.HasSetting(hideseekbaronlyrics)</selected>
                     <onclick>Skin.ToggleSetting(hideseekbaronlyrics)</onclick>
@@ -2474,7 +2486,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31566]:</label>
                     <label2>$VAR[Label_Setting_Cast]</label2>
                     <selected>Skin.HasSetting(filter.video.cast.on.line)</selected>
@@ -2487,7 +2499,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31598]:</label>
                     <label2>$VAR[Label_Setting_Info]</label2>
                     <selected>Skin.HasSetting(filter.video.only.local)</selected>
@@ -2500,7 +2512,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31054]</label>
                     <selected>Skin.HasSetting(Show.Discart.Video.Info)</selected>
                     <onclick>Skin.ToggleSetting(Show.Discart.Video.Info)</onclick>
@@ -2512,7 +2524,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31248]</label>
                     <selected>Skin.HasSetting(show.dialog.info.clearlogo.video)</selected>
                     <onclick>Skin.ToggleSetting(show.dialog.info.clearlogo.video)</onclick>
@@ -2522,7 +2534,7 @@
 
                 <control type="button" id="9311" description="SELECT INFO">
                     <width>1278</width>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
                     <label>$LOCALIZE[19033]:</label>
@@ -2539,7 +2551,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_base</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31100]</label>
                     <selected>Skin.HasSetting(PlayTrailerWindowed)</selected>
                     <onclick>Skin.ToggleSetting(PlayTrailerWindowed)</onclick>
@@ -2559,7 +2571,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31341]</label>
                     <label2>$VAR[Label_Setting_IntroPath]</label2>
                     <onclick>Skin.SetPath(IntroPath)</onclick>
@@ -2570,7 +2582,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31342]</label>
                     <label2>$VAR[Label_Setting_Trailer_Count]</label2>
                     <onclick>SetProperty(includesetting,Value_Trailer_Count,Home)</onclick>
@@ -2592,7 +2604,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31572]</label>
                     <selected>Skin.HasSetting(show.dialog.info.music.logo.record.compagny)</selected>
                     <onclick>Skin.ToggleSetting(show.dialog.info.music.logo.record.compagny)</onclick>
@@ -2605,7 +2617,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31054]</label>
                     <selected>Skin.HasSetting(show.dialog.info.music.discart)</selected>
                     <onclick>Skin.ToggleSetting(show.dialog.info.music.discart)</onclick>
@@ -2617,7 +2629,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(8)</visible>
                     <include>Def_Skin_Settings_Level_standard</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31248]</label>
                     <selected>Skin.HasSetting(show.dialog.info.clearlogo.music)</selected>
                     <onclick>Skin.ToggleSetting(show.dialog.info.clearlogo.music)</onclick>
@@ -2758,7 +2770,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(9)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31397]</label>
                     <selected>Skin.HasSetting(addon.upnext.use.thumbnail)</selected>
                     <onclick>Skin.ToggleSetting(addon.upnext.use.thumbnail)</onclick>
@@ -2779,7 +2791,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(10)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31001]</label>
                     <onclick condition="!System.HasAddon(script.xbmcbackup)">InstallAddon(script.xbmcbackup)</onclick>
                     <onclick>RunScript(script.xbmcbackup)</onclick>
@@ -2788,7 +2800,7 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(10)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[5]</label>
                     <onclick condition="!System.HasAddon(script.xbmcbackup)">InstallAddon(script.xbmcbackup)</onclick>
                     <onclick condition="System.HasAddon(script.xbmcbackup)">Addon.OpenSettings(script.xbmcbackup)</onclick>
@@ -2806,7 +2818,7 @@
                 <!-- <control type="button" id="9441" description="Settings to Defaults"> -->
                     <!-- <width>1278</width> -->
                     <!-- <visible>Container(3000).HasFocus(10)</visible> -->
-                    <!-- <include>Def_Settings_Button_Gradient_Select_Right_Side</include> -->
+                    <!-- <include>Def_Settings_Button_Focus_Select_Right_Side</include> -->
                     <!-- <label>$LOCALIZE[31599]</label> -->
                     <!-- <onclick>ActivateWindow(1252)</onclick> -->
                     <!-- <onclick>SetProperty(reloadskin,1,Home)</onclick> -->
@@ -2815,7 +2827,7 @@
                 <!-- <control type="button" id="9442" description="Settings to Defaults"> -->
                     <!-- <width>1278</width> -->
                     <!-- <visible>Container(3000).HasFocus(10)</visible> -->
-                    <!-- <include>Def_Settings_Button_Gradient_Select_Right_Side</include> -->
+                    <!-- <include>Def_Settings_Button_Focus_Select_Right_Side</include> -->
                     <!-- <label>$LOCALIZE[31238]</label> -->
                     <!-- <onclick>ActivateWindow(1253)</onclick> -->
                     <!-- <onclick>SetProperty(reloadskin,1,Home)</onclick> -->
@@ -2825,41 +2837,53 @@
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(10)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
                     <label>$LOCALIZE[31616]</label>
                     <onclick>RunScript(script.skinshortcuts,type=resetall)</onclick>
                     <!-- <onclick>SetProperty(reloadskin,1,Home)</onclick> -->
                 </control>
 
-                <control type="button" id="9442">
+                <control type="button" id="9442" description="Settings to Defaults">
                     <width>1278</width>
                     <visible>Container(3000).HasFocus(10)</visible>
                     <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
-                    <label>$LOCALIZE[31181]</label>
-                    <label2>$VAR[Label_Setting_Home_Widget_Style]</label2>
-                    <onclick>ActivateWindow(1152)</onclick>
+                    <include>Def_Settings_Button_Focus_Select_Right_Side</include>
+                    <label>$LOCALIZE[31622]</label>
+                    <onfocus condition="String.IsEmpty(Window(Home).Property(launchsetupwizard)">ClearProperty(launchsetupwizard,Home)</onfocus>
+                    <onunfocus condition="String.IsEmpty(Window(Home).Property(launchsetupwizard)">ClearProperty(launchsetupwizard,Home)</onunfocus>
+                    <onclick>SetProperty(launchsetupwizard,1,Home)</onclick>
+                    <onclick>ActivateWindow(1153)</onclick>
                 </control>
 
-                <control type="button" id="9443" description="Settings to Defaults">
-                    <width>1278</width>
-                    <visible>Container(3000).HasFocus(10)</visible>
-                    <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
-                    <label>$LOCALIZE[166] - $LOCALIZE[5] / $LOCALIZE[31364]</label>
-                    <label2>$VAR[Label_Skin_Settings_Perf_Selected]</label2>
-                    <onclick>ActivateWindow(1154)</onclick>
-                </control>
+                <!-- <control type="button" id="9442"> -->
+                    <!-- <width>1278</width> -->
+                    <!-- <visible>Container(3000).HasFocus(10)</visible> -->
+                    <!-- <include>Def_Skin_Settings_Level_advanced</include> -->
+                    <!-- <include>Def_Settings_Button_Focus_Select_Right_Side</include> -->
+                    <!-- <label>$LOCALIZE[31181]</label> -->
+                    <!-- <label2>$VAR[Label_Skin_Settings_Home_Widget_Style_Selected]</label2> -->
+                    <!-- <onclick>ActivateWindow(1153)</onclick> -->
+                <!-- </control> -->
 
-                <control type="button" id="9441" description="Settings to Defaults">
-                    <width>1278</width>
-                    <visible>Container(3000).HasFocus(10)</visible>
-                    <include>Def_Skin_Settings_Level_advanced</include>
-                    <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
-                    <label>$LOCALIZE[166] - $LOCALIZE[14078]</label>
-                    <label2>$VAR[Label_Skin_Settings_Theme_Color_Selected]</label2>
-                    <onclick>ActivateWindow(1155)</onclick>
-                </control>
+                <!-- <control type="button" id="9443" description="Settings to Defaults"> -->
+                    <!-- <width>1278</width> -->
+                    <!-- <visible>Container(3000).HasFocus(10)</visible> -->
+                    <!-- <include>Def_Skin_Settings_Level_advanced</include> -->
+                    <!-- <include>Def_Settings_Button_Focus_Select_Right_Side</include> -->
+                    <!-- <label>$LOCALIZE[166] - $LOCALIZE[5] / $LOCALIZE[31364]</label> -->
+                    <!-- <label2>$VAR[Label_Skin_Settings_Perf_Selected]</label2> -->
+                    <!-- <onclick>ActivateWindow(1154)</onclick> -->
+                <!-- </control> -->
+
+                <!-- <control type="button" id="9441" description="Settings to Defaults"> -->
+                    <!-- <width>1278</width> -->
+                    <!-- <visible>Container(3000).HasFocus(10)</visible> -->
+                    <!-- <include>Def_Skin_Settings_Level_advanced</include> -->
+                    <!-- <include>Def_Settings_Button_Focus_Select_Right_Side</include> -->
+                    <!-- <label>$LOCALIZE[166] - $LOCALIZE[14078]</label> -->
+                    <!-- <label2>$VAR[Label_Skin_Settings_Theme_Color_Selected]</label2> -->
+                    <!-- <onclick>ActivateWindow(1155)</onclick> -->
+                <!-- </control> -->
             </control>
 
             <!-- SCROLLBAR -->

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1155">
-    <defaultcontrol>11</defaultcontrol>
+    <defaultcontrol always="true">11</defaultcontrol>
 
-    <onload>SetProperty(SetSkinThemeColorSelected,$VAR[Label_Skin_Settings_Theme_Color_Selected],Home)</onload>
-    <onunload>ClearProperty(SetSkinThemeColorSelected,Home)</onunload>
+    <onload>ClearProperty(reloadsetupwizard,Home)</onload>
+    <onload>ClearProperty(SetupWizardDirection,Home)</onload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard))">SetFocus(3099)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard))">Skin.SetString(FullInitEnded,1)</onunload>
+
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard)) + Window.IsVisible(Custom_1100_Startup.xml)">SetFocus(3615)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -29,8 +34,11 @@
 
                 <onup>11</onup>
                 <ondown>11</ondown>
-                <onleft>close</onleft>
-                <onright>1773</onright>
+
+                <onleft condition="!$EXP[Condition_Show_Button_Setup_Wizard]">close</onleft>
+                <onleft condition="$EXP[Condition_Show_Button_Setup_Wizard]">5</onleft>
+
+                <onright>5</onright>
 
                 <usecontrolcoords>true</usecontrolcoords>
                 <itemgap>0</itemgap>
@@ -43,7 +51,7 @@
                         <font>Small</font>
                         <textcolor>PanelWhite100</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)</visible>
+                        <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <control type="label">
                         <left>30</left>
@@ -52,19 +60,21 @@
                         <font>Small</font>
                         <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </itemlayout>
                 <focusedlayout width="418" height="70">
 
                     <!-- ITEM FOCUS -->
 
-                    <include>Def_Layout_Item_Focus</include>
+                    <include content="Def_Layout_Item_Focus">
+                        <param name="fade_condition" value="!Control.HasFocus(11)" />
+                    </include>
 
                     <control type="label">
                         <left>30</left>
@@ -77,7 +87,7 @@
                     <include content="Def_Button_Radio">
                         <param name="colordiffuse_off" value="Selected" />
                         <param name="colordiffuse_on" value="Selected" />
-                        <param name="visible" value="String.IsEqual(Window(Home).property(SetSkinThemeColorSelected),ListItem.Label)" />
+                        <param name="visible" value="!String.IsEmpty(ListItem.Property(ItemSelected))" />
                     </include>
                 </focusedlayout>
 
@@ -89,29 +99,48 @@
 
                     <item id="1">
                         <label>$LOCALIZE[31613] ($LOCALIZE[571])</label>
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
                         <onclick>Skin.Reset(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,1)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1155,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardDirection,Next,Home)</onclick>
+                        <onclick condition="Skin.HasSetting(daynight.autocolor)">SetProperty(autocolors_enable,1,Home)</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),1)">Def_Item_Selected</include>
+
                         <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:03,silent)</onclick>
-                        <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:00,silent)</onclick>
+                        <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=default,noconfirm=true),00:01,silent)</onclick>
+                        <onclick>Close</onclick>
                     </item>
 
                     <!-- DAY -->
 
                     <item id="2">
                         <label>$LOCALIZE[31614]</label>
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
                         <onclick>Skin.Reset(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,2)</onclick>
-                        <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:3,silent)</onclick>
-                        <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:00,silent)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1155,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardDirection,Next,Home)</onclick>
+                        <onclick condition="Skin.HasSetting(daynight.autocolor)">SetProperty(autocolors_enable,1,Home)</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),2)">Def_Item_Selected</include>
+
+                        <onclick condition="Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:03,silent)</onclick>
+                        <onclick condition="!Skin.HasSetting(daynight.autocolor)">AlarmClock(DelaySkinColor1,RunScript(script.skin.info.service,action=set_setting,setting=lookandfeel.skincolors,value=light,noconfirm=true),00:01,silent)</onclick>
+                        <onclick>Close</onclick>
                     </item>
 
                     <!-- DAY NIGHT AUTOCOLOR -->
 
                     <item id="3">
                         <label>$LOCALIZE[31615]</label>
+                        <onclick condition="!System.HasAddon(script.skin.info.service)">InstallAddon(script.skin.info.service)</onclick>
+                        <onclick condition="!System.HasAddon(script.arctic.zephyr.rounded.autocolors)">InstallAddon(script.arctic.zephyr.rounded.autocolors)</onclick>
                         <onclick>Skin.SetBool(daynight.autocolor)</onclick>
                         <onclick>Skin.SetString(settingthemecolor,3)</onclick>
-                        <onclick>close</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(reloadsetupwizard,1155,Home)</onclick>
+                        <onclick condition="$EXP[Condition_Show_Button_Setup_Wizard]">SetProperty(SetupWizardDirection,Next,Home)</onclick>
+                        <onclick>Close</onclick>
+                        <include condition="String.IsEqual(Skin.String(settingthemecolor),3)">Def_Item_Selected</include>
                     </item>
                 </content>
             </control>
@@ -125,6 +154,61 @@
             <include content="Def_Dialog_View_Type">
                 <param name="texture" value="special://skin/extras/skincolor/$VAR[Def_Image_Skin_Theme_Color].jpg" />
             </include>
+
+            <!-- LINE HORIZONTALE -->
+
+            <control type="image">
+                <top>653</top>
+                <left>30</left>
+                <width>404</width>
+                <height>1</height>
+                <include>Texture_Dialog_Line</include>
+            </control>
+
+            <!-- BUTTON ON LEFT -->
+
+            <control type="grouplist" id="9055">
+                <top>654</top>
+                <left>30</left>
+                <width>388</width>
+                <height>490</height>
+
+                <!-- <onup>SetFocus(11,4,absolute)</onup> -->
+                <onup>11</onup>
+
+                <onleft condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onleft>
+                <onleft condition="$EXP[Condition_Show_Button_Setup_Wizard]">9010</onleft>
+
+                <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
+                <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</onright>
+
+                <ondown condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</ondown>
+                <ondown condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</ondown>
+
+                <onback>ClearProperty(launchsetupwizard,Home)</onback>
+
+                <itemgap>0</itemgap>
+
+                <scrolltime tween="quadratic">200</scrolltime>
+
+                <control type="label" id="9050" description="Backup">
+                    <include>Def_Settings_Label_Title_Right_Side</include>
+                    <label>$LOCALIZE[10507]</label>
+                </control>
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="5" />
+                    <param name="width" value="388" />
+                    <param name="align" value="left" />
+                    <param name="label" value="$LOCALIZE[31615]" />
+                    <!-- <param name="selected" value="Skin.HasSetting(home.show.menu.icons)" /> -->
+                    <param name="onclick1" value="Addon.OpenSettings(script.arctic.zephyr.rounded.autocolors)" />
+                </include>
+            </control>
+
+            <!-- BUTTON OK / PREV / NEXT -->
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Def_Button_Setup_Wizard</include>
 
             <!-- NUM ITEMS -->
 

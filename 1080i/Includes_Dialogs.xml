@@ -53,7 +53,7 @@
                <right>$PARAM[right]</right>
                <left>$PARAM[left]</left>
                <height>1</height>
-               <texture colordiffuse="$VAR[Color_Dialog_Line]">common/white.png</texture>
+               <include>Texture_Dialog_Line</include>
                <visible>$PARAM[visible]</visible>
             </control>
         </definition>
@@ -70,7 +70,7 @@
                 <bottom>$PARAM[bottom]</bottom>
                 <right>$PARAM[right]</right>
                 <width>1</width>
-                <texture colordiffuse="$VAR[Color_Dialog_Line]">common/white.png</texture>
+                <include>Texture_Dialog_Line</include>
                 <visible>$PARAM[visible]</visible>
             </control>
         </definition>
@@ -247,8 +247,10 @@
         <definition>
             <visible>$PARAM[visible]</visible>
 
-            <include>$PARAM[animation_fade_in]</include>
-            <include>$PARAM[animation_fade_out]</include>
+            <include condition="!$EXP[Condition_Show_Button_Setup_Wizard]">$PARAM[animation_fade_in]</include>
+            <include condition="!$EXP[Condition_Show_Button_Setup_Wizard]">$PARAM[animation_fade_out]</include>
+
+            <include condition="$EXP[Condition_Show_Button_Setup_Wizard]">Animation_Dialog_Menu_Prec_Next_Side</include>
 
             <centerleft>$PARAM[centerleft]</centerleft>
             <centertop>$PARAM[centertop]</centertop>
@@ -749,10 +751,10 @@
         <param name="visible" value="$PARAM[visible]" />
         <definition>
             <control type="image">
-                <right>30</right>
+                <right>32</right>
                 <centertop>50%</centertop>
-                <width>28</width>
-                <height>28</height>
+                <width>24</width>
+                <height>24</height>
                 <texture colordiffuse="$PARAM[colordiffuse_off]">buttons/radio-off.png</texture>
                 <visible>!$PARAM[visible]</visible>
             </control>
@@ -791,6 +793,14 @@
         <radiowidth>48</radiowidth>
     </include>
 
+    <include name="Def_Button_Dimensions_Circle">
+        <width>50</width>
+        <height>50</height>
+        <radioposx>1</radioposx>
+        <radioposy>10</radioposy>
+        <radiowidth>48</radiowidth>
+    </include>
+
     <include name="Def_Buttons_Info">
         <font>Button</font>
         <textcolor>Dark2</textcolor>
@@ -807,14 +817,6 @@
         <include>Texture_Dialog_Settings</include>
         <radioposx>559</radioposx>
         <textcolor>Black70</textcolor>
-    </include>
-
-    <include name="Def_Dialog_Buttons_Gradient">
-        <width>300</width>
-        <font>Small</font>
-        <textcolor>Black70</textcolor>
-        <height>70</height>
-        <include>Texture_Dialog_Settings</include>
     </include>
 
     <include name="Def_Button_Colorbox">
@@ -916,7 +918,7 @@
 
     <!-- DEF - DIALOG - SKIN SETTINGS - SETTINGS - CUSTOM SETTINGS ( HEIGHT 70 ) -->
 
-    <include name="Def_Settings_Button_Gradient_Select_Left_Side">
+    <include name="Def_Settings_Button_Focus_Select_Left_Side">
         <align>left</align>
         <width>568</width>
         <textoffsetx>30</textoffsetx>
@@ -939,7 +941,7 @@
         <animation effect="fade" start="100" end="60" condition="true">Conditional</animation>
     </include>
 
-    <include name="Def_Settings_Button_Gradient_Select_Right_Side">
+    <include name="Def_Settings_Button_Focus_Select_Right_Side">
         <align>left</align>
         <radioposx>1218</radioposx>
         <textoffsetx>30</textoffsetx>
@@ -963,7 +965,7 @@
         <animation effect="fade" start="100" end="60" condition="true">Conditional</animation>
     </include>
 
-    <include name="Def_Custom_Settings_Button_Gradient_Select_Left_Side">
+    <include name="Def_Custom_Settings_Button_Focus_Select_Left_Side">
         <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
 
         <definition>
@@ -991,7 +993,7 @@
             <visible>$PARAM[visible]</visible>
             <visible>System.HasAddon($PARAM[addonname]) + System.AddonIsEnabled($PARAM[addonname])</visible>
             <width>1278</width>
-            <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+            <include>Def_Settings_Button_Focus_Select_Right_Side</include>
             <label>$PARAM[addonname]</label>
             <label2>$INFO[System.AddonVersion($PARAM[addonname]),(,)]        </label2>
             <selected>true</selected>
@@ -1010,7 +1012,7 @@
             <visible>$PARAM[visible]</visible>
             <visible>!System.HasAddon($PARAM[addonname])</visible>
             <width>1278</width>
-            <include>Def_Settings_Button_Gradient_Select_Right_Side</include>
+            <include>Def_Settings_Button_Focus_Select_Right_Side</include>
             <label>$PARAM[addonname]</label>
             <label2>$INFO[System.AddonVersion($PARAM[addonname]),(,)]        </label2>
             <selected>false</selected>
@@ -2889,6 +2891,141 @@
 
                 <onclick>SetProperty(open_dialog_info_settings,1,Home)</onclick>
                 <onclick>SetFocus(9400)</onclick>
+            </control>
+        </control>
+    </include>
+
+    <!-- DEF - DIALOG SETUP WIZARD NAVIGATION -->
+
+    <include name="Def_Button_Setup_Wizard">
+        <control type="group">
+
+            <!-- PREC -->
+
+            <control type="group">
+                <left>30</left>
+                <bottom>20</bottom>
+                <height>50</height>
+
+                <control type="radiobutton" id="9010">
+                    <include>Def_Button_Dimensions_Circle</include>
+                    <include content="Texture_RadioButton_Dialog_Circle">
+                        <param name="icon" value="buttonsdialogs/angle-left.png" />
+                        <param name="color" value="Black12" />
+                    </include>
+                    <label/>
+                    <enable>!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)</enable>
+
+                    <onup condition="!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml) + !Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">SetFocus(11)</onup>
+                    <onup condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml) | Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">SetFocus(5)</onup>
+
+                    <ondown>SetFocus(11)</ondown>
+
+                    <onleft condition="!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9020)</onleft>
+                    <onright condition="!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9020)</onright>
+
+                    <onleft condition="Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9030)</onleft>
+                    <onright condition="Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">SetFocus(9030)</onright>
+
+                    <onclick>SetProperty(SetupWizardDirection,Prec,Home)</onclick>
+                    <onclick>close</onclick>
+
+                    <onclick condition="Window.IsVisible(Custom_1154_Set_Settings_Perfomance.xml)">ActivateWindow(1153)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">ActivateWindow(1154)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)">ActivateWindow(1155)</onclick>
+                </control>
+            </control>
+
+            <!-- NEXT -->
+
+            <control type="group">
+                <left>366</left>
+                <bottom>20</bottom>
+                <height>50</height>
+
+                <control type="radiobutton" id="9020">
+                    <include>Def_Button_Dimensions_Circle</include>
+                    <include content="Texture_RadioButton_Dialog_Circle">
+                        <param name="icon" value="buttonsdialogs/angle-right.png" />
+                        <param name="color" value="Black12" />
+                    </include>
+                    <label/>
+                    <visible>!Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)</visible>
+
+                    <onup condition="!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml) + !Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">SetFocus(11)</onup>
+                    <onup condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml) | Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">SetFocus(5)</onup>
+
+                    <ondown>SetFocus(11)</ondown>
+
+                    <onright condition="!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(9010)</onright>
+                    <onright condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(5)</onright>
+
+                    <onleft condition="!Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(9010)</onleft>
+                    <onleft condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">SetFocus(5)</onleft>
+
+                    <onclick>SetProperty(SetupWizardDirection,Next,Home)</onclick>
+                    <onclick>close</onclick>
+
+                    <onclick condition="Window.IsVisible(Custom_1153_Set_Viewtype_Home.xml)">ActivateWindow(1154)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1154_Set_Settings_Perfomance.xml)">ActivateWindow(1155)</onclick>
+                    <onclick condition="Window.IsVisible(Custom_1155_Set_Skin_Theme_Color.xml)">ActivateWindow(1156)</onclick>
+                </control>
+            </control>
+
+            <!-- START -->
+
+            <control type="group">
+                <left>366</left>
+                <bottom>20</bottom>
+                <height>50</height>
+
+                <control type="radiobutton" id="9030">
+                    <include>Def_Button_Dimensions_Circle</include>
+                    <include content="Texture_RadioButton_Dialog_Circle">
+                        <param name="icon" value="buttonsdialogs/launch.png" />
+                        <param name="color" value="Black12" />
+                    </include>
+                    <label/>
+                    <visible>Window.IsVisible(Custom_1156_Set_Skin_Preset_Color.xml)</visible>
+
+                    <onup>SetFocus(11)</onup>
+                    <ondown>SetFocus(11)</ondown>
+                    <onright>SetFocus(9010)</onright>
+                    <onleft>SetFocus(9010)</onleft>
+
+                    <onback>ClearProperty(launchsetupwizard,Home)</onback>
+
+                    <onclick>SetProperty(SetupWizardDirection,Next,Home)</onclick>
+
+                    <onclick condition="String.IsEmpty(Skin.String(FullInitEnded))">AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:01,silent)</onclick>
+                    <onclick condition="String.IsEmpty(Skin.String(FullInitEnded))">Skin.SetString(FullInitEnded,1)</onclick>
+                    <onclick condition="String.IsEmpty(Skin.String(FullInitEnded))">Dialog.Close(all)</onclick>
+
+                    <onclick condition="!String.IsEmpty(Skin.String(FullInitEnded)) | !String.IsEmpty(Window(Home).Property(launchsetupwizard)">close</onclick>
+                    <onclick condition="!String.IsEmpty(Window(Home).Property(launchsetupwizard)">ClearProperty(launchsetupwizard,Home)</onclick>
+                </control>
+            </control>
+
+            <!-- TIPS - FOOTER -->
+
+            <control type="group">
+                <visible>Control.HasFocus(9010) | Control.HasFocus(9020) | Control.HasFocus(9030)</visible>
+
+                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="150" /></include>
+                <include>Animation_Dialog_Info_Fade_Out_150</include>
+
+                <bottom>30</bottom>
+                <left>30</left>
+                <width>370</width>
+                <height>50</height>
+
+                <control type="label">
+                    <font>Small</font>
+                    <scroll>false</scroll>
+                    <align>center</align>
+                    <textcolor>Dark2</textcolor>
+                    <label>$VAR[Label_Setup_Wizard_Footer_Tip]</label>
+                </control>
             </control>
         </control>
     </include>

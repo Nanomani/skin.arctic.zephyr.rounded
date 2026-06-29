@@ -6,12 +6,20 @@
     <!-- RELOAD -->
 
     <onload>SetProperty(ReloadDone,1)</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard)">SetFocus(3099)</onload>
+
     <onunload>CancelAlarm(GoHome,true)</onunload>
 
     <controls>
+        <include>Hidden_Button_ReloadSetupWizard</include>
+
         <control type="button" id="3615">
             <visible allowhiddenfocus="true">false</visible>
-            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:03,silent)</onfocus>
+
+            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist)) + String.IsEmpty(Skin.String(FullInitStarted)) + String.IsEmpty(Skin.String(FullInitEnded))">AlarmClock(GoFullInit,ReplaceWindow(1153),00:03,silent)</onfocus>
+
+            <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist)) + !String.IsEmpty(Skin.String(FullInitStarted))">AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:03,silent)</onfocus>
+
             <onfocus condition="String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(FocusButton,SetFocus(3616),00:01,silent)</onfocus>
             <onfocus condition="!String.IsEmpty(Skin.String(StartupPlaylist))">AlarmClock(GoToCheck,SetFocus(9000),00:00,silent)</onfocus>
         </control>
@@ -21,7 +29,7 @@
         <control type="button" id="9000">
             <include>Def_Hidden_Button</include>
             <onfocus>AlarmClock(Check1,SetFocus(9002),00:01,silent)</onfocus>
-            <onfocus condition="!String.IsEmpty(Skin.String(StartupPlaylist)) + !Player.HasMedia">AlarmClock(PlayStartupVideo,PlayMedia($ESCINFO[Skin.String(StartupPlaylist)],1),00:00,silent,false)</onfocus>
+            <onfocus condition="!String.IsEmpty(Skin.String(StartupPlaylist)) + !Player.HasMedia">AlarmClock(PlayStartupVideo,PlayMedia($ESCINFO[Skin.String(StartupPlaylist)],1),00:00,silent)</onfocus>
             <onback>ReplaceWindow($INFO[System.StartupWindow])</onback>
             <onback>Stop</onback>
         </control>

@@ -1,7 +1,6 @@
 [![Add-on for Kodi](https://img.shields.io/badge/Add--on%20for-Kodi-17B2E7?logo=kodi)](https://forum.kodi.tv/showthread.php?tid=387634)
 ![Python](https://img.shields.io/badge/Python-3.0%2B-green?logo=python)
-[![License](https://img.shields.io/badge/License-GPLv3-orange)](LICENSE.txt)
-
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 ## Arctic: Zephyr - Rounded
 
 Arctic: Zephyr Rounded is a Kodi skin inspired by Arctic: Zephyr - Reloaded (and AH2) while following its own direction.
@@ -32,5 +31,5 @@ Over the years, many features have been removed, added, redesigned, or completel
 
 ## Credits
 
-All thanks for this Skin go to the author and creator.  
-[jurialmunkey](https://github.com/jurialmunkey), [beatmasterRS](https://github.com/beatmasterRS).
+All credit goes to the original author and creator of the Skin.  
+[jurialmunkey](https://github.com/jurialmunkey)

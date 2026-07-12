@@ -26,7 +26,7 @@ Over the years, many features have been removed, added, redesigned, or completel
 4. Install from Nanomani repo
 - Nanomani Repository > Look and Feel > Skins > Arctic Zephir Rounded
 
-### 👉 Forum Kodi : **[Access](https://forum.kodi.tv/showthread.php?tid=387634)**  
+### 👉 **[Forum Kodi](https://forum.kodi.tv/showthread.php?tid=387634)**  
 
 
 ## Credits

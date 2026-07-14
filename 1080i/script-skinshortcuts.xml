@@ -7,6 +7,7 @@
     <!-- <onunload>ClearProperty(header-widget)</onunload> -->
     <!-- <onunload condition="Control.IsVisible(9900)">ClearProperty(custommenu,Home)</onunload> -->
 
+    <onunload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|x1111|x1112|x1113|x1114|x1115|x1116|x1117|x1118|x1119|powermenu&amp;levels=6)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -67,7 +68,7 @@
                         <visible>true</visible>
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
-                        <visible>!Control.HasFocus(306) + !ControlGroup(9200).HasFocus()</visible>
+                        <visible>!Control.HasFocus(4000) + !ControlGroup(9200).HasFocus()</visible>
                         <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                     <control type="image">
@@ -79,7 +80,7 @@
                         <visible>true</visible>
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
-                        <visible>Control.HasFocus(306) | ControlGroup(9200).HasFocus()</visible>
+                        <visible>Control.HasFocus(4000) | ControlGroup(9200).HasFocus()</visible>
                         <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                 </itemlayout>
@@ -106,7 +107,7 @@
                         <texture colordiffuse="Black30" fallback="special://skin/extras/icons/addtile.png">$VAR[Image_SkinShortcut]</texture>
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
-                        <visible>!Control.HasFocus(306) + !ControlGroup(9200).HasFocus()</visible>
+                        <visible>!Control.HasFocus(4000) + !ControlGroup(9200).HasFocus()</visible>
                         <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                     <control type="image">
@@ -117,7 +118,7 @@
                         <texture colordiffuse="Selected" fallback="special://skin/extras/icons/addtile.png">$VAR[Image_SkinShortcut]</texture>
                         <animation effect="fade" start="0" end="100" time="1" delay="1" reversible="false">Visible</animation>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
-                        <visible>Control.HasFocus(306) | ControlGroup(9200).HasFocus()</visible>
+                        <visible>Control.HasFocus(4000) | ControlGroup(9200).HasFocus()</visible>
                         <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                     </control>
                 </focusedlayout>
@@ -139,8 +140,8 @@
                 <width>712</width>
                 <align>right</align>
 
-                <onright>306</onright>
-                <onleft>306</onleft>
+                <onright>4000</onright>
+                <onleft>4000</onleft>
                 <onup>Control.Move(211,-1)</onup>
                 <ondown>Control.Move(211,1)</ondown>
                 <onback>ClearProperty(header-widget,Home)</onback>
@@ -208,13 +209,12 @@
                     <texturenofocus colordiffuse="Black30" flipy="true">buttons/moveup.png</texturenofocus>
                     <texturefocus colordiffuse="Selected" flipy="true">buttons/moveup.png</texturefocus>
                     <onfocus condition="!String.IsEqual(Window(Home).Property(custommenu),yes)">ClearProperty(skinshortcuts-Widget,Home)</onfocus>
-                    <onclick>SetProperty(SetIcon,1,Home)</onclick>
                 </control>
             </control>
 
             <!-- LEFT LIST - SELECT ICON -->
 
-            <control type="button" id="306">
+            <control type="button" id="4000">
                 <include>Def_Hidden_Button</include>
                 <onup>Control.Move(211,-1)</onup>
                 <ondown>Control.Move(211,1)</ondown>
@@ -223,6 +223,7 @@
                 <onright>9100</onright>
                 <onback>ClearProperty(header-widget,Home)</onback>
                 <onclick>SetProperty(SetIcon,1,Home)</onclick>
+                <onclick>Sendclick(311)</onclick>
                 <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
             </control>
 
@@ -242,7 +243,7 @@
 
                 <onup>9100</onup>
                 <ondown>9100</ondown>
-                <onleft>306</onleft>
+                <onleft>4000</onleft>
                 <onright>303</onright>
                 <onback>ClearProperty(header-widget,Home)</onback>
 
@@ -254,7 +255,7 @@
 
                 <control type="button" id="313">
                     <visible>!String.IsEqual(Window(Home).Property(id),1)</visible>
-                    <!-- <visible>String.EndsWith(Window.Property(menuname),.1)</visible> -->
+                    <!-- <visible>String.EndsWith(Window.Property(groupname),.1)</visible> -->
 
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>126</label>
@@ -266,17 +267,23 @@
                 <control type="button" id="401" description="Alt chooser">
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
+
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
-                    <label>$ADDON[script.skinshortcuts 32048]</label>
+
                     <onfocus>SetProperty(TMDbHelper.IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
-                <!-- WIDGETS - CHOOSE WIDGET -->
+                <!-- WIDGETS - CHOOSE ACTION FOR MAIN MENU ITEM -->
 
-                <control type="button" id="4001" description="Choose Widget">
+                <control type="button" id="4001" description="Alt chooser">
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
+
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>31558</label>
+
+                    <onclick>SetProperty(custom-grouping,widget)</onclick>
+                    <onclick>SendClick(401)</onclick>
+                    <include>Set_SkinShortcuts_Content_Type_On_UnFocus</include>
                 </control>
 
                 <!-- MAIN MENU - CHOOSE ACTION - DISPLAY COMMAND ACTION -->
@@ -293,7 +300,7 @@
                     <onfocus>SetProperty(IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
-                <!-- WIDGETS - DISPLAY/EDIT ACTION -->
+                <!-- WIDGETS - CHOOSE ACTION - DISPLAY COMMAND ACTION -->
 
                 <control type="button" id="4307" description="Custom">
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
@@ -302,8 +309,10 @@
 
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>31194</label>
-                    <label2>$INFO[Container(211).ListItem.Property(widgetPath)]</label2>
+                    <label2>$INFO[Container(211).ListItem.Property(Path)]</label2>
 
+                    <onfocus>ClearProperty(TMDbHelper.IsStandardSkinShortcut,Home)</onfocus>
+                    <onclick>SetProperty(custom-grouping,widget)</onclick>
                     <onclick>SendClick(307)</onclick>
                 </control>
 
@@ -320,7 +329,7 @@
                 <!-- MAIN MENU - TITLE - "WIDGETS" -->
 
                 <control type="button" id="4988">
-                    <visible>String.IsEqual(Window.Property(menuname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
 
                     <include>Def_Skinshortcuts_Button_Title_Right_Side</include>
@@ -333,7 +342,7 @@
                 <!-- =========================================== -->
 
                 <control type="button" id="406" description="Set Widget">
-                    <visible>String.IsEqual(Window.Property(menuname),mainmenu)</visible>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible>
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <!-- <visible>!String.IsEqual(Container(211).ListItem.Label2,MovieHub) + !String.IsEqual(Container(211).ListItem.Label2,TVHub)</visible> -->
@@ -347,7 +356,7 @@
                 <!-- MAIN MENU - TITLE - "OPTIONS" -->
 
                 <control type="button" id="4989">
-                    <visible>String.IsEqual(Window.Property(menuname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
 
                     <include>Def_Skinshortcuts_Button_Title_Right_Side</include>
@@ -357,7 +366,7 @@
                 <!-- MAIN MENU - SET BACKGROUND - MENU -->
 
                 <control type="button" id="310" description="Background">
-                    <visible>[String.IsEqual(Window.Property(menuname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))] | String.IsEqual(Window(Home).Property(Backg),yes)</visible>
+                    <visible>[String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))] | String.IsEqual(Window(Home).Property(Backg),yes)</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
 
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
@@ -373,7 +382,7 @@
                     <!-- <visible>!String.IsEqual(Container(211).ListItem.Label2,MovieHub) + !String.IsEqual(Container(211).ListItem.Label2,TVHub)</visible> -->
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-                    <visible>String.IsEqual(Window.Property(menuname),mainmenu)</visible>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu)</visible>
 
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>31083</label>
@@ -469,7 +478,7 @@
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <!-- <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible> -->
-                    <!-- <visible>String.EndsWith(Window.Property(menuname),.1) | String.IsEqual(Window.Property(menuname),searchmenu)</visible> -->
+                    <!-- <visible>String.EndsWith(Window.Property(groupname),.1) | String.IsEqual(Window.Property(groupname),searchmenu)</visible> -->
 
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>$LOCALIZE[31000]</label>
@@ -535,14 +544,12 @@
                     <param name="buttonid2" value="9509" />
                 </include>
 
-                <!-- MAIN MENU - RESET - DEFAULT MAIN MENU -->
+                <!-- MAIN MENU - RESTORE / REINIT - DEFAULT MENU -->
 
-                <!-- <control type="button" id="308" description="Reset"> -->
-                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
-                    <!-- <include>Def_Skinshortcuts_Button_Menu_Right_Side</include> -->
-                    <!-- <label>$ADDON[script.skinshortcuts 32028]</label> -->
-                    <!-- <onclick>RunScript(script.skinshortcuts,type=reset,menu=mainmenu)</onclick> -->
-                <!-- </control> -->
+                <control type="button" id="308" description="Reset">
+                    <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
+                    <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                </control>
             </control>
 
             <!-- NUM ITEMS -->
@@ -550,13 +557,6 @@
             <include>Def_Dialog_Select_label_Num_Item</include>
         </control>
 
-        <control type="list" id="212">
-            <visible>false</visible>
-            <width>1</width>
-            <height>1</height>
-            <itemlayout width="1" height="1" />
-            <focusedlayout width="1" height="1" />
-        </control>
         <control type="button" id="404">
             <visible allowhiddenfocus="true">false</visible>
         </control>
@@ -573,5 +573,6 @@
             <visible allowhiddenfocus="true">false</visible>
             <onfocus>SetFocus(3050)</onfocus>
         </control>
+
     </controls>
 </window>

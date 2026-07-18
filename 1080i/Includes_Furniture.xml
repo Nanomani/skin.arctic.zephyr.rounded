@@ -702,6 +702,75 @@
         </definition>
     </include>
 
+    <include name="Layout_Poster_TMDb_Status">
+        <param name="small" value="$PARAM[small]" default="false" />
+        <param name="bottom_small" value="$PARAM[bottom_small]" default="82" />
+        <param name="left" value="$PARAM[left]" default="5" />
+        <param name="right" value="$PARAM[right]" default="5" />
+        <param name="bottom" value="$PARAM[bottom]" default="-10" />
+
+        <definition>
+
+            <!-- LEFT - RATING -->
+
+            <control type="group">
+                <visible>!Skin.HasSetting(show.furniture.video.rating.num.set.version)</visible>
+
+                <include content="Def_Bottom" condition="$PARAM[small]">
+                   <param name="bottom" value="$PARAM[bottom_small]" />
+                </include>
+
+                <left>$PARAM[left]</left>
+                <bottom>$PARAM[bottom]</bottom>
+
+                <!-- RATING - IMDb -->
+
+                <control type="group">
+                    <visible>!String.IsEmpty(ListItem.DBID)</visible>
+                    <visible>Window.IsVisible(DialogVideoInfo.xml) | $EXP[IsTMDbHelperItem]</visible>
+
+                    <control type="image">
+                        <include>Def_Image_Poster_Rating_Info_Left</include>
+                        <texture background="true" colordiffuse="FF081C24">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="label">
+                        <include>Def_Label_Poster_TMDb_DBID_status</include>
+                        <label>$VAR[Label_Icon_DBID]</label>
+                    </control>
+                </control>
+            </control>
+
+            <!-- RIGHT - SETS / VERSION -->
+
+            <control type="group">
+                <visible>!Skin.HasSetting(show.furniture.video.rating.num.set.version)</visible>
+
+                <include content="Def_Bottom" condition="$PARAM[small]">
+                   <param name="bottom" value="$PARAM[bottom_small]" />
+                </include>
+
+                <right>$PARAM[right]</right>
+                <bottom>$PARAM[bottom]</bottom>
+
+                <!-- DBTYPE MOVIE / TVSHOW ? -->
+
+                <control type="image">
+                    <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)</visible>
+                    <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))] | $EXP[IsTMDbHelper_User_Movies_Tvshows_List]</visible>
+                    <include>Def_Background_Poster_Rating_Info_Right</include>
+                    <texture background="true" colordiffuse="FF081C24">diffuse/circle_64.png</texture>
+                    <include>Animation_Fade_Background_Marker_Icon</include>
+                </control>
+                <control type="image">
+                    <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)</visible>
+                    <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))] | $EXP[IsTMDbHelper_User_Movies_Tvshows_List]</visible>
+                    <include>Def_Image_Poster_Rating_Info_Right</include>
+                    <texture background="true" colordiffuse="$VAR[Color_Indicator_DBType]">buttonsdialogs/$INFO[ListItem.DBType].png</texture>
+                </control>
+            </control>
+        </definition>
+    </include>
+
     <!-- =================================== -->
     <!--            FLAGS STAR               -->
     <!-- =================================== -->
@@ -2318,7 +2387,7 @@
             <!-- AUDIO -->
 
             <control type="image" description="Audio Codec">
-                <width min="20" max="100">auto</width>
+                <width min="20" max="140">auto</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
                 <include>Def_Flag_Image_Without_Label</include>
                 <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[Image_Media_Flag_Audio_Codec,flags/video/white/audiocodec/,.png]</texture>
@@ -2669,7 +2738,7 @@
             <!-- AUDIO -->
 
             <control type="image" description="Audio Codec">
-                <width min="20" max="120">auto</width>
+                <width min="20" max="140">auto</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
                 <include>Def_Flag_Image_Without_Label</include>
                 <texture fallback="flags/fallback.png">$VAR[Image_Media_Flag_Audio_Codec,flags/video/color/audiocodec/,.png]</texture>
@@ -3939,7 +4008,7 @@
                 <!-- AUDIO -->
 
                 <control type="image">
-                    <width min="20" max="100">auto</width>
+                    <width min="20" max="140">auto</width>
                     <aspectratio aligny="center" align="center">keep</aspectratio>
                     <include>Def_Flag_Image_Without_Label</include>
                     <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/white/audiocodec/,.png]</texture>
@@ -4152,7 +4221,7 @@
                 <!-- AUDIO -->
 
                 <control type="image">
-                    <width min="20" max="120">auto</width>
+                    <width min="20" max="140">auto</width>
                     <aspectratio aligny="center" align="center">keep</aspectratio>
                     <include>Def_Flag_Image_Without_Label</include>
                     <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/color/audiocodec/,.png]</texture>

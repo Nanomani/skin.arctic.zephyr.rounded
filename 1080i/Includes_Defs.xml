@@ -26,11 +26,11 @@
 
             <!-- RESET / STOP ON UNFOCUS -->
 
-            <onunfocus condition="!Skin.HasSetting(enable.trailer.playing.on.unfocus)">ClearProperty(Current_Trailer_Path,Home)</onunfocus>
+            <onunfocus condition="$EXP[Trailer_Is_Playing] + !Skin.HasSetting(enable.trailer.playing.on.unfocus)">ClearProperty(Current_Trailer_Path,Home)</onunfocus>
 
-            <onunfocus condition="!$EXP[Context_Menu_Trailer_Is_Launched] + ![$EXP[Video_Window_Home_Flix_Is_Active] + Player.HasMedia + Player.HasVideo] + !Skin.HasSetting(enable.trailer.playing.on.unfocus) + String.IsEmpty(Window(Home).Property(Trailer_Is_Fullscreen_Playing))">ClearProperty(Trailer_Fade_Background,Home)</onunfocus>
+            <onunfocus condition="$EXP[Trailer_Is_Playing] + !$EXP[Context_Menu_Trailer_Is_Launched] + ![$EXP[Video_Window_Home_Flix_Is_Active] + Player.HasMedia + Player.HasVideo] + !Skin.HasSetting(enable.trailer.playing.on.unfocus) + String.IsEmpty(Window(Home).Property(Trailer_Is_Fullscreen_Playing))">ClearProperty(Trailer_Fade_Background,Home)</onunfocus>
 
-            <onunfocus condition="!$EXP[Context_Menu_Trailer_Is_Launched] + ![$EXP[Video_Window_Home_Flix_Is_Active] + Player.HasMedia + Player.HasVideo] + !Skin.HasSetting(enable.trailer.playing.on.unfocus) + String.IsEmpty(Window(Home).Property(Trailer_Is_Fullscreen_Playing)) + !Player.HasAudio">Stop</onunfocus>
+            <onunfocus condition="$EXP[Trailer_Is_Playing] + !$EXP[Context_Menu_Trailer_Is_Launched] + ![$EXP[Video_Window_Home_Flix_Is_Active] + Player.HasMedia + Player.HasVideo] + !Skin.HasSetting(enable.trailer.playing.on.unfocus) + String.IsEmpty(Window(Home).Property(Trailer_Is_Fullscreen_Playing)) + !Player.HasAudio">Stop</onunfocus>
 
             <!-- RESET FULLSCREEN PROPERTY -->
 
@@ -157,22 +157,16 @@
         <control type="button" id="3099">
             <visible allowhiddenfocus="true">false</visible>
             <include>Def_Hidden_Button</include>
-            <onfocus>Control.SetFocus(3000,1,absolute)</onfocus>
-            <onfocus>ClearProperty(reloadsetupwizard,Home)</onfocus>
-            <!-- <onfocus>ClearProperty(launchsetupwizard,Home)</onfocus> -->
 
+            <onfocus condition="Window.IsVisible(SkinSettings.xml)">Control.SetFocus(3000,1,absolute)</onfocus>
+
+            <onfocus>ClearProperty(reloadsetupwizard,Home)</onfocus>
             <onfocus>ClearProperty(autocolors_enable,Home)</onfocus>
 
-            <!-- <onfocus>AlarmClock(DelayReloadSkin,ReloadSkin(),00:00,silent)</onfocus> -->
-            <!-- <onfocus condition="!String.IsEmpty(Window(Home).Property(launchsetupwizard)">AlarmClock(LaunchSetupWizard,ActivateWindow(1153),00:00,silent)</onfocus> -->
-
             <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1153)">AlarmClock(DelayReload1153,ActivateWindow(1154),00:01,silent)</onfocus>
-
             <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1154)">AlarmClock(DelayReload1154,ActivateWindow(1155),00:01,silent)</onfocus>
-
-            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1155) + String.IsEmpty(Window(Home).Property(autocolors_enable)">AlarmClock(DelayReload1155,ActivateWindow(1156),00:01,silent)</onfocus>
-            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1155) + !String.IsEmpty(Window(Home).Property(autocolors_enable)">AlarmClock(DelayReload1155,ActivateWindow(1156),00:07,silent)</onfocus>
-
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1155) + String.IsEmpty(Window(Home).Property(autocolors_enable))">AlarmClock(DelayReload1155,ActivateWindow(1156),00:01,silent)</onfocus>
+            <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1155) + !String.IsEmpty(Window(Home).Property(autocolors_enable))">AlarmClock(DelayReload1155,ActivateWindow(1156),00:07,silent)</onfocus>
             <onfocus condition="String.IsEqual(Window(Home).Property(reloadsetupwizard),1156)">AlarmClock(DelayReload1156,ActivateWindow(1156),00:01,silent)</onfocus>
         </control>
     </include>
@@ -1215,25 +1209,25 @@
             </control>
             <control type="label">
                 <include>Widgets_Item_Sub_Title_Definition</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Rating(imdb),  •  IMDb ]</label>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating(imdb),  •  $LOCALIZE[31149] ]</label>
                 <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
                 <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Rating(imdb))</visible>
             </control>
             <control type="label">
                 <include>Widgets_Item_Sub_Title_Definition</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Rating(themoviedb),  •  TMDb ]</label>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating(themoviedb),  •  $LOCALIZE[31173] ]</label>
                 <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
                 <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Rating(themoviedb))</visible>
             </control>
             <control type="label">
                 <include>Widgets_Item_Sub_Title_Definition</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Rating(trakt),  •  TrakT ]</label>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating(trakt),  •  $LOCALIZE[31096] ]</label>
                 <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
                 <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Rating(trakt))</visible>
             </control>
             <control type="label">
                 <include>Widgets_Item_Sub_Title_Definition</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Rating,  •  TMDb ]</label>
+                <label>$INFO[Container($PARAM[id]).ListItem.Rating,  •  $LOCALIZE[31173] ]</label>
                 <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.kodi.rating.num)</visible>
                 <visible>String.IsEmpty(Container($PARAM[id]).ListItem.Rating(imdb)) + String.IsEmpty(Container($PARAM[id]).ListItem.Rating(themoviedb)) + String.IsEmpty(Container($PARAM[id]).ListItem.Rating(trakt)) + String.IsEmpty(TMDbHelper.Container($PARAM[id]).ListItem.IMDb_Rating)</visible>
             </control>
@@ -2037,6 +2031,19 @@
         <selectedcolor>$VAR[Color_Indicator_Background_Is_Playing_Icon]</selectedcolor>
     </include>
 
+    <!-- DEF - POSTER - TMDB - DB LOCAL STATUS -->
+
+    <include name="Def_Label_Poster_TMDb_DBID_status">
+        <align>left</align>
+        <aligny>center</aligny>
+        <width>80</width>
+        <left>19</left>
+        <bottom>24</bottom>
+        <height>40</height>
+        <font>SymbolList</font>
+        <textcolor>$VAR[Color_Empty_DBID]</textcolor>
+    </include>
+
     <!-- DEF - POSTER - RATING - LEFT -->
 
     <include name="Def_Image_Poster_Rating_Info_Left">
@@ -2503,7 +2510,6 @@
         <onclick>Skin.Reset(hide.button.video.studio)</onclick>
         <onclick>Skin.SetBool(hide.button.video.similar)</onclick>
         <onclick>Skin.SetBool(show.dialog.info.clearlogo.video)</onclick>
-        <onclick>Skin.SetBool(filter.video.only.local)</onclick>
         <onclick>Skin.Reset(PlayTrailerWindowed)</onclick>
         <onclick>Skin.Reset(filter.video.only.local)</onclick>
         <onclick>Skin.SetBool(filter.video.animation)</onclick>

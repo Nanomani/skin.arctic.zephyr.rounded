@@ -277,12 +277,12 @@
             <visible>!Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogNotification.xml) + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(DialogSettings.xml) + !Window.IsVisible(DialogVolumeBar.xml) + !Window.IsVisible(GameOSD.xml) + !Window.IsVisible(VideoOSDBookmarks.xml)</visible>
 
             <visible>[!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.TimeRemaining)] | [VideoPlayer.Content(livetv) + VideoPlayer.HasEpg]</visible>
+            <visible>!$EXP[OSD_Video_Show_Plot_On_Pause] + String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT))</visible>
+            <visible>!Skin.HasSetting(hide.osd.video.clock)</visible>
             <visible>VideoPlayer.IsFullscreen</visible>
 
             <include>Animation_Common_Fade_In</include>
             <include>Animation_Common_Fade_Out</include>
-
-            <include>Animation_OSD_Slide_Up_With_Plot</include>
 
             <top>40</top>
             <right>90</right>
@@ -1521,7 +1521,7 @@
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
             <include>Def_OSD_UpDown_Video_Info</include>
             <onclick>Dialog.Close(all,true)</onclick>
-            <onclick>ActivateWindow(videoplaylist)</onclick>
+            <onclick>AlarmClock(delayplaylist,ActivateWindow(videoplaylist),00:01,silent)</onclick>
         </include>
 
         <!-- SETTINGS -->
@@ -1814,7 +1814,7 @@
             <!-- AUDIO MENU SETTINGS -->
 
             <control type="group">
-                <visible allowhiddenfocus="true">ControlGroup(19500).HasFocus()</visible>
+                <visible allowhiddenfocus="true">ControlGroup(19500).HasFocus() | Control.HasFocus(2)</visible>
                 <animation effect="slide" end="290,0" time="0" condition="Player.ShowInfo">Conditional</animation>
 
                 <include>Animation_OSD_Slide_Up</include>
@@ -1844,7 +1844,7 @@
             <!-- SUBTITLE MENU SETTINGS -->
 
             <control type="group">
-                <visible allowhiddenfocus="true">ControlGroup(9500).HasFocus()</visible>
+                <visible allowhiddenfocus="true">ControlGroup(9500).HasFocus() | Control.HasFocus(3)</visible>
                 <animation effect="slide" end="290,0" time="0" condition="Player.ShowInfo">Conditional</animation>
 
                 <include>Animation_OSD_Slide_Up</include>
@@ -2322,7 +2322,7 @@
                     <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
                 </control>
                 <control type="image">
-                    <width min="20" max="60">auto</width>
+                    <width min="20" max="70">auto</width>
                     <include>Def_Flag_Image</include>
                     <texture colordiffuse="$VAR[Color_OSD_Panel_White70]" fallback="flags/fallback.png">$INFO[VideoPlayer.AudioChannels,flags/video/white/audiochannels/,.png]</texture>
                     <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioChannels)</visible>
@@ -2462,7 +2462,7 @@
                     <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioCodec)</visible>
                 </control>
                 <control type="image">
-                    <width min="20" max="70">auto</width>
+                    <width min="20" max="90">auto</width>
                     <include>Def_Flag_Image</include>
                     <texture fallback="flags/fallback.png">$INFO[VideoPlayer.AudioChannels,flags/video/color/audiochannels/,.png]</texture>
                     <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.AudioChannels)</visible>

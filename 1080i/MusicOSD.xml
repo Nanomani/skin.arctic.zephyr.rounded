@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
+    <onload>ClearProperty(exit_music_visualisation,Home)</onload>
     <onunload>ClearProperty(Set_User_Rating,Home)</onunload>
-    <onunload>ClearProperty(ShowArtistInfo,Home)</onunload>
     <onunload>ClearProperty(OSDArtistDetails,Home)</onunload>
 
     <include condition="!Player.PauseEnabled">Def_OSD_FocusStop</include>
@@ -174,7 +174,10 @@
                     <param name="groupid" value="6499" />
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
-                    <onclick>PlayerControl(Stop)</onclick>
+                    <onclick>SetProperty(exit_music_visualisation,1,Home)</onclick>
+                    <onclick>Dialog.Close(musicosd)</onclick>
+                    <onclick condition="Player.ShowInfo">AlarmClock(delayCloseInfo,Action(Info),00:01,silent)</onclick>
+                    <onclick>AlarmClock(delayplaylist,PlayerControl(Stop),00:02,silent)</onclick>
                 </include>
 
                 <!-- FAST FORWARD -->
@@ -233,9 +236,10 @@
                     <param name="groupid" value="6899" />
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
-                    <onclick>Close</onclick>
+                    <onclick>SetProperty(exit_music_visualisation,1,Home)</onclick>
+                    <onclick>Dialog.Close(musicosd)</onclick>
                     <onclick condition="Player.ShowInfo">AlarmClock(delayCloseInfo,Action(Info),00:01,silent)</onclick>
-                    <onclick>AlarmClock(delayplaylist,ActivateWindow(musicplaylist),00:01,silent)</onclick>
+                    <onclick>AlarmClock(delayplaylist,ActivateWindow(musicplaylist),00:02,silent)</onclick>
                 </include>
 
                 <!-- VOLUME -->
@@ -248,7 +252,7 @@
                     <param name="groupid" value="7399" />
                     <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
                     <include>Def_OSD_UpDown_Music_Info</include>
-                    <onclick>Close</onclick>
+                    <onclick>Dialog.Close(musicosd)</onclick>
                     <onclick>ActivateWindow(GameVolume)</onclick>
                 </include>
 
@@ -510,6 +514,10 @@
             <ondown>SetFocus(14)</ondown>
             <onleft>StepBack</onleft>
             <onright>StepForward</onright>
+            <onclick>SetProperty(exit_music_visualisation,1,Home)</onclick>
+            <onclick>Dialog.Close(musicosd)</onclick>
+            <onclick condition="Player.ShowInfo">AlarmClock(delayCloseInfo,Action(Info),00:01,silent)</onclick>
+            <onclick>AlarmClock(delayplaylist,ActivateWindow(musicplaylist),00:02,silent)</onclick>
         </control>
 
         <control type="progress">

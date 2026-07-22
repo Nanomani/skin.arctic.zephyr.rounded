@@ -3147,8 +3147,17 @@
     </variable>
 
     <variable name="Label_Flag_Next_Aired_Details">
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">[COLOR=Dark1]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Name),,  ][/COLOR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Air_Time),, • ]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired)]</value>
-        <value condition="String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">[COLOR=Dark1]$INFO[Window(Home).Property(TMDbHelper.ListItem.Status),, • ][/COLOR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired)]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Canceled) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Canceled)">$LOCALIZE[31623]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired), • ,]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Ended) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Ended)">$LOCALIZE[31624]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired), • ,]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Released) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Released)">$LOCALIZE[31625]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),In Production) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),In Production) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Post Production) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Post Production)">$LOCALIZE[31626]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Planned) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Planned)">$LOCALIZE[31627]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series)] + Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Episode),1) + Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Season),1)">$LOCALIZE[31628]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series)] + Integer.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Episode),1)">$LOCALIZE[31629]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Days_Until_Aired)) + Integer.IsLess(Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Days_Until_Aired),7) + Integer.IsLess(Window(Home).Property(TMDbHelper.ListItem.Last_Aired.Days_From_Aired),8)">$LOCALIZE[31630]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series)] + [!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))]">$LOCALIZE[31629]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired), • ,]</value>
+        <value condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.Status),Returning Series)]">$LOCALIZE[31631]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired), • ,]</value>
+        <value>$LOCALIZE[13205]</value>
     </variable>
 
     <variable name="Label_Setting_View_Flag_Color">
@@ -3168,7 +3177,6 @@
         <value condition="Control.HasFocus(9020)">$LOCALIZE[209]</value>
         <value condition="Control.HasFocus(9030)">$LOCALIZE[13012]</value>
     </variable>
-
 
     <variable name="Label_Keyboard_Title_Footer">
         <value condition="$EXP[Is_AutoCompletion_Enabled] + !String.IsEmpty(Control.GetLabel(312).index(1))">$LOCALIZE[31586]</value>

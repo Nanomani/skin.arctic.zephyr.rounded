@@ -10,7 +10,7 @@ Over the years, many features have been removed, added, redesigned, or completel
 
 <img width="1920" height="1080" alt="screenshot00028" src="https://github.com/user-attachments/assets/735f1c25-d2a8-4709-9f36-2cd0577f8d0c" />
 
-## Installation
+## Installation for Kodi Piers:
 
 1. In Kodi Settings > System > Add-ons :
 - Unknown Sources: "Enable"
@@ -26,8 +26,26 @@ Over the years, many features have been removed, added, redesigned, or completel
 4. Install from Nanomani repo
 - Nanomani Repository > Look and Feel > Skins > Arctic Zephir Rounded
 
-### 👉 **[Forum Kodi](https://forum.kodi.tv/showthread.php?tid=387634)**  
+## Installation for Kodi Omega:
 
+1. In Kodi Settings > System > Add-ons :
+- Unknown Sources: "Enable"
+- Update official add-ons from: "Any repositories"
+
+2. Install nanomani repo from direct ZIP install:
+- Download: [repository.nanomani-0.9.zip](https://github.com/Nanomani/repository.omega.nanomani/releases/download/v0.9/repository.nanomani-0.9.zip)
+  
+3. Install from Nanomani repo :
+- Nanomani Repository > Add-on repository > Jurialmunkey Alpha Repo
+- Nanomani Repository > Video Add-ons > Skin Info Service
+
+4. Install from Nanomani repo
+- Nanomani Repository > Look and Feel > Skins > Arctic Zephir Rounded  
+
+5. After Skin installation "Restart" Kodi or manually check for updates
+- Kodi > Settings > Add-ons > Check for updates
+
+### 👉 **[Forum Kodi](https://forum.kodi.tv/showthread.php?tid=387634)**  
 
 ## Credits
 

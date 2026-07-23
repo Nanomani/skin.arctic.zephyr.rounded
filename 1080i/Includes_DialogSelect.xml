@@ -1327,137 +1327,183 @@
 
     <include name="Def_Dialog_Select_Video_Version">
         <control type="group">
-            <include content="Def_Dialog_Background"><param name="height" value="882" /><param name="width" value="1320" /></include>
+            <include content="Def_Dialog_Background"><param name="height" value="852" /><param name="width" value="1484" /></include>
 
-            <!-- HEADER -->
-
-            <control type="label" id="1">
-                <include>Def_Dialog_Header_Title</include>
-                <label/>
-            </control>
-
-            <include content="Def_Dialog_Header_Logo">
-                <param name="texture" value="kodi" />
-                <param name="visible" value="![String.IsEqual(Control.GetLabel(1),Wikipedia) | Window.IsVisible(script-wikipedia.xml) | String.IsEqual(Control.GetLabel(1),$LOCALIZE[13511])]" />
+            <include content="Def_Dialog_Header">
+                <param name="label_id" value="1" />
+                <param name="icon" value="kodi" />
             </include>
 
-            <include>Def_Dialog_Header_Line</include>
+            <!-- POSTER ON LEFT -->
+
+            <control type="group">
+                <top>112</top>
+                <left>40</left>
+                <width>PosterW</width>
+                <height>PosterH</height>
+
+                <include>Def_Art_Full_Background_b24</include>
+
+                <include content="Def_Art_Image">
+                    <param name="colordiffuse" value="Fallback" />
+                    <param name="texture" value="$VAR[Image_VideoVersion_Poster]" />
+                    <param name="texture_diffuse" value="poster_w428_h640_b24" />
+                    <param name="aspectratio" value="scale" />
+                    <param name="fallback" value="DefaultMovies" />
+                </include>
+            </control>
 
             <!-- DIALOG SELECT - ID 3  -->
+
             <include>Def_Dialog_Select</include>
 
+            <!-- VERSION -->
+
             <control type="list" id="6">
+                <description>version list</description>
                 <include>Animation_Scrolltime_Views_List</include>
 
                 <top>112</top>
-                <left>16</left>
-                <width>926</width>
-                <height>700</height>
+                <left>508</left>
+                <width>600</width>
+                <height>PosterH</height>
 
                 <onup>6</onup>
                 <ondown>6</ondown>
-                <onleft>5</onleft>
+                <onleft>9001</onleft>
                 <onright>1723</onright>
 
+                <scrolltime>200</scrolltime>
                 <pagecontrol>1723</pagecontrol>
 
-                <itemlayout height="140">
+                <itemlayout height="128" width="598">
+                    <control type="label">
+                        <left>30</left>
+                        <top>0</top>
+                        <right>20</right>
+                        <height>60</height>
+                        <font>InfoNetflix</font>
+                        <textcolor>Black70</textcolor>
+                        <selectedcolor>Black70</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$VAR[Label_Video_Name_Version]</label>
+                        <visible>!ListItem.IsSelected</visible>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <top>50</top>
+                        <right>20</right>
+                        <height>35</height>
+                        <font>Mini</font>
+                        <textcolor>Black70</textcolor>
+                        <selectedcolor>Black70</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Duration,$LOCALIZE[180]: ]</label>
+                        <visible>!ListItem.IsSelected</visible>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <top>85</top>
+                        <right>20</right>
+                        <height>30</height>
+                        <font>Mini</font>
+                        <textcolor>Black70</textcolor>
+                        <selectedcolor>Black70</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$VAR[Label_Video_Version_Media_Info]</label>
+                        <visible>!ListItem.IsSelected</visible>
+                    </control>
 
-                    <!-- ICON -->
-
-                    <include content="Def_View_List_Icon_Image_Select">
-                        <param name="colordiffuse_icon_black" value="PanelWhite100" />
-                        <param name="colordiffuse_background_icon_black" value="Black12" />
-                    </include>
-
-                    <!-- LABEL -->
-
-                    <include content="Def_View_List_Label">
-                        <param name="label_line_1" value="$INFO[ListItem.Label]$INFO[ListItem.VideoVersionName,  •  ,]" />
-                        <param name="label_line_2" value="$VAR[Label_Video_Version_Media_Info]$INFO[ListItem.Duration, | $LOCALIZE[180]: ]" />
-                        <param name="textcolor" value="PanelWhite100" />
-                        <param name="selectedcolor" value="$VAR[Color_List_Item_Selected]" />
-                    </include>
-
+                    <control type="label">
+                        <left>30</left>
+                        <top>0</top>
+                        <right>20</right>
+                        <height>60</height>
+                        <font>InfoNetflix</font>
+                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$VAR[Label_Video_Name_Version]</label>
+                        <visible>ListItem.IsSelected</visible>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <top>50</top>
+                        <right>20</right>
+                        <height>35</height>
+                        <font>Mini</font>
+                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Duration,$LOCALIZE[180]: ]</label>
+                        <visible>ListItem.IsSelected</visible>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <top>85</top>
+                        <right>20</right>
+                        <height>30</height>
+                        <font>Mini</font>
+                        <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                        <selectedcolor>$VAR[Color_List_Item_Selected]</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$VAR[Label_Video_Version_Media_Info]</label>
+                        <visible>ListItem.IsSelected</visible>
+                    </control>
                     <include content="Def_Button_Radio">
-                        <param name="colordiffuse_off" value="PanelWhite100" />
+                        <param name="colordiffuse_off" value="Black70" />
                         <param name="colordiffuse_on" value="$VAR[Color_List_Item_Selected]" />
                         <param name="visible" value="ListItem.IsSelected" />
                     </include>
                 </itemlayout>
-
-                <focusedlayout height="140">
-                    <control type="group">
-                        <visible>!Control.HasFocus(6)</visible>
-
-                    <!-- ICON -->
-
-                        <include content="Def_View_List_Icon_Image_Select">
-                            <param name="colordiffuse_icon_black" value="PanelWhite100" />
-                            <param name="colordiffuse_background_icon_black" value="Black12" />
-                            <param name="visible_icon" value="!String.StartsWith(ListItem.Icon,Default) + !String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,special://skin/extras/icons)" />
-                            <param name="visible_icon_black" value="String.StartsWith(ListItem.Icon,Default) | String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,special://skin/extras/icons)" />
-                        </include>
-
-                        <!-- LABEL - LABEL2 -->
-
-                        <include content="Def_View_List_Label">
-                            <param name="label_line_1" value="$INFO[ListItem.Label]$INFO[ListItem.VideoVersionName,  •  ,]" />
-                            <param name="label_line_2" value="$VAR[Label_Video_Version_Media_Info]$INFO[ListItem.Duration, | $LOCALIZE[180]: ]" />
-                            <param name="textcolor" value="PanelWhite100" />
-                            <param name="selectedcolor" value="PanelWhite100" />
-                        </include>
-
-                        <include content="Def_Button_Radio">
-                            <param name="colordiffuse_off" value="PanelWhite100" />
-                            <param name="colordiffuse_on" value="PanelWhite100" />
-                            <param name="visible" value="ListItem.IsSelected" />
-                        </include>
+                <focusedlayout height="128" width="598">
+                    <control type="image">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <include>Texture_Layout_Item_Focus</include>
+                        <animation effect="fade" start="100" end="50">UnFocus</animation>
+                        <include condition="true">Animation_View_List_Focus_Scroll</include>
                     </control>
-
-                    <control type="group">
-                        <visible>Control.HasFocus(6)</visible>
-                        <control type="image">
-                            <width>100%</width>
-                            <height>135</height>
-                            <include>Texture_Layout_Item_Focus</include>
-                            <include condition="true">Animation_View_List_Focus_Scroll</include>
-                        </control>
-
-                        <!-- ICON -->
-
-                        <include content="Def_View_List_Icon_Image_Select">
-                            <param name="colordiffuse_icon_black" value="Selected" />
-                            <param name="colordiffuse_background_icon_black" value="Dark3" />
-                        </include>
-
-                        <!-- LABEL - LABEL2 -->
-
-                        <include content="Def_View_List_Label">
-                            <param name="label_line_1" value="$INFO[ListItem.Label]$INFO[ListItem.VideoVersionName,  •  ,]" />
-                            <param name="label_line_2" value="$VAR[Label_Video_Version_Media_Info]$INFO[ListItem.Duration, | $LOCALIZE[180]: ]" />
-                            <param name="textcolor" value="Selected" />
-                            <param name="selectedcolor" value="Selected" />
-                        </include>
-
-                        <include content="Def_Button_Radio">
-                            <param name="colordiffuse_off" value="Selected" />
-                            <param name="colordiffuse_on" value="Selected" />
-                            <param name="visible" value="ListItem.IsSelected" />
-                        </include>
+                    <control type="label">
+                        <left>30</left>
+                        <top>0</top>
+                        <right>20</right>
+                        <height>60</height>
+                        <aligny>center</aligny>
+                        <scroll>true</scroll>
+                        <font>InfoNetflix</font>
+                        <textcolor>Selected</textcolor>
+                        <selectedcolor>Selected</selectedcolor>
+                        <label>$VAR[Label_Video_Name_Version]</label>
                     </control>
+                    <control type="label">
+                        <left>30</left>
+                        <top>50</top>
+                        <right>20</right>
+                        <height>35</height>
+                        <font>Mini</font>
+                        <textcolor>Selected</textcolor>
+                        <selectedcolor>Selected</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Duration,$LOCALIZE[180]: ]</label>
+                    </control>
+                    <control type="label">
+                        <left>30</left>
+                        <top>85</top>
+                        <right>20</right>
+                        <height>30</height>
+                        <font>Mini</font>
+                        <textcolor>Selected</textcolor>
+                        <selectedcolor>Selected</selectedcolor>
+                        <aligny>center</aligny>
+                        <label>$VAR[Label_Video_Version_Media_Info]</label>
+                    </control>
+                    <include content="Def_Button_Radio">
+                        <param name="colordiffuse_off" value="Selected" />
+                        <param name="colordiffuse_on" value="Selected" />
+                        <param name="visible" value="ListItem.IsSelected" />
+                    </include>
                 </focusedlayout>
-            </control>
-
-            <!-- LINE VERTICAL -->
-
-            <control type="image">
-                <right>360</right>
-                <top>112</top>
-                <bottom>17</bottom>
-                <width>1</width>
-                <include>Texture_Dialog_Line</include>
-                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
             </control>
 
             <!-- SCROLLBAR -->
@@ -1466,8 +1512,20 @@
                 <param name="scrollid" value="1723" />
                 <param name="onleft" value="6" />
                 <param name="onright" value="9001" />
+                <param name="height" value="PosterH" />
                 <param name="centerright" value="360" />
             </include>
+
+            <!-- LINE VERTICAL -->
+
+            <control type="image">
+                <right>360</right>
+                <top>112</top>
+                <bottom>100</bottom>
+                <width>1</width>
+                <include>Texture_Dialog_Line</include>
+                <animation effect="fade" start="0" end="100" time="100" condition="!Control.HasFocus(1723) + !Container.Scrolling">Conditional</animation>
+            </control>
 
             <!-- BUTTON ON RIGHT -->
 
@@ -1484,35 +1542,28 @@
                 <scrolltime tween="quadratic">200</scrolltime>
 
                 <include content="Def_Dialog_Button_Action">
-                    <param name="id" value="5" />
-                </include>
-                <include content="Def_Dialog_Button_Action">
                     <param name="id" value="7" />
                 </include>
             </control>
 
-            <!-- PICTURE -->
+            <!-- PATH ITEM -->
 
-            <control type="group">
-                <top>357</top>
+            <control type="label">
+                <align>left</align>
+                <bottom>17</bottom>
+                <left>30</left>
                 <right>30</right>
-                <width>300</width>
-                <height>450</height>
-
-                <control type="image">
-                    <width>100%</width>
-                    <height>100%</height>
-                    <texture fallback="DefaultPicture.png">$VAR[Image_Dialog_Select_Big]</texture>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <visible>!$EXP[View_Icon_Black_Dialog_Select]</visible>
-                </control>
-                <control type="image">
-                    <width>100%</width>
-                    <height>100%</height>
-                    <texture fallback="DefaultPicture.png" colordiffuse="PanelWhite100">$VAR[Image_Dialog_Select_Big]</texture>
-                    <aspectratio align="center" aligny="center">keep</aspectratio>
-                    <visible>$EXP[View_Icon_Black_Dialog_Select]</visible>
-                </control>
+                <width>1300</width>
+                <height>44</height>
+                <scroll>true</scroll>
+                <font>Tiny</font>
+                <haspath>false</haspath>
+                <label>$INFO[Container(6).ListItem.FileNameAndPath]</label>
+                <visible>Control.HasFocus(6)</visible>
+                <animation effect="fade" start="0" end="100" time="300" delay="300">WindowOpen</animation>
+                <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+                <animation effect="fade" start="0" end="100" time="300">Visible</animation>
+                <animation effect="fade" start="100" end="0" time="200">Hidden</animation>
             </control>
 
             <!-- NUM ITEMS -->

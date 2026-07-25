@@ -2628,12 +2628,12 @@
             <!-- MDBLIST - RATING -->
 
             <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
                 <texture colordiffuse="Dark1" background="true">$VAR[Image_Mdblist_White]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),,%]</label>
             </control>
@@ -2657,16 +2657,18 @@
             <!-- IMDB B/W -->
 
             <control type="image">
-                <visible>!ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
+                <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(ListItem.Rating(imdb))] + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb)</visible>
                 <width>70</width>
-                <!-- <left>30</left> -->
                 <include>Def_Flag_Image</include>
                 <texture colordiffuse="Dark2" background="true">flags/rating/white/imdb/imdb_white.png</texture>
             </control>
             <control type="label">
-                <visible>!ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
+                <visible>!String.IsEmpty(ListItem.Rating(imdb)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                <include>Def_Flag_Label</include>
+                <label>$INFO[ListItem.Rating(imdb)]</label>
+            </control>
+            <control type="label">
+                <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
             </control>
@@ -2674,25 +2676,22 @@
             <!-- IMDB TOP 250 B/W -->
 
             <control type="image">
+                <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
                 <width>42</width>
                 <include>Def_Flag_Image</include>
                 <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250_white.png</texture>
-                <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
             </control>
             <control type="label" description="IMDB Top 250">
+                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
                 <width min="70">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[ListItem.Top250,#,]</label>
-                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
             </control>
             <control type="label" description="IMDB Top 250">
+                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
                 <width min="70">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
             </control>
 
             <!-- RATING STAR -->
@@ -2706,11 +2705,10 @@
             <!-- RATING STAR - LABEL -->
 
             <control type="label" description="Rating">
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Label_Rating]</label>
                 <visible>!String.IsEmpty(ListItem.Rating) | [!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
                 <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.rating)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
+                <include>Def_Flag_Label</include>
+                <label>$VAR[Label_Rating]</label>
             </control>
         </control>
 
@@ -3018,12 +3016,12 @@
             <!-- MDBLIST - RATING -->
 
             <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
                 <texture background="true">$VAR[Image_Mdblist_Colored]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),,%]</label>
             </control>
@@ -3049,15 +3047,18 @@
             <!-- IMDB -->
 
             <control type="image">
-                <visible>!ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
+                <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(ListItem.Rating(imdb))] + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb)</visible>
                 <width>70</width>
                 <include>Def_Flag_Image</include>
                 <texture background="true">flags/rating/color/imdb/imdb.png</texture>
             </control>
             <control type="label">
-                <visible>!ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
+                <visible>!String.IsEmpty(ListItem.Rating(imdb)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                <include>Def_Flag_Label</include>
+                <label>$INFO[ListItem.Rating(imdb)]</label>
+            </control>
+            <control type="label">
+                <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
             </control>
@@ -3065,25 +3066,22 @@
             <!-- IMDB TOP 250 -->
 
             <control type="image">
+                <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
                 <width>42</width>
                 <include>Def_Flag_Image</include>
                 <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250_white.png</texture>
-                <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
             </control>
             <control type="label" description="IMDB Top 250">
+                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
                 <width min="70">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[ListItem.Top250,#,]</label>
-                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
             </control>
             <control type="label" description="IMDB Top 250">
+                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
                 <width min="70">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
             </control>
 
             <!-- RATING STAR -->
@@ -3097,11 +3095,10 @@
             <!-- RATING STAR - LABEL -->
 
             <control type="label" description="Rating">
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Label_Rating]</label>
                 <visible>!String.IsEmpty(ListItem.Rating) | [!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
                 <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.rating)</visible>
-                <visible>$EXP[Condition_Flag_IMDb_Rating]</visible>
+                <include>Def_Flag_Label</include>
+                <label>$VAR[Label_Rating]</label>
             </control>
         </control>
     </include>
@@ -4237,12 +4234,12 @@
                 <!-- MDBLIST - RATING -->
 
                 <control type="image" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
                     <texture colordiffuse="Dark1" background="true">$VAR[Image_Mdblist_White]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Label</include>
                     <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),,%]</label>
                 </control>
@@ -4490,12 +4487,12 @@
                 <!-- MDBLIST - RATING -->
 
                 <control type="image" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
                     <texture background="true">$VAR[Image_Mdblist_Colored]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Label</include>
                     <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),,%]</label>
                 </control>

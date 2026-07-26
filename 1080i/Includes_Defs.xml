@@ -959,22 +959,56 @@
 
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
+                    <label>$LOCALIZE[24029]: $LOCALIZE[231]</label>
+                    <visible>String.IsEmpty(Weather.plugin)</visible>
+                </control>
+
+                <control type="label">
+                    <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Window(Weather).Property(WeatherProvider)]</label>
+                    <visible>!String.IsEmpty(Weather.plugin)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#63097;</label>
+                    <visible>!String.IsEmpty(Weather.plugin)</visible>
                 </control>
 
                 <control type="label">
                     <visible>![String.Contains(Weather.Data(Current.Temperature),$LOCALIZE[503]) | String.IsEmpty(Window(Weather).Property(Updated))]</visible>
+                    <visible>!String.IsEmpty(Weather.plugin)</visible>
                     <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Window(Weather).Property(Location),  •  ,]</label>
                 </control>
                 <control type="label">
                     <visible>![String.Contains(Weather.Data(Current.Temperature),$LOCALIZE[503]) | String.IsEmpty(Window(Weather).Property(Updated))]</visible>
+                    <visible>!String.IsEmpty(Weather.plugin)</visible>
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#61984;</label>
+                </control>
+            </control>
+
+            <!-- FILEMANAGER -->
+
+            <control type="grouplist">
+                <visible>Window.IsVisible(FileManager.xml)</visible>
+                <visible>!String.IsEmpty(Container(20).NumItems)</visible>
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="label">
+                    <include>Def_Header_Sub_Info_Definition</include>
+                    <label>$INFO[Container(20).NumItems]</label>
+                    <visible>Control.HasFocus(20) | Control.HasFocus(1824) | ControlGroup(9000).HasFocus()</visible>
+                </control>
+                <control type="label">
+                    <include>Def_Header_Sub_Info_Definition</include>
+                    <label>$INFO[Container(21).NumItems]</label>
+                    <visible>Control.HasFocus(21) | Control.HasFocus(1825)</visible>
+                </control>
+                <control type="label">
+                    <include>Def_Label_Header_Sub_Icon_Definition</include>
+                    <label>   &#61654;</label>
                 </control>
             </control>
 
@@ -1072,7 +1106,7 @@
                 <visible>![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videoversions) | Container.Content(sets)]</visible>
                 <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs)]</visible>
                 <visible>![Container.Content(directors) | Container.Content(actors) | Container.Content(countries) | Container.Content(years) | Container.Content(genres) | Container.Content(tags) | Container.Content(studios)]</visible>
-                <visible>![$EXP[IsPvrDialog] | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(LoginScreen.xml) | Window.IsActive(videoplaylist) | Window.IsVisible(MyWeather.xml) | Container.Content(favourites)]</visible>
+                <visible>![$EXP[IsPvrDialog] | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(LoginScreen.xml) | Window.IsActive(videoplaylist) | Window.IsVisible(MyWeather.xml) | Container.Content(favourites) | Window.IsVisible(FileManager.xml)]</visible>
                 <visible>!$EXP[IsPluginApplePodcasts] + !$EXP[IsGameMode] + !Window.IsVisible(MyGames.xml)</visible>
 
                 <itemgap>0</itemgap>
@@ -1081,37 +1115,45 @@
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Window(Home).Property(Movies.Count)]</label>
+                    <visible>Library.HasContent(movies)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#61853;</label>
+                    <visible>Library.HasContent(movies)</visible>
                 </control>
 
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Window(Home).Property(TVShows.Count),  •  ,]</label>
+                    <visible>Library.HasContent(tvshows)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#61656;</label>
+                    <visible>Library.HasContent(tvshows)</visible>
                 </control>
 
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Window(Home).Property(Music.AlbumsCount),  •  ,]</label>
+                    <visible>Library.HasContent(music)</visible>
                 </control>
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#62292;</label>
+                    <visible>Library.HasContent(music)</visible>
                 </control>
 
                 <control type="label">
                     <include>Def_Header_Sub_Info_Definition</include>
                     <label>$INFO[Pvr.BackendChannels,  •  ,]</label>
+                    <visible>PVR.HasTVChannels</visible>
                 </control>
                 <control type="label">
                     <include>Def_Label_Header_Sub_Icon_Definition</include>
                     <label>   &#61860;</label>
+                    <visible>PVR.HasTVChannels</visible>
                 </control>
             </control>
         </control>

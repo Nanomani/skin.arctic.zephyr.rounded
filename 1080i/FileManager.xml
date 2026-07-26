@@ -18,7 +18,7 @@
         <include>Background_Global</include>
         <include>Furniture_Header_Info</include>
         <include condition="!Skin.HasSetting(hide.furniture.nowplaying.views)">Furniture_Header_NowPlaying</include>
-        <include>Furniture_Header_Clock_Right</include>
+        <include condition="$EXP[Show_Weather_All_Views]">Furniture_Footer_Clock_Right</include>
 
         <control type="group">
             <include>Animation_Common_Settings</include>
@@ -34,6 +34,17 @@
                     <param name="label" value="10003" />
                     <param name="icon" value="folder" />
                 </include>
+
+                <control type="label">
+                    <right>30</right>
+                    <top>40</top>
+                    <align>right</align>
+                    <width>90</width>
+                    <height>42</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container(20).CurrentItem]$INFO[Container(20).NumItems, / ,]</label>
+                </control>
 
                 <control type="list" id="20">
                     <include>Animation_Scrolltime_Views_List</include>
@@ -86,6 +97,17 @@
                     <param name="label" value="10003" />
                     <param name="icon" value="folder" />
                 </include>
+
+                <control type="label">
+                    <right>30</right>
+                    <top>40</top>
+                    <align>right</align>
+                    <width>90</width>
+                    <height>42</height>
+                    <font>InfoNetflix</font>
+                    <textcolor>Dark2</textcolor>
+                    <label>$INFO[Container(21).CurrentItem]$INFO[Container(21).NumItems, / ,]</label>
+                </control>
 
                 <control type="list" id="21">
                     <include>Animation_Scrolltime_Views_List</include>
@@ -251,179 +273,94 @@
             <left>View_List_Side</left>
             <align>left</align>
 
-            <!-- FILE - TITLE - LEFT -->
+            <!-- FILE - IMAGE -->
 
-            <control type="label">
-                <top>18</top>
-                <left>12</left>
-                <align>left</align>
-                <width>230</width>
-                <height>42</height>
-                <font>Mini</font>
-                <textcolor>Dark2</textcolor>
-                <selectedcolor>Dark2</selectedcolor>
-                <label>[B][UPPERCASE]$LOCALIZE[561] $LOCALIZE[39162][/UPPERCASE][/B] : </label>
-                <visible>Control.HasFocus(20) | Control.HasFocus(1824)</visible>
+            <control type="image">
+                <top>7</top>
+                <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                <width>58</width>
+                <height>58</height>
+                <left>10</left>
+                <centertop>50%</centertop>
+                <texture colordiffuse="Dark2">special://skin/extras/icons/folder-closed.png</texture>
+                <visible>[Container(20).ListItem.IsFolder + [Control.HasFocus(20) | Control.HasFocus(1824)]] | [Container(21).ListItem.IsFolder + [Control.HasFocus(21) | Control.HasFocus(1825)]]</visible>
+            </control>
+            <control type="image">
+                <top>7</top>
+                <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                <width>58</width>
+                <height>58</height>
+                <left>10</left>
+                <centertop>50%</centertop>
+                <texture colordiffuse="Dark2">special://skin/extras/icons/file.png</texture>
+                <visible>[!Container(20).ListItem.IsFolder + [Control.HasFocus(20) | Control.HasFocus(1824)]] | [!Container(21).ListItem.IsFolder + [Control.HasFocus(21) | Control.HasFocus(1825)]]</visible>
             </control>
 
-            <!-- FILE - TITLE - RIGHT -->
+            <!-- FILE - VALUE -->
 
             <control type="label">
-                <top>18</top>
-                <left>12</left>
+                <top>14</top>
+                <left>70</left>
                 <height>42</height>
                 <align>left</align>
                 <width min="128" max="970">auto</width>
-                <font>Mini</font>
+                <font>Tiny</font>
                 <textcolor>Dark2</textcolor>
                 <selectedcolor>Dark2</selectedcolor>
-                <label>[B][UPPERCASE]$LOCALIZE[561] $LOCALIZE[39164][/UPPERCASE][/B] : </label>
+                <label>$INFO[Container(20).ListItem.Label]</label>
+                <visible>Control.HasFocus(20) | Control.HasFocus(1824)</visible>
+            </control>
+            <control type="label">
+                <top>14</top>
+                <left>70</left>
+                <height>42</height>
+                <align>left</align>
+                <width min="128" max="970">auto</width>
+                <font>Tiny</font>
+                <textcolor>Dark2</textcolor>
+                <selectedcolor>Dark2</selectedcolor>
+                <label>$INFO[Container(21).ListItem.Label]</label>
                 <visible>Control.HasFocus(21) | Control.HasFocus(1825)</visible>
             </control>
 
-            <!-- FILE - VALUE - LEFT / RIGHT -->
+            <!-- FOLDER - IMAGE -->
 
-            <control type="label">
-                <top>18</top>
-                <left>230</left>
-                <height>42</height>
-                <align>left</align>
-                <width min="128" max="970">auto</width>
-                <font>Mini</font>
-                <textcolor>Dark2</textcolor>
-                <selectedcolor>Dark2</selectedcolor>
-                <label>$INFO[ListItem.Label]</label>
+            <control type="image">
+                <top>62</top>
+                <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                <width>58</width>
+                <height>58</height>
+                <left>10</left>
+                <centertop>50%</centertop>
+                <texture colordiffuse="Dark2">special://skin/extras/icons/filebox.png</texture>
+                <visible>Control.HasFocus(20) | Control.HasFocus(1824) | Control.HasFocus(21) | Control.HasFocus(1825)</visible>
             </control>
 
-            <!-- PATH - TITLE / VALUE - LEFT -->
+            <!-- FOLDER - PATH -->
 
-            <control type="label">
-                <bottom>90</bottom>
-                <left>12</left>
-                <align>left</align>
-                <width>230</width>
-                <height>42</height>
-                <font>Mini</font>
-                <textcolor>Dark2</textcolor>
-                <selectedcolor>Dark2</selectedcolor>
-                <label>[B][UPPERCASE]$LOCALIZE[20334] $LOCALIZE[39162][/UPPERCASE][/B] : </label>
-                <visible>Control.HasFocus(20) | Control.HasFocus(1824)</visible>
-            </control>
             <control type="textbox">
                 <width min="128" max="1270">auto</width>
                 <top>72</top>
-                <left>230</left>
+                <left>70</left>
                 <height min="64" max="128">auto</height>
                 <align>left</align>
-                <font>Mini</font>
+                <font>Tiny</font>
                 <textcolor>Dark2</textcolor>
                 <selectedcolor>Dark2</selectedcolor>
                 <label>$INFO[Control.GetLabel(101)]</label>
                 <visible>Control.HasFocus(20) | Control.HasFocus(1824)</visible>
             </control>
-
-            <!-- PATH - TITLE / VALUE - RIGHT -->
-
-            <control type="label">
-                <bottom>90</bottom>
-                <left>12</left>
-                <align>left</align>
-                <width>230</width>
-                <height>42</height>
-                <font>Mini</font>
-                <textcolor>Dark2</textcolor>
-                <selectedcolor>Dark2</selectedcolor>
-                <label>[B][UPPERCASE]$LOCALIZE[20334] $LOCALIZE[39164][/UPPERCASE][/B] : </label>
-                <visible>Control.HasFocus(21) | Control.HasFocus(1825)</visible>
-            </control>
             <control type="textbox">
                 <width min="128" max="1500">auto</width>
                 <top>72</top>
-                <left>230</left>
+                <left>70</left>
                 <height min="64" max="128">auto</height>
                 <align>left</align>
-                <font>Mini</font>
+                <font>Tiny</font>
                 <textcolor>Dark2</textcolor>
                 <selectedcolor>Dark2</selectedcolor>
                 <label>$INFO[Control.GetLabel(102)]</label>
                 <visible>Control.HasFocus(21) | Control.HasFocus(1825)</visible>
-            </control>
-        </control>
-
-        <!-- FOOTER - INFORMATION -  -->
-
-        <control type="group">
-            <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
-            <include>Animation_Common_Fade_Out</include>
-
-            <centerbottom>100</centerbottom>
-            <align>right</align>
-
-            <!-- RIGHT - LINE 1 - NUM ITEM - LEFT PANEL -->
-
-            <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
-                <label>$LOCALIZE[19076] $INFO[Container(20).NumItems,  •  , $LOCALIZE[31073]]</label>
-                <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(20) | Control.HasFocus(1824)]</visible>
-                <visible>Integer.IsGreater(Container(20).NumItems,1)</visible>
-            </control>
-            <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
-                <label>$LOCALIZE[21400] $INFO[Container(20).NumItems] $LOCALIZE[31321]</label>
-                <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(20) | Control.HasFocus(1824)]</visible>
-                <visible>Integer.IsEqual(Container(20).NumItems,1)</visible>
-            </control>
-
-            <!-- RIGHT - LINE 1 - NUM ITEM - RIGHT PANEL -->
-
-            <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
-                <label>$LOCALIZE[19076] $INFO[Container(21).NumItems,  •  , $LOCALIZE[31073]]</label>
-                <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(21) | Control.HasFocus(1825)]</visible>
-                <visible>Integer.IsGreater(Container(21).NumItems,1)</visible>
-            </control>
-            <control type="label">
-                <right>105</right>
-                <bottom>148</bottom>
-                <align>right</align>
-                <width>700</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
-                <label>$LOCALIZE[21400] $INFO[Container(21).NumItems] $LOCALIZE[31321]</label>
-                <visible>Window.IsVisible(FileManager.xml) + [Control.HasFocus(21) | Control.HasFocus(1825)]</visible>
-                <visible>Integer.IsEqual(Container(21).NumItems,1)</visible>
-            </control>
-
-            <!-- RIGHT - LINE 2 - NUM ITEM -->
-
-            <control type="label">
-                <right>105</right>
-                <bottom>90</bottom>
-                <align>right</align>
-                <width>300</width>
-                <height>42</height>
-                <font>InfoNetflix</font>
-                <textcolor>Dark2</textcolor>
-                <label>$VAR[Label_Dialog_Select_Num_Item_Footer]</label>
             </control>
         </control>
 

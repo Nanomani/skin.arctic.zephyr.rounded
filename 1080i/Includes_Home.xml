@@ -147,8 +147,12 @@
 
             <onfocus>SetProperty(399IsFocus,1,Home)</onfocus>
             <onunfocus>ClearProperty(399IsFocus,Home)</onunfocus>
+
             <onleft>ClearProperty(399IsFocus,Home)</onleft>
+            <onleft>AlarmClock(DelayArrow,SetProperty(399IsFocus,1,Home),00:00,silent)</onleft>
+
             <onright>ClearProperty(399IsFocus,Home)</onright>
+            <onright>AlarmClock(DelayArrow,SetProperty(399IsFocus,1,Home),00:00,silent)</onright>
 
             <!-- MAIN MENU - INIT STARTUP -->
 
@@ -2041,15 +2045,21 @@
 
                 <control type="label">
                     <animation effect="fade" start="100" end="30" delay="0" time="150" condition="!$EXP[Home_Menu_Is_Focus] + !Skin.HasSetting(home.vertical)">Conditional</animation>
+
+                    <top>0</top>
+                    <width>90%</width>
+                    <centerleft>45.7%</centerleft>
                     <align>center</align>
                     <aligny>top</aligny>
-                    <width>90%</width>
-                    <top>0</top>
-                    <centerleft>45.7%</centerleft>
-                    <textcolor>$VAR[Color_Focus]</textcolor>
+                    <scroll>true</scroll>
+                    <scrollspeed>60</scrollspeed>
                     <font>Home</font>
+                    <textcolor>$VAR[Color_Focus]</textcolor>
                     <label>$VAR[Label_Home_Main_Menu]</label>
                 </control>
+
+                <!-- ARROWS - IF SUB MENU 302 CONTENT -->
+
                 <control type="image">
                     <visible>$EXP[Home_Main_Menu_Is_Focus] + !String.IsEmpty(Window(Home).Property(399IsFocus))</visible>
                     <visible>Integer.IsGreater(Container(302).NumItems,0) + [!Skin.HasSetting(show.submenu.on.click.main.menu) | [Skin.HasSetting(show.submenu.on.click.main.menu) + !String.StartsWith(Container(300).ListItem.Property(path),SetFocus(302,0))]]</visible>
@@ -2070,9 +2080,9 @@
 
                     <top>0</top>
                     <width>90%</width>
+                    <centerleft>45.7%</centerleft>
                     <align>center</align>
                     <aligny>top</aligny>
-                    <centerleft>45.7%</centerleft>
                     <scroll>true</scroll>
                     <scrollspeed>60</scrollspeed>
                     <font>Home</font>

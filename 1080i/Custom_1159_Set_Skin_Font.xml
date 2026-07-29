@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1159">
-    <defaultcontrol>11</defaultcontrol>
-    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadskin))">SetFocus(3033)</onunload>
+    <defaultcontrol always="true">11</defaultcontrol>
+
+    <onload>ClearProperty(reloadsetupwizard,Home)</onload>
+    <onload>ClearProperty(SetupWizardDirection,Home)</onload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(reloadsetupwizard))">SetFocus(3099)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(reloadsetupwizard)) + String.IsEmpty(Window(Home).Property(SetupWizardDirection)) + Window.IsVisible(Custom_1100_Startup.xml) + !Window.IsVisible(1153) + !Window.IsVisible(1154) + !Window.IsVisible(1155) + !Window.IsVisible(1159) + !Window.IsVisible(1156)">AlarmClock(DelayFocus3615,SetFocus(3615),00:00,silent)</onunload>
 
     <controls>
         <include>Background_Overlay</include>
@@ -34,8 +39,8 @@
                 <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
                 <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</onright>
 
-                <itemgap>0</itemgap>
                 <usecontrolcoords>true</usecontrolcoords>
+                <itemgap>0</itemgap>
 
                 <itemlayout width="418" height="70">
                     <control type="label">
@@ -43,7 +48,7 @@
                         <width>310</width>
                         <height>70</height>
                         <font>Small</font>
-                        <textcolor>PanelWhite100</textcolor>
+                        <textcolor>Black70</textcolor>
                         <label>$INFO[ListItem.Label]</label>
                         <visible>String.IsEmpty(ListItem.Property(ItemSelected))</visible>
                     </control>
@@ -66,7 +71,9 @@
 
                     <!-- ITEM FOCUS -->
 
-                    <include>Def_Layout_Item_Focus</include>
+                    <include content="Def_Layout_Item_Focus">
+                        <param name="fade_condition" value="!Control.HasFocus(11)" />
+                    </include>
 
                     <control type="label">
                         <left>30</left>
@@ -83,12 +90,11 @@
                     </include>
                 </focusedlayout>
 
-                <!-- LIGHT -->
+                <!-- FONT -->
 
                 <content>
                     <include>Set_Skin_Font</include>
-                </content>
-            </control>
+                </content>            </control>
 
             <!-- LINE VERTICAL -->
 

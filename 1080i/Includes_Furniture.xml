@@ -2323,407 +2323,7 @@
     </include>
 
     <include name="Furniture_Video_Flags">
-
-        <!-- BLACK AND WHITE -->
-
         <control type="grouplist">
-            <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
-            <visible>[Container.Content(videos) | Container.Content(movies) | Container.Content(files) | Container.Content(musicvideos) | Container.Content(episodes) | Container.Content(tvshows) | Container.Content(sets) | Container.Content(videoversions) | [Container.Content(Seasons) + !Control.HasFocus(5161) + !Control.HasFocus(5261)] | $EXP[IsAnVideoInPlaylist]] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
-
-            <visible>[!Container.Content(files) | $EXP[IsAnVideoInPlaylist]] + !String.IsEmpty(ListItem.DBType) + !ListItem.IsParentFolder + !$EXP[IsYoutube]</visible>
-
-            <include condition="!$EXP[View_Info_Dialog]" content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
-            <include condition="!$EXP[View_Info_Dialog]">Animation_Common_Fade_Out</include>
-
-            <include content="Def_Left" condition="!$PARAM[position_low]">
-                <param name="left" value="0" />
-            </include>
-
-            <left>View_List_Side</left>
-
-            <include content="Def_Top" condition="!$PARAM[position_low]">
-                <param name="top" value="72" />
-            </include>
-
-            <include content="Def_Right" condition="!Skin.HasSetting(show.furniture.clock.date.weather) + $PARAM[position_low]">
-                <param name="right" value="View_List_Side" />
-            </include>
-
-            <include content="Def_Right" condition="Skin.HasSetting(show.furniture.clock.date.weather) + $PARAM[position_low]">
-                <param name="right" value="520" />
-            </include>
-
-            <align>left</align>
-            <height>120</height>
-            <centerbottom>NavBarPad</centerbottom>
-
-            <itemgap>0</itemgap>
-            <orientation>horizontal</orientation>
-            <usecontrolcoords>true</usecontrolcoords>
-
-            <!-- TOTAL EPISODES -->
-
-            <include>Total_Episodes</include>
-
-            <!-- NEXT AIRED -->
-
-            <include>Next_Aired</include>
-
-            <!-- COLLECTION -->
-
-            <control type="image" description="Sets">
-                <width>60</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1">flags/video/white/other/sets.png</texture>
-                <visible>ListItem.IsCollection</visible>
-                <visible>!$EXP[IsJlomItem]</visible>
-            </control>
-            <control type="label">
-                <width min="34">auto</width>
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Def_Set_Num_Item]$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems),/,]</label>
-                <visible>ListItem.IsCollection + !String.IsEmpty(ListItem.DBID)</visible>
-            </control>
-            <control type="label">
-                <width min="15">auto</width>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems)]</label>
-                <visible>ListItem.IsCollection + String.IsEmpty(ListItem.DBID)</visible>
-            </control>
-            <control type="label">
-                <width>10</width>
-                <include>Def_Flag_Label</include>
-                <visible>ListItem.IsCollection</visible>
-            </control>
-
-            <!-- VIDEO - RESOLUTION -->
-
-            <control type="image" description="Video Resolution">
-                <width min="20" max="80">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[ListItem.VideoResolution,flags/video/white/resolution/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(ListItem.VideoResolution) + !String.Contains(ListItem.Path,videodb://movies/sets)</visible>
-            </control>
-
-            <!-- VIDEO - CODEC -->
-
-            <control type="image" description="Video Codec">
-                <width min="20" max="100">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[ListItem.VideoCodec,flags/video/white/videocodec/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(ListItem.VideoCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-            </control>
-
-            <!-- HDR -->
-
-            <control type="image" description="HDR10+">
-                <width min="20" max="120">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr10plus.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10Plus]</visible>
-            </control>
-            <control type="image" description="HDR10">
-                <width min="20" max="120">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr10.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10]</visible>
-            </control>
-            <control type="image" description="HDR">
-                <width min="20" max="100">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR]</visible>
-            </control>
-            <control type="image" description="HLG">
-                <width min="20" max="100">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hlg.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHLG]</visible>
-            </control>
-            <control type="image" description="Dolby Vision">
-                <width min="20" max="140">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/dolbyvision.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoDolbyVision]</visible>
-            </control>
-
-            <!-- VIDEO - ASPECT RATIO -->
-
-            <control type="image" description="Aspect Ratio">
-                <width min="20" max="70">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[ListItem.VideoAspect,flags/video/white/aspectratio/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(ListItem.VideoAspect) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-            </control>
-
-            <!-- AUDIO - CODEC -->
-
-            <control type="image" description="Audio Codec">
-                <width min="20" max="140">auto</width>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[Image_Media_Flag_Audio_Codec,flags/video/white/audiocodec/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(ListItem.AudioCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-            </control>
-
-            <!-- AUDIO - CHANNEL -->
-
-            <control type="image" description="Audio Channels">
-                <width>100</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[ListItem.AudioChannels,flags/video/white/audiochannels/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(ListItem.AudioChannels)</visible>
-            </control>
-
-            <!-- MPAA -->
-
-            <control type="image" description="MPAA">
-                <width min="60" max="80">auto</width>
-                <height>40</height>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/mpaa/white/$VAR[flag_mpaa]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.mpaa) + !String.IsEmpty(ListItem.MPAA) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-            </control>
-
-            <!-- DURATION -->
-
-            <control type="image" description="Duration">
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
-                <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-            </control>
-            <control type="label" description="Duration">
-                <width min="110">auto</width>
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Label_Duration_Time_Check]  </label>
-                <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-            </control>
-
-            <!-- WEB - DVD - BLURAY - 3D -->
-
-            <control type="image" description="3D">
-                <width>64</width>
-                <centertop>50%</centertop>
-                <height>64</height>
-                <left>10</left>
-                <texture colordiffuse="Dark1">flags/video/white/other/3d.png</texture>
-                <visible>ListItem.IsStereoscopic | String.Contains(ListItem.Filenameandpath,.3D)</visible>
-            </control>
-            <control type="image" description="Bluray">
-                <width>84</width>
-                <centertop>50%</centertop>
-                <height>64</height>
-                <left>10</left>
-                <texture colordiffuse="Dark1">flags/$VAR[Image_Bluray].png</texture>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + !String.Contains(ListItem.Filenameandpath,.3D) + [String.Contains(ListItem.FilenameAndPath,bluray) | String.Contains(ListItem.FilenameAndPath,bdrip) | String.Contains(ListItem.FilenameAndPath,bd25) | String.Contains(ListItem.FilenameAndPath,bd50) | String.Contains(ListItem.FilenameAndPath,blu-ray)]</visible>
-            </control>
-            <control type="image" description="WEB-DL">
-                <width>84</width>
-                <height>64</height>
-                <centertop>50%</centertop>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/other/web-dl.png</texture>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + [String.Contains(ListItem.Filenameandpath,.web.) | String.Contains(ListItem.Filenameandpath,web-dl) | String.Contains(ListItem.Filenameandpath,webdl) | String.Contains(ListItem.Filenameandpath,webrip)]</visible>
-            </control>
-            <control type="image" description="HD DVD">
-                <width>94</width>
-                <centertop>50%</centertop>
-                <height>64</height>
-                <left>10</left>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-                <texture colordiffuse="Dark1">flags/video/white/other/hddvd.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
-            </control>
-            <control type="image" description="DVD">
-                <width>84</width>
-                <centertop>50%</centertop>
-                <height>64</height>
-                <left>10</left>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-                <texture colordiffuse="Dark1">flags/video/white/other/dvd.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + String.Contains(ListItem.FilenameAndPath,dvd) + !String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
-            </control>
-
-            <!-- LANGUAGE - AUDIO - SUBTITLE -->
-
-            <include condition="Skin.HasSetting(show.flags.audio.country)">Furniture_Audiostreams_Flags</include>
-            <include condition="Skin.HasSetting(show.flags.subtitles)">Furniture_Subtitles_Flags</include>
-
-            <!-- USER - RATING -->
-
-            <control type="image" description="User rating">
-                <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
-            </control>
-            <control type="label" description="User rating">
-                <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[ListItem.UserRating].0</label>
-            </control>
-
-            <!-- LETTERBOXD - RATING -->
-
-            <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">$VAR[Image_Letterboxd_White]</texture>
-            </control>
-            <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)]</label>
-            </control>
-
-            <!-- TRAKT - RATING -->
-
-            <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">$VAR[Image_Trakt_White]</texture>
-            </control>
-            <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)]</label>
-            </control>
-
-            <!-- METACRITIC - RATING -->
-
-            <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">flags/rating/white/metacritic/mc_white.png</texture>
-            </control>
-            <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating),,%]</label>
-            </control>
-
-            <!-- ROTTEN TOMATOES - RATING -->
-
-            <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_White]</texture>
-            </control>
-            <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating),,%]</label>
-            </control>
-
-            <!-- ROTTEN TOMATOES - USERMETER -->
-
-            <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_Audience_White]</texture>
-            </control>
-            <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter),,%]</label>
-            </control>
-
-            <!-- MDBLIST - RATING -->
-
-            <control type="image" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">$VAR[Image_Mdblist_White]</texture>
-            </control>
-            <control type="label" description="Rotten Tomatoes">
-                <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),,%]</label>
-            </control>
-
-            <!-- TMDB B/W -->
-
-            <control type="image">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <visible>$EXP[Condition_Flag_TMDb_Rating]</visible>
-                <width>56</width>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark2" background="true">flags/rating/white/tmdb/tmdb_white.png</texture>
-            </control>
-            <control type="label">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <visible>$EXP[Condition_Flag_TMDb_Rating]</visible>
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Value_Item_Rating_TMDb]</label>
-            </control>
-
-            <!-- IMDB B/W -->
-
-            <control type="image">
-                <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(ListItem.Rating(imdb))] + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb)</visible>
-                <width>70</width>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark2" background="true">flags/rating/white/imdb/imdb_white.png</texture>
-            </control>
-            <control type="label">
-                <visible>!String.IsEmpty(ListItem.Rating(imdb)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[ListItem.Rating(imdb)]</label>
-            </control>
-            <control type="label">
-                <visible>String.IsEmpty(ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
-            </control>
-
-            <!-- IMDB TOP 250 B/W -->
-
-            <control type="image">
-                <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                <width>42</width>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250_white.png</texture>
-            </control>
-            <control type="label" description="IMDB Top 250">
-                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                <width min="70">auto</width>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[ListItem.Top250,#,]</label>
-            </control>
-            <control type="label" description="IMDB Top 250">
-                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                <width min="70">auto</width>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-            </control>
-
-            <!-- RATING STAR -->
-
-            <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.rating) + !Container.Content(seasons)">
-                <param name="Star" value="Flagstar" />
-                <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" />
-                <param name="color" value="Dark1" />
-            </include>
-
-            <!-- RATING STAR - LABEL -->
-
-            <control type="label" description="Rating">
-                <visible>!String.IsEmpty(ListItem.Rating) | [!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
-                <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.rating)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Label_Rating]</label>
-            </control>
-        </control>
-
-        <!-- COLOR -->
-
-        <control type="grouplist">
-            <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
             <visible>[Container.Content(videos) | Container.Content(movies) | Container.Content(files) | Container.Content(musicvideos) | Container.Content(episodes) | Container.Content(sets) | Container.Content(videoversions) | Container.Content(tvshows) | [Container.Content(Seasons) + !Control.HasFocus(5161) + !Control.HasFocus(5261)] | $EXP[IsAnVideoInPlaylist]] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
 
             <visible>[!Container.Content(files) | $EXP[IsAnVideoInPlaylist]] + !String.IsEmpty(ListItem.DBType) + !ListItem.IsParentFolder + !$EXP[IsYoutube]</visible>
@@ -2768,14 +2368,14 @@
             <!-- COLLECTION -->
 
             <control type="image" description="Sets">
-                <width>70</width>
+                <width>58</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture>flags/video/color/other/set.png</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/set.png</texture>
                 <visible>ListItem.IsCollection</visible>
                 <visible>!$EXP[IsJlomItem]</visible>
             </control>
             <control type="label">
-                <width min="34">auto</width>
+                <width min="20">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$VAR[Def_Set_Num_Item]$INFO[Window(Home).Property(TMDbHelper.ListItem.Set.NumItems),/,]</label>
                 <visible>ListItem.IsCollection + !String.IsEmpty(ListItem.DBID)</visible>
@@ -2795,52 +2395,52 @@
             <!-- VIDEO - RESOLUTION -->
 
             <control type="image" description="Video Resolution">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(ListItem.VideoResolution) + !String.Contains(ListItem.Path,videodb://movies/sets)</visible>
                 <width min="20" max="80">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">$INFO[ListItem.VideoResolution,flags/video/color/resolution/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(ListItem.VideoResolution) + !String.Contains(ListItem.Path,videodb://movies/sets)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">$VAR[Def_Flag_Video_Resolution]</texture>
             </control>
 
             <!-- VIDEO - CODEC -->
 
             <control type="image" description="Video Codec">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(ListItem.VideoCodec)</visible>
                 <width min="20" max="100">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">$INFO[ListItem.VideoCodec,flags/video/color/videocodec/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(ListItem.VideoCodec)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">$VAR[Def_Flag_Video_Codec]</texture>
             </control>
 
             <!-- HDR -->
 
             <control type="image" description="HDR10+">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10Plus]</visible>
                 <width min="20" max="120">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">flags/video/color/hdr/hdr10plus.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10Plus]</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/hdr10plus.png</texture>
             </control>
             <control type="image" description="HDR10">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10]</visible>
                 <width min="20" max="110">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/color/hdr/hdr10.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10]</visible>
+                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr10.png</texture>
             </control>
             <control type="image" description="HDR">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR]</visible>
                 <width min="20" max="140">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">flags/video/color/hdr/hdrnew.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR]</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/hdrnew.png</texture>
             </control>
             <control type="image" description="HLG">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHLG]</visible>
                 <width min="20" max="80">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">flags/video/color/hdr/hlg.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHLG]</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/hlg.png</texture>
             </control>
             <control type="image" description="Dolby Vision">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoDolbyVision]</visible>
                 <width min="20" max="130">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">flags/video/color/hdr/dolbyvision.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoDolbyVision]</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/dolbyvision.png</texture>
             </control>
 
             <!-- VIDEO - ASPECT RATIO -->
@@ -2863,18 +2463,18 @@
                 <control type="image">
                     <height>20</height>
                     <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture fallback="flags/fallback.png">$INFO[ListItem.VideoAspect,flags/video/color/aspectratio/,.png]</texture>
+                    <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">$VAR[Def_Flag_Video_Apect_Ratio]</texture>
                 </control>
             </control>
 
             <!-- AUDIO - CODEC -->
 
             <control type="image" description="Audio Codec">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(ListItem.AudioCodec)</visible>
                 <width min="10" max="110">auto</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">$VAR[Image_Media_Flag_Audio_Codec,flags/video/color/audiocodec/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(ListItem.AudioCodec)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">$VAR[Def_Flag_Audio_Codec]</texture>
             </control>
 
             <!-- AUDIO - CHANNEL -->
@@ -2885,90 +2485,94 @@
                 <height>64</height>
                 <orientation>vertical</orientation>
                 <centertop>62%</centertop>
-                <itemgap>-3</itemgap>
-                <control type="image">
-                    <height>22</height>
-                    <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture fallback="flags/fallback.png">$INFO[ListItem.AudioChannels,flags/video/color/audiochannels/,.png]</texture>
+                <itemgap>6</itemgap>
+                <control type="label">
+                    <height>16</height>
+                    <align>center</align>
+                    <aligny>bottom</aligny>
+                    <label>$VAR[Def_Audio_Channels]</label>
+                    <font>channel</font>
+                    <textcolor>PanelWhite70</textcolor>
                 </control>
                 <control type="image">
                     <height>18</height>
                     <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <texture>flags/video/color/audiochannels/channel.png</texture>
+                    <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark2]">flags/video/$VAR[Def_Flag_Color]/audiochannels/channel.png</texture>
                 </control>
             </control>
 
             <!-- MPAA -->
 
             <control type="image" description="MPAA">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.mpaa) + !String.IsEmpty(ListItem.MPAA)</visible>
                 <width min="60" max="80">auto</width>
                 <height>40</height>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">flags/mpaa/color/$VAR[flag_mpaa]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.mpaa) + !String.IsEmpty(ListItem.MPAA) + Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/mpaa/$VAR[Def_Flag_Color]/$VAR[flag_mpaa]</texture>
             </control>
 
             <!-- DURATION -->
 
             <control type="image" description="Duration">
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
                 <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
                 <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
+                <include>Def_Flag_Image</include>
+                <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
             </control>
             <control type="label" description="Duration">
+                <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
+                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>                <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
+                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
                 <width min="110">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$VAR[Label_Duration_Time_Check]  </label>
-                <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
             </control>
 
             <!-- WEB - DVD - BLURAY - 3D -->
 
             <control type="image" description="3D">
+                <visible>ListItem.IsStereoscopic | String.Contains(ListItem.Filenameandpath,.3D)</visible>
                 <width>64</width>
                 <centertop>50%</centertop>
                 <height>64</height>
                 <left>10</left>
-                <texture>flags/video/color/other/3d.png</texture>
-                <visible>ListItem.IsStereoscopic | String.Contains(ListItem.Filenameandpath,.3D)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/3d.png</texture>
             </control>
             <control type="image" description="Bluray">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + !String.Contains(ListItem.Filenameandpath,.3D) + [String.Contains(ListItem.FilenameAndPath,bluray) | String.Contains(ListItem.FilenameAndPath,bdrip) | String.Contains(ListItem.FilenameAndPath,bd25) | String.Contains(ListItem.FilenameAndPath,bd50) | String.Contains(ListItem.FilenameAndPath,blu-ray)]</visible>
                 <width>84</width>
                 <centertop>50%</centertop>
                 <height>64</height>
                 <left>10</left>
-                <texture>flags/video/color/other/$VAR[Image_Bluray].png</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/$VAR[Image_Bluray].png</texture>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + !String.Contains(ListItem.Filenameandpath,.3D) + [String.Contains(ListItem.FilenameAndPath,bluray) | String.Contains(ListItem.FilenameAndPath,bdrip) | String.Contains(ListItem.FilenameAndPath,bd25) | String.Contains(ListItem.FilenameAndPath,bd50) | String.Contains(ListItem.FilenameAndPath,blu-ray)]</visible>
             </control>
             <control type="image" description="WEB-DL">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + [String.Contains(ListItem.Filenameandpath,.web.) | String.Contains(ListItem.Filenameandpath,web-dl) | String.Contains(ListItem.Filenameandpath,webdl) | String.Contains(ListItem.Filenameandpath,webrip)]</visible>
                 <width>84</width>
                 <height>64</height>
                 <centertop>50%</centertop>
-                <texture fallback="flags/fallback.png">flags/video/color/other/web-dl.png</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/web-dl.png</texture>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + [String.Contains(ListItem.Filenameandpath,.web.) | String.Contains(ListItem.Filenameandpath,web-dl) | String.Contains(ListItem.Filenameandpath,webdl) | String.Contains(ListItem.Filenameandpath,webrip)]</visible>
             </control>
             <control type="image" description="HD DVD">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray)</visible>
+                <visible>String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
                 <width>94</width>
                 <centertop>50%</centertop>
                 <height>64</height>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
-                <texture>flags/video/white/other/hddvd.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray)</visible>
-                <visible>String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/white/other/hddvd.png</texture>
             </control>
             <control type="image" description="DVD">
+                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray)</visible>
+                <visible>String.Contains(ListItem.FilenameAndPath,dvd) + !String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
                 <width>84</width>
                 <centertop>50%</centertop>
                 <height>64</height>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
-                <texture>flags/video/color/other/dvd.png</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray)</visible>
-                <visible>String.Contains(ListItem.FilenameAndPath,dvd) + !String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/dvd.png</texture>
             </control>
 
             <!-- LANGUAGE - AUDIO - SUBTITLE -->
@@ -2981,7 +2585,7 @@
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true" colordiffuse="$VAR[Color_Rating_User_Star]">flags/star/userrating/userrating_white.png</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_UserRatung_Star]">flags/star/userrating/white/userrating.png</texture>
             </control>
             <control type="label" description="User rating">
                 <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -2994,7 +2598,7 @@
             <control type="image" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true">$VAR[Image_Letterboxd_Colored]</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_Letterboxd]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3007,7 +2611,7 @@
             <control type="image" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true">$VAR[Image_Trakt_Colored]</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_Trakt]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3020,7 +2624,7 @@
             <control type="image">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true">flags/rating/color/metacritic/mc.png</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">flags/rating/$VAR[Def_Flag_Color]/metacritic/mc.png</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3033,7 +2637,7 @@
             <control type="image" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true">$VAR[Image_RottenTomatoes_Colored]</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_RottenTomatoes]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3046,7 +2650,7 @@
             <control type="image" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true">$VAR[Image_RottenTomatoes_Audience_Colored]</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_RottenTomatoes_Audience]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3059,7 +2663,7 @@
             <control type="image" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true">$VAR[Image_Mdblist_Colored]</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_Mdblist]</texture>
             </control>
             <control type="label" description="Rotten Tomatoes">
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3075,7 +2679,7 @@
                 <visible>$EXP[Condition_TMDb_Rating_Not_Null]</visible>
                 <width>56</width>
                 <include>Def_Flag_Image</include>
-                <texture background="true">flags/rating/color/tmdb/tmdb.png</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">flags/rating/$VAR[Def_Flag_Color]/tmdb/tmdb.png</texture>
             </control>
             <control type="label">
                 <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3091,7 +2695,7 @@
                 <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(ListItem.Rating(imdb))] + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb)</visible>
                 <width>70</width>
                 <include>Def_Flag_Image</include>
-                <texture background="true">flags/rating/color/imdb/imdb.png</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">flags/rating/$VAR[Def_Flag_Color]/imdb/imdb.png</texture>
             </control>
             <control type="label">
                 <visible>!String.IsEmpty(ListItem.Rating(imdb)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3110,16 +2714,16 @@
                 <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
                 <width>42</width>
                 <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250_white.png</texture>
+                <texture colordiffuse="Dark1" background="true">flags/rating/white/imdb/imdb_250.png</texture>
             </control>
             <control type="label" description="IMDB Top 250">
-                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                <visible>!String.IsEmpty(ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement) + !Skin.HasSetting(hide.flags.top250)</visible>
                 <width min="70">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[ListItem.Top250,#,]</label>
             </control>
             <control type="label" description="IMDB Top 250">
-                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                <visible>String.IsEmpty(ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement) + !Skin.HasSetting(hide.flags.top250)</visible>
                 <width min="70">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
@@ -3130,7 +2734,7 @@
             <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.rating) + !Container.Content(seasons)">
                 <param name="Star" value="Flagstar" />
                 <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" />
-                <param name="color" value="$VAR[Color_Stars_User_Rating_Override]" />
+                <param name="color" value="$VAR[Def_Flag_Colordiffuse_Star]" />
             </include>
 
             <!-- RATING STAR - LABEL -->
@@ -3138,6 +2742,7 @@
             <control type="label" description="Rating">
                 <visible>!String.IsEmpty(ListItem.Rating) | [!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
                 <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.rating)</visible>
+                <left>-4</left>
                 <include>Def_Flag_Label</include>
                 <label>$VAR[Label_Rating]</label>
             </control>
@@ -3467,7 +3072,7 @@
             <control type="image">
                 <width min="20" max="90">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture fallback="flags/fallback.png">$INFO[ListItem.FileExtension,flags/video/color/audiocodec/,.png]</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">$INFO[ListItem.FileExtension,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture>
                 <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
             </control>
 
@@ -3657,7 +3262,7 @@
                 <width min="20" max="100">auto</width>
                 <height>100</height>
                 <centertop>50%</centertop>
-                <texture fallback="flags/fallback.png">$VAR[Flag_Game_ESRB]</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">$VAR[Flag_Game_ESRB]</texture>
                 <aspectratio align="center">keep</aspectratio>
                 <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
             </control>
@@ -3729,7 +3334,7 @@
                 <!-- <height>70</height> -->
                 <!-- <left>-10</left> -->
                 <!-- <centertop>50%</centertop> -->
-                <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Resolution,flags/video/color/resolution/,.png]</texture> -->
+                <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Resolution,flags/video/$VAR[Def_Flag_Color]/resolution/,.png]</texture> -->
                 <!-- <aspectratio align="left">keep</aspectratio> -->
                 <!-- <visible>!String.IsEmpty(Control.GetLabel(6601))</visible> -->
                 <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution)</visible> -->
@@ -3738,7 +3343,7 @@
                 <!-- <width min="20" max="108">auto</width> -->
                 <!-- <height>60</height> -->
                 <!-- <centertop>50%</centertop> -->
-                <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Audio,flags/video/color/audiocodec/,.png]</texture> -->
+                <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Audio,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture> -->
                 <!-- <aspectratio align="center">keep</aspectratio> -->
                 <!-- <visible>!String.IsEmpty(Control.GetLabel(6602))</visible> -->
                 <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec)</visible> -->
@@ -4118,11 +3723,7 @@
             <align>left</align>
             <left>View_List_Side</left>
 
-            <!-- BLACK AND WHITE -->
-
             <control type="grouplist">
-                <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
                 <width>1400</width>
                 <height>120</height>
                 <align>left</align>
@@ -4144,308 +3745,7 @@
                 <control type="image">
                     <width min="20" max="80">auto</width>
                     <include>Def_Flag_Image_Without_Label</include>
-                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/white/resolution/,.png]</texture>
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution) + !String.Contains(Container($PARAM[controlid]).ListItem.Path,videodb://movies/sets)</visible>
-                </control>
-
-                <!-- VIDEO - CODEC -->
-
-                <control type="image">
-                <width min="20" max="100">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/white/videocodec/,.png]</texture>
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                </control>
-
-                <!-- VIDEO - ASPECT RATIO -->
-
-                <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                    <width min="20" max="90">auto</width>
-                    <height>64</height>
-                    <orientation>vertical</orientation>
-                    <centertop>57%</centertop>
-                    <itemgap>6</itemgap>
-                    <control type="label">
-                        <height>16</height>
-                        <align>center</align>
-                        <aligny>bottom</aligny>
-                        <label>[B]$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,,:1][/B]</label>
-                        <font>Small20</font>
-                        <textcolor>Dark2</textcolor>
-                    </control>
-                    <control type="image">
-                        <height>20</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/white/aspectratio/,.png]</texture>
-                    </control>
-                </control>
-
-
-                <!-- <control type="image"> -->
-                    <!-- <width min="20" max="70">auto</width> -->
-                    <!-- <include>Def_Flag_Image_Without_Label</include> -->
-                    <!-- <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/white/aspectratio/,.png]</texture> -->
-                    <!-- <aspectratio align="center">keep</aspectratio> -->
-                    <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect) + !Skin.HasSetting(enable.furniture.flags.colored)</visible> -->
-                <!-- </control> -->
-
-                <!-- AUDIO - CODEC -->
-
-                <control type="image">
-                    <width min="20" max="110">auto</width>
-                    <aspectratio aligny="center" align="center">keep</aspectratio>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/white/audiocodec/,.png]</texture>
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
-                </control>
-
-                <!-- AUDIO - CHANNEL -->
-
-                <!-- <control type="grouplist"> -->
-                    <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible> -->
-                    <!-- <width min="10" max="110">auto</width> -->
-                    <!-- <height>64</height> -->
-                    <!-- <orientation>vertical</orientation> -->
-                    <!-- <centertop>62%</centertop> -->
-                    <!-- <itemgap>-3</itemgap> -->
-                    <!-- <control type="image"> -->
-                        <!-- <height>22</height> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/white/audiochannels/,.png]</texture> -->
-                    <!-- </control> -->
-                    <!-- <control type="image"> -->
-                        <!-- <height>18</height> -->
-                        <!-- <aspectratio aligny="center" align="center">keep</aspectratio> -->
-                        <!-- <texture>flags/video/white/audiochannels/channel.png</texture> -->
-                    <!-- </control> -->
-                <!-- </control> -->
-
-                <control type="image">
-                    <width min="10" max="110">auto</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/white/audiochannels/,.png]</texture>
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
-                </control>
-
-                <!-- DURATION -->
-
-                <control type="image">
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1">flags/video/white/other/time.png</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                    <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-                </control>
-                <control type="label">
-                    <width min="110">auto</width>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(h),,$LOCALIZE[31061]] $INFO[Container($PARAM[controlid]).ListItem.Duration(mm),,$LOCALIZE[31062]]  </label>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                    <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-                </control>
-
-                <!-- LANGUAGE - AUDIO - SUBTITLE -->
-
-                <include content="Furniture_DialogInfo_Extended_Audiostreams_Flags" condition="Skin.HasSetting(show.flags.audio.country)"><param name="controlid" value="$PARAM[controlid]" /></include>
-                <include content="Furniture_DialogInfo_Extended_Subtitle_Flags"  condition="Skin.HasSetting(show.flags.subtitles)"><param name="controlid" value="$PARAM[controlid]" /></include>
-
-                <!-- USER - RATING -->
-
-                <control type="image">
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
-                </control>
-                <control type="label">
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
-                </control>
-
-                <!-- LETTERBOXD - RATING -->
-
-                <control type="image" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">$VAR[Image_Letterboxd_White]</texture>
-                </control>
-                <control type="label" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)]</label>
-                </control>
-
-                <!-- TRAKT - RATING -->
-
-                <control type="image" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">$VAR[Image_Trakt_White]</texture>
-                </control>
-                <control type="label" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)]</label>
-                </control>
-
-                <!-- METACRITIC - RATING -->
-
-                <control type="image" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">flags/rating/white/metacritic/mc_white.png</texture>
-                </control>
-                <control type="label" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating),,%]</label>
-                </control>
-
-                <!-- ROTTEN TOMATOES - RATING -->
-
-                <control type="image">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_White]</texture>
-                </control>
-                <control type="label">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating),,%]</label>
-                </control>
-
-                <!-- ROTTEN TOMATOES - USERMETER -->
-
-                <control type="image">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">$VAR[Image_RottenTomatoes_Audience_White]</texture>
-                </control>
-                <control type="label">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter),,%]</label>
-                </control>
-
-                <!-- MDBLIST - RATING -->
-
-                <control type="image" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">$VAR[Image_Mdblist_White]</texture>
-                </control>
-                <control type="label" description="Rotten Tomatoes">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),,%]</label>
-                </control>
-
-                <!-- TMDB -->
-
-                <control type="image">
-                    <visible>[String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)] | [!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.TMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)]</visible>
-                    <visible>Skin.HasSetting(show.flags.rating.tmdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
-                    <width>56</width>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark2" background="true">flags/rating/white/tmdb/tmdb_white.png</texture>
-                </control>
-                <control type="label">
-                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating)</visible>
-                    <visible>Skin.HasSetting(show.flags.rating.tmdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Rating]</label>
-                </control>
-                <control type="label">
-                    <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.TMDb_Rating)) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID)</visible>
-                    <visible>Skin.HasSetting(show.flags.rating.tmdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.TMDb_Rating)]</label>
-                </control>
-
-                <!-- IMDB B/W -->
-
-                <control type="image">
-                    <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <width>70</width>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark2" background="true">flags/rating/white/imdb/imdb_white.png</texture>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                </control>
-                <control type="label">
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Rating(imdb)]</label>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                </control>
-                <control type="label">
-                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)]</label>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                </control>
-
-                <!-- IMDB TOP 250 B/W -->
-
-                <control type="image">
-                    <width>42</width>
-                    <left>10</left>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250_white.png</texture>
-                    <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                </control>
-                <control type="label" description="IMDB Top 250">
-                    <width min="70">auto</width>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Top250,#,]</label>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                </control>
-                <control type="label" description="IMDB Top 250">
-                    <width min="70">auto</width>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
-                </control>
-
-                <!-- RATING STAR - LABEL -->
-
-                <include content="Def_Flags_Furniture_Small_Ext" condition="!Skin.HasSetting(hide.flags.rating)">
-                    <param name="controlid" value="$PARAM[controlid]" />
-                </include>
-            </control>
-
-            <!-- COLOR -->
-
-            <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
-                <width>1400</width>
-                <height>120</height>
-                <align>left</align>
-
-                <itemgap>0</itemgap>
-                <orientation>horizontal</orientation>
-                <usecontrolcoords>true</usecontrolcoords>
-
-                <!-- TOTAL EPISODES -->
-
-                <include>Total_Episodes_Ext</include>
-
-                <!-- NEXT AIRED -->
-
-                <include>Next_Aired_Ext</include>
-
-                <!-- VIDEO - RESOLUTION -->
-
-                <control type="image">
-                    <width min="20" max="80">auto</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/color/resolution/,.png]</texture>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoResolution,flags/video/$VAR[Def_Flag_Color]/resolution/,.png]</texture>
                     <aspectratio align="left">keep</aspectratio>
                     <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution) + !String.Contains(Container($PARAM[controlid]).ListItem.Path,videodb://movies/sets)</visible>
                 </control>
@@ -4455,7 +3755,7 @@
                 <control type="image">
                     <width min="20" max="100">auto</width>
                     <include>Def_Flag_Image_Without_Label</include>
-                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/color/videocodec/,.png]</texture>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoCodec,flags/video/$VAR[Def_Flag_Color]/videocodec/,.png]</texture>
                     <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec)</visible>
                 </control>
 
@@ -4479,7 +3779,7 @@
                     <control type="image">
                         <height>20</height>
                         <aspectratio>keep</aspectratio>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/color/aspectratio/,.png]</texture>
+                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.VideoAspect,flags/video/$VAR[Def_Flag_Color]/aspectratio/,.png]</texture>
                     </control>
                 </control>
 
@@ -4489,7 +3789,7 @@
                     <width min="20" max="140">auto</width>
                     <aspectratio aligny="center" align="center">keep</aspectratio>
                     <include>Def_Flag_Image_Without_Label</include>
-                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/color/audiocodec/,.png]</texture>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioCodec,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture>
                     <aspectratio align="center">keep</aspectratio>
                     <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec)</visible>
                 </control>
@@ -4502,25 +3802,21 @@
                     <height>64</height>
                     <orientation>vertical</orientation>
                     <centertop>62%</centertop>
-                    <itemgap>-3</itemgap>
-                    <control type="image">
-                        <height>22</height>
-                        <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/color/audiochannels/,.png]</texture>
+                    <itemgap>6</itemgap>
+                    <control type="label">
+                        <height>16</height>
+                        <align>center</align>
+                        <aligny>bottom</aligny>
+                        <label>$VAR[Def_Audio_Channels_Ext]</label>
+                        <font>channel</font>
+                        <textcolor>PanelWhite70</textcolor>
                     </control>
                     <control type="image">
                         <height>18</height>
                         <aspectratio aligny="center" align="center">keep</aspectratio>
-                        <texture>flags/video/color/audiochannels/channel.png</texture>
+                        <texture>flags/video/$VAR[Def_Flag_Color]/audiochannels/channel.png</texture>
                     </control>
                 </control>
-
-                <!-- <control type="image"> -->
-                    <!-- <width>100</width> -->
-                    <!-- <include>Def_Flag_Image_Without_Label</include> -->
-                    <!-- <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.AudioChannels,flags/video/color/audiochannels/,.png]</texture> -->
-                    <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible> -->
-                <!-- </control> -->
 
                 <!-- DURATION -->
 
@@ -4561,7 +3857,7 @@
                 <control type="image" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">$VAR[Image_Letterboxd_Colored]</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_Letterboxd]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Letterboxd_Rating)) + Skin.HasSetting(show.flags.rating.letterboxd) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4574,7 +3870,7 @@
                 <control type="image" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">$VAR[Image_Trakt_Colored]</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_Trakt]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Trakt_Rating)) + Skin.HasSetting(show.flags.rating.trakt) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4587,7 +3883,7 @@
                 <control type="image" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">flags/rating/color/metacritic/mc.png</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">flags/rating/$VAR[Def_Flag_Color]/metacritic/mc.png</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Metacritic_Rating)) + Skin.HasSetting(show.flags.rating.metacritics) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4600,7 +3896,7 @@
                 <control type="image" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">$VAR[Image_RottenTomatoes_Colored]</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_RottenTomatoes]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_Rating)) + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4613,7 +3909,7 @@
                 <control type="image" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">$VAR[Image_RottenTomatoes_Audience_Colored]</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_RottenTomatoes_Audience]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.RottenTomatoes_UserMeter)) + !ListItem.IsCollection + Skin.HasSetting(show.flags.rating.tomatoes) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4626,7 +3922,7 @@
                 <control type="image" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">$VAR[Image_Mdblist_Colored]</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">$VAR[Image_Mdblist]</texture>
                 </control>
                 <control type="label" description="Rotten Tomatoes">
                     <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating)) + !String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.MDBList_Rating),-) + Skin.HasSetting(show.flags.rating.mdblist) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4642,7 +3938,7 @@
                     <visible>!Control.IsVisible(5161) + !Control.IsVisible(5261)</visible>
                     <width>56</width>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">flags/rating/color/tmdb/tmdb.png</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" background="true">flags/rating/$VAR[Def_Flag_Color]/tmdb/tmdb.png</texture>
                 </control>
                 <control type="label">
                     <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.DBID) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating)</visible>
@@ -4663,10 +3959,10 @@
 
                 <control type="image">
                     <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating)) | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb))] + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                     <width>70</width>
                     <include>Def_Flag_Image</include>
-                    <texture background="true">flags/rating/color/imdb/imdb.png</texture>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                    <texture background="true">flags/rating/$VAR[Def_Flag_Color]/imdb/imdb.png</texture>
                 </control>
                 <control type="label">
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating(imdb)) + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4684,26 +3980,26 @@
                 <!-- IMDB TOP 250 -->
 
                 <control type="image">
+                    <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                     <width>42</width>
                     <left>10</left>
                     <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250_white.png</texture>
-                    <visible>!Skin.HasSetting(hide.flags.top250) + [!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250))]</visible>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
+                    <texture colordiffuse="Dark1">flags/rating/white/imdb/imdb_250.png</texture>
                 </control>
                 <control type="label" description="IMDB Top 250">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                     <width min="70">auto</width>
                     <include>Def_Flag_Label</include>
                     <label>$INFO[Container($PARAM[controlid]).ListItem.Top250,#,]</label>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                 </control>
                 <control type="label" description="IMDB Top 250">
+                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
+                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                     <width min="70">auto</width>
                     <include>Def_Flag_Label</include>
                     <label>$INFO[Window(Home).Property(TMDbHelper.ListItem.Top250),#,]</label>
-                    <visible>String.IsEmpty(Container($PARAM[controlid]).ListItem.Top250) + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Top250)) + Skin.HasSetting(show.flags.top250.classement)</visible>
-                    <visible>![Control.HasFocus(9579) | Control.HasFocus(95797)]</visible>
                 </control>
 
                 <!-- RATING STAR - LABEL -->
@@ -5004,7 +4300,7 @@
                 <control type="image">
                     <width min="20" max="90">auto</width>
                     <include>Def_Flag_Image_Without_Label</include>
-                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/color/audiocodec/,.png]</texture>
+                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture>
                     <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
                 </control>
 

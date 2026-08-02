@@ -2585,7 +2585,7 @@
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_UserRatung_Star]">flags/star/userrating/white/userrating.png</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_UserRatung_Star]" background="true">flags/star/userrating/userrating.png</texture>
             </control>
             <control type="label" description="User rating">
                 <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -2756,7 +2756,7 @@
             <width>44</width>
             <height>32</height>
             <aspectratio aligny="center" align="left">keep</aspectratio>
-            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc_white.png</texture>
+            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc.png</texture>
         </control>
         <control type="label">
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
@@ -2860,179 +2860,7 @@
     </include>
 
     <include name="Furniture_Audio_Flags">
-
-        <!-- BLACK / WHITE -->
-
         <control type="grouplist">
-            <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
-            <visible>[Container.Content(songs) | Container.Content(albums)] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
-
-            <visible>!ListItem.IsParentFolder</visible>
-
-            <include condition="!$EXP[View_Info_Dialog]" content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
-            <include condition="!$EXP[View_Info_Dialog]">Animation_Common_Fade_Out</include>
-
-            <include content="Def_Left" condition="!$PARAM[position_low]">
-                <param name="left" value="-4" />
-            </include>
-            <include content="Def_Top" condition="!$PARAM[position_low]">
-                <param name="top" value="166" />
-            </include>
-
-            <left>View_List_Side</left>
-            <align>left</align>
-            <height>120</height>
-            <centerbottom>NavBarPad</centerbottom>
-
-            <include content="Def_Right" condition="!Skin.HasSetting(show.furniture.clock.date.weather) + $PARAM[position_low]">
-                <param name="right" value="View_List_Side" />
-            </include>
-            <include content="Def_Right" condition="Skin.HasSetting(show.furniture.clock.date.weather) + $PARAM[position_low]">
-                <param name="right" value="440" />
-            </include>
-
-            <itemgap>0</itemgap>
-            <orientation>horizontal</orientation>
-            <usecontrolcoords>true</usecontrolcoords>
-
-            <!-- NUMBBER DISC / SONGS -->
-
-            <include>Number_Album_Disc_Count</include>
-
-            <!-- CODEC -->
-
-            <control type="image">
-                <width min="20" max="90">auto</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[ListItem.FileExtension,flags/video/white/audiocodec/,.png]</texture>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
-            </control>
-
-            <!-- BIT RATE -->
-
-            <control type="grouplist">
-                <width min="20" max="100">auto</width>
-                <height>64</height>
-                <orientation>vertical</orientation>
-                <centertop>57%</centertop>
-                <itemgap>-17</itemgap>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
-                <control type="label">
-                    <height>28</height>
-                    <align>center</align>
-                    <aligny>bottom</aligny>
-                    <label>$INFO[ListItem.BitRate]</label>
-                    <font>Small20</font>
-                    <textcolor>Dark1</textcolor>
-                </control>
-                <control type="image">
-                    <height>44</height>
-                    <aspectratio>keep</aspectratio>
-                    <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
-                </control>
-            </control>
-
-            <!-- SAMPLE RATE -->
-
-            <control type="grouplist">
-                <width min="20" max="100">auto</width>
-                <height>64</height>
-                <orientation>vertical</orientation>
-                <centertop>57%</centertop>
-                <itemgap>-17</itemgap>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
-                <control type="label">
-                    <height>28</height>
-                    <align>center</align>
-                    <aligny>bottom</aligny>
-                    <label>$INFO[ListItem.Samplerate]</label>
-                    <font>Small20</font>
-                    <textcolor>Dark1</textcolor>
-                </control>
-                <control type="image">
-                    <height>44</height>
-                    <aspectratio>keep</aspectratio>
-                    <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
-                </control>
-            </control>
-
-            <!-- BPM -->
-
-            <control type="grouplist">
-                <width min="20" max="100">auto</width>
-                <height>64</height>
-                <orientation>vertical</orientation>
-                <centertop>57%</centertop>
-                <itemgap>-17</itemgap>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
-                <control type="label">
-                    <height>28</height>
-                    <align>center</align>
-                    <aligny>bottom</aligny>
-                    <label>$INFO[ListItem.BPM]</label>
-                    <font>Small20</font>
-                    <textcolor>Dark1</textcolor>
-                </control>
-                <control type="image">
-                    <height>44</height>
-                    <aspectratio>keep</aspectratio>
-                    <texture colordiffuse="Dark1">flags/audio/white/bpm.png</texture>
-                </control>
-            </control>
-
-            <!-- DURATION -->
-
-            <control type="image">
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="$VAR[Color_Flag_Duration]">flags/video/white/other/time.png</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-            </control>
-            <control type="label">
-                <include>Def_Flag_Label</include>
-                <label>$INFO[ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
-                <visible>!String.IsEmpty(ListItem.Duration)</visible>
-                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-            </control>
-
-            <!-- USER RATING -->
-
-            <control type="image">
-                <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
-            </control>
-            <control type="label">
-                <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                <include>Def_Flag_Label</include>
-                <label>$INFO[ListItem.UserRating].0</label>
-            </control>
-
-            <!-- RATING - STAR -->
-
-            <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.music.rating)">
-                <param name="Star" value="FlagstarSong" />
-                <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" />
-                <param name="color" value="Dark1" />
-            </include>
-
-            <!-- RATING - LABEL -->
-
-            <control type="label">
-                <left>-6</left>
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Label_Rating]</label>
-                <visible>!String.IsEmpty(ListItem.Rating) | [!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
-                <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
-            </control>
-        </control>
-
-        <!-- COLOR -->
-
-        <control type="grouplist">
-            <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
             <visible>[Container.Content(songs) | Container.Content(albums)] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,song) | String.IsEqual(ListItem.DBType,album)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
 
             <visible>!ListItem.IsParentFolder</visible>
@@ -3072,7 +2900,7 @@
             <control type="image">
                 <width min="20" max="90">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">$INFO[ListItem.FileExtension,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/audiocodec/$INFO[ListItem.FileExtension].png</texture>
                 <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
             </control>
 
@@ -3089,14 +2917,14 @@
                     <height>28</height>
                     <align>center</align>
                     <aligny>bottom</aligny>
-                    <label>$INFO[ListItem.BitRate]</label>
                     <font>Small20</font>
                     <textcolor>Dark1</textcolor>
+                    <label>[B]$INFO[ListItem.BitRate][/B]</label>
                 </control>
                 <control type="image">
                     <height>44</height>
                     <aspectratio>keep</aspectratio>
-                    <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
+                    <texture colordiffuse="Dark2" background="true">flags/audio/white/bit.png</texture>
                 </control>
             </control>
 
@@ -3113,14 +2941,14 @@
                     <height>28</height>
                     <align>center</align>
                     <aligny>bottom</aligny>
-                    <label>$INFO[ListItem.Samplerate]</label>
                     <font>Small20</font>
                     <textcolor>Dark1</textcolor>
+                    <label>[B]$INFO[ListItem.Samplerate][/B]</label>
                 </control>
                 <control type="image">
                     <height>44</height>
                     <aspectratio>keep</aspectratio>
-                    <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
+                    <texture colordiffuse="Dark2" background="true">flags/audio/white/khz.png</texture>
                 </control>
             </control>
 
@@ -3137,24 +2965,24 @@
                     <height>28</height>
                     <align>center</align>
                     <aligny>bottom</aligny>
-                    <label>$INFO[ListItem.BPM]</label>
                     <font>Small20</font>
                     <textcolor>Dark1</textcolor>
+                    <label>[B]$INFO[ListItem.BPM][/B]</label>
                 </control>
                 <control type="image">
                     <height>44</height>
                     <aspectratio>keep</aspectratio>
-                    <texture colordiffuse="Dark1">flags/audio/white/bpm.png</texture>
+                    <texture colordiffuse="Dark2" background="true">flags/audio/white/bpm.png</texture>
                 </control>
             </control>
 
             <!-- DURATION -->
 
             <control type="image">
-                <include>Def_Flag_Image</include>
-                <texture colordiffuse="$VAR[Color_Flag_Duration]">flags/video/white/other/time.png</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
                 <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
+                <visible>!String.IsEmpty(ListItem.Duration)</visible>
+                <include>Def_Flag_Image</include>
+                <texture colordiffuse="$VAR[Color_Flag_Duration]"  background="true">flags/video/white/other/time.png</texture>
             </control>
             <control type="label">
                 <include>Def_Flag_Label</include>
@@ -3168,7 +2996,7 @@
             <control type="image">
                 <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                 <include>Def_Flag_Image</include>
-                <texture colordiffuse="$VAR[Color_Rating_User_Star]" background="true">flags/star/userrating/userrating_white.png</texture>
+                <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_UserRatung_Star]" background="true">flags/star/userrating/userrating.png</texture>
             </control>
             <control type="label">
                 <visible>!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -3181,17 +3009,17 @@
             <include content="Def_Flags_Furniture_Small" condition="!Skin.HasSetting(hide.flags.music.rating)">
                 <param name="Star" value="FlagstarSong" />
                 <param name="visible" value="!Skin.HasSetting(enable.flags.rating.numeric)" />
-                <param name="color" value="$VAR[Color_Stars_User_Rating_Override]" />
+                <param name="color" value="$VAR[Def_Flag_Colordiffuse_Star]" />
             </include>
 
             <!-- RATING - LABEL -->
 
             <control type="label">
-                <left>-6</left>
-                <include>Def_Flag_Label</include>
-                <label>$VAR[Label_Rating]</label>
                 <visible>[!String.IsEmpty(ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)] | !String.IsEmpty(ListItem.Rating)</visible>
                 <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
+                <left>-6</left>
+                <include>Def_Flag_Label</include>
+                <label>$VAR[Label_Rating]</label>
             </control>
         </control>
     </include>
@@ -3924,7 +3752,7 @@
                 <control type="image">
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Rating_User_Star]">flags/star/userrating/userrating_white.png</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_UserRatung_Star]" background="true">flags/star/userrating/userrating.png</texture>
                 </control>
                 <control type="label">
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4098,7 +3926,7 @@
             <width>44</width>
             <height>32</height>
             <aspectratio aligny="center" align="left">keep</aspectratio>
-            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc_white.png</texture>
+            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc.png</texture>
         </control>
         <control type="label">
             <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
@@ -4205,11 +4033,7 @@
             <align>left</align>
             <left>View_List_Side</left>
 
-            <!-- BLACK / WHITE -->
-
             <control type="grouplist">
-                <visible>!Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
                 <width>1400</width>
                 <height>120</height>
                 <align>left</align>
@@ -4225,163 +4049,10 @@
                 <!-- CODEC -->
 
                 <control type="image">
-                    <width min="20" max="90">auto</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture colordiffuse="Dark1" fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/white/audiocodec/,.png]</texture>
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
-                </control>
-
-                <!-- BIT RATE -->
-
-                <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
-
-                    <width min="20" max="100">auto</width>
-                    <centertop>57%</centertop>
-                    <height>64</height>
-
-                    <itemgap>-17</itemgap>
-                    <orientation>vertical</orientation>
-
-                    <control type="label">
-                        <height>28</height>
-                        <align>center</align>
-                        <aligny>bottom</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.BitRate]</label>
-                        <font>Small20</font>
-                        <textcolor>Dark1</textcolor>
-                    </control>
-                    <control type="image">
-                        <height>44</height>
-                        <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="Dark1">flags/audio/white/bit.png</texture>
-                    </control>
-                </control>
-
-                <!-- SAMPLE RATE -->
-
-                <control type="grouplist">
-                    <width min="20" max="100">auto</width>
-                    <height>64</height>
-                    <orientation>vertical</orientation>
-                    <centertop>57%</centertop>
-                    <itemgap>-17</itemgap>
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
-                    <control type="label">
-                        <height>28</height>
-                        <align>center</align>
-                        <aligny>bottom</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.Samplerate]</label>
-                        <font>Small20</font>
-                        <textcolor>Dark1</textcolor>
-                    </control>
-                    <control type="image">
-                        <height>44</height>
-                        <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="Dark1">flags/audio/white/khz.png</texture>
-                    </control>
-                </control>
-
-                <!-- BPM -->
-
-                <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
-
-                    <width min="20" max="100">auto</width>
-                    <centertop>57%</centertop>
-                    <height>64</height>
-
-                    <itemgap>-17</itemgap>
-                    <orientation>vertical</orientation>
-
-                    <control type="label">
-                        <height>28</height>
-                        <align>center</align>
-                        <aligny>bottom</aligny>
-                        <label>$INFO[Container($PARAM[controlid]).ListItem.BPM]</label>
-                        <font>Small20</font>
-                        <textcolor>Dark1</textcolor>
-                    </control>
-                    <control type="image">
-                        <height>44</height>
-                        <aspectratio>keep</aspectratio>
-                        <texture colordiffuse="Dark1">flags/audio/white/bpm.png</texture>
-                    </control>
-                </control>
-
-                <!-- DURATION -->
-
-                <control type="image">
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="$VAR[Color_Flag_Duration]">flags/video/white/other/time.png</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-                </control>
-                <control type="label">
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
-                </control>
-
-                <!-- USER RATING -->
-
-                <control type="image">
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Image</include>
-                    <texture colordiffuse="Dark1" background="true">flags/star/userrating/userrating_white.png</texture>
-                </control>
-                <control type="label">
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.UserRating].0</label>
-                </control>
-
-                <!-- RATING - STAR -->
-
-                <include condition="!Skin.HasSetting(hide.flags.music.rating)">Def_Flags_Furniture_Small_Ext</include>
-
-                <!-- RATING - LABEL -->
-
-                <control type="label">
-                    <left>-6</left>
-                    <width min="48">auto</width>
-                    <centertop>50%</centertop>
-                    <height>64</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$VAR[Label_Rating]</label>
-                    <font>Flag</font>
-                    <textcolor>Dark1</textcolor>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating) | [!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)]</visible>
-                    <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
-                </control>
-            </control>
-
-            <!-- COLOR -->
-
-            <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.colored)</visible>
-
-                <width>1400</width>
-                <height>120</height>
-                <align>left</align>
-
-                <itemgap>0</itemgap>
-                <orientation>horizontal</orientation>
-                <usecontrolcoords>true</usecontrolcoords>
-
-                <!-- NUMBBER DISC / SONGS -->
-
-                <include content="Number_Album_Disc_Count_Ext"><param name="controlid" value="$PARAM[controlid]" /></include>
-
-                <!-- CODEC -->
-
-                <control type="image">
-                    <width min="20" max="90">auto</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture fallback="flags/fallback.png">$INFO[Container($PARAM[controlid]).ListItem.FileExtension,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture>
                     <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
+                    <width min="20" max="90">auto</width>
+                    <include>Def_Flag_Image_Without_Label</include>
+                    <texture fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/audiocodec/$INFO[Container($PARAM[controlid]).ListItem.FileExtension].png</texture>
                 </control>
 
                 <!-- BIT RATE -->
@@ -4468,16 +4139,16 @@
                 <!-- DURATION -->
 
                 <control type="image">
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
+                    <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
                     <include>Def_Flag_Image</include>
                     <texture colordiffuse="$VAR[Color_Flag_Duration]">flags/video/white/other/time.png</texture>
-                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
-                    <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
                 </control>
                 <control type="label">
-                    <include>Def_Flag_Label</include>
-                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Duration)</visible>
                     <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
+                    <include>Def_Flag_Label</include>
+                    <label>$INFO[Container($PARAM[controlid]).ListItem.Duration(mins:ss),, $LOCALIZE[31074]  ]</label>
                 </control>
 
                 <!-- USER RATING -->
@@ -4485,7 +4156,7 @@
                 <control type="image">
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
                     <include>Def_Flag_Image</include>
-                    <texture colordiffuse="$VAR[Color_Rating_User_Star]" background="true">flags/star/userrating/userrating_white.png</texture>
+                    <texture colordiffuse="$VAR[Def_Flag_Colordiffuse_UserRatung_Star]" background="true">flags/star/userrating/userrating.png</texture>
                 </control>
                 <control type="label">
                     <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(show.flags.music.rating.user) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
@@ -4500,17 +4171,17 @@
                 <!-- RATING - LABEL -->
 
                 <control type="label">
-                    <left>-6</left>
-                    <width min="48">auto</width>
-                    <centertop>50%</centertop>
-                    <height>64</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$VAR[Label_Rating]</label>
-                    <font>Flag</font>
-                    <textcolor>Dark1</textcolor>
                     <visible>[!String.IsEmpty(Container($PARAM[controlid]).ListItem.UserRating) + Skin.HasSetting(userrating.override.kodi.rating.num)] | !String.IsEmpty(Container($PARAM[controlid]).ListItem.Rating)</visible>
                     <visible>Skin.HasSetting(enable.flags.rating.numeric) + !Skin.HasSetting(hide.flags.music.rating)</visible>
+                    <left>-6</left>
+                    <width min="48">auto</width>
+                    <centertop>50%</centertop>
+                    <height>64</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>Flag</font>
+                    <textcolor>Dark1</textcolor>
+                    <label>$VAR[Label_Rating]</label>
                 </control>
             </control>
         </control>

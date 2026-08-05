@@ -20,7 +20,6 @@ Over the years, many features have been removed, added, redesigned, or completel
 - Download: [repository.nanomani-1.0.zip](https://github.com/Nanomani/repository.nanomani/releases/download/v1.0/repository.nanomani-1.0.zip)
   
 3. Install from Nanomani repo :
-- Nanomani Repository > Add-on repository > SYLVO Developement Repo
 - Nanomani Repository > Add-on repository > Jurialmunkey Alpha Repo
 
 4. Install from Nanomani repo
@@ -37,7 +36,6 @@ Over the years, many features have been removed, added, redesigned, or completel
   
 3. Install from Nanomani repo :
 - Nanomani Repository > Add-on repository > Jurialmunkey Alpha Repo
-- Nanomani Repository > Video Add-ons > Skin Info Service
 
 4. Install from Nanomani repo
 - Nanomani Repository > Look and Feel > Skins > Arctic Zephir Rounded  

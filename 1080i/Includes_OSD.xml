@@ -466,6 +466,7 @@
         <param name="icon_colordiffuse_disabled" default="$VAR[Color_OSD_Icon_Disabled]" />
         <param name="back_colordiffuse" default="$VAR[Color_OSD_Background_Button]" />
         <param name="vertical" default="false" />
+        <param name="flag_bookmarks" default="false" />
         <param name="flag_lang_audio" default="false" />
         <param name="flag_lang_subtitle" default="false" />
         <param name="show_not_enabled" default="false" />
@@ -556,6 +557,18 @@
                        <height>21</height>
                        <texture>$INFO[VideoPlayer.AudioLanguage,flags/lang/32x32/,.png]</texture>
                        <visible>$PARAM[flag_lang_audio]</visible>
+                    </control>
+
+                    <!-- FLAG - BOOKMARKS -->
+
+                    <control type="image">
+                       <bottom>-3</bottom>
+                       <right>-6</right>
+                       <width>24</width>
+                       <height>21</height>
+                       <texture background="true" colordiffuse="$VAR[Color_OSD_Icon_Bookmarks]">buttonsdialogs/bookmark-star.png</texture>
+                       <visible>$PARAM[flag_bookmarks]</visible>
+                       <visible>Player.HasBookmarks</visible>
                     </control>
                 </control>
             </control>
@@ -1385,7 +1398,7 @@
 
         <definition>
             <control type="group">
-                <visible>!String.StartsWith(ListItem.Label,$LOCALIZE[21396])</visible>
+                <visible>!String.Contains(ListItem.Label,$LOCALIZE[21396]) + !String.Contains(ListItem.Label,Chapter) + !String.Contains(ListItem.Label,Chapitre)</visible>
 
                 <right>$PARAM[right]</right>
                 <bottom>$PARAM[bottom]</bottom>
@@ -1602,6 +1615,7 @@
             <param name="id" value="6" />
             <param name="groupid" value="5999" />
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
+            <param name="flag_bookmarks" value="true" />
             <align>right</align>
             <include>Def_OSD_UpDown_Video_Info</include>
             <onclick>ActivateWindow(125)</onclick>

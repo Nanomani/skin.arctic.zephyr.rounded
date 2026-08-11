@@ -638,36 +638,55 @@
     </expression>
 
 
-
     <!-- ================================== -->
     <!--             CODEC VIDEO            -->
     <!-- ================================== -->
 
     <expression name="IsVideoHDR10Plus">
-        [String.IsEmpty(ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(ListItem.FileNameAndPath,hdr10plus) | [VideoPlayer.IsFullscreen + String.Contains(Player.FileNameAndPath,hdr10plus)]]]
-    </expression>
-    <expression name="IsVideoHDR10Plus2">
-        [String.IsEmpty(Container($PARAM[controlid]).ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(Container($PARAM[controlid]).ListItem.FileNameAndPath,.hdr10plus.)]
+        [String.IsEqual(ListItem.HdrType,hdr10) + String.Contains(ListItem.FileNameAndPath,hdr10plus)]
+        | [VideoPlayer.IsFullscreen + String.IsEqual(VideoPlayer.HdrType,hdr10) + String.Contains(Player.FileNameAndPath,hdr10plus)]
     </expression>
 
     <expression name="IsVideoHDR10">
-        [String.IsEqual(ListItem.HdrType,hdr10) | String.Contains(ListItem.FileNameAndPath,hdr10)
-        | [VideoPlayer.IsFullscreen + [String.IsEqual(VideoPlayer.HdrType,hdr10) | String.Contains(Player.FileNameAndPath,hdr10)]]] + !$EXP[IsVideoHDR10Plus]
-    </expression>
-
-    <expression name="IsVideoHDR">
-        [String.IsEmpty(ListItem.HdrType) + String.IsEmpty(VideoPlayer.HdrType) + [String.Contains(ListItem.FileNameAndPath,hdr)
-        | [VideoPlayer.IsFullscreen + String.Contains(Player.FileNameAndPath,hdr)]]] + !$EXP[IsVideoHDR10Plus] + !$EXP[IsVideoHDR10]
+        [String.IsEqual(ListItem.HdrType,hdr10) + !String.Contains(ListItem.FileNameAndPath,hdr10plus)]
+        | [VideoPlayer.IsFullscreen + String.IsEqual(VideoPlayer.HdrType,hdr10) + !String.Contains(Player.FileNameAndPath,hdr10plus)]
     </expression>
 
     <expression name="IsVideoHLG">
-        String.IsEqual(ListItem.HdrType,hlg) | String.Contains(ListItem.FileNameAndPath,hlg) | [VideoPlayer.IsFullscreen + [String.IsEqual(VideoPlayer.HdrType,hlg) | String.Contains(Player.FileNameAndPath,hlg)]]
+        String.IsEqual(ListItem.HdrType,hlg)
+        | [VideoPlayer.IsFullscreen + String.IsEqual(VideoPlayer.HdrType,hlg)]
     </expression>
 
     <expression name="IsVideoDolbyVision">
-        String.IsEqual(ListItem.HdrType,dolbyvision) | String.Contains(ListItem.FileNameAndPath,.dv.) | String.Contains(ListItem.FileNameAndPath,dolbyvision) | String.Contains(ListItem.FileNameAndPath,dolby-vision) | String.Contains(ListItem.FileNameAndPath,dolby vision) | [VideoPlayer.IsFullscreen + [String.IsEqual(VideoPlayer.HdrType, dolbyvision) | String.Contains(Player.FileNameAndPath,.dv.) | String.Contains(Player.FileNameAndPath,dolbyvision) | String.Contains(Player.FileNameAndPath,dolby-vision) | String.Contains(Player.FileNameAndPath,dolby vision)]]
+        String.IsEqual(ListItem.HdrType,dolbyvision)
+        | [VideoPlayer.IsFullscreen + String.IsEqual(VideoPlayer.HdrType, dolbyvision)]
     </expression>
 
+
+    <!-- ===================================== -->
+    <!--        VIDEO TYPE WITH KEYWORDS       -->
+    <!-- ===================================== -->
+
+    <expression name="IsVideo3D">
+        [ListItem.IsStereoscopic | String.Contains(ListItem.FilenameAndPath,.3D) | String.Contains(ListItem.FilenameAndPath,-3D)
+        | String.Contains(ListItem.FilenameAndPath,_3D)]
+    </expression>
+
+    <expression name="IsVideoBluray">
+        [String.Contains(ListItem.FilenameAndPath,bluray) | String.Contains(ListItem.FilenameAndPath,bdrip) | String.Contains(ListItem.FilenameAndPath,bd25) | String.Contains(ListItem.FilenameAndPath,bd50) | String.Contains(ListItem.FilenameAndPath,blu-ray)] + !$EXP[IsVideo3D]
+    </expression>
+
+    <expression name="IsVideoHDDVD">
+        String.Contains(ListItem.FilenameAndPath,hddvd)
+    </expression>
+
+    <expression name="IsVideoDVD">
+        String.Contains(ListItem.FilenameAndPath,dvd) + !$EXP[IsVideoHDDVD]
+    </expression>
+
+    <expression name="IsVideoWebDL">
+        [String.Contains(ListItem.Filenameandpath,.web.) | String.Contains(ListItem.Filenameandpath,web-dl) | String.Contains(ListItem.Filenameandpath,webdl) | String.Contains(ListItem.Filenameandpath,webrip)]
+    </expression>
 
 
     <!-- ================================== -->
@@ -705,6 +724,7 @@
             | String.IsEqual(Window(Home).Property(LatestEpisode.10.ShowTitle),ListItem.TvShowTitle)
           ]
     </expression>
+
     <expression name="IsNewEpisode">
         [Container.Content(episodes) | Window.isVisible(Home.xml)]
         + [

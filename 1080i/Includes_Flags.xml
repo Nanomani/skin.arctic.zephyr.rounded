@@ -237,6 +237,8 @@
 
     <include name="Furniture_Video_Flags">
         <control type="grouplist">
+            <visible>Skin.HasSetting(enable.furniture.flags.icons)</visible>
+
             <visible>[Container.Content(videos) | Container.Content(movies) | Container.Content(files) | Container.Content(musicvideos) | Container.Content(episodes) | Container.Content(sets) | Container.Content(videoversions) | Container.Content(tvshows) | [Container.Content(Seasons) + !Control.HasFocus(5161) + !Control.HasFocus(5261)] | $EXP[IsAnVideoInPlaylist]] | [Window.IsVisible(Home) + ControlGroup(301).HasFocus() + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)] + Skin.HasSetting(home.vertical) + !Skin.HasSetting(hide.furniture.flags.vertical.widgets)]</visible>
 
             <visible>[!Container.Content(files) | $EXP[IsAnVideoInPlaylist]] + !String.IsEmpty(ListItem.DBType) + !ListItem.IsParentFolder + !$EXP[IsYoutube]</visible>
@@ -308,7 +310,7 @@
             <!-- VIDEO - RESOLUTION -->
 
             <control type="image" description="Video Resolution">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(ListItem.VideoResolution) + !String.Contains(ListItem.Path,videodb://movies/sets)</visible>
+                <visible>!Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(ListItem.VideoResolution)</visible>
                 <width min="20" max="80">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
                 <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/resolution/$INFO[ListItem.VideoResolution].png</texture>
@@ -317,49 +319,25 @@
             <!-- VIDEO - CODEC -->
 
             <control type="image" description="Video Codec">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(ListItem.VideoCodec)</visible>
+                <visible>!Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(ListItem.VideoCodec)</visible>
                 <width>100</width>
                 <include>Def_Flag_Image_Without_Label</include>
                 <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/videocodec/$INFO[ListItem.VideoCodec].png</texture>
             </control>
 
-            <!-- HDR -->
+            <!-- VIDEO - HDR -->
 
-            <control type="image" description="HDR10+">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10Plus]</visible>
-                <width>120</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/hdr10plus.png</texture>
-            </control>
-            <control type="image" description="HDR10">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR10]</visible>
-                <width>110</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture colordiffuse="Dark1" fallback="flags/fallback.png">flags/video/white/hdr/hdr10.png</texture>
-            </control>
             <control type="image" description="HDR">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHDR]</visible>
-                <width>140</width>
+                <visible>!Skin.HasSetting(hide.flags.hdr) + !String.IsEmpty(ListItem.HdrType)</visible>
+                <width min="110" max="130">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/hdrnew.png</texture>
-            </control>
-            <control type="image" description="HLG">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoHLG]</visible>
-                <width>80</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/hlg.png</texture>
-            </control>
-            <control type="image" description="Dolby Vision">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.hdr) + $EXP[IsVideoDolbyVision]</visible>
-                <width>120</width>
-                <include>Def_Flag_Image_Without_Label</include>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/hdr/dolbyvision.png</texture>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">$VAR[Image_Media_Flag_Video_HDR]</texture>
             </control>
 
             <!-- VIDEO - ASPECT RATIO -->
 
             <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(ListItem.VideoAspect)</visible>
+                <visible>!Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(ListItem.VideoAspect)</visible>
                 <width>70</width>
                 <height>64</height>
                 <orientation>vertical</orientation>
@@ -383,7 +361,7 @@
             <!-- AUDIO - CODEC -->
 
             <control type="image" description="Audio Codec">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(ListItem.AudioCodec)</visible>
+                <visible>!Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(ListItem.AudioCodec)</visible>
                 <width>140</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
                 <include>Def_Flag_Image_Without_Label</include>
@@ -393,7 +371,7 @@
             <!-- AUDIO - CHANNEL -->
 
             <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(ListItem.AudioChannels)</visible>
+                <visible>!Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(ListItem.AudioChannels)</visible>
                 <width>100</width>
                 <height>64</height>
                 <orientation>vertical</orientation>
@@ -417,7 +395,7 @@
             <!-- MPAA -->
 
             <control type="image" description="MPAA">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.mpaa) + !String.IsEmpty(ListItem.MPAA)</visible>
+                <visible>!Skin.HasSetting(hide.flags.mpaa) + !String.IsEmpty(ListItem.MPAA)</visible>
                 <width min="60" max="80">auto</width>
                 <height>40</height>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
@@ -435,57 +413,62 @@
             </control>
             <control type="label" description="Duration">
                 <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
-                <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>                <visible>!String.IsEmpty(ListItem.Duration(mins)) + !Skin.HasSetting(hide.flags.videoduration)</visible>
                 <visible>![Container.Content(tvshows) | Container.Content(seasons)]</visible>
                 <width min="110">auto</width>
                 <include>Def_Flag_Label</include>
                 <label>$VAR[Label_Duration_Time_Check]  </label>
             </control>
 
-            <!-- WEB - DVD - BLURAY - 3D -->
+            <!-- SOURCE - KEYWORDS -->
+
+            <!-- 3D -->
 
             <control type="image" description="3D">
-                <visible>ListItem.IsStereoscopic | String.Contains(ListItem.Filenameandpath,.3D)</visible>
-                <width>64</width>
-                <centertop>50%</centertop>
-                <height>64</height>
-                <left>10</left>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/3d.png</texture>
+                <visible>!Skin.HasSetting(hide.flags.bluray) + $EXP[IsVideo3D]</visible>
+                <width>80</width>
+                <aspectratio aligny="center" align="center">keep</aspectratio>
+                <include>Def_Flag_Image_Without_Label</include>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/source/3d.png</texture>
             </control>
+
+            <!-- BLURAY -->
+
             <control type="image" description="Bluray">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + !String.Contains(ListItem.Filenameandpath,.3D) + [String.Contains(ListItem.FilenameAndPath,bluray) | String.Contains(ListItem.FilenameAndPath,bdrip) | String.Contains(ListItem.FilenameAndPath,bd25) | String.Contains(ListItem.FilenameAndPath,bd50) | String.Contains(ListItem.FilenameAndPath,blu-ray)]</visible>
-                <width>84</width>
-                <centertop>50%</centertop>
-                <height>64</height>
-                <left>10</left>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/$VAR[Image_Bluray].png</texture>
+                <visible>!Skin.HasSetting(hide.flags.bluray) + $EXP[IsVideoBluray]</visible>
+                <width>110</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
+                <include>Def_Flag_Image_Without_Label</include>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/source/$VAR[Image_Media_Flag_Bluray].png</texture>
             </control>
-            <control type="image" description="WEB-DL">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray) + [String.Contains(ListItem.Filenameandpath,.web.) | String.Contains(ListItem.Filenameandpath,web-dl) | String.Contains(ListItem.Filenameandpath,webdl) | String.Contains(ListItem.Filenameandpath,webrip)]</visible>
-                <width>84</width>
-                <height>64</height>
-                <centertop>50%</centertop>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/web-dl.png</texture>
-                <aspectratio aligny="center" align="center">keep</aspectratio>
-            </control>
+
+            <!-- HD DVD -->
+
             <control type="image" description="HD DVD">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray)</visible>
-                <visible>String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
-                <width>94</width>
-                <centertop>50%</centertop>
-                <height>64</height>
+                <visible>!Skin.HasSetting(hide.flags.bluray) + $EXP[IsVideoHDDVD]</visible>
+                <width>130</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/white/other/hddvd.png</texture>
+                <include>Def_Flag_Image_Without_Label</include>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/white/source/hddvd.png</texture>
             </control>
+
+            <!-- DVD -->
+
             <control type="image" description="DVD">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.bluray)</visible>
-                <visible>String.Contains(ListItem.FilenameAndPath,dvd) + !String.Contains(ListItem.FilenameAndPath,hddvd)</visible>
-                <width>84</width>
-                <centertop>50%</centertop>
-                <height>64</height>
+                <visible>!Skin.HasSetting(hide.flags.bluray) + $EXP[IsVideoDVD]</visible>
+                <width>100</width>
                 <aspectratio aligny="center" align="center">keep</aspectratio>
-                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/other/dvd.png</texture>
+                <include>Def_Flag_Image_Without_Label</include>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/source/dvd.png</texture>
+            </control>
+
+            <!-- WEB DL -->
+
+            <control type="image" description="WEB-DL">
+                <visible>!Skin.HasSetting(hide.flags.bluray) + $EXP[IsVideoWebDL]</visible>
+                <width>110</width>
+                <aspectratio aligny="center" align="center">keep</aspectratio>
+                <include>Def_Flag_Image_Without_Label</include>
+                <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_Flag_Color]/source/web-dl.png</texture>
             </control>
 
             <!-- LANGUAGE - AUDIO - SUBTITLE -->
@@ -662,29 +645,65 @@
         </control>
     </include>
 
+    <include name="Furniture_Audiostreams_Flags">
+        <control type="image" description="Audio">
+            <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
+            <centertop>50%</centertop>
+            <width>50</width>
+            <height>34</height>
+            <aspectratio aligny="center" align="right">keep</aspectratio>
+            <texture colordiffuse="Dark1">flags/video/white/other/video_audio.png</texture>
+        </control>
+        <control type="grouplist">
+            <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
+
+            <left>4</left>
+            <width>250</width>
+            <height>64</height>
+            <centertop>65%</centertop>
+
+            <orientation>horizontal</orientation>
+
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[ListItem.Property(AudioLanguage.1),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
+            </control>
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[ListItem.Property(AudioLanguage.2),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.2)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
+            </control>
+            <control type="image">
+                <top>20</top>
+                <width>10</width>
+                <height>28</height>
+                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
+            </control>
+        </control>
+    </include>
+
     <include name="Furniture_Subtitles_Flags">
         <control type="image">
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
             <centertop>50%</centertop>
-            <width>44</width>
+            <width>50</width>
             <height>32</height>
-            <aspectratio aligny="center" align="left">keep</aspectratio>
-            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc.png</texture>
-        </control>
-        <control type="label">
-            <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
-            <visible>!Skin.HasSetting(show.flags.subtitles.country)</visible>
-            <width>10</width>
-            <include>Def_Flag_Label</include>
+            <aspectratio aligny="center" align="right">keep</aspectratio>
+            <texture background="true" colordiffuse="Dark1">flags/video/white/other/video_cc.png</texture>
         </control>
         <control type="grouplist">
             <visible>Skin.HasSetting(show.flags.subtitles.country)</visible>
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
 
-            <centertop>65%</centertop>
-            <left>10</left>
-            <width>300</width>
+            <left>4</left>
+            <width>250</width>
             <height>64</height>
+            <centertop>65%</centertop>
 
             <orientation>horizontal</orientation>
 
@@ -707,48 +726,6 @@
                 <width>20</width>
                 <height>28</height>
                 <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
-            </control>
-        </control>
-    </include>
-
-    <include name="Furniture_Audiostreams_Flags">
-        <control type="image" description="Audio">
-            <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
-            <centertop>50%</centertop>
-            <width>42</width>
-            <height>34</height>
-            <aspectratio aligny="center" align="left">keep</aspectratio>
-            <texture colordiffuse="Dark1">flags/video/white/other/audio.png</texture>
-        </control>
-        <control type="grouplist">
-            <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
-
-            <centertop>65%</centertop>
-            <left>4</left>
-            <width>250</width>
-            <height>64</height>
-
-            <orientation>horizontal</orientation>
-
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[ListItem.Property(AudioLanguage.1),flags/lang/32x32/,.png]</texture>
-                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[ListItem.Property(AudioLanguage.2),flags/lang/32x32/,.png]</texture>
-                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.2)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>20</width>
-                <height>28</height>
-                <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1)) + !String.IsEqual(ListItem.Property(AudioLanguage.1),und)</visible>
             </control>
         </control>
     </include>
@@ -794,7 +771,7 @@
             <!-- CODEC -->
 
             <control type="image">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
+                <visible>!String.IsEmpty(ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
                 <width min="20" max="90">auto</width>
                 <include>Def_Flag_Image_Without_Label</include>
                 <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/audiocodec/$INFO[ListItem.FileExtension].png</texture>
@@ -803,7 +780,7 @@
             <!-- BIT RATE -->
 
             <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
+                <visible>!String.IsEmpty(ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
                 <width min="20" max="100">auto</width>
                 <height>64</height>
                 <orientation>vertical</orientation>
@@ -827,7 +804,7 @@
             <!-- SAMPLE RATE -->
 
             <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
+                <visible>!String.IsEmpty(ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
                 <width min="20" max="100">auto</width>
                 <height>64</height>
                 <orientation>vertical</orientation>
@@ -851,7 +828,7 @@
             <!-- BPM -->
 
             <control type="grouplist">
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
+                <visible>!String.IsEmpty(ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
                 <width min="20" max="100">auto</width>
                 <height>64</height>
                 <orientation>vertical</orientation>
@@ -962,7 +939,7 @@
                 <centertop>50%</centertop>
                 <texture fallback="flags/empty_fallback.png">$VAR[Flag_Game_Studio]</texture>
                 <aspectratio align="left">keep</aspectratio>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Studio) + !String.IsEmpty(Skin.String(game.logos.path))</visible>
+                <visible>!String.IsEmpty(ListItem.Studio) + !String.IsEmpty(Skin.String(game.logos.path))</visible>
             </control>
             <control type="image" description="Game Video Resolution">
                 <width min="20" max="70">auto</width>
@@ -971,7 +948,7 @@
                 <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[Flag_Game_Resolution,flags/video/white/resolution/,.png]</texture>
                 <aspectratio align="left">keep</aspectratio>
                 <visible>!String.IsEmpty(Control.GetLabel(6601))</visible>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution)</visible>
+                <visible>!Skin.HasSetting(hide.flags.resolution)</visible>
             </control>
             <control type="image" description="Game Audio Codec">
                 <width min="20" max="108">auto</width>
@@ -980,7 +957,7 @@
                 <texture colordiffuse="Dark1" fallback="flags/fallback.png">$VAR[Flag_Game_Audio,flags/video/white/audiocodec/,.png]</texture>
                 <aspectratio align="center">keep</aspectratio>
                 <visible>!String.IsEmpty(Control.GetLabel(6602))</visible>
-                <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
+                <visible>!Skin.HasSetting(hide.flags.audiocodec) + !Skin.HasSetting(enable.furniture.flags.colored)</visible>
             </control>
             <control type="image" description="ESRB">
                 <width min="20" max="100">auto</width>
@@ -1051,7 +1028,7 @@
                 <!-- <centertop>50%</centertop> -->
                 <!-- <texture fallback="flags/empty_fallback.png">$VAR[Flag_Game_Studio]</texture> -->
                 <!-- <aspectratio align="left">keep</aspectratio> -->
-                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(ListItem.Studio) + !String.IsEmpty(Skin.String(game.logos.path))</visible> -->
+                <!-- <visible>!String.IsEmpty(ListItem.Studio) + !String.IsEmpty(Skin.String(game.logos.path))</visible> -->
             <!-- </control> -->
             <!-- <control type="image" description="Game Video Resolution"> -->
                 <!-- <width min="20" max="90">auto</width> -->
@@ -1061,7 +1038,7 @@
                 <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Resolution,flags/video/$VAR[Def_Flag_Color]/resolution/,.png]</texture> -->
                 <!-- <aspectratio align="left">keep</aspectratio> -->
                 <!-- <visible>!String.IsEmpty(Control.GetLabel(6601))</visible> -->
-                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution)</visible> -->
+                <!-- <visible>!Skin.HasSetting(hide.flags.resolution)</visible> -->
             <!-- </control> -->
             <!-- <control type="image" description="Game Audio Codec"> -->
                 <!-- <width min="20" max="108">auto</width> -->
@@ -1070,7 +1047,7 @@
                 <!-- <texture fallback="flags/fallback.png">$VAR[Flag_Game_Audio,flags/video/$VAR[Def_Flag_Color]/audiocodec/,.png]</texture> -->
                 <!-- <aspectratio align="center">keep</aspectratio> -->
                 <!-- <visible>!String.IsEmpty(Control.GetLabel(6602))</visible> -->
-                <!-- <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec)</visible> -->
+                <!-- <visible>!Skin.HasSetting(hide.flags.audiocodec)</visible> -->
             <!-- </control> -->
             <!-- <control type="image" description="ESRB"> -->
                 <!-- <width min="20" max="100">auto</width> -->
@@ -1145,7 +1122,7 @@
                 <!-- VIDEO - RESOLUTION -->
 
                 <control type="image">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution)</visible>
+                    <visible>!Skin.HasSetting(hide.flags.resolution) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoResolution)</visible>
                     <width min="20" max="80">auto</width>
                     <include>Def_Flag_Image_Without_Label</include>
                     <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/resolution/$INFO[Container($PARAM[controlid]).ListItem.VideoResolution].png</texture>
@@ -1154,7 +1131,7 @@
                 <!-- VIDEO - CODEC -->
 
                 <control type="image">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec)</visible>
+                    <visible>!Skin.HasSetting(hide.flags.videocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoCodec)</visible>
                     <width>100</width>
                     <include>Def_Flag_Image_Without_Label</include>
                     <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/videocodec/$INFO[Container($PARAM[controlid]).ListItem.VideoCodec].png</texture>
@@ -1163,7 +1140,7 @@
                 <!-- VIDEO - ASPECT RATIO -->
 
                 <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect)</visible>
+                    <visible>!Skin.HasSetting(hide.flags.aspectratio) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.VideoAspect)</visible>
                     <width>70</width>
                     <height>64</height>
                     <orientation>vertical</orientation>
@@ -1187,7 +1164,7 @@
                 <!-- AUDIO - CODEC -->
 
                 <control type="image">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec)</visible>
+                    <visible>!Skin.HasSetting(hide.flags.audiocodec) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioCodec)</visible>
                     <width>140</width>
                     <aspectratio aligny="center" align="center">keep</aspectratio>
                     <include>Def_Flag_Image_Without_Label</include>
@@ -1197,7 +1174,7 @@
                 <!-- AUDIO - CHANNEL -->
 
                 <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
+                    <visible>!Skin.HasSetting(hide.flags.audiochannels) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.AudioChannels)</visible>
                     <width>100</width>
                     <height>64</height>
                     <orientation>vertical</orientation>
@@ -1493,29 +1470,65 @@
         </control>
     </include>
 
+    <include name="Furniture_DialogInfo_Extended_Audiostreams_Flags">
+        <control type="image" description="Audio">
+            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+            <centertop>50%</centertop>
+            <width>50</width>
+            <height>34</height>
+            <aspectratio aligny="center" align="right">keep</aspectratio>
+            <texture colordiffuse="Dark1">flags/video/white/other/video_audio.png</texture>
+        </control>
+        <control type="grouplist">
+            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+
+            <left>4</left>
+            <width>250</width>
+            <height>64</height>
+            <centertop>65%</centertop>
+
+            <orientation>horizontal</orientation>
+
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+            </control>
+            <control type="image">
+                <top>20</top>
+                <width>32</width>
+                <height>28</height>
+                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2),flags/lang/32x32/,.png]</texture>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+            </control>
+            <control type="image">
+                <top>20</top>
+                <width>10</width>
+                <height>28</height>
+                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
+            </control>
+        </control>
+    </include>
+
     <include name="Furniture_DialogInfo_Extended_Subtitle_Flags">
         <control type="image">
             <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
             <centertop>50%</centertop>
-            <width>44</width>
+            <width>50</width>
             <height>32</height>
-            <aspectratio aligny="center" align="left">keep</aspectratio>
-            <texture background="true" colordiffuse="Dark1">flags/video/white/other/cc.png</texture>
-        </control>
-        <control type="label">
-            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
-            <visible>!Skin.HasSetting(show.flags.subtitles.country)</visible>
-            <width>10</width>
-            <include>Def_Flag_Label</include>
+            <aspectratio aligny="center" align="right">keep</aspectratio>
+            <texture background="true" colordiffuse="Dark1">flags/video/white/other/video_cc.png</texture>
         </control>
         <control type="grouplist">
             <visible>Skin.HasSetting(show.flags.subtitles.country)</visible>
             <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
 
-            <centertop>64%</centertop>
+            <left>4</left>
             <width>250</width>
             <height>64</height>
-            <left>10</left>
+            <centertop>65%</centertop>
 
             <orientation>horizontal</orientation>
 
@@ -1538,48 +1551,6 @@
                 <width>20</width>
                 <height>28</height>
                 <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(SubtitleLanguage.1))</visible>
-            </control>
-        </control>
-    </include>
-
-    <include name="Furniture_DialogInfo_Extended_Audiostreams_Flags">
-        <control type="image" description="Audio">
-            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            <centertop>50%</centertop>
-            <width>42</width>
-            <height>34</height>
-            <aspectratio aligny="center" align="left">keep</aspectratio>
-            <texture colordiffuse="Dark1">flags/video/white/other/audio.png</texture>
-        </control>
-        <control type="grouplist">
-            <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-
-            <centertop>65%</centertop>
-            <width>250</width>
-            <height>64</height>
-            <left>4</left>
-
-            <orientation>horizontal</orientation>
-
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),flags/lang/32x32/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>32</width>
-                <height>28</height>
-                <texture>$INFO[Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2),flags/lang/32x32/,.png]</texture>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.2)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
-            </control>
-            <control type="image">
-                <top>20</top>
-                <width>20</width>
-                <height>28</height>
-                <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1)) + !String.IsEqual(Container($PARAM[controlid]).ListItem.Property(AudioLanguage.1),und)</visible>
             </control>
         </control>
     </include>
@@ -1615,7 +1586,7 @@
                 <!-- CODEC -->
 
                 <control type="image">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.FileExtension) + !Skin.HasSetting(hide.flags.music.codec)</visible>
                     <width min="20" max="90">auto</width>
                     <include>Def_Flag_Image_Without_Label</include>
                     <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_Flag_Color]/audiocodec/$INFO[Container($PARAM[controlid]).ListItem.FileExtension].png</texture>
@@ -1624,7 +1595,7 @@
                 <!-- BIT RATE -->
 
                 <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.BitRate) + !Skin.HasSetting(hide.flags.music.bitrate)</visible>
 
                     <width min="20" max="100">auto</width>
                     <centertop>57%</centertop>
@@ -1651,7 +1622,7 @@
                 <!-- SAMPLE RATE -->
 
                 <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.Samplerate) + Skin.HasSetting(show.flags.music.samplerate)</visible>
 
                     <width min="20" max="100">auto</width>
                     <centertop>57%</centertop>
@@ -1678,7 +1649,7 @@
                 <!-- BPM -->
 
                 <control type="grouplist">
-                    <visible>Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[controlid]).ListItem.BPM) + Skin.HasSetting(show.flags.music.bpm)</visible>
 
                     <width min="20" max="100">auto</width>
                     <centertop>57%</centertop>
@@ -1961,40 +1932,16 @@
                     <texture background="true" colordiffuse="$VAR[Def_VideoPlayer_Flag_Colordiffuse_Dark1]" fallback="flags/fallback.png">flags/video/$VAR[Def_VideoPlayer_Flag_Color]/videocodec/$INFO[VideoPlayer.VideoCodec].png</texture>
                 </control>
 
-                <!-- HDR -->
+                <!-- VIDEO - HDR -->
 
-                <control type="image" description="HDR10+">
-                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10Plus]</visible>
-                    <width>120</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture background="true" colordiffuse="$VAR[Def_VideoPlayer_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_VideoPlayer_Flag_Color]/hdr/hdr10plus.png</texture>
-                </control>
-                <control type="image" description="HDR10">
-                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR10]</visible>
-                    <width>110</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture colordiffuse="$VAR[Color_OSD_Panel_White100]" fallback="flags/fallback.png">flags/video/white/hdr/hdr10.png</texture>
-                </control>
                 <control type="image" description="HDR">
-                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHDR]</visible>
-                    <width>140</width>
+                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.HdrType)</visible>
+                    <width min="110" max="130">auto</width>
                     <include>Def_Flag_Image_Without_Label</include>
-                    <texture background="true" colordiffuse="$VAR[Def_VideoPlayer_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_VideoPlayer_Flag_Color]/hdr/hdrnew.png</texture>
-                </control>
-                <control type="image" description="HLG">
-                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoHLG]</visible>
-                    <width>80</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture background="true" colordiffuse="$VAR[Def_VideoPlayer_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_VideoPlayer_Flag_Color]/hdr/hlg.png</texture>
-                </control>
-                <control type="image" description="Dolby Vision">
-                    <visible>Skin.HasSetting(show.osd.video.flags.icons) + $EXP[IsVideoDolbyVision]</visible>
-                    <width>120</width>
-                    <include>Def_Flag_Image_Without_Label</include>
-                    <texture background="true" colordiffuse="$VAR[Def_VideoPlayer_Flag_Colordiffuse_Dark1]">flags/video/$VAR[Def_VideoPlayer_Flag_Color]/hdr/dolbyvision.png</texture>
+                    <texture background="true" colordiffuse="$VAR[Def_Flag_Colordiffuse_Dark1]">$VAR[Image_Media_Flag_Video_HDR]</texture>
                 </control>
 
-            <!-- VIDEO - ASPECT RATIO -->
+                <!-- VIDEO - ASPECT RATIO -->
 
                 <control type="grouplist">
                     <visible>Skin.HasSetting(show.osd.video.flags.icons) + !String.IsEmpty(VideoPlayer.VideoAspect)</visible>
@@ -2061,13 +2008,13 @@
                     <texture colordiffuse="$VAR[Def_VideoPlayer_Flag_Colordiffuse_Dark1]" background="true">flags/rating/$VAR[Def_VideoPlayer_Flag_Color]/imdb/imdb.png</texture>
                 </control>
                 <control type="label">
-                    <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <visible>!String.IsEmpty(VideoPlayer.Rating(imdb)) + Skin.HasSetting(show.flags.rating.imdb) + !String.IsEmpty(VideoPlayer.DBID)</visible>
                     <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
                     <include>Def_Flag_Label</include>
                     <label>$INFO[VideoPlayer.Rating(imdb)]</label>
                 </control>
                 <control type="label">
-                    <visible>String.IsEmpty(VideoPlayer.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.Player.IMDb_Rating)) + Skin.HasSetting(show.flags.rating.imdb) + Skin.HasSetting(enable.furniture.flags.icons) + !String.IsEmpty(VideoPlayer.DBID)</visible>
+                    <visible>String.IsEmpty(VideoPlayer.Rating(imdb)) + !String.IsEmpty(Window(Home).Property(TMDbHelper.Player.IMDb_Rating)) + Skin.HasSetting(show.flags.rating.imdb) + !String.IsEmpty(VideoPlayer.DBID)</visible>
                     <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
                     <include>Def_Flag_Label</include>
                     <label>$INFO[Window(Home).Property(TMDbHelper.Player.IMDb_Rating)]</label>

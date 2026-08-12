@@ -9,6 +9,7 @@
             <param name="visible" value="$PARAM[visible]" default="true" />
 
             <control type="label">
+                <visible>$PARAM[visible]</visible>
 
                 <include content="Def_Height" condition="Player.HasVideo + Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo) + $EXP[Title_Clearlogo_PlayingNow_Available]">
                     <param name="height" value="ClearLogoTitleMaxHeight" />
@@ -19,6 +20,7 @@
                 <include content="Def_Font">
                     <param name="font" value="LargeNetflix" />
                 </include>
+
                 <width>100%</width>
                 <left>$PARAM[left]</left>
                 <align>left</align>
@@ -26,7 +28,6 @@
                 <textcolor>Dark1</textcolor>
                 <label>$PARAM[label]</label>
                 <include condition="Skin.HasSetting(labels.autoscroll)">LabelScroll</include>
-                <visible>$PARAM[visible]</visible>
             </control>
         </definition>
     </include>
@@ -363,7 +364,7 @@
 
                 <control type="group">
                     <visible>Player.HasAudio</visible>
-                    <visible>!Skin.HasSetting(home.extended.nowplaying.scrolling.text) + [!Skin.HasSetting(home.extended.nowplaying.tracklist) | !String.IsEmpty(VideoPlayer.Plot)]</visible>
+                    <visible>!Skin.HasSetting(home.extended.nowplaying.scrolling.text) + [!$EXP[Now_Playing_Audio_Show_Tracklist] | !String.IsEmpty(VideoPlayer.Plot)]</visible>
 
                     <orientation>vertical</orientation>
                     <width>100%</width>
@@ -385,7 +386,7 @@
                 <control type="label">
                     <include>Widgets_Item_Sub_Title_Definition</include>
                     <label>$VAR[Label_NowPlaying_Music_Sub_Header]</label>
-                    <visible>Skin.HasSetting(home.extended.nowplaying.tracklist) + Player.HasAudio + String.IsEmpty(VideoPlayer.Plot)</visible>
+                    <visible>$EXP[Now_Playing_Audio_Show_Tracklist] + Player.HasAudio + String.IsEmpty(VideoPlayer.Plot)</visible>
                 </control>
 
                 <control type="button" id="779" description="Helper">
@@ -396,9 +397,11 @@
                 </control>
 
                 <control type="list" id="778">
-                    <visible allowhiddenfocus="true">Skin.HasSetting(home.extended.nowplaying.tracklist) + Player.HasAudio</visible>
+                    <visible allowhiddenfocus="true">$EXP[Now_Playing_Audio_Show_Tracklist] + Player.HasAudio</visible>
+
                     <height>200</height>
                     <width>100%</width>
+
                     <onleft condition="!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">777</onleft>
                     <onright condition="!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">777</onright>
                     <onleft condition="Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)">301</onleft>
@@ -407,6 +410,7 @@
                     <ondown>780</ondown>
                     <onback>300</onback>
                     <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onfocus>
+
                     <orientation>vertical</orientation>
 
                     <itemlayout height="35">
@@ -813,7 +817,7 @@
     <!-- DEF - OSD - UPDOWN -->
 
     <include name="Def_OSD_UpDown_Home_NowPlaying">
-        <onup condition="Skin.HasSetting(home.extended.nowplaying.tracklist) + Integer.IsGreater(Container(778).NumItems,0) + Player.HasAudio">778</onup>
+        <onup condition="$EXP[Now_Playing_Audio_Show_Tracklist] + Integer.IsGreater(Container(778).NumItems,0) + Player.HasAudio">778</onup>
         <onup>301</onup>
         <ondown>300</ondown>
         <onback>300</onback>

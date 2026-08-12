@@ -1319,7 +1319,15 @@
 
         <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</ondown>
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !Skin.HasSetting(show.osd.on.down.wiki)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
+
+        <!-- WIKIPEDIA -->
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + Skin.HasSetting(show.osd.on.down.wiki)">SetProperty(wikipedia,1,Home)</ondown>
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + Skin.HasSetting(show.osd.on.down.wiki)">$VAR[Def_Wiki_Search_Currently_Playing_Item_VideoOSD]</ondown>
+
+        <!-- AUTO PAUSE -->
 
         <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !Player.Paused">PlayerControl(Play)</ondown>
 
@@ -1727,10 +1735,7 @@
             <param name="back_colordiffuse" value="$VAR[Color_OSD_Button_Background]" />
             <param name="show_not_enabled" value="true" />
             <align>right</align>
-            <onup condition="!Player.Paused">PlayerControl(Play)</onup>
-            <onup>Dialog.Close(VideoOSD)</onup>
-            <onup>SetProperty(wikipedia,1,Home)</onup>
-            <onup>RunScript(script.wikipedia,wikipedia=$INFO[VideoPlayer.TvShowTitle],tmdb_type=tv,language=$VAR[Path_Wikipedia_Language])</onup>
+            <include>Def_OSD_UpDown_Video_Info</include>
             <enable>!String.IsEmpty(VideoPlayer.Title) + !String.IsEmpty(VideoPlayer.DBID)</enable>
             <onclick condition="!String.IsEmpty(VideoPlayer.Title) + String.IsEmpty(Skin.String(Value_OSD_Auto_Hide_Timeout))">Dialog.Close(VideoOSD)</onclick>
             <onclick condition="!String.IsEmpty(VideoPlayer.Title)">SetProperty(wikipedia,1,Home)</onclick>

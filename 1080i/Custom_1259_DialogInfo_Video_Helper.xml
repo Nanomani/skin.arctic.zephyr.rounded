@@ -72,9 +72,15 @@
 
     <!-- DIRECTOR -->
 
-    <onload condition="Skin.HasSetting(show.button.video.director) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
+    <onload condition="$EXP[IsTMDbServiceEnable] + Skin.HasSetting(show.button.video.director) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
 
-    <onload condition="Skin.HasSetting(show.button.video.director) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Director_Query))">SetProperty(Director_Query,$VAR[Path_Director_TMDb_ID],Home)</onload>
+    <onload condition="$EXP[IsTMDbServiceEnable] + Skin.HasSetting(show.button.video.director) + [!Skin.HasSetting(filter.video.only.local) | String.IsEmpty(ListItem.DBID)] + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + String.IsEmpty(Window(Home).Property(Director_Query))">SetProperty(Director_Query,$VAR[Path_Director_TMDb_ID],Home)</onload>
+
+    <!-- DIRECTOR - TMDB SERVICE DISABLE -->
+
+    <onload condition="!$EXP[IsTMDbServiceEnable] + Skin.HasSetting(show.button.video.director) + !Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Director) + String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$VAR[Path_Director_Name],Home)</onload>
+
+    <onload condition="!$EXP[IsTMDbServiceEnable] + Skin.HasSetting(show.button.video.director) + !Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.Director) + !String.Contains(ListItem.Director, / ) + String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SetDirectorSelected,$INFO[ListItem.Director],Home)</onload>
 
     <!-- DIRECTOR - PERSON -->
 

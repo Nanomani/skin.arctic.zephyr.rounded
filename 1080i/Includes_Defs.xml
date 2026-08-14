@@ -133,9 +133,84 @@
 
             <onclick>ClearProperty(GlobalSearchWindowOpen,Home)</onclick>
             <onclick>SetProperty(Launch_Search,1,Home)</onclick>
-            <onclick>ActivateWindow(1146)</onclick>
+            <!-- <onclick>ActivateWindow(1146)</onclick> -->
+            <onclick>ActivateWindow(1147)</onclick>
             <onclick>ClearProperty(AnimationDirection,Home)</onclick>
         </control>
+
+        <!-- BUTTON EDIT WIKI -->
+
+        <control type="group">
+            <visible allowhiddenfocus="true">[Control.HasFocus(90999) | Control.HasFocus(340)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogSelect.xml) + !String.IsEmpty(Window(Home).Property(Launch_Search_Wiki))</visible>
+
+            <!-- SEARCH BAR WIKIPEDIA -->
+
+            <control type="group">
+                <visible>[Control.HasFocus(90999) | Control.HasFocus(340)]</visible>
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+                <control type="image">
+                    <width>589</width>
+                    <height>80</height>
+                    <include>Texture_Dialog_Search</include>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
+                </control>
+            </control>
+
+            <!-- EDIT BAR WIKIPEDIA -->
+
+            <control type="grouplist">
+                <top>40</top>
+                <left>80</left>
+                <orientation>horizontal</orientation>
+                <control type="edit" id="90999">
+                    <width>580</width>
+                    <height>80</height>
+                    <label/>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>HeaderLabel</font>
+                    <textoffsetx>80</textoffsetx>
+                    <textcolor />
+                    <focusedcolor>Selected</focusedcolor>
+                    <selectedcolor>Selected</selectedcolor>
+                    <disabledcolor>White12</disabledcolor>
+                    <texturefocus />
+                    <texturenofocus />
+                    <onup>SetFocus(399)</onup>
+                    <ondown>SetFocus(399)</ondown>
+                    <onright>340</onright>
+                    <onleft>340</onleft>
+                </control>
+                <control type="button" id="340" description="Helper">
+                    <include>Def_Hidden_Button</include>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90999).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90999).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90999).index(1))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90999).index(1)])</onfocus>
+                    <onfocus>SetFocus(90999)</onfocus>
+                    <visible allowhiddenfocus="true">Control.HasFocus(340)</visible>
+                    <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+                </control>
+            </control>
+        </control>
+
+        <!-- TIPS - FOOTER -->
+
+        <include content="Object_Footer_Tips">
+            <param name="top" value="130" />
+            <param name="left" value="120" />
+            <param name="label" value="31540" />
+            <param name="textcolor" value="Black70" />
+            <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
+            <param name="visible" value="[Control.HasFocus(90999) | Control.HasFocus(340)] + !String.IsEmpty(Control.GetLabel(90999).index(1))" />
+        </include>
     </include>
 
     <include name="Hidden_Button_ReloadSkin">

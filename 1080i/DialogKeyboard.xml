@@ -5,28 +5,26 @@
     <onunload condition="!String.IsEmpty(Control.GetLabel(312).index(1))">AlarmClock(delay_add_search_history,RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)]),00:01,silent)</onunload>
 
     <controls>
-        <include>Background_Overlay</include>
+        <include content="Background_Overlay">
+            <param name="visible" value="!Window.IsVisible(Home)" />
+        </include>
 
         <control type="group">
             <visible>!Window.IsVisible(numericinput)</visible>
 
+            <include content="Def_Top" condition="!Window.IsVisible(Home)">
+                <param name="top" value="114" />
+            </include>
+
+            <top>160</top>
+
             <centertop>40%</centertop>
-            <include content="Def_Dialog_Background"><param name="height" value="522" /><param name="width" value="1532" /><param name="colordiffuse" value="Panel" /></include>
 
-            <!-- TITLE HEADER -->
-
-            <control type="label" id="311">
-                <description>Heading</description>
-                <left>26</left>
-                <right>26</right>
-                <top>-86</top>
-                <height>75</height>
-                <align>center</align>
-                <scroll>true</scroll>
-                <scrollspeed>40</scrollspeed>
-                <font>SmallBold</font>
-                <textcolor>Selected</textcolor>
-            </control>
+            <include content="Def_Dialog_Background">
+                <param name="height" value="522" />
+                <param name="width" value="1532" />
+                <param name="colordiffuse" value="Panel" />
+            </include>
 
             <!-- PASSWORD -->
 
@@ -499,29 +497,12 @@
                 </control>
             </control>
 
-            <!-- TITLE FOOTER -->
-
-            <control type="label">
-                <description>Heading</description>
-                <left>26</left>
-                <right>26</right>
-                <bottom>-82</bottom>
-                <height>75</height>
-                <align>center</align>
-                <scroll>true</scroll>
-                <scrollspeed>40</scrollspeed>
-                <font>SmallBold</font>
-                <textcolor>Selected</textcolor>
-                <label>$VAR[Label_Keyboard_Title_Footer]</label>
-                <visible>Integer.IsGreater(Container(8000).NumItems,0)</visible>
-            </control>
-
             <!-- AUTOCOMPLETION / HISTORY SEARCH -->
 
             <control type="group">
                 <width>1532</width>
                 <height>220</height>
-                <bottom>-304</bottom>
+                <bottom>-248</bottom>
 
                 <include content="Def_Dialog_Image_Background">
                     <param name="colordiffuse" value="White100" />

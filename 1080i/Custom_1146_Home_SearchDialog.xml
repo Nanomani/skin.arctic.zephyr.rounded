@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1146">
     <defaultcontrol always="true">3110</defaultcontrol>
-    <zorder>10</zorder>
+    <zorder>9</zorder>
 
     <!-- TMDBHELPER.WIDGETCONTAINER -->
 
@@ -9,7 +9,7 @@
 
     <!-- SELECT BUUTON - EDIT WIKI - CANCEL -->
 
-    <onload>ClearProperty(Launch_Search_Wiki,Home)</onload>
+    <onload>ClearProperty(Launch_Wiki_Search,Home)</onload>
 
     <!-- HOME - CANCEL CLOCK - SLIDE OUT HOME MAIN MENU -->
 
@@ -18,23 +18,32 @@
 
     <onload>Control.SetFocus(3110,0,absolute)</onload>
 
+    <!-- <onunload condition="!String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus)) + $EXP[Home_Dialog_Button_Menu_Focus_On_Exit]">SetFocus($INFO[Window(Home).Property(HomeLastWidgetFocus)])</onunload> -->
 
-    <onunload condition="!String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus)) + $EXP[Home_Dialog_Button_Menu_Focus_On_Exit]">SetFocus($INFO[Window(Home).Property(HomeLastWidgetFocus)])</onunload>
-
-    <onunload condition="String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus)) + $EXP[Home_Dialog_Button_Menu_Focus_On_Exit]">AlarmClock(power_menu_setfocus_399,SetFocus(399),00:01,silent)</onunload>
+    <!-- <onunload condition="String.IsEmpty(Window(Home).Property(HomeLastWidgetFocus)) + $EXP[Home_Dialog_Button_Menu_Focus_On_Exit]">AlarmClock(power_menu_setfocus_399,SetFocus(399),00:01,silent)</onunload> -->
 
     <!-- HOME - FOCUS - HOME MAIN MENU -->
 
     <!-- <onunload condition="!Window.IsVisible(DialogConfirm.xml) + Window.IsVisible(Home)">SetFocus(399)</onunload> -->
 
-    <onunload condition="!String.IsEmpty(Window(Home).Property(Launch_Search_Wiki))">AlarmClock(power_menu_setfocus_399,SetFocus(90999),00:00,silent)</onunload>
-    <onunload condition="String.IsEmpty(Window(Home).Property(Launch_Search_Wiki))">SetFocus(399)</onunload>
+    <onunload condition="!String.IsEmpty(Window(Home).Property(Launch_Wiki_Search))">AlarmClock(power_menu_setfocus_399,SetFocus(90009),00:00,silent)</onunload>
+    <onunload condition="String.IsEmpty(Window(Home).Property(Launch_Wiki_Search))">SetFocus(399)</onunload>
 
     <controls>
-        <!-- <include>Background_Overlay</include> -->
+        <include content="Background_Overlay">
+            <param name="visible" value="!Window.IsVisible(Home)" />
+        </include>
 
         <control type="group">
-            <include content="Animation_Common_Context_Menu_Slide_Left"><param name="left" value="-490" /></include>
+            <include condition="Window.IsVisible(Home)" content="Animation_Common_Context_Menu_Slide_Left"><param name="left" value="-490" /></include>
+            <include condition="!Window.IsVisible(Home)">Animation_Dialog_Menu_Top_Side</include>
+
+            <include content="Def_Top" condition="!Window.IsVisible(Home)">
+                <param name="top" value="114" />
+            </include>
+            <include content="Def_CenterLeft" condition="!Window.IsVisible(Home)">
+                <param name="centerleft" value="50%" />
+            </include>
 
             <top>160</top>
             <centerleft>285</centerleft>

@@ -54,6 +54,7 @@
                         <texture border="12" colordiffuse="Black12">$VAR[texture_box12]</texture>
                     </control>
                     <control type="image">
+                        <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                         <top>8</top>
                         <left>16</left>
                         <width>56</width>
@@ -66,6 +67,7 @@
                         <right>90</right>
                         <label>$INFO[ListItem.Label]</label>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
+                        <animation effect="slide" start="0" end="-54" time="0" condition="$EXP[Script_SkinShortcuts_Widget]">Conditional</animation>
                     </control>
                 </itemlayout>
                 <focusedlayout width="731" height="69">
@@ -75,6 +77,7 @@
                         <include>Texture_Layout_Item_Focus</include>
                     </control>
                     <control type="image">
+                        <visible>!$EXP[Script_SkinShortcuts_Widget]</visible>
                         <top>8</top>
                         <left>16</left>
                         <width>56</width>
@@ -90,6 +93,7 @@
                         <label>$INFO[ListItem.Label]</label>
                         <textcolor>Selected</textcolor>
                         <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
+                        <animation effect="slide" start="0" end="-54" time="0" condition="$EXP[Script_SkinShortcuts_Widget]">Conditional</animation>
                     </control>
                     <control type="image">
                         <right>15</right>
@@ -231,6 +235,7 @@
 
             <control type="grouplist" id="9100">
                 <visible>String.IsEmpty(Window(Home).Property(custommenu))</visible>
+                <include>Animation_Scrolltime_Views_List</include>
 
                 <animation effect="fade" start="100" end="50" time="100" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">Conditional</animation>
 
@@ -242,11 +247,12 @@
                 <onup>9100</onup>
                 <ondown>9100</ondown>
                 <onleft>4000</onleft>
-                <onright>303</onright>
+                <onright>1773</onright>
                 <onback>ClearProperty(header-widget,Home)</onback>
 
                 <itemgap>3</itemgap>
-                <scrolltime>0</scrolltime>
+
+                <pagecontrol>1773</pagecontrol>
                 <orientation>vertical</orientation>
 
                 <!-- ACTIVATED / DESACTIVATED -->
@@ -271,9 +277,9 @@
                     <onfocus>SetProperty(TMDbHelper.IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
-                <!-- WIDGETS - CHOOSE ACTION FOR MAIN MENU ITEM -->
+                <!-- WIDGETS - CHOOSE WIDGET -->
 
-                <control type="button" id="4001" description="Alt chooser">
+                <control type="button" id="4001" description="Choose Widget">
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
 
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
@@ -298,7 +304,7 @@
                     <onfocus>SetProperty(IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
-                <!-- WIDGETS - CHOOSE ACTION - DISPLAY COMMAND ACTION -->
+                <!-- WIDGETS - DISPLAY/EDIT ACTION -->
 
                 <control type="button" id="4307" description="Custom">
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
@@ -324,7 +330,7 @@
                     <label2>$INFO[Container(211).ListItem.Label]</label2>
                 </control>
 
-                <!-- MAIN MENU - TITLE - "WIDGETS" -->
+        <!-- MAIN MENU - TITLE - "WIDGETS" -->
 
                 <control type="button" id="4988">
                     <visible>String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
@@ -336,7 +342,7 @@
 
 
                 <!-- =========================================== -->
-                <!--           MAIN MENU - LIST WIDGETS          -->
+                <!--           MAIN MENU / PROPERTY WIDGETS      -->
                 <!-- =========================================== -->
 
                 <control type="button" id="406" description="Set Widget">
@@ -363,12 +369,11 @@
                     <label>31083</label>
                 </control>
 
-                <!-- MAIN MENU - TITLE - "OPTIONS" -->
+        <!-- MAIN MENU - TITLE - MAIN MENU / WIDGETS - "OPTIONS" -->
 
                 <control type="button" id="4989">
-                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) | $EXP[Script_SkinShortcuts_Widget]</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
-
                     <include>Def_Skinshortcuts_Button_Title_Right_Side</include>
                     <label>33063</label>
                 </control>
@@ -385,6 +390,11 @@
 
                     <onfocus>SetProperty(IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
+
+
+                <!-- =========================================== -->
+                <!--               WIDGET - PROPERTY             -->
+                <!-- =========================================== -->
 
                 <!-- WIDGETS - ASPECT -->
 
@@ -542,12 +552,13 @@
                     <param name="buttonid2" value="9509" />
                 </include>
 
-                <!-- MAIN MENU - RESTORE / REINIT - DEFAULT MENU -->
+        <!-- MAIN MENU - WIDGETS - TITLE - "RESET" -->
 
-                <!-- <control type="button" id="308" description="Reset"> -->
-                    <!-- <include>Def_Skinshortcuts_Button_Menu_Right_Side</include> -->
-                    <!-- <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible> -->
-                <!-- </control> -->
+                <control type="button" id="5089">
+                    <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
+                    <include>Def_Skinshortcuts_Button_Title_Right_Side</include>
+                    <label>13007</label>
+                </control>
 
                 <!-- MAIN MENU - RESET - DEFAULT MAIN MENU -->
 
@@ -569,6 +580,18 @@
                     <label2>$INFO[Container(211).ListItem.Label]</label2>
                 </control>
             </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="scrollid" value="1773" />
+                <param name="top" value="112" />
+                <param name="onleft" value="9100" />
+                <param name="onright" value="9100" />
+                <param name="height" value="690" />
+                <param name="centerright" value="4" />
+                <param name="animation_fade_hide" value="false" />
+            </include>
 
             <!-- TIPS - FOOTER -->
 

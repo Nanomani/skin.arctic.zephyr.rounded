@@ -500,8 +500,6 @@
 
             <visible>[Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + ![Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]] | [!Window.IsVisible(Home) + !$EXP[View_Flix]]</visible>
 
-            <visible>!$EXP[View_Info_Dialog]</visible>
-
             <visible>!$EXP[Home_Search_Is_Focus]</visible>
 
             <include>Animation_Fade_In_Out_Fanart_Flix</include>
@@ -641,14 +639,13 @@
     <!-- ================= -->
 
     <variable name="Global_Search_Background">
+        <value condition="Window.IsVisible(Home) + $EXP[Home_Search_Is_Focus] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
 
-    <!-- =================================== -->
-    <!--               SEARCH                -->
-    <!-- =================================== -->
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !$EXP[View_Info_Dialog]">$INFO[Skin.String(fanart.fallback.search)]</value>
 
-        <value condition="$EXP[Background_Home_Flix_Or_All_Views] + Window.IsVisible(Home) + $EXP[Home_Search_Is_Focus] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
+        <!-- FALLBACK -->
 
-        <value condition="$EXP[Background_Home_Flix_Or_All_Views] + !String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !$EXP[View_Info_Dialog]">$INFO[Skin.String(fanart.fallback.search)]</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback)) + Skin.HasSetting(global.show.fallback.only)">$INFO[Skin.String(fanart.fallback)]</value>
 
         <value condition="String.Contains(Skin.CurrentColourTheme,Light)">background/bg.jpg</value>
         <value>background/bg_black.jpg</value>

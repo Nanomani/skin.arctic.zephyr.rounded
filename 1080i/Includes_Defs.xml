@@ -80,13 +80,14 @@
 
     <include name="Hidden_Button_Search">
         <control type="button" id="9099" description="Helper">
-            <visible allowhiddenfocus="true">Control.HasFocus(9099)</visible>
+            <visible allowhiddenfocus="true">$EXP[Home_Search_Is_Focus]</visible>
             <animation effect="fade" time="300" start="0" end="0">Focus</animation>
 
             <include>Def_Hidden_Button</include>
 
             <!-- CANCEL - TIMER - AUTO SLIDE MENU -->
 
+            <onfocus>CancelAlarm(power_menu_setfocus_399,true)</onfocus>
             <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onfocus>
 
             <!-- MAIN MENU : FOCUS IF INACTIVITY -->
@@ -106,41 +107,51 @@
             <onup condition="$EXP[Home_Is_Vertical]">SetProperty(AnimationDirection,Up,Home)</onup>
             <onup condition="$EXP[Home_Is_Vertical]">SetFocus(300,$INFO[Container(300).NumItems])</onup>
             <onup condition="$EXP[Home_Is_Vertical]">SetProperty(end_menu,1,Home)</onup>
+            <onup condition="$EXP[Home_Is_Vertical]">ClearProperty(Show_Menu_Search,Home)</onup>
 
-            <ondown condition="$EXP[Home_Is_Vertical]">SetFocus(300,0,absolute)</ondown>
-            <ondown condition="$EXP[Home_Is_Vertical]">SetProperty(first_menu,1,Home)</ondown>
+            <ondown condition="$EXP[Home_Is_Vertical] + !Control.IsVisible(3060)">SetFocus(300,0,absolute)</ondown>
+            <ondown condition="$EXP[Home_Is_Vertical] + !Control.IsVisible(3060)">SetProperty(first_menu,1,Home)</ondown>
+            <ondown condition="$EXP[Home_Is_Vertical] + Control.IsVisible(3060)">Control.SetFocus(3060,0,absolute)</ondown>
 
             <onleft condition="$EXP[Home_Is_Vertical]">SetFocus(300,0,absolute)</onleft>
             <onleft condition="$EXP[Home_Is_Vertical]">SetProperty(first_menu,1,Home)</onleft>
+            <onleft condition="$EXP[Home_Is_Vertical]">ClearProperty(Show_Menu_Search,Home)</onleft>
 
             <onright condition="$EXP[Home_Is_Vertical]">SetFocus(300,0,absolute)</onright>
             <onright condition="$EXP[Home_Is_Vertical]">SetProperty(first_menu,1,Home)</onright>
+            <onright condition="$EXP[Home_Is_Vertical]">ClearProperty(Show_Menu_Search,Home)</onright>
 
             <!-- HORIZONTALE LAYOUT -->
 
             <onleft condition="$EXP[Home_Is_Horizontal]">SetProperty(AnimationDirection,Left,Home)</onleft>
             <onleft condition="$EXP[Home_Is_Horizontal]">SetFocus(300,$INFO[Container(300).NumItems])</onleft>
             <onleft condition="$EXP[Home_Is_Horizontal]">SetProperty(end_menu,1,Home)</onleft>
+            <onleft condition="$EXP[Home_Is_Horizontal]">ClearProperty(Show_Menu_Search,Home)</onleft>
 
             <onright condition="$EXP[Home_Is_Horizontal]">SetFocus(300,0,absolute)</onright>
             <onright condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</onright>
+            <onright condition="$EXP[Home_Is_Horizontal]">ClearProperty(Show_Menu_Search,Home)</onright>
 
-            <ondown condition="$EXP[Home_Is_Horizontal]">SetFocus(300,0,absolute)</ondown>
-            <ondown condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</ondown>
+            <ondown condition="$EXP[Home_Is_Horizontal] + !Control.IsVisible(3060)">SetFocus(300,0,absolute)</ondown>
+            <ondown condition="$EXP[Home_Is_Horizontal] + !Control.IsVisible(3060)">SetProperty(first_menu,1,Home)</ondown>
+            <ondown condition="$EXP[Home_Is_Horizontal] + Control.IsVisible(3060)">Control.SetFocus(3060,0,absolute)</ondown>
 
             <onup condition="$EXP[Home_Is_Horizontal]">SetFocus(300,0,absolute)</onup>
             <onup condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</onup>
 
+            <!-- <include content="Object_OnDirection_Action"><param name="ondirection" value="ClearProperty(Show_Menu_Search,Home)" /></include> -->
+
             <onclick>ClearProperty(GlobalSearchWindowOpen,Home)</onclick>
-            <onclick>SetProperty(Launch_Search,1,Home)</onclick>
-            <onclick>ActivateWindow(1146)</onclick>
+            <onfocus>SetProperty(Show_Menu_Search,1,Home)</onfocus>
+            <!-- <onclick>ActivateWindow(1146)</onclick> -->
+            <onclick>Control.SetFocus(3060,0,absolute)</onclick>
             <onclick>ClearProperty(AnimationDirection,Home)</onclick>
         </control>
 
         <!-- BUTTON EDIT WIKI -->
 
         <control type="group">
-            <visible allowhiddenfocus="true">[Control.HasFocus(90009) | Control.HasFocus(340)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml) + !String.IsEmpty(Window(Home).Property(Launch_Wiki_Search))</visible>
+            <visible allowhiddenfocus="true">[Control.HasFocus(90009) | Control.HasFocus(340)] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml)</visible>
 
             <animation effect="fade" time="300" start="0" end="0">Focus</animation>
 
@@ -164,6 +175,18 @@
                     <height>88</height>
                     <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
                 </control>
+            </control>
+
+            <control type="button" id="331" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus>ActivateWindow(addonbrowser,return)</onfocus>
+                <onfocus>SetFocus(6000,4,absolute)</onfocus>
+                <onfocus>SetFocus(50)</onfocus>
+                <onfocus>Container.Update(addons://search/,return)</onfocus>
+            </control>
+            <control type="button" id="330" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus>SetFocus(90009)</onfocus>
             </control>
 
             <!-- EDIT BAR WIKIPEDIA -->
@@ -194,6 +217,7 @@
                     <onright>340</onright>
                     <onleft>340</onleft>
                 </control>
+
                 <control type="button" id="340" description="Helper">
                     <include>Def_Hidden_Button</include>
                     <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus>

@@ -8,13 +8,17 @@
         <include>Home_Header</include>
         <include condition="Skin.HasSetting(home.style.horizontal.clean)">Home_Clean_Widgets_Item_Position</include>
 
+        <!-- MENU SEARCH -->
+
+        <include>Furniture_Menu_Search</include>
+
         <!-- WIDGETS -->
 
         <control type="group">
 
             <!-- HOME CLEAN ONLY - SLIDE DOWN - WIDGET / NOWPLAYING NOW - IF MAIN MENU IS HIDDEN -->
 
-            <animation effect="slide" start="0" end="0,123" time="250" tween="sine" easing="out" delay="0" condition="![$EXP[Home_Menu_Is_Focus] | Control.HasFocus(9099)] + Skin.HasSetting(hide.home.menu) + ![$EXP[Extended_Now_Playing_Is_Visible] + Skin.HasSetting(hide.home.menu.with.nowplaying.extended)] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,123" time="250" tween="sine" easing="out" delay="0" condition="![$EXP[Home_Menu_Is_Focus] | $EXP[Home_Search_Is_Focus]] + Skin.HasSetting(hide.home.menu) + ![$EXP[Extended_Now_Playing_Is_Visible] + Skin.HasSetting(hide.home.menu.with.nowplaying.extended)] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
             <include>Animation_Visible_Sub_Menu_Vertical_Fade_Conditional_Widgets</include>
 
@@ -51,12 +55,14 @@
             <visible>String.IsEmpty(Window(Home).Property(Hide_On_Reload_Dialog_Info))</visible>
             <include>Animation_Dialog_Info_Visible_Fade_Conditional</include>
 
+            <!-- COMMON ANIMATION -->
+
             <include>Animation_Fade_In_Delay_Zoom</include>
             <include>Animation_Common_Fade_Out</include>
 
             <!-- HOME CLEAN ONLY - MAIN MENU - CLOCK - SLIDE DOWN -->
 
-            <animation effect="slide" start="0" end="0,163" time="250" tween="sine" easing="out" delay="0" condition="[[!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + Skin.HasSetting(hide.home.menu)] | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099)]] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,163" time="250" tween="sine" easing="out" delay="0" condition="[[!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + Skin.HasSetting(hide.home.menu)] | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099)]] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
             <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation>
 
@@ -66,8 +72,14 @@
 
                 <!-- HOME HORIZONTAL ONLY - MAIN MENU - SLIDE DOWN -->
 
-                <animation effect="slide" start="0" end="0,163" time="250" tween="sine" easing="out" delay="0" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + $EXP[Extended_Now_Playing_Is_Visible] + !ControlGroup(301).HasFocus()]] + !Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
+                <animation effect="slide" start="0" end="0,163" time="250" tween="sine" easing="out" delay="0" condition="!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + $EXP[Extended_Now_Playing_Is_Visible] + !ControlGroup(301).HasFocus()]] + !Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
+                <!-- HIDDEN WITH SEARCH MENU -->
+
+                <include content="Animation_Fade_Out_Home_Fullscreen_Widget_150">
+                    <param name="condition" value="$EXP[Home_Search_Is_Focus]" />
+                </include>
+            
                 <!-- MENU - ARROWS - LEFT - RIGHT -->
 
                 <include>Home_Horizontal_Menu_Arrows</include>
@@ -89,6 +101,7 @@
                     <onfocus>ClearProperty(controls_nowplaying_visible,Home)</onfocus>
                     <onfocus>ClearProperty(Set_User_Rating,Home)</onfocus>
                     <onfocus>ClearProperty(Launch_Search,Home)</onfocus>
+                    <onfocus>ClearProperty(Show_Menu_Search,Home)</onfocus>
                     <onfocus>ClearProperty(Set_Back_Menu_300_After_SubMenu_302,Home)</onfocus>
 
                     <include condition="Skin.HasSetting(home.show.menu.icons)">Home_Horizontal_Main_Menu_Icon</include>
@@ -272,6 +285,7 @@
             <!-- OTHERS -->
 
             <onfocus>ClearProperty(Launch_Search,Home)</onfocus>
+            <onfocus>ClearProperty(Show_Menu_Search,Home)</onfocus>
             <onfocus>ClearProperty(ListItem_Trailer_Path,Home)</onfocus>
         </control>
 
@@ -291,17 +305,27 @@
         <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
         <include condition="!Skin.HasSetting(hide.furniture.flags.vertical.widgets)">Furniture_Home_Vertical_Widget_Flags</include>
 
+        <!-- MENU SEARCH -->
+
+        <include>Furniture_Menu_Search</include>
+
         <!-- WIDGETS - MENU -->
 
         <control type="group">
             <visible>String.IsEmpty(Window(Home).Property(Hide_On_Reload_Dialog_Info))</visible>
             <include>Animation_Dialog_Info_Visible_Fade_Conditional</include>
 
+            <!-- HIDDEN WITH SEARCH MENU -->
+
+            <include content="Animation_Fade_Out_Home_Fullscreen_Widget_150">
+                <param name="condition" value="$EXP[Home_Search_Is_Focus]" />
+            </include>
+
             <animation effect="slide" start="0" end="-100" time="0" delay="0" condition="true">Conditional</animation>
 
             <!-- SLIDE LEFT - MENU TEXT - HIDE MENU / NOWPLAYING -->
 
-            <animation effect="slide" start="0" end="-260" time="300" delay="0" center="auto" tween="sine" easing="out" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + !Skin.HasSetting(home.show.menu.icons) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !ControlGroup(301).HasFocus()]]">Conditional</animation>
+            <animation effect="slide" start="0" end="-260" time="300" delay="0" center="auto" tween="sine" easing="out" condition="!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + !Skin.HasSetting(home.show.menu.icons) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !ControlGroup(301).HasFocus()]]">Conditional</animation>
 
             <!-- WIDGETS -->
 
@@ -374,7 +398,7 @@
 
                     <!-- FADE HIDDEN - MAIN MENU TEXT HIDDEN / WITH NOWPLAYING VISIBLE -->
 
-                    <animation effect="fade" start="100" end="0" time="250" condition="!$EXP[Home_Menu_Is_Focus] + !Control.HasFocus(9099) + [[Skin.HasSetting(hide.home.menu) + !Skin.HasSetting(home.show.menu.icons)] | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]]">Conditional</animation>
+                    <animation effect="fade" start="100" end="0" time="250" condition="!$EXP[Home_Menu_Is_Focus] + [[Skin.HasSetting(hide.home.menu) + !Skin.HasSetting(home.show.menu.icons)] | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]]">Conditional</animation>
 
                     <!-- SLIDE LEFT - MAIN MENU - ICON -->
 
@@ -404,6 +428,7 @@
                     <onfocus>ClearProperty(controls_nowplaying_visible,Home)</onfocus>
                     <onfocus>ClearProperty(Set_User_Rating,Home)</onfocus>
                     <onfocus>ClearProperty(Launch_Search,Home)</onfocus>
+                    <onfocus>ClearProperty(Show_Menu_Search,Home)</onfocus>
                     <onfocus>ClearProperty(Set_Back_Menu_300_After_SubMenu_302,Home)</onfocus>
 
                     <orientation>vertical</orientation>
@@ -888,6 +913,7 @@
             <!-- OTHERS -->
 
             <onfocus>ClearProperty(Launch_Search,Home)</onfocus>
+            <onfocus>ClearProperty(Show_Menu_Search,Home)</onfocus>
             <onfocus>ClearProperty(ListItem_Trailer_Path,Home)</onfocus>
         </control>
 
@@ -2654,7 +2680,7 @@
         <!-- ARROWS (UP / DOWN) - MAIN MENU - 300 -->
 
         <control type="group">
-            <visible>[Control.HasFocus(300) | Control.HasFocus(222) | Control.HasFocus(399) | Control.HasFocus(9099)]</visible>
+            <visible>[Control.HasFocus(300) | Control.HasFocus(222) | Control.HasFocus(399)]</visible>
 
             <animation effect="fade" end="100" start="0" delay="300" time="400" reversible="false" condition="!Control.HasFocus(302)">Conditional</animation>
 

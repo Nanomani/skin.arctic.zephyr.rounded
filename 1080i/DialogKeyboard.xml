@@ -2,7 +2,15 @@
 <window>
     <defaultcontrol always="true">300</defaultcontrol>
 
-    <onunload condition="!String.IsEmpty(Control.GetLabel(312).index(1))">AlarmClock(delay_add_search_history,RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)]),00:01,silent)</onunload>
+
+
+    <onunload condition="Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !String.IsEmpty(Window(Home).Property(Launch_Search))">SetProperty(keyboard_value,Control.GetLabel(312).index(1)),Home)</onunload>
+
+    <onunload condition="Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + String.IsEmpty(Window(Home).Property(keyboard_value)) + !String.IsEmpty(Window(Home).Property(Launch_Search))">SetFocus(300)</onunload>
+
+    <onunload condition="String.IsEmpty(Control.GetLabel(312).index(1)) + String.IsEmpty(Window(Home).Property(keyboard_value)) + !String.IsEmpty(Window(Home).Property(Launch_Search))">ClearProperty(Launch_Search,Home)</onunload>
+
+    <onunload condition="!String.IsEmpty(Window(Home).Property(keyboard_value))">AlarmClock(delay_add_search_history,RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Window(Home).Property(keyboard_value)]),00:01,silent)</onunload>
 
     <controls>
         <include content="Background_Overlay">
@@ -16,9 +24,7 @@
                 <param name="top" value="114" />
             </include>
 
-            <top>160</top>
-
-            <centertop>40%</centertop>
+            <top>120</top>
 
             <include content="Def_Dialog_Background">
                 <param name="height" value="522" />

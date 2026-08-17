@@ -1315,17 +1315,21 @@
 
         <!-- MOVIES / TV SHOWS DETAILED INFO -->
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">Close</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEqual(Skin.String(osd_down_action),1)">Close</ondown>
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !Skin.HasSetting(show.osd.on.down.wiki)">SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action))">SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</ondown>
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !Skin.HasSetting(show.osd.on.down.wiki)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action))">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
+
+        <!-- BOOKMARKS -->
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.Title) + String.IsEqual(Skin.String(osd_down_action),1)">ActivateWindow(125)</ondown>
 
         <!-- WIKIPEDIA -->
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + Skin.HasSetting(show.osd.on.down.wiki)">SetProperty(wikipedia,1,Home)</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + String.IsEqual(Skin.String(osd_down_action),2)">SetProperty(wikipedia,1,Home)</ondown>
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + Skin.HasSetting(show.osd.on.down.wiki)">$VAR[Path_Player_Wikipedia]</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + String.IsEqual(Skin.String(osd_down_action),2)">$VAR[Path_Player_Wikipedia]</ondown>
 
         <!-- AUTO PAUSE -->
 
@@ -1727,7 +1731,7 @@
         <!-- TVSHOW - WIKIPEDIA -->
 
         <include content="Object_OSD_Button">
-            <param name="visible" value="!Skin.HasSetting(show.osd.on.down.wiki)" />
+            <param name="visible" value="!String.IsEqual(Skin.String(osd_down_action),2)" />
             <param name="left" value="-47" />
             <param name="icon" value="osd/world.png" />
             <param name="id" value="4" />
@@ -1745,7 +1749,7 @@
         <!-- TVSHOW - INFO -->
 
         <include content="Object_OSD_Button">
-            <param name="visible" value="Skin.HasSetting(show.osd.on.down.wiki)" />
+            <param name="visible" value="!String.IsEmpty(Skin.String(osd_down_action))" />
             <param name="left" value="-47" />
             <param name="icon" value="osd/info.png" />
             <param name="id" value="21" />
@@ -1767,7 +1771,7 @@
         <!-- MOVIE - WIKIPEDIA -->
 
         <include content="Object_OSD_Button">
-            <param name="visible" value="!Skin.HasSetting(show.osd.on.down.wiki)" />
+            <param name="visible" value="!String.IsEqual(Skin.String(osd_down_action),2)" />
             <param name="left" value="-47" />
             <param name="icon" value="osd/world.png" />
             <param name="id" value="4" />
@@ -1785,7 +1789,7 @@
         <!-- MOVIE - INFO -->
 
         <include content="Object_OSD_Button">
-            <param name="visible" value="Skin.HasSetting(show.osd.on.down.wiki)" />
+            <param name="visible" value="!String.IsEmpty(Skin.String(osd_down_action))" />
             <param name="left" value="-47" />
             <param name="icon" value="osd/info.png" />
             <param name="id" value="22" />

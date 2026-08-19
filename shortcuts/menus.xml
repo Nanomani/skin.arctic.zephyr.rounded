@@ -32,6 +32,12 @@
             <icon>special://skin/extras/icons/world.png</icon>
             <visible>System.AddonIsEnabled(script.wikipedia)</visible>
         </item>
+        <item name="search-tv">
+            <label>$LOCALIZE[10704]</label>
+            <action>ActivateWindow(TVSearch)</action>
+            <icon>special://skin/extras/icons/tvguide.png</icon>
+            <visible>System.HasPVRAddon</visible>
+        </item>
         <item name="search-addons">
             <label>$LOCALIZE[10510]</label>
             <action>SetFocus(331)</action>
@@ -173,6 +179,11 @@
             <label>$LOCALIZE[2]</label>
             <action>ActivateWindow(Music,root,return)</action>
             <icon>special://skin/extras/icons/songs.png</icon>
+        </item>
+        <item name="musicvideos" submenu="musicvideos">
+            <label>$LOCALIZE[20389]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/,return)</action>
+            <icon>special://skin/extras/icons/musicvideo.png</icon>
         </item>
         <item name="livetv" submenu="livetv">
             <label>$LOCALIZE[31075]</label>
@@ -455,6 +466,16 @@
     <!-- MUSIC - SUBMENU -->
 
     <submenu name="music">
+        <item name="music-recent">
+            <label>$LOCALIZE[20382]</label>
+            <action>ActivateWindow(Music,musicdb://recentlyaddedalbums/,return)</action>
+            <icon>special://skin/extras/icons/recentlyadded.png</icon>
+        </item>
+        <item name="music-recentlyplayed">
+            <label>$LOCALIZE[568]</label>
+            <action>ActivateWindow(Music,musicdb://recentlyplayedalbums/,return)</action>
+            <icon>special://skin/extras/icons/recent.png</icon>
+        </item>
         <item name="music-files">
             <label>$LOCALIZE[744]</label>
             <action>ActivateWindow(Music,Files,Return)</action>
@@ -480,16 +501,6 @@
             <action>ActivateWindow(Music,special://musicplaylists/,return)</action>
             <icon>special://skin/extras/icons/playlist.png</icon>
         </item>
-        <item name="music-recent">
-            <label>$LOCALIZE[359]</label>
-            <action>ActivateWindow(Music,musicdb://recentlyaddedalbums/,return)</action>
-            <icon>special://skin/extras/icons/recentlyadded.png</icon>
-        </item>
-        <item name="music-recentlyplayed">
-            <label>$LOCALIZE[517]</label>
-            <action>ActivateWindow(Music,musicdb://recentlyplayedalbums/,return)</action>
-            <icon>special://skin/extras/icons/recent.png</icon>
-        </item>
         <item name="music-library">
             <label>$LOCALIZE[15100]</label>
             <action>ActivateWindow(Music,root,return)</action>
@@ -500,7 +511,23 @@
     <!-- MUSIC - WIDGET -->
 
     <submenu name="music.1" type="widgets">
-        <item name="Random-Albums">
+        <item name="music-widget-new">
+            <label>$LOCALIZE[31044]</label>
+            <property name="widgetPath">musicdb://recentlyaddedalbums/</property>
+            <property name="widgetTarget">music</property>
+            <property name="widgetType">music</property>
+            <property name="widgetaspect">SquareMiddle</property>
+            <visible>Library.HasContent(music)</visible>
+        </item>
+        <item name="music-widget-recent-played">
+            <label>$LOCALIZE[517]</label>
+            <property name="widgetPath">musicdb://recentlyplayedalbums/</property>
+            <property name="widgetTarget">music</property>
+            <property name="widgetType">music</property>
+            <property name="widgetaspect">SquareMiddle</property>
+            <visible>Library.HasContent(music)</visible>
+        </item>
+        <item name="music-widget-random">
             <label>$LOCALIZE[31047]</label>
             <property name="widgetPath">special://skin/extras/playlists/RandomAlbums.xsp</property>
             <property name="widgetTarget">music</property>
@@ -508,13 +535,74 @@
             <property name="widgetaspect">SquareMiddle</property>
             <visible>Library.HasContent(music)</visible>
         </item>
-        <item name="New-Albums">
+    </submenu>
+
+    <!-- MUSIC VIDEO - SUBMENU -->
+
+    <submenu name="musicvideos">
+        <item name="musicvideos-news">
+            <label>$LOCALIZE[20382]</label>
+            <action>ActivateWindow(Videos,videodb://recentlyaddedmusicvideos/,return)</action>
+            <icon>special://skin/extras/icons/recentlyadded.png</icon>
+        </item>
+        <item name="musicvideos-genres">
+            <label>$LOCALIZE[135]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/genres/,return)</action>
+            <icon>special://skin/extras/icons/masks-theater.png</icon>
+        </item>
+        <item name="musicvideos-titles">
+            <label>$LOCALIZE[369]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/titles/,return)</action>
+            <icon>special://skin/extras/icons/songs.png</icon>
+        </item>
+        <item name="musicvideos-years">
+            <label>$LOCALIZE[562]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/years/,return)</action>
+            <icon>special://skin/extras/icons/calendar-day.png</icon>
+        </item>
+        <item name="musicvideos-artists">
+            <label>$LOCALIZE[133]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/artists/,return)</action>
+            <icon>special://skin/extras/icons/artist.png</icon>
+        </item>
+        <item name="musicvideos-albums">
+            <label>$LOCALIZE[132]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/albums/,return)</action>
+            <icon>special://skin/extras/icons/compact-disc.png</icon>
+        </item>
+        <item name="musicvideos-library">
+            <label>$LOCALIZE[15100]</label>
+            <action>ActivateWindow(Videos,videodb://musicvideos/,return)</action>
+            <icon>special://skin/extras/icons/database.png</icon>
+        </item>
+    </submenu>
+
+    <!-- MUSIC VIDEO - WIDGET -->
+
+    <submenu name="musicvideos.1" type="widgets">
+        <item name="musicvideo-widget-new">
             <label>$LOCALIZE[31044]</label>
-            <property name="widgetPath">musicdb://recentlyaddedalbums/</property>
+            <property name="widgetPath">videodb://recentlyaddedmusicvideos/</property>
             <property name="widgetTarget">music</property>
             <property name="widgetType">music</property>
             <property name="widgetaspect">SquareMiddle</property>
-            <visible>Library.HasContent(music)</visible>
+            <visible>Library.HasContent(musicvideos)</visible>
+        </item>
+        <item name="musicvideo-widget-recent-played">
+            <label>$LOCALIZE[517]</label>
+            <property name="widgetPath">special://skin/extras/playlists/random_musicvideo_artists.xsp</property>
+            <property name="widgetTarget">music</property>
+            <property name="widgetType">music</property>
+            <property name="widgetaspect">SquareMiddle</property>
+            <visible>Library.HasContent(musicvideos)</visible>
+        </item>
+        <item name="musicvideo-widget-random">
+            <label>$LOCALIZE[31047]</label>
+            <property name="widgetPath">special://skin/extras/playlists/random_musicvideo_artists.xsp</property>
+            <property name="widgetTarget">music</property>
+            <property name="widgetType">music</property>
+            <property name="widgetaspect">SquareMiddle</property>
+            <visible>Library.HasContent(musicvideos)</visible>
         </item>
     </submenu>
 

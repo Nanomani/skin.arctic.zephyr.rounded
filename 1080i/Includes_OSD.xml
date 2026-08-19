@@ -1313,13 +1313,20 @@
 
         <onup condition="Control.HasFocus(20)">9902</onup>
 
-        <!-- MOVIES / TV SHOWS DETAILED INFO -->
+        <!-- MUSIC VIDEO -->
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + VideoPlayer.Content(musicvideos) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action)) + !Container(999).IsUpdating + Integer.IsGreater(Container(999).NumItems,0)">SetFocus(998)</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + VideoPlayer.Content(musicvideos) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action)) + !Container(999).IsUpdating + Integer.IsGreater(Container(999).NumItems,0)">Action(info)</ondown>
+
+        <!-- MOVIES / TV SHOWS DETAILED INFO / MUSIC VIDEO - INIT -->
 
         <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEqual(Skin.String(osd_down_action),1)">Close</ondown>
 
         <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action))">SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</ondown>
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action))">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
+        <!-- MOVIES / TV SHOWS DETAILED INFO -->
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !VideoPlayer.Content(musicvideos) + String.IsEmpty(Skin.String(osd_down_action))">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</ondown>
 
         <!-- BOOKMARKS -->
 
@@ -2427,7 +2434,7 @@
                         <!-- POSTER -->
 
                         <control type="group">
-                            <visible>!VideoPlayer.Content(livetv) + [!String.IsEmpty(Player.Art(tvshow.poster)) | !String.IsEmpty(Player.Art(poster))]</visible>
+                            <visible>!VideoPlayer.Content(musicvideos) + !VideoPlayer.Content(livetv) + [!String.IsEmpty(Player.Art(tvshow.poster)) | !String.IsEmpty(Player.Art(poster))]</visible>
 
                             <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(videoosd) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO))">Conditional</animation>
 
@@ -2454,7 +2461,7 @@
                         <!-- FANART / THUMB -->
 
                         <control type="group">
-                            <visible>[!VideoPlayer.Content(livetv) + !String.IsEmpty(Player.Art(thumb)) + String.IsEmpty(Player.Art(tvshow.poster)) + String.IsEmpty(Player.Art(poster))]</visible>
+                            <visible>[!VideoPlayer.Content(musicvideos) + !VideoPlayer.Content(livetv) + !String.IsEmpty(Player.Art(thumb)) + String.IsEmpty(Player.Art(tvshow.poster)) + String.IsEmpty(Player.Art(poster))]</visible>
 
                             <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(videoosd) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO))">Conditional</animation>
 
@@ -2473,6 +2480,33 @@
                             <control type="image">
                                 <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                                 <texture diffuse="diffuse/fanart_w370_h205_b24.png">$VAR[Image_Player_Poster]</texture>
+                            </control>
+                        </control>
+
+                        <!-- ALBUM COVER -->
+
+                        <control type="group">
+                            <visible>VideoPlayer.Content(musicvideos)</visible>
+
+                            <animation effect="slide" start="0" end="0,74" time="150" condition="Window.IsVisible(videoosd) | !String.IsEmpty(Window(Home).Property(OSDVideo_Show_AT_START_INFO))">Conditional</animation>
+
+                            <top>-686</top>
+                            <left>0</left>
+                            <width>378</width>
+                            <height>378</height>
+
+                            <include content="Def_Art_Full_Background_b24">
+                                <param name="colordiffuse_border" value="$VAR[Color_OSD_Dialog_Border]" />
+                                <param name="colordiffuse_shadow" value="$VAR[Color_OSD_Dialog_Shadow]" />
+                                <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
+                                <param name="condition_fade" value="false" />
+                            </include>
+
+                            <control type="image">
+                                <height>100%</height>
+                                <width>100%</width>
+                                <aspectratio scalediffuse="false">scale</aspectratio>
+                                <texture diffuse="diffuse/square_w380_h380_b24.png" fallback="DefaultAlbumCover.png">$VAR[Image_Player_Poster]</texture>
                             </control>
                         </control>
 

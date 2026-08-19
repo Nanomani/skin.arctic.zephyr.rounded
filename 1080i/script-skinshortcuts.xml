@@ -210,7 +210,6 @@
                     <texturenofocus colordiffuse="B3BBBBBB">skinshortcuts/circle-chevron-down.png</texturenofocus>
                     <texturefocus colordiffuse="Selected">skinshortcuts/circle-chevron-down.png</texturefocus>
                     <onfocus condition="!String.IsEqual(Window(Home).Property(custommenu),yes)">ClearProperty(skinshortcuts-Widget,Home)</onfocus>
-                    <onclick>SetProperty(SetIcon,1,Home)</onclick>
                 </control>
             </control>
 
@@ -363,7 +362,7 @@
         <!-- MAIN MENU - TITLE - MAIN MENU / WIDGETS - "OPTIONS" -->
 
                 <control type="button" id="4989">
-                    <visible>String.IsEqual(Window.Property(menuname),mainmenu) | $EXP[Script_SkinShortcuts_Widget]</visible>
+                    <visible>String.IsEqual(Window.Property(menuname),mainmenu) | $EXP[Script_SkinShortcuts_Widget] | String.IsEqual(Window.Property(menuname),searchmenulist)</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <include>Def_Skinshortcuts_Button_Title_Right_Side</include>
                     <label>33063</label>
@@ -382,6 +381,16 @@
                     <onfocus>SetProperty(IsStandardSkinShortcut,1,Home)</onfocus>
                 </control>
 
+                <!-- SEARCH MENU - SET BACKGROUND - SEARCH FALLBACK -->
+
+                <control type="button" id="4990" description="Background">
+                    <visible>String.IsEqual(Window.Property(menuname),searchmenulist) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                    <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
+                    <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
+                    <label>$LOCALIZE[31081]</label>
+                    <label2>$INFO[Skin.String(fanart.fallback.search)]</label2>
+                    <onclick>Skin.SetImage(fanart.fallback.search)</onclick>
+                </control>
 
                 <!-- =========================================== -->
                 <!--               WIDGET - PROPERTY             -->
@@ -579,7 +588,7 @@
 
                 <control type="button" id="312" description="Reset">
                     <visible>String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
-                    <!-- <visible>String.IsEqual(Window.Property(menuname),mainmenu)</visible> -->
+                    <!-- <enable>String.IsEqual(Window.Property(menuname),mainmenu)</enable> -->
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                 	<label>$ADDON[script.skinshortcuts 32028]:</label>
                     <label2>$INFO[Container(211).ListItem.Label]</label2>

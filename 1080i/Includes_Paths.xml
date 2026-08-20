@@ -49,7 +49,11 @@
 
     <variable name="Def_Dialog_Info_Currently_Playing_Item_MusicOSD">
 
-        <!-- SEARCH SONG -->
+        <!-- SEARCH - MUSIC VIDEO - INFO -->
+
+        <value condition="VideoPlayer.Content(musicvideos) + !String.IsEmpty(VideoPlayer.DBID)">videodb://musicvideos/titles/?xsp={"order":{"direction":"ascending","ignorefolders":0,"method":"sorttitle"},"rules":{"and":[{"field":"artist","operator":"contains","value":["$INFO[VideoPlayer.Artist]"]},{"field":"title","operator":"is","value":["$INFO[VideoPlayer.Title]"]}]},"type":"musicvideos"}</value>
+
+        <!-- SEARCH - SONG - INFO -->
 
         <value condition="Player.HasAudio + !String.IsEmpty(MusicPlayer.DBID)">musicdb://songs/?songid=$INFO[MusicPlayer.DBID]</value>
     </variable>
@@ -65,6 +69,7 @@
         <!-- search movie -->
 
         <value condition="String.IsEmpty(VideoPlayer.TvShowTitle)">RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[VideoPlayer.DBID],tmdb_type=movie,call_auto=1190)</value>
+
     </variable>
 
     <!-- =================================== -->
@@ -73,6 +78,7 @@
 
     <variable name="Path_Youtube_Query">
         <value condition="[String.IsEqual(ListItem.DBType,set) | ListItem.IsCollection] + !String.IsEmpty(ListItem.Set)">$INFO[ListItem.Set]</value>
+        <value condition="String.IsEqual(ListItem.DBType,musicvideo) + !String.IsEmpty(ListItem.Title)">$INFO[Window(Home).Property(Encoded.ListItem.Title)]</value>
         <value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.Title)">$INFO[Window(Home).Property(Encoded.ListItem.Title)]$INFO[ListItem.Year, ,] Movie</value>
         <value condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(ListItem.Title)">$INFO[Window(Home).Property(Encoded.ListItem.Title)]$INFO[ListItem.Year, ,]</value>
         <value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(ListItem.TVShowTitle)">$INFO[Window(Home).Property(Encoded.ListItem.TVShowTitle)]$INFO[ListItem.Season, Season ,]</value>
@@ -574,9 +580,9 @@
     </variable>
 
 
-    <!-- =================================== -->
-    <!--          MOVIE / TVSHOW             -->
-    <!-- =================================== -->
+    <!-- ================================================ -->
+    <!--          MOVIE / TVSHOW / MUSIC VIDEO            -->
+    <!-- ================================================ -->
 
     <variable name="Def_List_Crew">
         <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">plugin://plugin.video.themoviedb.helper?info=crew&amp;tmdb_type=tv&amp;tmdb_id=$INFO[Window(Home).Property(Set_Movie_TvShow_TMDb_id)]$VAR[Path_Param_Widget_Cache_Only]&amp;aggregate=true</value>
@@ -585,11 +591,13 @@
     </variable>
 
     <variable name="Def_List_Director">
-        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Director_Query))">plugin://plugin.video.themoviedb.helper/?info=crew_in_both&amp;tmdb_type=person&amp;filter_key=job&amp;filter_value=Director$INFO[Window(Home).Property(Director_Query)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Limit]</value>
+        <value condition="!Skin.HasSetting(filter.video.only.local) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(Director_Query))">plugin://plugin.video.themoviedb.helper/?info=crew_in_both&amp;tmdb_type=person&amp;filter_key=job&amp;filter_value=Director$INFO[Window(Home).Property(Director_Query)]$VAR[Path_Param_Widget_Cache_Only]$VAR[Path_Param_Limit]</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">videodb://movies/titles/?xsp={"rules":{"and":[{"field":"director","operator":"is","value":["$INFO[Window(Home).Property(SetDirectorSelected)]"]}]},"type":"movies"}</value>
 
         <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,episode) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">videodb://movies/titles/?xsp={"rules":{"and":[{"field":"director","operator":"is","value":["$INFO[Window(Home).Property(SetDirectorSelected)]"]}]},"type":"tvshows"}</value>
+
+        <value condition="Skin.HasSetting(filter.video.only.local) + String.IsEqual(ListItem.DBType,musicvideo) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">videodb://movies/titles/?xsp={"rules":{"and":[{"field":"director","operator":"is","value":["$INFO[Window(Home).Property(SetDirectorSelected)]"]}]},"type":"movies"}</value>
     </variable>
 
     <variable name="Def_List_Writer">

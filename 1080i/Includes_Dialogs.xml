@@ -1794,8 +1794,8 @@
 
             <!-- CAST LIST - LOCAL ONLY -->
 
-            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !$EXP[CastOnLine] + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]">SetProperty(last_video_focus,50,Home)</onup>
-            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !$EXP[CastOnLine] + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]">50</onup>
+            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + [!$EXP[CastOnLine] | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]">SetProperty(last_video_focus,50,Home)</onup>
+            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + [!$EXP[CastOnLine] | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]">50</onup>
 
             <!-- SET LIST -->
 
@@ -1805,9 +1805,9 @@
 
             <!-- CAST LIST - ON LINE - WITH TMDB ONLINE -->
 
-            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !Container(9550).IsUpdating + $EXP[CastOnLine] + $EXP[PluginsAllowedItem]">SetProperty(last_video_focus,9550,Home)</onup>
-            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !Container(9550).IsUpdating + $EXP[CastOnLine] + $EXP[PluginsAllowedItem]">9550</onup>
-            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !Container(9550).IsUpdating + $EXP[CastOnLine] + $EXP[PluginsAllowedItem]">SetProperty(TMDbHelper.WidgetContainer,9550,Home)</onup>
+            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !Container(9550).IsUpdating + $EXP[CastOnLine] + !String.IsEqual(ListItem.DBType,musicvideo) + $EXP[PluginsAllowedItem]">SetProperty(last_video_focus,9550,Home)</onup>
+            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !Container(9550).IsUpdating + $EXP[CastOnLine] + !String.IsEqual(ListItem.DBType,musicvideo) + $EXP[PluginsAllowedItem]">9550</onup>
+            <onup condition="String.IsEmpty(Window(Home).Property(moviecontent)) + !Container(9550).IsUpdating + $EXP[CastOnLine] + !String.IsEqual(ListItem.DBType,musicvideo) + $EXP[PluginsAllowedItem]">SetProperty(TMDbHelper.WidgetContainer,9550,Home)</onup>
 
             <!-- CAST PICTURE -->
 
@@ -1941,7 +1941,7 @@
             <!-- INFO -->
 
             <control type="radiobutton" id="9001">
-                <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)</visible>
+                <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
 
                 <onfocus>SetProperty(last_video_focus,9001,Home)</onfocus>
                 <onfocus>SetProperty(moviecontent,1,Home)</onfocus>
@@ -1963,9 +1963,11 @@
 
                 <!-- SEARCH DIRECTOR INFO -->
 
-                <onclick condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SelectPerson,1,Home)</onclick>
+                <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">SetProperty(SelectPerson,1,Home)</onclick>
 
                 <onclick condition="!String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(SetDirectorSelected)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+
+                <onclick condition="!String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,musicvideo) + !String.IsEmpty(Window(Home).Property(SetDirectorSelected))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(SetDirectorSelected)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
 
                 <!-- SEARCH DIRECTOR INFO -->
 
@@ -2214,7 +2216,7 @@
             <!-- WIKIPEDIA -->
 
             <control type="radiobutton" id="9013">
-                <visible>String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)</visible>
+                <visible>String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
                 <visible>[!String.IsEqual(ListItem.DBType,video) + !String.IsEmpty(ListItem.DBType)] | String.IsEqual(ListItem.Property(tmdb_type),person)</visible>
                 <visible>!Skin.HasSetting(hide.button.video.wiki) + System.AddonIsEnabled(script.wikipedia)</visible>
 
@@ -2262,7 +2264,7 @@
             <!-- USER RATING -->
 
             <control type="radiobutton" id="7">
-                <visible>[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode)] + Control.IsEnabled(7)</visible>
+                <visible>[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + Control.IsEnabled(7)</visible>
                 <visible>!Skin.HasSetting(hide.button.video.rating)</visible>
 
                 <onfocus>SetProperty(last_video_focus,7,Home)</onfocus>

@@ -789,12 +789,12 @@
                 </control>
             </control>
 
-            <!-- MOVIES / TVSHOWS / SEASONS / EPISODES -->
+            <!-- MOVIES / TVSHOWS / SEASONS / EPISODES / MUSIC VIDEO -->
 
             <!-- FILTER + UNWATCHED ONLY -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)</visible>
+                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(musicvideos)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + Container.Filtered + String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])</visible>
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -834,7 +834,7 @@
             <!-- FILTER + WATCHED ONLY -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)</visible>
+                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(musicvideos)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + Container.Filtered + String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])</visible>
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -874,7 +874,7 @@
             <!-- FILTER + ALL VIDEO -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)</visible>
+                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(musicvideos)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + Container.Filtered + String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])</visible>
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -906,7 +906,7 @@
             <!-- UNWATCHED ONLY -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)</visible>
+                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(musicvideos)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + !Container.Filtered + String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])</visible>
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -933,7 +933,7 @@
             <!-- WATCHED ONLY -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)</visible>
+                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(musicvideos)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + !Container.Filtered + String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])</visible>
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -1173,7 +1173,7 @@
             <!-- ALL -->
 
             <control type="grouplist">
-                <visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsPluginApplePodcasts] | Container.Content(favourites) | Window.IsVisible(MyGames.xml) | $EXP[IsGameMode]</visible>
+                <visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | $EXP[IsPluginApplePodcasts] | Container.Content(favourites) | Window.IsVisible(MyGames.xml) | $EXP[IsGameMode] | Container.Content(musicvideos)</visible>
                 <visible>!String.IsEmpty(Container.NumItems) + !Container.Filtered + !String.Contains(Control.GetLabel(10),$LOCALIZE[16101]) + !String.Contains(Control.GetLabel(10),$LOCALIZE[16102]) + !Window.IsActive(videoplaylist)</visible>
 
                 <itemgap>0</itemgap>
@@ -1207,7 +1207,7 @@
             <!-- FALLBACK -->
 
             <control type="grouplist">
-                <visible>![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videoversions) | Container.Content(sets)]</visible>
+                <visible>![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videoversions) | Container.Content(sets) | Container.Content(musicvideos)]</visible>
                 <visible>![Container.Content(artists) | Container.Content(albums) | Container.Content(songs)]</visible>
                 <visible>![Container.Content(directors) | Container.Content(actors) | Container.Content(countries) | Container.Content(years) | Container.Content(genres) | Container.Content(tags) | Container.Content(studios)]</visible>
                 <visible>![$EXP[IsPvrDialog] | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(LoginScreen.xml) | Window.IsActive(videoplaylist) | Window.IsVisible(MyWeather.xml) | Container.Content(favourites) | Window.IsVisible(FileManager.xml)]</visible>
@@ -1535,6 +1535,14 @@
         <control type="label">
             <include>Widgets_Item_Sub_Title_Definition</include>
             <label fallback="19055">$INFO[Window(Home).Property(TMDbHelper.ListItem.Age),, $LOCALIZE[31530]  •  ]</label>
+            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Age))</visible>
+        </control>
+    </include>
+
+    <include name="Def_Home_Label_Widget_Sub_Title_Artist_Age">
+        <control type="label">
+            <include>Widgets_Item_Sub_Title_Definition</include>
+            <label fallback="19055">$INFO[Window(Home).Property(TMDbHelper.ListItem.Age),  •  , $LOCALIZE[31530]]</label>
             <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Age))</visible>
         </control>
     </include>
@@ -3135,6 +3143,7 @@
         <onclick>Skin.SetString(fanart.fallback.movie,special://skin/extras/backgrounds/movies/movies_3.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.tvshow,special://skin/extras/backgrounds/tvshows/tvshows_3.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.music,special://skin/extras/backgrounds/music/music_20.jpg)</onclick>
+        <onclick>Skin.SetString(fanart.fallback.musicvideo,special://skin/extras/backgrounds/musicvideos/musicvideos_1.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.favourite,special://skin/extras/backgrounds/favourites/favourites_2.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.pvr,special://skin/extras/backgrounds/pvr/pvr1.jpg)</onclick>
         <onclick>Skin.SetString(fanart.fallback.radio,special://skin/extras/backgrounds/radio/radio2.jpg)</onclick>
@@ -3527,6 +3536,7 @@
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.movie,special://skin/extras/backgrounds/movies/movies_3.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.tvshow,special://skin/extras/backgrounds/tvshows/tvshows_3.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.music,special://skin/extras/backgrounds/music/music_20.jpg)</onload>
+        <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.musicvideo,special://skin/extras/backgrounds/musicvideos/musicvideos_1.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.favourite,special://skin/extras/backgrounds/favourites/favourites_2.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.pvr,special://skin/extras/backgrounds/pvr/pvr1.jpg)</onload>
         <onload condition="!Skin.HasSetting(startup.init)">Skin.SetString(fanart.fallback.radio,special://skin/extras/backgrounds/radio/radio2.jpg)</onload>

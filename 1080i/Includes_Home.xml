@@ -79,7 +79,7 @@
                 <include content="Animation_Fade_Out_Home_Fullscreen_Widget_150">
                     <param name="condition" value="$EXP[Home_Search_Is_Focus]" />
                 </include>
-            
+
                 <!-- MENU - ARROWS - LEFT - RIGHT -->
 
                 <include>Home_Horizontal_Menu_Arrows</include>
@@ -1169,6 +1169,33 @@
 
             <include content="Def_Home_Label_Widget_Sub_Title_Song"><param name="id" value="$PARAM[id]" /></include>
 
+            <!-- MUSIC VIDEO - ALBUM -->
+
+            <control type="grouplist">
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,musicvideo)</visible>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Def_Home_Label_Widget_Sub_Title_Label"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_AlbumYear"><param name="id" value="$PARAM[id]" /></include>
+            </control>
+
+            <!-- MUSIC VIDEO - ARTIST -->
+
+            <control type="grouplist">
+                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,actor) | String.IsEqual(Container($PARAM[id]).ListItem.Property(tmdb_type),person)</visible>
+                <visible>String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include content="Def_Home_Label_Widget_Sub_Title_Label"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Artist_Age"><param name="id" value="$PARAM[id]" /></include>
+            </control>
+
             <!-- FAVOURITES -->
 
             <include content="Def_Home_Label_Widget_Sub_Title_Favourite_Type"><param name="id" value="$PARAM[id]" /></include>
@@ -1187,10 +1214,11 @@
                 <include content="Def_Home_Label_Widget_Sub_Title_Group_Channel"><param name="id" value="$PARAM[id]" /></include>
             </control>
 
-            <!-- ACTORS -->
+            <!-- ACTORS - VIDEO -->
 
             <control type="grouplist">
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,actor) | String.IsEqual(Container($PARAM[id]).ListItem.Property(tmdb_type),person)</visible>
+                <visible>!String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
 
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -1568,9 +1596,9 @@
         <!-- HIDDEN WITH SEARCH MENU -->
 
         <include content="Animation_Fade_Out_Home_Fullscreen_Widget_150">
-            <param name="condition" value="[$EXP[Home_Search_Is_Focus]]" />
+            <param name="condition" value="$EXP[Home_Search_Is_Focus]" />
         </include>
-                    
+
         <include>Animation_Home_Clean_Fade_Trailer_Is_Playing</include>
 
         <height>40</height>

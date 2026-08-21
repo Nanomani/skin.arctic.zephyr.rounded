@@ -909,7 +909,7 @@
                     <left>0</left>
                     <width>80</width>
                     <bottom>0</bottom>
-                    <texture border="24" colordiffuse="PanelWhite12">$VAR[texture_box24]</texture>
+                    <texture border="24" colordiffuse="$VAR[Value_Color_Settings]">$VAR[texture_box24]</texture>
                     <animation effect="fade" end="50" start="100" time="0" condition="true">Conditional</animation>
                 </control>
                 <control type="image">
@@ -963,7 +963,7 @@
         <textoffsetx>30</textoffsetx>
         <radioposx>518</radioposx>
         <textcolor>PanelWhite100</textcolor>
-        <disabledcolor>PanelWhite12</disabledcolor>
+        <disabledcolor>$VAR[Color_OSD_Panel_Setting_Disable]</disabledcolor>
         <selectedcolor>Selected</selectedcolor>
         <height>70</height>
         <include>Texture_Highlight_Focus</include>
@@ -985,7 +985,7 @@
         <radioposx>1218</radioposx>
         <textoffsetx>30</textoffsetx>
         <textcolor>PanelWhite100</textcolor>
-        <disabledcolor>PanelWhite12</disabledcolor>
+        <disabledcolor>$VAR[Color_OSD_Panel_Setting_Disable]</disabledcolor>
         <selectedcolor>Selected</selectedcolor>
         <height>70</height>
         <include>Texture_Highlight_Focus</include>
@@ -1893,6 +1893,26 @@
                 <onclick>Dialog.Close(all)</onclick>
             </control>
 
+            <!-- CINEMA EXPERIENCE -->
+
+            <control type="radiobutton" id="9049">
+                <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)</visible>
+                <visible>Skin.HasSetting(show.button.video.cinema) + System.AddonIsEnabled(script.preshowexperience)</visible>
+
+                <onfocus>SetProperty(last_video_focus,9049,Home)</onfocus>
+                <onfocus>ClearProperty(moviecontent,Home)</onfocus>
+
+                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
+                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
+
+                <include>Def_Button_Dimensions_Poster</include>
+                <include content="Texture_RadioButton_Dialog_Info">
+                    <param name="icon" value="buttonsdialogs/playcinema.png" />
+                </include>
+
+                <onclick>RunScript(script.preshowexperience,dbtype=$INFO[ListItem.DBType],dbid=$INFO[ListItem.DBID])</onclick>
+            </control>
+
             <!-- FOLDER SEASON / EPISODES / SET -->
 
             <control type="radiobutton" id="9078">
@@ -2238,26 +2258,6 @@
                 <onclick>$VAR[Path_Dialog_Info_Wikipedia]</onclick>
             </control>
 
-            <!-- CINEMA EXPERIENCE -->
-
-            <control type="radiobutton" id="49">
-                <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)</visible>
-                <visible>Skin.HasSetting(show.button.video.cinema) + System.AddonIsEnabled(script.preshowexperience)</visible>
-
-                <onfocus>SetProperty(last_video_focus,49,Home)</onfocus>
-                <onfocus>ClearProperty(moviecontent,Home)</onfocus>
-
-                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
-                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
-
-                <include>Def_Button_Dimensions_Poster</include>
-                <include content="Texture_RadioButton_Dialog_Info">
-                    <param name="icon" value="buttonsdialogs/playcinema.png" />
-                </include>
-
-                <onclick>RunScript(script.preshowexperience,dbtype=$INFO[ListItem.DBType],dbid=$INFO[ListItem.DBID])</onclick>
-            </control>
-
             <!-- USER RATING -->
 
             <control type="radiobutton" id="7">
@@ -2307,6 +2307,31 @@
 
                 <onclick>Action(close)</onclick>
                 <onclick>RunScript(plugin.video.specialfeatures,listitem)</onclick>
+            </control>
+
+            <!-- MUSIC VIDEO - BROWSE ALBUM LIST -->
+
+            <control type="radiobutton" id="9075">
+                <visible>String.IsEqual(ListItem.DBType,musicvideo)</visible>
+                <!-- <visible>!String.IsEmpty(Window(Home).Property(Encoded.ListItem.AlbumArtist))</visible> -->
+                <visible>Integer.IsGreater(Container(9575).NumItems,0)</visible>
+
+                <onfocus>SetProperty(last_video_focus,9075,Home)</onfocus>
+                <onfocus>SetProperty(moviecontent,21,Home)</onfocus>
+
+                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
+                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
+
+                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
+                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
+
+                <include>Def_Button_Dimensions_Poster</include>
+                <include content="Texture_RadioButton_Dialog_Info">
+                    <param name="icon" value="buttonsdialogs/compact-disc.png" />
+                </include>
+
+                <onclick>Dialog.Close(all,false)</onclick>
+                <onclick>ActivateWindow(Music,musicdb://albums/?artist=$INFO[ListItem.Artist]&amp;albumartistonly=true&amp;compilation=false)</onclick>
             </control>
 
             <!-- FANART -->

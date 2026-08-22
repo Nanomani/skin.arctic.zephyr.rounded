@@ -1315,8 +1315,9 @@
 
         <!-- MUSIC VIDEO -->
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + VideoPlayer.Content(musicvideos) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action)) + !Container(998).IsUpdating + Integer.IsGreater(Container(998).NumItems,0)">SetFocus(998)</ondown>
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + VideoPlayer.Content(musicvideos) + !String.IsEmpty(VideoPlayer.DBID) + String.IsEmpty(Skin.String(osd_down_action)) + !Container(998).IsUpdating + Integer.IsGreater(Container(998).NumItems,0)">Action(info)</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + VideoPlayer.Content(musicvideos) + String.IsEmpty(Skin.String(osd_down_action)) + !Container(998).IsUpdating + Integer.IsGreater(Container(998).NumItems,0)">SetFocus(998)</ondown>
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + VideoPlayer.Content(musicvideos) + String.IsEmpty(Skin.String(osd_down_action)) + !Container(998).IsUpdating + Integer.IsGreater(Container(998).NumItems,0)">Action(info)</ondown>
 
         <!-- MOVIES / TV SHOWS DETAILED INFO / MUSIC VIDEO - INIT -->
 
@@ -1338,9 +1339,9 @@
 
         <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !String.IsEmpty(VideoPlayer.Title) + String.IsEqual(Skin.String(osd_down_action),2)">$VAR[Path_Player_Wikipedia]</ondown>
 
-        <!-- AUTO PAUSE -->
+        <!-- AUTO PAUSE IN ALL CASE FOR DIALOG INFO -->
 
-        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !Player.Paused">PlayerControl(Play)</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !Player.Paused + !VideoPlayer.Content(musicvideos)">PlayerControl(Play)</ondown>
 
         <!-- PVR - SHOWS GROUP CHANNEL LIST -->
 
@@ -1764,6 +1765,8 @@
             <include>Def_OSD_UpDown_Video_Info</include>
             <enable>!String.IsEmpty(VideoPlayer.Title) + !String.IsEmpty(VideoPlayer.DBID)</enable>
 
+            <!-- TV SHOW -->
+
             <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">Dialog.Close(VideoOSD)</onclick>
             <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</onclick>
             <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</onclick>
@@ -1804,9 +1807,20 @@
             <include>Def_OSD_UpDown_Video_Info</include>
             <enable>!String.IsEmpty(VideoPlayer.Title) + !String.IsEmpty(VideoPlayer.DBID)</enable>
 
+            <!-- MUSIC VIDEO -->
+
+            <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + VideoPlayer.Content(musicvideos) + !Container(998).IsUpdating + Integer.IsGreater(Container(998).NumItems,0)">SetFocus(998)</onclick>
+
+            <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + VideoPlayer.Content(musicvideos) + !Container(998).IsUpdating + Integer.IsGreater(Container(998).NumItems,0)">Action(info)</onclick>
+
+            <!-- COMMON -->
+
             <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">Dialog.Close(VideoOSD)</onclick>
             <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">SetProperty(OSDVideo_DIALOG_VIDEO_INFO,1,Home)</onclick>
-            <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</onclick>
+
+            <!-- MOVIE -->
+
+            <onclick condition="String.IsEmpty(Window(Home).Property(OSDVideo_Show_INFO)) + String.IsEmpty(Window(Home).Property(OSDVideo_DONT_AUTO_CLOSE)) + !String.IsEmpty(VideoPlayer.DBID) + !VideoPlayer.Content(musicvideos)">$VAR[Def_Dialog_Info_Currently_Playing_Item_VideoOSD]</onclick>
         </include>
     </include>
 

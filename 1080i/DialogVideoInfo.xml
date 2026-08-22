@@ -16,6 +16,19 @@
     <onload>ClearProperty(Encoded.ListItem.Label,Home)</onload>
     <onload>ClearProperty(Encoded.ListItem.TVShowTitle,Home)</onload>
 
+    <!-- INIT - ENCODE ARTIST NAME -->
+
+    <onload>ClearProperty(Encoded.ListItem.Artist,Home)</onload>
+    <onload>ClearProperty(Init_Value_Album_Artist,Home)</onload>
+
+    <!-- ENCODE ARTIST NAME - 1 ARTIST -->
+
+    <onload condition="String.IsEqual(ListItem.DBType,musicvideo) + !String.IsEmpty(ListItem.Artist) + !String.Contains(ListItem.Artist, / )">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Artist&amp;&amp;$INFO[ListItem.Artist]")</onload>
+
+    <!-- ENCODE ARTIST NAME - MORE THAN 1 ARTIST -->
+
+    <onload condition="String.IsEqual(ListItem.DBType,musicvideo) + !String.IsEmpty(ListItem.Artist) + String.Contains(ListItem.Artist, / )">RunPlugin("plugin://script.skinvariables/?info=get_split_string&amp;window_id=Home&amp;window_prop=List.Multi.Artist.Album&amp;infolabel=ListItem.Artist&amp;separator=' / '")</onload>
+
     <!-- ENCODE -->
 
     <onload condition="!String.IsEmpty(ListItem.Title)">RunPlugin("plugin://script.skinvariables/?info=get_encoded_string&amp;unencoded_paths=true&amp;window_id=Home&amp;window_prop=Encoded.ListItem.Title&amp;&amp;$INFO[ListItem.Title]")</onload>

@@ -1762,11 +1762,11 @@
 
             <!-- FOCUS SECOND ROW BUTTON NAVIGATION -->
 
-            <ondown condition="!String.IsEqual(ListItem.Property(tmdb_type),person) + !String.IsEqual(ListItem.DBType,set) + String.IsEmpty(Window(Home).Property(Show_Disc)) + !String.IsEqual(ListItem.DBType,video)">9090</ondown>
+            <ondown condition="!String.IsEqual(ListItem.Property(tmdb_type),person) + !String.IsEqual(ListItem.DBType,set) + String.IsEmpty(Window(Home).Property(Show_Disc)) + !String.IsEqual(ListItem.DBType,video) + !String.IsEqual(ListItem.DBType,musicvideo)">9090</ondown>
 
             <!-- SHOW RESUME OVERLAY -->
 
-            <ondown condition="String.IsEqual(ListItem.Property(tmdb_type),person) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,video)">9669</ondown>
+            <ondown condition="String.IsEqual(ListItem.Property(tmdb_type),person) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,musicvideo)">9669</ondown>
 
             <!-- MOVIES LIST BY CAST -->
 
@@ -1792,6 +1792,11 @@
 
             <onup condition="String.IsEqual(ListItem.Property(tmdb_type),person) + String.IsEqual(Window(Home).Property(moviecontent),20)">9560</onup>
             <onup condition="String.IsEqual(ListItem.Property(tmdb_type),person) + String.IsEqual(Window(Home).Property(moviecontent),20)">SetProperty(TMDbHelper.WidgetContainer,9560,Home)</onup>
+
+            <!-- MUSIC VIDEO - LIST ALBUMS -->
+
+            <onup condition="String.IsEqual(ListItem.DBType,musicvideo) + String.IsEqual(Window(Home).Property(moviecontent),21)">9575</onup>
+            <onup condition="String.IsEqual(ListItem.DBType,musicvideo) + String.IsEqual(Window(Home).Property(moviecontent),21)">SetProperty(TMDbHelper.WidgetContainer,9575,Home)</onup>
 
             <!-- CAST LIST - LOCAL ONLY -->
 
@@ -2034,6 +2039,38 @@
                 <onclick condition="[String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Encoded.ListItem.Studio,Home)</onclick>
 
                 <onclick condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(Window(Home).Property(Set_Movie_TvShow_TMDb_id))">ClearProperty(Director_Person_Query,Home)</onclick>
+            </control>
+
+            <!-- MUSIC VIDEO - BROWSE ALBUM LIST -->
+
+            <control type="radiobutton" id="9075">
+                <visible>String.IsEqual(ListItem.DBType,musicvideo)</visible>
+                <!-- <visible>!String.IsEmpty(Window(Home).Property(Encoded.ListItem.AlbumArtist))</visible> -->
+                <visible>Integer.IsGreater(Container(9575).NumItems,0)</visible>
+
+                <onfocus>SetProperty(last_video_focus,9075,Home)</onfocus>
+                <onfocus>SetProperty(moviecontent,21,Home)</onfocus>
+
+                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
+                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
+
+                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
+                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
+
+                <include>Def_Button_Dimensions_Poster</include>
+                <include content="Texture_RadioButton_Dialog_Info">
+                    <param name="icon" value="buttonsdialogs/compact-disc.png" />
+                </include>
+
+                <onclick>SetFocus(9575)</onclick>
+                <onclick>SetProperty(view_extended,1,Home)</onclick>
+                <onclick>SetProperty(TMDbHelper.WidgetContainer,9575,Home)</onclick>
+                <onclick>Skin.SetBool(TMDbHelper.ForceWidgetContainer)</onclick>
+
+                <!-- BROWSE -->
+
+                <!-- <onclick>Dialog.Close(all,false)</onclick> -->
+                <!-- <onclick>ActivateWindow(Music,musicdb://albums/?artist=$INFO[ListItem.Artist]&amp;albumartistonly=true&amp;compilation=false)</onclick> -->
             </control>
 
             <!-- TRAILER - FULLSCREEN -->
@@ -2307,31 +2344,6 @@
 
                 <onclick>Action(close)</onclick>
                 <onclick>RunScript(plugin.video.specialfeatures,listitem)</onclick>
-            </control>
-
-            <!-- MUSIC VIDEO - BROWSE ALBUM LIST -->
-
-            <control type="radiobutton" id="9075">
-                <visible>String.IsEqual(ListItem.DBType,musicvideo)</visible>
-                <!-- <visible>!String.IsEmpty(Window(Home).Property(Encoded.ListItem.AlbumArtist))</visible> -->
-                <visible>Integer.IsGreater(Container(9575).NumItems,0)</visible>
-
-                <onfocus>SetProperty(last_video_focus,9075,Home)</onfocus>
-                <onfocus>SetProperty(moviecontent,21,Home)</onfocus>
-
-                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
-                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
-
-                <include>Def_Clear_TMDbHelper_WidgetContainer_On_Focus</include>
-                <onfocus>ClearProperty(Show_Disc,Home)</onfocus>
-
-                <include>Def_Button_Dimensions_Poster</include>
-                <include content="Texture_RadioButton_Dialog_Info">
-                    <param name="icon" value="buttonsdialogs/compact-disc.png" />
-                </include>
-
-                <onclick>Dialog.Close(all,false)</onclick>
-                <onclick>ActivateWindow(Music,musicdb://albums/?artist=$INFO[ListItem.Artist]&amp;albumartistonly=true&amp;compilation=false)</onclick>
             </control>
 
             <!-- FANART -->

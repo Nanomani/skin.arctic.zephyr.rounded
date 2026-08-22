@@ -1399,15 +1399,24 @@
                 <!-- <param name="right" value="440" /> -->
             <!-- </include> -->
 
-            <!-- MOVIES / TV SHOWS / MUSIC VIDEO -->
+            <!-- MOVIES / TV SHOWS -->
 
             <control type="label">
                 <include>Def_Info_Left_Line1</include>
                 <label>$VAR[Label_Title]$VAR[Label_Footer_Year,  •  ,]</label>
-                <visible>[Container.Content(movies) | String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,video) | String.IsEqual(ListItem.DBType,musicvideo)]</visible>
+                <visible>[Container.Content(movies) | String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,video)]</visible>
                 <visible>!$EXP[IsYoutube_Comments] + !$EXP[IsYoutubeItem] + !ListItem.IsParentFolder</visible>
                 <visible>![Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !$EXP[IsAnPlugin]]]</visible>
                 <visible>!ListItem.HasVideoVersions + !String.IsEmpty(ListItem.Label)</visible>
+            </control>
+
+            <!-- MUSIC VIDEO -->
+
+            <control type="label">
+                <include>Def_Info_Left_Line1</include>
+                <label>$INFO[ListItem.Artist]$VAR[Label_Footer_Year,  •  ,]$INFO[ListItem.Title,  •  ,]</label>
+                <visible>String.IsEqual(ListItem.DBType,musicvideo)</visible>
+                <visible>!String.IsEmpty(ListItem.Artist)</visible>
             </control>
 
             <!-- MOVIES VIDEOVERSIONS -->
@@ -1673,7 +1682,7 @@
 
             <control type="label">
                 <include>Def_Info_Right_Line1</include>
-                <label>$VAR[Label_View_Flix_Sub_Title_Music]</label>
+                <label>$INFO[ListItem.Album,,  •  ]$VAR[Label_Duration_Time_Check]$INFO[ListItem.Genre,  •  ,]</label>
                 <visible>String.IsEqual(ListItem.DBType,musicvideo)</visible>
                 <visible>Control.IsVisible(52) | Control.IsVisible(503) | [Control.IsVisible(515) + Container.Content(musicvideos)] | [Control.IsVisible(500) + Container.Content(musicvideos)] | Control.IsVisible(508) | Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(5228) | Control.IsVisible(5238)</visible>
                 <visible>!Window.IsVisible(MyPrograms.xml) + !$EXP[IsPluginRadio] + !ListItem.IsParentFolder</visible>

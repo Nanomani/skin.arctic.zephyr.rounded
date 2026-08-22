@@ -574,6 +574,7 @@
     </variable>
 
     <variable name="LabelSub_1_GenreAlbum">
+        <value condition="Container.Content(musicvideos) + !String.IsEmpty(ListItem.Album)">$INFO[ListItem.Title]</value>
         <value condition="Container.Content(albums) + !String.IsEmpty(ListItem.Album)">$INFO[ListItem.Album]</value>
         <value condition="[Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)] + !String.IsEmpty(ListItem.Genre)">$INFO[ListItem.Genre]</value>
         <value condition="$EXP[IsGameMode]">$VAR[Label_Game_Genre]</value>
@@ -757,7 +758,7 @@
         <value condition="!String.IsEmpty(Container.PluginName) + Container.Content() + !String.IsEmpty(System.AddonTitle(Container.PluginName))">$INFO[System.AddonTitle(Container.PluginName)]</value>
         <value condition="$EXP[IsJlomFolder] + !String.IsEmpty(System.AddonTitle(Container.PluginName))">$INFO[System.AddonTitle(Container.PluginName)]</value>
         <value condition="[Container.Content(artists) | Container.Content(albums) | Container.Content(songs)] + !String.IsEmpty(ListItem.AlbumArtist)">$INFO[ListItem.AlbumArtist]</value>
-        <value condition="[Container.Content(artists) | Container.Content(albums) | Container.Content(songs)] + !String.IsEmpty(ListItem.Artist)">$INFO[ListItem.Artist]</value>
+        <value condition="[Container.Content(artists) | Container.Content(albums) | Container.Content(songs) | Container.Content(musicvideos)] + !String.IsEmpty(ListItem.Artist)">$INFO[ListItem.Artist]</value>
         <value condition="String.StartsWith(ListItem.Path,pvr://channels) + !String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
         <value condition="[Container.Content(seasons) | Container.Content(episodes) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TVShowTitle]</value>
         <value condition="[Container.Content(files) | Container.Content(addons)] + !String.IsEmpty(ListItem.Label)">$INFO[ListItem.Label]</value>
@@ -769,7 +770,8 @@
 
         <!-- MUSIC VIDEO -->
 
-        <value condition="String.IsEqual(ListItem.DBType,musicvideo)">$INFO[ListItem.Title]$INFO[ListItem.Year,  •  ,]$INFO[ListItem.Genre,  •  ,]</value>
+        <value condition="String.IsEqual(ListItem.DBType,musicvideo) + Control.IsVisible(514)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]</value>
+        <value condition="String.IsEqual(ListItem.DBType,musicvideo)">$INFO[ListItem.Title]$INFO[ListItem.Year,  •  ,]$INFO[ListItem.Album,  •  ,]</value>
 
         <!-- YOUTUBE -->
 
@@ -903,7 +905,8 @@
         <!-- MUSIC VIDEO -->
 
         <value condition="String.IsEqual(ListItem.DBType,musicvideo) + Control.IsVisible(57)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
-        <value condition="String.IsEqual(ListItem.DBType,musiscvideo) + Control.IsVisible(523)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
+        <value condition="String.IsEqual(ListItem.DBType,musicvideo) + Control.IsVisible(523)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
+        <value condition="String.IsEqual(ListItem.DBType,musicvideo) + Control.IsVisible(503)">$INFO[ListItem.Title]$INFO[ListItem.Year,  •  ,]$INFO[ListItem.Album,  •  ,]</value>
         <value condition="String.IsEqual(ListItem.DBType,musicvideo)">$INFO[ListItem.Album]$INFO[ListItem.Year,  •  ,]$VAR[Label_Duration_Time_Check,  •  ,]</value>
 
         <!-- OTHERS / DEFAULT -->
@@ -2402,6 +2405,7 @@
     <!-- LABEL OSD VIDEO - MAIN TITLE -->
 
     <variable name="Label_OSD_Title_Big">
+        <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Artist]</value>
         <value condition="Player.HasAudio">$INFO[MusicPlayer.Artist]</value>
         <value condition="VideoPlayer.Content(movies)">$INFO[VideoPlayer.Title]</value>
         <!-- <value condition="VideoPlayer.Content(episodes)">$INFO[VideoPlayer.TvShowTitle] - S0$INFO[VideoPlayer.Season]E$INFO[VideoPlayer.Episode]</value> -->
@@ -2415,7 +2419,7 @@
     <!-- LABEL OSD VIDEO - SUB TITLE - INFO -->
 
     <variable name="Label_OSD_Sub_Title_Info_Video">
-        <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Artist]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Album,  •  ]$VAR[Label_OSD_Time_Remaining,  •  $LOCALIZE[31584] ]</value>
+        <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Album,  •  ]$VAR[Label_OSD_Time_Remaining,  •  $LOCALIZE[31584] ]</value>
         <value condition="!String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]$VAR[Label_OSD_Time_Remaining,  •  $LOCALIZE[31584] ]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</value>
         <value condition="String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Premiered)">$INFO[VideoPlayer.Premiered]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</value>
 
@@ -2430,7 +2434,7 @@
     <!-- LABEL OSD VIDEO - SUB TITLE -->
 
     <variable name="Label_OSD_Sub_Title_Video">
-        <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Artist]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Album,  •  ]</value>
+        <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Album,  •  ]</value>
         <value condition="!String.IsEmpty(VideoPlayer.Genre)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</value>
         <value condition="String.IsEmpty(VideoPlayer.Genre) + !String.IsEmpty(VideoPlayer.Premiered) + !Player.IsLive">$INFO[VideoPlayer.Premiered]</value>
         <value condition="String.IsEmpty(VideoPlayer.Genre) + !String.IsEmpty(VideoPlayer.Premiered) + Player.IsLive">$INFO[VideoPlayer.Premiered,,  •  ]$LOCALIZE[19664]</value>
@@ -3015,11 +3019,13 @@
  <!-- LABEL - WIDGETS -->
 
     <variable name="Label_Widget_Lign_1">
+        <value condition="Container.Content(musicvideos)">$INFO[ListItem.Artist]</value>
         <value condition="Container.Content(songs)">$INFO[ListItem.TrackNumber,,.  ]$INFO[ListItem.Title]</value>
         <value>$INFO[ListItem.Label]</value>
     </variable>
 
     <variable name="Label_Widget_Lign_2">
+        <value condition="Container.Content(musicvideos)">$INFO[ListItem.Title]$INFO[ListItem.Year, • ,]</value>
         <value condition="Container.Content(artists)">$INFO[ListItem.Genre]</value>
         <value condition="Container.Content(albums) | Container.Content(songs)">$INFO[ListItem.Artist]</value>
         <value condition="Container.Content(addons)">$INFO[ListItem.AddonVersion,v ]</value>

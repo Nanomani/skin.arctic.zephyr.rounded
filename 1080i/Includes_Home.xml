@@ -1162,20 +1162,42 @@
 
             <!-- ARTISTS -->
 
+            <!-- <control type="grouplist"> -->
+                <!-- <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist)</visible> -->
+
+                <!-- <itemgap>0</itemgap> -->
+                <!-- <orientation>horizontal</orientation> -->
+                <!-- <usecontrolcoords>true</usecontrolcoords> -->
+
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_TotalAlbum"><param name="id" value="$PARAM[id]" /></include> -->
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_ArtistStyle"><param name="id" value="$PARAM[id]" /></include> -->
+            <!-- </control> -->
+
+            <!-- SONGS -->
+
+            <include content="Def_Home_Label_Widget_Sub_Title_Song"><param name="id" value="$PARAM[id]" /></include>
+
+            <!-- MUSIC VIDEO - ARTIST -->
+
             <control type="grouplist">
-                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist)</visible>
+                <visible>String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo) + !$EXP[Home_Main_Menu_Is_Focus]</visible>
 
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
                 <usecontrolcoords>true</usecontrolcoords>
 
-                <include content="Def_Home_Label_Widget_Sub_Title_TotalAlbum"><param name="id" value="$PARAM[id]" /></include>
-                <include content="Def_Home_Label_Widget_Sub_Title_ArtistStyle"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Label"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Artist_Age"><param name="id" value="$PARAM[id]" /></include>
             </control>
+            <control type="grouplist">
+                <visible>$EXP[Home_Main_Menu_Is_Focus] + String.Contains(Container(300).ListItem.Property(submenuVisibility),musicvideo)</visible>
 
-            <!-- SONGS -->
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
 
-            <include content="Def_Home_Label_Widget_Sub_Title_Song"><param name="id" value="$PARAM[id]" /></include>
+                <include content="Def_Home_Label_Widget_Sub_Title_Label"><param name="id" value="$PARAM[id]" /></include>
+            </control>
 
             <!-- MUSIC VIDEO - ALBUM -->
 
@@ -1189,20 +1211,6 @@
                 <include content="Def_Home_Label_Widget_Sub_Title_Label"><param name="id" value="$PARAM[id]" /></include>
                 <include content="Def_Home_Label_Widget_Sub_Title_AlbumYear"><param name="id" value="$PARAM[id]" /></include>
                 <include content="Def_Home_Label_Widget_Sub_Title_Album"><param name="id" value="$PARAM[id]" /></include>
-            </control>
-
-            <!-- MUSIC VIDEO - ARTIST -->
-
-            <control type="grouplist">
-                <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,actor) | String.IsEqual(Container($PARAM[id]).ListItem.Property(tmdb_type),person)</visible>
-                <visible>String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
-
-                <itemgap>0</itemgap>
-                <orientation>horizontal</orientation>
-                <usecontrolcoords>true</usecontrolcoords>
-
-                <include content="Def_Home_Label_Widget_Sub_Title_Label"><param name="id" value="$PARAM[id]" /></include>
-                <include content="Def_Home_Label_Widget_Sub_Title_Artist_Age"><param name="id" value="$PARAM[id]" /></include>
             </control>
 
             <!-- FAVOURITES -->
@@ -1227,7 +1235,7 @@
 
             <control type="grouplist">
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,actor) | String.IsEqual(Container($PARAM[id]).ListItem.Property(tmdb_type),person)</visible>
-                <visible>!String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
+                <visible>!String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo) + ![$EXP[Home_Main_Menu_Is_Focus] + String.Contains(Container(300).ListItem.Property(submenuVisibility),musicvideo)]</visible>
 
                 <itemgap>0</itemgap>
                 <orientation>horizontal</orientation>
@@ -1276,25 +1284,25 @@
 
             <!-- OTHERS / PLUGING -->
 
-            <control type="grouplist">
-                <visible>String.IsEmpty(Container($PARAM[id]).ListItem.DBType) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video)</visible>
-                <visible>!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.youtube) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.audio.apple.podcasts)</visible>
-                <visible>!$EXP[Home_More_Item]</visible>
+            <!-- <control type="grouplist"> -->
+                <!-- <visible>String.IsEmpty(Container($PARAM[id]).ListItem.DBType) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,video)</visible> -->
+                <!-- <visible>!String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.video.youtube) + !String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,plugin://plugin.audio.apple.podcasts)</visible> -->
+                <!-- <visible>!$EXP[Home_More_Item]</visible> -->
 
-                <itemgap>0</itemgap>
-                <orientation>horizontal</orientation>
-                <usecontrolcoords>true</usecontrolcoords>
+                <!-- <itemgap>0</itemgap> -->
+                <!-- <orientation>horizontal</orientation> -->
+                <!-- <usecontrolcoords>true</usecontrolcoords> -->
 
-                <include content="Def_Home_Label_Widget_Sub_Title_Year"><param name="id" value="$PARAM[id]" /></include>
-                <include content="Def_Home_Label_Widget_Sub_Title_DateAdded"><param name="id" value="$PARAM[id]" /></include>
-                <include content="Def_Home_Label_Widget_Sub_Title_Genre"><param name="id" value="$PARAM[id]" /></include>
-                <include content="Def_Home_Label_Widget_Sub_Title_Duration"><param name="id" value="$PARAM[id]" /></include>
-                <include content="Def_Home_Label_Widget_Sub_Title_Tagline"><param name="id" value="$PARAM[id]" /></include>
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_Year"><param name="id" value="$PARAM[id]" /></include> -->
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_DateAdded"><param name="id" value="$PARAM[id]" /></include> -->
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_Genre"><param name="id" value="$PARAM[id]" /></include> -->
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_Duration"><param name="id" value="$PARAM[id]" /></include> -->
+                <!-- <include content="Def_Home_Label_Widget_Sub_Title_Tagline"><param name="id" value="$PARAM[id]" /></include> -->
 
-                <include content="Home_Clean_Movies_Indicator" condition="!Skin.HasSetting(hide.markers) + Skin.HasSetting(home.style.horizontal.clean)">
-                    <param name="id" value="$PARAM[id]" />
-                </include>
-            </control>
+                <!-- <include content="Home_Clean_Movies_Indicator" condition="!Skin.HasSetting(hide.markers) + Skin.HasSetting(home.style.horizontal.clean)"> -->
+                    <!-- <param name="id" value="$PARAM[id]" /> -->
+                <!-- </include> -->
+            <!-- </control> -->
         </control>
     </include>
 
@@ -1326,13 +1334,14 @@
                 <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
                 <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Plot)</visible>
                 <visible>String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
+                <visible>!$EXP[Home_Main_Menu_Is_Focus]</visible>
             </control>
-            <control type="textbox">
-                <include>Def_Widgets_Textbox</include>
-                <label>$INFO[Container($PARAM[id]).ListItem.Property(Artist_Description)]</label>
-                <visible>String.IsEmpty(Container($PARAM[id]).ListItem.Plot) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))</visible>
-                <visible>String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
-            </control>
+            <!-- <control type="textbox"> -->
+                <!-- <include>Def_Widgets_Textbox</include> -->
+                <!-- <label>$INFO[Container($PARAM[id]).ListItem.Property(Artist_Description)]</label> -->
+                <!-- <visible>String.IsEmpty(Container($PARAM[id]).ListItem.Plot) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))</visible> -->
+                <!-- <visible>String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible> -->
+            <!-- </control> -->
 
             <!-- PLUGIN JLOM - MOVIES -->
 
@@ -1362,12 +1371,14 @@
                 <label>$INFO[Container($PARAM[id]).ListItem.Property(Artist_Description)]</label>
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))</visible>
                 <visible>!String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
+                <visible>!$EXP[Home_Main_Menu_Is_Focus]</visible>
             </control>
             <control type="textbox">
                 <include>Def_Widgets_Textbox</include>
                 <label>$INFO[Container(44030).ListItemAbsolute(0).Year,, - ]$INFO[Container(44030).ListItemAbsolute(0).Label][CR]$INFO[Container(44030).ListItemAbsolute(1).Year,, - ]$INFO[Container(44030).ListItemAbsolute(1).Label][CR]$INFO[Container(44030).ListItemAbsolute(2).Year,, - ]$INFO[Container(44030).ListItemAbsolute(2).Label][CR]$INFO[Container(44030).ListItemAbsolute(3).Year,, - ]$INFO[Container(44030).ListItemAbsolute(3).Label][CR]$INFO[Container(44030).ListItemAbsolute(4).Year,, - ]$INFO[Container(44030).ListItemAbsolute(4).Label][CR]$INFO[Container(44030).ListItemAbsolute(5).Year,, - ]$INFO[Container(44030).ListItemAbsolute(5).Label][CR]</label>
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) + String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))</visible>
                 <visible>!String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
+                <visible>!$EXP[Home_Main_Menu_Is_Focus]</visible>
             </control>
 
             <!-- SONGS -->
@@ -1402,6 +1413,7 @@
                 <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Plot))</visible>
                 <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,actor)</visible>
                 <visible>!String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)</visible>
+                <visible>!$EXP[Home_Main_Menu_Is_Focus]</visible>
             </control>
 
             <!-- FILES -->

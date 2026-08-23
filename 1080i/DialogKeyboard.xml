@@ -4,9 +4,8 @@
 
 
 
-    <onunload condition="Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !String.IsEmpty(Window(Home).Property(Launch_Search))">SetProperty(keyboard_value,Control.GetLabel(312).index(1)),Home)</onunload>
-
-    <onunload condition="Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + String.IsEmpty(Window(Home).Property(keyboard_value)) + !String.IsEmpty(Window(Home).Property(Launch_Search))">SetFocus(300)</onunload>
+    <onunload condition="Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !String.IsEmpty(Window(Home).Property(Launch_Search))">SetProperty(keyboard_value,$INFO[Control.GetLabel(312).index(1)],Home)</onunload>
+    <onunload condition="Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !String.IsEmpty(Window(Home).Property(Launch_Search)) + String.IsEmpty(Window(Home).Property(keyboard_value))">SetFocus(300)</onunload>
 
     <onunload condition="String.IsEmpty(Control.GetLabel(312).index(1)) + String.IsEmpty(Window(Home).Property(keyboard_value)) + !String.IsEmpty(Window(Home).Property(Launch_Search))">ClearProperty(Launch_Search,Home)</onunload>
 
@@ -73,6 +72,7 @@
                 <textcolor>Black70</textcolor>
                 <include>Texture_Dialog_Keyboard</include>
 
+                <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">SetProperty(keyboard_value,Control.GetLabel(312).index(1)),Home)</onclick>
                 <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)])</onclick>
             </control>
 
@@ -457,6 +457,7 @@
                     <control type="radiobutton" id="300">
                         <onup>307</onup>
 
+                        <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">SetProperty(keyboard_value,Control.GetLabel(312).index(1)),Home)</onclick>
                         <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)])</onclick>
 
                         <include content="Texture_Dialog_NumPad">

@@ -192,9 +192,7 @@
 
             <control type="group">
                 <visible>String.StartsWith(ListItem.Icon,Default)</visible>
-
                 <visible>[Container.Content(files) | [Container.Content(movies) + String.IsEmpty(ListItem.DBType)] | $EXP[IsJlomFolder]]</visible>
-
                 <visible>$EXP[Views_Bottom_40] | [$EXP[IsJlomFolder] + !$EXP[Views_Bottom_28] + !$EXP[Views_Bottom_18]]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
@@ -321,7 +319,7 @@
         </definition>
     </include>
 
-    <include name="Layout_Poster_Rating_Set_Version_Info">
+    <include name="Layout_Poster_Flag_Rating_Type">
         <param name="small" value="$PARAM[small]" default="false" />
         <param name="bottom_small" value="$PARAM[bottom_small]" default="82" />
         <param name="left" value="$PARAM[left]" default="5" />
@@ -333,7 +331,7 @@
             <!-- LEFT - RATING -->
 
             <control type="group">
-                <visible>Skin.HasSetting(show.furniture.video.rating.num.set.version)</visible>
+                <visible>Skin.HasSetting(show.furniture.video.poster.rating)</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -352,7 +350,7 @@
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
 
                     <control type="image">
-                        <include>Def_Image_Poster_Rating_Info_Left</include>
+                        <include>Def_Background_Poster_Rating_Info_Left</include>
                         <texture background="true" colordiffuse="$VAR[Color_Background_IMDb]">diffuse/circle_64.png</texture>
                     </control>
                     <control type="label">
@@ -368,14 +366,17 @@
                     <visible>!String.IsEmpty(ListItem.DBID) | $EXP[IsPluginShortlist] | [$EXP[IsLibraryGenie] + !$EXP[View_Info_Dialog]] | [Window.IsVisible(Home) + !$EXP[IsTMDbHelperItem]]</visible>
 
                     <visible>String.IsEmpty(ListItem.Rating(imdb))</visible>
-                    <!-- <visible>String.IsEmpty(ListItem.Rating(imdb)) + String.IsEmpty(ListItem.Rating(trakt))</visible> -->
                     <visible>!String.IsEmpty(ListItem.Rating(themoviedb)) | String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),TMDb) | String.IsEqual(Skin.String(Value_Kodi_Rating_Provider),Kodi)</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem]</visible>
 
                     <control type="image">
-                        <include>Def_Image_Poster_Rating_Info_Left</include>
+                        <include>Def_Background_Poster_Rating_Info_Left</include>
                         <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                         <texture background="true" colordiffuse="$VAR[Color_Background_Kodi]">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Left</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Label_Kodi]">common/border_circle_64.png</texture>
                     </control>
                     <control type="label">
                         <textcolor>$VAR[Color_Label_Kodi]</textcolor>
@@ -389,12 +390,11 @@
                 <control type="group">
                     <visible>!String.IsEmpty(ListItem.Rating)</visible>
                     <visible>String.IsEmpty(ListItem.DBID)</visible>
+                    <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) + !Window.IsVisible(Home)] | $EXP[IsTMDbHelperItem]</visible>
                     <visible>!String.IsEqual(ListItem.DBType,album) + !String.IsEqual(ListItem.DBType,set) + !$EXP[IsYoutubeItem] + ![$EXP[IsLibraryGenie] + !$EXP[View_Info_Dialog]] + !$EXP[IsPluginShortlist]</visible>
 
-                    <visible>[!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) + !Window.IsVisible(Home)] | $EXP[IsTMDbHelperItem]</visible>
-
                     <control type="image">
-                        <include>Def_Image_Poster_Rating_Info_Left</include>
+                        <include>Def_Background_Poster_Rating_Info_Left</include>
                         <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
                         <texture background="true" colordiffuse="$VAR[Color_Background_TMDb]">diffuse/circle_64.png</texture>
                     </control>
@@ -405,94 +405,10 @@
                 </control>
             </control>
 
-            <!-- RIGHT - SETS / VERSION -->
+            <!-- LEFT - BDID - TMDB - JLOM -->
 
             <control type="group">
-                <visible>Skin.HasSetting(show.furniture.video.rating.num.set.version)</visible>
-
-                <include content="Def_Bottom" condition="$PARAM[small]">
-                   <param name="bottom" value="$PARAM[bottom_small]" />
-                </include>
-
-                <right>$PARAM[right]</right>
-                <bottom>$PARAM[bottom]</bottom>
-
-                <!-- SETS -->
-
-                <control type="image">
-                    <visible>ListItem.IsCollection + !$EXP[IsJlomItem]</visible>
-                    <include>Def_Background_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                    <include>Animation_Fade_Background_Marker_Icon</include>
-                </control>
-                <control type="image">
-                    <visible>ListItem.IsCollection + !$EXP[IsJlomItem]</visible>
-                    <include>Def_Image_Poster_Rating_Info_Right</include>
-                    <texture background="false" colordiffuse="$VAR[Color_Indicator_Set]">dialog/poster_status/collection.png</texture>
-                </control>
-
-                <!-- VERSIONS -->
-
-                <control type="image">
-                    <visible>ListItem.HasVideoVersions + [!$EXP[View_Info_Dialog] | !String.IsEmpty(Window(Home).Property(view_extended))]</visible>
-                    <visible>!Container.Content(videoversions) + !String.StartsWith(Container.FolderPath,videodb://movies/videoversions)</visible>
-                    <include>Def_Background_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                    <include>Animation_Fade_Background_Marker_Icon</include>
-                </control>
-                <control type="image">
-                    <visible>ListItem.HasVideoVersions + [!$EXP[View_Info_Dialog] | !String.IsEmpty(Window(Home).Property(view_extended))]</visible>
-                    <visible>!Container.Content(videoversions) + !String.StartsWith(Container.FolderPath,videodb://movies/videoversions)</visible>
-                    <include>Def_Image_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Indicator_Version]">dialog/poster_status/server.png</texture>
-                </control>
-
-                <!-- PLUGIN JLOM - MOVIE NOT IN DB -->
-
-                <control type="image">
-                    <visible>$EXP[IsJlomMovie]</visible>
-                    <include>Def_Background_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                    <include>Animation_Fade_Background_Marker_Icon</include>
-                </control>
-                <control type="image">
-                    <visible>$EXP[IsJlomMovie]</visible>
-                    <include>Def_Image_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Indicator_JLOM]">dialog/poster_status/info.png</texture>
-                </control>
-
-                <!-- DBTYPE MOVIE / TVSHOW ? -->
-
-                <control type="image">
-                    <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
-                    <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))] | $EXP[IsTMDbHelper_User_Movies_Tvshows_List]</visible>
-                    <include>Def_Background_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                    <include>Animation_Fade_Background_Marker_Icon</include>
-                </control>
-                <control type="image">
-                    <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
-                    <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))] | $EXP[IsTMDbHelper_User_Movies_Tvshows_List]</visible>
-                    <include>Def_Image_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Indicator_DBType]">dialog/poster_dbtype/$INFO[ListItem.DBType].png</texture>
-                </control>
-            </control>
-        </definition>
-    </include>
-
-    <include name="Layout_Poster_TMDb_Status">
-        <param name="small" value="$PARAM[small]" default="false" />
-        <param name="bottom_small" value="$PARAM[bottom_small]" default="82" />
-        <param name="left" value="$PARAM[left]" default="5" />
-        <param name="right" value="$PARAM[right]" default="5" />
-        <param name="bottom" value="$PARAM[bottom]" default="-10" />
-
-        <definition>
-
-            <!-- BDID - TMDB - JLOM -->
-
-            <control type="group">
-                <visible>!Skin.HasSetting(show.furniture.video.rating.num.set.version)</visible>
+                <visible>!Skin.HasSetting(show.furniture.video.poster.rating)</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -506,13 +422,16 @@
                     <visible>[!String.IsEmpty(Window(Home).Property(view_extended)) + !Skin.HasSetting(filter.video.only.local) + Window.IsVisible(DialogVideoInfo.xml)] | [!Window.IsVisible(DialogVideoInfo.xml) + $EXP[IsTMDbHelperItem] + !Window.IsVisible(Home)] | [!Window.IsVisible(DialogVideoInfo.xml) + $EXP[IsJlomMovieBDID] + !Window.IsVisible(Home)]</visible>
 
                     <control type="image">
-                        <include>Def_Image_Poster_Rating_Info_Left</include>
-                        <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                        <include>Animation_Fade_Background_Marker_Icon</include>
+                        <include>Def_Background_Poster_Rating_Info_Left</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_DBID]">diffuse/circle_64.png</texture>
                     </control>
-                    <control type="label">
-                        <include>Def_Label_Poster_TMDb_DBID_status</include>
-                        <label>$VAR[Label_Icon_DBID]</label>
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Left</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Circle_Type]">common/border_circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Image_Poster_Rating_Info_Left</include>
+                        <texture background="false" colordiffuse="$VAR[Color_Indicator_Empty_DBID]">dialog/poster_status/database.png</texture>
                     </control>
                 </control>
             </control>
@@ -520,7 +439,7 @@
             <!-- RIGHT - SETS / VERSION -->
 
             <control type="group">
-                <visible>!Skin.HasSetting(show.furniture.video.rating.num.set.version)</visible>
+                <visible>Skin.HasSetting(show.furniture.video.poster.itemtype)</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -529,36 +448,82 @@
                 <right>$PARAM[right]</right>
                 <bottom>$PARAM[bottom]</bottom>
 
+                <!-- SETS -->
+
+                <control type="group">
+                    <visible>ListItem.IsCollection + !$EXP[IsJlomItem]</visible>
+
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Circle_Type]">common/border_circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Image_Poster_Rating_Info_Right</include>
+                        <texture background="false" colordiffuse="$VAR[Color_Indicator_Set_Poster]">dialog/poster_status/collection.png</texture>
+                    </control>
+                </control>
+
                 <!-- VERSIONS -->
 
-                <control type="image">
-                    <visible>ListItem.HasVideoVersions + !String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>[Window.IsVisible(DialogVideoInfo.xml) + !String.IsEmpty(Window(Home).Property(view_extended)) + Skin.HasSetting(filter.video.only.local)]</visible>
-                    <include>Def_Background_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                    <include>Animation_Fade_Background_Marker_Icon</include>
+                <control type="group">
+                    <visible>ListItem.HasVideoVersions + [!$EXP[View_Info_Dialog] | !String.IsEmpty(Window(Home).Property(view_extended))]</visible>
+                    <visible>!Container.Content(videoversions) + !String.StartsWith(Container.FolderPath,videodb://movies/videoversions)</visible>
+
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Circle_Type]">common/border_circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Image_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Indicator_Version_Poster]">dialog/poster_status/server.png</texture>
+                    </control>
                 </control>
-                <control type="image">
-                    <visible>ListItem.HasVideoVersions + !String.IsEmpty(ListItem.DBID)</visible>
-                    <visible>[Window.IsVisible(DialogVideoInfo.xml) + !String.IsEmpty(Window(Home).Property(view_extended)) + Skin.HasSetting(filter.video.only.local)]</visible>
-                    <include>Def_Image_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Indicator_Version]">dialog/poster_status/server.png</texture>
+
+                <!-- PLUGIN JLOM - MOVIE NOT IN DB -->
+
+                <control type="group">
+                    <visible>$EXP[IsJlomMovie]</visible>
+
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Circle_Type]">common/border_circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Image_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Indicator_JLOM]">dialog/poster_status/info.png</texture>
+                    </control>
                 </control>
 
                 <!-- DBTYPE MOVIE / TVSHOW ? -->
 
-                <control type="image">
+                <control type="group">
                     <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
                     <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))] | $EXP[IsTMDbHelper_User_Movies_Tvshows_List]</visible>
-                    <include>Def_Background_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
-                    <include>Animation_Fade_Background_Marker_Icon</include>
-                </control>
-                <control type="image">
-                    <visible>String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
-                    <visible>Control.IsVisible(9506) | Control.IsVisible(9556) | Control.IsVisible(9560) | [Control.IsVisible(6) + !String.IsEmpty(Window(Home).Property(ListVideoForCast))] | $EXP[IsTMDbHelper_User_Movies_Tvshows_List]</visible>
-                    <include>Def_Image_Poster_Rating_Info_Right</include>
-                    <texture background="true" colordiffuse="$VAR[Color_Indicator_DBType]">dialog/poster_dbtype/$INFO[ListItem.DBType].png</texture>
+
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Background_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Background_Others]">diffuse/circle_64.png</texture>
+                    </control>
+                    <control type="image">
+                        <include>Def_Image_Poster_Rating_Info_Right</include>
+                        <texture background="true" colordiffuse="$VAR[Color_Indicator_DBType]">dialog/poster_dbtype/$INFO[ListItem.DBType].png</texture>
+                    </control>
                 </control>
             </control>
         </definition>

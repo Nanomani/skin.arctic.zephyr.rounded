@@ -46,136 +46,142 @@
 
         <definition>
             <control type="group">
+                <visible>!Container.Content(years) + !Container.Content(studios)</visible>
+
                 <top>$PARAM[top]</top>
                 <right>$PARAM[right]</right>
-                <visible>!Container.Content(years)</visible>
 
-                <!-- FLAG IS PLAYING -->
+                <!-- STATUS - IS PLAYING  -->
 
-                <control type="image">
-                    <visible>ListItem.IsPlaying | $EXP[IsAlbumIsPlaying]</visible>
+                <control type="group">
                     <visible>!Skin.HasSetting(hide.markers.isplaying)</visible>
-                    <include>Def_Media_Status_Banner_Background</include>
-                    <texture colordiffuse="$VAR[Color_Indicator_Background_Is_Playing]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                    <visible>ListItem.IsPlaying | $EXP[IsAlbumIsPlaying]</visible>
+
+                    <control type="image">
+                        <include>Def_Media_Status_Banner_Background</include>
+                        <texture colordiffuse="$VAR[Color_Indicator_Background_Is_Playing]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                    </control>
+
+                    <!-- ICON - PLAYING -->
+
+                    <control type="label">
+                        <visible>!Player.Paused</visible>
+
+                        <include>Def_Media_Status_Banner_Symbol</include>
+                        <label>&#62811;</label>
+                    </control>
+
+                    <!-- ICON - PLAYING PAUSED -->
+
+                    <control type="label">
+                        <visible>Player.Paused</visible>
+
+                        <include>Def_Media_Status_Banner_Symbol</include>
+                        <label>&#62813;</label>
+                    </control>
                 </control>
 
-                <!-- FLAG IN PROGRESS  -->
+                <!-- STATUS - IN PROGRESS  -->
 
-                <control type="image">
-                    <visible>[ListItem.IsResumable | $EXP[IsTVShowInProgress]] + !ListItem.IsPlaying + !Skin.HasSetting(hide.markers.inprogress)</visible>
-                    <include>Def_Media_Status_Banner_Background</include>
-                    <texture colordiffuse="$VAR[Color_Indicator_Background_In_Progress]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                <control type="group">
+                    <visible>!Skin.HasSetting(hide.markers.inprogress)</visible>
+                    <visible>!ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] | [ListItem.IsPlaying + Skin.HasSetting(hide.markers.isplaying)]</visible>
+
+                    <control type="image">
+                        <visible>[ListItem.IsResumable | $EXP[IsTVShowInProgress]]</visible>
+
+                        <include>Def_Media_Status_Banner_Background</include>
+                        <texture colordiffuse="$VAR[Color_Indicator_Background_In_Progress]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                    </control>
+
+                    <!-- MOVIE -->
+
+                    <control type="label">
+                        <visible>!String.IsEqual(ListItem.DBType,set)</visible>
+                        <visible>!Skin.HasSetting(hide.markers) + !$EXP[IsTVShowInProgress] + ListItem.IsResumable</visible>
+
+                        <include>Def_Media_Status_Banner_Label</include>
+                        <label>$VAR[Label_Flag_Indicator_Is_Resumable]</label>
+                    </control>
+
+                    <!-- LABEL - SETS -->
+
+                    <control type="label">
+                        <visible>String.IsEqual(ListItem.DBType,set)</visible>
+                        <visible>!$EXP[IsTVShowInProgress] + ListItem.IsResumable</visible>
+
+                        <include>Def_Media_Status_Banner_Label</include>
+                        <label>$VAR[Label_Flag_Indicator_Set_In_Progress]</label>
+                    </control>
+
+                    <!-- LABEL - TVSHOW -->
+
+                    <control type="label">
+                        <visible>$EXP[IsTVShowInProgress]</visible>
+                        <include>Def_Media_Status_Banner_Label</include>
+                        <label>$VAR[Label_Flag_Indicator_TVShows_In_Progress]</label>
+                    </control>
                 </control>
 
-                <!-- FLAG IS WATCHED  -->
+                <!-- STATUS - WATCHED  -->
 
-                <control type="image">
-                    <visible>!ListItem.IsResumable + !$EXP[IsTVShowInProgress] + !ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] + Integer.IsGreater(ListItem.Playcount,0) + !Skin.HasSetting(hide.markers.watched)</visible>
+                <control type="group">
+                    <visible>!Skin.HasSetting(hide.markers.watched)</visible>
+                    <visible>!ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] | [ListItem.IsPlaying + Skin.HasSetting(hide.markers.isplaying)]</visible>
+
+                    <visible>!ListItem.IsResumable + !$EXP[IsTVShowInProgress] + Integer.IsGreater(ListItem.Playcount,0)</visible>
                     <visible>[Container.Content(actors) + Window.IsVisible(DialogVideoInfo.xml)] | !Container.Content(actors)</visible>
                     <visible>$EXP[Exp_View_Flag_Watched_Album_Song]</visible>
-                    <include>Def_Media_Status_Banner_Background</include>
-                    <texture colordiffuse="$VAR[Color_Indicator_Background_Watched]" background="true">dialog/misc/banner_status_overlay.png</texture>
+
+                    <control type="image">
+                        <include>Def_Media_Status_Banner_Background</include>
+                        <texture colordiffuse="$VAR[Color_Indicator_Background_Watched]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                    </control>
+                    <control type="label">
+                        <include>Def_Media_Status_Banner_Label</include>
+                        <label>$VAR[Label_Flag_Watched_Poster]</label>
+                    </control>
                 </control>
 
-                <!-- FLAG IS UNWATCHED  -->
+                <!-- STATUS - UNWATCHED  -->
 
-                <control type="image">
-                    <visible>!ListItem.IsResumable + !$EXP[IsTVShowInProgress] + !ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] + Integer.IsEqual(ListItem.Playcount,0) + Skin.HasSetting(show.markers.unwatched.banner)</visible>
+                <control type="group">
+                    <visible>Skin.HasSetting(show.markers.unwatched.banner)</visible>
+                    <visible>!ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] | [ListItem.IsPlaying + Skin.HasSetting(hide.markers.isplaying)]</visible>
+
+                    <visible>!ListItem.IsResumable + !$EXP[IsTVShowInProgress] + Integer.IsEqual(ListItem.Playcount,0)</visible>
                     <visible>String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)</visible>
                     <visible>!$EXP[Home_More_Item]</visible>
                     <visible>![String.IsEqual(ListItem.Overlay,OverlayUnwatched.png) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]]]</visible>
                     <visible>![Control.IsVisible(9550) | Control.IsVisible(9557)]</visible>
                     <visible>[Container.Content(actors) + Window.IsVisible(DialogVideoInfo.xml)] | !Container.Content(actors)</visible>
-                    <include>Def_Media_Status_Banner_Background</include>
-                    <texture colordiffuse="$VAR[Color_Indicator_Background_UnWatched]" background="true">dialog/misc/banner_status_overlay.png</texture>
+
+                    <control type="image">
+                        <include>Def_Media_Status_Banner_Background</include>
+                        <texture colordiffuse="$VAR[Color_Indicator_Background_UnWatched]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                    </control>
+                    <control type="label">
+                        <include>Def_Media_Status_Banner_Label</include>
+                        <label>$VAR[Label_Flag_UnWatched_Poster]</label>
+                    </control>
                 </control>
 
-                <!-- FLAG IS NEW  -->
+                <!-- STATUS - NEW  -->
 
-                <control type="image">
-                    <visible>!ListItem.IsResumable + !$EXP[IsTVShowInProgress] + !ListItem.IsPlaying + [String.IsEqual(ListItem.Overlay,OverlayUnwatched.png) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]]] + !Skin.HasSetting(hide.markers.newcontent)</visible>
-                    <include>Def_Media_Status_Banner_Background</include>
-                    <texture colordiffuse="$VAR[Color_Indicator_Background_New]" background="true">dialog/misc/banner_status_overlay.png</texture>
-                </control>
+                <control type="group">
+                    <visible>!Skin.HasSetting(hide.markers.newcontent)</visible>
+                    <visible>!ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] | [ListItem.IsPlaying + Skin.HasSetting(hide.markers.isplaying)]</visible>
 
-                <!-- LABEL MOVIE IN PROGRESS  -->
+                    <visible>!ListItem.IsResumable + !$EXP[IsTVShowInProgress] + [String.IsEqual(ListItem.Overlay,OverlayUnwatched.png) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]]]</visible>
 
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers) + !$EXP[IsTVShowInProgress] + ListItem.IsResumable + !Skin.HasSetting(hide.markers.inprogress)</visible>
-                    <visible>!ListItem.IsPlaying + !Skin.HasSetting(hide.markers.isplaying) + !String.IsEqual(ListItem.DBType,set)</visible>
-                    <include>Def_Media_Status_Banner_Label</include>
-                    <label>$VAR[Label_Flag_Indicator_Is_Resumable]</label>
-                </control>
-
-                <!-- LABEL SETS IN PROGRESS  -->
-
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers) + !$EXP[IsTVShowInProgress] + ListItem.IsResumable + !Skin.HasSetting(hide.markers.inprogress)</visible>
-                    <visible>!ListItem.IsPlaying + !Skin.HasSetting(hide.markers.isplaying) + String.IsEqual(ListItem.DBType,set)</visible>
-                    <include>Def_Media_Status_Banner_Label</include>
-                    <label>$VAR[Label_Flag_Indicator_Set_In_Progress]</label>
-                </control>
-
-                <!-- LABEL TVSHOW IN PROGRESS  -->
-
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers) + $EXP[IsTVShowInProgress] + !Skin.HasSetting(hide.markers.inprogress)</visible>
-                    <visible>!ListItem.IsPlaying + !Skin.HasSetting(hide.markers.isplaying)</visible>
-                    <include>Def_Media_Status_Banner_Label</include>
-                    <label>$VAR[Label_Flag_Indicator_TVShows_In_Progress]</label>
-                </control>
-
-                <!-- LABEL IS WATCHED  -->
-
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers) + !ListItem.IsResumable + Integer.IsGreater(ListItem.Playcount,0) + !Skin.HasSetting(hide.markers.watched)</visible>
-                    <visible>!ListItem.IsPlaying</visible>
-                    <visible>!Skin.HasSetting(hide.markers.isplaying)</visible>
-                    <visible>$EXP[Exp_View_Flag_Watched_Album_Song] + !$EXP[IsAlbumIsPlaying]</visible>
-                    <visible>[Container.Content(actors) + Window.IsVisible(DialogVideoInfo.xml)] | !Container.Content(actors)</visible>
-                    <include>Def_Media_Status_Banner_Label</include>
-                    <label>$VAR[Label_Flag_Watched_Poster]</label>
-                </control>
-
-                <!-- LABEL IS UNWATCHED  -->
-
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers) + !ListItem.IsResumable + Integer.IsEqual(ListItem.Playcount,0) + Skin.HasSetting(show.markers.unwatched.banner)</visible>
-                    <visible>String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)</visible>
-                    <visible>!$EXP[Home_More_Item]</visible>
-                    <visible>![String.IsEqual(ListItem.Overlay,OverlayUnwatched.png) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]]]</visible>
-                    <visible>!ListItem.IsPlaying</visible>
-                    <visible>![Control.IsVisible(9550) | Control.IsVisible(9557)]</visible>
-                    <visible>[Container.Content(actors) + Window.IsVisible(DialogVideoInfo.xml)] | !Container.Content(actors)</visible>
-                    <include>Def_Media_Status_Banner_Label</include>
-                    <label>$VAR[Label_Flag_UnWatched_Poster]</label>
-                </control>
-
-                 <!-- LABEL IS NEW  -->
-
-                <control type="label">
-                    <visible>String.IsEqual(ListItem.Overlay,OverlayUnwatched.png) + [$EXP[IsNewMovie] | $EXP[IsNewTVShow] | $EXP[IsNewEpisode]] + !Skin.HasSetting(hide.markers.newcontent) + [!$EXP[IsTVShowInProgress] + !ListItem.IsResumable]</visible>
-                    <visible>!ListItem.IsPlaying</visible>
-                    <include>Def_Media_Status_Banner_Label</include>
-                    <label>$LOCALIZE[31369]</label>
-                </control>
-
-                <!-- ICON IS PLAYING -->
-
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers.isplaying)</visible>
-                    <visible>[ListItem.IsPlaying | $EXP[IsAlbumIsPlaying]] + !Player.Paused</visible>
-                    <include>Def_Media_Status_Banner_Symbol</include>
-                    <label>&#62811;</label>
-                </control>
-
-                <!-- ICON IS PLAYING PAUSED -->
-
-                <control type="label">
-                    <visible>!Skin.HasSetting(hide.markers.isplaying)</visible>
-                    <visible>[ListItem.IsPlaying | $EXP[IsAlbumIsPlaying]] + Player.Paused</visible>
-                    <include>Def_Media_Status_Banner_Symbol</include>
-                    <label>&#62813;</label>
+                    <control type="image">
+                        <include>Def_Media_Status_Banner_Background</include>
+                        <texture colordiffuse="$VAR[Color_Indicator_Background_New]" background="true">dialog/misc/banner_status_overlay.png</texture>
+                    </control>
+                    <control type="label">
+                        <include>Def_Media_Status_Banner_Label</include>
+                        <label>$LOCALIZE[31369]</label>
+                    </control>
                 </control>
             </control>
         </definition>
@@ -338,7 +344,7 @@
 
             <control type="group">
                 <visible>Skin.HasSetting(show.furniture.video.poster.rating)</visible>
-                <visible>!$EXP[ShowProgressBarPercentPlayed]</visible>
+                <visible>!$EXP[ShowProgressBarPercentPlayed] + !$EXP[ShowProgressBarPercentTvShowsPlayed]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -416,7 +422,7 @@
 
             <control type="group">
                 <visible>!Skin.HasSetting(show.furniture.video.poster.rating)</visible>
-                <visible>!$EXP[ShowProgressBarPercentPlayed]</visible>
+                <visible>!$EXP[ShowProgressBarPercentPlayed] + !$EXP[ShowProgressBarPercentTvShowsPlayed]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -448,7 +454,7 @@
 
             <control type="group">
                 <visible>Skin.HasSetting(show.furniture.video.poster.itemtype)</visible>
-                <visible>!$EXP[ShowProgressBarPercentPlayed]</visible>
+                <visible>!$EXP[ShowProgressBarPercentPlayed] + !$EXP[ShowProgressBarPercentTvShowsPlayed]</visible>
 
                 <include content="Def_Bottom" condition="$PARAM[small]">
                    <param name="bottom" value="$PARAM[bottom_small]" />
@@ -552,10 +558,14 @@
         <param name="bottom_middle" value="$PARAM[bottom_middle]" default="85" />
         <param name="bottom" value="$PARAM[bottom]" default="20" />
         <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" default="$VAR[Color_Widget_Progress_Bar_Background]" />
-        <param name="visible" value="$PARAM[visible]" default="Integer.IsGreater(ListItem.PercentPlayed,1) + !Integer.IsGreater(ListItem.PercentPlayed,99) + !Skin.HasSetting(hide.markers)" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
             <control type="progress">
+                <visible>$PARAM[visible]</visible>
+                <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,video) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)</visible>
+                <visible>$EXP[ShowProgressBarPercentPlayed]</visible>
+
                 <left>$PARAM[left]</left>
                 <right>$PARAM[right]</right>
                 <height>$PARAM[height]</height>
@@ -568,7 +578,25 @@
                 <bottom>$PARAM[bottom]</bottom>
                 <info>ListItem.PercentPlayed</info>
                 <texturebg colordiffuse="$PARAM[colordiffuse_background]" border="8,0,8,0">progress/progress-nib.png</texturebg>
+            </control>
+
+            <control type="progress">
                 <visible>$PARAM[visible]</visible>
+                <visible>String.IsEqual(ListItem.DBType,tvshow)</visible>
+                <visible>$EXP[ShowProgressBarPercentTvShowsPlayed]</visible>
+
+                <left>$PARAM[left]</left>
+                <right>$PARAM[right]</right>
+                <height>$PARAM[height]</height>
+                <include content="Def_Bottom" condition="$PARAM[small]">
+                   <param name="bottom" value="$PARAM[bottom_small]" />
+                </include>
+                <include content="Def_Bottom" condition="$PARAM[middle]">
+                   <param name="bottom" value="$PARAM[bottom_middle]" />
+                </include>
+                <bottom>$PARAM[bottom]</bottom>
+                <info>ListItem.Property(WatchedEpisodePercent)</info>
+                <texturebg colordiffuse="$PARAM[colordiffuse_background]" border="8,0,8,0">progress/progress-nib.png</texturebg>
             </control>
         </definition>
     </include>
@@ -583,10 +611,14 @@
         <param name="bottom_middle" value="$PARAM[bottom_middle]" default="85" />
         <param name="bottom" value="$PARAM[bottom]" default="20" />
         <param name="colordiffuse_background" value="$PARAM[colordiffuse_background]" default="$VAR[Color_Widget_Progress_Bar_Background]" />
-        <param name="visible" value="$PARAM[visible]" default="Integer.IsGreater(ListItem.Progress,1) + !Integer.IsGreater(ListItem.Progress,99) + String.StartsWith(ListItem.Path,pvr://channels) + !String.IsEqual(ListItem.Path,pvr://channels/tv/)" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
             <control type="progress">
+                <visible>$PARAM[visible]</visible>
+                <visible>String.StartsWith(ListItem.Path,pvr://channels) + !String.IsEqual(ListItem.Path,pvr://channels/tv/)</visible>
+                <visible>Integer.IsGreater(ListItem.Progress,1) + !Integer.IsGreater(ListItem.Progress,99)</visible>
+
                 <left>$PARAM[left]</left>
                 <right>$PARAM[right]</right>
                 <height>$PARAM[height]</height>
@@ -599,7 +631,6 @@
                 <bottom>$PARAM[bottom]</bottom>
                 <info>ListItem.Progress</info>
                 <texturebg colordiffuse="$PARAM[colordiffuse_background]" border="8,0,8,0">progress/progress-nib.png</texturebg>
-                <visible>$PARAM[visible]</visible>
             </control>
         </definition>
     </include>

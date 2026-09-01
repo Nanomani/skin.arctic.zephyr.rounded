@@ -625,6 +625,11 @@
         <value condition="!String.IsEmpty(ListItem.Genre)">$INFO[ListItem.Genre]</value>
     </variable>
 
+    <variable name="Label_Player_Genre">
+        <value condition="Skin.HasSetting(enabled.tmdb.helper.service) + !String.IsEmpty(Window(Home).Property(TMDbHelper.Player.Genre.1.Name))">$INFO[Window(Home).Property(TMDbHelper.Player.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.Player.Genre.2.Name), / ,]</value>
+        <value condition="!String.IsEmpty(ListItem.Genre)">$INFO[VideoPlayer.Genre]</value>
+    </variable>
+
     <variable name="Label_Genre_Ext">
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.1.Name)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Genre.2.Name), / ,]</value>
     </variable>
@@ -2427,7 +2432,7 @@
 
     <variable name="Label_OSD_Sub_Title_Info_Video">
         <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Album,  •  ]$VAR[Label_OSD_Time_Remaining,  •  $LOCALIZE[31584] ]</value>
-        <value condition="!String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]$VAR[Label_OSD_Time_Remaining,  •  $LOCALIZE[31584] ]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</value>
+        <value condition="!String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes)">$INFO[VideoPlayer.Year]$VAR[Label_Player_Genre,  •  ]$VAR[Label_OSD_Time_Remaining,  •  $LOCALIZE[31584] ]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</value>
         <value condition="String.IsEmpty(VideoPlayer.Genre) + !VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.Premiered)">$INFO[VideoPlayer.Premiered]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</value>
 
         <value condition="VideoPlayer.Content(episodes) + Integer.IsGreater(VideoPlayer.Episode,9)">$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Season,  •  $LOCALIZE[20359] ,x]$INFO[VideoPlayer.Episode]$INFO[VideoPlayer.Title,  •  ,]$INFO[Player.FinishTime ,  •  $LOCALIZE[31003] ]</value>
@@ -2442,7 +2447,7 @@
 
     <variable name="Label_OSD_Sub_Title_Video">
         <value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Title]$INFO[VideoPlayer.Year,  •  ]$INFO[VideoPlayer.Album,  •  ]</value>
-        <value condition="!String.IsEmpty(VideoPlayer.Genre)">$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre,  •  ]</value>
+        <value condition="!String.IsEmpty(VideoPlayer.Genre)">$INFO[VideoPlayer.Year]$VAR[Label_Player_Genre,  •  ]</value>
         <value condition="String.IsEmpty(VideoPlayer.Genre) + !String.IsEmpty(VideoPlayer.Premiered) + !Player.IsLive">$INFO[VideoPlayer.Premiered]</value>
         <value condition="String.IsEmpty(VideoPlayer.Genre) + !String.IsEmpty(VideoPlayer.Premiered) + Player.IsLive">$INFO[VideoPlayer.Premiered,,  •  ]$LOCALIZE[19664]</value>
         <value>$INFO[player.chapter,$LOCALIZE[21396] ]$INFO[Player.ChapterCount,/]</value>

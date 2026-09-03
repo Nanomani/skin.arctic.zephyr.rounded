@@ -28,7 +28,7 @@
         <!-- PLOT - VIDEO - WITH VIDEO OSD - MANUAL -->
 
         <include content="Object_OSD_Player_Plot">
-            <param name="visible" value="[!String.IsEmpty(Window(Home).Property(OSDVideo_Show_PLOT)) + !Window.IsVisible(DialogFullScreenInfo.xml) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO))]" />
+            <param name="visible" value="[$EXP[OSD_Video_Show_Plot_Poster] + !Window.IsVisible(DialogFullScreenInfo.xml) + String.IsEmpty(Window(Home).Property(OSDVideo_DIALOG_VIDEO_INFO))]" />
             <param name="onleft" value="SetFocus(556)" />
             <param name="onright" value="SetFocus(556)" />
             <param name="onback" value="SetFocus(556)" />
@@ -36,6 +36,11 @@
             <param name="scroll_centerright" value="1340" />
             <param name="scrollid" value="9805" />
         </include>
+
+        <control type="button" id="558">
+            <include>Def_Hidden_Button</include>
+            <include content="Object_OnDirection_Action"><param name="ondirection" value="556" /></include>
+        </control>
 
         <control type="button" id="556">
             <include>Def_Hidden_Button</include>
@@ -51,7 +56,8 @@
             <onfocus>SetProperty(OSDVideo_Show_INFO,1,Home)</onfocus>
             <onfocus>SetProperty(OSDVideo_Show_PLOT,1,Home)</onfocus>
 
-            <onfocus condition="Control.IsVisible(9805)">AlarmClock(delay_focus_scrollbar,SetFocus(9805),00:01,silent)</onfocus>
+            <onfocus condition="Control.IsVisible(9805) + !Skin.HasSetting(hide.osd.info.plot.poster)">AlarmClock(delay_focus_scrollbar,SetFocus(9805),00:01,silent)</onfocus>
+            <onfocus condition="Skin.HasSetting(hide.osd.info.plot.poster)">AlarmClock(delay_focus_scrollbar,SetFocus(558),00:00,silent)</onfocus>
             <!-- <onup>SetFocus(9805)</onup> -->
 
             <onleft>ClearProperty(OSDVideo_Show_INFO,Home)</onleft>

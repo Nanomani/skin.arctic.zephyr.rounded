@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1148">
+    <defaultcontrol always="true">90009</defaultcontrol>
+
+
+    <onload condition="!String.IsEmpty(Window(Home).Property(CustomSearchTerm))">RunScript(script.skinvariables,set_editcontrol=90009,window_id=1114,setfocus=340,text=$INFO[Window(Home).Property(CustomSearchTerm)])</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(CustomSearchTerm)) + !String.IsEqual(Window(Home).Property(ReplaceWindow),1114)">ClearProperty(CustomSearchTerm,Home)</onload>
+
+    <onload>SetFocus(90009)</onload>
+
+	<controls>
+        <include>Background_Global</include>
+
+        <!-- BUTTON EDIT SEARCH -->
+
+        <control type="group">
+            <!-- <visible allowhiddenfocus="true">[Control.HasFocus(90009) | Control.HasFocus(340)] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml)</visible> -->
+
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+
+            <!-- SEARCH BAR -->
+
+            <control type="group">
+                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(90009)">Conditional</animation>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>589</width>
+                    <height>80</height>
+                    <include>Texture_Dialog_Search</include>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
+                </control>
+            </control>
+
+            <control type="button" id="331" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus>ActivateWindow(addonbrowser,return)</onfocus>
+                <onfocus>SetFocus(6000,4,absolute)</onfocus>
+                <onfocus>SetFocus(50)</onfocus>
+                <onfocus>Container.Update(addons://search/,return)</onfocus>
+            </control>
+            <control type="button" id="330" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus>SetFocus(90009)</onfocus>
+            </control>
+
+            <!-- EDIT BAR -->
+
+            <control type="group">
+                <top>40</top>
+                <left>80</left>
+
+                <control type="edit" id="90009">
+                    <width>580</width>
+                    <height>80</height>
+                    <label/>
+                    <align>left</align>
+                    <aligny>center</aligny>
+
+                    <font>HeaderLabel</font>
+                    <textoffsetx>80</textoffsetx>
+                    <textcolor>Selected</textcolor>
+                    <focusedcolor>Selected</focusedcolor>
+                    <selectedcolor>Selected</selectedcolor>
+                    <disabledcolor>White12</disabledcolor>
+                    <texturefocus />
+                    <texturenofocus />
+
+                    <!-- <onright>Close</onright> -->
+                    <!-- <onleft>Close</onleft> -->
+
+                    <ondown>SetProperty(PreviousSearchTerm,$INFO[Control.GetLabel(9099).index(1)])</ondown>
+                    <ondown condition="!Integer.IsEqual(Container(6000).NumItems,0)">6000</ondown>
+                    <ondown condition="Integer.IsEqual(Container(6000).NumItems,0)">340</ondown>
+
+                    <onright>380</onright>
+                    <onleft>380</onleft>
+                </control>
+
+                <control type="button" id="380" description="Helper">
+                    <include>Def_Hidden_Button</include>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus>SetFocus(90009)</onfocus>
+                    <visible allowhiddenfocus="true">Control.HasFocus(380)</visible>
+                    <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+                </control>
+            </control>
+
+            <!-- TIPS - FOOTER -->
+
+            <include content="Object_Footer_Tips">
+                <param name="top" value="120" />
+                <param name="left" value="94" />
+                <param name="label" value="$VAR[Label_Home_Search_Bar_Tip]" />
+                <param name="textcolor" value="Black70" />
+                <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
+                <param name="visible" value="[Control.HasFocus(90009) | Control.HasFocus(380)] + !Window.IsVisible(DialogKeyboard.xml)" />
+            </include>
+        </control>
+
+		<control type="group">
+
+            <control type="grouplist" id="6000">
+                <onup>90009</onup>
+                <ondown>330</ondown>
+
+                <include>Animation_Common_Global</include>
+                <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
+
+                <animation type="Conditional" condition="Control.IsVisible(340)" reversible="false">
+                    <effect type="slide" end="0,20" time="60" tween="sine" />
+                    <effect type="slide" end="0,-20" time="180" tween="sine" delay="80" />
+                </animation>
+                <animation type="Conditional" condition="Control.IsVisible(330)" reversible="false">
+                    <effect type="slide" end="0,-20" time="60" tween="sine" />
+                    <effect type="slide" end="0,20" time="180" tween="sine" delay="80" />
+                </animation>
+                    
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <height>770</height>
+                <bottom>188</bottom>
+                <width>1920</width>
+
+                <include>skinshortcuts-template-search</include>
+            </control>
+        </control>
+
+        <control type="button" id="330">
+            <width>1</width>
+            <height>1</height>
+            <left>-1000</left>
+            <onfocus>SetFocus(6000)</onfocus>
+            <onclick>SetFocus(6000)</onclick>
+            <visible allowhiddenfocus="true">Control.HasFocus(330)</visible>
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+        </control>
+
+        <control type="button" id="340">
+            <width>1</width>
+            <height>1</height>
+            <left>-1000</left>
+            <onfocus>SetFocus(90009)</onfocus>
+            <onclick>SetFocus(90009)</onclick>
+            <visible allowhiddenfocus="true">Control.HasFocus(340)</visible>
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+        </control>
+    </controls>
+</window>

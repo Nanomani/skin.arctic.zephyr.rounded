@@ -87,7 +87,7 @@
 
             <!-- SHOW MENU SEARCH -->
 
-            <onfocus>SetProperty(Show_Menu_Search,1,Home)</onfocus>
+            <onfocus condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">SetProperty(Show_Menu_Search,1,Home)</onfocus>
 
             <!-- CANCEL - TIMER - AUTO SLIDE MENU -->
 
@@ -144,7 +144,8 @@
             <onup condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</onup>
 
             <onclick>ClearProperty(GlobalSearchWindowOpen,Home)</onclick>
-            <onclick>Control.SetFocus(3060,0,absolute)</onclick>
+            <onclick condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">Control.SetFocus(3060,0,absolute)</onclick>
+            <onclick condition="Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1148)</onclick>
             <onclick>ClearProperty(AnimationDirection,Home)</onclick>
         </control>
 
@@ -178,7 +179,7 @@
                 <width>80</width>
                 <height>80</height>
                 <control type="image">
-                    <width>589</width>
+                    <width>590</width>
                     <height>80</height>
                     <include>Texture_Dialog_Search</include>
                 </control>
@@ -200,6 +201,25 @@
             <control type="button" id="330" description="Helper">
                 <include>Def_Hidden_Button</include>
                 <onfocus>SetFocus(90009)</onfocus>
+            </control>
+
+            <!-- SPINNER LOADING -->
+
+            <control type="group">
+                <visible>Window.IsVisible(DialogBusy.xml)</visible>
+
+                <top>30</top>
+                <left>580</left>
+
+                <width>100</width>
+                <height>100</height>
+
+                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
+                <include content="Object_Spinner_Busy">
+                    <param name="show_label_spinner" value="false" />
+                    <param name="centerleft" value="50%" />
+                    <param name="centertop" value="50%" />
+                </include>
             </control>
 
             <!-- EDIT BAR WIKIPEDIA -->

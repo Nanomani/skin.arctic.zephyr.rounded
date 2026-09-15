@@ -1067,6 +1067,56 @@
     <!--          WIDGET CONTAINER           -->
     <!-- =================================== -->
 
+    <include name="Def_Search_Widget_Container">
+        <param name="height" value="$PARAM[height]" default="325" />
+        <param name="orientation" value="$PARAM[orientation]" default="horizontal" />
+        <param name="movement" value="$PARAM[movement]" default="0" />
+        <param name="visible" value="$PARAM[visible]"  default="true" />
+        <param name="altvisible" value="$PARAM[altvisible]"  default="false" />
+        <param name="busy_visible" value="$PARAM[busy_visible]"  default="false" />
+
+        <definition>
+            <visible>[Container($PARAM[id]).IsUpdating | !Integer.IsEqual(Container($PARAM[id]).NumItems,0) | $PARAM[altvisible]]</visible>
+            <visible>$PARAM[visible]</visible>
+
+            <animation effect="fade" start="100" end="0" time="0" condition="Container($PARAM[id]).IsUpdating + $PARAM[busy_visible]">Conditional</animation>
+            <include>Animation_Horizontal_Scrolltime_Widgets_List</include>
+
+            <top>60</top>
+            <left>0</left>
+            <right>0</right>
+            <height>325</height>
+
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]10).NumItems,0) + Control.IsVisible($PARAM[idshort]10)">SetProperty(BackToFirstRow,$PARAM[idshort]10,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]9).NumItems,0) + Control.IsVisible($PARAM[idshort]9)">SetProperty(BackToFirstRow,$PARAM[idshort]9,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]8).NumItems,0) + Control.IsVisible($PARAM[idshort]8)">SetProperty(BackToFirstRow,$PARAM[idshort]8,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]7).NumItems,0) + Control.IsVisible($PARAM[idshort]7)">SetProperty(BackToFirstRow,$PARAM[idshort]7,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]6).NumItems,0) + Control.IsVisible($PARAM[idshort]6)">SetProperty(BackToFirstRow,$PARAM[idshort]6,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]5).NumItems,0) + Control.IsVisible($PARAM[idshort]5)">SetProperty(BackToFirstRow,$PARAM[idshort]5,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]4).NumItems,0) + Control.IsVisible($PARAM[idshort]4)">SetProperty(BackToFirstRow,$PARAM[idshort]4,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]3).NumItems,0) + Control.IsVisible($PARAM[idshort]3)">SetProperty(BackToFirstRow,$PARAM[idshort]3,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]2).NumItems,0) + Control.IsVisible($PARAM[idshort]2)">SetProperty(BackToFirstRow,$PARAM[idshort]2,Home)</onfocus> -->
+            <!-- <onfocus condition="Integer.IsGreater(Container($PARAM[idshort]1).NumItems,0) + Control.IsVisible($PARAM[idshort]1)">SetProperty(BackToFirstRow,$PARAM[idshort]1,Home)</onfocus> -->
+
+            <onfocus condition="$EXP[Has_Home_Menu_Auto_Slide_Out_Animation]">CancelAlarm(slide_out_setfocus_2011,true)</onfocus>
+
+            <!-- SET TMDB WIDGET CONTAINER -->
+
+            <onfocus>SetProperty(TMDbHelper.WidgetContainer,$PARAM[id],Home)</onfocus>
+
+            <onunfocus>ClearProperty(nowplaying.auto.show.timer,Home)</onunfocus>
+            <onunfocus>ClearProperty(HomeLastWidgetFocus,Home)</onunfocus>
+
+            <!-- MAIN MENU : FOCUS IF INACTIVITY -->
+
+            <onfocus condition="Window.IsVisible(Home) + Skin.HasSetting(homemenu.auto.back.to.main) + !Skin.HasSetting(homemenu.auto.back.to.main.only.from.submenu)">SetProperty(focus_main_menu_timer,1,Home)</onfocus>
+
+            <focusposition>0</focusposition>
+            <movement>$PARAM[movement]</movement>
+            <orientation>$PARAM[orientation]</orientation>
+        </definition>
+    </include>
+
     <include name="Def_Multi_Widget_Container">
         <param name="height" value="$PARAM[height]" default="325" />
         <param name="orientation" value="$PARAM[orientation]" default="horizontal" />

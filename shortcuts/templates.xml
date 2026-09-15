@@ -6,6 +6,12 @@
 
     <expressions>
         <expression name="widgetItemVisible">String.IsEqual(Container(300).ListItem.Property(submenuVisibility),$PARENT[name]) + [Integer.IsGreater(Container($MATH[$PARENT[index] * 1000 + 600 + widgetIndex]).NumItems,0) | Container($MATH[$PARENT[index] * 1000 + 600 + widgetIndex]).IsUpdating]</expression>
+
+        <expression name="SearchItemVisible">!String.IsEmpty(Control.GetLabel(90009).index(1))</expression>
+
+        <expression name="SearchItemAltvisible">[Control.HasFocus(340) | [System.IdleTime(1) + !System.IdleTime(2) + Control.HasFocus(90009) + !String.IsEqual(Window.Property(PreviousSearchTerm),Control.GetLabel(90009).index(1))]]</expression>
+
+        <expression name="SearchItemLabelVisible">[Integer.IsGreater(Container($MATH[5000 + widgetIndex]).NumItems,0) | Container($MATH[5000 + widgetIndex]).IsUpdating]</expression>
     </expressions>
 
     <!-- ============================================================ -->
@@ -41,7 +47,7 @@
     <!-- ============================================================ -->
     <!-- Iterates over each widget in a menu item's .1 submenu -->
 
-    <template items="widgets" source="1">
+    <template items="items_widgets" source="1">
         <!-- Properties from the widget item -->
         <property name="widgetIndex" from="index" />
         <property name="widgetPath" from="widgetPath" />
@@ -321,7 +327,7 @@
                 <ondown condition="$EXP[Home_Is_Vertical] + !Skin.HasSetting(enable.widgets.onup.go.back.to.last.widget) + Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(9567)</ondown>
 
                 <!-- Widget items inserted here -->
-                <skinshortcuts insert="widgets" />
+                <skinshortcuts insert="items_widgets" />
             </control>
         </controls>
     </template>
@@ -355,6 +361,222 @@
     <template include="SettingsInfoContent" build="true">
         <controls>
             <include>Def_Content_Widget_Settings_Items</include>
+        </controls>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--                  SEARCH DYNAMIC TEMPLATE                     -->
+    <!-- ============================================================ -->
+
+    <template items="items_search" source="1">
+
+        <!-- Properties from the widget item -->
+        <property name="widgetIndex" from="index" />
+        <property name="widgetPath" from="widgetPath" />
+        <property name="widgetTarget" from="widgetTarget" />
+        <property name="widgetLabel" from="label" />
+        <property name="widgetLimit" from="widgetLimit" />
+        <property name="widgetSortby" from="widgetSortby" />
+        <property name="widgetSortorder" from="widgetSortorder" />
+        <property name="widgetAspect" from="widgetaspect" />
+        <property name="widgetAuto" from="widgetAuto" />
+        <property name="widgetlisttype" from="widgetlisttype" />
+        <property name="widgetClearLogoFanart" from="widgetClearLogoFanart" />
+
+        <!-- Movement presets -->
+
+        <preset content="widgetMovement" />
+
+        <var name="widgetPath1">
+            <value condition="widgetPath=DefaultSearch-Movies">videodb://movies/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+            <value condition="widgetPath=DefaultSearch-TvShows">videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-Episodes">videodb://tvshows/titles/-1/-1/-1/-1/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-Albums">musicdb://albums/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22album%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-Artists">musicdb://artists/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22artist%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-Songs">musicdb://songs/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideos">videodb://musicvideos/titles/?xsp=%7b%22order%22%3a%7b%22direction%22%3a%22ascending%22%2c%22ignorefolders%22%3a0%2c%22method%22%3a%22sorttitle%22%7d%2c%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22title%22%2c%22operator%22%3a%22contains%22%2c%22value%22%3a%5b%22</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideoArtists">videodb://musicvideos/titles/?xsp=%7b%22order%22%3a%7b%22direction%22%3a%22ascending%22%2c%22ignorefolders%22%3a0%2c%22method%22%3a%22sorttitle%22%7d%2c%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22artist%22%2c%22operator%22%3a%22contains%22%2c%22value%22%3a%5b%22</value>
+			<value condition="widgetPath=DefaultSearch-TMDBMovies">plugin://plugin.video.themoviedb.helper?info=search&amp;type=movie&amp;query=</value>
+			<value condition="widgetPath=DefaultSearch-TMDBShows">plugin://plugin.video.themoviedb.helper?info=search&amp;type=tv&amp;query=</value>
+			<value condition="widgetPath=DefaultSearch-TMDBSets">plugin://plugin.video.themoviedb.helper?info=search&amp;type=collection&amp;query=</value>
+			<value condition="widgetPath=DefaultSearch-TMDBPeople">plugin://plugin.video.themoviedb.helper?info=search&amp;type=person&amp;query=</value>
+        </var>
+
+        <var name="widgetPath2">
+            <value condition="widgetPath=DefaultSearch-Movies">%22%5D%7D%5D%7D%2C%22type%22%3A%22movies%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-TvShows">%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-Episodes">%22%5D%7D%5D%7D%2C%22type%22%3A%22episodes%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-Albums">%22%5D%7D%5D%7D%2C%22type%22%3A%22albums%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-Artists">%22%5D%7D%5D%7D%2C%22type%22%3A%22artists%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-Songs">%22%5D%7D%5D%7D%2C%22type%22%3A%22songs%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideos">%22%5d%7d%5d%7d%2c%22type%22%3a%22musicvideos%22%7d</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideoArtists">%22%5d%7d%5d%7d%2c%22type%22%3a%22musicvideos%22%7d</value>
+			<value condition="widgetPath=DefaultSearch-TMDBMovies">&amp;nextpage=false&amp;fanarttv=false&amp;cacheonly=true</value>
+			<value condition="widgetPath=DefaultSearch-TMDBShows">&amp;nextpage=false&amp;fanarttv=false&amp;cacheonly=true</value>
+			<value condition="widgetPath=DefaultSearch-TMDBSets">&amp;nextpage=false&amp;fanarttv=false&amp;cacheonly=true</value>
+			<value condition="widgetPath=DefaultSearch-TMDBPeople">&amp;nextpage=false&amp;fanarttv=false&amp;cacheonly=true</value>
+        </var>
+
+        <!-- Computed widget style based on aspect/target -->
+
+        <var name="widgetStyle">
+            <value condition="widgetaspect=SquareMiddle">SquareMid</value>
+            <value condition="widgetaspect=SquareSmall">SqSmallTb</value>
+            <value condition="widgetaspect=ThumbnailSmall">ThumbSmall</value>
+            <value condition="widgetaspect=FanartSmall">FanSmall</value>
+            <value condition="widgetaspect">$PROPERTY[widgetAspect]</value>
+            <value>Poster</value>
+        </var>
+
+        <!-- List type -->
+        <var name="listType">
+            <value condition="widgetlisttype">$PROPERTY[widgetlisttype]</value>
+            <value>fixedlist</value>
+        </var>
+
+        <!-- Limit fallback -->
+        <var name="limit">
+            <value condition="widgetLimit=10">10</value>
+            <value condition="widgetLimit=25">25</value>
+            <value condition="widgetLimit=50">50</value>
+            <value condition="widgetLimit=100">100</value>
+            <value condition="widgetLimit=200">200</value>
+            <value condition="widgetLimit=99999">99999</value>
+            <value condition="widgetLimit">$PROPERTY[widgetLimit]</value>
+            <value>$VAR[Value_Widget_Limit]</value>
+        </var>
+
+        <!-- Clearlogo setting -->
+        <var name="clearLogoFanart">
+            <value condition="widgetClearLogoFanart=no">false</value>
+            <value>true</value>
+        </var>
+
+        <!-- Style booleans for includes -->
+        <var name="isThumbnail">
+            <value condition="widgetStyle=Thumbnail">true</value>
+            <value>false</value>
+        </var>
+        <var name="isFanart">
+            <value condition="widgetStyle=Fanart">true</value>
+            <value>false</value>
+        </var>
+        <var name="isFanartSmall">
+            <value condition="widgetStyle=FanSmall">true</value>
+            <value>false</value>
+        </var>
+        <var name="isThumbnailSmall">
+            <value condition="widgetStyle=ThumbSmall">true</value>
+            <value>false</value>
+        </var>
+        <var name="isSquare">
+            <value condition="widgetStyle=Square">true</value>
+            <value>false</value>
+        </var>
+        <var name="isSquareMiddle">
+            <value condition="widgetStyle=SquareMid">true</value>
+            <value>false</value>
+        </var>
+        <var name="isSquareSmall">
+            <value condition="widgetStyle=SqSmallTb">true</value>
+            <value>false</value>
+        </var>
+
+        <var name="test_content">
+            <value>plugin://plugin.video.themoviedb.helper?info=search&amp;type=movie&amp;query=heat&amp;nextpage=false&amp;fanarttv=false&amp;cacheonly=true</value>
+        </var>
+
+        <controls>
+
+            <!-- Main widget list control (must be FIRST for z-order with usecontrolcoords) -->
+
+            <control type="$PROPERTY[listType]" id="$MATH[5000 + widgetIndex]">
+                <include>Animation_Widget_Fade_In_Out</include>
+
+                <include content="Def_Search_Widget_Container">
+                    <param name="id" value="$MATH[5000 + widgetIndex]" />
+                    <param name="height" value="325" />
+                    <param name="idshort" value="$MATH[5000 + widgetIndex]" />
+                    <param name="backid" value="$MATH[5000 + 601]" />
+                    <param name="AutoTime" value="$PROPERTY[widgetAuto]" />
+                    <param name="orientation" value="horizontal" />
+                    <param name="movement" value="$PROPERTY[widgetMovement]" />
+                    <param name="animation_condition" value="!Control.HasFocus($MATH[5000 + widgetIndex])" />
+                    <param name="visible" value="[$EXP[SearchItemVisible]]" />
+                    <param name="altvisible" value="[$EXP[SearchItemAltvisible]]" />
+                </include>
+
+                <!-- Item layouts -->
+
+                <include content="Def_Normal_Layout_Item">
+                    <param name="shortcutsclearlogo" value="$PROPERTY[clearLogoFanart]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="distance" value="10" />
+                    <param name="Thumbnail" value="$PROPERTY[isThumbnail]" />
+                    <param name="Fanart" value="$PROPERTY[isFanart]" />
+                    <param name="FanartSmall" value="$PROPERTY[isFanartSmall]" />
+                    <param name="ThumbnailSmall" value="$PROPERTY[isThumbnailSmall]" />
+                    <param name="Square" value="$PROPERTY[isSquare]" />
+                    <param name="SquareMiddle" value="$PROPERTY[isSquareMiddle]" />
+                    <param name="SquareSmall" value="$PROPERTY[isSquareSmall]" />
+                </include>
+
+                <!-- Focus layouts -->
+
+                <include content="Def_Normal_Layout_Item_Focus">
+                    <param name="shortcutsid" value="$MATH[5000 + widgetIndex]" />
+                    <param name="shortcutsclearlogo" value="$PROPERTY[clearLogoFanart]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="distance" value="10" />
+                    <param name="Thumbnail" value="$PROPERTY[isThumbnail]" />
+                    <param name="Fanart" value="$PROPERTY[isFanart]" />
+                    <param name="FanartSmall" value="$PROPERTY[isFanartSmall]" />
+                    <param name="ThumbnailSmall" value="$PROPERTY[isThumbnailSmall]" />
+                    <param name="Square" value="$PROPERTY[isSquare]" />
+                    <param name="SquareMiddle" value="$PROPERTY[isSquareMiddle]" />
+                    <param name="SquareSmall" value="$PROPERTY[isSquareSmall]" />
+                </include>
+
+                <!-- Widget content -->
+
+                <!-- <content limit="$PROPERTY[limit]" target="$PROPERTY[widgetTarget]" sortby="$PROPERTY[widgetSortby]" sortorder="$PROPERTY[widgetSortorder]" browse="never">$INFO[Control.GetLabel(90009).index(1),$PROPERTY[widgetPath1],$PROPERTY[widgetPath2]]</content> -->
+
+                <!-- Debug only - for test -->
+
+                <content limit="25" target="videos" sortby="$PROPERTY[widgetSortby]" sortorder="$PROPERTY[widgetSortorder]" browse="never">plugin://plugin.video.themoviedb.helper?info=search&amp;type=movie&amp;query=$INFO[Control.GetLabel(90009).index(1)]&amp;nextpage=false&amp;fanarttv=false&amp;cacheonly=true</content>
+
+                <!-- <content limit="$PROPERTY[limit]" target="$PROPERTY[widgetTarget]" sortby="$PROPERTY[widgetSortby]" sortorder="$PROPERTY[widgetSortorder]" browse="never">$PROPERTY[test_content]</content> -->
+
+                <!-- More content button -->
+
+                <include content="Def_Widget_Item_More_Content" condition="Skin.HasSetting(enable.morewidget)">
+                    <param name="id" value="$MATH[5000 + widgetIndex]" />
+                    <param name="target" value="$PROPERTY[widgetTarget]" />
+                    <param name="content" value="$INFO[Control.GetLabel(90009).index(1),$PROPERTY[widgetPath1],$PROPERTY[widgetPath2]]" />
+                </include>
+            </control>
+
+            <!-- Widget title label group -->
+
+            <control type="group" id="$MATH[5000 + 900 + widgetIndex]">
+                <visible>[$EXP[SearchItemLabelVisible]]</visible>
+
+                <control type="grouplist" id="$MATH[5000 + 800 + widgetIndex]">
+                    <include content="Widget_Title_Label" condition="!Skin.HasSetting(hide.widget.title)">
+                        <param name="focusid" value="$MATH[5000 + widgetIndex]" />
+                        <param name="idshort" value="$MATH[5000 + widgetIndex]" />
+                        <param name="animation_condition" value="!Control.HasFocus($MATH[5000 + widgetIndex])" />
+                        <param name="widget_label" value="$PROPERTY[widgetLabel]" />
+                        <param name="busy_visible" value="Integer.IsEqual(Container($MATH[5000 + widgetIndex]).NumItems,0) | Container($MATH[5000 + widgetIndex]).IsUpdating" />
+                    </include>
+                </control>
+            </control>
+        </controls>
+    </template>
+
+    <template include="search" menu="searchmenu">
+        <controls>
+            <skinshortcuts insert="items_search" />
         </controls>
     </template>
 </templates>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1148">
+    <defaultcontrol always="true">90009</defaultcontrol>
+
+
+    <onload condition="!String.IsEmpty(Window(Home).Property(CustomSearchTerm))">RunScript(script.skinvariables,set_editcontrol=90009,window_id=1114,setfocus=340,text=$INFO[Window(Home).Property(CustomSearchTerm)])</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(CustomSearchTerm)) + !String.IsEqual(Window(Home).Property(ReplaceWindow),1114)">ClearProperty(CustomSearchTerm,Home)</onload>
+
+    <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
+
+    <onload>SetFocus(90009)</onload>
+
+	<controls>
+        <include content="Home_Search_Background" Condition="!Skin.HasSetting(home.style.horizontal.clean)">
+            <param name="visible" value="true" />
+        </include>
+
+        <control type="group">
+            <animation effect="slide" start="0" end="0,-40" time="0" condition="true">Conditional</animation>
+
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <control type="group">
+                <visible>!$EXP[View_Info_Dialog]</visible>
+                <include>Animation_Feature_NowPlaying</include>
+                <include condition="!Skin.HasSetting(hide.furniture.nowplaying.views)">Furniture_Header_NowPlaying</include>
+            </control>
+        </control>
+
+        <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
+
+        <!-- WIDGET TITLE DETAIL -->
+
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Artist_Album_Count</include>
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Album_Song_Count</include>
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Album_Item_Name_In_Folder</include>
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Set_Count</include>
+
+        <!-- SEARCH BAR -->
+
+        <control type="group">
+            <visible allowhiddenfocus="true">!Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml)</visible>
+
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+
+            <!-- SEARCH BAR -->
+
+            <control type="group">
+                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(90009)">Conditional</animation>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <include>Texture_Dialog_Search</include>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
+                </control>
+            </control>
+
+            <!-- SPINNER LOADING -->
+
+            <control type="group">
+                <visible>Window.IsVisible(DialogBusy.xml)</visible>
+
+                <top>30</top>
+                <left>580</left>
+
+                <width>100</width>
+                <height>100</height>
+
+                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
+                <include content="Object_Spinner_Busy">
+                    <param name="show_label_spinner" value="false" />
+                    <param name="centerleft" value="50%" />
+                    <param name="centertop" value="50%" />
+                </include>
+            </control>
+
+            <!-- EDIT BAR -->
+
+            <control type="group">
+                <top>40</top>
+                <left>80</left>
+
+                <control type="edit" id="90009">
+                    <width>580</width>
+                    <height>80</height>
+                    <label/>
+                    <align>left</align>
+                    <aligny>center</aligny>
+
+                    <font>HeaderLabel</font>
+                    <textoffsetx>80</textoffsetx>
+                    <textcolor>Selected</textcolor>
+                    <focusedcolor>Selected</focusedcolor>
+                    <selectedcolor>Selected</selectedcolor>
+                    <disabledcolor>White12</disabledcolor>
+                    <texturefocus />
+                    <texturenofocus />
+
+                    <ondown>SetProperty(PreviousSearchTerm,$INFO[Control.GetLabel(9099).index(1)])</ondown>
+
+                    <ondown condition="!Integer.IsEqual(Container(6000).NumItems,0)">6000</ondown>
+
+                    <onup condition="Integer.IsEqual(Container(6000).NumItems,0)">Close</onup>
+                    <ondown condition="Integer.IsEqual(Container(6000).NumItems,0)">Close</ondown>
+
+                    <onright>380</onright>
+                    <onleft>380</onleft>
+                </control>
+
+                <!-- SEARCH ON WIKI -->
+
+                <control type="button" id="380" description="Helper">
+                    <include>Def_Hidden_Button</include>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus>SetFocus(90009)</onfocus>
+                    <visible allowhiddenfocus="true">Control.HasFocus(380)</visible>
+                    <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+                </control>
+            </control>
+
+            <!-- TIPS - FOOTER -->
+
+            <include content="Object_Footer_Tips">
+                <param name="top" value="120" />
+                <param name="left" value="94" />
+                <param name="label" value="$VAR[Label_Home_Search_Bar_Tip]" />
+                <param name="textcolor" value="Black70" />
+                <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
+                <param name="visible" value="[Control.HasFocus(90009) | Control.HasFocus(380)] + !Window.IsVisible(DialogKeyboard.xml)" />
+            </include>
+        </control>
+
+        <!-- CONTAINER ROW WIDGETS -->
+
+        <control type="grouplist" id="6000">
+            <onup>90009</onup>
+
+            <include>Animation_Common_Global</include>
+            <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
+
+            <itemgap>0</itemgap>
+            <orientation>vertical</orientation>
+            <usecontrolcoords>true</usecontrolcoords>
+
+            <height>770</height>
+            <bottom>188</bottom>
+            <width>1920</width>
+
+            <include>skinshortcuts-template-search</include>
+        </control>
+    </controls>
+</window>

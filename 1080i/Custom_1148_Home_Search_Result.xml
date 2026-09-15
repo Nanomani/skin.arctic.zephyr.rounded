@@ -30,15 +30,17 @@
 
         <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
 
+        <!-- WIDGET TITLE DETAIL -->
+
         <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Artist_Album_Count</include>
         <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Album_Song_Count</include>
         <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Album_Item_Name_In_Folder</include>
         <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Set_Count</include>
 
-        <!-- BUTTON EDIT SEARCH -->
+        <!-- SEARCH BAR -->
 
         <control type="group">
-            <!-- <visible allowhiddenfocus="true">[Control.HasFocus(90009) | Control.HasFocus(340)] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml)</visible> -->
+            <visible allowhiddenfocus="true">!Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml)</visible>
 
             <animation effect="fade" time="300" start="0" end="0">Focus</animation>
 
@@ -66,18 +68,6 @@
                 </control>
             </control>
 
-            <control type="button" id="331" description="Helper">
-                <include>Def_Hidden_Button</include>
-                <onfocus>ActivateWindow(addonbrowser,return)</onfocus>
-                <onfocus>SetFocus(6000,4,absolute)</onfocus>
-                <onfocus>SetFocus(50)</onfocus>
-                <onfocus>Container.Update(addons://search/,return)</onfocus>
-            </control>
-            <control type="button" id="330" description="Helper">
-                <include>Def_Hidden_Button</include>
-                <onfocus>SetFocus(90009)</onfocus>
-            </control>
-
             <!-- EDIT BAR -->
 
             <control type="group">
@@ -100,16 +90,18 @@
                     <texturefocus />
                     <texturenofocus />
 
-                    <!-- <onright>Close</onright> -->
-                    <!-- <onleft>Close</onleft> -->
-
                     <ondown>SetProperty(PreviousSearchTerm,$INFO[Control.GetLabel(9099).index(1)])</ondown>
+
                     <ondown condition="!Integer.IsEqual(Container(6000).NumItems,0)">6000</ondown>
-                    <ondown condition="Integer.IsEqual(Container(6000).NumItems,0)">340</ondown>
+
+                    <onup condition="Integer.IsEqual(Container(6000).NumItems,0)">Close</onup>
+                    <ondown condition="Integer.IsEqual(Container(6000).NumItems,0)">Close</ondown>
 
                     <onright>380</onright>
                     <onleft>380</onleft>
                 </control>
+
+                <!-- SEARCH ON WIKI -->
 
                 <control type="button" id="380" description="Helper">
                     <include>Def_Hidden_Button</include>
@@ -133,54 +125,23 @@
             </include>
         </control>
 
-		<control type="group">
+        <!-- CONTAINER ROW WIDGETS -->
 
-            <control type="grouplist" id="6000">
-                <onup>90009</onup>
-                <!-- <ondown>330</ondown> -->
+        <control type="grouplist" id="6000">
+            <onup>90009</onup>
 
-                <include>Animation_Common_Global</include>
-                <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
+            <include>Animation_Common_Global</include>
+            <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
 
-                <!-- <animation type="Conditional" condition="Control.IsVisible(340)" reversible="false"> -->
-                    <!-- <effect type="slide" end="0,20" time="60" tween="sine" /> -->
-                    <!-- <effect type="slide" end="0,-20" time="180" tween="sine" delay="80" /> -->
-                <!-- </animation> -->
-                <!-- <animation type="Conditional" condition="Control.IsVisible(330)" reversible="false"> -->
-                    <!-- <effect type="slide" end="0,-20" time="60" tween="sine" /> -->
-                    <!-- <effect type="slide" end="0,20" time="180" tween="sine" delay="80" /> -->
-                <!-- </animation> -->
+            <itemgap>0</itemgap>
+            <orientation>vertical</orientation>
+            <usecontrolcoords>true</usecontrolcoords>
 
-                <itemgap>0</itemgap>
-                <orientation>vertical</orientation>
-                <usecontrolcoords>true</usecontrolcoords>
+            <height>770</height>
+            <bottom>188</bottom>
+            <width>1920</width>
 
-                <height>770</height>
-                <bottom>188</bottom>
-                <width>1920</width>
-
-                <include>skinshortcuts-template-search</include>
-            </control>
-        </control>
-
-        <control type="button" id="330">
-            <width>1</width>
-            <height>1</height>
-            <left>-1000</left>
-            <onfocus>SetFocus(6000)</onfocus>
-            <onclick>SetFocus(6000)</onclick>
-            <visible allowhiddenfocus="true">Control.HasFocus(330)</visible>
-            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
-        </control>
-
-        <control type="button" id="340">
-            <width>1</width>
-            <height>1</height>
-            <left>-1000</left>
-            <onfocus>SetFocus(90009)</onfocus>
-            <onclick>SetFocus(90009)</onclick>
-            <visible allowhiddenfocus="true">Control.HasFocus(340)</visible>
-            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+            <include>skinshortcuts-template-search</include>
         </control>
     </controls>
 </window>

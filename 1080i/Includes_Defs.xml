@@ -191,6 +191,17 @@
                     <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
                 </control>
             </control>
+
+            <!-- Search Local -->
+            <control type="button" id="332" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus condition="!String.IsEmpty(Window(Home).Property(Launch_local_Search))">SetFocus(399)</onfocus>
+                <onfocus>SetProperty(Launch_local_Search,1,Home)</onfocus>
+                <onfocus>SetFocus(90009)</onfocus>
+                <onfocus>RunScript(script.globalsearch)</onfocus>
+            </control>
+
+            <!-- Search addon -->
             <control type="button" id="331" description="Helper">
                 <include>Def_Hidden_Button</include>
                 <onfocus>ActivateWindow(addonbrowser,return)</onfocus>
@@ -198,6 +209,8 @@
                 <onfocus>SetFocus(50)</onfocus>
                 <onfocus>Container.Update(addons://search/,return)</onfocus>
             </control>
+
+            <!-- Search Wiki -->
             <control type="button" id="330" description="Helper">
                 <include>Def_Hidden_Button</include>
                 <onfocus>SetFocus(90009)</onfocus>
@@ -255,7 +268,8 @@
                 <control type="button" id="340" description="Helper">
                     <include>Def_Hidden_Button</include>
                     <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
-                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1)) + String.IsEmpty(Window(Home).Property(Launch_local_Search))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Window(Home).Property(Launch_local_Search))">RunScript(script.globalsearch)</onfocus>
                     <onfocus>SetFocus(90009)</onfocus>
                     <visible allowhiddenfocus="true">Control.HasFocus(340)</visible>
                     <animation effect="fade" time="300" start="0" end="0">Focus</animation>
@@ -267,7 +281,7 @@
             <include content="Object_Footer_Tips">
                 <param name="top" value="120" />
                 <param name="left" value="94" />
-                <param name="label" value="$VAR[Label_Home_Search_Bar_Tip]" />
+                <param name="label" value="$VAR[Label_Home_Search_List_Bar_Tip]" />
                 <param name="textcolor" value="Black70" />
                 <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
                 <param name="visible" value="[Control.HasFocus(90009) | Control.HasFocus(340)] + !Window.IsVisible(DialogKeyboard.xml)" />

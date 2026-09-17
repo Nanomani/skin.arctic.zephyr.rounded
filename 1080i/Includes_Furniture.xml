@@ -21,21 +21,44 @@
                 <right>$PARAM[right]</right>
 
                 <!-- BACKGROUND -->
+
                 <control type="image">
                     <include>Def_Background_Media_Status_Icon_Top_Right</include>
                     <texture background="true" colordiffuse="$VAR[Color_Background_Status_Poster]">$VAR[Image_Indicator_Icon_Background]</texture>
                 </control>
 
                 <!-- CIRCLE -->
+
                 <control type="image">
                     <include>Def_Background_Media_Status_Icon_Top_Right</include>
                     <texture background="true" colordiffuse="$VAR[Color_Indicator_Status_Poster]">$VAR[Image_Indicator_Icon_Circle]</texture>
                 </control>
 
                 <!-- ICON -->
+
+                <!-- All others -->
                 <control type="label">
-                   <include>Def_Media_Status_Icon_Symbol</include>
-                   <label>$VAR[Label_Icon_Status_Poster]</label>
+                    <visible>!ListItem.IsPlaying + !$EXP[IsAlbumIsPlaying] | [ListItem.IsPlaying + Skin.HasSetting(hide.markers.isplaying)]</visible>
+                    <include>Def_Media_Status_Icon_Symbol</include>
+                    <label>$VAR[Label_Icon_Status_Poster]</label>
+                </control>
+
+                <!-- Item is playing + Player not paused -->
+                <control type="label">
+                    <visible>!Skin.HasSetting(hide.markers.isplaying)</visible>
+                    <visible>ListItem.IsPlaying | $EXP[IsAlbumIsPlaying]</visible>
+                    <visible>!Player.Paused</visible>
+                    <include>Def_Media_Status_Icon_Symbol</include>
+                    <label>[COLOR=$VAR[Color_Indicator_Status_Poster]]&#62811;[/COLOR]</label>
+                </control>
+
+                <!-- Item is playing + Player paused -->
+                <control type="label">
+                    <visible>!Skin.HasSetting(hide.markers.isplaying)</visible>
+                    <visible>ListItem.IsPlaying | $EXP[IsAlbumIsPlaying]</visible>
+                    <visible>Player.Paused</visible>
+                    <include>Def_Media_Status_Icon_Symbol</include>
+                    <label>[COLOR=$VAR[Color_Indicator_Status_Poster]]&#62813;[/COLOR]</label>
                 </control>
             </control>
 
@@ -63,7 +86,6 @@
 
                     <control type="label">
                         <visible>!Player.Paused</visible>
-
                         <include>Def_Media_Status_Banner_Symbol</include>
                         <label>&#62811;</label>
                     </control>
@@ -72,7 +94,6 @@
 
                     <control type="label">
                         <visible>Player.Paused</visible>
-
                         <include>Def_Media_Status_Banner_Symbol</include>
                         <label>&#62813;</label>
                     </control>
@@ -86,7 +107,6 @@
 
                     <control type="image">
                         <visible>[ListItem.IsResumable | $EXP[IsTVShowInProgress]]</visible>
-
                         <include>Def_Media_Status_Banner_Background</include>
                         <texture colordiffuse="$VAR[Color_Indicator_Background_In_Progress]" background="true">$VAR[Image_Indicator_Banner_Overlay]</texture>
                     </control>
@@ -96,7 +116,6 @@
                     <control type="label">
                         <visible>!String.IsEqual(ListItem.DBType,set)</visible>
                         <visible>!Skin.HasSetting(hide.markers) + !$EXP[IsTVShowInProgress] + ListItem.IsResumable</visible>
-
                         <include>Def_Media_Status_Banner_Label</include>
                         <label>$VAR[Label_Flag_Indicator_Is_Resumable]</label>
                     </control>
@@ -106,7 +125,6 @@
                     <control type="label">
                         <visible>String.IsEqual(ListItem.DBType,set)</visible>
                         <visible>!$EXP[IsTVShowInProgress] + ListItem.IsResumable</visible>
-
                         <include>Def_Media_Status_Banner_Label</include>
                         <label>$VAR[Label_Flag_Indicator_Set_In_Progress]</label>
                     </control>

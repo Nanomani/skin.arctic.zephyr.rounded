@@ -10,7 +10,7 @@
 
         <!-- MENU SEARCH -->
 
-        <include>Furniture_Menu_Search</include>
+        <!-- <include>Furniture_Menu_Search</include> -->
 
         <!-- WIDGETS -->
 
@@ -72,7 +72,7 @@
 
                 <!-- HOME HORIZONTAL ONLY - MAIN MENU - SLIDE DOWN -->
 
-                <animation effect="slide" start="0" end="0,163" time="250" tween="sine" easing="out" delay="0" condition="!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + $EXP[Extended_Now_Playing_Is_Visible] + !ControlGroup(301).HasFocus()]] + !Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
+                <animation effect="slide" start="0" end="0,163" time="250" tween="sine" easing="out" delay="0" condition="!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + $EXP[Extended_Now_Playing_Is_Visible] + !$EXP[Home_Widget_Is_Focus]]] + !Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
                 <!-- HIDDEN WITH SEARCH MENU -->
 
@@ -315,7 +315,7 @@
 
         <!-- MENU SEARCH -->
 
-        <include>Furniture_Menu_Search</include>
+        <!-- <include>Furniture_Menu_Search</include> -->
 
         <!-- WIDGETS - MENU -->
 
@@ -333,7 +333,7 @@
 
             <!-- SLIDE LEFT - MENU TEXT - HIDE MENU / NOWPLAYING -->
 
-            <animation effect="slide" start="0" end="-260" time="300" delay="0" center="auto" tween="sine" easing="out" condition="!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + !Skin.HasSetting(home.show.menu.icons) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !ControlGroup(301).HasFocus()]]">Conditional</animation>
+            <animation effect="slide" start="0" end="-260" time="300" delay="0" center="auto" tween="sine" easing="out" condition="!$EXP[Home_Menu_Is_Focus] + !$EXP[Home_Search_Is_Focus] + !Skin.HasSetting(home.show.menu.icons) + [Skin.HasSetting(hide.home.menu) | [Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + !$EXP[Home_Widget_Is_Focus]]]">Conditional</animation>
 
             <!-- WIDGETS -->
 
@@ -1446,7 +1446,7 @@
             <control type="textbox">
                 <include>Def_Widgets_Textbox</include>
                 <label>$INFO[Container($PARAM[id]).ListItem.Plot]</label>
-                <visible>![[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Album_Description))] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,song) + ControlGroup(301).HasFocus()] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,song) + !ControlGroup(301).HasFocus() + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))]+ ![!String.IsEmpty(Container($PARAM[id]).ListItem.AddonDescription) + !String.IsEmpty(Container($PARAM[id]).ListItem.AddonDescription)] + ![String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://)]</visible>
+                <visible>![[String.IsEqual(Container($PARAM[id]).ListItem.DBType,set) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,episode) | String.IsEqual(Container($PARAM[id]).ListItem.DBType,tvshow) | String.Contains(Window(Home).Property(ListItem_FolderPath),musicvideo)] + !String.IsEmpty(Container($PARAM[id]).ListItem.Plot)] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,album) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Album_Description))] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,artist) + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,song) + $EXP[Home_Widget_Is_Focus]] + ![String.IsEqual(Container($PARAM[id]).ListItem.DBType,song) + !$EXP[Home_Widget_Is_Focus] + !String.IsEmpty(Container($PARAM[id]).ListItem.Property(Artist_Description))]+ ![!String.IsEmpty(Container($PARAM[id]).ListItem.AddonDescription) + !String.IsEmpty(Container($PARAM[id]).ListItem.AddonDescription)] + ![String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://)]</visible>
             </control>
         </control>
     </include>
@@ -1643,7 +1643,7 @@
         <visible>!Skin.HasSetting(hide.widget.title)</visible>
         <visible>![!Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button) + !String.IsEmpty(Window(Home).Property(controls_nowplaying_visible))]</visible>
 
-        <animation effect="fade" start="100" end="30" time="150" condition="!ControlGroup(301).HasFocus() + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
+        <animation effect="fade" start="100" end="30" time="150" condition="!$EXP[Home_Widget_Is_Focus] + Skin.HasSetting(home.style.horizontal.clean)">Conditional</animation>
 
         <include content="Animation_Fade_Out_Home_Fullscreen_Widget" condition="Skin.HasSetting(home.style.horizontal.clean)">
             <param name="condition" value="$PARAM[animation_condition]" />
@@ -1912,7 +1912,7 @@
 
     <include name="Widget_Navigation_Arrows">
         <control type="group">
-            <visible>!String.IsEqual(Window(Home).Property(BackToId),Window(Home).Property(LastId)) + ControlGroup(301).HasFocus()</visible>
+            <visible>!String.IsEqual(Window(Home).Property(BackToId),Window(Home).Property(LastId)) + $EXP[Home_Widget_Is_Focus]</visible>
             <visible>Control.HasFocus($PARAM[focusid])</visible>
             <visible>!$EXP[View_Info_Dialog]</visible>
 

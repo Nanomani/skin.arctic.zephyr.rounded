@@ -28,7 +28,10 @@
             </control>
         </control>
 
-        <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
+        <control type="group">
+            <!-- <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation> -->
+            <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
+        </control>
 
         <!-- WIDGET TITLE DETAIL -->
 
@@ -47,7 +50,7 @@
             <!-- SEARCH BAR -->
 
             <control type="group">
-                <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(90009)">Conditional</animation>
+                <visible>Control.HasFocus(90009)</visible>
 
                 <top>40</top>
                 <left>80</left>
@@ -57,14 +60,41 @@
                 <control type="image">
                     <width>590</width>
                     <height>80</height>
-                    <include>Texture_Dialog_Search</include>
+                    <include>Texture_Bar_Search_Focus</include>
                 </control>
                 <control type="image">
                     <top>-4</top>
                     <left>-4</left>
                     <width>88</width>
                     <height>88</height>
-                    <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
+                    <include>Texture_Icon_Search_Focus</include>
+                </control>
+            </control>
+            <control type="group">
+                <visible>!Control.HasFocus(90009)</visible>
+                <animation effect="fade" start="100" end="40" condition="true">Conditional</animation>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <include>Texture_Bar_Search_NoFocus</include>
+                </control>
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <texture border="40" colordiffuse="$VAR[Color_Search_Bar_Border]" infill="false">$VAR[border40]</texture>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <include>Texture_Icon_Search_NoFocus</include>
                 </control>
             </control>
 
@@ -104,7 +134,7 @@
 
                     <font>HeaderLabel</font>
                     <textoffsetx>80</textoffsetx>
-                    <textcolor>Selected</textcolor>
+                    <textcolor>$VAR[Color_Label_Edit_Search]</textcolor>
                     <focusedcolor>Selected</focusedcolor>
                     <selectedcolor>Selected</selectedcolor>
                     <disabledcolor>White12</disabledcolor>

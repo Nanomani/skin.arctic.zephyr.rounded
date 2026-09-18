@@ -3,6 +3,7 @@
     <defaultcontrol always="true">300</defaultcontrol>
 
     <onunload condition="!String.IsEmpty(Control.GetLabel(312).index(1))">AlarmClock(delay_add_search_history,RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)]),00:01,silent)</onunload>
+    <onunload>AlarmClock(delay_clear,ClearProperty(Launch_local_Search,Home),00:01,silent)</onunload>
 
     <controls>
         <include content="Background_Overlay">
@@ -64,9 +65,9 @@
                 <align>center</align>
                 <textcolor>Black70</textcolor>
                 <include>Texture_Dialog_Keyboard</include>
-
-                <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">SetProperty(keyboard_value,Control.GetLabel(312).index(1)),Home)</onclick>
                 <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)])</onclick>
+                <onclick condition="String.IsEmpty(Control.GetLabel(312).index(1))">ClearProperty(Launch_local_Search,Home)</onclick>
+                <onback>ClearProperty(Launch_local_Search,Home)</onback>
             </control>
 
             <control type="group">
@@ -450,8 +451,9 @@
                     <control type="radiobutton" id="300">
                         <onup>307</onup>
 
-                        <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">SetProperty(keyboard_value,Control.GetLabel(312).index(1)),Home)</onclick>
                         <onclick condition="!String.IsEmpty(Control.GetLabel(312).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(312).index(1)])</onclick>
+                        <onclick condition="String.IsEmpty(Control.GetLabel(312).index(1))">ClearProperty(Launch_local_Search,Home)</onclick>
+                        <onback>ClearProperty(Launch_local_Search,Home)</onback>
 
                         <include content="Texture_Dialog_NumPad">
                             <param name="icon" value="dialog/keyboard/enabled.png" />

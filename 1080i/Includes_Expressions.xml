@@ -211,11 +211,17 @@
     <expression name="View_Fanart">Control.IsVisible(547) | Control.IsVisible(557) | Control.IsVisible(56) | Control.IsVisible(57)</expression>
     <expression name="View_Poster">Control.IsVisible(55) | Control.IsVisible(509) | Control.IsVisible(517) | Control.IsVisible(519)</expression>
 
-    <expression name="View_Settings">[$EXP[View_Kodi_Settings] | Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyWeather.xml) | Window.IsVisible(MyPVRTimers.xml) | [Window.IsVisible(MyPVRChannels.xml) + !Control.IsVisible(526) + !Window.IsVisible(DialogPVRInfo.xml)] | Window.IsVisible(MyPVRProviders.xml) | Window.IsVisible(MyMusicPlaylistEditor.xml) | [Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(DialogPVRInfo.xml)] | $EXP[View_Search_Dynamic]]</expression>
+    <expression name="View_Settings">[$EXP[View_Kodi_Settings] | Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml) | Window.IsVisible(MyWeather.xml) | Window.IsVisible(MyPVRTimers.xml) | [Window.IsVisible(MyPVRChannels.xml) + !Control.IsVisible(526) + !Window.IsVisible(DialogPVRInfo.xml)] | Window.IsVisible(MyPVRProviders.xml) | Window.IsVisible(MyMusicPlaylistEditor.xml) | [Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(DialogPVRInfo.xml)] | $EXP[View_Search_Dynamic] | $EXP[View_Search_List]]</expression>
 
     <expression name="View_Kodi_Settings">[Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(Settings.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(service-CoreELEC-Settings-mainWindow.xml) | Window.IsVisible(service-LibreELEC-Settings-mainWindow.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml) | Window.IsVisible(FileManager.xml)]</expression>
 
     <expression name="View_Search_Dynamic">[Window.IsVisible(1148) + !$EXP[View_Info_Dialog]]</expression>
+
+    <expression name="View_Search_List">[Window.IsVisible(1147) + !$EXP[View_Info_Dialog]]</expression>
+
+    <expression name="Home_Search_Is_Focus">[Control.HasFocus(9099)]</expression>
+
+    <expression name="Search_Bar_Visible">[Control.HasFocus(90009) | Control.HasFocus(330) | Control.HasFocus(331) | Control.HasFocus(332) | Control.HasFocus(340)]</expression>
 
     <expression name="View_Blur_Disable">[$EXP[View_Settings] | Window.IsVisible(FileManager.xml) | Container.Content(images) | Window.IsVisible(MyPics.xml) | Window.IsVisible(script-globalsearch.xml)]</expression>
 
@@ -229,7 +235,7 @@
     <!--               HOME                 -->
     <!-- ================================== -->
 
-    <expression name="Home_Dialog_Button_Menu_Focus_On_Exit">[Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(DialogConfirm.xml) + !Window.IsVisible(Custom_1146_Home_SearchDialog.xml) + !Window.IsVisible(Custom_1148_Home_Search_Result.xml) + !Window.IsVisible(FileManager.xml) + !$EXP[View_Settings] + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + !$EXP[Dialog_Keyboard_Is_Visible] + !Window.IsVisible(Custom_1201_Dialog_Custom_Font_Code.xml) + !Window.IsVisible(script.audioprofiles-apmenu.xml)]</expression>
+    <expression name="Home_Dialog_Button_Menu_Focus_On_Exit">[Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(DialogConfirm.xml) + !Window.IsVisible(FileManager.xml) + !$EXP[View_Settings] + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + !$EXP[Dialog_Keyboard_Is_Visible] + !Window.IsVisible(Custom_1201_Dialog_Custom_Font_Code.xml) + !Window.IsVisible(script.audioprofiles-apmenu.xml)]</expression>
 
     <expression name="Home_Widget_Item_PVR">[Window.IsVisible(Home) + String.Contains(Window(Home).Property(ListItem_FolderPath),pvr://channels)]</expression>
 
@@ -261,21 +267,17 @@
 
     <!-- AUTO FOCUS MAIN MENU IF INACTIVITY -->
 
-    <expression name="Has_Home_Menu_Auto_Focus_Main_If_Inactivity">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + [System.IdleTime(10) + Skin.HasSetting(homemenu.auto.back.to.main) + !String.IsEmpty(Window(Home).Property(focus_main_menu_timer)) + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml) + !Window.IsVisible(Custom_1146_Home_SearchDialog.xml) + !Window.IsVisible(Custom_1148_Home_Search_Result.xml)]</expression>
+    <expression name="Has_Home_Menu_Auto_Focus_Main_If_Inactivity">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + [System.IdleTime(10) + Skin.HasSetting(homemenu.auto.back.to.main) + !String.IsEmpty(Window(Home).Property(focus_main_menu_timer)) + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
 
     <!-- AUTO FOCUS MAIN MENU IF INACTIVITY ON SEARCH BAR -->
 
-    <expression name="Has_Home_menu_Auto_Focus_Main_If_SearchBar_Inactivity">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(focus_main_menu_timer_from_search_bar)) + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml) + !Window.IsVisible(Custom_1146_Home_SearchDialog.xml) + !Window.IsVisible(Custom_1148_Home_Search_Result.xml)]</expression>
+    <expression name="Has_Home_menu_Auto_Focus_Main_If_SearchBar_Inactivity">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(focus_main_menu_timer_from_search_bar)) + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
 
     <!-- AUTO SLIDE MENU IF NOWPLAYING -->
 
-    <expression name="Has_Now_Playing_Auto_Slide_Out_Animation">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + $EXP[Extended_Now_Playing_Is_Enable] + !Window.IsVisible(Custom_1146_Home_SearchDialog.xml) + !Window.IsVisible(Custom_1148_Home_Search_Result.xml) + !Window.IsVisible(DialogContextMenu.xml) + [!Skin.HasSetting(hide.home.menu) | Skin.HasSetting(hide.only.if.widgetcontainer.gets.focus)]]</expression>
+    <expression name="Has_Now_Playing_Auto_Slide_Out_Animation">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + $EXP[Extended_Now_Playing_Is_Enable] + !Window.IsVisible(DialogContextMenu.xml) + [!Skin.HasSetting(hide.home.menu) | Skin.HasSetting(hide.only.if.widgetcontainer.gets.focus)]]</expression>
 
     <!-- HOME BACKGROUND ON MENU -->
-
-    <expression name="Home_Search_Is_Focus">[Control.HasFocus(9099) | Control.HasFocus(90009) | Control.HasFocus(3060) | Control.HasFocus(330) | Control.HasFocus(331) | Control.HasFocus(332) | Control.HasFocus(340)]</expression>
-
-    <expression name="Home_Search_Header_Is_Focus">[Control.HasFocus(9099) | Control.HasFocus(90009) | Control.HasFocus(330) | Control.HasFocus(331) | Control.HasFocus(332) | Control.HasFocus(340)]</expression>
 
     <expression name="Home_Main_Menu_Is_Focus">[Control.HasFocus(300) | Control.HasFocus(222) | Control.HasFocus(399)]</expression>
 
@@ -287,7 +289,7 @@
 
     <expression name="Background_Home_On_Menu_Background_Setting_Menu">[Skin.HasSetting(home.enable.menu.background) + Window.IsVisible(Home) + [$EXP[Home_Menu_Is_Focus] | Control.HasFocus(2011)]]</expression>
 
-    <expression name="Background_Home_Extended_Now_Playing">[$EXP[Extended_Now_Playing_Is_Visible] + Window.IsVisible(Home) + !ControlGroup(301).HasFocus() + !$EXP[Home_Search_Is_Focus]]</expression>
+    <expression name="Background_Home_Extended_Now_Playing">[$EXP[Extended_Now_Playing_Is_Visible] + Window.IsVisible(Home) + !$EXP[Home_Widget_Is_Focus] + !$EXP[Home_Search_Is_Focus]]</expression>
 
     <expression name="Background_Home_Flix_Or_All_Views">[[!Skin.HasSetting(hide.global.fanart) + !$EXP[View_Settings]] | [Window.IsVisible(Home) + Skin.HasSetting(home.style.flix) + !$EXP[View_Info_Dialog]] | $EXP[View_Flix]]</expression>
 
@@ -317,15 +319,15 @@
 
     <!-- AUTO SHOW NOWPLAYING HELPER -->
 
-    <expression name="Extended_Now_Playing_Helper_AutoShow">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + $EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + [Player.HasMedia | Player.Playing] + Skin.HasSetting(enable.home.auto.show.nowplaying.extended) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml) + !Window.IsVisible(Custom_1146_Home_SearchDialog.xml) + !Window.IsVisible(Custom_1148_Home_Search_Result.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
+    <expression name="Extended_Now_Playing_Helper_AutoShow">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + $EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + [Player.HasMedia | Player.Playing] + Skin.HasSetting(enable.home.auto.show.nowplaying.extended) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
 
     <!-- AUTO CLOSE NOWPLAYING HELPER -->
 
-    <expression name="Extended_Now_Playing_Helper_AutoClose">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + [[!String.IsEmpty(Window(Home).Property(controls_nowplaying_visible)) | Control.HasFocus(25) | Control.HasFocus(778)] + Skin.HasSetting(show.furniture.nowplaying.extended.home) + !Player.HasMedia + Window.IsVisible(Home) + !Player.Playing + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(Custom_1146_Home_SearchDialog.xml) + !Window.IsVisible(Custom_1148_Home_Search_Result.xml)]</expression>
+    <expression name="Extended_Now_Playing_Helper_AutoClose">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + [[!String.IsEmpty(Window(Home).Property(controls_nowplaying_visible)) | Control.HasFocus(25) | Control.HasFocus(778)] + Skin.HasSetting(show.furniture.nowplaying.extended.home) + !Player.HasMedia + Window.IsVisible(Home) + !Player.Playing + !Skin.HasSetting(hide.home.nowplaying.extended.osd.control.button)] + !Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml)]</expression>
 
     <!-- NOWPLAYING VISIBLE -->
 
-    <expression name="Extended_Now_Playing_Is_Visible">[$EXP[Extended_Now_Playing_Is_Enable] + Player.HasMedia + Window.IsVisible(Home) + !$EXP[View_Info_Dialog]] + [[!ControlGroup(301).HasFocus() + !Control.HasFocus(9808) + !Control.HasFocus(9888) + !Control.HasFocus(9567) + !Control.HasFocus(8808) + !Control.HasFocus(8888) + !Control.HasFocus(4567) + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + !$EXP[Home_Search_Is_Focus]] | ControlGroup(777).HasFocus()]</expression>
+    <expression name="Extended_Now_Playing_Is_Visible">[$EXP[Extended_Now_Playing_Is_Enable] + Player.HasMedia + Window.IsVisible(Home) + !$EXP[View_Info_Dialog]] + [[!$EXP[Home_Widget_Is_Focus] + !Control.HasFocus(9808) + !Control.HasFocus(9888) + !Control.HasFocus(9567) + !Control.HasFocus(8808) + !Control.HasFocus(8888) + !Control.HasFocus(4567) + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + !$EXP[Home_Search_Is_Focus]] | ControlGroup(777).HasFocus()]</expression>
 
     <expression name="Extended_Now_Playing_Is_Enable">[Skin.HasSetting(show.furniture.nowplaying.extended.home) + [[!$EXP[Home_Show_NowPlaying_Video_In_Window_Flix] + Player.HasVideo] | Player.HasAudio]]</expression>
 
@@ -558,7 +560,7 @@
 
     <!-- VIEW ARTWORK / BACKGROUND -->
 
-    <expression name="View_Artwork_Condition">[Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(DialogVideoInfo.xml) | Window.IsActive(Home) | Container.Content(addons) | [Container.Content(movies) + !String.IsEmpty(ListItem.DBType) + !$EXP[IsJlomFolder]] | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + Window.IsVisible(MyVideoNav.xml) + !ListItem.IsFolder] | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videoversions) | [String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(actors) | Container.Content(files) | Container.Content(artists)  | Container.Content(albums) | Container.Content(songs) | Container.Content(musicvideos) | Window.IsVisible(FileBrowser.xml) | Window.IsVisible(EventLog.xml) | Window.IsVisible(DialogAddonInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(MyPics.xml) | Window.IsVisible(Custom_1104_MovieDB_Movies.xml) | Window.IsVisible(Custom_1105_MovieDB_Shows.xml) | String.IsEqual(ListItem.DBType,artist) | String.StartsWith(Container.FolderPath,pvr://) | Window.IsVisible(script-akl-romdetails.xml) | [$EXP[IsAnPlugin] + !$EXP[IsLibraryGenieItemSetting] + !$EXP[IsJlomFolder]] | Window.IsVisible(Custom_1148_Home_Search_Result.xml)]</expression>
+    <expression name="View_Artwork_Condition">[Window.IsVisible(VideoOSDBookmarks.xml) | Window.IsVisible(DialogVideoInfo.xml) | Window.IsActive(Home) | Container.Content(addons) | [Container.Content(movies) + !String.IsEmpty(ListItem.DBType) + !$EXP[IsJlomFolder]] | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + Window.IsVisible(MyVideoNav.xml) + !ListItem.IsFolder] | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(videoversions) | [String.IsEqual(ListItem.Path,favourites://) | Container.Content(favourites)] | Container.Content(countries) | Container.Content(genres) | Container.Content(years) | Container.Content(tags) | Container.Content(studios) | Container.Content(directors) | Container.Content(actors) | Container.Content(files) | Container.Content(artists)  | Container.Content(albums) | Container.Content(songs) | Container.Content(musicvideos) | Window.IsVisible(FileBrowser.xml) | Window.IsVisible(EventLog.xml) | Window.IsVisible(DialogAddonInfo.xml) | Window.IsVisible(DialogPVRInfo.xml) | Window.IsVisible(MyPics.xml) | Window.IsVisible(Custom_1104_MovieDB_Movies.xml) | Window.IsVisible(Custom_1105_MovieDB_Shows.xml) | String.IsEqual(ListItem.DBType,artist) | String.StartsWith(Container.FolderPath,pvr://) | Window.IsVisible(script-akl-romdetails.xml) | [$EXP[IsAnPlugin] + !$EXP[IsLibraryGenieItemSetting] + !$EXP[IsJlomFolder]] | $EXP[View_Search_Dynamic]]</expression>
 
     <expression name="View_Artwork_Specific">[!String.StartsWith(ListItem.Icon,Default) | [String.StartsWith(ListItem.Icon,Default) + [Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | [Container.Content(albums) + !String.IsEmpty(ListItem.DBType) + !String.StartsWith(ListItem.FolderPath,videodb://musicvideos/)] | Container.Content(songs) | [Container.Content(countries) + !String.IsEmpty(Skin.String(country.logos.path))] | [Container.Content(genres) + !String.IsEmpty(Skin.String(genre.icons.path)) + Window.IsVisible(MyVideoNav.xml)] | [Container.Content(studios) + !String.IsEmpty(Skin.String(studio.logos.path))] | Window.IsVisible(VideoOSDBookmarks.xml) | [Window.IsActive(DialogVideoInfo.xml) + !Control.HasFocus(50) + !Control.HasFocus(507)] | [String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID)]  | [Container.Content(movies) + String.IsEmpty(ListItem.DBType) + !Window.IsActive(DialogVideoInfo.xml)] | String.IsEqual(ListItem.DBType,tvshow) | [!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.DBType)) + !Control.HasFocus(50) + !Container.Content(actors) + !String.StartsWith(ListItem.FolderPath,videodb://musicvideos/)] | [String.IsEqual(ListItem.DBType,movie) + $EXP[IsJlomItem]] ]]]</expression>
 

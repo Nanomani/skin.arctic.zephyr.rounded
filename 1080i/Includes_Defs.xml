@@ -78,7 +78,7 @@
         </control>
     </include>
 
-    <include name="Hidden_Button_Search">
+    <include name="Hidden_Button_Home_Search">
         <control type="button" id="9099" description="Helper">
             <visible allowhiddenfocus="true">$EXP[Home_Search_Is_Focus]</visible>
             <animation effect="fade" time="300" start="0" end="0">Focus</animation>
@@ -87,7 +87,7 @@
 
             <!-- SHOW MENU SEARCH -->
 
-            <onfocus condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">SetProperty(Show_Menu_Search,1,Home)</onfocus>
+            <!-- <onfocus condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">SetProperty(Show_Menu_Search,1,Home)</onfocus> -->
 
             <!-- CANCEL - TIMER - AUTO SLIDE MENU -->
 
@@ -112,9 +112,13 @@
             <onup condition="$EXP[Home_Is_Vertical]">SetProperty(end_menu,1,Home)</onup>
             <onup condition="$EXP[Home_Is_Vertical]">ClearProperty(Show_Menu_Search,Home)</onup>
 
-            <ondown condition="$EXP[Home_Is_Vertical] + !Control.IsVisible(3060)">SetFocus(300,0,absolute)</ondown>
-            <ondown condition="$EXP[Home_Is_Vertical] + !Control.IsVisible(3060)">SetProperty(first_menu,1,Home)</ondown>
-            <ondown condition="$EXP[Home_Is_Vertical] + Control.IsVisible(3060)">Control.SetFocus(3060,0,absolute)</ondown>
+            <ondown condition="$EXP[Home_Is_Vertical]">SetFocus(300,0,absolute)</ondown>
+            <ondown condition="$EXP[Home_Is_Vertical]">SetProperty(first_menu,1,Home)</ondown>
+
+            <!-- <ondown condition="$EXP[Home_Is_Vertical] + Control.IsVisible(3060)">Control.SetFocus(3060,0,absolute)</ondown> -->
+
+            <!-- <ondown condition="$EXP[Home_Is_Vertical] + !Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1147)</ondown> -->
+            <!-- <ondown condition="$EXP[Home_Is_Vertical] + Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1148)</ondown> -->
 
             <onleft condition="$EXP[Home_Is_Vertical]">SetFocus(300,0,absolute)</onleft>
             <onleft condition="$EXP[Home_Is_Vertical]">SetProperty(first_menu,1,Home)</onleft>
@@ -135,147 +139,22 @@
             <onright condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</onright>
             <onright condition="$EXP[Home_Is_Horizontal]">ClearProperty(Show_Menu_Search,Home)</onright>
 
-            <ondown condition="$EXP[Home_Is_Horizontal] + !Control.IsVisible(3060)">SetFocus(300,0,absolute)</ondown>
-            <ondown condition="$EXP[Home_Is_Horizontal] + !Control.IsVisible(3060)">SetProperty(first_menu,1,Home)</ondown>
-            <ondown condition="$EXP[Home_Is_Horizontal] + Control.IsVisible(3060)">Control.SetFocus(3060,0,absolute)</ondown>
+            <ondown condition="$EXP[Home_Is_Horizontal]">SetFocus(300,0,absolute)</ondown>
+            <ondown condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</ondown>
+
+            <!-- <ondown condition="$EXP[Home_Is_Horizontal] + Control.IsVisible(3060)">Control.SetFocus(3060,0,absolute)</ondown> -->
+
+            <!-- <ondown condition="$EXP[Home_Is_Horizontal] + !Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1147)</ondown> -->
+            <!-- <ondown condition="$EXP[Home_Is_Horizontal] + Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1148)</ondown> -->
 
             <onup condition="$EXP[Home_Is_Horizontal]">SetFocus(300,0,absolute)</onup>
             <onup condition="$EXP[Home_Is_Horizontal]">SetProperty(first_menu,1,Home)</onup>
 
             <onclick>ClearProperty(GlobalSearchWindowOpen,Home)</onclick>
-            <onclick condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">Control.SetFocus(3060,0,absolute)</onclick>
+            <!-- <onclick condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">Control.SetFocus(3060,0,absolute)</onclick> -->
+            <onclick condition="!Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1147)</onclick>
             <onclick condition="Skin.HasSetting(Show.Home.Search.Type.Dynamic)">ActivateWindow(1148)</onclick>
             <onclick>ClearProperty(AnimationDirection,Home)</onclick>
-        </control>
-
-        <!-- BUTTON EDIT WIKI -->
-
-        <control type="group">
-            <visible allowhiddenfocus="true">[Control.HasFocus(90009) | Control.HasFocus(340)] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml)</visible>
-            <visible>!$EXP[Dialog_Keyboard_Is_Visible]</visible>
-
-            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
-
-            <!-- SEARCH BAR WIKIPEDIA -->
-
-            <control type="group">
-                <visible>Control.HasFocus(90009) | Control.HasFocus(340)</visible>
-
-                <top>40</top>
-                <left>80</left>
-                <width>80</width>
-                <height>80</height>
-                <control type="image">
-                    <width>590</width>
-                    <height>80</height>
-                    <include>Texture_Dialog_Search</include>
-                </control>
-                <control type="image">
-                    <top>-4</top>
-                    <left>-4</left>
-                    <width>88</width>
-                    <height>88</height>
-                    <texture colordiffuse="Selected" border="12">special://skin/extras/icons/search.png</texture>
-                </control>
-            </control>
-
-            <!-- Search Local -->
-            <control type="button" id="332" description="Helper">
-                <include>Def_Hidden_Button</include>
-                <onfocus condition="!String.IsEmpty(Window(Home).Property(Launch_local_Search))">SetFocus(399)</onfocus>
-                <onfocus>SetProperty(Launch_local_Search,1,Home)</onfocus>
-                <onfocus>SetFocus(90009)</onfocus>
-                <onfocus>RunScript(script.globalsearch)</onfocus>
-            </control>
-
-            <!-- Search addon -->
-            <control type="button" id="331" description="Helper">
-                <include>Def_Hidden_Button</include>
-                <onfocus>ActivateWindow(addonbrowser,return)</onfocus>
-                <onfocus>SetFocus(6000,4,absolute)</onfocus>
-                <onfocus>SetFocus(50)</onfocus>
-                <onfocus>Container.Update(addons://search/,return)</onfocus>
-            </control>
-
-            <!-- Search Wiki -->
-            <control type="button" id="330" description="Helper">
-                <include>Def_Hidden_Button</include>
-                <onfocus>SetFocus(90009)</onfocus>
-            </control>
-
-            <!-- SPINNER LOADING -->
-
-            <control type="group">
-                <visible>Window.IsVisible(DialogBusy.xml)</visible>
-                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
-
-                <top>30</top>
-                <left>580</left>
-
-                <width>100</width>
-                <height>100</height>
-
-                <include content="Object_Spinner_Busy">
-                    <param name="show_label_spinner" value="false" />
-                    <param name="show_icon" value="false" />
-                    <param name="colordiffuse_progress" value="Selected" />
-                    <param name="centerleft" value="50%" />
-                    <param name="centertop" value="50%" />
-                </include>
-            </control>
-
-            <!-- EDIT BAR WIKIPEDIA -->
-
-            <control type="grouplist">
-                <top>40</top>
-                <left>80</left>
-                <orientation>horizontal</orientation>
-
-                <control type="edit" id="90009">
-                    <width>580</width>
-                    <height>80</height>
-                    <label/>
-                    <align>left</align>
-                    <aligny>center</aligny>
-
-                    <font>HeaderLabel</font>
-                    <textoffsetx>80</textoffsetx>
-                    <textcolor />
-                    <focusedcolor>Selected</focusedcolor>
-                    <selectedcolor>Selected</selectedcolor>
-                    <disabledcolor>White12</disabledcolor>
-                    <texturefocus />
-                    <texturenofocus />
-
-                    <onup>SetFocus(399)</onup>
-                    <ondown>SetFocus(399)</ondown>
-                    <onright>340</onright>
-                    <onleft>340</onleft>
-                </control>
-
-                <!-- LAUNCH SEARH WIKI / GLOBAL SEARCH -->
-
-                <control type="button" id="340" description="Helper">
-                    <include>Def_Hidden_Button</include>
-                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
-                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1)) + String.IsEmpty(Window(Home).Property(Launch_local_Search))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
-                    <onfocus condition="!String.IsEmpty(Window(Home).Property(Launch_local_Search))">RunScript(script.globalsearch)</onfocus>
-                    <onfocus>SetFocus(90009)</onfocus>
-                    <visible allowhiddenfocus="true">Control.HasFocus(340)</visible>
-                    <animation effect="fade" time="300" start="0" end="0">Focus</animation>
-                </control>
-            </control>
-
-            <!-- TIPS - FOOTER -->
-
-            <include content="Object_Footer_Tips">
-                <param name="top" value="120" />
-                <param name="left" value="94" />
-                <param name="label" value="$VAR[Label_Home_Search_List_Bar_Tip]" />
-                <param name="textcolor" value="Black70" />
-                <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
-                <param name="visible" value="[Control.HasFocus(90009) | Control.HasFocus(340)] + !$EXP[Dialog_Keyboard_Is_Visible]" />
-            </include>
         </control>
     </include>
 
@@ -337,6 +216,10 @@
 
     <variable name="border24">
         <value>common/border24.png</value>
+    </variable>
+
+    <variable name="border40">
+        <value>common/border40.png</value>
     </variable>
 
     <!-- ======================================================== -->
@@ -1331,7 +1214,7 @@
 
         <!-- HIDE WITH NOWPLAYING -->
 
-        <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !ControlGroup(301).HasFocus() + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
+        <animation type="Conditional" condition="Skin.HasSetting(hide.home.menu.with.nowplaying.extended) + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + [ControlGroup(777).HasFocus() | !$EXP[Extended_Now_Playing_Helper_AutoShow]] + !$EXP[Home_Widget_Is_Focus] + Window.IsVisible(Home) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)" reversible="true">
             <effect type="slide" start="0,0" end="350,0" tween="sine" easing="out" time="300" delay="0" />
             <effect type="fade" start="100" end="0" time="150" delay="0" />
         </animation>
@@ -1373,7 +1256,7 @@
 
     <include name="Def_Home_Label_Widget_Sub_Title_Rating">
         <control type="group">
-            <visible>!$EXP[IsYoutubeItem] + !$EXP[IsPluginRadio] + ControlGroup(301).HasFocus()</visible>
+            <visible>!$EXP[IsYoutubeItem] + !$EXP[IsPluginRadio] + $EXP[Home_Widget_Is_Focus]</visible>
 
             <control type="label">
                 <include>Widgets_Item_Sub_Title_Definition</include>
@@ -1668,7 +1551,7 @@
             <include>Widgets_Item_Sub_Title_Definition</include>
             <label> $INFO[Control.GetLabel(9967)]</label>
             <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
-            <visible>ControlGroup(301).HasFocus()</visible>
+            <visible>$EXP[Home_Widget_Is_Focus]</visible>
             <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.Property(Album_Totaldiscs),1)</visible>
             <visible>Integer.IsGreater(Container(44022).NumItems,0)</visible>
         </control>
@@ -1676,7 +1559,7 @@
             <include>Widgets_Item_Sub_Title_Definition</include>
             <label> $INFO[Control.GetLabel(9970)]</label>
             <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Label)</visible>
-            <visible>ControlGroup(301).HasFocus()</visible>
+            <visible>$EXP[Home_Widget_Is_Focus]</visible>
             <visible>Integer.IsGreater(Container($PARAM[id]).ListItem.Property(Album_Totaldiscs),1)</visible>
             <visible>Integer.IsGreater(Container(44022).NumItems,0)</visible>
         </control>

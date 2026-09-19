@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1147">
+    <!-- <defaultcontrol always="false">90009</defaultcontrol> -->
+
+    <onload>SetProperty(Show_Menu_Search,1,Home)</onload>
+    <onload>SetProperty(Launch_Search,1,Home)</onload>
+    <onload>Control.SetFocus(3060,0,absolute)</onload>
+
+    <onunload condition="Window.IsVisible(script-globalsearch.xml)">ClearProperty(GlobalSearchWindowOpen,Home)</onunload>
+
+    <!-- <onunload>ClearProperty(Show_Menu_Search,Home)</onunload> -->
+    <!-- <onunload>ClearProperty(Launch_Search,Home)</onunload> -->
+
+    <onload condition="!String.IsEmpty(Window(Home).Property(CustomSearchTerm))">RunScript(script.skinvariables,set_editcontrol=90009,window_id=1147,setfocus=340,text=$INFO[Window(Home).Property(CustomSearchTerm)])</onload>
+    <onload condition="!String.IsEmpty(Window(Home).Property(CustomSearchTerm)) + !String.IsEqual(Window(Home).Property(ReplaceWindow),1147)">ClearProperty(CustomSearchTerm,Home)</onload>
+
+    <!-- <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload> -->
+    <!-- <onload>SetFocus(90009)</onload> -->
+
+	<controls>
+        <include content="Home_Search_Background" Condition="!Skin.HasSetting(home.style.horizontal.clean)">
+            <param name="visible" value="true" />
+        </include>
+
+        <control type="group">
+            <animation effect="slide" start="0" end="0,-40" time="0" condition="true">Conditional</animation>
+
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <control type="group">
+                <visible>!$EXP[View_Info_Dialog]</visible>
+                <include>Animation_Feature_NowPlaying</include>
+                <include condition="!Skin.HasSetting(hide.furniture.nowplaying.views)">Furniture_Header_NowPlaying</include>
+            </control>
+        </control>
+
+        <control type="group">
+            <animation effect="slide" start="0" end="0,30" time="0" condition="true">Conditional</animation>
+            <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
+        </control>
+
+        <!-- SEARCH BAR -->
+
+        <control type="group">
+            <visible allowhiddenfocus="true">[Control.HasFocus(90009) | Control.HasFocus(340) | Control.HasFocus(3060)]</visible>
+            <visible>!$EXP[Dialog_Keyboard_Is_Visible] + String.IsEmpty(Window(Home).Property(Launch_local_Search))</visible>
+
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+
+            <!-- SEARCH BAR WIKIPEDIA -->
+
+            <control type="group">
+                <visible>Control.HasFocus(90009)</visible>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <include>Texture_Bar_Search_Focus</include>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <include>Texture_Icon_Search_Focus</include>
+                </control>
+            </control>
+            <control type="group">
+                <visible>!Control.HasFocus(90009)</visible>
+                <animation effect="fade" start="100" end="40" condition="true">Conditional</animation>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <include>Texture_Bar_Search_NoFocus</include>
+                </control>
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <texture border="40" colordiffuse="$VAR[Color_Search_Bar_Border]" infill="false">$VAR[border40]</texture>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <include>Texture_Icon_Search_NoFocus</include>
+                </control>
+            </control>
+
+            <!-- Search Local -->
+            <control type="button" id="332" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus condition="!String.IsEmpty(Window(Home).Property(Launch_local_Search))">close</onfocus>
+                <onfocus>SetProperty(Launch_local_Search,1,Home)</onfocus>
+                <onfocus>SetFocus(90009)</onfocus>
+                <onfocus>RunScript(script.globalsearch)</onfocus>
+            </control>
+
+            <!-- Search addon -->
+            <control type="button" id="331" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus>ActivateWindow(addonbrowser,return)</onfocus>
+                <onfocus>SetFocus(6000,4,absolute)</onfocus>
+                <onfocus>SetFocus(50)</onfocus>
+                <onfocus>Container.Update(addons://search/,return)</onfocus>
+            </control>
+
+            <!-- Search Wiki -->
+            <control type="button" id="330" description="Helper">
+                <include>Def_Hidden_Button</include>
+                <onfocus>SetFocus(90009)</onfocus>
+            </control>
+
+            <!-- SPINNER LOADING -->
+
+            <control type="group">
+                <visible>Window.IsVisible(DialogBusy.xml)</visible>
+                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
+
+                <top>30</top>
+                <left>580</left>
+
+                <width>100</width>
+                <height>100</height>
+
+                <include content="Object_Spinner_Busy">
+                    <param name="show_label_spinner" value="false" />
+                    <param name="show_icon" value="false" />
+                    <param name="colordiffuse_progress" value="Selected" />
+                    <param name="centerleft" value="50%" />
+                    <param name="centertop" value="50%" />
+                </include>
+            </control>
+
+            <!-- EDIT BAR -->
+
+            <control type="group">
+                <top>40</top>
+                <left>80</left>
+
+                <control type="edit" id="90009">
+                    <width>580</width>
+                    <height>80</height>
+                    <label/>
+                    <align>left</align>
+                    <aligny>center</aligny>
+
+                    <font>HeaderLabel</font>
+                    <textoffsetx>80</textoffsetx>
+                    <textcolor />
+                    <focusedcolor>Selected</focusedcolor>
+                    <selectedcolor>Selected</selectedcolor>
+                    <disabledcolor>White12</disabledcolor>
+                    <texturefocus />
+                    <texturenofocus />
+
+                    <onup>Close</onup>
+                    <ondown>SetProperty(Show_Menu_Search,1,Home)</ondown>
+                    <ondown>3060</ondown>
+                    <onright>340</onright>
+                    <onleft>340</onleft>
+                </control>
+
+                <!-- LAUNCH SEARH WIKI / GLOBAL SEARCH -->
+
+                <control type="button" id="340" description="Helper">
+                    <include>Def_Hidden_Button</include>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1)) + String.IsEmpty(Window(Home).Property(Launch_local_Search))">RunScript(script.wikipedia,wikipedia=$INFO[Control.GetLabel(90009).index(1)])</onfocus>
+                    <onfocus condition="!String.IsEmpty(Window(Home).Property(Launch_local_Search))">RunScript(script.globalsearch)</onfocus>
+                    <onfocus>SetFocus(90009)</onfocus>
+                    <visible allowhiddenfocus="true">Control.HasFocus(340)</visible>
+                    <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+                </control>
+            </control>
+
+            <!-- TIPS - FOOTER -->
+
+            <include content="Object_Footer_Tips">
+                <param name="top" value="120" />
+                <param name="left" value="94" />
+                <param name="label" value="$VAR[Label_Home_Search_List_Bar_Tip]" />
+                <param name="textcolor" value="Black70" />
+                <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
+                <param name="visible" value="[Control.HasFocus(90009) | Control.HasFocus(340)] + !$EXP[Dialog_Keyboard_Is_Visible]" />
+            </include>
+        </control>
+
+        <!-- MENU SEARCH -->
+
+        <control type="group">
+            <visible>!$EXP[Dialog_Keyboard_Is_Visible] + !Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml) + !Window.IsVisible(DialogBusy.xml) + String.IsEmpty(Window(Home).Property(Launch_local_Search))</visible>
+
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <top>200</top>
+            <centerleft>345</centerleft>
+            <width>450</width>
+
+            <!-- ARROWS -->
+
+            <include content="Object_Arrows_Dialog_Vertical">
+                <param name="container_id" value="3060" />
+                <param name="colordiffuse" value="Dark3" />
+            </include>
+
+            <!-- BACKGROUND -->
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="199" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,1)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="269" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,2)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="339" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,3)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="409" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,4)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="479" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,5)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="549" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,6)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="619" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,7)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="689" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,8)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="759" />
+                <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,9)" />
+            </include>
+
+            <include content="Def_Dialog_Multi_Row_Background">
+                <param name="height" value="829" />
+                <param name="visible" value="Integer.IsGreater(Container(3060).NumItems,9)" />
+            </include>
+
+            <include content="Def_Dialog_Header">
+                <param name="label" value="137" />
+                <param name="icon" value="search" />
+            </include>
+
+            <!-- LIST MENU SEARCH -->
+
+            <control type="list" id="3060">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>112</top>
+                <left>16</left>
+                <height min="100" max="700">auto</height>
+                <width>418</width>
+                <bottom>17</bottom>
+
+                <onup>3060</onup>
+                <ondown>3060</ondown>
+
+                <onback>SetFocus(399)</onback>
+                <onback>ClearProperty(Show_Menu_Search,Home)</onback>
+                <onback>Close</onback>
+
+                <onleft>SetFocus(399)</onleft>
+                <onleft>ClearProperty(Show_Menu_Search,Home)</onleft>
+                <onleft>Close</onleft>
+
+                <onright>SetFocus(399)</onright>
+                <onright>ClearProperty(Show_Menu_Search,Home)</onright>
+                <onright>Close</onright>
+
+                <!-- <onright>1799</onright> -->
+
+                <pagecontrol>1799</pagecontrol>
+                <orientation>vertical</orientation>
+
+                <itemlayout width="418" height="70">
+                    <control type="image">
+                        <top>8</top>
+                        <left>16</left>
+                        <width>56</width>
+                        <height>56</height>
+                        <texture colordiffuse="$VAR[Color_Icon_Menu_List]">$INFO[Container(300).ListItem.Icon]</texture>
+                    </control>
+                    <control type="label">
+                        <left>84</left>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <width>74%</width>
+                        <height>100%</height>
+                        <centertop>50%</centertop>
+                        <font>Tiny</font>
+                        <textcolor>Dark2</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="418" height="70">
+                    <include content="Def_Layout_Item_Focus">
+                        <param name="fade_condition" value="!Control.HasFocus(3060)" />
+                    </include>
+
+                    <control type="image">
+                        <top>8</top>
+                        <left>16</left>
+                        <width>56</width>
+                        <height>56</height>
+                        <texture colordiffuse="Selected">$INFO[Container(300).ListItem.Icon]</texture>
+                        <visible>Control.HasFocus(3060)</visible>
+                    </control>
+                    <control type="label">
+                        <left>84</left>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <width>74%</width>
+                        <height>100%</height>
+                        <centertop>50%</centertop>
+                        <font>Tiny</font>
+                        <textcolor>Selected</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <visible>Control.HasFocus(3060)</visible>
+                    </control>
+                    <control type="image">
+                        <top>8</top>
+                        <left>16</left>
+                        <width>56</width>
+                        <height>56</height>
+                        <texture colordiffuse="$VAR[Color_Icon_Menu_List]">$INFO[Container(300).ListItem.Icon]</texture>
+                        <visible>!Control.HasFocus(3060)</visible>
+                    </control>
+                    <control type="label">
+                        <left>84</left>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <width>74%</width>
+                        <height>100%</height>
+                        <centertop>50%</centertop>
+                        <font>Tiny</font>
+                        <textcolor>Dark2</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                        <visible>!Control.HasFocus(3060)</visible>
+                    </control>
+                </focusedlayout>
+
+                <!-- SKINSHORTCUTS -->
+
+                <content>
+                    <include>skinshortcuts-searchlistmenu</include>
+                </content>
+            </control>
+        </control>
+    </controls>
+</window>

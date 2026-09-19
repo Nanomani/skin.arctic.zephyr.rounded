@@ -364,25 +364,25 @@
     </include>
 
     <include name="Home_Search_Background">
-        <control type="multiimage" description="Fanart">
-            <visible>Window.IsVisible(Home) + !Skin.HasSetting(home.style.horizontal.clean) + !$EXP[View_Info_Dialog] + $EXP[Home_Search_Is_Focus]</visible>
+        <control type="group">
+            <visible>$PARAM[visible]</visible>
 
-            <include>Def_Dimensions_Fullscreen</include>
+            <control type="multiimage" description="Fanart">
+                <include>Def_Dimensions_Fullscreen</include>
 
-            <aspectratio>scale</aspectratio>
-            <imagepath background="true">$VAR[Global_Search_Background]</imagepath>
-        </control>
-        <control type="image" description="FanartOverlay">
-            <visible>Window.IsVisible(Home) + !Skin.HasSetting(home.style.horizontal.clean) + !$EXP[View_Info_Dialog] + $EXP[Home_Search_Is_Focus]</visible>
-
-            <animation type="WindowOpen" reversible="false">
-                <effect type="fade" start="66" end="100" time="150" />
-            </animation>
-            <animation type="WindowClose" reversible="false">
-                <effect type="fade" end="33" start="100" time="300" />
-            </animation>
-            <include>Def_Dimensions_Fullscreen</include>
-            <texture colordiffuse="FloorFade2">background/full_clean.png</texture>
+                <aspectratio>scale</aspectratio>
+                <imagepath background="true">$VAR[Global_Search_Background]</imagepath>
+            </control>
+            <control type="image" description="FanartOverlay">
+                <animation type="WindowOpen" reversible="false">
+                    <effect type="fade" start="66" end="100" time="150" />
+                </animation>
+                <animation type="WindowClose" reversible="false">
+                    <effect type="fade" end="33" start="100" time="300" />
+                </animation>
+                <include>Def_Dimensions_Fullscreen</include>
+                <texture colordiffuse="FloorFade2">background/full_clean.png</texture>
+            </control>
         </control>
     </include>
 
@@ -580,7 +580,9 @@
 
         <!-- HOME SEARCH -->
 
-        <include Condition="!Skin.HasSetting(home.style.horizontal.clean)">Home_Search_Background</include>
+        <include content="Home_Search_Background" Condition="!Skin.HasSetting(home.style.horizontal.clean)">
+            <param name="visible" value="Window.IsVisible(Home) + !Skin.HasSetting(home.style.horizontal.clean) + !$EXP[View_Info_Dialog] + $EXP[Home_Search_Is_Focus]" />
+        </include>
     </include>
 
 
@@ -661,8 +663,8 @@
     <!-- ================= -->
 
     <variable name="Global_Search_Background">
+        <value condition="[Window.IsVisible(1147) | Window.IsVisible(1148)] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
         <value condition="Window.IsVisible(Home) + $EXP[Home_Search_Is_Focus] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
-
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !$EXP[View_Info_Dialog]">$INFO[Skin.String(fanart.fallback.search)]</value>
 
         <!-- FALLBACK -->

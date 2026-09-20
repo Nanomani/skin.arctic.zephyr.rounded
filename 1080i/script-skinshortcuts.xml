@@ -360,7 +360,7 @@
         <!-- MAIN MENU - TITLE - MAIN MENU / WIDGETS - "OPTIONS" -->
 
                 <control type="button" id="4989">
-                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) | String.IsEqual(Window.Property(groupname),searchlistmenu) | $EXP[Script_SkinShortcuts_Widget]</visible>
+                    <visible>String.IsEqual(Window.Property(groupname),mainmenu) | String.IsEqual(Window.Property(groupname),searchlistmenu) | String.IsEqual(Window.Property(groupname),searchdynamenu) | $EXP[Script_SkinShortcuts_Widget]</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <include>Def_Skinshortcuts_Button_Title_Right_Side</include>
                     <label>33063</label>
@@ -380,11 +380,12 @@
                 <!-- SEARCH MENU - SET BACKGROUND - SEARCH FALLBACK -->
 
                 <control type="button" id="4990" description="Background">
-                    <visible>String.IsEqual(Window.Property(groupname),searchlistmenu) + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
+                    <visible>[String.IsEqual(Window.Property(groupname),searchlistmenu) | String.IsEqual(Window.Property(groupname),searchdynamenu)] + String.IsEmpty(Window(Home).Property(skinshortcuts-Widget))</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>$LOCALIZE[31081]</label>
                     <label2>$INFO[Skin.String(fanart.fallback.search)]</label2>
+                    <onclick condition="String.IsEqual(Window.Property(groupname),searchdynamenu)">SetProperty(widgetmanagement,1,Home)</onclick>
                     <onclick>Skin.SetImage(fanart.fallback.search)</onclick>
                 </control>
 

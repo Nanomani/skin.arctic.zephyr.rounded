@@ -365,7 +365,8 @@
 
     <include name="Home_Search_Background">
         <control type="group">
-            <visible>$PARAM[visible]</visible>
+            <visible>$EXP[View_Search_Background]</visible>
+            <visible>[!Skin.HasSetting(home.style.horizontal.clean) + Window.IsVisible(Home)] | !Window.IsVisible(Home)</visible>
 
             <control type="multiimage" description="Fanart">
                 <include>Def_Dimensions_Fullscreen</include>
@@ -464,7 +465,7 @@
 
             <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Flix] + !$EXP[View_Info_Dialog] + !Skin.HasSetting(home.style.horizontal.clean)] | [!Window.IsVisible(Home) + $EXP[View_Flix]] | [Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]</visible>
 
-            <visible>!$EXP[Home_Search_Is_Focus]</visible>
+            <visible>!$EXP[View_Search_Background]</visible>
 
             <include>Animation_Fade_In_Out_Fanart_Flix</include>
 
@@ -500,7 +501,7 @@
 
             <visible>[Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + ![Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]] | [!Window.IsVisible(Home) + !$EXP[View_Flix]]</visible>
 
-            <visible>!$EXP[Home_Search_Is_Focus]</visible>
+            <visible>!$EXP[View_Search_Background]</visible>
 
             <include>Animation_Fade_In_Out_Fanart_Flix</include>
 
@@ -534,7 +535,7 @@
 
         <control type="image" description="Fanart Overlay">
             <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Flix] + !$EXP[View_Info_Dialog] + !Skin.HasSetting(home.style.horizontal.clean)] | [!Window.IsVisible(Home) + $EXP[View_Flix]] | [Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]</visible>
-            <visible>!$EXP[Home_Search_Is_Focus]</visible>
+            <visible>!$EXP[View_Search_Background]</visible>
             <include>Animation_AutoTrailer_Fade_Out_Background</include>
             <include>Animation_VideoHomeWindowsFlix_Fade_Out_Background</include>
             <include>Def_Dimensions_Fullscreen</include>
@@ -544,7 +545,7 @@
         <!-- overlay double - if light theme -->
         <!-- <control type="image" description="Fanart Overlay"> -->
             <!-- <visible>[Window.IsVisible(Home) + $EXP[Home_Is_Flix] + !$EXP[View_Info_Dialog] + !Skin.HasSetting(home.style.horizontal.clean)] | [!Window.IsVisible(Home) + $EXP[View_Flix]] | [Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]</visible> -->
-            <!-- <visible>!$EXP[Home_Search_Is_Focus]</visible> -->
+            <!-- <visible>!$EXP[View_Search_Background]</visible> -->
             <!-- <visible>String.IsEqual(Skin.CurrentColourTheme,Light)</visible> -->
             <!-- <include>Animation_AutoTrailer_Fade_Out_Background</include> -->
             <!-- <include>Animation_VideoHomeWindowsFlix_Fade_Out_Background</include> -->
@@ -556,7 +557,7 @@
 
         <control type="image" description="Fanart Overlay">
             <visible>[[Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + ![Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]] | [!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]]]</visible>
-            <visible>!$EXP[Home_Search_Is_Focus]</visible>
+            <visible>!$EXP[View_Search_Background]</visible>
             <include>Animation_AutoTrailer_Fade_Out_Background</include>
             <include>Animation_VideoHomeWindowsFlix_Fade_Out_Background</include>
             <include>Def_Dimensions_Fullscreen</include>
@@ -566,7 +567,7 @@
         <!-- overlay double - if light theme -->
         <!-- <control type="image" description="Fanart Overlay"> -->
             <!-- <visible>[[Window.IsVisible(Home) + !$EXP[Home_Is_Flix] + !$EXP[Home_Is_Horizontal_Clean] + ![Player.HasMedia + $EXP[Extended_Now_Playing_Is_Enable] + $EXP[Extended_Now_Playing_Is_Visible]]] | [!Window.IsVisible(Home) + !$EXP[View_Flix]] | [Window.IsVisible(Home) + $EXP[View_Info_Dialog]]]</visible> -->
-            <!-- <visible>!$EXP[Home_Search_Is_Focus]</visible> -->
+            <!-- <visible>!$EXP[View_Search_Background]</visible> -->
             <!-- <visible>String.IsEqual(Skin.CurrentColourTheme,Light)</visible> -->
             <!-- <include>Animation_AutoTrailer_Fade_Out_Background</include> -->
             <!-- <include>Animation_VideoHomeWindowsFlix_Fade_Out_Background</include> -->
@@ -581,10 +582,9 @@
         <!-- HOME SEARCH -->
 
         <include content="Home_Search_Background" Condition="!Skin.HasSetting(home.style.horizontal.clean)">
-            <param name="visible" value="Window.IsVisible(Home) + !Skin.HasSetting(home.style.horizontal.clean) + !$EXP[View_Info_Dialog] + $EXP[Home_Search_Is_Focus]" />
+            <param name="visible" value="!Skin.HasSetting(home.style.horizontal.clean) + !$EXP[View_Info_Dialog] + $EXP[View_Search_Background]" />
         </include>
     </include>
-
 
     <!-- ===================== -->
     <!-- BACKGROUND HOME CLEAN -->
@@ -664,7 +664,7 @@
 
     <variable name="Global_Search_Background">
         <value condition="[Window.IsVisible(1147) | Window.IsVisible(1148)] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
-        <value condition="Window.IsVisible(Home) + $EXP[Home_Search_Is_Focus] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
+        <value condition="Window.IsVisible(Home) + $EXP[View_Search_Background] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
         <value condition="!String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !$EXP[View_Info_Dialog]">$INFO[Skin.String(fanart.fallback.search)]</value>
 
         <!-- FALLBACK -->
@@ -767,7 +767,7 @@
     <!--               SEARCH                -->
     <!-- =================================== -->
 
-        <value condition="$EXP[Background_Home_Flix_Or_All_Views] + Window.IsVisible(Home) + $EXP[Home_Search_Is_Focus] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
+        <value condition="$EXP[Background_Home_Flix_Or_All_Views] + $EXP[View_Search_Background] + !String.IsEmpty(Skin.String(fanart.fallback.search))">$INFO[Skin.String(fanart.fallback.search)]</value>
         <value condition="$EXP[Background_Home_Flix_Or_All_Views] + !String.IsEmpty(Skin.String(fanart.fallback.search)) + Window.IsVisible(script-globalsearch.xml) + !$EXP[View_Info_Dialog]">$INFO[Skin.String(fanart.fallback.search)]</value>
 
     <!-- =================================== -->

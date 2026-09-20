@@ -2,6 +2,9 @@
 <window>
     <defaultcontrol always="true">9100</defaultcontrol>
 
+    <onload condition="String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),searchdynamenu)">SetProperty(SkinshortcutsLoad,1,Home)</onload>
+    <onload condition="String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),searchdynamenu) + String.IsEmpty(Window(Home).Property(SkinshortcutsLoad)">SetFocus(555)</onload>
+
     <onunload>ClearProperty(widgetmanagement,Home)</onunload>
     <onunload>ClearProperty(SetWidgetProperty,Home)</onunload>
 
@@ -275,6 +278,7 @@
                 <!-- WIDGETS - CHOOSE WIDGET -->
 
                 <control type="button" id="4001" description="Choose Widget">
+                    <visible>!String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),searchdynamenu)</visible>
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <onfocus>ClearProperty(TMDbHelper.IsStandardSkinShortcut,Home)</onfocus>
@@ -284,6 +288,7 @@
                 <!-- WIDGETS - DISPLAY/EDIT ACTION -->
 
                 <control type="button" id="4307" description="Custom">
+                    <visible>!String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),searchdynamenu)</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
@@ -293,7 +298,7 @@
                     <onclick>SendClick(307)</onclick>
                 </control>
 
-                <!-- MAIN MENU - SET LABEL -->
+                <!-- MAIN MENU / WIDGETS - SET LABEL -->
 
                 <control type="button" id="305" description="Set Label">
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
@@ -374,7 +379,7 @@
                 <control type="button" id="9901" description="Widget Aspect">
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
-                    <enable>!String.IsEqual(Container(211).ListItem.Property(widgettarget),system) + !String.IsEqual(Container(211).ListItem.Property(widget),epg) + !Skin.HasSetting(home.style.horizontal.clean)</enable>
+                    <enable>!String.IsEqual(Container(211).ListItem.Property(widgettarget),system) + !String.IsEqual(Container(211).ListItem.Property(widget),epg) + ![Skin.HasSetting(home.style.horizontal.clean) + String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),mainmenu)]</enable>
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
                     <label>31189</label>
                     <label2>$VAR[Label_Widget_Aspect]</label2>
@@ -439,6 +444,7 @@
                 <!-- WIDGETS - DISABLE RELOAD -->
 
 			    <control type="radiobutton" id="9412" description="Prevent reload">
+	                <visible>String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),mainmenu)</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
 	                <visible>!$EXP[Widget_Content_Weather_Sys_Info]</visible>
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
@@ -451,6 +457,7 @@
                 <!-- WIDGETS - AUTO SCROLL - TIME -->
 
                 <control type="button" id="4196">
+	                <visible>String.IsEqual(Window(Home).Property(SkinshortcutsMenuName),mainmenu)</visible>
                     <visible>!String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)</visible>
                     <visible>$EXP[Script_SkinShortcuts_Widget]</visible>
                     <include>Def_Skinshortcuts_Button_Menu_Right_Side</include>
@@ -602,6 +609,15 @@
         </control>
         <control type="button" id="311">
             <visible allowhiddenfocus="true">false</visible>
+        </control>
+
+        <!-- Button for open menu serch dynamic Widgets -->
+
+        <control type="button" id="555">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus>SetFocus(406)</onfocus>
+            <onfocus>SetProperty(widgetmanagement,1,Home)</onfocus>
+            <onfocus>SendClick(406)</onfocus>
         </control>
 
         <!-- Button back to button 3050 from Widgets lists -->

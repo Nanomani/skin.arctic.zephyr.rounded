@@ -932,6 +932,58 @@
         <param name="align" value="$PARAM[align]" default="left" />
 
         <param name="label" value="$PARAM[label]" default="" />
+        <param name="font" value="$PARAM[font]" default="Tiny" />
+        <param name="textcolor" value="$PARAM[textcolor]" default="Dark3" />
+        <param name="colordiffuse" value="$PARAM[colordiffuse]" default="Dark3" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
+
+        <definition>
+            <control type="grouplist">
+                <visible>$PARAM[visible]</visible>
+
+                <include>Animation_OSD_Fade_Tips</include>
+
+                <top>$PARAM[top]</top>
+                <left>$PARAM[left]</left>
+                <width>$PARAM[width]</width>
+                <height>$PARAM[height]</height>
+                <align>$PARAM[align]</align>
+
+                <itemgap>0</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <control type="image">
+                    <visible>!String.IsEmpty(Control.GetLabel(88).index(0))</visible>
+                    <top>3</top>
+                    <width>50</width>
+                    <height>50</height>
+                    <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+                    <texture flipy="false" colordiffuse="$PARAM[colordiffuse]">special://skin/extras/icons/lightbulb.png</texture>
+                </control>
+                <control type="label" id="88">
+                    <height>56</height>
+                    <font>$PARAM[font]</font>
+                    <scroll>true</scroll>
+                    <scrollspeed>40</scrollspeed>
+                    <scrollsuffix>  ••  </scrollsuffix>
+                    <textcolor>$PARAM[textcolor]</textcolor>
+                    <label>$PARAM[label]</label>
+                    <aligny>center</aligny>
+                    <align>left</align>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Object_Footer_Duo_Tips">
+        <param name="top" value="$PARAM[top]" default="814" />
+        <param name="left" value="$PARAM[left]" default="40" />
+        <param name="width" value="$PARAM[width]" default="1400" />
+        <param name="height" value="$PARAM[height]" default="50" />
+        <param name="align" value="$PARAM[align]" default="left" />
+
+        <param name="label" value="$PARAM[label]" default="" />
         <param name="label2" value="$PARAM[label2]" default="" />
         <param name="id_label" value="$PARAM[id_label]" default="88" />
         <param name="font" value="$PARAM[font]" default="Tiny" />
@@ -986,6 +1038,63 @@
                     <aligny>center</aligny>
                     <align>left</align>
                     <include content="Animation_Label_Fade_Out"><param name="visible" value="$PARAM[visible]" /></include>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <!-- SEARCH -->
+
+    <include name="Object_Search_Bar">
+        <param name="visible" value="$PARAM[visible]" default="Control.HasFocus(90009)" />
+
+        <definition>
+            <control type="group">
+                <visible>$PARAM[visible]</visible>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <include>Texture_Bar_Search_Focus</include>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <include>Texture_Icon_Search_Focus</include>
+                </control>
+            </control>
+            <control type="group">
+                <visible>!$PARAM[visible]</visible>
+                <animation effect="fade" start="100" end="50" condition="true">Conditional</animation>
+
+                <top>40</top>
+                <left>80</left>
+                <width>80</width>
+                <height>80</height>
+
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <include>Texture_Bar_Search_NoFocus</include>
+                </control>
+                <control type="image">
+                    <width>590</width>
+                    <height>80</height>
+                    <texture border="40" colordiffuse="$VAR[Color_Search_Bar_Border]" infill="false">$VAR[border40]</texture>
+                </control>
+                <control type="image">
+                    <top>-4</top>
+                    <left>-4</left>
+                    <width>88</width>
+                    <height>88</height>
+                    <include>Texture_Icon_Search_NoFocus</include>
                 </control>
             </control>
         </definition>

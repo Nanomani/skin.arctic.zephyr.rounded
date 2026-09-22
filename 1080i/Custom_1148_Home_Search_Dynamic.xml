@@ -87,7 +87,10 @@
                     <texturenofocus />
 
                     <ondown>SetProperty(PreviousSearchTerm,$INFO[Control.GetLabel(9099).index(1)])</ondown>
+                    <ondown condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</ondown>
                     <ondown condition="!Integer.IsEqual(Container(6000).NumItems,0)">6000</ondown>
+
+                    <onup condition="!Integer.IsEqual(Container(6000).NumItems,0)">381</onup>
 
                     <onup condition="Integer.IsEqual(Container(6000).NumItems,0)">Close</onup>
                     <ondown condition="Integer.IsEqual(Container(6000).NumItems,0)">Close</ondown>
@@ -95,16 +98,6 @@
                     <onright>9992</onright>
                     <onleft>9992</onleft>
                 </control>
-
-                <!-- SEARCH ON WIKI -->
-
-                <!-- <control type="button" id="380" description="Helper"> -->
-                    <!-- <include>Def_Hidden_Button</include> -->
-                    <!-- <onfocus condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</onfocus> -->
-                    <!-- <onfocus>SetFocus(90009)</onfocus> -->
-                    <!-- <visible allowhiddenfocus="true">Control.HasFocus(380)</visible> -->
-                    <!-- <animation effect="fade" time="300" start="0" end="0">Focus</animation> -->
-                <!-- </control> -->
             </control>
 
             <!-- TIPS - FOOTER -->
@@ -175,22 +168,329 @@
             </include>
         </control>
 
+        <!-- CONTAINER RESULT -->
+
+        <control type="group">
+            <animation effect="slide" start="0" end="490" time="300" delay="0" center="auto" tween="sine" easing="out" condition="[Control.HasFocus(9992) | Control.HasFocus(3060)] + !Integer.IsEqual(Container(6000).NumItems,0)">Conditional</animation>
+
+            <control type="group">
+                <visible allowhiddenfocus="true">Control.HasFocus(9992) | Control.HasFocus(3060)</visible>
+
+                <visible>!Integer.IsEqual(Container(6000).NumItems,0) + !$EXP[Search_Widget_Is_Focus]</visible>
+
+                <include>Animation_Common_Fade_In</include>
+                <include>Animation_Common_Fade_Out</include>
+
+                <top>174</top>
+                <left>-410</left>
+                <width>450</width>
+
+                <!-- ARROWS -->
+
+                <include content="Object_Arrows_Dialog_Vertical">
+                    <param name="container_id" value="3060" />
+                    <param name="colordiffuse" value="Dark3" />
+                    <param name="arrow_bottom" value="744" />
+                </include>
+
+                <!-- BACKGROUND -->
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="104" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,1)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="174" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,2)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="244" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,3)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="314" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,4)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="384" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,5)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="454" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,6)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="524" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,7)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="594" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,8)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="664" />
+                    <param name="visible" value="Integer.IsEqual(Container(3060).NumItems,9)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="734" />
+                    <param name="visible" value="Integer.IsGreater(Container(3060).NumItems,9)" />
+                </include>
+
+                <!-- LIST MENU SEARCH -->
+
+                <control type="list" id="3060">
+                    <include>Animation_Scrolltime_Views_List</include>
+
+                    <top>17</top>
+                    <left>16</left>
+                    <height min="100" max="700">auto</height>
+                    <width>418</width>
+                    <bottom>17</bottom>
+
+                    <onup>3060</onup>
+                    <ondown>3060</ondown>
+
+                    <onback>SetFocus(90009)</onback>
+                    <onleft>SetFocus(90009)</onleft>
+                    <onright>6000</onright>
+
+                    <pagecontrol>1799</pagecontrol>
+                    <orientation>vertical</orientation>
+
+                    <itemlayout width="418" height="70">
+                        <control type="image">
+                            <top>8</top>
+                            <left>16</left>
+                            <width>56</width>
+                            <height>56</height>
+                            <texture colordiffuse="$VAR[Color_Icon_Menu_List]">$INFO[Container(300).ListItem.Icon]</texture>
+                        </control>
+                        <control type="label">
+                            <left>84</left>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <width>74%</width>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <right>16</right>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="418" height="70">
+                        <include>Def_Layout_Item_Focus</include>
+
+                        <control type="image">
+                            <top>8</top>
+                            <left>16</left>
+                            <width>56</width>
+                            <height>56</height>
+                            <texture colordiffuse="Selected">$INFO[Container(300).ListItem.Icon]</texture>
+                        </control>
+                        <control type="label">
+                            <left>84</left>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <width>74%</width>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <right>16</right>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                    </focusedlayout>
+
+                    <!-- SKINSHORTCUTS -->
+
+                    <content>
+                        <!-- movies -->
+                        <item>
+                            <label>$LOCALIZE[342]</label>
+                            <label2>$INFO[Container(5001).NumItems]</label2>
+                            <icon>special://skin/extras/icons/film.png</icon>
+                            <onclick>Setfocus(5001)</onclick>
+                            <visible>Control.IsVisible(5001)</visible>
+                        </item>
+                        <!-- tvshows -->
+                        <item>
+                            <label>$LOCALIZE[20343]</label>
+                            <label2>$INFO[Container(5002).NumItems]</label2>
+                            <icon>special://skin/extras/icons/tv.png</icon>
+                            <onclick>Setfocus(5002)</onclick>
+                            <visible>Control.IsVisible(5002)</visible>
+                        </item>
+                        <!-- episodes -->
+                        <item>
+                            <label>$LOCALIZE[20360]</label>
+                            <label2>$INFO[Container(5003).NumItems]</label2>
+                            <icon>special://skin/extras/icons/tv.png</icon>
+                            <onclick>Setfocus(5003)</onclick>
+                            <visible>Control.IsVisible(5003)</visible>
+                        </item>
+                        <!-- Actor -->
+                        <item>
+                            <label>$LOCALIZE[344]</label>
+                            <label2>$INFO[Container(5004).NumItems]</label2>
+                            <icon>special://skin/extras/icons/artist.png</icon>
+                            <onclick>Setfocus(5004)</onclick>
+                            <visible>Control.IsVisible(5004)</visible>
+                        </item>
+                        <!-- director -->
+                        <item>
+                            <label>$LOCALIZE[20348]</label>
+                            <label2>$INFO[Container(5005).NumItems]</label2>
+                            <icon>special://skin/extras/icons/director.png</icon>
+                            <onclick>Setfocus(5005)</onclick>
+                            <visible>Control.IsVisible(5005)</visible>
+                        </item>
+                        <!-- albums -->
+                        <item>
+                            <label>$LOCALIZE[132]</label>
+                            <label2>$INFO[Container(5006).NumItems]</label2>
+                            <icon>special://skin/extras/icons/songs.png</icon>
+                            <onclick>Setfocus(5006)</onclick>
+                            <visible>Control.IsVisible(5006)</visible>
+                        </item>
+                        <!-- artists -->
+                        <item>
+                            <label>$LOCALIZE[133]</label>
+                            <label2>$INFO[Container(5007).NumItems]</label2>
+                            <icon>special://skin/extras/icons/songs.png</icon>
+                            <onclick>Setfocus(5007)</onclick>
+                            <visible>Control.IsVisible(5007)</visible>
+                        </item>
+                        <!-- songs -->
+                        <item>
+                            <label>$LOCALIZE[134]</label>
+                            <label2>$INFO[Container(5008).NumItems]</label2>
+                            <icon>special://skin/extras/icons/songs.png</icon>
+                            <onclick>Setfocus(5008)</onclick>
+                            <visible>Control.IsVisible(5008)</visible>
+                        </item>
+                        <!-- musicvideos -->
+                        <item>
+                            <label>$LOCALIZE[20389]</label>
+                            <label2>$INFO[Container(5009).NumItems]</label2>
+                            <icon>special://skin/extras/icons/musicvideo.png</icon>
+                            <onclick>Setfocus(5009)</onclick>
+                            <visible>Control.IsVisible(5009)</visible>
+                        </item>
+                        <!-- musicvideos artists -->
+                        <item>
+                            <label>$LOCALIZE[20389] $LOCALIZE[133]</label>
+                            <label2>$INFO[Container(5010).NumItems]</label2>
+                            <icon>special://skin/extras/icons/musicvideo.png</icon>
+                            <onclick>Setfocus(5010)</onclick>
+                            <visible>Control.IsVisible(5010)</visible>
+                        </item>
+                        <!-- tmdb movies -->
+                        <item>
+                            <label>$LOCALIZE[31642]</label>
+                            <label2>$INFO[Container(5011).NumItems]</label2>
+                            <icon>special://skin/extras/icons/film.png</icon>
+                            <onclick>Setfocus(5011)</onclick>
+                            <visible>Control.IsVisible(5011)</visible>
+                        </item>
+                        <!-- tmdb tvshows -->
+                        <item>
+                            <label>$LOCALIZE[31643]</label>
+                            <label2>$INFO[Container(5012).NumItems]</label2>
+                            <icon>special://skin/extras/icons/tv.png</icon>
+                            <onclick>Setfocus(5012)</onclick>
+                            <visible>Control.IsVisible(5012)</visible>
+                        </item>
+                        <!-- tmdb sets -->
+                        <item>
+                            <label>$LOCALIZE[31644]</label>
+                            <label2>$INFO[Container(5013).NumItems]</label2>
+                            <icon>special://skin/extras/icons/sets.png</icon>
+                            <onclick>Setfocus(5013)</onclick>
+                            <visible>Control.IsVisible(5013)</visible>
+                        </item>
+                        <!-- tmdb people -->
+                        <item>
+                            <label>$LOCALIZE[31645]</label>
+                            <label2>$INFO[Container(5014).NumItems]</label2>
+                            <icon>special://skin/extras/icons/artist.png</icon>
+                            <onclick>Setfocus(5014)</onclick>
+                            <visible>Control.IsVisible(5014)</visible>
+                        </item>
+                    </content>
+                </control>
+            </control>
+        </control>
+
         <!-- CONTAINER ROW WIDGETS -->
 
-        <control type="grouplist" id="6000">
-            <include>Animation_Common_Global</include>
-            <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
+        <control type="group">
+            <animation effect="slide" start="0" end="490" time="300" delay="0" center="auto" tween="sine" easing="out" condition="[Control.HasFocus(9992) | Control.HasFocus(3060)] + !Integer.IsEqual(Container(6000).NumItems,0)">Conditional</animation>
 
-            <height>770</height>
-            <bottom>188</bottom>
-            <width>1920</width>
-            <onup>90009</onup>
+            <control type="grouplist" id="6000">
+                <include>Animation_Common_Global</include>
+                <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
 
-            <itemgap>0</itemgap>
-            <orientation>vertical</orientation>
-            <usecontrolcoords>true</usecontrolcoords>
+                <height>770</height>
+                <bottom>188</bottom>
+                <width>1920</width>
+                <onup>90009</onup>
+                <onleft>3060</onleft>
 
-            <include>skinshortcuts-template-search</include>
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include>skinshortcuts-template-search</include>
+            </control>
+        </control>
+
+        <!-- BUTTON TO FOCUS LAST ITEM ON LIST -->
+
+        <control type="button" id="381">
+            <visible allowhiddenfocus="true">false</visible>
+            <height>1</height>
+            <onfocus condition="Control.IsVisible(5001)">SetFocus(5001)</onfocus>
+            <onfocus condition="Control.IsVisible(5002)">SetFocus(5002)</onfocus>
+            <onfocus condition="Control.IsVisible(5003)">SetFocus(5003)</onfocus>
+            <onfocus condition="Control.IsVisible(5004)">SetFocus(5004)</onfocus>
+            <onfocus condition="Control.IsVisible(5005)">SetFocus(5005)</onfocus>
+            <onfocus condition="Control.IsVisible(5006)">SetFocus(5006)</onfocus>
+            <onfocus condition="Control.IsVisible(5007)">SetFocus(5007)</onfocus>
+            <onfocus condition="Control.IsVisible(5008)">SetFocus(5008)</onfocus>
+            <onfocus condition="Control.IsVisible(5009)">SetFocus(5009)</onfocus>
+            <onfocus condition="Control.IsVisible(5010)">SetFocus(5010)</onfocus>
+            <onfocus condition="Control.IsVisible(5011)">SetFocus(5011)</onfocus>
+            <onfocus condition="Control.IsVisible(5012)">SetFocus(5012)</onfocus>
+            <onfocus condition="Control.IsVisible(5013)">SetFocus(5013)</onfocus>
+            <onfocus condition="Control.IsVisible(5014)">SetFocus(5014)</onfocus>
         </control>
     </controls>
 </window>

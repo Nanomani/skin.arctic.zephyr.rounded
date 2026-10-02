@@ -1083,8 +1083,6 @@
             <visible>[Container($PARAM[id]).IsUpdating | !Integer.IsEqual(Container($PARAM[id]).NumItems,0) | $PARAM[altvisible]]</visible>
             <visible>$PARAM[visible]</visible>
 
-            <!-- <animation effect="fade" start="100" end="0" time="0" condition="Container($PARAM[id]).IsUpdating + $PARAM[busy_visible]">Conditional</animation> -->
-
             <include>Animation_Horizontal_Scrolltime_Widgets_List</include>
 
             <top>60</top>
@@ -1096,14 +1094,12 @@
 
             <onfocus>SetProperty(TMDbHelper.WidgetContainer,$PARAM[id],Home)</onfocus>
 
-            <!-- MAIN MENU : FOCUS IF INACTIVITY -->
+            <!-- ON BACK -->
 
             <onback condition="!Integer.IsEqual(Container($PARAM[id]).Position,0)">SetProperty(focus_on_back_id,$PARAM[id],Home)</onback>
             <onback condition="!Integer.IsEqual(Container($PARAM[id]).Position,0)">384</onback>
-
             <onback condition="Integer.IsEqual(Container($PARAM[id]).Position,0)">90009</onback>
 
-            <focusposition>0</focusposition>
             <movement>$PARAM[movement]</movement>
             <orientation>$PARAM[orientation]</orientation>
         </definition>
@@ -1221,6 +1217,8 @@
 
             <onback condition="Skin.HasSetting(enable_widgets_to_position_0_onback_menu) + [!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious]">SetFocus($PARAM[id],0,absolute)</onback>
             <onback condition="Skin.HasSetting(enable_widgets_to_position_0_onback_menu) + Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious">SetFocus($PARAM[backid])</onback>
+
+            <onback condition="[!Integer.IsEqual(Container($PARAM[id]).Position,0) | Container($PARAM[id]).HasPrevious] + Skin.HasSetting(widget.items.onback.go.back.to.position.0) + Skin.HasSetting(widget.items.onback.go.back.to.position.0.setfocus.home) + !Skin.HasSetting(enable_widgets_to_position_0_onback_menu)">SetFocus(300)</onback>
 
             <onback condition="Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious">SetFocus($PARAM[backid])</onback>
             <onback condition="!$EXP[Home_Is_Vertical] + Integer.IsEqual(Container($PARAM[id]).Position,0) + !Container($PARAM[id]).HasPrevious">SetFocus(4567)</onback>

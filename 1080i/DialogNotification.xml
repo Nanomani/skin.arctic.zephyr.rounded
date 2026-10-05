@@ -5,12 +5,14 @@
             <visible>!Window.IsVisible(Startup.xml) + !Window.IsVisible(Custom_1100_Startup.xml)</visible>
             <visible>!Window.IsVisible(DialogVolumeBar.xml) | Player.Muted</visible>
 
+            <visible>!$EXP[Player_Music_Video_Is_FullScreen] | [$EXP[Player_Music_Video_Is_FullScreen] + [String.StartsWith(Control.GetLabel(401),$LOCALIZE[287]) | String.StartsWith(Control.GetLabel(401),$LOCALIZE[460])]]</visible>
+
             <include>Animation_Common_Fade_In_Slide_Down_Bounce</include>
             <include>Animation_Common_Fade_Out</include>
             <include>Animation_Feature_Slide_Up</include>
             <include>Animation_Home_Dialog_Notification_Slide_Up</include>
 
-            <include content="Def_Right" condition="VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)">
+            <include content="Def_Right" condition="$EXP[Player_Music_Video_Is_FullScreen]">
                 <param name="right" value="40" />
             </include>
 
@@ -21,10 +23,10 @@
 
             <include content="Def_Dialog_Notification_Background">
                 <param name="colordiffuse" value="$VAR[Color_OSD_Background_Dialog]" />
-                <param name="visible" value="VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)" />
+                <param name="visible" value="$EXP[Player_Music_Video_Is_FullScreen]" />
             </include>
             <include content="Def_Dialog_Notification_Background">
-                <param name="visible" value="![VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)]" />
+                <param name="visible" value="!$EXP[Player_Music_Video_Is_FullScreen]" />
             </include>
 
             <control type="group">
@@ -40,7 +42,7 @@
                     <param name="colordiffuse" value="0" />
                     <param name="aspectratio" value="center" />
                     <param name="texture" value="$VAR[Image_OSD_Flag_Lang]" />
-                    <param name="visible" value="[VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)] + String.StartsWith(Control.GetLabel(401),$LOCALIZE[287])" />
+                    <param name="visible" value="$EXP[Player_Music_Video_Is_FullScreen] + String.StartsWith(Control.GetLabel(401),$LOCALIZE[287])" />
                 </include>
 
                 <!-- OSD - TOGGLE AUDIO -->
@@ -50,7 +52,7 @@
                     <param name="colordiffuse" value="0" />
                     <param name="aspectratio" value="center" />
                     <param name="texture" value="$INFO[VideoPlayer.AudioLanguage,flags/lang/80x80/,.png]" />
-                    <param name="visible" value="[VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)] + String.StartsWith(Control.GetLabel(401),$LOCALIZE[460])" />
+                    <param name="visible" value="$EXP[Player_Music_Video_Is_FullScreen] + String.StartsWith(Control.GetLabel(401),$LOCALIZE[460])" />
                 </include>
 
                 <!-- KODI INFO -->
@@ -59,7 +61,7 @@
                     <param name="texture_diffuse" value="circle_72" />
                     <param name="colordiffuse" value="Dark2" />
                     <param name="texture" value="$INFO[Control.GetLabel(400)]" />
-                    <param name="visible" value="String.StartsWith(Control.GetLabel(400),DefaultIconInfo) + ![VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)]" />
+                    <param name="visible" value="!$EXP[Player_Music_Video_Is_FullScreen] + String.StartsWith(Control.GetLabel(400),DefaultIconInfo)" />
                 </include>
 
                 <!-- KODI WARNING -->
@@ -68,7 +70,7 @@
                     <param name="texture_diffuse" value="circle_72" />
                     <param name="colordiffuse" value="FFFFD800" />
                     <param name="texture" value="$INFO[Control.GetLabel(400)]" />
-                    <param name="visible" value="String.StartsWith(Control.GetLabel(400),DefaultIconWarning) + ![VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)]" />
+                    <param name="visible" value="!$EXP[Player_Music_Video_Is_FullScreen] + String.StartsWith(Control.GetLabel(400),DefaultIconWarning)" />
                 </include>
 
                 <!-- KODI ERROR -->
@@ -77,7 +79,7 @@
                     <param name="texture_diffuse" value="circle_72" />
                     <param name="colordiffuse" value="FFC50F0F" />
                     <param name="texture" value="$INFO[Control.GetLabel(400)]" />
-                    <param name="visible" value="String.StartsWith(Control.GetLabel(400),DefaultIconError) + ![VideoPlayer.IsFullscreen | Window.IsVisible(MusicVisualisation.xml)]" />
+                    <param name="visible" value="!$EXP[Player_Music_Video_Is_FullScreen] + String.StartsWith(Control.GetLabel(400),DefaultIconError)" />
                 </include>
 
                 <!-- ADDONS - OTHERS -->
@@ -86,7 +88,7 @@
                     <param name="texture_diffuse" value="circle_72" />
                     <param name="colordiffuse" value="0" />
                     <param name="texture" value="$INFO[Control.GetLabel(400)]" />
-                    <param name="visible" value="!String.StartsWith(Control.GetLabel(400),Default)" />
+                    <param name="visible" value="!$EXP[Player_Music_Video_Is_FullScreen] + !String.StartsWith(Control.GetLabel(400),Default)" />
                 </include>
 
                 <control type="label" id="401">

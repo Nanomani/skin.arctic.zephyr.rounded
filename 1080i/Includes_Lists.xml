@@ -314,6 +314,7 @@
     <include name="View_Dialog_Info_Poster">
         <param name="animation_dialog_info_zoom" value="$PARAM[animation_dialog_info_zoom]" default="Animation_Extended_Info_Video_Poster_Zoom" />
         <param name="fallbackpicture" value="$PARAM[fallbackpicture]" default="pbtmdb" />
+        <param name="enableopeninfo" value="$PARAM[enableopeninfo]" default="true" />
         <param name="height" value="$PARAM[height]" default="335" />
         <param name="width" value="$PARAM[width]" default="222" />
         <param name="condition.includecontent" value="$PARAM[condition.includecontent]" default="false" />
@@ -413,21 +414,22 @@
 
                         <!-- TMDB HELPER -->
 
-                        <onclick condition="!Control.IsVisible(9579) + String.IsEmpty(Container.ListItem.DBID)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_path=$INFO[Container($PARAM[controlid]).ListItem.FolderPath],call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
+                        <onclick condition="$PARAM[enableopeninfo] + String.IsEmpty(Container.ListItem.DBID)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_path=$INFO[Container($PARAM[controlid]).ListItem.FolderPath],call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
 
                         <!-- SEASON -->
 
-                        <onclick condition="!Control.IsVisible(9579) + String.IsEqual(ListItem.DBType,season)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,close_dialog=1190,call_path=$INFO[Container($PARAM[controlid]).ListItem.FolderPath]),00:00,silent)</onclick>
+                        <onclick condition="$PARAM[enableopeninfo] + String.IsEqual(ListItem.DBType,season)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,close_dialog=1190,call_path=$INFO[Container($PARAM[controlid]).ListItem.FolderPath]),00:00,silent)</onclick>
 
                         <!-- LOCAL ONLY -->
 
-                        <onclick condition="!Control.IsVisible(9579) + !String.IsEmpty(Container.ListItem.DBID) + String.IsEqual(ListItem.DBType,movie)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[Container($PARAM[controlid]).ListItem.DBID],tmdb_type=movie,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
+                        <onclick condition="$PARAM[enableopeninfo] + !String.IsEmpty(Container.ListItem.DBID) + String.IsEqual(ListItem.DBType,movie)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[Container($PARAM[controlid]).ListItem.DBID],tmdb_type=movie,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
 
-                        <onclick condition="!Control.IsVisible(9579) + !String.IsEmpty(Container.ListItem.DBID) + String.IsEqual(ListItem.DBType,tvshow)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[Container($PARAM[controlid]).ListItem.DBID],tmdb_type=tv,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
+                        <onclick condition="$PARAM[enableopeninfo] + !String.IsEmpty(Container.ListItem.DBID) + String.IsEqual(ListItem.DBType,tvshow)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[Container($PARAM[controlid]).ListItem.DBID],tmdb_type=tv,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
 
-                        <onclick condition="!Control.IsVisible(9579) + !String.IsEmpty(Container.ListItem.DBID) + String.IsEqual(ListItem.DBType,episode)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[Container($PARAM[controlid]).ListItem.DBID],tmdb_type=episode,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
+                        <onclick condition="$PARAM[enableopeninfo] + !String.IsEmpty(Container.ListItem.DBID) + String.IsEqual(ListItem.DBType,episode)">AlarmClock(Delay_Open_Info,RunScript(plugin.video.themoviedb.helper,add_dbid=$INFO[Container($PARAM[controlid]).ListItem.DBID],tmdb_type=episode,call_auto=1190$VAR[Path_Info_First_Item],return),00:00,silent)</onclick>
 
-                        <!-- <onclick condition="!Control.IsVisible(9579) + !String.IsEqual(Window(Home).Property(Set_Movie_TvShow_TMDb_id),Window(Home).Property(TMDbHelper.ListItem.tmdb_id)) + String.IsEmpty(Window(Home).Property(TMDbHelper.IsUpdating))">$PARAM[onclick3]</onclick> -->
+                        <!-- =================================== -->
+                        <!-- =================================== -->
 
                         <onclick>$PARAM[onclick4]</onclick>
                         <onclick>$PARAM[onclick5]</onclick>

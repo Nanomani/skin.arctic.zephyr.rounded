@@ -11,59 +11,12 @@
                 <include>Animation_Video_Info_Extended_Views_Fade_Out</include>
                 <include>Animation_Wiki_Fade_Out</include>
 
-                <animation type="Conditional" condition="String.IsEqual(Window(Home).Property(Show_Disc),1) + Skin.HasSetting(Show.Discart.Video.Info)">
-                    <effect type="slide" start="0,0" end="0,130" delay="0" time="200" tween="quadratic" easing="out" />
-                </animation>
-
-                <!-- ARROW -->
-
-                <control type="group">
-                    <visible>Control.HasFocus(9001) + !String.IsEqual(Window(Home).Property(Show_Disc),1) + !String.IsEmpty(ListItem.Art(discart)) + Skin.HasSetting(Show.Discart.Video.Info)</visible>
-
-                    <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
-
-                    <centerbottom>1006</centerbottom>
-                    <height>16</height>
-                    <control type="image">
-                        <centerleft>290</centerleft>
-                        <top>8</top>
-                        <include>Def_Arrow_Size</include>
-                        <include content="Texture_Arrow_Up"><param name="colordiffuse" value="Dark1" /></include>
-                    </control>
-                </control>
-
-                <!-- DISCART -->
-
-                <control type="image">
-                    <visible>!String.IsEmpty(ListItem.Art(discart)) + String.IsEqual(Window(Home).Property(moviecontent),1) + Skin.HasSetting(Show.Discart.Video.Info)</visible>
-
-                    <animation type="Visible">
-                        <effect type="slide" start="0,0" end="0,-100" delay="0" time="400" tween="quadratic" easing="out" />
-                    </animation>
-                    <animation type="Hidden">
-                        <effect type="slide" start="0,0" end="0,100" delay="0" time="200" tween="quadratic" easing="out" />
-                    </animation>
-                    <animation type="Conditional" condition="String.IsEqual(Window(Home).Property(Show_Disc),1)">
-                        <effect type="slide" start="0,0" end="0,-220" delay="0" time="200" tween="quadratic" easing="out" />
-                    </animation>
-
-                    <top>200</top>
-                    <left>90</left>
-                    <width>405</width>
-                    <height>405</height>
-                    <texture>$INFO[ListItem.Art(discart)]</texture>
-                </control>
-
                 <!-- POSTER -->
 
-                <control type="group">
-                    <animation condition="String.IsEqual(Window(Home).Property(moviecontent),1) + !String.IsEmpty(ListItem.Art(discart)) + Skin.HasSetting(Show.Discart.Video.Info)" effect="slide" end="0,80" start="0,0" time="300">Conditional</animation>
-
-                    <include content="View_50_Side_Poster">
-                        <param name="texture" value="$VAR[Image_Dialog_Info_Video_Poster]" />
-                        <param name="condition_fadetime" value="false" />
-                    </include>
-                </control>
+                <include content="View_50_Side_Poster">
+                    <param name="texture" value="$VAR[Image_Dialog_Info_Video_Poster]" />
+                    <param name="condition_fadetime" value="false" />
+                </include>
             </control>
 
             <!-- RIGHT INFORMATIONS -->
@@ -1119,6 +1072,17 @@
                             <align>left</align>
                             <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator))</visible>
                             <visible>!String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>!Control.HasFocus(862)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <label>[B]$LOCALIZE[31534][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>Control.HasFocus(862)</visible>
                         </control>
 
                         <!-- DIRECTOR -->
@@ -1131,6 +1095,17 @@
                             <align>left</align>
                             <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director))</visible>
                             <visible>!String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>!Control.HasFocus(864)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <label>[B]$LOCALIZE[20339][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>Control.HasFocus(864)</visible>
                         </control>
 
                         <!-- WRITER -->
@@ -1143,6 +1118,17 @@
                             <align>left</align>
                             <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer))</visible>
                             <visible>!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>!Control.HasFocus(866)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <label>[B]$LOCALIZE[20417][/B]</label>
+                            <aligny>center</aligny>
+                            <align>left</align>
+                            <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>Control.HasFocus(866)</visible>
                         </control>
 
                         <!-- STUDIO -->
@@ -1255,6 +1241,16 @@
                             <aligny>center</aligny>
                             <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator))</visible>
                             <visible>!String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>!Control.HasFocus(862)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <label>[B]$INFO[Window(Home).Property(TMDbHelper.ListItem.Creator)][/B]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,episode)</visible>
+                            <visible>Control.HasFocus(862)</visible>
                         </control>
 
                         <!-- DIRECTOR -->
@@ -1266,6 +1262,16 @@
                             <aligny>center</aligny>
                             <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director))</visible>
                             <visible>!String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>!Control.HasFocus(864)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <label fallback="19055">[B]$VAR[Label_Director][/B]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Director) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>Control.HasFocus(864)</visible>
                         </control>
 
                         <!-- WRITER -->
@@ -1277,6 +1283,16 @@
                             <aligny>center</aligny>
                             <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer))</visible>
                             <visible>!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>!Control.HasFocus(866)</visible>
+                        </control>
+                        <control type="label">
+                            <font>Tiny</font>
+                            <textcolor>$VAR[Color_List_Item_Selected]</textcolor>
+                            <label fallback="19055">[B]$VAR[Label_Writer][/B]</label>
+                            <aligny>center</aligny>
+                            <visible>!String.IsEmpty(ListItem.Writer) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer))</visible>
+                            <visible>!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season)</visible>
+                            <visible>Control.HasFocus(866)</visible>
                         </control>
 
                         <!-- STUDIO -->
@@ -1751,6 +1767,106 @@
             <onright>SetFocus(160)</onright>
         </control>
 
+        <!-- INFO - CREATOR -->
+
+        <control type="button" id="862">
+            <visible allowhiddenfocus="true">false</visible>
+
+            <left>-2000</left>
+            <width>1</width>
+
+            <onup condition="String.IsEqual(ListItem.DBType,tvshow)">SetFocus(864)</onup>
+            <ondown condition="String.IsEqual(ListItem.DBType,tvshow)">SetFocus(864)</ondown>
+
+            <onback>9000</onback>
+            <onleft>9000</onleft>
+            <onright>9000</onright>
+
+            <!-- SEARCH CREATOR INFO -->
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SelectPerson,1,Home)</onclick>
+
+            <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(SetCreatorSelected)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+
+            <!-- SEARCH CREATOR INFO -->
+
+            <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(Creator_Query))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(Creator_Query)],call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+        </control>
+
+        <!-- INFO - DIRECTOR -->
+
+        <control type="button" id="864">
+            <visible allowhiddenfocus="true">false</visible>
+
+            <left>-2000</left>
+            <width>1</width>
+
+            <onup condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]">SetFocus(862)</onup>
+            <ondown condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]">SetFocus(862)</ondown>
+            <onup condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]">SetFocus(866)</onup>
+            <ondown condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]">SetFocus(866)</ondown>
+
+            <onback>9000</onback>
+            <onleft>9000</onleft>
+            <onright>9000</onright>
+
+            <!-- ============================== -->
+            <!--       SEARCH DIRECTOR INFO     -->
+            <!-- ============================== -->
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0))">SetProperty(SelectPerson,1,Home)</onclick>
+
+            <!-- MOVIE, EPISODE, MUSICVIDEO -->
+
+            <!-- Multi director -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(ListItem.Director, / )">SetProperty(open_dialog_info_director,1,Home)</onclick>
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(ListItem.Director, / )">SetFocus(9410)</onclick>
+
+            <!-- Only 1 director -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + !String.Contains(ListItem.Director, / )">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Director],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+
+            <!-- TVSHOW -->
+
+            <!-- Multi director -->
+            <onclick condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / )">SetProperty(open_dialog_info_director,1,Home)</onclick>
+            <onclick condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / )">SetFocus(9410)</onclick>
+
+            <!-- Only 1 director -->
+            <onclick condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + !String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / )">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(TMDbHelper.ListItem.Director)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+        </control>
+
+        <!-- INFO - WRITER -->
+
+        <control type="button" id="866">
+            <visible allowhiddenfocus="true">false</visible>
+
+            <left>-2000</left>
+            <width>1</width>
+
+            <onup condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]">SetFocus(864)</onup>
+            <ondown condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]">SetFocus(864)</ondown>
+
+            <onback>9000</onback>
+            <onleft>9000</onleft>
+            <onright>9000</onright>
+
+            <!-- ============================== -->
+            <!--       SEARCH WRITER INFO     -->
+            <!-- ============================== -->
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0))">SetProperty(SelectPerson,1,Home)</onclick>
+
+            <!-- MOVIE, EPISODE, MUSICVIDEO -->
+
+            <!-- Multi Writer -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0)) + String.Contains(ListItem.Writer, / )">SetProperty(open_dialog_info_writer,1,Home)</onclick>
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0)) + String.Contains(ListItem.Writer, / )">SetFocus(9420)</onclick>
+
+            <!-- Only 1 Writer -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0)) + !String.Contains(ListItem.Writer, / )">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Writer],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+        </control>
+
+
         <!-- ======================================================================= -->
 
         <control type="group">
@@ -1791,6 +1907,7 @@
         <include>Hidden_List_Up_Next_Episode</include>
         <include>Def_Dialog_Custom_Settings</include>
         <include>Def_Dialog_Director_Info</include>
+        <include>Def_Dialog_Writer_Info</include>
         <include>Def_Dialog_Info_Video_Fullscreen</include>
     </include>
 </includes>

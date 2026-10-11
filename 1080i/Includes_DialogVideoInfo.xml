@@ -1782,15 +1782,28 @@
             <onleft>9000</onleft>
             <onright>9000</onright>
 
-            <!-- SEARCH CREATOR INFO -->
 
-            <onclick condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">SetProperty(SelectPerson,1,Home)</onclick>
+            <!-- ============================== -->
+            <!--       SEARCH CREATOR INFO      -->
+            <!-- ============================== -->
 
-            <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(SetCreatorSelected)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+            <onclick>SetProperty(SelectPerson,1,Home)</onclick>
 
-            <!-- SEARCH CREATOR INFO -->
 
-            <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(Creator_Query))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(Creator_Query)],call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+            <!-- TVSHOW, EPISODE -->
+
+            <!-- Multi Creator -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Creator), / )">SetProperty(open_dialog_info_creator,1,Home)</onclick>
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Creator), / )">AlarmClock(DelayFocus9430,SetFocus(9430),00:00,silent)</onclick>
+
+            <!-- Only 1 Creator -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator)) + !String.Contains(Window(Home).Property(TMDbHelper.ListItem.Creator), / )">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(TMDbHelper.ListItem.Creator)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+
+
+            <!-- <onclick condition="!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(SetCreatorSelected))">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(SetCreatorSelected)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick> -->
+
+            <!-- <onclick condition="String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(Window(Home).Property(Creator_Query))">RunScript(plugin.video.themoviedb.helper,add_path=plugin://plugin.video.themoviedb.helper/?info=details&amp;tmdb_type=person&amp;tmdb_id=$INFO[Window(Home).Property(Creator_Query)],call_auto=1190$VAR[Path_Info_First_Item],return)</onclick> -->
         </control>
 
         <!-- INFO - DIRECTOR -->
@@ -1801,8 +1814,8 @@
             <left>-2000</left>
             <width>1</width>
 
-            <onup condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]">SetFocus(862)</onup>
-            <ondown condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]">SetFocus(862)</ondown>
+            <onup condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator))">SetFocus(862)</onup>
+            <ondown condition="[String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Creator))">SetFocus(862)</ondown>
             <onup condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]">SetFocus(866)</onup>
             <ondown condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]">SetFocus(866)</ondown>
 
@@ -1810,29 +1823,34 @@
             <onleft>9000</onleft>
             <onright>9000</onright>
 
+
             <!-- ============================== -->
             <!--       SEARCH DIRECTOR INFO     -->
             <!-- ============================== -->
 
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0))">SetProperty(SelectPerson,1,Home)</onclick>
+            <onclick>SetProperty(SelectPerson,1,Home)</onclick>
 
-            <!-- MOVIE, EPISODE, MUSICVIDEO -->
 
-            <!-- Multi director -->
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(ListItem.Director, / ) + !String.IsEmpty(ListItem.Director)">SetProperty(open_dialog_info_director,1,Home)</onclick>
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(ListItem.Director, / ) + !String.IsEmpty(ListItem.Director)">AlarmClock(DelayFocus9420,AlarmClock(DelayFocus9410,SetFocus(9410),00:00,silent),00:00,silent)</onclick>
-
-            <!-- Only 1 director -->
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + !String.Contains(ListItem.Director, / ) + !String.IsEmpty(ListItem.Director)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Director],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
-
-            <!-- TVSHOW -->
+            <!-- MOVIE, TVSHOW, EPISODE, MUSICVIDEO -->
 
             <!-- Multi director -->
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / ) + String.IsEmpty(ListItem.Director)">SetProperty(open_dialog_info_director,1,Home)</onclick>
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / ) + String.IsEmpty(ListItem.Director)">AlarmClock(DelayFocus9410,SetFocus(9410),00:00,silent)</onclick>
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(ListItem.Director) + String.Contains(ListItem.Director, / ) + !String.IsEmpty(ListItem.Director)">SetProperty(open_dialog_info_director,1,Home)</onclick>
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(ListItem.Director) + String.Contains(ListItem.Director, / ) + !String.IsEmpty(ListItem.Director)">AlarmClock(DelayFocus9410,AlarmClock(DelayFocus9410,SetFocus(9410),00:00,silent),00:00,silent)</onclick>
 
             <!-- Only 1 director -->
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(List.Multi.Director.0)) + !String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / ) + String.IsEmpty(ListItem.Director)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(TMDbHelper.ListItem.Director)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(ListItem.Director) + !String.Contains(ListItem.Director, / ) + !String.IsEmpty(ListItem.Director)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Director],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+
+
+            <!-- MOVIE, TVSHOW, EPISODE, MUSICVIDEO -->
+
+            <!-- Multi director -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / ) + String.IsEmpty(ListItem.Director)">SetProperty(open_dialog_info_director,1,Home)</onclick>
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / ) + String.IsEmpty(ListItem.Director)">AlarmClock(DelayFocus9410,SetFocus(9410),00:00,silent)</onclick>
+
+            <!-- Only 1 director -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Director)) + !String.Contains(Window(Home).Property(TMDbHelper.ListItem.Director), / ) + String.IsEmpty(ListItem.Director)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(TMDbHelper.ListItem.Director)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
         </control>
 
         <!-- INFO - WRITER -->
@@ -1850,20 +1868,34 @@
             <onleft>9000</onleft>
             <onright>9000</onright>
 
+
             <!-- ============================== -->
-            <!--       SEARCH WRITER INFO     -->
+            <!--       SEARCH WRITER INFO       -->
             <!-- ============================== -->
 
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0))">SetProperty(SelectPerson,1,Home)</onclick>
+            <onclick>SetProperty(SelectPerson,1,Home)</onclick>
 
-            <!-- MOVIE, EPISODE, MUSICVIDEO -->
+
+            <!-- MOVIE, EPISODE -->
 
             <!-- Multi Writer -->
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0)) + String.Contains(ListItem.Writer, / ) + !String.IsEmpty(ListItem.Writer)">SetProperty(open_dialog_info_writer,1,Home)</onclick>
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0)) + String.Contains(ListItem.Writer, / ) + !String.IsEmpty(ListItem.Writer)">AlarmClock(DelayFocus9420,SetFocus(9420),00:00,silent)</onclick>
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)]  + !String.IsEmpty(ListItem.Writer) + String.Contains(ListItem.Writer, / ) + !String.IsEmpty(ListItem.Writer)">SetProperty(open_dialog_info_writer,1,Home)</onclick>
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)]  + !String.IsEmpty(ListItem.Writer) + String.Contains(ListItem.Writer, / ) + !String.IsEmpty(ListItem.Writer)">AlarmClock(DelayFocus9420,AlarmClock(DelayFocus9410,SetFocus(9420),00:00,silent),00:00,silent)</onclick>
 
             <!-- Only 1 Writer -->
-            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)] + !String.IsEmpty(Window(Home).Property(List.Multi.Writer.0)) + !String.Contains(ListItem.Writer, / ) + !String.IsEmpty(ListItem.Writer)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Writer],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)]  + !String.IsEmpty(ListItem.Writer) + !String.Contains(ListItem.Writer, / ) + !String.IsEmpty(ListItem.Writer)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Writer],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
+
+
+            <!-- MOVIE, EPISODE -->
+
+            <!-- Multi Writer -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Writer), / ) + String.IsEmpty(ListItem.Writer)">SetProperty(open_dialog_info_writer,1,Home)</onclick>
+
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer)) + String.Contains(Window(Home).Property(TMDbHelper.ListItem.Writer), / ) + String.IsEmpty(ListItem.Writer)">AlarmClock(DelayFocus9420,SetFocus(9420),00:00,silent)</onclick>
+
+            <!-- Only 1 Writer -->
+            <onclick condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode)]  + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Writer)) + !String.Contains(Window(Home).Property(TMDbHelper.ListItem.Writer), / ) + String.IsEmpty(ListItem.Writer)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Window(Home).Property(TMDbHelper.ListItem.Writer)],tmdb_type=person,call_auto=1190$VAR[Path_Info_First_Item],return)</onclick>
         </control>
 
 
@@ -1908,6 +1940,7 @@
         <include>Def_Dialog_Custom_Settings</include>
         <include>Def_Dialog_Director_Info</include>
         <include>Def_Dialog_Writer_Info</include>
+        <include>Def_Dialog_Creator_Info</include>
         <include>Def_Dialog_Info_Video_Fullscreen</include>
     </include>
 </includes>

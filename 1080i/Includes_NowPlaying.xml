@@ -54,8 +54,6 @@
 
     <include name="NowPlaying_ClearArt">
         <control type="group">
-            <visible>![Skin.HasSetting(show.home.nowplaying.extended.video.windows) + !Skin.HasSetting(hide.home.nowplaying.extended.video.cd)]</visible>
-
             <left>1360</left>
             <bottom>0</bottom>
 
@@ -634,51 +632,6 @@
         </control>
     </include>
 
-    <!-- DEF - VIDEO - DISCART -->
-
-    <include name="NowPlaying_Image_DiscArt_Video">
-        <param name="visible" value="$PARAM[visible]" default="true" />
-        <param name="left" value="$PARAM[left]" default="106" />
-        <definition>
-            <control type="group">
-                <visible>Player.HasMedia + Player.HasVideo + VideoPlayer.Content(movies)</visible>
-                <visible>!Skin.HasSetting(hide.home.nowplaying.extended.video.cd)</visible>
-                <visible>$PARAM[visible]</visible>
-
-                <animation type="WindowClose" reversible="false">
-                    <effect type="slide" start="0,0" end="-106,0" tween="sine" easing="out" time="300" delay="0" />
-                    <effect type="fade" start="100" end="0" time="150" delay="0" />
-                </animation>
-                <animation type="WindowOpen" reversible="false" condition="$EXP[Extended_Now_Playing_Is_Visible]">
-                    <effect type="slide" start="-106,0" end="0,0" tween="sine" easing="out" time="600" delay="500" />
-                </animation>
-                <animation type="Conditional" condition="!$EXP[Home_Menu_Is_Focus] + !Controlgroup(777).HasFocus() + !Control.HasFocus(2011)" reversible="false">
-                    <effect type="slide" start="0,0" end="-106,0" tween="sine" easing="out" time="300" delay="0" />
-                    <effect type="fade" start="100" end="0" time="150" delay="0" />
-                </animation>
-                <animation type="Conditional" condition="$EXP[Home_Menu_Is_Focus] | Controlgroup(777).HasFocus() | Control.HasFocus(2011) | Control.HasFocus(9099)" reversible="false">
-                    <effect type="slide" start="-106,0" end="0,0" tween="sine" easing="out" time="600" delay="500" />
-                    <effect type="fade" start="0" end="100" time="1" delay="500" />
-                </animation>
-
-                <top>571</top>
-                <left>$PARAM[left]</left>
-
-                <include content="Def_NowPlaying_DiscArt">
-                    <param name="visible" value="Skin.HasSetting(home.video.disc.fake.bluray)" />
-                    <param name="diffuse" value="diffuse/cd_w496_h496.png" />
-                    <param name="discart" value="$VAR[Image_DiscArt_Video]" />
-                    <param name="width" value="194" />
-                </include>
-                <include content="Def_NowPlaying_DiscArt">
-                    <param name="visible" value="!Skin.HasSetting(home.video.disc.fake.bluray)" />
-                    <param name="discart" value="$VAR[Image_DiscArt_Video]" />
-                    <param name="width" value="194" />
-                </include>
-            </control>
-        </definition>
-    </include>
-
     <!-- DEF - VIDEO - WINDOW -->
 
     <include name="NowPlaying_VideoWindow">
@@ -1058,16 +1011,6 @@
                 <include condition="Skin.HasSetting(show.home.nowplaying.extended.video.windows)">NowPlaying_VideoWindow</include>
                 <include>NowPlaying_ClearArt</include>
 
-                <!-- DISCART -->
-
-                <include content="NowPlaying_Image_DiscArt_Video">
-                    <param name="visible" value="!Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
-                </include>
-                <include content="NowPlaying_Image_DiscArt_Video">
-                    <param name="left" value="679" />
-                    <param name="visible" value="Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
-                </include>
-
                 <!-- POSTER / SQUARE -->
 
                 <include content="NowPlaying_Poster">
@@ -1087,34 +1030,49 @@
                 </include>
                 <include content="NowPlaying_Square">
                     <param name="left" value="0" />
-                    <param name="visible" value="$EXP[IsPVRAudio] + Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
+                    <param name="visible" value="$EXP[IsPVRVideo] + !Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
                 </include>
 
                 <!-- INFO RIGHT -->
 
+                <!-- video in library -->
                 <include content="NowPlaying_InfoRight">
-                    <param name="left" value="561" />
-                    <param name="visible" value="$EXP[IsVideo] + Skin.HasSetting(show.home.nowplaying.extended.video.windows) + Skin.HasSetting(hide.home.nowplaying.extended.video.cd)" />
+                    <param name="left" value="-40" />
+                    <param name="visible" value="$EXP[IsVideo] + String.IsEmpty(VideoPlayer.DBID) + !Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
                 </include>
                 <include content="NowPlaying_InfoRight">
-                    <param name="left" value="641" />
-                    <param name="visible" value="$EXP[IsVideo] + Skin.HasSetting(show.home.nowplaying.extended.video.windows) + !Skin.HasSetting(hide.home.nowplaying.extended.video.cd)" />
+                    <param name="left" value="531" />
+                    <param name="visible" value="$EXP[IsVideo] + String.IsEmpty(VideoPlayer.DBID) + Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
+                </include>
+
+                <!-- video with plugin -->
+                <include content="NowPlaying_InfoRight">
+                    <param name="left" value="-20" />
+                    <param name="visible" value="$EXP[IsVideo] + !String.IsEmpty(VideoPlayer.DBID) + !Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
                 </include>
                 <include content="NowPlaying_InfoRight">
-                    <param name="left" value="0" />
-                    <param name="visible" value="[$EXP[IsVideo] + !Skin.HasSetting(show.home.nowplaying.extended.video.windows) + Skin.HasSetting(hide.home.nowplaying.extended.video.cd)] | [$EXP[IsAudio] + Skin.HasSetting(hide.home.nowplaying.extended.music.cd)] | [$EXP[IsPVRAudio] + Skin.HasSetting(hide.home.nowplaying.extended.video.cd)]" />
+                    <param name="left" value="551" />
+                    <param name="visible" value="$EXP[IsVideo] + !String.IsEmpty(VideoPlayer.DBID) + Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
                 </include>
+
+                <!-- audio -->
                 <include content="NowPlaying_InfoRight">
-                    <param name="left" value="661" />
-                    <param name="visible" value="$EXP[IsPVRVideo] + Skin.HasSetting(show.home.nowplaying.extended.video.windows) + Skin.HasSetting(hide.home.nowplaying.extended.video.cd)" />
+                    <param name="left" value="-40" />
+                    <param name="visible" value="[$EXP[IsAudio] + Skin.HasSetting(hide.home.nowplaying.extended.music.cd)] | $EXP[IsPVRAudio]" />
                 </include>
                 <include content="NowPlaying_InfoRight">
                     <param name="left" value="140" />
-                    <param name="visible" value="[$EXP[IsPVRAudio] + !Skin.HasSetting(hide.home.nowplaying.extended.video.cd)] | [$EXP[IsAudio] + !Skin.HasSetting(hide.home.nowplaying.extended.music.cd)]" />
+                    <param name="visible" value="[$EXP[IsAudio] + !Skin.HasSetting(hide.home.nowplaying.extended.music.cd)]" />
+                </include>
+
+                <!-- pvr -->
+                <include content="NowPlaying_InfoRight">
+                    <param name="left" value="80" />
+                    <param name="visible" value="$EXP[IsPVRVideo] + !Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
                 </include>
                 <include content="NowPlaying_InfoRight">
-                    <param name="left" value="100" />
-                    <param name="visible" value="$EXP[IsPVRVideo] + !Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
+                    <param name="left" value="641" />
+                    <param name="visible" value="$EXP[IsPVRVideo] + Skin.HasSetting(show.home.nowplaying.extended.video.windows)" />
                 </include>
 
                 <control type="list" id="999">

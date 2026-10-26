@@ -331,7 +331,9 @@
 
     <!-- AUTO SHOW NOWPLAYING HELPER -->
 
-    <expression name="Extended_Now_Playing_Helper_AutoShow">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + [System.IdleTime(5) + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + $EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + [Player.HasMedia | Player.Playing] + Skin.HasSetting(enable.home.auto.show.nowplaying.extended) + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
+    <expression name="Extended_Now_Playing_Helper_AutoShow">[!$EXP[Trailer_Is_Ready] + !$EXP[Trailer_Is_Playing] + !$EXP[Trailer_Waiting_For_Player] + !$EXP[Trailer_Window_Is_Active] + String.IsEmpty(Window(Home).Property(Trailer_Fade_Background)) + [$EXP[Extended_Now_Playing_Helper_Timing] + !String.IsEmpty(Window(Home).Property(nowplaying.auto.show.timer)) + $EXP[Extended_Now_Playing_Is_Enable] + Window.IsVisible(Home) + [Player.HasMedia | Player.Playing] + !$EXP[View_Info_Dialog] + !Window.IsVisible(DialogContextMenu.xml)] + !Window.IsVisible(DialogBusy.xml) + !Window.IsVisible(DialogConfirm.xml)]</expression>
+
+    <expression name="Extended_Now_Playing_Helper_Timing">[Skin.HasSetting(enable.home.auto.show.nowplaying.extended) + [[System.IdleTime(3) + Integer.IsEqual(Skin.String(Value_Delay_Auto_Show_NowPlaying),3)] | [System.IdleTime(5) + Integer.IsEqual(Skin.String(Value_Delay_Auto_Show_NowPlaying),5)] | [System.IdleTime(7) + Integer.IsEqual(Skin.String(Value_Delay_Auto_Show_NowPlaying),7)] | [System.IdleTime(10) + Integer.IsEqual(Skin.String(Value_Delay_Auto_Show_NowPlaying),10)]]]</expression>
 
     <!-- AUTO CLOSE NOWPLAYING HELPER -->
 

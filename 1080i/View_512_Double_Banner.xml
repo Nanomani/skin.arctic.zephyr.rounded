@@ -45,41 +45,63 @@
         </control>
     </include>
 
-    <include name="ListView511Banner">
+    <include name="Control_512_List_Info_Video_List">
         <control type="list" id="512">
-            <visible>$EXP[Exp_View_512]</visible>
-            <include>Animation_Scrolltime_Views_List</include>
-            <animation effect="slide" start="0,0" end="690,0" time="200" condition="Skin.HasSetting(flip512rightleft)">Conditional</animation>
-
-            <top>314</top>
-            <left>View_List_Side</left>
-            <width>1092</width>
-            <height>540</height>
-
-            <include content="Def_Layout_Action_On_Left_On_Right" >
-                <param name="scrollid" value="1691" />
-            </include>
-
-            <orientation>vertical</orientation>
-            <preloaditems>2</preloaditems>
-            <pagecontrol>1691</pagecontrol>
-
-            <viewtype label="31064">list</viewtype>
-
-            <itemlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="67.5">
-                <include>layout_list_item_video</include>
-            </itemlayout>
-            <focusedlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="67.5">
-                <include content="layout_list_focus_video"><param name="list_id" value="512" /></include>
-            </focusedlayout>
-
-            <itemlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="90">
-                <include>layout_list_item_video_info</include>
-            </itemlayout>
-            <focusedlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="90">
-                <include content="layout_list_focus_video_info"><param name="list_id" value="512" /></include>
-            </focusedlayout>
+            <include>Layout_512_List_Info_Video</include>
         </control>
+    </include>
+
+    <include name="Control_512_List_Info_Video_Fixed_List">
+        <control type="fixedlist" id="512">
+            <include>Layout_512_List_Info_Video</include>
+        </control>
+    </include>
+
+    <include name="Layout_512_List_Info_Video">
+        <visible>$EXP[Exp_View_512]</visible>
+        <include>Animation_Scrolltime_Views_List</include>
+        <animation effect="slide" start="0,0" end="690,0" time="200" condition="Skin.HasSetting(flip512rightleft)">Conditional</animation>
+
+        <top>314</top>
+        <left>View_List_Side</left>
+        <width>1092</width>
+        <height>540</height>
+
+        <include content="Def_Layout_Action_On_Left_On_Right" >
+            <param name="scrollid" value="1691" />
+        </include>
+
+        <orientation>vertical</orientation>
+        <preloaditems>2</preloaditems>
+        <pagecontrol>1691</pagecontrol>
+
+        <focusposition>1</focusposition>
+
+        <include content="Def_Focus_Position" condition="!Skin.HasSetting(51x.list.control.list)">
+            <param name="focusposition" value="1" />
+        </include>
+        <include content="Def_Movement" condition="!Skin.HasSetting(enable.view.5x.51x.extended.list) + !Skin.HasSetting(51x.list.control.list)">
+            <param name="movement" value="6" />
+        </include>
+        <include content="Def_Movement" condition="Skin.HasSetting(enable.view.5x.51x.extended.list) + !Skin.HasSetting(51x.list.control.list)">
+            <param name="movement" value="4" />
+        </include>
+
+        <viewtype label="31064">list</viewtype>
+
+        <itemlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="67.5">
+            <include>layout_list_item_video</include>
+        </itemlayout>
+        <focusedlayout condition="!Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="67.5">
+            <include content="layout_list_focus_video"><param name="list_id" value="512" /></include>
+        </focusedlayout>
+
+        <itemlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="90">
+            <include>layout_list_item_video_info</include>
+        </itemlayout>
+        <focusedlayout condition="Skin.HasSetting(enable.view.5x.51x.extended.list)" width="1070" height="90">
+            <include content="layout_list_focus_video_info"><param name="list_id" value="512" /></include>
+        </focusedlayout>
     </include>
 
     <include name="View_512_Double_Banner">
@@ -180,7 +202,8 @@
                 </control>
             </control>
 
-            <include condition="Skin.HasSetting(ListView511)">ListView511Banner</include>
+            <include condition="Skin.HasSetting(ListView511) + !Skin.HasSetting(51x.list.control.list)">Control_512_List_Info_Video_Fixed_List</include>
+            <include condition="Skin.HasSetting(ListView511) + Skin.HasSetting(51x.list.control.list)">Control_512_List_Info_Video_List</include>
             <include condition="!Skin.HasSetting(ListView511)">DoubleView511Banner</include>
 
             <!-- SCROLLBAR -->

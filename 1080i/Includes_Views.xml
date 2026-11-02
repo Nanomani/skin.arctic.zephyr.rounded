@@ -596,7 +596,6 @@
         <include>Furniture_Header_Info</include>
         <include condition="!Skin.HasSetting(hide.furniture.nowplaying.views)">Furniture_Header_NowPlaying</include>
         <include condition="$EXP[Show_Weather_All_Views]">Furniture_Footer_Clock_Right</include>
-        <include content="Furniture_DialogInfo_Extended_Video_Flags" condition="!Skin.HasSetting(hide.furniture.flags)"><param name="controlid" value="9500" /></include>
         <include>Hidden_Button_ReloadSkin</include>
 
         <control type="group">
@@ -976,7 +975,7 @@
 
                 <include content="Def_Dialog_Menu_GroupList"><param name="height" value="910" /><param name="idlayout" value="9501" /></include>
 
-                <!-- NOW PLAYING -->
+            <!-- NOW PLAYING -->
 
                 <control type="button" id="55555">
                     <include>Def_Dialog_Menu_Button_Title</include>
@@ -990,11 +989,30 @@
 
                 <include>Def_Dialog_Menu_MiniPlayer</include>
 
-                <!-- FILTER -->
+            <!-- FILTER -->
 
                 <control type="button" id="55551">
                     <include>Def_Dialog_Menu_Button_Title</include>
                     <label>$LOCALIZE[31051]</label>
+                </control>
+
+                <!-- SHOW PLOT -->
+
+                <control type="radiobutton" id="9296">
+                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
+                    <label>$LOCALIZE[31221]</label>
+                    <selected>Skin.HasSetting(hub.showplot)</selected>
+                    <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
+                </control>
+
+                <!-- HUB LIMIT NUM ITEM  -->
+
+                <control type="button" id="9842">
+                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
+                    <label>$LOCALIZE[31134]</label>
+                    <label2>$VAR[Def_Hub_Limit]</label2>
+                    <onclick>SetProperty(includesetting,Value_Hub_Limit,Home)</onclick>
+                    <onclick>ActivateWindow(1248)</onclick>
                 </control>
 
                 <!-- SHOW CONTEXT MENU ON LEFT -->
@@ -1007,55 +1025,53 @@
                     <onclick>SetProperty(reloadskin,1,Home)</onclick>
                 </control>
 
-                <control type="button" id="9842">
-                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
-                    <label>$LOCALIZE[31134]</label>
-                    <label2>$VAR[Def_Hub_Limit]</label2>
-                    <onclick>SetProperty(includesetting,Value_Hub_Limit,Home)</onclick>
-                    <onclick>ActivateWindow(1248)</onclick>
-                </control>
-                <control type="radiobutton" id="9296">
-                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
-                    <label>$LOCALIZE[31221]</label>
-                    <selected>Skin.HasSetting(hub.showplot)</selected>
-                    <onclick>Skin.ToggleSetting(hub.showplot)</onclick>
-                </control>
-
-            <!-- DISPLAY MEDIA FLAG -->
-
-                <control type="button" id="55529">
-                    <include>Def_Dialog_Menu_Button_Title</include>
-                    <label>$LOCALIZE[31229]</label>
-                </control>
-                <control type="radiobutton" id="9260">
-                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
-                    <label>$LOCALIZE[31112]</label>
-                    <selected>!Skin.HasSetting(hide.furniture.flags)</selected>
-                    <onclick>Skin.ToggleSetting(hide.furniture.flags)</onclick>
-                    <onclick>SetProperty(reloadskin,1,Home)</onclick>
-                </control>
-                <control type="button" id="9584">
-                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
-                    <label>$LOCALIZE[467]$LOCALIZE[31079]</label>
-                    <label2>$VAR[Label_Setting_View_Flag_Color]</label2>
-                    <selected>Skin.HasSetting(enable.furniture.flags.colored)</selected>
-                    <onclick>Skin.ToggleSetting(enable.furniture.flags.colored)</onclick>
-                    <visible>!Skin.HasSetting(hide.furniture.flags) + Skin.HasSetting(enable.furniture.flags.icons)</visible>
-                </control>
-
             <!-- ACTION -->
 
                 <control type="button" id="666">
                     <include>Def_Dialog_Menu_Button_Title</include>
                     <label>14230</label>
-                    <visible>!Container.Content(addons) + String.IsEmpty(Container.PluginName)</visible>
                 </control>
+
+                <!-- UPDATE LIBRARY VIDEO -->
+
                 <control type="togglebutton" id="20">
                     <description>Update</description>
                     <label>$LOCALIZE[653]</label>
                     <altlabel>13353</altlabel>
                     <include>Def_Dialog_Menu_Button_Focus_Select</include>
                     <usealttexture>Library.IsScanningVideo</usealttexture>
+                    <onclick>UpdateLibrary(video)</onclick>
+                    <visible>String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),tvshow) | Window.IsVisible(1111) | Window.IsVisible(1112)</visible>
+                </control>
+
+                <!-- CLEANUP LIBRARY VIDEO -->
+
+                <control type="button" id="9009">
+                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
+                    <label>14247</label>
+                    <onclick>CleanLibrary(video)</onclick>
+                    <visible>String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),movie) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),episode) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),season) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.DBType),tvshow) | Window.IsVisible(1111) | Window.IsVisible(1112)</visible>
+                </control>
+
+                <!-- UPDATE LIBRARY MUSIC -->
+
+                <control type="togglebutton" id="21">
+                    <description>Update</description>
+                    <label>653</label>
+                    <altlabel>13353</altlabel>
+                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
+                    <usealttexture>Library.IsScanningMusic</usealttexture>
+                    <onclick>UpdateLibrary(music)</onclick>
+                    <visible>Container.Content(albums) | Container.Content(songs) | Container.Content(artists) | Window.IsVisible(1113)</visible>
+                </control>
+
+                <!-- CLEANUP LIBRARY MUSIC -->
+
+                <control type="button" id="9010">
+                    <include>Def_Dialog_Menu_Button_Focus_Select</include>
+                    <label>14247</label>
+                    <onclick>CleanLibrary(music)</onclick>
+                    <visible>Container.Content(albums) | Container.Content(songs) | Container.Content(artists) | Window.IsVisible(1113)</visible>
                 </control>
             </control>
         </control>

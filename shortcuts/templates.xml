@@ -591,4 +591,191 @@
             <skinshortcuts insert="items_search" />
         </controls>
     </template>
+
+    <!-- ============================================================ -->
+    <!--                   SEARCH MUSIC TEMPLATE                      -->
+    <!-- ============================================================ -->
+
+    <template items="items_searchmusic" source="1">
+
+        <!-- Properties from the widget item -->
+        <property name="widgetIndex" from="index" />
+        <property name="widgetPath" from="widgetPath" />
+        <property name="widgetTarget" from="widgetTarget" />
+        <property name="widgetLabel" from="label" />
+        <property name="widgetLimit" from="widgetLimit" />
+        <property name="widgetSortby" from="widgetSortby" />
+        <property name="widgetSortorder" from="widgetSortorder" />
+        <property name="widgetAspect" from="widgetaspect" />
+        <property name="widgetAuto" from="widgetAuto" />
+        <property name="widgetlisttype" from="widgetlisttype" />
+        <property name="widgetClearLogoFanart" from="widgetClearLogoFanart" />
+
+        <!-- Movement presets -->
+
+        <preset content="widgetMovement" />
+
+        <!-- Code from jurialmunkey and arctic horizon 2 skin -->
+
+        <var name="widgetPath1">
+			<value condition="widgetPath=DefaultSearch-Albums">musicdb://albums/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22album%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-Artists">musicdb://artists/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22artist%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-Songs">musicdb://songs/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22contains%22%2C%22value%22%3A%5B%22</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideos">videodb://musicvideos/titles/?xsp=%7b%22order%22%3a%7b%22direction%22%3a%22ascending%22%2c%22ignorefolders%22%3a0%2c%22method%22%3a%22sorttitle%22%7d%2c%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22title%22%2c%22operator%22%3a%22contains%22%2c%22value%22%3a%5b%22</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideoArtists">videodb://musicvideos/titles/?xsp=%7b%22order%22%3a%7b%22direction%22%3a%22ascending%22%2c%22ignorefolders%22%3a0%2c%22method%22%3a%22sorttitle%22%7d%2c%22rules%22%3a%7b%22and%22%3a%5b%7b%22field%22%3a%22artist%22%2c%22operator%22%3a%22contains%22%2c%22value%22%3a%5b%22</value>
+        </var>
+
+        <var name="widgetPath2">
+			<value condition="widgetPath=DefaultSearch-Albums">%22%5D%7D%5D%7D%2C%22type%22%3A%22albums%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-Artists">%22%5D%7D%5D%7D%2C%22type%22%3A%22artists%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-Songs">%22%5D%7D%5D%7D%2C%22type%22%3A%22songs%22%7D</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideos">%22%5d%7d%5d%7d%2c%22type%22%3a%22musicvideos%22%7d</value>
+			<value condition="widgetPath=DefaultSearch-MusicVideoArtists">%22%5d%7d%5d%7d%2c%22type%22%3a%22musicvideos%22%7d</value>
+        </var>
+
+        <!-- Computed widget style based on aspect/target -->
+
+        <var name="widgetStyle">
+            <value>SquareMid</value>
+        </var>
+
+        <!-- List type -->
+        <var name="listType">
+            <value condition="widgetlisttype">$PROPERTY[widgetlisttype]</value>
+            <value>fixedlist</value>
+        </var>
+
+        <!-- Limit fallback -->
+        <var name="limit">
+            <value condition="widgetLimit=10">10</value>
+            <value condition="widgetLimit=25">25</value>
+            <value condition="widgetLimit=50">50</value>
+            <value condition="widgetLimit=100">100</value>
+            <value condition="widgetLimit=200">200</value>
+            <value condition="widgetLimit=99999">99999</value>
+            <value condition="widgetLimit">$PROPERTY[widgetLimit]</value>
+            <value>$VAR[Value_Widget_Limit]</value>
+        </var>
+
+        <!-- Style booleans for includes -->
+        <var name="isThumbnail">
+            <value condition="widgetStyle=Thumbnail">true</value>
+            <value>false</value>
+        </var>
+        <var name="isFanart">
+            <value condition="widgetStyle=Fanart">true</value>
+            <value>false</value>
+        </var>
+        <var name="isFanartSmall">
+            <value condition="widgetStyle=FanSmall">true</value>
+            <value>false</value>
+        </var>
+        <var name="isThumbnailSmall">
+            <value condition="widgetStyle=ThumbSmall">true</value>
+            <value>false</value>
+        </var>
+        <var name="isSquare">
+            <value condition="widgetStyle=Square">true</value>
+            <value>false</value>
+        </var>
+        <var name="isSquareMiddle">
+            <value condition="widgetStyle=SquareMid">true</value>
+            <value>false</value>
+        </var>
+        <var name="isSquareSmall">
+            <value condition="widgetStyle=SqSmallTb">true</value>
+            <value>false</value>
+        </var>
+
+        <controls>
+
+            <!-- Main widget list control (must be FIRST for z-order with usecontrolcoords) -->
+
+            <control type="$PROPERTY[listType]" id="$MATH[5000 + widgetIndex]">
+                <include>Animation_Widget_Fade_In_Out</include>
+
+                <include content="Def_Search_Widget_Container">
+                    <param name="id" value="$MATH[5000 + widgetIndex]" />
+                    <param name="height" value="325" />
+                    <param name="idshort" value="$MATH[5000 + widgetIndex]" />
+                    <param name="backid" value="$MATH[5000 + 1]" />
+                    <param name="AutoTime" value="$PROPERTY[widgetAuto]" />
+                    <param name="orientation" value="horizontal" />
+                    <param name="movement" value="$PROPERTY[widgetMovement]" />
+                    <param name="animation_condition" value="!Control.HasFocus($MATH[5000 + widgetIndex])" />
+                    <param name="visible" value="[$EXP[SearchItemVisible]]" />
+                    <param name="altvisible" value="[$EXP[SearchItemAltvisible]]" />
+                    <param name="window_search" value="true" />
+                </include>
+
+                <!-- Item layouts -->
+
+                <include content="Def_Normal_Layout_Item">
+                    <param name="shortcutsclearlogo" value="$PROPERTY[clearLogoFanart]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="distance" value="10" />
+                    <param name="Thumbnail" value="false" />
+                    <param name="Fanart" value="false" />
+                    <param name="FanartSmall" value="false" />
+                    <param name="ThumbnailSmall" value="false" />
+                    <param name="Square" value="false" />
+                    <param name="SquareMiddle" value="true" />
+                    <param name="SquareSmall" value="false" />
+                    <param name="window_search" value="true" />
+                </include>
+
+                <!-- Focus layouts -->
+
+                <include content="Def_Normal_Layout_Item_Focus">
+                    <param name="shortcutsid" value="$MATH[5000 + widgetIndex]" />
+                    <param name="shortcutsclearlogo" value="$PROPERTY[clearLogoFanart]" />
+                    <param name="aspectratio" value="keep" />
+                    <param name="distance" value="10" />
+                    <param name="Thumbnail" value="false" />
+                    <param name="Fanart" value="false" />
+                    <param name="FanartSmall" value="false" />
+                    <param name="ThumbnailSmall" value="false" />
+                    <param name="Square" value="false" />
+                    <param name="SquareMiddle" value="true" />
+                    <param name="SquareSmall" value="false" />
+                    <param name="window_search" value="true" />
+                </include>
+
+                <!-- Widget content -->
+
+                <content limit="$PROPERTY[limit]" target="$PROPERTY[widgetTarget]" sortby="$PROPERTY[widgetSortby]" sortorder="$PROPERTY[widgetSortorder]" browse="never">$INFO[Control.GetLabel(90009).index(1),$PROPERTY[widgetPath1],$PROPERTY[widgetPath2]]</content>
+
+                <!-- More content button -->
+
+                <include content="Def_Widget_Item_More_Content" condition="Skin.HasSetting(enable.morewidget)">
+                    <param name="id" value="$MATH[5000 + widgetIndex]" />
+                    <param name="target" value="$PROPERTY[widgetTarget]" />
+                    <param name="content" value="$INFO[Control.GetLabel(90009).index(1),$PROPERTY[widgetPath1],$PROPERTY[widgetPath2]]" />
+                </include>
+            </control>
+
+            <!-- Widget title label group -->
+
+            <control type="group" id="$MATH[5000 + 900 + widgetIndex]">
+                <visible>[$EXP[SearchItemLabelVisible]]</visible>
+
+                <control type="grouplist" id="$MATH[5000 + 800 + widgetIndex]">
+                    <include content="Widget_Title_Label" condition="true">
+                        <param name="focusid" value="$MATH[5000 + widgetIndex]" />
+                        <param name="idshort" value="$MATH[5000 + widgetIndex]" />
+                        <param name="animation_condition" value="!Control.HasFocus($MATH[5000 + widgetIndex])" />
+                        <param name="widget_label" value="$PROPERTY[widgetLabel]" />
+                        <param name="busy_visible" value="Integer.IsEqual(Container($MATH[5000 + widgetIndex]).NumItems,0) | Container($MATH[5000 + widgetIndex]).IsUpdating" />
+                        <param name="window_search" value="true" />
+                    </include>
+                </control>
+            </control>
+        </controls>
+    </template>
+
+    <template include="searchmusic" menu="searchmusicmenu">
+        <controls>
+            <skinshortcuts insert="items_searchmusic" />
+        </controls>
+    </template>
 </templates>

@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1146">
+    <defaultcontrol always="false">90009</defaultcontrol>
+
+    <onload>ClearProperty(focus_on_back_id,Home)</onload>
+    <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
+
+	<controls>
+        <include>Background_Global</include>
+
+        <control type="group">
+            <animation effect="slide" start="0" end="0,-40" time="0" condition="true">Conditional</animation>
+
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <control type="group">
+                <visible>!$EXP[View_Info_Dialog] + !$EXP[View_Search_Focus_Keyboard]</visible>
+                <include>Animation_Feature_NowPlaying</include>
+                <include condition="!Skin.HasSetting(hide.furniture.nowplaying.views)">Furniture_Header_NowPlaying</include>
+            </control>
+        </control>
+
+        <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
+
+        <!-- WIDGET TITLE DETAIL -->
+
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Artist_Album_Count</include>
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Album_Song_Count</include>
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Album_Item_Name_In_Folder</include>
+        <include condition="!Skin.HasSetting(disable.all.hidden.list)">Hidden_List_Home_Set_Count</include>
+
+        <!-- SEARCH BAR -->
+
+        <control type="group">
+            <visible allowhiddenfocus="true">!Window.IsVisible(DialogSelect.xml) + !Window.IsVisible(script-wikipedia.xml) + !$EXP[Dialog_Keyboard_Is_Visible]</visible>
+
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+
+            <!-- SEARCH BAR -->
+
+            <include content="Object_Search_Bar">
+                <param name="visible" value="Control.HasFocus(90009)" />
+            </include>
+
+            <!-- SPINNER LOADING -->
+
+            <control type="group">
+                <visible>Window.IsVisible(DialogBusy.xml) | [$EXP[View_Search_Music_Is_Updating] + !String.IsEmpty(Control.GetLabel(90009).index(1))]</visible>
+                <include content="Animation_Common_Delay_Fade_In"><param name="delay" value="200" /></include>
+
+                <top>30</top>
+                <left>580</left>
+
+                <width>100</width>
+                <height>100</height>
+
+                <include content="Object_Spinner_Busy">
+                    <param name="show_label_spinner" value="false" />
+                    <param name="show_icon" value="false" />
+                    <param name="colordiffuse_progress" value="Selected" />
+                    <param name="centerleft" value="50%" />
+                    <param name="centertop" value="50%" />
+                </include>
+            </control>
+
+            <!-- EDIT BAR -->
+
+            <control type="group">
+                <top>40</top>
+                <left>80</left>
+
+                <control type="edit" id="90009">
+                    <width>580</width>
+                    <height>80</height>
+                    <label/>
+                    <align>left</align>
+                    <aligny>center</aligny>
+
+                    <font>HeaderLabel</font>
+                    <textoffsetx>80</textoffsetx>
+                    <textcolor>$VAR[Color_Label_Edit_Search]</textcolor>
+                    <focusedcolor>Selected</focusedcolor>
+                    <selectedcolor>Selected</selectedcolor>
+                    <disabledcolor>White12</disabledcolor>
+                    <texturefocus />
+                    <texturenofocus />
+
+                    <ondown>SetProperty(PreviousSearchTerm,$INFO[Control.GetLabel(9099).index(1)])</ondown>
+                    <ondown condition="!String.IsEmpty(Control.GetLabel(90009).index(1))">RunScript(script.skinvariables,add_skinstring_history=SearchHistory,value=$INFO[Control.GetLabel(90009).index(1)])</ondown>
+
+                    <onup>Close</onup>
+                    <ondown>6000</ondown>
+
+                    <onright>9992</onright>
+                    <onleft>9992</onleft>
+                </control>
+            </control>
+
+            <!-- TIPS - FOOTER -->
+
+            <include content="Object_Footer_Duo_Tips">
+                <param name="top" value="120" />
+                <param name="left" value="94" />
+                <param name="label" value="$VAR[Label_Feature_Search_Dynamic_Bar_Tip_2]" />
+                <param name="label2" value="$VAR[Label_Feature_Search_Dynamic_Bar_Tip]" />
+                <param name="id_label" value="88" />
+                <param name="textcolor" value="$VAR[Color_Label_Tips_Search]" />
+                <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
+                <param name="visible" value="Control.HasFocus(90009) + !$EXP[Dialog_Keyboard_Is_Visible] + !Skin.HasSetting(hide.search.feature.tips)" />
+            </include>
+        </control>
+
+        <!-- MINI KEYBOARD -->
+
+        <control type="group">
+            <visible allowhiddenfocus="true">$EXP[View_Search_Focus_Keyboard]</visible>
+            <visible>!Window.IsVisible(DialogVolumeBar.xml)</visible>
+
+            <animation effect="fade" time="300" start="0" end="0">Focus</animation>
+
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <control type="group">
+                <top>40</top>
+                <left>870</left>
+                <height>80</height>
+
+                <!-- BACKGROUND -->
+
+                <control type="group">
+                    <control type="image">
+                        <width>970</width>
+                        <height>100</height>
+                        <include>Texture_Keyboard_Search_Background</include>
+                        <animation effect="fade" start="100" end="90" condition="true">Conditional</animation>
+                    </control>
+                    <control type="image">
+                        <width>970</width>
+                        <height>100</height>
+                        <texture border="40" colordiffuse="$VAR[Color_Search_Bar_Border]" infill="false">$VAR[border40]</texture>
+                        <animation effect="fade" start="100" end="50" condition="true">Conditional</animation>
+                    </control>
+                </control>
+
+                <!-- KEYBOARD -->
+
+                <control type="group">
+                    <top>13</top>
+                    <left>26</left>
+                    <include>Search_Panel_Keyboard</include>
+                </control>
+
+                <!-- LINE VERTICAL -->
+
+                <control type="image">
+                    <left>566</left>
+                    <top>17</top>
+                    <height>64</height>
+                    <width>1</width>
+                    <include>Texture_Dialog_Line</include>
+                </control>
+
+                <!-- LINE VERTICAL -->
+
+                <control type="image">
+                    <left>806</left>
+                    <top>17</top>
+                    <height>64</height>
+                    <width>1</width>
+                    <include>Texture_Dialog_Line</include>
+                </control>
+            </control>
+
+            <!-- TIPS - KEYBOARD -->
+
+            <include content="Object_Footer_Right_Tips">
+                <param name="top" value="134" />
+                <param name="right" value="106" />
+                <param name="label" value="$VAR[Label_Feature_Search_Keyboard_Tip]" />
+                <param name="id_label" value="89" />
+                <param name="textcolor" value="$VAR[Color_Label_Tips_Search]" />
+                <param name="colordiffuse" value="$VAR[Color_Icon_Light]" />
+                <param name="visible" value="!Skin.HasSetting(hide.search.feature.tips) + Integer.IsEqual(Container(6000).NumItems,0)" />
+            </include>
+        </control>
+
+        <!-- CONTAINER RESULT -->
+
+        <control type="group">
+            <animation effect="slide" start="0" end="490" time="300" delay="0" center="auto" tween="sine" easing="out" condition="$EXP[View_Search_Panel_Result]">Conditional</animation>
+
+            <control type="group">
+                <visible allowhiddenfocus="true">!Integer.IsEqual(Container(6000).NumItems,0) + $EXP[View_Search_Panel_Result] + !$EXP[Dialog_Keyboard_Is_Visible]</visible>
+
+                <include>Animation_Common_Fade_In</include>
+                <include>Animation_Common_Fade_Out</include>
+
+                <top>174</top>
+                <left>-410</left>
+                <width>450</width>
+
+                <!-- ARROWS -->
+
+                <include content="Object_Arrows_Dialog_Vertical">
+                    <param name="container_id" value="6060" />
+                    <param name="colordiffuse" value="Dark3" />
+                    <param name="arrow_bottom" value="744" />
+                </include>
+
+                <!-- BACKGROUND -->
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="104" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,1)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="174" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,2)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="244" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,3)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="314" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,4)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="384" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,5)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="454" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,6)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="524" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,7)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="594" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,8)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="664" />
+                    <param name="visible" value="Integer.IsEqual(Container(6060).NumItems,9)" />
+                </include>
+
+                <include content="Def_Dialog_Multi_Row_Background">
+                    <param name="height" value="734" />
+                    <param name="visible" value="Integer.IsGreater(Container(6060).NumItems,9)" />
+                </include>
+
+                <!-- LIST MENU SEARCH -->
+
+                <control type="panel" id="6060">
+                    <include>Animation_Scrolltime_Views_List</include>
+
+                    <top>17</top>
+                    <left>16</left>
+                    <height min="100" max="700">auto</height>
+                    <width>418</width>
+                    <bottom>17</bottom>
+
+                    <onup>6060</onup>
+                    <ondown>6060</ondown>
+
+                    <onback>90009</onback>
+                    <onleft>90009</onleft>
+                    <onright>6000</onright>
+
+                    <pagecontrol>1799</pagecontrol>
+                    <orientation>vertical</orientation>
+
+                    <itemlayout width="418" height="70">
+                        <control type="image">
+                            <top>8</top>
+                            <left>16</left>
+                            <width>56</width>
+                            <height>56</height>
+                            <texture colordiffuse="$VAR[Color_Icon_Menu_List]">$INFO[Container(300).ListItem.Icon]</texture>
+                        </control>
+                        <control type="label">
+                            <left>84</left>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <width>74%</width>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <right>22</right>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Dark2</textcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="418" height="70">
+                        <include>Def_Layout_Item_Focus</include>
+
+                        <control type="image">
+                            <top>8</top>
+                            <left>16</left>
+                            <width>56</width>
+                            <height>56</height>
+                            <texture colordiffuse="Selected">$INFO[Container(300).ListItem.Icon]</texture>
+                        </control>
+                        <control type="label">
+                            <left>84</left>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <width>74%</width>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <right>22</right>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <height>100%</height>
+                            <centertop>50%</centertop>
+                            <font>Tiny</font>
+                            <textcolor>Selected</textcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                    </focusedlayout>
+
+                    <!-- SKINSHORTCUTS -->
+
+                    <content>
+                        <!-- albums -->
+                        <item>
+                            <label>$LOCALIZE[132]</label>
+                            <label2>$INFO[Container(5001).NumItems]</label2>
+                            <icon>special://skin/extras/icons/songs.png</icon>
+                            <onclick>Setfocus(5001)</onclick>
+                            <onclick>SetProperty(TMDbHelper.WidgetContainer,5001,Home)</onclick>
+                            <visible>Control.IsVisible(5001)</visible>
+                        </item>
+                        <!-- artists -->
+                        <item>
+                            <label>$LOCALIZE[133]</label>
+                            <label2>$INFO[Container(5002).NumItems]</label2>
+                            <icon>special://skin/extras/icons/artist.png</icon>
+                            <onclick>Setfocus(5002)</onclick>
+                            <onclick>SetProperty(TMDbHelper.WidgetContainer,5002,Home)</onclick>
+                            <visible>Control.IsVisible(5002)</visible>
+                        </item>
+                        <!-- songs -->
+                        <item>
+                            <label>$LOCALIZE[134]</label>
+                            <label2>$INFO[Container(5003).NumItems]</label2>
+                            <icon>special://skin/extras/icons/song.png</icon>
+                            <onclick>Setfocus(5003)</onclick>
+                            <onclick>SetProperty(TMDbHelper.WidgetContainer,5003,Home)</onclick>
+                            <visible>Control.IsVisible(5003)</visible>
+                        </item>
+                        <!-- musicvideos -->
+                        <item>
+                            <label>$LOCALIZE[20389]</label>
+                            <label2>$INFO[Container(5004).NumItems]</label2>
+                            <icon>special://skin/extras/icons/musicvideo.png</icon>
+                            <onclick>Setfocus(5004)</onclick>
+                            <onclick>SetProperty(TMDbHelper.WidgetContainer,5004,Home)</onclick>
+                            <visible>Control.IsVisible(5004)</visible>
+                        </item>
+                        <!-- musicvideos artists -->
+                        <item>
+                            <label>$LOCALIZE[20389] $LOCALIZE[133]</label>
+                            <label2>$INFO[Container(5005).NumItems]</label2>
+                            <icon>special://skin/extras/icons/musicvideo.png</icon>
+                            <onclick>Setfocus(5005)</onclick>
+                            <onclick>SetProperty(TMDbHelper.WidgetContainer,5005,Home)</onclick>
+                            <visible>Control.IsVisible(5005)</visible>
+                        </item>
+                    </content>
+                </control>
+            </control>
+        </control>
+
+        <!-- CONTAINER ROW WIDGETS -->
+
+        <control type="group">
+            <animation effect="slide" start="0" end="490" time="300" delay="0" center="auto" tween="sine" easing="out" condition="$EXP[View_Search_Panel_Result]">Conditional</animation>
+
+            <control type="grouplist" id="6000">
+                <visible>!$EXP[Dialog_Keyboard_Is_Visible]</visible>
+
+                <include>Animation_Common_Global</include>
+                <include>Animation_Vertical_Scrolltime_Widgets_Container</include>
+
+                <height>770</height>
+                <bottom>188</bottom>
+                <width>1920</width>
+                <onup>90009</onup>
+                <onleft>SetFocus(383)</onleft>
+
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+
+                <include>skinshortcuts-template-searchmusic</include>
+            </control>
+        </control>
+
+        <!-- BUTTON TO FOCUS PANEL RESULT -->
+
+        <control type="button" id="383">
+            <visible allowhiddenfocus="true">false</visible>
+            <include>Def_Hidden_Button</include>
+            <onfocus>SetFocus(6060)</onfocus>
+        </control>
+
+        <!-- BUTTON TO FOCUS 1ST ITEM ON BACK -->
+
+        <control type="button" id="384">
+            <visible allowhiddenfocus="true">false</visible>
+            <include>Def_Hidden_Button</include>
+            <onfocus>SetFocus($INFO[Window(Home).Property(focus_on_back_id)],0,absolute)</onfocus>
+        </control>
+    </controls>
+</window>

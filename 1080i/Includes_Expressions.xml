@@ -376,7 +376,7 @@
 
     <!-- SHOW VIDEO IN HOME IN WINDOWS FLIX -->
 
-    <expression name="Video_Window_Home_Flix_Is_Active">!$EXP[Extended_Now_Playing_Is_Enable] + $EXP[Home_Show_NowPlaying_Video_In_Window_Flix] + !Skin.HasSetting(hide.furniture.nowplaying.home)  + [Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Vertical_Flix]]] + !$EXP[View_Info_Dialog] + !$EXP[Trailer_Window_Is_Active] + !$EXP[Context_Menu_Trailer_Is_Launched]</expression>
+    <expression name="Video_Window_Home_Flix_Is_Active">!$EXP[Extended_Now_Playing_Is_Enable] + $EXP[Home_Show_NowPlaying_Video_In_Window_Flix] + !Skin.HasSetting(hide.furniture.nowplaying.home)  + [Window.IsVisible(Home) + [$EXP[Home_Is_Horizontal_Flix] | $EXP[Home_Is_Vertical_Flix]]] + !$EXP[View_Info_Dialog] + !$EXP[Trailer_Window_Is_Active] + !$EXP[Context_Menu_Trailer_Is_Launched] + !Control.HasFocus(9099)</expression>
 
     <!-- SHOW VIDEO IN WINDOWS VIEWS FLIX -->
 
@@ -628,7 +628,13 @@
 
     <!-- CONDITION NOT SHOW VIDEO BACKGROUND -->
 
-    <expression name="Show_Video_Background_Not_Enable">[!Player.HasVideo | [Player.HasVideo + !Skin.HasSetting(show.global.visualisation.background.video)]]</expression>
+    <expression name="Show_Video_Background_Not_Enable">[!Player.HasVideo |
+	[Player.HasVideo + !Skin.HasSetting(show.global.visualisation.background.video)] |
+	[Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video) + Window.IsVisible(Home) + Skin.HasSetting(show.furniture.nowplaying.extended.home) + Skin.HasSetting(show.home.nowplaying.extended.video.windows) + !Control.HasFocus(9099) + !$EXP[View_Info_Dialog]] |
+	[Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video) + Window.IsVisible(Home) + Skin.HasSetting(show.furniture.nowplaying.extended.home) + !Skin.HasSetting(show.home.nowplaying.extended.video.windows) + $EXP[Home_Is_Flix] + !Control.HasFocus(9099) + !$EXP[View_Info_Dialog]] |
+	[Player.HasVideo + !Window.IsVisible(Home) + Skin.HasSetting(show.global.visualisation.background.video) + $EXP[View_Flix]]]</expression>
+
+    <expression name="Show_Video_FullScreen_In_Background">[Window.IsVisible(Home) + Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video) + Skin.HasSetting(show.furniture.nowplaying.extended.home) + !Skin.HasSetting(show.home.nowplaying.extended.video.windows)] | [Window.IsVisible(Home) + Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video) + $EXP[View_Info_Dialog]] | [!Window.IsVisible(Home) + !$EXP[View_Flix] + Player.HasVideo + Skin.HasSetting(show.global.visualisation.background.video)] | [Player.HasAudio + Skin.HasSetting(show.global.visualisation.background.music) + !String.IsEmpty(Visualisation.Name)]</expression>
 
     <!-- CONDITION NOT SHOW MUSIC VISUALISATION BACKGROUND -->
 

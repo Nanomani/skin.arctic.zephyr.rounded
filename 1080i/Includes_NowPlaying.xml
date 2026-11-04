@@ -636,6 +636,7 @@
 
     <include name="NowPlaying_VideoWindow">
         <control type="group">
+            <visible>Skin.HasSetting(show.home.nowplaying.extended.video.windows)</visible>
             <visible>Player.HasVideo + !$EXP[Home_Widget_Is_Focus]</visible>
 
             <top>466</top>
@@ -784,6 +785,9 @@
     <!-- DEF - OSD -->
 
     <include name="OSD_NowPlaying">
+
+        <!-- SHOW INFO -->
+
         <control type="button" id="25">
             <visible allowhiddenfocus="!String.IsEmpty(VideoPlayer.DBID) | !String.IsEmpty(MusicPlayer.DBID)">false</visible>
 
@@ -826,6 +830,8 @@
             <onfocus condition="!Player.HasMedia">SetFocus(300)</onfocus>
         </control>
 
+        <!-- PREVIOUS -->
+
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="size" value="36" />
@@ -839,6 +845,8 @@
             <include>Def_OSD_UpDown_Home_NowPlaying</include>
             <onclick>PlayerControl(Previous)</onclick>
         </include>
+
+        <!-- RAPID RETURN -->
 
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
@@ -858,6 +866,8 @@
             <animation effect="fade" start="100" end="66" time="100" condition="!Player.SeekEnabled">Conditional</animation>
         </include>
 
+        <!-- PLAY / PAUSE -->
+
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="size" value="36" />
@@ -875,6 +885,8 @@
             <animation effect="fade" start="100" end="66" time="100" condition="!Player.PauseEnabled">Conditional</animation>
         </include>
 
+        <!-- STOP -->
+
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="size" value="36" />
@@ -887,6 +899,8 @@
             <include>Def_OSD_UpDown_Home_NowPlaying</include>
             <onclick>PlayerControl(Stop)</onclick>
         </include>
+
+        <!-- FAST FORWARD -->
 
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
@@ -905,6 +919,8 @@
             <animation effect="fade" start="100" end="66" time="100" condition="!Player.SeekEnabled">Conditional</animation>
         </include>
 
+        <!-- NEXT -->
+
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
             <param name="size" value="36" />
@@ -917,6 +933,8 @@
             <include>Def_OSD_UpDown_Home_NowPlaying</include>
             <onclick>PlayerControl(Next)</onclick>
         </include>
+
+        <!-- FULL SCREEN PLAYER -->
 
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
@@ -932,6 +950,8 @@
             <onclick condition="Player.HasVideo">ActivateWindow(fullscreenvideo)</onclick>
             <onclick condition="Player.HasAudio">ActivateWindow(visualisation)</onclick>
         </include>
+
+        <!-- PLAYLIST -->
 
         <include content="Object_OSD_Button">
             <param name="visible" value="true" />
@@ -952,6 +972,8 @@
             <animation effect="fade" start="100" end="66" time="100" condition="VideoPlayer.Content(livetv)">Conditional</animation>
         </include>
 
+        <!-- USER RATING -->
+
         <include content="Object_OSD_Button" condition="!String.IsEmpty(MusicPlayer.DBID) + [Skin.HasSetting(show.flags.music.rating.user) | Skin.HasSetting(userrating.override.kodi.rating.stars)]">
             <param name="visible" value="true" />
             <param name="size" value="36" />
@@ -965,6 +987,22 @@
             <include>Def_OSD_UpDown_Home_NowPlaying</include>
             <include>Def_On_User_Rating</include>
             <onclick>SetRating</onclick>
+        </include>
+
+        <!-- SETTINGS -->
+
+        <include content="Object_OSD_Button">
+            <param name="visible" value="true" />
+            <param name="size" value="36" />
+            <param name="left" value="-47" />
+            <param name="icon" value="osd/preset.png" />
+            <param name="icon_colordiffuse" value="Dark2" />
+            <param name="flipx" value="false" />
+            <param name="id" value="24" />
+            <param name="groupid" value="7099" />
+            <param name="back_colordiffuse" value="$VAR[Color_OSD_NowPlaying_Button_Background]" />
+            <include>Def_OSD_UpDown_Home_NowPlaying</include>
+            <onclick>ActivateWindow(1139)</onclick>
         </include>
     </include>
 
@@ -1009,7 +1047,7 @@
 
                 <include>NowPlaying_TopBottomInfo</include>
                 <include>NowPlaying_AudioDiscArt</include>
-                <include condition="Skin.HasSetting(show.home.nowplaying.extended.video.windows)">NowPlaying_VideoWindow</include>
+                <include>NowPlaying_VideoWindow</include>
                 <include>NowPlaying_ClearArt</include>
 
                 <!-- POSTER / SQUARE -->

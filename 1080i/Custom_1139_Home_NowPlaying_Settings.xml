@@ -2,6 +2,9 @@
 <window type="dialog" id="1139">
     <defaultcontrol always="true">9000</defaultcontrol>
 
+    <onunload condition="Player.HasVideo + Skin.HasSetting(show.nowplaying.video.home.flix) + $EXP[Home_Is_Flix]">SetFocus(300)</onunload>
+    <onunload condition="![Player.HasVideo + Skin.HasSetting(show.nowplaying.video.home.flix) + $EXP[Home_Is_Flix]]">SetFocus(24)</onunload>
+
     <controls>
         <include>Background_Overlay</include>
         <include>Animation_Common_Settings</include>
@@ -33,8 +36,8 @@
                 <onup>9000</onup>
                 <ondown>9000</ondown>
                 <onright>1799</onright>
+
                 <onleft>Dialog.Close(1139)</onleft>
-                <onleft condition="Player.HasVideo + Skin.HasSetting(show.nowplaying.video.home.flix) + $EXP[Home_Is_Flix]">AlarmClock(slide_out_setfocus_399,SetFocus(399),00:01,silent)</onleft>
 
                 <itemgap>0</itemgap>
                 <pagecontrol>1799</pagecontrol>
@@ -144,7 +147,6 @@
                     <label>$LOCALIZE[31414]</label>
                     <selected>Skin.HasSetting(show.home.nowplaying.extended.video.title.clearlogo)</selected>
                     <onclick>Skin.ToggleSetting(show.home.nowplaying.extended.video.title.clearlogo)</onclick>
-                    <onclick condition="!Skin.HasSetting(show.home.nowplaying.extended.video.windows)">Skin.Reset(show.global.visualisation.background.video)</onclick>
                     <onclick>SetProperty(reloadskin,1,Home)</onclick>
                     <visible>Skin.HasSetting(show.furniture.nowplaying.extended.home) + !$EXP[Home_Show_NowPlaying_Video_In_Window_Flix]</visible>
                 </control>
@@ -278,7 +280,6 @@
                     <label>$LOCALIZE[31082]</label>
                     <selected>Skin.HasSetting(show.global.visualisation.background.video)</selected>
                     <onclick>Skin.ToggleSetting(show.global.visualisation.background.video)</onclick>
-                    <onclick>SetProperty(reloadskin,1,Home)</onclick>
                 </control>
 
                 <!--  SHOW MUSIC VISUALISATION IN BACKGROUND -->
@@ -297,7 +298,7 @@
             <include content="Object_Scrollbar_Dialog_Vertical">
                 <param name="scrollid" value="1799" />
                 <param name="onleft" value="9000" />
-                <param name="onright" value="9000" />
+                <param name="onright" value="Dialog.Close(1139)" />
                 <param name="height" value="910" />
                 <param name="centerright" value="4" />
 

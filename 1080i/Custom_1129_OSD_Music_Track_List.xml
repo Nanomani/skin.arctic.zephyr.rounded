@@ -2,6 +2,8 @@
 <window type="dialog" id="1129">
     <defaultcontrol always="true">6090</defaultcontrol>
 
+    <onload>ClearProperty(OSDRelaunchPlaylist,Home)</onload>
+    <onload>SetProperty(TMDbHelper.WidgetContainer,6090,Home)</onload>
     <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
 
     <include>Animation_Dialog_Menu_Top_Side</include>
@@ -43,12 +45,13 @@
 
                     <onleft>Close</onleft>
                     <onright>6092</onright>
-                    <!-- <onback>Close</onback> -->
 
                     <onup>6090</onup>
                     <ondown>6090</ondown>
 
                     <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchFullscreen))">SetProperty(OSDRelaunchFullscreen,1,Home)</onclick>
+
+                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchPlaylist))">SetProperty(OSDRelaunchPlaylist,1,Home)</onclick>
 
                     <onclick condition="String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.FolderPath],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
 
@@ -89,7 +92,9 @@
                     <top>17</top>
                     <bottom>17</bottom>
                     <width>1</width>
-                    <include>Texture_Dialog_Line</include>
+                    <include content="Texture_Dialog_Line">
+                        <param name="colordiffuse" value="$VAR[Color_OSD_Dialog_Border]" />
+                    </include>
                 </control>
             </control>
 
@@ -110,7 +115,7 @@
                     <top>0</top>
                     <left>16</left>
                     <height>548.4</height>
-                    <width>1270</width>
+                    <width>1302</width>
 
                     <onup>6092</onup>
                     <ondown>6092</ondown>
@@ -121,6 +126,8 @@
 
                     <onclick>SetProperty(OSDRelaunchFullscreen,$INFO[Container(6092).CurrentItem],Home)</onclick>
 
+                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchPlaylist))">SetProperty(OSDRelaunchPlaylist,1,Home)</onclick>
+
                     <onclick>SetFocus(6090)</onclick>
 
                     <onclick>Action(Select)</onclick>
@@ -130,14 +137,20 @@
 
                     <focusposition>1</focusposition>
 
-                    <itemlayout height="91.4" width="635">
-                        <include>layout_list_item_music_osd</include>
+                    <itemlayout height="91.4" width="651">
+                        <control type="group">
+                            <width>631</width>
+                            <include>layout_list_item_music_osd</include>
+                        </control>
                     </itemlayout>
-                    <focusedlayout height="91.4" width="635">
-                        <include content="layout_list_focus_music_osd">
-                            <param name="list_id" value="6092" />
-                            <param name="visible" value="Control.HasFocus(6092) | Control.HasFocus(1899) | Control.HasFocus(6094) | Control.HasFocus(1999)" />
-                        </include>
+                    <focusedlayout height="91.4" width="651">
+                        <control type="group">
+                            <width>631</width>
+                            <include content="layout_list_focus_music_osd">
+                                <param name="list_id" value="6092" />
+                                <param name="visible" value="Control.HasFocus(6092) | Control.HasFocus(1899) | Control.HasFocus(6094) | Control.HasFocus(1999)" />
+                            </include>
+                        </control>
                     </focusedlayout>
 
                     <!-- LIST ALBUM -->

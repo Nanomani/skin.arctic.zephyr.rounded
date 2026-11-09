@@ -41,8 +41,18 @@
                     <height>548.4</height>
                     <width>450</width>
 
-                    <!-- <onback>Close</onback> -->
+                    <onleft>Close</onleft>
                     <onright>6092</onright>
+                    <!-- <onback>Close</onback> -->
+
+                    <onup>6090</onup>
+                    <ondown>6090</ondown>
+
+                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchFullscreen))">SetProperty(OSDRelaunchFullscreen,1,Home)</onclick>
+
+                    <onclick condition="String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.FolderPath],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
+
+                    <onclick condition="!String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.Property(folderpath)],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
 
                     <orientation>vertical</orientation>
 
@@ -69,19 +79,7 @@
 
                     <!-- LIST ALBUM - ARTIST NOW PLAYING -->
 
-                    <content sortby="title" sortorder="ascending">musicdb://albums/?xsp={"rules":{"and":[{"field":"artist","operator":"is","value":["$INFO[MusicPlayer.Artist]"]}]},"type":"albums"}</content>
-
-                    <onup>6090</onup>
-                    <ondown>6090</ondown>
-
-                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchFullscreen))">SetProperty(OSDRelaunchFullscreen,1,Home)</onclick>
-
-                    <onclick condition="String.IsEmpty(Container(6090).ListItem.Property(folderpath)) + !String.IsEmpty(Container(6090).ListItem.FolderPath)">PlayMedia($ESCINFO[Container(6090).ListItem.FolderPath],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)])</onclick>
-
-                    <onclick condition="!String.IsEmpty(Container(6090).ListItem.Property(folderpath))">PlayMedia($ESCINFO[Container(6090).ListItem.Property(folderpath)],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)])</onclick>
-
-                    <onup>Close</onup>
-                    <onleft>Close</onleft>
+                    <content>musicdb://albums/?xsp={"rules":{"and":[{"field":"artist","operator":"is","value":["$INFO[MusicPlayer.Artist]"]}]},"type":"albums"}</content>
                 </control>
 
                 <!-- LINE VERTICAL -->
@@ -144,7 +142,7 @@
 
                     <!-- LIST ALBUM -->
 
-                    <content sortby="$VAR[Path_MusicOSD_Sortby]" sortorder="$VAR[Path_MusicOSD_Sortorder]">$VAR[Path_MusicOSD_TrackList_Col1]</content>
+                    <content>$VAR[Path_MusicOSD_TrackList_Col1]</content>
                 </control>
 
                 <!-- SCROLLBAR -->

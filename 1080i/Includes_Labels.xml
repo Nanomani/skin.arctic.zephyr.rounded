@@ -2506,10 +2506,15 @@
         <value condition="VideoPlayer.Content(livetv) + VideoPlayer.HasEpg">$INFO[PVR.EpgEventFinishTime]</value>
     </variable>
 
-    <variable name="Label_OSD_Action_On_Down">
+    <variable name="Label_OSD_Action_On_Down_Video">
         <value condition="String.IsEqual(Skin.String(osd_down_action),1)">$LOCALIZE[298]</value>
         <value condition="String.IsEqual(Skin.String(osd_down_action),2)">$LOCALIZE[31477]</value>
         <value condition="String.IsEqual(Skin.String(osd_down_action),3)">$LOCALIZE[31406]</value>
+        <value>$LOCALIZE[14116]</value>
+    </variable>
+
+    <variable name="Label_OSD_Action_On_Down_Music">
+        <value condition="Skin.HasSetting(osd.music.action.on.down.playlist)">$LOCALIZE[559]</value>
         <value>$LOCALIZE[14116]</value>
     </variable>
 
@@ -2655,24 +2660,38 @@
 
         <!-- ON FOCUS -->
 
+        <!-- Repeate -->
         <value condition="Control.HasFocus(1) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[486]$INFO[Playlist.Repeat, : ]</value>
+
+        <!-- Shuffle -->
         <value condition="Control.HasFocus(6) + !String.IsEmpty(MusicPlayer.DBID)">$VAR[Label_OSD_Shuffle_Tip]</value>
+
+        <!-- Lyrics -->
         <value condition="Control.HasFocus(2) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[24013]</value>
+
+        <!-- Display info : always / never -->
         <value condition="Control.HasFocus(3) + !String.IsEmpty(MusicPlayer.DBID)">$VAR[Label_OSD_Info_Tip]</value>
 
-        <!-- ON DOWN -->
+        <!-- ON DOWN - BUTTONS CENTER -->
 
-        <value condition="ControlGroup(6002).HasFocus() + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[31516] $LOCALIZE[31521]</value>
+        <!-- Extended Info on this song -->
+        <value condition="ControlGroup(6002).HasFocus() + !String.IsEmpty(MusicPlayer.DBID) + !Skin.HasSetting(osd.music.action.on.down.playlist)">$LOCALIZE[31516] $LOCALIZE[31521]</value>
+
+        <!-- Music playlist -->
+        <value condition="ControlGroup(6002).HasFocus() + !String.IsEmpty(MusicPlayer.DBID) + Skin.HasSetting(osd.music.action.on.down.playlist)">$LOCALIZE[31516] $LOCALIZE[10500]</value>
 
         <!-- ON UP -->
 
+        <!-- Artist information -->
         <value condition="Control.HasFocus(8200) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[31557] $LOCALIZE[21891]</value>
+
+        <!-- Media info -->
         <value condition="Control.HasFocus(8200) + String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[31557] $LOCALIZE[544]</value>
     </variable>
 
     <variable name="Label_OSD_Footer_Tip_Music_Right">
 
-        <!-- FOCUS - BUTTONS CENTER -->
+        <!-- ON UP - SEEK BAR -->
 
         <value condition="ControlGroup(6002).HasFocus()">$LOCALIZE[31557] $LOCALIZE[10115]</value>
 
@@ -2682,10 +2701,22 @@
 
         <!-- TIPS SELECTED BUTTON -->
 
+        <!-- Music playlist -->
         <value condition="Control.HasFocus(21) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[10500]</value>
+
+        <!-- Information -->
+        <value condition="Control.HasFocus(26) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[14116]</value>
+
+        <!-- Volume adjustments -->
         <value condition="Control.HasFocus(23) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[638]</value>
+
+        <!-- Audio profiles -->
         <value condition="Control.HasFocus(25)">$ADDON[script.audio.profiles 32106]</value>
+
+        <!-- Set my rating -->
         <value condition="Control.HasFocus(22) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[38023]</value>
+
+        <!-- Settings -->
         <value condition="Control.HasFocus(24) + !String.IsEmpty(MusicPlayer.DBID)">$LOCALIZE[5]</value>
     </variable>
 

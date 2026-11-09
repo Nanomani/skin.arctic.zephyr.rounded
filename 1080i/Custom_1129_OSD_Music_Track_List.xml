@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="1129">
+    <!-- <defaultcontrol always="false">90009</defaultcontrol> -->
+    <defaultcontrol always="true">6090</defaultcontrol>
+
+    <onload>ClearProperty(focus_on_back_id,Home)</onload>
+    <onunload>ClearProperty(TMDbHelper.WidgetContainer,Home)</onunload>
+
+	<controls>
+        <include>Background_Global</include>
+
+        <control type="group">
+            <animation effect="slide" start="0" end="0,-40" time="0" condition="true">Conditional</animation>
+
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <control type="group">
+                <visible>!$EXP[View_Info_Dialog] + !$EXP[View_Search_Focus_Keyboard]</visible>
+                <include>Animation_Feature_NowPlaying</include>
+                <include>Furniture_Header_NowPlaying</include>
+            </control>
+        </control>
+
+        <include condition="!Skin.HasSetting(show.home.header.clock.left)">Furniture_Footer_Clock_Right</include>
+
+        <control type="group">
+            <visible allowhiddenfocus="true">!Control.HasFocus(90009) + String.IsEmpty(Control.GetLabel(90009).index(1)) + !$EXP[View_Search_Focus_Keyboard]</visible>
+
+            <!-- LEFT MENU -->
+
+            <control type="group">
+                <!-- <animation effect="slide" start="0" end="490" time="300" delay="0" center="auto" tween="sine" easing="out" condition="!Integer.IsEqual(Container(6090).NumItems,0)">Conditional</animation> -->
+
+                <control type="group">
+                    <!-- <visible allowhiddenfocus="true">!Integer.IsEqual(Container(6000).NumItems,0) + $EXP[View_Search_Panel_Result] + !$EXP[Dialog_Keyboard_Is_Visible]</visible> -->
+
+                    <include>Animation_Common_Fade_In</include>
+                    <include>Animation_Common_Fade_Out</include>
+
+                    <top>174</top>
+                    <left>80</left>
+                    <width>450</width>
+                    <height>548.4</height>
+
+                    <!-- ARROWS -->
+
+                    <include content="Object_Arrows_Dialog_Vertical">
+                        <param name="container_id" value="6090" />
+                        <param name="colordiffuse" value="Dark3" />
+                        <param name="arrow_bottom" value="558.4" />
+                        <param name="numitems" value="6" />
+                    </include>
+
+                    <!-- LIST MENU SEARCH -->
+
+                    <control type="list" id="6090">
+                        <include>Animation_Scrolltime_Views_List</include>
+
+                        <top>0</top>
+                        <left>16</left>
+                        <height>548.4</height>
+                        <width>418</width>
+
+                        <onup>6090</onup>
+                        <ondown>6090</ondown>
+
+                        <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchFullscreen))">SetProperty(OSDRelaunchFullscreen,1,Home)</onclick>
+                        <onclick condition="String.IsEmpty(Container(9801).ListItem.Property(folderpath))">PlayMedia($ESCINFO[Container(9801).ListItem.FolderPath],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)])</onclick>
+                        <onclick condition="!String.IsEmpty(Container(9801).ListItem.Property(folderpath))">PlayMedia($ESCINFO[Container(9801).ListItem.Property(folderpath)],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)])</onclick>
+
+                        <onup>Close</onup>
+                        <onleft>Close</onleft>
+
+                        <!-- <onback>Close</onback> -->
+                        <onright>6092</onright>
+
+                        <!-- <pagecontrol>1799</pagecontrol> -->
+                        <orientation>vertical</orientation>
+
+                        <focusposition>1</focusposition>
+
+                        <itemlayout height="91.4" width="418">
+                            <include>layout_list_item_music_osd</include>
+                        </itemlayout>
+                        <focusedlayout height="91.4" width="418">
+                            <include content="layout_list_focus_music_osd">
+                                <param name="list_id" value="6090" />
+                            </include>
+                        </focusedlayout>
+
+                        <!-- PLAYLIST MUSIC -->
+
+                        <content>
+                            <item>
+                                <label>$LOCALIZE[559]</label>
+                                <icon>special://skin/extras/icons/playlist.png</icon>
+                                <!-- <property name="sublabel">$LOCALIZE[31244]</property> -->
+                                <property name="folderpath">playlistmusic://</property>
+                            </item>
+                        </content>
+
+                        <!-- LIST ALBUM - ARTIST NOW PLAYING -->
+
+                        <content sortby="titles" sortorder="ascending">musicdb://albums/?xsp={"rules":{"and":[{"field":"artist","operator":"is","value":["$INFO[MusicPlayer.Artist]"]}]},"type":"albums"}</content>
+                    </control>
+
+                    <!-- LINE VERTICAL -->
+
+                    <control type="image">
+                        <left>454</left>
+                        <top>17</top>
+                        <bottom>17</bottom>
+                        <width>1</width>
+                        <include>Texture_Dialog_Line</include>
+                    </control>
+                </control>
+            </control>
+
+            <!-- COLUMN 1 -->
+
+            <control type="group">
+                <!-- <animation effect="slide" start="0" end="490" time="300" delay="0" center="auto" tween="sine" easing="out" condition="!Integer.IsEqual(Container(6090).NumItems,0)">Conditional</animation> -->
+
+                <control type="group">
+                    <!-- <visible allowhiddenfocus="true">!Integer.IsEqual(Container(6000).NumItems,0) + $EXP[View_Search_Panel_Result] + !$EXP[Dialog_Keyboard_Is_Visible]</visible> -->
+
+                    <include>Animation_Common_Fade_In</include>
+                    <include>Animation_Common_Fade_Out</include>
+
+                    <top>174</top>
+                    <left>540</left>
+
+                    <!-- LIST ITEM -->
+
+                    <control type="panel" id="6092">
+                        <include>Animation_Scrolltime_Views_List</include>
+
+                        <top>0</top>
+                        <left>16</left>
+                        <height>548.4</height>
+                        <width>1250</width>
+
+                        <onup>6092</onup>
+                        <ondown>6092</ondown>
+
+                        <onback>6090</onback>
+                        <onleft>6090</onleft>
+
+                        <onright>1899</onright>
+
+                        <pagecontrol>1899</pagecontrol>
+                        <orientation>vertical</orientation>
+
+                        <focusposition>1</focusposition>
+
+                        <itemlayout height="91.4" width="625">
+                            <include>layout_list_item_music_osd</include>
+                        </itemlayout>
+                        <focusedlayout height="91.4" width="625">
+                            <include content="layout_list_focus_music_osd">
+                                <param name="list_id" value="6092" />
+                                <param name="visible" value="Control.HasFocus(6092) | Control.HasFocus(1899) | Control.HasFocus(6094) | Control.HasFocus(1999)" />
+                            </include>
+                        </focusedlayout>
+
+                        <!-- LIST ALBUM -->
+
+                        <content sortby="$VAR[Path_MusicOSD_Sortby]" sortorder="$VAR[Path_MusicOSD_Sortorder]">$VAR[Path_MusicOSD_TrackList_Col1]</content>
+                    </control>
+                </control>
+
+                <!-- SCROLLBAR -->
+
+                <include content="Object_Scrollbar_Dialog_Vertical">
+                    <param name="scrollid" value="1899" />
+                    <param name="top" value="174" />
+                    <param name="onback" value="6092" />
+                    <param name="onleft" value="6092" />
+                    <param name="onright" value="6092" />
+                    <param name="height" value="548.4" />
+                    <param name="centerright" value="60" />
+                    <param name="animation_fade_hide" value="false" />
+                </include>
+            </control>
+        </control>
+    </controls>
+</window>

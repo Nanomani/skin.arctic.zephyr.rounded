@@ -9,171 +9,167 @@
     <include>Animation_Dialog_Menu_Top_Side</include>
 
     <controls>
-        <!-- <include>Background_Global</include> -->
+
+        <!-- LEFT MENU -->
 
         <control type="group">
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
 
-            <!-- LEFT MENU -->
+            <top>80</top>
+            <left>80</left>
+            <width>450</width>
+            <height>548.4</height>
 
-            <control type="group">
-                <include>Animation_Common_Fade_In</include>
-                <include>Animation_Common_Fade_Out</include>
+            <!-- ARROWS -->
 
-                <top>80</top>
-                <left>80</left>
-                <width>450</width>
+            <include content="Object_Arrows_Dialog_Vertical">
+                <param name="container_id" value="6090" />
+                <param name="colordiffuse" value="Dark3" />
+                <param name="arrow_bottom" value="558.4" />
+                <param name="numitems" value="6" />
+            </include>
+
+            <!-- LIST MENU SEARCH -->
+
+            <control type="list" id="6090">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>0</top>
+                <left>0</left>
                 <height>548.4</height>
+                <width>450</width>
 
-                <!-- ARROWS -->
+                <onleft>Close</onleft>
+                <onright>6092</onright>
 
-                <include content="Object_Arrows_Dialog_Vertical">
-                    <param name="container_id" value="6090" />
-                    <param name="colordiffuse" value="Dark3" />
-                    <param name="arrow_bottom" value="558.4" />
-                    <param name="numitems" value="6" />
-                </include>
+                <onup>6090</onup>
+                <ondown>6090</ondown>
 
-                <!-- LIST MENU SEARCH -->
+                <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchFullscreen))">SetProperty(OSDRelaunchFullscreen,1,Home)</onclick>
 
-                <control type="list" id="6090">
-                    <include>Animation_Scrolltime_Views_List</include>
+                <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchPlaylist))">SetProperty(OSDRelaunchPlaylist,1,Home)</onclick>
 
-                    <top>0</top>
-                    <left>0</left>
-                    <height>548.4</height>
-                    <width>450</width>
+                <onclick condition="String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.FolderPath],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
 
-                    <onleft>Close</onleft>
-                    <onright>6092</onright>
+                <onclick condition="!String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.Property(folderpath)],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
 
-                    <onup>6090</onup>
-                    <ondown>6090</ondown>
+                <orientation>vertical</orientation>
 
-                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchFullscreen))">SetProperty(OSDRelaunchFullscreen,1,Home)</onclick>
+                <focusposition>1</focusposition>
 
-                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchPlaylist))">SetProperty(OSDRelaunchPlaylist,1,Home)</onclick>
-
-                    <onclick condition="String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.FolderPath],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
-
-                    <onclick condition="!String.IsEmpty(Container(6090).ListItem.Property(folderpath))">AlarmClock(LaunchPlayMedia,PlayMedia($ESCINFO[Container(6090).ListItem.Property(folderpath)],isdir,playoffset=$INFO[Window(Home).Property(OSDRelaunchFullscreen)]),00:00,silent)</onclick>
-
-                    <orientation>vertical</orientation>
-
-                    <focusposition>1</focusposition>
-
-                    <itemlayout height="91.4" width="450">
-                        <include>layout_list_item_music_osd</include>
-                    </itemlayout>
-                    <focusedlayout height="91.4" width="450">
-                        <include content="layout_list_focus_music_osd">
-                            <param name="list_id" value="6090" />
-                        </include>
-                    </focusedlayout>
-
-                    <!-- PLAYLIST MUSIC -->
-
-                    <content>
-                        <item>
-                            <label>$LOCALIZE[559]</label>
-                            <icon>special://skin/extras/icons/playlist.png</icon>
-                            <property name="folderpath">playlistmusic://</property>
-                        </item>
-                    </content>
-
-                    <!-- LIST ALBUM - ARTIST NOW PLAYING -->
-
-                    <content>musicdb://albums/?xsp={"rules":{"and":[{"field":"artist","operator":"is","value":["$INFO[MusicPlayer.AlbumArtist]"]}]},"type":"albums"}</content>
-                </control>
-
-                <!-- LINE VERTICAL -->
-
-                <control type="image">
-                    <left>462</left>
-                    <top>17</top>
-                    <bottom>17</bottom>
-                    <width>1</width>
-                    <include content="Texture_Dialog_Line">
-                        <param name="colordiffuse" value="$VAR[Color_OSD_Dialog_Border]" />
+                <itemlayout height="91.4" width="450">
+                    <include>layout_list_item_music_osd</include>
+                </itemlayout>
+                <focusedlayout height="91.4" width="450">
+                    <include content="layout_list_focus_music_osd">
+                        <param name="list_id" value="6090" />
                     </include>
-                </control>
+                </focusedlayout>
+
+                <!-- PLAYLIST MUSIC -->
+
+                <content>
+                    <item>
+                        <label>$LOCALIZE[559]</label>
+                        <icon>special://skin/extras/icons/playlist.png</icon>
+                        <property name="folderpath">playlistmusic://</property>
+                    </item>
+                </content>
+
+                <!-- LIST ALBUM - ARTIST NOW PLAYING -->
+
+                <content>musicdb://albums/?xsp={"rules":{"and":[{"field":"artist","operator":"is","value":["$INFO[MusicPlayer.AlbumArtist]"]}]},"type":"albums"}</content>
             </control>
 
-            <!-- COLUMN 1 -->
+            <!-- LINE VERTICAL -->
 
-            <control type="group">
-                <include>Animation_Common_Fade_In</include>
-                <include>Animation_Common_Fade_Out</include>
-
-                <top>80</top>
-                <left>540</left>
-
-                <!-- LIST ITEM -->
-
-                <control type="panel" id="6092">
-                    <include>Animation_Scrolltime_Views_List</include>
-
-                    <top>0</top>
-                    <left>16</left>
-                    <height>548.4</height>
-                    <width>1302</width>
-
-                    <onup>6092</onup>
-                    <ondown>6092</ondown>
-
-                    <onback>6090</onback>
-                    <onleft>6090</onleft>
-                    <onright>1899</onright>
-
-                    <onclick>SetProperty(OSDRelaunchFullscreen,$INFO[Container(6092).CurrentItem],Home)</onclick>
-
-                    <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchPlaylist))">SetProperty(OSDRelaunchPlaylist,1,Home)</onclick>
-
-                    <onclick>SetFocus(6090)</onclick>
-
-                    <onclick>Action(Select)</onclick>
-
-                    <pagecontrol>1899</pagecontrol>
-                    <orientation>vertical</orientation>
-
-                    <focusposition>1</focusposition>
-
-                    <itemlayout height="91.4" width="651">
-                        <control type="group">
-                            <width>631</width>
-                            <include>layout_list_item_music_osd</include>
-                        </control>
-                    </itemlayout>
-                    <focusedlayout height="91.4" width="651">
-                        <control type="group">
-                            <width>631</width>
-                            <include content="layout_list_focus_music_osd">
-                                <param name="list_id" value="6092" />
-                                <param name="visible" value="Control.HasFocus(6092) | Control.HasFocus(1899) | Control.HasFocus(6094) | Control.HasFocus(1999)" />
-                            </include>
-                        </control>
-                    </focusedlayout>
-
-                    <!-- LIST ALBUM -->
-
-                    <content>$VAR[Path_MusicOSD_TrackList_Col1]</content>
-                </control>
-
-                <!-- SCROLLBAR -->
-
-                <include content="Object_Scrollbar_Dialog_Vertical">
-                    <param name="colordiffuse_texturesliderbackground" value="E62D2E2E" />
-                    <param name="texturesliderbarfocus" value="dialog/scrollbar/scrollv.png" />
-                    <!-- <param name="texturesliderbarfocus_colordiffuse" value="4ddddddd" /> -->
-                    <param name="scrollid" value="1899" />
-                    <param name="top" value="0" />
-                    <param name="onback" value="6092" />
-                    <param name="onleft" value="6092" />
-                    <param name="onright" value="6092" />
-                    <param name="height" value="548.4" />
-                    <param name="centerright" value="60" />
-                    <param name="animation_fade_hide" value="false" />
+            <control type="image">
+                <left>462</left>
+                <top>17</top>
+                <bottom>17</bottom>
+                <width>1</width>
+                <include content="Texture_Dialog_Line">
+                    <param name="colordiffuse" value="$VAR[Color_OSD_Dialog_Border]" />
                 </include>
             </control>
+        </control>
+
+        <!-- COLUMN 1 -->
+
+        <control type="group">
+            <include>Animation_Common_Fade_In</include>
+            <include>Animation_Common_Fade_Out</include>
+
+            <top>80</top>
+            <left>540</left>
+
+            <!-- LIST ITEM -->
+
+            <control type="panel" id="6092">
+                <include>Animation_Scrolltime_Views_List</include>
+
+                <top>0</top>
+                <left>16</left>
+                <height>548.4</height>
+                <width>1302</width>
+
+                <onup>6092</onup>
+                <ondown>6092</ondown>
+
+                <onback>6090</onback>
+                <onleft>6090</onleft>
+                <onright>1899</onright>
+
+                <onclick>SetProperty(OSDRelaunchFullscreen,$INFO[Container(6092).CurrentItem],Home)</onclick>
+
+                <onclick condition="String.IsEmpty(Window(Home).Property(OSDRelaunchPlaylist))">SetProperty(OSDRelaunchPlaylist,1,Home)</onclick>
+
+                <onclick>SetFocus(6090)</onclick>
+
+                <onclick>Action(Select)</onclick>
+
+                <pagecontrol>1899</pagecontrol>
+                <orientation>vertical</orientation>
+
+                <focusposition>1</focusposition>
+
+                <itemlayout height="91.4" width="651">
+                    <control type="group">
+                        <width>631</width>
+                        <include>layout_list_item_music_osd</include>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="91.4" width="651">
+                    <control type="group">
+                        <width>631</width>
+                        <include content="layout_list_focus_music_osd">
+                            <param name="list_id" value="6092" />
+                            <param name="visible" value="Control.HasFocus(6092) | Control.HasFocus(1899) | Control.HasFocus(6094) | Control.HasFocus(1999)" />
+                        </include>
+                    </control>
+                </focusedlayout>
+
+                <!-- LIST ALBUM -->
+
+                <content>$VAR[Path_MusicOSD_TrackList_Col1]</content>
+            </control>
+
+            <!-- SCROLLBAR -->
+
+            <include content="Object_Scrollbar_Dialog_Vertical">
+                <param name="colordiffuse_texturesliderbackground" value="E62D2E2E" />
+                <param name="texturesliderbarfocus" value="dialog/scrollbar/scrollv.png" />
+                <!-- <param name="texturesliderbarfocus_colordiffuse" value="4ddddddd" /> -->
+                <param name="scrollid" value="1899" />
+                <param name="top" value="0" />
+                <param name="onback" value="6092" />
+                <param name="onleft" value="6092" />
+                <param name="onright" value="6092" />
+                <param name="height" value="548.4" />
+                <param name="centerright" value="60" />
+                <param name="animation_fade_hide" value="false" />
+            </include>
         </control>
     </controls>
 </window>

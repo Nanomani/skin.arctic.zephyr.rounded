@@ -1348,9 +1348,10 @@
 
             <control type="group">
                 <visible>!String.IsEmpty(Weather.plugin)</visible>
-                <animation effect="slide" start="0" end="-45" time="0" condition="String.Contains(Skin.Font,Arial)">Conditional</animation>
-                <animation effect="slide" start="0" end="-20,0" time="0" condition="Integer.IsGreater(System.Time(hh),9) + !String.IsEmpty(System.Time(xx))">Conditional</animation>
+
                 <animation effect="slide" start="0" end="-30,0" time="0" condition="!String.IsEmpty(System.Time(xx))">Conditional</animation>
+                <animation effect="slide" start="0" end="-20,0" time="0" condition="!String.IsEmpty(System.Time(xx)) + Integer.IsGreater(System.Time(hh),9)">Conditional</animation>
+                <animation effect="slide" start="0" end="-30" time="0" condition="!String.IsEmpty(System.Time(xx)) + String.Contains(Skin.Font,Arial)">Conditional</animation>
 
                 <control type="grouplist">
                     <visible>!String.Contains(Weather.Data(Current.Temperature),$LOCALIZE[503])</visible>
@@ -1358,6 +1359,9 @@
                     <visible>Weather.IsFetched</visible>
 
                     <include>Animation_Fade_In_WeatherDelay</include>
+
+                    <animation effect="slide" start="0" end="25" time="0" condition="String.Contains(Skin.Font,Arial) + !String.IsEmpty(System.Time(xx))">Conditional</animation>
+                    <!-- <animation effect="slide" start="0" end="-15" time="0" condition="String.Contains(Skin.Font,Arial) + !String.IsEmpty(System.Time(xx))">Conditional</animation> -->
 
                     <right>210</right>
                     <height>100</height>
@@ -1368,6 +1372,8 @@
                     <itemgap>15</itemgap>
                     <orientation>horizontal</orientation>
                     <usecontrolcoords>true</usecontrolcoords>
+
+                    <!-- TEMPERATURE -->
 
                     <control type="label">
                         <visible>![String.Contains(Weather.Data(Current.Temperature),$LOCALIZE[503]) | String.IsEmpty(Window(Weather).Property(Updated))]</visible>
@@ -1425,6 +1431,9 @@
                     </control>
                 </control>
             </control>
+
+            <!-- TIME -->
+
             <control type="label">
                 <centertop>24</centertop>
                 <right>135</right>
@@ -1433,8 +1442,11 @@
                 <textcolor>Dark1</textcolor>
                 <label>$INFO[System.Time(hh:mm)]</label>
                 <animation effect="slide" start="0" end="55" time="0" condition="String.IsEmpty(System.Time(xx))">Conditional</animation>
-                <animation effect="slide" start="0" end="-15" time="0" condition="String.Contains(Skin.Font,Arial) + !String.IsEmpty(System.Time(xx))">Conditional</animation>
+                <!-- <animation effect="slide" start="0" end="-15" time="0" condition="String.Contains(Skin.Font,Arial) + !String.IsEmpty(System.Time(xx))">Conditional</animation> -->
             </control>
+
+            <!-- AM / PM -->
+
             <control type="label">
                 <centertop>30</centertop>
                 <right>View_List_Side</right>
@@ -1445,6 +1457,9 @@
                 <label>$INFO[System.Time(xx)]</label>
                 <visible>!String.IsEmpty(System.Time(xx))</visible>
             </control>
+
+            <!-- DATE -->
+
             <control type="label">
                 <centertop>64</centertop>
                 <right>View_List_Side</right>

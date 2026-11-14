@@ -701,7 +701,7 @@
                     <width>160</width>
                     <height>160</height>
 
-                    <!-- SEARCH ICON HEADER -->
+                    <!-- HEADER - SEARCH ICON / PROFILE -->
 
                     <control type="group">
                         <visible>!Control.HasFocus(9099)</visible>
@@ -709,7 +709,7 @@
                         <!-- Shadows Background -->
 
                         <control type="image">
-                            <visible>$EXP[Has_Home_Profil_Image] | String.IsEmpty(Skin.String(home_search_state)) | !String.IsEmpty(Window(Home).Property(Show_Menu_Search))</visible>
+                            <visible>$EXP[Has_Home_Profil_Image] | $EXP[Home_Header_Icon_Search_Show]</visible>
                             <width>160</width>
                             <height>160</height>
                             <include>Texture_Header_Common_Background_Icon</include>
@@ -720,11 +720,11 @@
                         <!-- Icon search -->
 
                         <control type="image">
-                            <visible>[!$EXP[Has_Home_Profil_Image] + String.IsEmpty(Skin.String(home_search_state))] | !String.IsEmpty(Window(Home).Property(Show_Menu_Search))</visible>
-                            <top>36</top>
-                            <left>36</left>
-                            <width>88</width>
-                            <height>88</height>
+                            <visible>!$EXP[Has_Home_Profil_Image] + $EXP[Home_Header_Icon_Search_Show]</visible>
+                            <top>40</top>
+                            <left>40</left>
+                            <width>80</width>
+                            <height>80</height>
                             <texture colordiffuse="PanelWhite100">special://skin/extras/icons/search.png</texture>
                             <animation effect="fade" start="100" end="40" condition="!Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
                             <animation effect="fade" start="100" end="90" condition="Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
@@ -734,13 +734,12 @@
 
                         <control type="image">
                             <visible>$EXP[Has_Home_Profil_Image]</visible>
-                            <top>36</top>
-                            <left>36</left>
-                            <width>88</width>
-                            <height>88</height>
+                            <top>40</top>
+                            <left>40</left>
+                            <width>80</width>
+                            <height>80</height>
                             <texture diffuse="common/circle80.png">$INFO[System.ProfileThumb]</texture>
                         </control>
-
                     </control>
 
                     <control type="group">
@@ -776,8 +775,10 @@
                 <!-- HOME - HEADER - CLOCK LEFT -->
 
                 <control type="group">
-                    <visible>!Window.IsVisible(DialogBusy.xml)</visible>
+                    <visible>!Window.IsVisible(DialogBusy.xml) + !Control.HasFocus(9099)</visible>
                     <visible>Window.IsActive(Home) + Skin.HasSetting(show.home.header.clock.left) + Skin.HasSetting(show.furniture.clock.date.weather)</visible>
+
+                    <animation effect="slide" start="0" end="-104,0" time="0" condition="!$EXP[Has_Home_Profil_Image] + [$EXP[Home_Header_Icon_Search_Disabled] | $EXP[Home_Header_Icon_Search_Hide]]">Conditional</animation>
 
                     <top>40</top>
                     <left>144</left>

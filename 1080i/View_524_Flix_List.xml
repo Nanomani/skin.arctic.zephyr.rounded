@@ -247,6 +247,12 @@
         </control>
     </include>
 
+    <include name="Control_524_Flix_List_Playlist_Panel">
+        <control type="panel" id="524">
+            <include>Layout_524_Flix_List_Playlist</include>
+        </control>
+    </include>
+
     <include name="Layout_524_Flix_List_Playlist">
         <visible>$EXP[Exp_View_524]</visible>
         <include>Animation_Scrolltime_Views_List</include>
@@ -255,8 +261,12 @@
 
         <top>View_List_Top</top>
         <height>366</height>
-        <right>View_List_Side</right>
+
+        <include content="Def_Left" condition="Skin.HasSetting(hide.fanart.playlist.view.524)"><param name="left" value="View_List_Side" /></include>
         <left>780</left>
+
+        <include content="Def_Right" condition="Skin.HasSetting(hide.fanart.playlist.view.524)"><param name="right" value="60" /></include>
+        <right>View_List_Side</right>
 
         <include content="Def_Layout_Action_On_Left_On_Right" >
             <param name="scrollid" value="1623" />
@@ -267,29 +277,64 @@
 
         <pagecontrol>1623</pagecontrol>
 
-        <include content="Def_Focus_Position" condition="!Skin.HasSetting(524.list.control.list)">
+        <include content="Def_Focus_Position" condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(524.list.control.list)">
             <param name="focusposition" value="1" />
         </include>
-        <include content="Def_Movement" condition="!Skin.HasSetting(disable.view.524.extended.list.info) + !Skin.HasSetting(524.list.control.list)">
+        <include content="Def_Movement" condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(disable.view.524.extended.list.info) + !Skin.HasSetting(524.list.control.list)">
             <param name="movement" value="2" />
         </include>
-        <include content="Def_Movement" condition="Skin.HasSetting(disable.view.524.extended.list.info) + !Skin.HasSetting(524.list.control.list)">
+        <include content="Def_Movement" condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + Skin.HasSetting(disable.view.524.extended.list.info) + !Skin.HasSetting(524.list.control.list)">
             <param name="movement" value="3" />
         </include>
 
         <viewtype label="31556">list</viewtype>
 
-        <itemlayout condition="Skin.HasSetting(disable.view.524.extended.list.info)" height="64">
+        <!-- LIST SIMPLE - WITH FANART -->
+
+        <itemlayout condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + Skin.HasSetting(disable.view.524.extended.list.info)" height="64">
             <include>layout_list_item_playlist</include>
         </itemlayout>
-        <focusedlayout condition="Skin.HasSetting(disable.view.524.extended.list.info)" height="64">
+        <focusedlayout condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + Skin.HasSetting(disable.view.524.extended.list.info)" height="64">
             <include content="layout_list_focus_playlist"><param name="list_id" value="524" /></include>
         </focusedlayout>
-        <itemlayout condition="!Skin.HasSetting(disable.view.524.extended.list.info)" height="91.4">
+
+        <!-- LIST EXTENDED - WITH FANART -->
+
+        <itemlayout condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(disable.view.524.extended.list.info)" height="91.4">
             <include>layout_list_item_playlist_info</include>
         </itemlayout>
-        <focusedlayout condition="!Skin.HasSetting(disable.view.524.extended.list.info)" height="91.4">
+        <focusedlayout condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(disable.view.524.extended.list.info)" height="91.4">
             <include content="layout_list_focus_playlist_info"><param name="list_id" value="524" /></include>
+        </focusedlayout>
+
+        <!-- LIST SIMPLE - WITHOUT FANART -->
+
+        <itemlayout condition="Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(enable.view.5x.51x.extended.list)" width="890" height="64">
+            <control type="group">
+                <width>870</width>
+                <include>layout_list_item_playlist</include>
+            </control>
+        </itemlayout>
+        <focusedlayout condition="Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(enable.view.5x.51x.extended.list)" width="890" height="64">
+            <control type="group">
+                <width>870</width>
+                <include content="layout_list_focus_playlist"><param name="list_id" value="524" /></include>
+            </control>
+        </focusedlayout>
+
+        <!-- LIST EXTENDED - WITHOUT FANART -->
+
+        <itemlayout condition="Skin.HasSetting(hide.fanart.playlist.view.524) + Skin.HasSetting(enable.view.5x.51x.extended.list)" width="890" height="91.4">
+            <control type="group">
+                <width>870</width>
+                <include>layout_list_item_playlist_info</include>
+            </control>
+        </itemlayout>
+        <focusedlayout condition="Skin.HasSetting(hide.fanart.playlist.view.524) + Skin.HasSetting(enable.view.5x.51x.extended.list)" width="890" height="91.4">
+            <control type="group">
+                <width>870</width>
+                <include content="layout_list_focus_playlist_info"><param name="list_id" value="524" /></include>
+            </control>
         </focusedlayout>
     </include>
 
@@ -305,24 +350,37 @@
             <control type="group">
                 <top>310</top>
 
-                <include condition="!Skin.HasSetting(524.list.control.list)">Control_524_Flix_List_Playlist_Fixed_List</include>
-                <include condition="Skin.HasSetting(524.list.control.list)">Control_524_Flix_List_Playlist_List</include>
+                <include condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(524.list.control.list)">Control_524_Flix_List_Playlist_Fixed_List</include>
+                <include condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + Skin.HasSetting(524.list.control.list)">Control_524_Flix_List_Playlist_List</include>
+                <include condition="Skin.HasSetting(hide.fanart.playlist.view.524)">Control_524_Flix_List_Playlist_Panel</include>
 
                 <!-- SCROLLBAR -->
 
-                <include content="Def_Layout_Scrollbar_Vertical" >
-                    <param name="scrollid" value="1623" />
-                    <param name="idlayout" value="524" />
-                    <param name="height" value="364" />
-                    <param name="centerleft" value="760" />
-                </include>
+                <control type="scrollbar" id="1623">
+                    <include content="Object_Scrollbar_Views_Vertical_On_Left" condition="!Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(show.context.menu.onleft)">
+                        <param name="scrollid" value="1623" />
+                        <param name="idlayout" value="524" />
+                        <param name="centerleft" value="760" />
+                        <param name="height" value="364" />
+                    </include>
+                    <include content="Object_Scrollbar_Views_Vertical_On_Left" condition="Skin.HasSetting(hide.fanart.playlist.view.524) + !Skin.HasSetting(show.context.menu.onleft)">
+                        <param name="scrollid" value="1623" />
+                        <param name="idlayout" value="524" />
+                        <param name="height" value="364" />
+                    </include>
+                    <include content="Object_Scrollbar_Views_Vertical_On_Right" condition="Skin.HasSetting(show.context.menu.onleft)">
+                        <param name="scrollid" value="1623" />
+                        <param name="idlayout" value="524" />
+                        <param name="height" value="364" />
+                    </include>
+                </control>
             </control>
 
             <include content="Def_View_Flix_Minimal_Content">
                 <param name="def_label_sub_title" value="Def_Label_View_Flix_Playlist_Sub_Title" />
             </include>
 
-            <include content="524_Fanart">
+            <include content="524_Fanart" condition="!Skin.HasSetting(hide.fanart.playlist.view.524)">
                 <param name="top" value="528" />
                 <param name="height" value="364" />
                 <param name="width" value="658" />

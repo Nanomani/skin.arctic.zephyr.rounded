@@ -1171,6 +1171,21 @@
         <value condition="[Container.Content(tvshows) + !Control.IsVisible(58) + !Control.IsVisible(555)] | Container.Content(episodes)">$VAR[Label_View_List_Year]</value>
     </variable>
 
+    <variable name="Label_View_List_Plot">
+        <value condition="$EXP[IsApplePodcastsItem] + !ListItem.IsFolder">$INFO[ListItem.Property(podcast_title),[B],[/B][CR],]$INFO[ListItem.Plot]</value>
+        <value condition="$EXP[IsJlomFolder] + !String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
+        <value condition="!String.IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
+        <value condition="!String.IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
+        <value condition="!String.IsEmpty(ListItem.AddonDescription)">$INFO[ListItem.AddonDescription]</value>
+        <value condition="Control.HasFocus(5161)">$INFO[Container(5161).ListItem.Plot]</value>
+        <value condition="Control.HasFocus(5261)">$INFO[Container(5261).ListItem.Plot]</value>
+        <value condition="Container.Content(seasons)">$VAR[Label_Season_Plot]</value>
+        <value condition="Container.Content(episodes)">$INFO[ListItem.Plot]</value>
+        <value condition="$EXP[IsGameMode]">$VAR[Label_Game_Plot]</value>
+        <value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
+        <value condition="!String.IsEmpty(ListItem.Property(plotlabel))">$INFO[ListItem.Property(plotlabel)]</value>
+    </variable>
+
     <variable name="Label_Duration_Format_List">
         <value condition="!Integer.IsGreater(ListItem.Duration(mins),0) + !Skin.HasSetting(show.time.format.hh.mm)">$INFO[ListItem.Duration(mins),, $LOCALIZE[31074]]</value>
 
@@ -1218,6 +1233,7 @@
         <value condition="!String.IsEqual(Container(6090).ListItem.Label,$LOCALIZE[559]) + !String.IsEmpty(Container(6090).ListItem.DiscNumber) | Integer.IsGreater(Container(6090).ListItem.Property(Album_Totaldiscs),1)">$INFO[Container(6090).ListItem.Property(Album_Totaldiscs),, $LOCALIZE[427]]          $LOCALIZE[180]$LOCALIZE[31079] $INFO[Container(6090).ListItem.Duration(mins),, $LOCALIZE[31074]]</value>
         <value condition="!String.IsEqual(Container(6090).ListItem.Label,$LOCALIZE[559]) + String.IsEmpty(Container(6090).ListItem.DiscNumber) + !Integer.IsGreater(Container(6090).ListItem.Property(Album_Totaldiscs),1)">$INFO[Container(6092).NumItems,, $LOCALIZE[134]]          $LOCALIZE[180]$LOCALIZE[31079] $INFO[Container(6090).ListItem.Duration(mins),, $LOCALIZE[31074]]</value>
     </variable>
+
     <variable name="Label_OSD_Playlist_Title_Right2">
         <value>$INFO[Container(6092).CurrentItem]$INFO[Container(6092).NumItems, / ,]</value>
     </variable>
@@ -1503,20 +1519,15 @@
 
         <value condition="[String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),album) | String.IsEqual(Window(Home).Property(TMDbHelper.ListItem.base_dbtype),song)] + !String.IsEmpty(ListItem.Rating)">$VAR[Label_Rating_TMDb_Votes,Kodi ,]</value>
 
-        <!-- MOVIES TVSHOWS - IMDB RATING -->
+        <!-- MOVIES / TVSHOWS - IMDB RATING -->
 
         <value condition="!String.IsEmpty(ListItem.Rating(imdb))">$VAR[Label_Rating_IMDb_Votes_Top250,IMDb ,]</value>
         <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.IMDb_Rating))">$VAR[Label_Rating_IMDb_Votes_Top250,IMDb ,]</value>
 
-        <!-- MOVIES TVSHOWS - TMDB RATING -->
+        <!-- MOVIES / TVSHOWS - TMDB RATING -->
 
         <value condition="!String.IsEmpty(ListItem.Rating)">$VAR[Label_Rating_TMDb_Votes,TMDb ,]</value>
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Rating))">$VAR[Label_Rating_TMDb_Votes,TMDb ,]</value>
-
-        <!-- SETS - TMDB RATING -->
-
-        <value condition="!String.IsEmpty(ListItem.Rating)">$VAR[Label_Rating_TMDb_Votes,TMDb ,]</value>
-        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Rating))">$VAR[Label_Rating_TMDb_Votes,TMDb ,]</value>
+        <value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Rating)) + Integer.IsGreater(Window(home).Property(TMDBHelper.ListItem.Rating),0)">$VAR[Label_Rating_TMDb_Votes,TMDb ,]</value>
     </variable>
 
     <variable name="Label_Actors_Context_Birth_Death">

@@ -692,7 +692,7 @@
                     <effect type="fade" start="100" end="0" time="150" delay="0" />
                 </animation>
 
-                <!-- HEADER - ICON LEFT -->
+                <!-- HEADER - ICON - SEARCH ICON / PROFILE - LEFT -->
 
                 <control type="group" description="iconbox">
                     <visible>!Window.IsVisible(DialogBusy.xml) | [Window.IsVisible(DialogBusy.xml) + [$EXP[Trailer_Window_Is_Active] | $EXP[Trailer_Waiting_For_Player] | $EXP[Trailer_Is_Playing]]]</visible>
@@ -700,8 +700,6 @@
 
                     <width>160</width>
                     <height>160</height>
-
-                    <!-- HEADER - SEARCH ICON / PROFILE -->
 
                     <control type="group">
                         <visible>!Control.HasFocus(9099)</visible>
@@ -772,7 +770,7 @@
                     </control>
                 </control>
 
-                <!-- HOME - HEADER - CLOCK / WEATHER LEFT -->
+                <!-- HEADER - CLOCK / WEATHER - LEFT -->
 
                 <control type="group">
                     <visible>!Window.IsVisible(DialogBusy.xml) + !Control.HasFocus(9099)</visible>
@@ -783,65 +781,70 @@
                     <top>40</top>
                     <left>144</left>
 
-                    <control type="group">
+                    <!-- Line 1 -->
 
-                        <!-- Line 1 - Time -->
+                    <control type="grouplist">
+                        <itemgap>0</itemgap>
+                        <orientation>horizontal</orientation>
+                        <usecontrolcoords>true</usecontrolcoords>
+
+                        <!-- Time -->
 
                         <control type="label">
                             <centertop>24</centertop>
                             <align>left</align>
+                            <width max="90">auto</width>
                             <font>HeaderLabel</font>
                             <textcolor>Dark1</textcolor>
                             <label>$INFO[System.Time(hh:mm)]</label>
                         </control>
 
-                        <!-- Line 2 - Date -->
+                        <!-- Icon Weather -->
 
-                        <control type="label">
-                            <centertop>58</centertop>
-                            <align>left</align>
-                            <font>Flag</font>
-                            <width>auto</width>
-                            <textcolor>Dark2</textcolor>
-                            <label>$INFO[System.Date]</label>
+                        <control type="group">
+                            <visible>!String.Contains(Weather.Data(Current.Temperature),$LOCALIZE[503])</visible>
+                            <visible>!String.IsEmpty(Weather.plugin)</visible>
+                            <visible>Weather.IsFetched</visible>
+                            <include>Animation_Fade_In_WeatherDelay</include>
+
+                            <top>-2</top>
+                            <left>20</left>
+                            <width>50</width>
+                            <height>50</height>
+                            <align>center</align>
+                            <aligny>center</aligny>
+
+                            <include>Def_Feature_Weather_Icon</include>
+                        </control>
+
+                        <!-- Temperature -->
+
+                        <control type="group">
+                            <visible>!String.IsEmpty(Weather.plugin)</visible>
+                            <visible>Weather.IsFetched</visible>
+                            <width>100</width>
+                            <left>20</left>
+
+                            <control type="label">
+                                <centertop>26</centertop>
+                                <width>auto</width>
+                                <font>Flag</font>
+                                <align>left</align>
+                                <textcolor>Dark1</textcolor>
+                                <label>$INFO[Window(Weather).Property(Current.Temperature)]$INFO[System.TemperatureUnits]</label>
+                            </control>
                         </control>
                     </control>
 
-                    <!-- Line 1 - Icon Weather -->
+                    <!-- Line 2 - Date -->
 
-                    <control type="group">
-                        <visible>!String.Contains(Weather.Data(Current.Temperature),$LOCALIZE[503])</visible>
-                        <visible>!String.IsEmpty(Weather.plugin)</visible>
-                        <visible>Weather.IsFetched</visible>
-                        <include>Animation_Fade_In_WeatherDelay</include>
-
-                        <top>-2</top>
-                        <left>90</left>
-                        <width>50</width>
-                        <height>50</height>
-                        <align>center</align>
-                        <aligny>center</aligny>
-
-                        <include>Def_Feature_Weather_Icon</include>
-                    </control>
-
-                    <!-- Line 1 - Temperature -->
-
-                    <control type="group">
-                        <visible>!String.IsEmpty(Weather.plugin)</visible>
-                        <visible>Weather.IsFetched</visible>
-                        <width>500</width>
-                        <left>30</left>
-
-                        <control type="label">
-                            <centertop>24</centertop>
-                            <left>120</left>
-                            <width>auto</width>
-                            <font>Flag</font>
-                            <align>left</align>
-                            <textcolor>Dark2</textcolor>
-                            <label>$INFO[Window(Weather).Property(Current.Temperature)]$INFO[System.TemperatureUnits]</label>
-                        </control>
+                    <control type="label">
+                        <centertop>58</centertop>
+                        <align>left</align>
+                        <font>Flag</font>
+                        <width>auto</width>
+                        <textcolor>Dark2</textcolor>
+                        <label>$INFO[System.Date]</label>
                     </control>
                 </control>
             </control>

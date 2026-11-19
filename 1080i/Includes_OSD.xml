@@ -286,10 +286,17 @@
 
             <top>40</top>
             <right>40</right>
-            <width>720</width>
             <height>160</height>
 
-            <!-- VIDEO -->
+            <!-- without time AM / PM -->
+            <include content="Def_Width" condition="String.IsEmpty(System.Time(xx))">
+                <param name="width" value="640" />
+            </include>
+
+            <!-- with time AM / PM -->
+            <width>720</width>
+
+            <!-- BACKGROUND -->
 
             <include content="Def_Dialog_Notification_Background">
                 <param name="texture" value="$VAR[Image_Notification_Background]" />
@@ -297,91 +304,111 @@
                 <param name="colordiffuse_border" value="$VAR[Color_OSD_Dialog_Border]" />
             </include>
 
-            <!-- HORLOGE -->
+            <!-- LEFT - TIME REMAINING -->
 
             <control type="group">
                 <top>40</top>
-                <right>120</right>
-                <height>40</height>
-                <width>560</width>
+                <left>40</left>
 
-                <!-- IMAGE - CLOCK -->
+                <control type="grouplist">
+                    <itemgap>16</itemgap>
+                    <orientation>horizontal</orientation>
+                    <usecontrolcoords>true</usecontrolcoords>
 
-                <control type="image">
-                    <left>8</left>
-                    <centertop>40</centertop>
-                    <width>62</width>
-                    <height>62</height>
-                    <aspectratio aligny="center">keep</aspectratio>
-                    <colordiffuse>$VAR[Color_OSD_Panel_White100]</colordiffuse>
-                    <texture flipx="true">dialog/kaitoast/finishtime.png</texture>
-                </control>
-
-                <!-- TIME REMAINING -->
-
-                <control type="label">
-                    <left>80</left>
-                    <width>128</width>
-                    <height>80</height>
                     <align>left</align>
-                    <aligny>center</aligny>
-                    <font>Consensus</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
-                    <label>$VAR[Label_OSD_Time_Remaining]</label>
-                </control>
+                    <width>560</width>
 
-                <!-- TIME ACTUAL -->
+                    <!-- IMAGE - CLOCK -->
 
-                <control type="label">
-                    <left>200</left>
-                    <width>150</width>
-                    <height>80</height>
-                    <align>right</align>
-                    <aligny>center</aligny>
-                    <font>Consensus</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
-                    <label>$INFO[System.Time]</label>
-                </control>
+                    <control type="image">
+                        <left>8</left>
+                        <centertop>40</centertop>
+                        <width>62</width>
+                        <height>62</height>
+                        <aspectratio aligny="center">keep</aspectratio>
+                        <colordiffuse>$VAR[Color_OSD_Panel_White100]</colordiffuse>
+                        <texture flipx="true">dialog/kaitoast/finishtime.png</texture>
+                    </control>
 
-                <!-- IMAGE - ARROW -->
+                    <!-- TIME REMAINING -->
 
-                <control type="image">
-                    <left>366</left>
-                    <centertop>40</centertop>
-                    <width>48</width>
-                    <height>48</height>
-                    <aspectratio aligny="center">keep</aspectratio>
-                    <colordiffuse>$VAR[Color_OSD_Panel_White100]</colordiffuse>
-                    <texture>dialog/kaitoast/arrow.png</texture>
-                </control>
-
-                <!-- TIME FINISH -->
-
-                <control type="label">
-                    <left>424</left>
-                    <width>150</width>
-                    <height>80</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>Consensus</font>
-                    <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
-                    <label>$VAR[Label_OSD_Time_Finish]</label>
+                    <control type="label">
+                        <left>-4</left>
+                        <width min="90">auto</width>
+                        <height>80</height>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <font>Consensus</font>
+                        <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
+                        <label>$VAR[Label_OSD_Time_Remaining]</label>
+                    </control>
                 </control>
             </control>
 
-            <!-- SPINNER PAUSE -->
+            <!-- RIGHT - TIME ACTUAL => TIME FINISH -->
 
             <control type="group">
                 <top>40</top>
                 <right>40</right>
-                <height>40</height>
-                <width>80</width>
 
-                <include content="Object_Spinner_Pause">
-                    <param name="visible" value="true" />
-                    <param name="centerleft" value="40" />
-                    <param name="centertop" value="40" />
-                </include>
+                <control type="grouplist">
+                    <right>0</right>
+                    <width>560</width>
+                    <align>right</align>
+
+                    <itemgap>14</itemgap>
+                    <orientation>horizontal</orientation>
+                    <usecontrolcoords>true</usecontrolcoords>
+
+                    <!-- TIME ACTUAL -->
+
+                    <control type="label">
+                        <height>80</height>
+                        <align>right</align>
+                        <aligny>center</aligny>
+                        <width min="50">auto</width>
+                        <font>Consensus</font>
+                        <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
+                        <label>$INFO[System.Time]</label>
+                    </control>
+
+                    <!-- IMAGE - ARROW -->
+
+                    <control type="image">
+                        <align>right</align>
+                        <centertop>40</centertop>
+                        <width>48</width>
+                        <height>48</height>
+                        <aspectratio aligny="center">keep</aspectratio>
+                        <colordiffuse>$VAR[Color_OSD_Panel_White100]</colordiffuse>
+                        <texture>dialog/kaitoast/arrow.png</texture>
+                    </control>
+
+                    <!-- TIME FINISH -->
+
+                    <control type="label">
+                        <height>80</height>
+                        <align>right</align>
+                        <aligny>center</aligny>
+                        <width min="50">auto</width>
+                        <font>Consensus</font>
+                        <textcolor>$VAR[Color_OSD_Panel_White100]</textcolor>
+                        <label>$VAR[Label_OSD_Time_Finish]</label>
+                    </control>
+
+                    <!-- SPINNER PLAY / PAUSE -->
+
+                    <control type="group">
+                        <height>40</height>
+                        <width>80</width>
+
+                        <include content="Object_Spinner_Pause">
+                            <param name="visible" value="true" />
+                            <param name="centerleft" value="40" />
+                            <param name="centertop" value="40" />
+                        </include>
+                    </control>
+                </control>
             </control>
         </control>
     </include>

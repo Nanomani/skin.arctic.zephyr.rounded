@@ -6,9 +6,9 @@
 Arctic: Zephyr Rounded is a Kodi skin inspired by Arctic: Zephyr - Reloaded (and AH2) while following its own direction.
 Over the years, many features have been removed, added, redesigned, or completely reworked to better align with the goals of this project.
 
-<img width="1920" height="1080" alt="screenshot00005" src="https://github.com/user-attachments/assets/e975cdc5-a5dc-4bfa-9b43-02a8dda8c8fc" />
+<img width="1920" height="1080" alt="0noB0CY" src="https://github.com/user-attachments/assets/5e7c2b47-17a1-41ab-92e8-c99f5b375618" />
 
-<img width="1920" height="1080" alt="screenshot00028" src="https://github.com/user-attachments/assets/735f1c25-d2a8-4709-9f36-2cd0577f8d0c" />
+<img width="1920" height="1080" alt="tA0WWnl" src="https://github.com/user-attachments/assets/0988838f-0e87-4e62-bda6-3ce82d691481" />
 
 ## Installation for Kodi Piers:
 

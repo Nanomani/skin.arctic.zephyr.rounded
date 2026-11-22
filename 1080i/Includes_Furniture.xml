@@ -711,8 +711,9 @@
                             <width>160</width>
                             <height>160</height>
                             <include>Texture_Header_Common_Background_Icon</include>
-                            <animation effect="fade" start="100" end="40" condition="!Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
-                            <animation effect="fade" start="100" end="90" condition="Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
+                            <animation effect="fade" start="100" end="40" condition="!Skin.HasSetting(show.home.header.clock.left) + !Skin.HasSetting(home.show.menu.on.top)">Conditional</animation>
+                            <animation effect="fade" start="100" end="90" condition="Skin.HasSetting(show.home.header.clock.left) + !Skin.HasSetting(home.show.menu.on.top)">Conditional</animation>
+                            <animation effect="fade" start="100" end="60" condition="Skin.HasSetting(home.show.menu.on.top)">Conditional</animation>
                         </control>
 
                         <!-- Icon search -->
@@ -724,8 +725,9 @@
                             <width>80</width>
                             <height>80</height>
                             <texture colordiffuse="PanelWhite100">special://skin/extras/icons/search.png</texture>
-                            <animation effect="fade" start="100" end="40" condition="!Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
-                            <animation effect="fade" start="100" end="90" condition="Skin.HasSetting(show.home.header.clock.left)">Conditional</animation>
+                            <animation effect="fade" start="100" end="40" condition="!Skin.HasSetting(show.home.header.clock.left) + !Skin.HasSetting(home.show.menu.on.top)">Conditional</animation>
+                            <animation effect="fade" start="100" end="90" condition="Skin.HasSetting(show.home.header.clock.left) + !Skin.HasSetting(home.show.menu.on.top)">Conditional</animation>
+                            <animation effect="fade" start="100" end="60" condition="Skin.HasSetting(home.show.menu.on.top)">Conditional</animation>
                         </control>
 
                         <!-- Icon profile -->
@@ -773,6 +775,7 @@
                 <!-- HEADER - CLOCK / WEATHER - LEFT -->
 
                 <control type="group">
+                    <visible>!Skin.HasSetting(home.show.menu.on.top)</visible>
                     <visible>!Window.IsVisible(DialogBusy.xml) + !Control.HasFocus(9099)</visible>
                     <visible>Window.IsActive(Home) + Skin.HasSetting(show.home.header.clock.left) + Skin.HasSetting(show.furniture.clock.date.weather)</visible>
 
@@ -1382,7 +1385,8 @@
 
             <visible>$EXP[View_Clock_In_Footer_Always]
             | [Skin.HasSetting(show.furniture.clock.date.weather) + !$EXP[View_Flix] + !Skin.HasSetting(show.furniture.footer)]
-            | [Skin.HasSetting(show.furniture.clock.date.weather) + Window.IsActive(Home) + !Skin.HasSetting(show.home.header.clock.left)]</visible>
+            | [Skin.HasSetting(show.furniture.clock.date.weather) + Window.IsActive(Home) + !Skin.HasSetting(show.home.header.clock.left)]
+            | [Skin.HasSetting(show.furniture.clock.date.weather) + Window.IsActive(Home) + $EXP[Home_Is_Horizontal] + Skin.HasSetting(home.show.menu.on.top)]</visible>
 
             <visible>String.IsEmpty(Window(Home).Property(Hide_On_Reload_Dialog_Info))</visible>
             <include>Animation_Dialog_Info_Visible_Fade_Conditional</include>

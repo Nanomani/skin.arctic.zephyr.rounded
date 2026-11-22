@@ -193,17 +193,25 @@
 
             <include content="Def_Dialog_View_Type">
                 <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type].jpg" />
-                <param name="visible" value="!Skin.HasSetting(home.show.menu.icons)" />
+                <param name="visible" value="[!Skin.HasSetting(home.show.menu.icons) + [Container(11).HasFocus(1) | Container(11).HasFocus(2)]] | [[!Skin.HasSetting(home.show.menu.icons) + !Skin.HasSetting(home.show.menu.on.top)] + [Container(11).HasFocus(3) | Container(11).HasFocus(4) | Container(11).HasFocus(5)]]" />
             </include>
             <include content="Def_Dialog_View_Type">
                 <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type]2.jpg" />
-                <param name="visible" value="Skin.HasSetting(home.show.menu.icons)" />
+                <param name="visible" value="[Skin.HasSetting(home.show.menu.icons) + [Container(11).HasFocus(1) | Container(11).HasFocus(2)]] | [[Skin.HasSetting(home.show.menu.icons) + !Skin.HasSetting(home.show.menu.on.top)] + [Container(11).HasFocus(3) | Container(11).HasFocus(4) | Container(11).HasFocus(5)]]" />
+            </include>
+            <include content="Def_Dialog_View_Type">
+                <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type]3.jpg" />
+                <param name="visible" value="!Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.on.top) + [Container(11).HasFocus(3) | Container(11).HasFocus(4) | Container(11).HasFocus(5)]" />
+            </include>
+            <include content="Def_Dialog_View_Type">
+                <param name="texture" value="special://skin/extras/homemenu/$VAR[Def_Image_Home_Menu_View_type]4.jpg" />
+                <param name="visible" value="Skin.HasSetting(home.show.menu.icons) + Skin.HasSetting(home.show.menu.on.top) + [Container(11).HasFocus(3) | Container(11).HasFocus(4) | Container(11).HasFocus(5)]" />
             </include>
 
             <!-- LINE HORIZONTALE -->
 
             <control type="image">
-                <top>653</top>
+                <top>575</top>
                 <left>30</left>
                 <width>404</width>
                 <height>1</height>
@@ -213,22 +221,24 @@
             <!-- BUTTON ON LEFT -->
 
             <control type="grouplist" id="9053">
-                <top>654</top>
+                <top>590</top>
                 <left>30</left>
                 <width>388</width>
                 <height>490</height>
 
                 <onup>11</onup>
                 <onleft>11</onleft>
+
                 <onright condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</onright>
                 <onright condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</onright>
                 <ondown condition="!$EXP[Condition_Show_Button_Setup_Wizard]">11</ondown>
                 <ondown condition="$EXP[Condition_Show_Button_Setup_Wizard]">9020</ondown>
 
-                <itemgap>0</itemgap>
+                <itemgap>14</itemgap>
                 <scrolltime tween="quadratic">200</scrolltime>
 
-                <control type="label" id="9050" description="Backup">
+                <control type="label" id="9050">
+                    <height>42</height>
                     <include>Def_Settings_Label_Title_Right_Side</include>
                     <label>$LOCALIZE[33063]</label>
                 </control>
@@ -237,10 +247,19 @@
                     <param name="id" value="5" />
                     <param name="width" value="388" />
                     <param name="align" value="left" />
-                    <param name="label" value="$LOCALIZE[31562] :" />
+                    <param name="label" value="$LOCALIZE[31562]$LOCALIZE[31079]" />
                     <param name="label2" value="$VAR[Label_Setting_Home_Menu_Style]" />
-                    <param name="selected" value="Skin.HasSetting(home.show.menu.icons)" />
                     <param name="onclick1" value="Skin.ToggleSetting(home.show.menu.icons)" />
+                </include>
+
+                <include content="Def_Dialog_Button_Action">
+                    <param name="id" value="6" />
+                    <param name="width" value="388" />
+                    <param name="align" value="left" />
+                    <param name="label" value="$LOCALIZE[31199]$LOCALIZE[31079]" />
+                    <param name="label2" value="$VAR[Label_Setting_Home_Menu_Position]" />
+                    <param name="onclick1" value="Skin.ToggleSetting(home.show.menu.on.top)" />
+                    <param name="visible" value="Container(11).HasFocus(3) | Container(11).HasFocus(4) | Container(11).HasFocus(5)" />
                 </include>
             </control>
 

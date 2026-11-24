@@ -132,7 +132,9 @@
         <param name="visible_icon_black" value="$PARAM[visible_icon_black]" default="String.StartsWith(ListItem.Icon,Default)" />
 
         <definition>
-            <!-- background -->
+        
+            <!-- BACKGROUND -->
+            
             <control type="image">
                 <centertop>$PARAM[centertop]</centertop>
                 <left>$PARAM[left]</left>
@@ -142,7 +144,8 @@
                 <!-- <visible>$PARAM[visible_icon_black]</visible> -->
             </control>
 
-            <!-- Icon black -->
+            <!-- ICON BLACK -->
+            
             <control type="image">
                 <centertop>$PARAM[centertop]</centertop>
                 <left>$PARAM[left]</left>
@@ -154,6 +157,7 @@
             </control>
 
             <!-- ICON -->
+            
             <control type="image">
                 <centertop>$PARAM[centertop]</centertop>
                 <left>$PARAM[left]</left>
@@ -188,7 +192,8 @@
 
         <definition>
 
-            <!-- Background -->
+            <!-- BACKGROUND -->
+            
             <control type="image">
                 <top>$PARAM[top]</top>
                 <left>$PARAM[left]</left>
@@ -198,6 +203,7 @@
             </control>
 
             <!-- ICON -->
+            
             <control type="image">
                 <top>$PARAM[top]</top>
                 <left>$PARAM[left]</left>
@@ -208,7 +214,8 @@
                 <visible>$PARAM[visible_icon]</visible>
             </control>
 
-            <!-- Icon black -->
+            <!-- ICON BLACK -->
+            
             <control type="image">
                 <top>$PARAM[top]</top>
                 <left>$PARAM[left]</left>
@@ -219,7 +226,8 @@
                 <visible>$PARAM[visible_icon_black]</visible>
             </control>
 
-            <!-- Icon black selected -->
+            <!-- ICON BLACK SELECTED -->
+            
             <control type="image">
                 <top>$PARAM[top]</top>
                 <left>$PARAM[left]</left>
@@ -273,34 +281,35 @@
     </include>
 
     <include name="Def_View_List_Item_IsPlaying">
-        <param name="visible" value="$PARAM[visible]" default="true" />
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
         <param name="width" value="$PARAM[width]" default="100%" />
         <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
+        <param name="condition_isplaying" value="$PARAM[condition_isplaying]" default="ListItem.IsPlaying" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
             <control type="group">
                 <width>$PARAM[width]</width>
 
                 <!-- BACKGROUND -->
-                
+
                 <control type="image">
                     <include content="Def_Padding"><param name="pad" value="$PARAM[pad_image]" /></include>
                     <include>Texture_Layout_Item_IsPlaying_Background_NoFocus</include>
                     <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
-                    <visible>ListItem.IsPlaying</visible>
+                    <visible>$PARAM[condition_isplaying]</visible>
                     <visible>$PARAM[visible]</visible>
                 </control>
-                
+
                 <!-- TEXTURE IS PLAYING -->
-                
+
                 <control type="image">
                     <include content="Def_Padding"><param name="pad" value="$PARAM[pad_image]" /></include>
                     <aspectratio aligny="top">center</aspectratio>
                     <include>Texture_Layout_Item_IsPlaying_Selected</include>
-                    <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
+                    <animation effect="fade" start="100" end="15" condition="$PARAM[condition_isplaying]">Conditional</animation>
                     <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
-                    <visible>ListItem.IsPlaying</visible>
+                    <visible>$PARAM[condition_isplaying]</visible>
                     <visible>$PARAM[visible]</visible>
                 </control>
             </control>
@@ -312,29 +321,31 @@
         <param name="width" value="$PARAM[width]" default="100%" />
         <param name="list_id" value="$PARAM[list_id]" default="50" />
         <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
+        <param name="condition_isplaying" value="$PARAM[condition_isplaying]" default="ListItem.IsPlaying" />
         <param name="visible" value="$PARAM[visible]" default="true" />
+
         <definition>
             <control type="group">
                 <width>$PARAM[width]</width>
 
                 <!-- TEXTURE FOCUS -->
-                
+
                 <control type="image">
                     <include>Texture_Layout_Item_Focus</include>
                     <animation effect="fade" start="100" end="50" condition="!Control.HasFocus($PARAM[list_id])">Conditional</animation>
                     <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                     <visible>$PARAM[visible]</visible>
                 </control>
-                
+
                 <!-- TEXTURE IS PLAYING -->
-                
+
                 <control type="image">
                     <include content="Def_Padding"><param name="pad" value="$PARAM[pad_image]" /></include>
                     <aspectratio aligny="top">center</aspectratio>
                     <include>Texture_Layout_Item_IsPlaying_Selected</include>
-                    <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
+                    <animation effect="fade" start="100" end="15" condition="$PARAM[condition_isplaying]">Conditional</animation>
                     <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
-                    <visible>ListItem.IsPlaying</visible>
+                    <visible>$PARAM[condition_isplaying]</visible>
                     <visible>$PARAM[visible]</visible>
                 </control>
             </control>
@@ -344,48 +355,62 @@
     <include name="Def_View_List_Item_IsPlaying_square">
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
         <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
+        <param name="condition_isplaying" value="$PARAM[condition_isplaying]" default="ListItem.IsPlaying" />
         <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
+
+            <!-- BACKGROUND -->
+
             <control type="image">
                 <include content="Def_Padding"><param name="pad" value="$PARAM[pad_image]" /></include>
                 <include>Texture_Layout_Item_Square_IsPlaying_Background_NoFocus</include>
                 <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
-                <visible>ListItem.IsPlaying</visible>
+                <visible>$PARAM[condition_isplaying]</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
+
+            <!-- TEXTURE IS PLAYING -->
+
             <control type="image">
                 <include content="Def_Padding"><param name="pad" value="$PARAM[pad_image]" /></include>
                 <aspectratio aligny="top">center</aspectratio>
                 <include>Texture_Layout_Item_Square_IsPlaying_Selected</include>
-                <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
+                <animation effect="fade" start="100" end="15" condition="$PARAM[condition_isplaying]">Conditional</animation>
                 <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
-                <visible>ListItem.IsPlaying</visible>
+                <visible>$PARAM[condition_isplaying]</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
         </definition>
     </include>
 
     <include name="Def_View_List_Focus_IsPlaying_square">
-        <param name="visible" value="$PARAM[visible]" default="true" />
         <param name="list_id" value="$PARAM[list_id]" default="50" />
         <param name="pad_image" value="$PARAM[pad_image]" default="5" />
         <param name="condition_scroll_anim" value="$PARAM[condition_scroll_anim]" default="true" />
+        <param name="condition_isplaying" value="$PARAM[condition_isplaying]" default="ListItem.IsPlaying" />
+        <param name="visible" value="$PARAM[visible]" default="true" />
 
         <definition>
+
+            <!-- TEXTURE FOCUS -->
+
             <control type="image">
                 <include>Texture_PVR_Item_Focus</include>
                 <animation effect="fade" start="100" end="50" condition="!Control.HasFocus($PARAM[list_id])">Conditional</animation>
                 <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
                 <visible>$PARAM[visible]</visible>
             </control>
+
+            <!-- TEXTURE IS PLAYING -->
+
             <control type="image">
                 <include content="Def_Padding"><param name="pad" value="$PARAM[pad_image]" /></include>
                 <aspectratio aligny="top">center</aspectratio>
                 <include>Texture_Layout_Item_Square_IsPlaying_Selected</include>
-                <animation effect="fade" start="100" end="15" condition="ListItem.IsPlaying">Conditional</animation>
+                <animation effect="fade" start="100" end="15" condition="$PARAM[condition_isplaying]">Conditional</animation>
                 <include condition="$PARAM[condition_scroll_anim]">Animation_View_List_Focus_Scroll</include>
-                <visible>ListItem.IsPlaying</visible>
+                <visible>$PARAM[condition_isplaying]</visible>
                 <visible>$PARAM[visible]</visible>
             </control>
         </definition>
